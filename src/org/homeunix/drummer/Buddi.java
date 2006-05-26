@@ -23,13 +23,14 @@ import org.homeunix.drummer.view.logic.MainBudgetFrame;
  */
 public class Buddi {
 
+	public static final String version = "0.91 Beta";
+
 	private static Boolean isMac;
-	
-	public static final String version = "0.9 Beta";
+	private static final boolean UI_DEBUG = true; 
 	
 	public static boolean isMac(){
 		if (isMac == null){
-			isMac = System.getProperty("os.name").equals("Mac OS X");
+			isMac = !UI_DEBUG && System.getProperty("os.name").equals("Mac OS X");
 		}
 		
 		return isMac;

@@ -4,14 +4,12 @@
 package org.homeunix.drummer.view.layout;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.homeunix.drummer.Strings;
-import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -44,11 +42,6 @@ public abstract class MainBudgetFrameLayout extends AbstractBudgetFrame {
 		this.setTitle(Strings.inst().get(Strings.BUDDI));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
-		
-		this.setPreferredSize(new Dimension(
-				PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(),
-				PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight()
-		));
 	}
 	
 	public AccountListPanel getAccountListPanel(){

@@ -134,6 +134,12 @@ public class PrefsInstance {
 			WindowAttributes graphs = prefsFactory.createWindowAttributes();
 			WindowAttributes reports = prefsFactory.createWindowAttributes();
 			
+			main.setHeight(400);
+			main.setWidth(600);
+			
+			transactions.setHeight(500);
+			transactions.setWidth(700);
+			
 			prefs.setMainWindow(main);
 			prefs.setTransactionsWindow(transactions);
 			prefs.setGraphsWindow(graphs);
@@ -285,5 +291,13 @@ public class PrefsInstance {
 		if (prefs.getReportsWindow() == null)
 			prefs.setReportsWindow(prefsFactory.createWindowAttributes());
 
+		if (prefs.getMainWindow().getHeight() < 300)
+			prefs.getMainWindow().setHeight(300);
+		if (prefs.getTransactionsWindow().getHeight() < 300)
+			prefs.getTransactionsWindow().setHeight(300);
+		if (prefs.getMainWindow().getWidth() < 400)
+			prefs.getMainWindow().setWidth(400);
+		if (prefs.getTransactionsWindow().getWidth() < 500)
+			prefs.getTransactionsWindow().setWidth(500);
 	}
 }

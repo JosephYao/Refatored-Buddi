@@ -96,7 +96,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-		this.setPreferredSize(new Dimension(700, 350));
+//		this.setPreferredSize(new Dimension(700, 350));
 		
 		if (Buddi.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");

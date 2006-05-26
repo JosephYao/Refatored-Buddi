@@ -107,7 +107,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			tree.putClientProperty("Quaqua.Tree.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,3,12));
-			balanceLabel.putClientProperty("Quaqua.Component.style", "mini");
+//			balanceLabel.putClientProperty("Quaqua.Component.style", "mini");
 		}
 		
 		//this.setDefaultButton(openButton);
