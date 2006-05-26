@@ -1,0 +1,30 @@
+PhotoDirectory is released under the GPL (see README.txt for more information).
+
+Third-party Library Licenses:
+
+-----------------
+
+MRJ Adapter:
+License Terms
+
+MRJ Adapter is open source and can be modified and/or distributed under the Artistic License, included in Licenses/Artistic License.txt
+
+-----------------
+
+Quaqua:
+License Terms
+
+Source code, documentation and binaries of the Quaqua Look and Feel (also called "this software") are subject to the GNU Lesser General Public License (LGPL).
+
+Alternatively, this software may be used under the terms of the Modified BSD License.
+
+Third party software used by the Quaqua Look and Feel come with their own license restrictions.
+
+You may not use or disclose this software except in compliance with these license term.
+
+-----------------
+
+JFreeChart
+License Terms:
+
+JFreeChart (http://www.jfree.org/jfreechart/) is open source, and is distributed under the GNU Lesser General Public License.  A copy of the LGPL can be found in the Licenses folder.

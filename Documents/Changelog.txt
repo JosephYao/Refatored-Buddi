@@ -1,0 +1,8 @@
+0.8 Beta
+
+First public release.
+
+Includes ability to edit accounts, categories, and budget amounts.  Can show
+reports and graphs on net worth, expenses, etc.  Should be stable enough for 
+everday use, although I recommend not using it for critical data yet, as if 
+there are changes to the data structure in the future, you may lose data.

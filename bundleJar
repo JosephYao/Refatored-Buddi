@@ -1,0 +1,43 @@
+# Copies the jar file to the .app package.
+#
+############################
+
+DEST=/Users/wyatt/Desktop/Buddi
+OSX=$DEST/Buddi_OSX
+GENERIC=$DEST/Buddi
+SOURCE=source
+
+#Export the SVN source
+rm -rf $DEST
+mkdir -p $DEST
+svn export . $DEST/$SOURCE
+
+#Create the platform independent directory
+mkdir -p $GENERIC
+cp Buddi.jar $GENERIC
+cp -R $DEST/$SOURCE/Languages $GENERIC
+#cp -R $DEST/$SOURCE/Help $GENERIC
+cp -R $DEST/$SOURCE/Documents $GENERIC
+cp -R $DEST/$SOURCE/Licenses $GENERIC
+
+#Create the OSX directory
+mkdir -p $OSX
+mv $DEST/$SOURCE/Buddi.app $OSX
+cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
+cp -R $DEST/$SOURCE/Languages $OSX/Buddi.app/Contents/Resources/Java/
+#cp -R $DEST/$SOURCE/Help $OSX/Buddi.app/Contents/Resources/Java/
+cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
+cp -R $DEST/$SOURCE/Documents $OSX
+cp -R $DEST/$SOURCE/Licenses $OSX
+
+#Tar the source and give to each distro
+tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
+cp -R $DEST/$SOURCE.tgz $GENERIC
+cp -R $DEST/$SOURCE.tgz $OSX
+
+rm -rf $DEST/$SOURCE
+rm $DEST/$SOURCE.tgz
+
+echo "If this is a production version, please change the version number in Info.plist"
+
+open $DEST

@@ -1,0 +1,17 @@
+# Copies the web file to a .tgz for upload
+#
+############################
+
+DEST=/Users/wyatt/Desktop/
+
+#Export the SVN source
+rm -rf $DEST/www
+svn export www $DEST/www
+
+#Tar the pages
+cd $DEST/www
+tar -czvf $DEST/www.tgz *
+
+#Send the tar and untar it
+scp $DEST/www.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
+ssh olsonw@shell.sf.net 'tar -C /home/groups/b/bu/buddi/htdocs -zxvf /home/groups/b/bu/buddi/htdocs/www.tgz'
