@@ -8,7 +8,5 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.0.jar"/>
 	<classpathentry kind="lib" path="/Applications/Eclipse/plugins/org.eclipse.emf.ecore.xmi_2.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse/plugins/org.eclipse.emf.common_2.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Eclipse/plugins/org.eclipse.emf.ecore_2.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
