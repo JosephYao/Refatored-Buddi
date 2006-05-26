@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Tue May 16 16:49:48 MDT 2006
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=Buddi.jar
+manifest.mergeall=true
+manifest.mainclass=org.homeunix.drummer.Buddi
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=<po|Buddi>~.svn/
+includes=
