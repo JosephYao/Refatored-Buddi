@@ -4,8 +4,6 @@
 package org.homeunix.drummer.view.reports.logic;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -65,17 +63,6 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 		plot.setLabelGap(0.02);
 		
 		return new ChartPanel(chart);
-	}
-	
-	@Override
-	protected AbstractBudgetFrame initActions() {
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				ExpensesGraphFrame.this.setVisible(false);
-			}
-		});
-		
-		return this;
 	}
 
 	@Override

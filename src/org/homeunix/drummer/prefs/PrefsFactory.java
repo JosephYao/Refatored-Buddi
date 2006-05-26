@@ -44,6 +44,15 @@ public interface PrefsFactory extends EFactory{
 	Prefs createPrefs();
 
 	/**
+	 * Returns a new object of class '<em>Window Attributes</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Window Attributes</em>'.
+	 * @generated
+	 */
+	WindowAttributes createWindowAttributes();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

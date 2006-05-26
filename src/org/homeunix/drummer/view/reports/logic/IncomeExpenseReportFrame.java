@@ -3,8 +3,6 @@
  */
 package org.homeunix.drummer.view.reports.logic;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -90,17 +88,6 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		sb.append("</table></body></html>");
 		
 		return sb.toString();
-	}
-	
-	@Override
-	protected AbstractBudgetFrame initActions() {
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				IncomeExpenseReportFrame.this.setVisible(false);
-			}
-		});
-		
-		return this;
 	}
 
 	@Override

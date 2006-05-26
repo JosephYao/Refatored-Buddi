@@ -39,6 +39,7 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 		switch (eClass.getClassifierID()) {
 			case PrefsPackage.DICT_ENTRY: return createDictEntry();
 			case PrefsPackage.PREFS: return createPrefs();
+			case PrefsPackage.WINDOW_ATTRIBUTES: return createWindowAttributes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -62,6 +63,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public Prefs createPrefs() {
 		PrefsImpl prefs = new PrefsImpl();
 		return prefs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public WindowAttributes createWindowAttributes() {
+		WindowAttributesImpl windowAttributes = new WindowAttributesImpl();
+		return windowAttributes;
 	}
 
 	/**

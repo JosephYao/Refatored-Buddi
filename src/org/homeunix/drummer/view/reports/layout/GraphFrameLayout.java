@@ -7,6 +7,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +22,7 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
@@ -81,6 +86,45 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 		return DataInstance.getInstance().getAccounts();
 	}
 	
+	
+	
+	@Override
+	protected AbstractBudgetFrame initActions() {
+		this.addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Log.debug("Graphs window resized");
+				
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentResized(arg0);
+			}
+			
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				PrefsInstance.getInstance().checkSanity();
+				
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setX(arg0.getComponent().getX());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setY(arg0.getComponent().getY());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentHidden(arg0);
+			}
+		});
+		
+		okButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				GraphFrameLayout.this.setVisible(false);
+			}
+		});
+		
+		return this;
+	}
+
 	protected Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){
 		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();

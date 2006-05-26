@@ -8,6 +8,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -18,6 +22,8 @@ import javax.swing.JScrollPane;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 
 public abstract class ReportFrameLayout extends AbstractBudgetFrame {
@@ -78,5 +84,42 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	@Override
 	public Component getPrintedComponent() {
 		return reportLabel;
+	}
+	
+	@Override
+	protected AbstractBudgetFrame initActions() {
+		this.addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Log.debug("Reports window resized");
+				
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentResized(arg0);
+			}
+			
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				PrefsInstance.getInstance().checkSanity();
+				
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentHidden(arg0);
+			}
+		});
+		
+		okButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				ReportFrameLayout.this.setVisible(false);
+			}
+		});
+		
+		return this;
 	}
 }

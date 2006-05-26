@@ -3,8 +3,6 @@
  */
 package org.homeunix.drummer.view.reports.logic;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -74,17 +72,6 @@ public class ExpenseBudgetedActualGraphFrame extends GraphFrameLayout {
 		plot.setNoDataMessage("No data available");
 		
 		return new ChartPanel(chart);
-	}
-	
-	@Override
-	protected AbstractBudgetFrame initActions() {
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				ExpenseBudgetedActualGraphFrame.this.setVisible(false);
-			}
-		});
-		
-		return this;
 	}
 
 	@Override

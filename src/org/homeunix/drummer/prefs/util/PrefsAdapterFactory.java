@@ -76,6 +76,9 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object casePrefs(Prefs object) {
 				return createPrefsAdapter();
 			}
+			public Object caseWindowAttributes(WindowAttributes object) {
+				return createWindowAttributesAdapter();
+			}
 			public Object defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -119,6 +122,20 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPrefsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.WindowAttributes <em>Window Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes
+	 * @generated
+	 */
+	public Adapter createWindowAttributesAdapter() {
 		return null;
 	}
 

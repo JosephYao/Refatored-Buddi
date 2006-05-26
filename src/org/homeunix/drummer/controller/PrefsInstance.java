@@ -23,6 +23,7 @@ import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsPackage;
+import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;
@@ -127,6 +128,16 @@ public class PrefsInstance {
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
 			prefs.setDateFormat("yyyy/MMM/d");
+			
+			WindowAttributes main = prefsFactory.createWindowAttributes();
+			WindowAttributes transactions = prefsFactory.createWindowAttributes();
+			WindowAttributes graphs = prefsFactory.createWindowAttributes();
+			WindowAttributes reports = prefsFactory.createWindowAttributes();
+			
+			prefs.setMainWindow(main);
+			prefs.setTransactionsWindow(transactions);
+			prefs.setGraphsWindow(graphs);
+			prefs.setReportsWindow(reports);
 			
 			ResourceSet resourceSet = new ResourceSetImpl();			
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -264,4 +275,15 @@ public class PrefsInstance {
 		return dataFileName;
 	}
 
+	public void checkSanity(){
+		if (prefs.getMainWindow() == null)
+			prefs.setMainWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getTransactionsWindow() == null)
+			prefs.setTransactionsWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getGraphsWindow() == null)
+			prefs.setGraphsWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getReportsWindow() == null)
+			prefs.setReportsWindow(prefsFactory.createWindowAttributes());
+
+	}
 }

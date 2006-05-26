@@ -144,22 +144,58 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__DATE_FORMAT = 4;
 
 	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__DESC_DICT = 5;
-
-	/**
 	 * The feature id for the '<em><b>Memo Dict</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MEMO_DICT = 6;
+	int PREFS__MEMO_DICT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__TRANSACTIONS_WINDOW = 6;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__GRAPHS_WINDOW = 7;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__REPORTS_WINDOW = 8;
+
+	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__DESC_DICT = 9;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__MAIN_WINDOW = 10;
 
 	/**
 	 * The number of structural features of the the '<em>Prefs</em>' class.
@@ -168,7 +204,63 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 7;
+	int PREFS_FEATURE_COUNT = 11;
+
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.WindowAttributesImpl <em>Window Attributes</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.WindowAttributesImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
+	 * @generated
+	 */
+	int WINDOW_ATTRIBUTES = 2;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOW_ATTRIBUTES__X = 0;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOW_ATTRIBUTES__Y = 1;
+
+	/**
+	 * The feature id for the '<em><b>Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOW_ATTRIBUTES__WIDTH = 2;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOW_ATTRIBUTES__HEIGHT = 3;
+
+	/**
+	 * The number of structural features of the the '<em>Window Attributes</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOW_ATTRIBUTES_FEATURE_COUNT = 4;
 
 
 	/**
@@ -258,6 +350,39 @@ public interface PrefsPackage extends EPackage{
 	EAttribute getPrefs_DateFormat();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Transactions Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getTransactionsWindow()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_TransactionsWindow();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Graphs Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getGraphsWindow()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_GraphsWindow();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Main Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getMainWindow()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_MainWindow();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getMemoDict <em>Memo Dict</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -269,6 +394,17 @@ public interface PrefsPackage extends EPackage{
 	EReference getPrefs_MemoDict();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Reports Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getReportsWindow()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_ReportsWindow();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -278,6 +414,60 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	EReference getPrefs_DescDict();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.WindowAttributes <em>Window Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Window Attributes</em>'.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes
+	 * @generated
+	 */
+	EClass getWindowAttributes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.WindowAttributes#getX <em>X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>X</em>'.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes#getX()
+	 * @see #getWindowAttributes()
+	 * @generated
+	 */
+	EAttribute getWindowAttributes_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.WindowAttributes#getY <em>Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Y</em>'.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes#getY()
+	 * @see #getWindowAttributes()
+	 * @generated
+	 */
+	EAttribute getWindowAttributes_Y();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.WindowAttributes#getWidth <em>Width</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Width</em>'.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes#getWidth()
+	 * @see #getWindowAttributes()
+	 * @generated
+	 */
+	EAttribute getWindowAttributes_Width();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.WindowAttributes#getHeight <em>Height</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Height</em>'.
+	 * @see org.homeunix.drummer.prefs.WindowAttributes#getHeight()
+	 * @see #getWindowAttributes()
+	 * @generated
+	 */
+	EAttribute getWindowAttributes_Height();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
