@@ -3,15 +3,42 @@
 ############################
 
 DEST=/Users/wyatt/Desktop/
+WWWDIR="$DEST/www"
+HELPDIR="Help"
+INCLUDE="$HELPDIR/inc"
+
 
 #Export the SVN source
-rm -rf $DEST/www
-svn export www $DEST/www
+rm -rf $WWWDIR
+svn export www $WWWDIR
+
+rm -rf $HELPDIR/*
+cp -r $WWWDIR/* $HELPDIR
+
+#Replace internal occurrences (in the header) of .php with .html
+sed -i .bak  -e 's/.php/.html/' $INCLUDE/header.php
+
+for X in `ls $HELPDIR/*.php`;
+	do
+	#Replace internal occurrences of .php with .html
+	sed -i .bak  -e 's/.php/.html/' $X
+
+	#Rename files to be .html, and add header / footer to them.
+	XNEW=`echo $X | cut -f 1 -d .`
+	cat $INCLUDE/header.php > $XNEW.html
+	cat $X | grep -v '<? include ' >> $XNEW.html
+	cat $INCLUDE/footer.php | grep -v 'http://sourceforge.net' >> $XNEW.html
+	done
+
+rm -f $HELPDIR/*.php
+rm -f $HELPDIR/*.bak
+
 
 #Tar the pages
-cd $DEST/www
-tar -czvf $DEST/www.tgz *
+cd $WWWDIR
+tar -czvf $WWWDIR.tgz *
 
 #Send the tar and untar it
-scp $DEST/www.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
+scp $WWWDIR.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
 ssh olsonw@shell.sf.net 'tar -C /home/groups/b/bu/buddi/htdocs -zxvf /home/groups/b/bu/buddi/htdocs/www.tgz'
+

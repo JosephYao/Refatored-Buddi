@@ -26,7 +26,7 @@ public class Buddi {
 	public static final String version = "0.95 Beta";
 
 	private static Boolean isMac;
-	private static final boolean UI_DEBUG = true; 
+	private static final boolean UI_DEBUG = false; 
 	
 	public static boolean isMac(){
 		if (isMac == null){
