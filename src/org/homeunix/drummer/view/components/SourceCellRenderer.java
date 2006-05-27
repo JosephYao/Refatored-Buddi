@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.view.components;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -38,10 +39,13 @@ public class SourceCellRenderer extends JPanel implements TreeCellRenderer {
 		nameLabel.setPreferredSize(new Dimension(250, nameLabel.getPreferredSize().height));
 		amountLabel.setPreferredSize(new Dimension(100, amountLabel.getPreferredSize().height));
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setMinimumSize(new Dimension(400, 40));
+		
+//		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setLayout(new BorderLayout());
 		this.setOpaque(false);
-		this.add(nameLabel);
-		this.add(amountLabel);
+		this.add(nameLabel, BorderLayout.WEST);
+		this.add(amountLabel, BorderLayout.EAST);
 	}
 	
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
