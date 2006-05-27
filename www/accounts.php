@@ -32,7 +32,7 @@ Note that after the new account has been added, the net worth value at the botto
 <img src='/img/accounts/after.png' alt="Accounts window after adding another account">
 
 <p>
-If you created an account in error, you can delete it.  If there are any transactions in it, you can only mark it as deleted; the information will still stay in your data file.  (Depending on your <a href='/preferences.php'>preferences</a>, you may see the deleted account as an account with a line through it, or it may disappear from the screen altogether).
+If you created an account in error, you can delete it.  If there are any transactions in it, you can only mark it as deleted; the information will still stay in your data file.  (Depending on your <a href='./preferences.php'>preferences</a>, you may see the deleted account as an account with a line through it, or it may disappear from the screen altogether).
 </p>
 
 

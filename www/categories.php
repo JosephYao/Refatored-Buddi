@@ -15,7 +15,7 @@ There are two types of categories: Income and Expense.  Income categories would 
 </p>
 
 <p>
-Just like <a href='/accounts.php'>accounts</a>, you can add new categories by clicking on the 'New' button, or edit existing categories with the 'Edit' button.
+Just like <a href='./accounts.php'>accounts</a>, you can add new categories by clicking on the 'New' button, or edit existing categories with the 'Edit' button.
 </p>
 
 <p>

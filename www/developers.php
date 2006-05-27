@@ -15,7 +15,7 @@ The .lang file contains pairs of keywords and values, in the format 'KEYWORD=Val
 </p>
 
 <p>
-Once you have completed the translation, you can choose the new language from the <a href='/preferences.php'>Preferences</a> screen.
+Once you have completed the translation, you can choose the new language from the <a href='./preferences.php'>Preferences</a> screen.
 </p>
 
 <? include "./inc/footer.php" ?>

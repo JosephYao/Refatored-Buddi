@@ -9,7 +9,7 @@ You need to have Java 1.5 installed for Buddi to work. If you are running OS X, 
 </p>
 
 <p>
-I've not gotten enough feedback yet to see what the most frequent questions are. If you're stuck on something, feel free to <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">ask me</a>.
+I've not gotten enough feedback yet to see what the most frequent questions are. If you're stuck on something, feel free to <a href='&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>ask me</a>.
 </p>
 
 <? include "./inc/footer.php" ?>

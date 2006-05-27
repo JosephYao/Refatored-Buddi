@@ -21,7 +21,7 @@ First, there is the history of past transactions.  This is sorted in order of da
 <img src='/img/transactions/history.png' alt="Transactions window, detailing the transaction history">
 
 <p>
-Next there is the the date and amount fields.  Both of these are neccesary to record the transaction, and should be filled in.  The amount must be non-zero, and the date must be valid, in the format specified in the <a href='/preferences.php'>Preferences</a> window.
+Next there is the the date and amount fields.  Both of these are neccesary to record the transaction, and should be filled in.  The amount must be non-zero, and the date must be valid, in the format specified in the <a href='./preferences.php'>Preferences</a> window.
 </p>
 
 <img src='/img/transactions/date_and_amount.png' alt="Transactions window, detailing the date and amount fields">

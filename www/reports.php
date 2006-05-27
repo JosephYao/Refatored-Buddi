@@ -17,7 +17,7 @@ Some of the graphs and reports include:
 </ul>
 
 <p>
-If there is a report type which you think would be nice to have, feel free to <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">suggest</a> it to me.
+If there is a report type which you think would be nice to have, feel free to <a href='&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>suggest</a> it to me.
 </p>
 
 <? include "./inc/footer.php" ?>
