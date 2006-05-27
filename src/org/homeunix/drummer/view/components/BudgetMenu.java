@@ -245,7 +245,7 @@ public class BudgetMenu extends JScreenMenuBar {
 					if (localHelp.exists())
 						location = "file://" + localHelp.getAbsolutePath();
 					else
-						location = "http://buddi.sourceforge.net/help";
+						location = "http://buddi.sourceforge.net";
 					
 					Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher.openURL(location);

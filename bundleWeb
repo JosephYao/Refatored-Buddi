@@ -32,13 +32,14 @@ for X in `ls $HELPDIR/*.php`;
 
 rm -f $HELPDIR/*.php
 rm -f $HELPDIR/*.bak
+rm -rf $HELPDIR/inc
 
+if [ "$1" != "--local" ]; then
+	#Tar the pages
+	cd $WWWDIR
+	tar -czvf $WWWDIR.tgz *
 
-#Tar the pages
-cd $WWWDIR
-tar -czvf $WWWDIR.tgz *
-
-#Send the tar and untar it
-scp $WWWDIR.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
-ssh olsonw@shell.sf.net 'tar -C /home/groups/b/bu/buddi/htdocs -zxvf /home/groups/b/bu/buddi/htdocs/www.tgz'
-
+	#Send the tar and untar it
+	scp $WWWDIR.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
+	ssh olsonw@shell.sf.net 'tar -C /home/groups/b/bu/buddi/htdocs -zxvf /home/groups/b/bu/buddi/htdocs/www.tgz'
+fi
