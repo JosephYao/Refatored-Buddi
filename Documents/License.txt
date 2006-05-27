@@ -1,4 +1,6 @@
-PhotoDirectory is released under the GPL (see README.txt for more information).
+Buddi is released under the GPL (see Readme.txt for more information).
+
+A copy of all the licenses used by Buddi and its libraries are included in the Licenses folder.
 
 Third-party Library Licenses:
 

@@ -23,10 +23,10 @@ import org.homeunix.drummer.view.logic.MainBudgetFrame;
  */
 public class Buddi {
 
-	public static final String version = "0.91 Beta";
+	public static final String version = "0.95 Beta";
 
 	private static Boolean isMac;
-	private static final boolean UI_DEBUG = false; 
+	private static final boolean UI_DEBUG = true; 
 	
 	public static boolean isMac(){
 		if (isMac == null){

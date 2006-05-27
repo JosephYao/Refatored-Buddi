@@ -5,9 +5,12 @@ package org.homeunix.drummer.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
@@ -20,24 +23,25 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Formatter;
 
 
-public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
+public class SourceCellRenderer extends JPanel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;
 	
-//	private final JLabel nameLabel;
-//	private final JLabel amountLabel;
+	private final JLabel nameLabel;
+	private final JLabel amountLabel;
 	
 	public SourceCellRenderer(){
 		super();
 		
-//		nameLabel = new JLabel();
-//		amountLabel = new JLabel();
-//		
-//		nameLabel.setPreferredSize(new Dimension(250, nameLabel.getPreferredSize().height));
-//		amountLabel.setPreferredSize(new Dimension(100, amountLabel.getPreferredSize().height));
-//		
-//		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-//		this.add(nameLabel);
-//		this.add(amountLabel);
+		nameLabel = new JLabel();
+		amountLabel = new JLabel();
+		
+		nameLabel.setPreferredSize(new Dimension(250, nameLabel.getPreferredSize().height));
+		amountLabel.setPreferredSize(new Dimension(100, amountLabel.getPreferredSize().height));
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setOpaque(false);
+		this.add(nameLabel);
+		this.add(amountLabel);
 	}
 	
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
@@ -74,27 +78,27 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			else
 				amount = c.getBudgetedAmount();
 
-			this.setText(
-					sbOpen.toString() 
-					+ c.toString()
-					+ ": "
-					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0))
-					+ sbClose.toString()
-			);
-
-//			nameLabel.setText(
+//			this.setText(
 //					sbOpen.toString() 
 //					+ c.toString()
-//					+ sbClose.toString()
-//			);
-//
-//			amountLabel.setText(
-//					sbOpen.toString()
+//					+ ": "
 //					+ Strings.inst().get(Strings.CURRENCY_SIGN)
 //					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0))
 //					+ sbClose.toString()
 //			);
+
+			nameLabel.setText(
+					sbOpen.toString() 
+					+ c.toString()
+					+ sbClose.toString()
+			);
+
+			amountLabel.setText(
+					sbOpen.toString()
+					+ Strings.inst().get(Strings.CURRENCY_SIGN)
+					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0))
+					+ sbClose.toString()
+			);
 		}
 		else if (obj instanceof Account) {			
 			Account a = (Account) obj;
@@ -111,34 +115,27 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				sbClose.insert(0, "</font>");
 			}
 			
-//			if (a.isDeleted()){
-//				this.setForeground(Color.RED);
-//			}
-//			else{
-//				this.setForeground(Color.BLACK);
-//			}
-
-			this.setText(
-					sbOpen.toString() 
-					+ a.toString()
-					+ ": "
-					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0))
-					+ sbClose.toString()
-			);	
-			
-//			nameLabel.setText(
+//			this.setText(
 //					sbOpen.toString() 
 //					+ a.toString()
-//					+ sbClose.toString()
-//			);
-//
-//			amountLabel.setText(
-//					sbOpen.toString()
+//					+ ": "
 //					+ Strings.inst().get(Strings.CURRENCY_SIGN)
 //					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0))
 //					+ sbClose.toString()
 //			);	
+			
+			nameLabel.setText(
+					sbOpen.toString() 
+					+ a.toString()
+					+ sbClose.toString()
+			);
+
+			amountLabel.setText(
+					sbOpen.toString()
+					+ Strings.inst().get(Strings.CURRENCY_SIGN)
+					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0))
+					+ sbClose.toString()
+			);	
 		}
 		
 		if (!Buddi.isMac()){
