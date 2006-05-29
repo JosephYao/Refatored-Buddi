@@ -16,6 +16,7 @@ import net.roydesign.app.Application;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.ListPanelLayout;
 import org.homeunix.drummer.view.layout.MainBudgetFrameLayout;
@@ -56,13 +57,25 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 	protected AbstractBudgetFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Log.debug("Main window resized");
+				
+				PrefsInstance.getInstance().checkSanity();
+				
+				PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(arg0.getComponent().getWidth());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentResized(arg0);
+			}
+
+			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getMainWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getMainWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(arg0.getComponent().getWidth());
 				
 				PrefsInstance.getInstance().savePrefs();
 				

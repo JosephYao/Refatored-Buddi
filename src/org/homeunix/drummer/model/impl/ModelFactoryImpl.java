@@ -45,7 +45,6 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.CATEGORIES: return createCategories();
 			case ModelPackage.CATEGORY: return createCategory();
 			case ModelPackage.DATA_MODEL: return createDataModel();
-			case ModelPackage.SUB_ACCOUNT: return createSubAccount();
 			case ModelPackage.TRANSACTION: return createTransaction();
 			case ModelPackage.TRANSACTIONS: return createTransactions();
 			case ModelPackage.TYPE: return createType();
@@ -131,16 +130,6 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public DataModel createDataModel() {
 		DataModelImpl dataModel = new DataModelImpl();
 		return dataModel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SubAccount createSubAccount() {
-		SubAccountImpl subAccount = new SubAccountImpl();
-		return subAccount;
 	}
 
 	/**

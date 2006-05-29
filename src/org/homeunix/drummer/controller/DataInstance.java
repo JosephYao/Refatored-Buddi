@@ -28,7 +28,6 @@ import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
-import org.homeunix.drummer.model.SubAccount;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Transactions;
 import org.homeunix.drummer.model.Type;
@@ -269,10 +268,6 @@ public class DataInstance {
 		for (Account a : getAccounts()){
 			a.calculateBalance();
 		}
-		
-		for (SubAccount sa : getSubAccounts()){
-			sa.calculateBalance();
-		}
 	}
 	
 	public void addAccount(Account a){
@@ -280,11 +275,6 @@ public class DataInstance {
 		saveDataModel();
 	}
 
-	public void addSubAccount(SubAccount sa){
-		getDataModel().getAllAccounts().getSubAccounts().add(sa);
-		saveDataModel();
-	}
-	
 	public void addCategory(Category c){
 		getDataModel().getAllCategories().getCategories().add(c);
 		saveDataModel();
@@ -316,40 +306,17 @@ public class DataInstance {
 				}
 			}
 		}
-		if (s instanceof Account){
-			Account a = (Account) s;
-			for (Object o : a.getSub()) {
-				if (o instanceof SubAccount){
-					SubAccount sa = (SubAccount) o;
-					deleteSource(sa);
-				}
-			}
-		}
 		saveDataModel();
 	}
 
 	public void deleteSourcePermanent(Source s){
 		if (s instanceof Category) {
 			Category c = (Category) s;
-			if (c.getChildren().size() == 0)
-				getDataModel().getAllCategories().getCategories().remove(c);
-			else
-				Log.critical("Attempted to delete a category with children!");
+			getDataModel().getAllCategories().getCategories().remove(c);
 		}
 		else if (s instanceof Account) {
 			Account a = (Account) s;
-			if (a.getSub().size() == 0)
-				getDataModel().getAllAccounts().getAccounts().remove(a);
-			else
-				Log.critical("Attempted to delte an account with subaccounts!");
-		}
-		else if (s instanceof SubAccount) {
-			SubAccount sa = (SubAccount) s;
-			getDataModel().getAllAccounts().getSubAccounts().remove(sa);
-			for (Account a : getAccounts()) {
-				if (a.getSub().contains(sa))
-					a.getSub().remove(sa);
-			}
+			getDataModel().getAllAccounts().getAccounts().remove(a);
 		}
 		saveDataModel();
 	}
@@ -380,23 +347,6 @@ public class DataInstance {
 		
 	public Vector<Account> getAccounts(){
 		Vector<Account> v = new Vector<Account>(getDataModel().getAllAccounts().getAccounts());
-		Collections.sort(v);
-		return v;
-	}
-	
-	public Vector<SubAccount> getSubAccounts(){
-		Vector<SubAccount> v = new Vector<SubAccount>(getDataModel().getAllAccounts().getSubAccounts());
-		Collections.sort(v);
-		return v;
-	}
-	
-	public Vector<SubAccount> getSubAccounts(Account parent){
-		Vector<SubAccount> v = new Vector<SubAccount>();
-		
-		for (Object o : parent.getSub()) {
-			if (o instanceof SubAccount)
-				v.add((SubAccount) o);
-		}
 		Collections.sort(v);
 		return v;
 	}

@@ -28,7 +28,6 @@ public abstract class AbstractBudgetDialog extends JDialog {
 	public abstract AbstractBudgetDialog updateButtons();
 
 	public AbstractBudgetDialog openWindow(){
-		updateContent();
 		initContent();
 		updateButtons();
 

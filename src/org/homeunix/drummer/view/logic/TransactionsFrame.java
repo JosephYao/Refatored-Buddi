@@ -155,13 +155,23 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Log.debug("Transactions window resized");
+				
+				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
+				
+				PrefsInstance.getInstance().savePrefs();
+				
+				super.componentResized(arg0);
+			}
+			
+			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
 				
 				PrefsInstance.getInstance().savePrefs();
 				

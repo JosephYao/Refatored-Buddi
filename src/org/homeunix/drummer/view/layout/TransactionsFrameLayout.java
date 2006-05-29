@@ -9,7 +9,6 @@ import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -104,8 +103,6 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			//listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,12,12));
 		}
-		
-		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		//Call the method to add actions to the buttons
 		initActions();

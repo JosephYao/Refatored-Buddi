@@ -269,11 +269,6 @@ public class EditableTransaction extends JPanel {
 			toModel.addElement(source);
 			fromModel.addElement(source);
 		}
-
-		for (Source source : DataInstance.getInstance().getSubAccounts()) {
-			toModel.addElement(source);
-			fromModel.addElement(source);
-		}
 		
 		for (Category c : DataInstance.getInstance().getCategories()){
 			if (c.isIncome())

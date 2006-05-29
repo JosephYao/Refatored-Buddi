@@ -31,8 +31,8 @@ import org.homeunix.drummer.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getAllCategories <em>All Categories</em>}</li>
  * </ul>
  * </p>
  *
@@ -139,10 +139,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-					return eBasicSetContainer(null, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
 				case ModelPackage.CATEGORIES__CATEGORIES:
 					return ((InternalEList)getCategories()).basicRemove(otherEnd, msgs);
+				case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+					return eBasicSetContainer(null, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
 				default:
 					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
 			}
@@ -174,10 +174,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories();
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				return getCategories();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -190,12 +190,12 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	@SuppressWarnings("unchecked")
 	public void eSet(EStructuralFeature eFeature, Object newValue) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)newValue);
-				return;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				getCategories().clear();
 				getCategories().addAll((Collection)newValue);
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -208,11 +208,11 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public void eUnset(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)null);
-				return;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				getCategories().clear();
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)null);
 				return;
 		}
 		eDynamicUnset(eFeature);
@@ -225,10 +225,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public boolean eIsSet(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories() != null;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				return categories != null && !categories.isEmpty();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories() != null;
 		}
 		return eDynamicIsSet(eFeature);
 	}

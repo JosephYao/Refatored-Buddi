@@ -36,8 +36,8 @@ import org.homeunix.drummer.model.Types;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getTypes <em>Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getTypes <em>Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,10 +144,10 @@ public class TypesImpl extends EObjectImpl implements Types {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.TYPES__TYPES:
-					return ((InternalEList)getTypes()).basicRemove(otherEnd, msgs);
 				case ModelPackage.TYPES__ALL_TYPES:
 					return eBasicSetContainer(null, ModelPackage.TYPES__ALL_TYPES, msgs);
+				case ModelPackage.TYPES__TYPES:
+					return ((InternalEList)getTypes()).basicRemove(otherEnd, msgs);
 				default:
 					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
 			}
@@ -179,10 +179,10 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TYPES__TYPES:
-				return getTypes();
 			case ModelPackage.TYPES__ALL_TYPES:
 				return getAllTypes();
+			case ModelPackage.TYPES__TYPES:
+				return getTypes();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -195,12 +195,12 @@ public class TypesImpl extends EObjectImpl implements Types {
 	@SuppressWarnings("unchecked")
 	public void eSet(EStructuralFeature eFeature, Object newValue) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
+			case ModelPackage.TYPES__ALL_TYPES:
+				setAllTypes((DataModel)newValue);
+				return;
 			case ModelPackage.TYPES__TYPES:
 				getTypes().clear();
 				getTypes().addAll((Collection)newValue);
-				return;
-			case ModelPackage.TYPES__ALL_TYPES:
-				setAllTypes((DataModel)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -213,11 +213,11 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public void eUnset(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TYPES__TYPES:
-				getTypes().clear();
-				return;
 			case ModelPackage.TYPES__ALL_TYPES:
 				setAllTypes((DataModel)null);
+				return;
+			case ModelPackage.TYPES__TYPES:
+				getTypes().clear();
 				return;
 		}
 		eDynamicUnset(eFeature);
@@ -230,10 +230,10 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public boolean eIsSet(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TYPES__TYPES:
-				return types != null && !types.isEmpty();
 			case ModelPackage.TYPES__ALL_TYPES:
 				return getAllTypes() != null;
+			case ModelPackage.TYPES__TYPES:
+				return types != null && !types.isEmpty();
 		}
 		return eDynamicIsSet(eFeature);
 	}

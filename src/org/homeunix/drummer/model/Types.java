@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.Types#getTypes <em>Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Types#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Types#getTypes <em>Types</em>}</li>
  * </ul>
  * </p>
  *

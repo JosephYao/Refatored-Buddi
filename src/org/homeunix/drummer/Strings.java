@@ -157,7 +157,6 @@ public class Strings {
 	public final static String NOTHING_TO_PRINT = "NOTHING_TO_PRINT";
 	public final static String PRINT_ERROR = "PRINT_ERROR";
 	
-	public final static String SUB_ACCOUNT = "SUB_ACCOUNT";
 	
 	private final Properties translations = new Properties();
 	

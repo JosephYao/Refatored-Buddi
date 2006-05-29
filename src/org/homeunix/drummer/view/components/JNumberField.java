@@ -26,7 +26,7 @@ import javax.swing.JFormattedTextField;
 public class JNumberField extends JFormattedTextField {
 	public static final long serialVersionUID = 0;
 	
-	private final static String badchars = "`~!@#$%^&*()_+=\\|\"':;?/>< ";
+	private final static String badchars = "-`~!@#$%^&*()_+=\\|\"':;?/>< ";
 	//private int value;
 	
 	public JNumberField(){

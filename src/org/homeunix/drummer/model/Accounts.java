@@ -18,9 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.Accounts#getAccounts <em>Accounts</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.Accounts#getSubAccounts <em>Sub Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Accounts#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Accounts#getAccounts <em>Accounts</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,22 +43,6 @@ public interface Accounts extends EObject{
 	 * @generated
 	 */
 	EList getAccounts();
-
-	/**
-	 * Returns the value of the '<em><b>Sub Accounts</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.model.SubAccount}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Sub Accounts</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sub Accounts</em>' containment reference list.
-	 * @see org.homeunix.drummer.model.ModelPackage#getAccounts_SubAccounts()
-	 * @model type="org.homeunix.drummer.model.SubAccount" containment="true"
-	 * @generated
-	 */
-	EList getSubAccounts();
 
 	/**
 	 * Returns the value of the '<em><b>All Accounts</b></em>' container reference.

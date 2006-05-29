@@ -16,7 +16,6 @@ import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.SubAccount;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -111,15 +110,9 @@ public class AccountListPanel extends ListPanelLayout {
 		selectedSource = null;
 		
 		for (Account a : DataInstance.getInstance().getAccounts()) {
-			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts()){
-				DefaultMutableTreeNode node = new DefaultMutableTreeNode(a);
-				root.add(node);
+			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts())
+				root.add(new DefaultMutableTreeNode(a));
 			
-				for (SubAccount sa : DataInstance.getInstance().getSubAccounts(a)) {
-					if (!sa.isDeleted() && PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts())
-						node.add(new DefaultMutableTreeNode(sa));
-				}
-			}
 			Log.debug(a);
 			
 			balance += a.getBalance();
@@ -130,7 +123,7 @@ public class AccountListPanel extends ListPanelLayout {
 		else
 			balanceLabel.setForeground(Color.RED);
 		
-		balanceLabel.setText(Strings.inst().get(Strings.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + "$" + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
+		balanceLabel.setText(Strings.inst().get(Strings.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Strings.inst().get(Strings.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
 		treeModel.reload(root);
 		

@@ -21,7 +21,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 
-public abstract class PreferencesDialogLayout extends AbstractBudgetDialog {
+public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -34,7 +34,7 @@ public abstract class PreferencesDialogLayout extends AbstractBudgetDialog {
 	
 	protected final DefaultComboBoxModel languageModel;
 	
-	protected PreferencesDialogLayout(Frame owner){
+	protected PreferencesFrameLayout(Frame owner){
 		super(owner);
 		
 		okButton = new JButton(Strings.inst().get(Strings.OK));

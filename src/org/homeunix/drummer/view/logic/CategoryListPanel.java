@@ -145,7 +145,7 @@ public class CategoryListPanel extends ListPanelLayout {
 		sb.append(Strings.inst().get(Strings.BUDGET_NET_INCOME))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
-				.append("$")
+				.append(Strings.inst().get(Strings.CURRENCY_SIGN))
 				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)));
 		
 		balanceLabel.setText(sb.toString());
