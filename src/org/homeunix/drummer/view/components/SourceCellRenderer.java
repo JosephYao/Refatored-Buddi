@@ -15,33 +15,18 @@ import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.SubAccount;
 import org.homeunix.drummer.util.Formatter;
 
 
 public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;
-	
-//	private final JLabel nameLabel;
-//	private final JLabel amountLabel;
-	
+		
 	public SourceCellRenderer(){
 		super();
-		
-//		nameLabel = new JLabel();
-//		amountLabel = new JLabel();
-//		
-//		nameLabel.setPreferredSize(new Dimension(250, nameLabel.getPreferredSize().height));
-//		amountLabel.setPreferredSize(new Dimension(100, amountLabel.getPreferredSize().height));
-//		
-//		this.setMinimumSize(new Dimension(400, 40));
-		
-//		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-//		this.setLayout(new BorderLayout());
-//		this.setOpaque(false);
-//		this.add(nameLabel, BorderLayout.WEST);
-//		this.add(amountLabel, BorderLayout.EAST);
 	}
 	
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
@@ -77,15 +62,6 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				amount = getTotalAmount(n);
 			else
 				amount = c.getBudgetedAmount();
-
-//			this.setText(
-//					sbOpen.toString() 
-//					+ c.toString()
-//					+ ": "
-//					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-//					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0))
-//					+ sbClose.toString()
-//			);
 			
 			StringBuffer sb = new StringBuffer();
 			
@@ -102,24 +78,9 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append("</td></tr></table></html>");
 			
 			this.setText(sb.toString());
-
-//			nameLabel.setText(
-//					sbOpen.toString() 
-//					+ c.toString()
-//					+ sbClose.toString()
-//			);
-//
-//			amountLabel.setText(
-//					sbOpen.toString()
-//					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-//					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0))
-//					+ sbClose.toString()
-//			);
 		}
 		else if (obj instanceof Account) {			
 			Account a = (Account) obj;
-//			StringBuffer sbOpen = new StringBuffer("<html>");
-//			StringBuffer sbClose = new StringBuffer("</html>");
 			StringBuffer sbOpen = new StringBuffer();
 			StringBuffer sbClose = new StringBuffer();
 			
@@ -133,17 +94,22 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				sbClose.insert(0, "</font>");
 			}
 			
-//			this.setText(
-//					sbOpen.toString() 
-//					+ a.toString()
-//					+ ": "
-//					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-//					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0))
-//					+ sbClose.toString()
-//			);
+			final String negative;
+			if ((a.isCredit() && a.getBalance() > 0)
+					|| (!a.isCredit() && a.getBalance() < 0))
+				negative = "-";
+			else
+				negative = "";
 			
 			StringBuffer sb = new StringBuffer();
+
+			long balance = a.getBalance();
 			
+			if (expanded && a.getSub().size() > 0){
+				for (SubAccount sa : DataInstance.getInstance().getSubAccounts(a)) {
+					balance -= sa.getBalance();
+				}
+			}
 			
 			sb.append("<html><table><tr><td width=200px>")
 					.append(sbOpen.toString())
@@ -151,25 +117,13 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
+					.append(negative)
 					.append(Strings.inst().get(Strings.CURRENCY_SIGN))
-					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0)))
+					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");
 			
 			this.setText(sb.toString());
-			
-//			nameLabel.setText(
-//					sbOpen.toString() 
-//					+ a.toString()
-//					+ sbClose.toString()
-//			);
-//
-//			amountLabel.setText(
-//					sbOpen.toString()
-//					+ Strings.inst().get(Strings.CURRENCY_SIGN)
-//					+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0))
-//					+ sbClose.toString()
-//			);	
 		}
 		
 		if (!Buddi.isMac()){

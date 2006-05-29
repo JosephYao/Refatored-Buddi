@@ -171,13 +171,22 @@ public interface ModelPackage extends EPackage{
 	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Sub</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNT__SUB = SOURCE_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the the '<em>Account</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 3;
+	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.AccountsImpl <em>Accounts</em>}' class.
@@ -190,22 +199,31 @@ public interface ModelPackage extends EPackage{
 	int ACCOUNTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACCOUNTS__ALL_ACCOUNTS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Accounts</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNTS__ACCOUNTS = 1;
+	int ACCOUNTS__ACCOUNTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Sub Accounts</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNTS__SUB_ACCOUNTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNTS__ALL_ACCOUNTS = 2;
 
 	/**
 	 * The number of structural features of the the '<em>Accounts</em>' class.
@@ -214,7 +232,7 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNTS_FEATURE_COUNT = 2;
+	int ACCOUNTS_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.CategoriesImpl <em>Categories</em>}' class.
@@ -227,22 +245,22 @@ public interface ModelPackage extends EPackage{
 	int CATEGORIES = 2;
 
 	/**
-	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIES__CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIES__ALL_CATEGORIES = 1;
+	int CATEGORIES__ALL_CATEGORIES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIES__CATEGORIES = 1;
 
 	/**
 	 * The number of structural features of the the '<em>Categories</em>' class.
@@ -309,22 +327,22 @@ public interface ModelPackage extends EPackage{
 	int CATEGORY__INCOME = SOURCE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Parent</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 3;
+	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the the '<em>Category</em>' class.
@@ -355,13 +373,22 @@ public interface ModelPackage extends EPackage{
 	int DATA_MODEL__ALL_TRANSACTIONS = 0;
 
 	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_CATEGORIES = 1;
+
+	/**
 	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 1;
+	int DATA_MODEL__ALL_ACCOUNTS = 2;
 
 	/**
 	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
@@ -370,16 +397,7 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TYPES = 2;
-
-	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_CATEGORIES = 3;
+	int DATA_MODEL__ALL_TYPES = 3;
 
 	/**
 	 * The number of structural features of the the '<em>Data Model</em>' class.
@@ -391,6 +409,97 @@ public interface ModelPackage extends EPackage{
 	int DATA_MODEL_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.SubAccountImpl <em>Sub Account</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.model.impl.SubAccountImpl
+	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSubAccount()
+	 * @generated
+	 */
+	int SUB_ACCOUNT = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__NAME = ACCOUNT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Deleted</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__DELETED = ACCOUNT__DELETED;
+
+	/**
+	 * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__CREATION_DATE = ACCOUNT__CREATION_DATE;
+
+	/**
+	 * The feature id for the '<em><b>Balance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__BALANCE = ACCOUNT__BALANCE;
+
+	/**
+	 * The feature id for the '<em><b>Starting Balance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__STARTING_BALANCE = ACCOUNT__STARTING_BALANCE;
+
+	/**
+	 * The feature id for the '<em><b>Account Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__ACCOUNT_TYPE = ACCOUNT__ACCOUNT_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Sub</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__SUB = ACCOUNT__SUB;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT__PARENT = ACCOUNT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the the '<em>Sub Account</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_ACCOUNT_FEATURE_COUNT = ACCOUNT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionImpl <em>Transaction</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -398,7 +507,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransaction()
 	 * @generated
 	 */
-	int TRANSACTION = 6;
+	int TRANSACTION = 7;
 
 	/**
 	 * The feature id for the '<em><b>Amount</b></em>' attribute.
@@ -498,7 +607,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransactions()
 	 * @generated
 	 */
-	int TRANSACTIONS = 7;
+	int TRANSACTIONS = 8;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
@@ -535,7 +644,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 8;
+	int TYPE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -572,16 +681,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTypes()
 	 * @generated
 	 */
-	int TYPES = 9;
-
-	/**
-	 * The feature id for the '<em><b>All Types</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__ALL_TYPES = 0;
+	int TYPES = 10;
 
 	/**
 	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
@@ -590,7 +690,16 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__TYPES = 1;
+	int TYPES__TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Types</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__ALL_TYPES = 1;
 
 	/**
 	 * The number of structural features of the the '<em>Types</em>' class.
@@ -609,7 +718,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDate()
 	 * @generated
 	 */
-	int DATE = 10;
+	int DATE = 11;
 
 
 	/**
@@ -656,6 +765,17 @@ public interface ModelPackage extends EPackage{
 	EReference getAccount_AccountType();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.homeunix.drummer.model.Account#getSub <em>Sub</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Sub</em>'.
+	 * @see org.homeunix.drummer.model.Account#getSub()
+	 * @see #getAccount()
+	 * @generated
+	 */
+	EReference getAccount_Sub();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Accounts <em>Accounts</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -675,6 +795,17 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 */
 	EReference getAccounts_Accounts();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.model.Accounts#getSubAccounts <em>Sub Accounts</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Sub Accounts</em>'.
+	 * @see org.homeunix.drummer.model.Accounts#getSubAccounts()
+	 * @see #getAccounts()
+	 * @generated
+	 */
+	EReference getAccounts_SubAccounts();
 
 	/**
 	 * Returns the meta object for the container reference '{@link org.homeunix.drummer.model.Accounts#getAllAccounts <em>All Accounts</em>}'.
@@ -869,6 +1000,27 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 */
 	EAttribute getSource_CreationDate();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.model.SubAccount <em>Sub Account</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Sub Account</em>'.
+	 * @see org.homeunix.drummer.model.SubAccount
+	 * @generated
+	 */
+	EClass getSubAccount();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.SubAccount#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent</em>'.
+	 * @see org.homeunix.drummer.model.SubAccount#getParent()
+	 * @see #getSubAccount()
+	 * @generated
+	 */
+	EReference getSubAccount_Parent();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Transaction <em>Transaction</em>}'.

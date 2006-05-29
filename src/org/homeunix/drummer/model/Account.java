@@ -8,6 +8,8 @@ package org.homeunix.drummer.model;
 
 
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Account</b></em>'.
@@ -19,6 +21,7 @@ package org.homeunix.drummer.model;
  *   <li>{@link org.homeunix.drummer.model.Account#getBalance <em>Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getStartingBalance <em>Starting Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getAccountType <em>Account Type</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Account#getSub <em>Sub</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,6 +107,22 @@ public interface Account extends Source{
 	 * @generated
 	 */
 	void setAccountType(Type value);
+
+	/**
+	 * Returns the value of the '<em><b>Sub</b></em>' reference list.
+	 * The list contents are of type {@link org.homeunix.drummer.model.SubAccount}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sub</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sub</em>' reference list.
+	 * @see org.homeunix.drummer.model.ModelPackage#getAccount_Sub()
+	 * @model type="org.homeunix.drummer.model.SubAccount"
+	 * @generated
+	 */
+	EList getSub();
 
 	public void calculateBalance();
 	

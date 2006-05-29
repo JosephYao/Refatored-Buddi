@@ -19,8 +19,8 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.Category#getBudgetedAmount <em>Budgeted Amount</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Category#isIncome <em>Income</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.Category#getParent <em>Parent</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Category#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Category#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *

@@ -6,23 +6,24 @@
  */
 package org.homeunix.drummer.model.impl;
 
+import java.util.Collection;
 import java.util.Date;
-
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.homeunix.drummer.Strings;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
+import org.homeunix.drummer.model.SubAccount;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
-import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
 /**
@@ -35,6 +36,7 @@ import org.homeunix.drummer.util.Log;
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getBalance <em>Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getStartingBalance <em>Starting Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getAccountType <em>Account Type</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getSub <em>Sub</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,6 +92,16 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * @ordered
 	 */
 	protected Type accountType = null;
+
+	/**
+	 * The cached value of the '{@link #getSub() <em>Sub</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSub()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList sub = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,6 +206,18 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList getSub() {
+		if (sub == null) {
+			sub = new EObjectResolvingEList(SubAccount.class, this, ModelPackage.ACCOUNT__SUB);
+		}
+		return sub;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
 			case ModelPackage.ACCOUNT__NAME:
@@ -209,6 +233,8 @@ public class AccountImpl extends SourceImpl implements Account {
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				if (resolve) return getAccountType();
 				return basicGetAccountType();
+			case ModelPackage.ACCOUNT__SUB:
+				return getSub();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -218,6 +244,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	public void eSet(EStructuralFeature eFeature, Object newValue) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
 			case ModelPackage.ACCOUNT__NAME:
@@ -237,6 +264,10 @@ public class AccountImpl extends SourceImpl implements Account {
 				return;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)newValue);
+				return;
+			case ModelPackage.ACCOUNT__SUB:
+				getSub().clear();
+				getSub().addAll((Collection)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -267,6 +298,9 @@ public class AccountImpl extends SourceImpl implements Account {
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)null);
 				return;
+			case ModelPackage.ACCOUNT__SUB:
+				getSub().clear();
+				return;
 		}
 		eDynamicUnset(eFeature);
 	}
@@ -290,6 +324,8 @@ public class AccountImpl extends SourceImpl implements Account {
 				return startingBalance != STARTING_BALANCE_EDEFAULT;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				return accountType != null;
+			case ModelPackage.ACCOUNT__SUB:
+				return sub != null && !sub.isEmpty();
 		}
 		return eDynamicIsSet(eFeature);
 	}
@@ -311,21 +347,6 @@ public class AccountImpl extends SourceImpl implements Account {
 		return result.toString();
 	}
 	
-	public String toStringLong() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(name);
-		result.append(" (");
-		result.append(accountType);
-		result.append("): ");
-		if ((isCredit() ^ balance <= 0) && balance != 0)
-			result.append("-");
-		result.append(Strings.inst().get(Strings.CURRENCY_SIGN));
-		result.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)));
-		return result.toString();
-	}
-
-	
 	public void calculateBalance(){
 		long balance = this.getStartingBalance();
 //		long balance = 0;
@@ -335,13 +356,17 @@ public class AccountImpl extends SourceImpl implements Account {
 		for (Transaction transaction : transactions) {
 			//We are moving money *to* this account
 			if (transaction.getTo().equals(this)){
-				balance = balance + transaction.getAmount();
+				if (!(transaction.getFrom() instanceof SubAccount) 
+						|| !this.getSub().contains(transaction.getFrom()))
+					balance = balance + transaction.getAmount();
 				transaction.setBalanceTo(balance);
 			}
 			
 			//We are moving money *from* this account
 			else{
-				balance = balance - transaction.getAmount();
+				if (!(transaction.getTo() instanceof SubAccount) 
+						|| !this.getSub().contains(transaction.getTo()))
+					balance = balance - transaction.getAmount();
 				transaction.setBalanceFrom(balance);
 			}
 		}
@@ -353,7 +378,8 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (getAccountType() != null)
 			return getAccountType().isCredit();
 		else{
-			Log.critical("null type for account " + this.toStringLong());
+			if (!(this instanceof SubAccount))
+				Log.critical("null type for account " + this.toString());
 			return false;
 		}
 	}

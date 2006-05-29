@@ -88,6 +88,9 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			public Object caseSource(Source object) {
 				return createSourceAdapter();
 			}
+			public Object caseSubAccount(SubAccount object) {
+				return createSubAccountAdapter();
+			}
 			public Object caseTransaction(Transaction object) {
 				return createTransactionAdapter();
 			}
@@ -199,6 +202,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSourceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.model.SubAccount <em>Sub Account</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.model.SubAccount
+	 * @generated
+	 */
+	public Adapter createSubAccountAdapter() {
 		return null;
 	}
 

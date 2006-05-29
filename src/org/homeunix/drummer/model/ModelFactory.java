@@ -71,6 +71,15 @@ public interface ModelFactory extends EFactory{
 	DataModel createDataModel();
 
 	/**
+	 * Returns a new object of class '<em>Sub Account</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Sub Account</em>'.
+	 * @generated
+	 */
+	SubAccount createSubAccount();
+
+	/**
 	 * Returns a new object of class '<em>Transaction</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

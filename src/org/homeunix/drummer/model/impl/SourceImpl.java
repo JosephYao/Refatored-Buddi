@@ -270,7 +270,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	}
 
 	public int compareTo(Source arg0) {
-		return this.toStringLong().compareTo(arg0.toStringLong());
+		return this.toString().compareTo(arg0.toString());
 	}
 	
 	

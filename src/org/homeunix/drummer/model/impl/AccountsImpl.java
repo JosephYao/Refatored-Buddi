@@ -24,6 +24,8 @@ import org.homeunix.drummer.model.Accounts;
 import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelPackage;
 
+import org.homeunix.drummer.model.SubAccount;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Accounts</b></em>'.
@@ -31,8 +33,9 @@ import org.homeunix.drummer.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAccounts <em>Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getSubAccounts <em>Sub Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,6 +51,16 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * @ordered
 	 */
 	protected EList accounts = null;
+
+	/**
+	 * The cached value of the '{@link #getSubAccounts() <em>Sub Accounts</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubAccounts()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList subAccounts = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -77,6 +90,18 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 			accounts = new EObjectContainmentEList(Account.class, this, ModelPackage.ACCOUNTS__ACCOUNTS);
 		}
 		return accounts;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList getSubAccounts() {
+		if (subAccounts == null) {
+			subAccounts = new EObjectContainmentEList(SubAccount.class, this, ModelPackage.ACCOUNTS__SUB_ACCOUNTS);
+		}
+		return subAccounts;
 	}
 
 	/**
@@ -139,10 +164,12 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-					return eBasicSetContainer(null, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
 				case ModelPackage.ACCOUNTS__ACCOUNTS:
 					return ((InternalEList)getAccounts()).basicRemove(otherEnd, msgs);
+				case ModelPackage.ACCOUNTS__SUB_ACCOUNTS:
+					return ((InternalEList)getSubAccounts()).basicRemove(otherEnd, msgs);
+				case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+					return eBasicSetContainer(null, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
 				default:
 					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
 			}
@@ -174,10 +201,12 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts();
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return getAccounts();
+			case ModelPackage.ACCOUNTS__SUB_ACCOUNTS:
+				return getSubAccounts();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -190,12 +219,16 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	@SuppressWarnings("unchecked")
 	public void eSet(EStructuralFeature eFeature, Object newValue) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)newValue);
-				return;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
 				getAccounts().addAll((Collection)newValue);
+				return;
+			case ModelPackage.ACCOUNTS__SUB_ACCOUNTS:
+				getSubAccounts().clear();
+				getSubAccounts().addAll((Collection)newValue);
+				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -208,11 +241,14 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public void eUnset(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)null);
-				return;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
+				return;
+			case ModelPackage.ACCOUNTS__SUB_ACCOUNTS:
+				getSubAccounts().clear();
+				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)null);
 				return;
 		}
 		eDynamicUnset(eFeature);
@@ -225,10 +261,12 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public boolean eIsSet(EStructuralFeature eFeature) {
 		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts() != null;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return accounts != null && !accounts.isEmpty();
+			case ModelPackage.ACCOUNTS__SUB_ACCOUNTS:
+				return subAccounts != null && !subAccounts.isEmpty();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts() != null;
 		}
 		return eDynamicIsSet(eFeature);
 	}

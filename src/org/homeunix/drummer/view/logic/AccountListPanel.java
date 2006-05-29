@@ -16,6 +16,7 @@ import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.SubAccount;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -110,9 +111,15 @@ public class AccountListPanel extends ListPanelLayout {
 		selectedSource = null;
 		
 		for (Account a : DataInstance.getInstance().getAccounts()) {
-			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts())
-				root.add(new DefaultMutableTreeNode(a));
+			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts()){
+				DefaultMutableTreeNode node = new DefaultMutableTreeNode(a);
+				root.add(node);
 			
+				for (SubAccount sa : DataInstance.getInstance().getSubAccounts(a)) {
+					if (!sa.isDeleted() && PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts())
+						node.add(new DefaultMutableTreeNode(sa));
+				}
+			}
 			Log.debug(a);
 			
 			balance += a.getBalance();
