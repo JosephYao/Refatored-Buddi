@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Strings;
@@ -75,6 +76,8 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 				
 //		reportPanel.setPreferredSize(new Dimension(reportPanel.getPreferredSize().width, Math.min(400, reportPanel.getPreferredSize().height)));
 		
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
 		//Call the method to add actions to the buttons
 		initActions();
 		
@@ -92,23 +95,13 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	protected AbstractBudgetFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Graphs window resized");
-				
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
-				super.componentResized(arg0);
-			}
-			
-			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
 				
 				PrefsInstance.getInstance().savePrefs();
 				

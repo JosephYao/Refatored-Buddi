@@ -16,6 +16,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +24,6 @@ import javax.swing.JScrollPane;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.controller.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 
 public abstract class ReportFrameLayout extends AbstractBudgetFrame {
@@ -70,7 +70,9 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 		
 		reportLabel.setText(buildReport(startDate, endDate));
 		
-		reportLabel.setPreferredSize(new Dimension(reportLabel.getPreferredSize().width, Math.min(400, reportLabel.getPreferredSize().height)));
+		//reportLabel.setPreferredSize(new Dimension(reportLabel.getPreferredSize().width, Math.min(400, reportLabel.getPreferredSize().height)));
+		
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		//Call the method to add actions to the buttons
 		initActions();
@@ -90,23 +92,13 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	protected AbstractBudgetFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Reports window resized");
-				
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
-				super.componentResized(arg0);
-			}
-			
-			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
 				
 				PrefsInstance.getInstance().savePrefs();
 				

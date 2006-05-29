@@ -49,7 +49,6 @@ public abstract class AbstractBudgetFrame extends JFrame{
 	
 	public AbstractBudgetFrame openWindow(){
 		load();
-		this.pack();
 		
 		Point p;
 		Dimension d;
@@ -92,11 +91,10 @@ public abstract class AbstractBudgetFrame extends JFrame{
 					PrefsInstance.getInstance().getPrefs().getReportsWindow().getX(),
 					PrefsInstance.getInstance().getPrefs().getReportsWindow().getY()
 			);
-			d = null;
-//			d = new Dimension(
-//					PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(),
-//					PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()					
-//			);
+			d = new Dimension(
+					PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(),
+					PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()					
+			);
 		}
 		else{
 			Log.debug("Not of a known type");
@@ -105,9 +103,14 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		}
 				
 		this.setLocation(p);
-		if (d != null)
-			this.setPreferredSize(d);
+		if (d != null){
+			this.setMaximumSize(d);
+			this.setMinimumSize(d);
+		}
 		this.setVisible(true);
+		
+		this.pack();
+
 		return this;
 	}
 	

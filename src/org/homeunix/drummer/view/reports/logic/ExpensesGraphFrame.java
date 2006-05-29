@@ -39,7 +39,8 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 		Collections.sort(cats);
 		
 		for (Category c : cats) {
-			pieData.setValue(Strings.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
+			if (categories.get(c) > 0)
+				pieData.setValue(Strings.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
