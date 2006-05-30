@@ -137,7 +137,7 @@ public class BudgetMenu extends JScreenMenuBar {
 		//Help menu items
 		final JScreenMenuItem showHelp = new JScreenMenuItem(Strings.inst().get(Strings.BUDDI_HELP));
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
-                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		
 		help.add(showHelp);
 
