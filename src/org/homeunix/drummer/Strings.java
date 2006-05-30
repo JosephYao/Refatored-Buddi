@@ -105,7 +105,7 @@ public class Strings {
 	public final static String INVESTMENT_INCOME = "INVESTMENT_INCOME";
 	public final static String CHOOSE_BACKUP_FILE = "CHOOSE_BACKUP_FILE";
 	public final static String CANNOT_SAVE_OVER_DIR = "CANNOT_SAVE_OVER_DIR";
-	public final static String SUCCESSFUL_BACKUP = "SUCCESSFUL BACKUP";
+	public final static String SUCCESSFUL_BACKUP = "SUCCESSFUL_BACKUP";
 	public final static String FILE_SAVED = "FILE_SAVED";
 	public final static String LOAD_BACKUP_FILE = "LOAD_BACKUP_FILE";
 	public final static String MUST_SELECT_BUDDI_FILE = "MUST_SELECT_BUDDI_FILE";
@@ -113,7 +113,7 @@ public class Strings {
 	public final static String CLOSE_DATA_FILE = "CLOSE_DATA_FILE";
 	public final static String SUCCESSFUL_OPEN_FILE = "SUCCESSFUL_OPEN_FILE";
 	public final static String OPENED_FILE = "OPENED_FILE";
-	public final static String KEEP_DATA_FILE_OPEN = "KEEP_DATA_FILE_OPEN";
+	public final static String CANCELLED_FILE_LOAD_MESSAGE = "CANCELLED_FILE_LOAD_MESSAGE";
 	public final static String CANCELLED_FILE_LOAD = "CANCELLED_FILE_LOAD";
 	public final static String CHOOSE_DATE_INTERVAL = "CHOOSE_DATE_INTERVAL";
 	public final static String PERMANENT_DELETE_ACCOUNT = "PERMANENT_DELETE_ACCOUNT";
@@ -157,6 +157,12 @@ public class Strings {
 	public final static String NOTHING_TO_PRINT = "NOTHING_TO_PRINT";
 	public final static String PRINT_ERROR = "PRINT_ERROR";
 	
+	public final static String RESTORE_DATA_FILE = "RESTORE_DATA_FILE";
+	public final static String CONFIRM_RESTORE_BACKUP_FILE = "CONFIRM_RESTORE_BACKUP_FILE";
+	public final static String SUCCESSFUL_RESTORE_FILE = "SUCCESSFUL_RESTORE_FILE";
+	public final static String RESTORED_FILE = "RESTORED_FILE";
+	public final static String CANCELLED_FILE_RESTORE = "CANCELLED_FILE_RESTORE";
+	public final static String CANCEL_FILE_RESTORE_MESSAGE = "CANCEL_FILE_RESTORE_MESSAGE";
 	
 	private final Properties translations = new Properties();
 	

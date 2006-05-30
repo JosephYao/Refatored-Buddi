@@ -30,6 +30,7 @@ import org.homeunix.drummer.Strings;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.BrowserLauncher;
+import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -64,16 +65,20 @@ public class BudgetMenu extends JScreenMenuBar {
 		//File menu items
 		final JScreenMenuItem backup = new JScreenMenuItem(Strings.inst().get(Strings.BACKUP_DATA_FILE));
 		final JScreenMenuItem open = new JScreenMenuItem(Strings.inst().get(Strings.OPEN_DATA_FILE));
+		final JScreenMenuItem restore = new JScreenMenuItem(Strings.inst().get(Strings.RESTORE_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Strings.inst().get(Strings.PRINT));
 		final JScreenMenuItem close = new JScreenMenuItem(Strings.inst().get(Strings.CLOSE_WINDOW));
 		
 		backup.addUserFrame(MainBudgetFrame.class);
 		open.addUserFrame(MainBudgetFrame.class);
+		restore.addUserFrame(MainBudgetFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
 		
 		backup.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		restore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
                 KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -81,8 +86,10 @@ public class BudgetMenu extends JScreenMenuBar {
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 		
-		file.add(backup);
 		file.add(open);
+		file.addSeparator();
+		file.add(backup);
+		file.add(restore);
 		file.addSeparator();
 		file.add(print);
 		file.addSeparator();
@@ -153,6 +160,53 @@ public class BudgetMenu extends JScreenMenuBar {
 			}
 		});
 		
+		restore.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setFileHidingEnabled(true);
+				jfc.setFileFilter(new FileFilter(){
+					public boolean accept(File arg0) {
+						if (arg0.isDirectory() 
+								|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
+							return true;
+						else
+							return false;
+					}
+
+					public String getDescription() {
+						return Strings.inst().get(Strings.BUDDI_FILE_DESC);
+					}
+				});
+				jfc.setDialogTitle(Strings.inst().get(Strings.RESTORE_DATA_FILE));
+				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+					if (jfc.getSelectedFile().isDirectory())
+						Log.debug(Strings.inst().get(Strings.MUST_SELECT_BUDDI_FILE));
+					
+					else{
+						if (JOptionPane.showConfirmDialog(
+								null, 
+								Strings.inst().get(Strings.CONFIRM_RESTORE_BACKUP_FILE), 
+								Strings.inst().get(Strings.RESTORE_DATA_FILE),
+								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+							try{
+								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
+								DataInstance.getInstance().loadDataModel(oldFile);
+								MainBudgetFrame.getInstance().updateContent();
+								JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Strings.inst().get(Strings.RESTORED_FILE), JOptionPane.INFORMATION_MESSAGE);
+							}
+							catch (IOException ioe){
+								JOptionPane.showMessageDialog(null, ioe, "Flagrant System Error", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+						else
+							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANCEL_FILE_RESTORE_MESSAGE), Strings.inst().get(Strings.CANCELLED_FILE_RESTORE), JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		});
+		
 		open.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser jfc = new JFileChooser();
@@ -189,7 +243,7 @@ public class BudgetMenu extends JScreenMenuBar {
 							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Strings.inst().get(Strings.OPENED_FILE), JOptionPane.INFORMATION_MESSAGE);
 						}
 						else
-							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.KEEP_DATA_FILE_OPEN), Strings.inst().get(Strings.CANCELLED_FILE_LOAD), JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANCELLED_FILE_LOAD_MESSAGE), Strings.inst().get(Strings.CANCELLED_FILE_LOAD), JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
