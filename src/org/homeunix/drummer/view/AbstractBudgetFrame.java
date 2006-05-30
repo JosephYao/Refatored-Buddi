@@ -48,9 +48,6 @@ public abstract class AbstractBudgetFrame extends JFrame{
 	}
 	
 	public AbstractBudgetFrame openWindow(){
-		load();
-		this.pack();
-		
 		Point p;
 		Dimension d;
 		
@@ -107,6 +104,10 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		this.setLocation(p);
 		if (d != null)
 			this.setPreferredSize(d);
+		
+		load();
+		this.pack();
+		
 		this.setVisible(true);
 		return this;
 	}

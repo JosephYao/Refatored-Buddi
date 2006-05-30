@@ -177,7 +177,8 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public void clearTransaction(){
-//		date.setValue(new Date());
+		if (date.getValue() == null)
+			date.setValue(new Date());
 		number.setText("");
 		description.setText("");
 		amount.setValue(0);
