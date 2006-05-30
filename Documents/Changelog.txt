@@ -1,3 +1,10 @@
+0.95 Beta (May 30 2006)
+-Added local help documents
+-Each window remembers size / screen position on close
+-Misc. UI improvements
+-Automatically creates a backup file each day on the first run of the day.
+-Added menu options to create a new data store and restore from a previous backup.
+
 0.91 Beta (May 26 2006)
 -Interim bugfix release, to fix display problem introduced with 0.9.  Windows (and possibly all non-Macintosh Java VMs) did not like the TreeCellRenderer that I included in 0.9, and the accounts and categories lists would not display.
 

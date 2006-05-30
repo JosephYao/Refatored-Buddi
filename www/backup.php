@@ -3,11 +3,15 @@
 <h1>Backup and Restore</h1>
 
 <p>
-It is recommended to backup your data file regularly.  To backup, simply select 'Backup Data File' from the File menu.  To load, you can either copy over the existing data file with a backup (make sure that Buddi is closed before you do this), or select 'Open Data File' from the File menu.  (Note that if you open the data file, it will change the default location to that of the backup file).
+Starting with version 0.95 Beta, Buddi will automatically create a new backup file every day when you first launch the program.
 </p>
 
 <p>
-By default, Buddi remembers the location of the last data file which was used.  If you want to change to a different data file, you can do so via the 'Open Data File' menu command.
+To restore a previous backup, you can select 'Restore from Backup File' from the File menu.  This will overwrite your existing file with the contents of the selected backup file.  It is recommended that you make a backup copy of your data file beforehand.
+</p>
+
+<p>
+In version 0.95, you can also create a new data store, as well as load an existing one.
 </p>
 
 <? include "./inc/footer.php" ?>
