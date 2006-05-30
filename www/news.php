@@ -2,6 +2,11 @@
 
 <h1>News</h1>
 
+<h2>RSS Support Added (May 30 2006)</h2>
+<p>
+I have included a link to SourceForge's RSS syndication at the bottom of the website.  This link is for syndication of file releases; on Buddi's sourceforge project page, there are other RSS links included which allow you to monitor other features.
+</p>
+
 <h2>0.95 Beta (May 30 2006)</h2>
 <ul>
 <li>Added local help documents</li>
