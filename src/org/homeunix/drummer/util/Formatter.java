@@ -23,6 +23,7 @@ public class Formatter {
 	private final NumberFormat decimalFormat; 
 	private final SimpleDateFormat dateFormat;
 	private final SimpleDateFormat shortDateFormat;
+	private final SimpleDateFormat filenameDateFormat;
 	private final LengthFormat lengthFormat;
 	
 	private Formatter(){
@@ -31,6 +32,7 @@ public class Formatter {
 		decimalFormat.setMinimumFractionDigits(2);
 		
 		shortDateFormat = new SimpleDateFormat("MM/dd");
+		filenameDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String dateFormatString = PrefsInstance.getInstance().getPrefs().getDateFormat();
 		dateFormat = new SimpleDateFormat(dateFormatString);
@@ -54,7 +56,11 @@ public class Formatter {
 	public SimpleDateFormat getShortDateFormat(){
 		return shortDateFormat;
 	}
-	
+
+	public SimpleDateFormat getFilenameDateFormat(){
+		return filenameDateFormat;
+	}
+
 	public class LengthFormat{
 		private int length;
 				

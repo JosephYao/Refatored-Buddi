@@ -34,6 +34,7 @@ import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.Types;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
 @SuppressWarnings("unchecked")
@@ -52,14 +53,30 @@ public class DataInstance {
 	private ResourceSet resourceSet;
 	
 	private DataInstance(){
-		File locationFile;
+		File dataFile;
 		
-		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
-			locationFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
+			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+			try{
+				String backupFileLocation = 
+					PrefsInstance.getInstance().getPrefs().getDataFile()
+					.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
+					+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
+					+ Const.DATA_FILE_EXTENSION;
+				File backupFile = new File(backupFileLocation);
+				if (!backupFile.exists()){
+					FileFunctions.copyFile(dataFile, backupFile);
+					Log.debug("Backing up file to " + backupFile);
+				}
+			}
+			catch(IOException ioe){
+				Log.emergency("Failure when attempting to backup when starting program: " + ioe);
+			}
+		}
 		else
-			locationFile = null;
+			dataFile = null;
 		
-		loadDataModel(locationFile);
+		loadDataModel(dataFile);
 	}
 	
 	public void loadDataModel(File locationFile){
