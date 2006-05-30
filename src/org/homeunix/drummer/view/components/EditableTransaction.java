@@ -49,7 +49,6 @@ public class EditableTransaction extends JPanel {
 	private final JTextField number;
 	private final AutoCompleteTextField description;
 	private final AutoCompleteTextField memo;
-	//private final JTextField balance;
 	
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
@@ -69,7 +68,6 @@ public class EditableTransaction extends JPanel {
 		description = new AutoCompleteTextField(PrefsInstance.getInstance().getDescDict());
 		memo = new AutoCompleteTextField(PrefsInstance.getInstance().getMemoDict());
 		
-		//balance = new JTextField();
 		components = new Vector<JComponent>();
 		
 		toModel = new DefaultComboBoxModel();
@@ -179,7 +177,7 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public void clearTransaction(){
-		date.setValue(new Date());
+//		date.setValue(new Date());
 		number.setText("");
 		description.setText("");
 		amount.setValue(0);
@@ -187,6 +185,8 @@ public class EditableTransaction extends JPanel {
 		transferTo.setSelectedIndex(0);
 		transferFrom.setSelectedIndex(0);
 		memo.setText("");
+		
+		date.requestFocus();
 		
 		//Reset change flag
 		setChanged(false);

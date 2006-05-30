@@ -163,6 +163,11 @@ public class Strings {
 	public final static String RESTORED_FILE = "RESTORED_FILE";
 	public final static String CANCELLED_FILE_RESTORE = "CANCELLED_FILE_RESTORE";
 	public final static String CANCEL_FILE_RESTORE_MESSAGE = "CANCEL_FILE_RESTORE_MESSAGE";
+	public final static String NEW_DATA_FILE = "NEW_DATA_FILE"; 
+	public final static String NEW_DATA_FILE_SAVED = "NEW_DATA_FILE_SAVED";
+	public final static String CHOOSE_DATASTORE_LOCATION = "CHOOSE_DATASTORE_LOCATION";
+	public final static String OVERWRITE_EXISTING_FILE = "OVERWRITE_EXISTING_FILE";
+	public final static String OVERWRITE_EXISTING_FILE_MESSAGE = "OVERWRITE_EXISTING_FILE_MESSAGE";
 	
 	private final Properties translations = new Properties();
 	

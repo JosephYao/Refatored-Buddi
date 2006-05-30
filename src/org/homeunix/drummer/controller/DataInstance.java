@@ -76,34 +76,40 @@ public class DataInstance {
 		else
 			dataFile = null;
 		
-		loadDataModel(dataFile);
+		loadDataModel(dataFile, false);
 	}
 	
-	public void loadDataModel(File locationFile){
+	public void loadDataModel(File locationFile, boolean forceNewFile){
 		
-		while (locationFile == null || !locationFile.getParentFile().exists()){
-			JOptionPane.showMessageDialog(
-					null,
-					"There was a problem reading the data file:\n"
-					+ locationFile.getAbsolutePath() + "\n"
-					+ "The requested directory does not exist.\n"
-					+ "Please choose an existing data file, or a\n"
-					+ "folder in which to create a new data file.",
-					"Missing Data File",
-					JOptionPane.ERROR_MESSAGE);
-			
-					String file = PrefsInstance.chooseDataFile();
-			if (file != null)
-				locationFile = new File(file);
-			else
-				locationFile = null;
-		}
-		
-		if (!locationFile.exists() && locationFile.getParentFile().exists()){
-			locationFile = new File(locationFile.getParent() + File.separator + Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
-		}
+		if (!forceNewFile){
+			while (locationFile == null || !locationFile.getParentFile().exists()){
+				JOptionPane.showMessageDialog(
+						null,
+						"There was a problem reading the data file:\n"
+						+ locationFile.getAbsolutePath() + "\n"
+						+ "The requested directory does not exist.\n"
+						+ "Please choose an existing data file, or a\n"
+						+ "folder in which to create a new data file.",
+						"Missing Data File",
+						JOptionPane.ERROR_MESSAGE);
 				
+				String file = PrefsInstance.chooseDataFile();
+				if (file != null)
+					locationFile = new File(file);
+				else
+					locationFile = null;
+			}
+			
+			if (!locationFile.exists() && locationFile.getParentFile().exists()){
+				locationFile = new File(locationFile.getParent() + File.separator + Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
+			}
+		}
+		
 		try{
+			if (forceNewFile){
+				throw new Exception();
+			}
+			
 			// Create a resource set.
 			resourceSet = new ResourceSetImpl();
 			
@@ -135,7 +141,7 @@ public class DataInstance {
 			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
 			PrefsInstance.getInstance().savePrefs();
 			
-			if (!locationFile.exists() || JOptionPane.showConfirmDialog(
+			if (forceNewFile || !locationFile.exists() || JOptionPane.showConfirmDialog(
 					null,
 					"There was a problem reading the data file:\n" 
 					+ locationFile.getAbsolutePath() + ".\n"
@@ -146,7 +152,7 @@ public class DataInstance {
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
 				
-				if (!locationFile.exists()){
+				if (!locationFile.exists() && !forceNewFile){
 					JOptionPane.showMessageDialog(
 							null,
 							"Created a new data file:\n"

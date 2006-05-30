@@ -63,29 +63,34 @@ public class BudgetMenu extends JScreenMenuBar {
 		this.add(help);
 		
 		//File menu items
-		final JScreenMenuItem backup = new JScreenMenuItem(Strings.inst().get(Strings.BACKUP_DATA_FILE));
 		final JScreenMenuItem open = new JScreenMenuItem(Strings.inst().get(Strings.OPEN_DATA_FILE));
+		final JScreenMenuItem newFile = new JScreenMenuItem(Strings.inst().get(Strings.NEW_DATA_FILE));
+		final JScreenMenuItem backup = new JScreenMenuItem(Strings.inst().get(Strings.BACKUP_DATA_FILE));
 		final JScreenMenuItem restore = new JScreenMenuItem(Strings.inst().get(Strings.RESTORE_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Strings.inst().get(Strings.PRINT));
 		final JScreenMenuItem close = new JScreenMenuItem(Strings.inst().get(Strings.CLOSE_WINDOW));
 		
-		backup.addUserFrame(MainBudgetFrame.class);
+		newFile.addUserFrame(MainBudgetFrame.class);
 		open.addUserFrame(MainBudgetFrame.class);
+		backup.addUserFrame(MainBudgetFrame.class);
 		restore.addUserFrame(MainBudgetFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
 		
-		backup.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		backup.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		restore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-                KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 		
+		file.add(newFile);
 		file.add(open);
 		file.addSeparator();
 		file.add(backup);
@@ -136,6 +141,82 @@ public class BudgetMenu extends JScreenMenuBar {
 		
 		help.add(showHelp);
 
+		newFile.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setDialogTitle(Strings.inst().get(Strings.CHOOSE_DATASTORE_LOCATION));
+				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+					if (jfc.getSelectedFile().isDirectory())
+						JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANNOT_SAVE_OVER_DIR));
+					else{
+						if (jfc.getSelectedFile().exists()){
+							if (JOptionPane.showConfirmDialog(
+									null, 
+									Strings.inst().get(Strings.OVERWRITE_EXISTING_FILE_MESSAGE) + jfc.getSelectedFile(),
+									Strings.inst().get(Strings.OVERWRITE_EXISTING_FILE),
+									JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+								return;
+							}
+						}
+
+						final String location;
+						if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
+							location = jfc.getSelectedFile().getAbsolutePath();
+						else
+							location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
+						
+						DataInstance.getInstance().loadDataModel(new File(location), true);
+						PrefsInstance.getInstance().getPrefs().setDataFile(location);
+						MainBudgetFrame.getInstance().updateContent();
+						JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.NEW_DATA_FILE_SAVED) + location, Strings.inst().get(Strings.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		});
+		
+		open.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setFileHidingEnabled(true);
+				jfc.setFileFilter(new FileFilter(){
+					public boolean accept(File arg0) {
+						if (arg0.isDirectory() 
+								|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
+							return true;
+						else
+							return false;
+					}
+
+					public String getDescription() {
+						return Strings.inst().get(Strings.BUDDI_FILE_DESC);
+					}
+				});
+				jfc.setDialogTitle(Strings.inst().get(Strings.LOAD_BACKUP_FILE));
+				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+					if (jfc.getSelectedFile().isDirectory())
+						Log.debug(Strings.inst().get(Strings.MUST_SELECT_BUDDI_FILE));
+					
+					else{
+						if (JOptionPane.showConfirmDialog(
+								null, 
+								Strings.inst().get(Strings.CONFIRM_LOAD_BACKUP_FILE), 
+								Strings.inst().get(Strings.CLOSE_DATA_FILE),
+								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile(), false);
+							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
+							PrefsInstance.getInstance().savePrefs();
+							MainBudgetFrame.getInstance().updateContent();
+							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Strings.inst().get(Strings.OPENED_FILE), JOptionPane.INFORMATION_MESSAGE);
+						}
+						else
+							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANCELLED_FILE_LOAD_MESSAGE), Strings.inst().get(Strings.CANCELLED_FILE_LOAD), JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		});
+		
 		//Add the action listeners.  Sure, it's kinda ugly, but it works, and I am too lazy to change it.
 		backup.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -192,7 +273,7 @@ public class BudgetMenu extends JScreenMenuBar {
 							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 							try{
 								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
-								DataInstance.getInstance().loadDataModel(oldFile);
+								DataInstance.getInstance().loadDataModel(oldFile, false);
 								MainBudgetFrame.getInstance().updateContent();
 								JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Strings.inst().get(Strings.RESTORED_FILE), JOptionPane.INFORMATION_MESSAGE);
 							}
@@ -202,48 +283,6 @@ public class BudgetMenu extends JScreenMenuBar {
 						}
 						else
 							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANCEL_FILE_RESTORE_MESSAGE), Strings.inst().get(Strings.CANCELLED_FILE_RESTORE), JOptionPane.INFORMATION_MESSAGE);
-					}
-				}
-			}
-		});
-		
-		open.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				final JFileChooser jfc = new JFileChooser();
-				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setFileHidingEnabled(true);
-				jfc.setFileFilter(new FileFilter(){
-					public boolean accept(File arg0) {
-						if (arg0.isDirectory() 
-								|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
-							return true;
-						else
-							return false;
-					}
-
-					public String getDescription() {
-						return Strings.inst().get(Strings.BUDDI_FILE_DESC);
-					}
-				});
-				jfc.setDialogTitle(Strings.inst().get(Strings.LOAD_BACKUP_FILE));
-				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Strings.inst().get(Strings.MUST_SELECT_BUDDI_FILE));
-					
-					else{
-						if (JOptionPane.showConfirmDialog(
-								null, 
-								Strings.inst().get(Strings.CONFIRM_LOAD_BACKUP_FILE), 
-								Strings.inst().get(Strings.CLOSE_DATA_FILE),
-								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile());
-							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
-							PrefsInstance.getInstance().savePrefs();
-							MainBudgetFrame.getInstance().updateContent();
-							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Strings.inst().get(Strings.OPENED_FILE), JOptionPane.INFORMATION_MESSAGE);
-						}
-						else
-							JOptionPane.showMessageDialog(null, Strings.inst().get(Strings.CANCELLED_FILE_LOAD_MESSAGE), Strings.inst().get(Strings.CANCELLED_FILE_LOAD), JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
