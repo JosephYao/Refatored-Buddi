@@ -42,4 +42,9 @@ if [ "$1" != "--local" ]; then
 	#Send the tar and untar it
 	scp $WWWDIR.tgz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs
 	ssh olsonw@shell.sf.net 'tar -C /home/groups/b/bu/buddi/htdocs -zxvf /home/groups/b/bu/buddi/htdocs/www.tgz'
+	
+	#Remove Tar file
+	rm $WWWDIRwww.tgz
 fi
+
+rm -rf $WWWDIR

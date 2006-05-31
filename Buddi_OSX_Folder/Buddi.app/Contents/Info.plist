@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>JavaApplicationStub</string>
 	<key>CFBundleGetInfoString</key>
-	<string>X, Copyright 2006 Wyatt Olson</string>
+	<string>BUDDI_VERSION, Copyright 2006 Wyatt Olson</string>
 	<key>CFBundleIconFile</key>
 	<string>Buddi.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>X</string>
+	<string>BUDDI_VERSION</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>Java</key>
