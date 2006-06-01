@@ -26,6 +26,8 @@ Buddi's core functions include:
 
 It runs on most major operating systems, but (like most programs), it looks much nicer when running on a Macintosh.
 
+To run the program, either double click on the .jar file (Windows), double click on the Buddi application file (Macintosh), or type from a command line (in the Buddi directory) 'java -jar Buddi.jar' (just about anything else).
+
 For more information on how to use Buddi to help with your finances, please see the online help documentation, at http://buddi.sourceforge.net.
 
 For bug reports, suggestions, or just to let me know that you are using the program, please email me.
