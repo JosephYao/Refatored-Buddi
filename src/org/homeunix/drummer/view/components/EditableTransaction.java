@@ -22,6 +22,8 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.homeunix.drummer.TranslateKeys;
@@ -49,7 +51,7 @@ public class EditableTransaction extends JPanel {
 	private final JComboBox transferTo;
 	private final JTextField number;
 	private final AutoCompleteTextField description;
-	private final AutoCompleteTextField memo;
+	private final JTextArea memo;
 	
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
@@ -67,7 +69,8 @@ public class EditableTransaction extends JPanel {
 		transferTo = new JComboBox();
 		number = new JTextField();
 		description = new AutoCompleteTextField(PrefsInstance.getInstance().getDescDict());
-		memo = new AutoCompleteTextField(PrefsInstance.getInstance().getMemoDict());
+//		memo = new AutoCompleteTextField(PrefsInstance.getInstance().getMemoDict());
+		memo = new JTextArea();
 		
 		components = new Vector<JComponent>();
 		
@@ -76,12 +79,7 @@ public class EditableTransaction extends JPanel {
 		
 		transferTo.setModel(toModel);
 		transferFrom.setModel(fromModel);
-		
-		Dimension textDimension = new Dimension(50, date.getPreferredSize().height);
-		date.setPreferredSize(textDimension);
-		amount.setPreferredSize(textDimension);
-		memo.setPreferredSize(textDimension);
-		
+				
 		number.setPreferredSize(new Dimension(34, number.getPreferredSize().height));
 		description.setPreferredSize(new Dimension(100, number.getPreferredSize().height));
 		
@@ -102,17 +100,15 @@ public class EditableTransaction extends JPanel {
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		
-		JPanel topRightPanel = new JPanel();
-		JPanel topLeftPanel = new JPanel();
-		JPanel bottomRightPanel = new JPanel();
-		JPanel bottomLeftPanel = new JPanel();
+//		JPanel topRightPanel = new JPanel();
+//		JPanel topLeftPanel = new JPanel();
+//		JPanel bottomRightPanel = new JPanel();
+//		JPanel bottomLeftPanel = new JPanel();
 
-		topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.X_AXIS));
-		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.X_AXIS));
-		bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.X_AXIS));
-		bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.X_AXIS));
-		
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//		topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.X_AXIS));
+//		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.X_AXIS));
+//		bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.X_AXIS));
+//		bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.X_AXIS));
 				
 		components.add(date);
 		components.add(amount);
@@ -124,31 +120,51 @@ public class EditableTransaction extends JPanel {
 		components.add(memo);
 //		components.add(this);
 		
-		topLeftPanel.add(date);
-		topLeftPanel.add(amount);
-		
-		topRightPanel.add(transferFrom);
-		topRightPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
-		topRightPanel.add(transferTo);
+		topPanel.add(date);
+		topPanel.add(description);
+		topPanel.add(number);
+//		topRightPanel.add(memo);
 
-		bottomLeftPanel.add(number);
-		bottomLeftPanel.add(description);
+		bottomPanel.add(amount);
 		
-		bottomRightPanel.add(memo);
+		bottomPanel.add(transferFrom);
+		bottomPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
+		bottomPanel.add(transferTo);
 
-		topPanel.add(topLeftPanel);
-		topPanel.add(topRightPanel);
-		bottomPanel.add(bottomLeftPanel);
-		bottomPanel.add(bottomRightPanel);
+//		topPanel.add(topLeftPanel);
+//		topPanel.add(topRightPanel);
+//		bottomPanel.add(bottomLeftPanel);
+//		bottomPanel.add(bottomRightPanel);
 		
 		
-		this.add(topPanel);
-		this.add(bottomPanel);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.add(topPanel);
+		mainPanel.add(bottomPanel);
 		
-		topRightPanel.setPreferredSize(new Dimension(400, topRightPanel.getPreferredSize().height));
-		topLeftPanel.setPreferredSize(new Dimension(200, topLeftPanel.getPreferredSize().height));
-		bottomRightPanel.setPreferredSize(new Dimension(350, bottomRightPanel.getPreferredSize().height));
-		bottomLeftPanel.setPreferredSize(new Dimension(300, bottomLeftPanel.getPreferredSize().height));
+		JScrollPane memoScroller = new JScrollPane(memo);
+		memoScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		memoScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.add(mainPanel);
+		this.add(memoScroller);
+		
+		int textHeight = date.getPreferredSize().height;
+		date.setPreferredSize(new Dimension(80, textHeight));
+		description.setPreferredSize(new Dimension(200, textHeight));
+		number.setPreferredSize(new Dimension(80, textHeight));
+		
+		amount.setPreferredSize(new Dimension(250, textHeight));
+		transferFrom.setPreferredSize(new Dimension(300, transferFrom.getPreferredSize().height));
+		transferTo.setPreferredSize(transferFrom.getPreferredSize());
+		
+		memoScroller.setPreferredSize(new Dimension(300, memo.getPreferredSize().height));
+		
+//		topRightPanel.setPreferredSize(new Dimension(400, topRightPanel.getPreferredSize().height));
+//		topLeftPanel.setPreferredSize(new Dimension(200, topLeftPanel.getPreferredSize().height));
+//		bottomRightPanel.setPreferredSize(new Dimension(400, bottomRightPanel.getPreferredSize().height));
+//		bottomLeftPanel.setPreferredSize(new Dimension(50, bottomLeftPanel.getPreferredSize().height));
 		
 		
 		
