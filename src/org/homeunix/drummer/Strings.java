@@ -168,6 +168,9 @@ public class Strings {
 	public final static String CHOOSE_DATASTORE_LOCATION = "CHOOSE_DATASTORE_LOCATION";
 	public final static String OVERWRITE_EXISTING_FILE = "OVERWRITE_EXISTING_FILE";
 	public final static String OVERWRITE_EXISTING_FILE_MESSAGE = "OVERWRITE_EXISTING_FILE_MESSAGE";
+	public final static String PREFERENCES_MENU_ITEM = "PREFERENCES_MENU_ITEM";
+	public final static String ABOUT_MENU_ITEM = "ABOUT_MENU_ITEM";
+	public final static String QUIT_MENU_ITEM = "QUIT_MENU_ITEM";
 	
 	private final Properties translations = new Properties();
 	
@@ -191,11 +194,11 @@ public class Strings {
 		}
 		return this;
 	}
-		
+
 	public String get(String key){
 		String ret = translations.getProperty(key);
 		if (ret == null)
-			return key;
+			return key.toString();
 		return ret;
 	}
 }

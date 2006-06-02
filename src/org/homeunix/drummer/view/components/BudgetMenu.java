@@ -352,9 +352,7 @@ public class BudgetMenu extends JScreenMenuBar {
 		// Get an About item instance. Here it's for Swing but there
 		// are also AWT variants like getAboutMenuItem().
 		AboutJMenuItem about = app.getAboutJMenuItem();
-		
-		// Add the action listener for it. Basically, you do what you
-		// would normally do. You could also use setAction() for example.
+		about.setText(Strings.inst().get(Strings.ABOUT_MENU_ITEM));
 		about.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -370,6 +368,7 @@ public class BudgetMenu extends JScreenMenuBar {
 		
 		// Do the same thing for the Preferences and Quit items
 		PreferencesJMenuItem preferences = app.getPreferencesJMenuItem();
+		preferences.setText(Strings.inst().get(Strings.PREFERENCES_MENU_ITEM));
 		preferences.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -380,6 +379,7 @@ public class BudgetMenu extends JScreenMenuBar {
 		if (!PreferencesJMenuItem.isAutomaticallyPresent())
 			edit.add(preferences);
 		QuitJMenuItem quit = app.getQuitJMenuItem();
+		quit.setText(Strings.inst().get(Strings.QUIT_MENU_ITEM));
 		quit.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)

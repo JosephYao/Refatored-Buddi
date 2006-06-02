@@ -151,3 +151,6 @@ NEW_DATA_FILE_SAVED=New data file was successfully created:\n
 CHOOSE_DATASTORE_LOCATION=Choose Datastore Location...
 OVERWRITE_EXISTING_FILE_MESSAGE=Are you sure that you want to overwrite the file:\n
 OVERWRITE_EXISTING_FILE=Overwrite Existing File
+PREFERENCES_MENU_ITEM=Preferences...
+QUIT_MENU_ITEM=Quit Buddi
+ABOUT_MENU_ITEM=About Buddi
