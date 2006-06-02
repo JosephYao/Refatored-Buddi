@@ -144,40 +144,13 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__DATE_FORMAT = 4;
 
 	/**
-	 * The feature id for the '<em><b>Memo Dict</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MEMO_DICT = 5;
-
-	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__TRANSACTIONS_WINDOW = 6;
-
-	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__GRAPHS_WINDOW = 7;
-
-	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__REPORTS_WINDOW = 8;
+	int PREFS__MAIN_WINDOW = 5;
 
 	/**
 	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
@@ -186,16 +159,34 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 9;
+	int PREFS__DESC_DICT = 6;
 
 	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MAIN_WINDOW = 10;
+	int PREFS__TRANSACTIONS_WINDOW = 7;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__GRAPHS_WINDOW = 8;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__REPORTS_WINDOW = 9;
 
 	/**
 	 * The number of structural features of the the '<em>Prefs</em>' class.
@@ -204,8 +195,36 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 11;
+	int PREFS_FEATURE_COUNT = 10;
 
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.UserPrefsImpl <em>User Prefs</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.UserPrefsImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
+	 * @generated
+	 */
+	int USER_PREFS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Prefs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER_PREFS__PREFS = 0;
+
+	/**
+	 * The number of structural features of the the '<em>User Prefs</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER_PREFS_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.WindowAttributesImpl <em>Window Attributes</em>}' class.
@@ -215,7 +234,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 2;
+	int WINDOW_ATTRIBUTES = 3;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -383,17 +402,6 @@ public interface PrefsPackage extends EPackage{
 	EReference getPrefs_MainWindow();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getMemoDict <em>Memo Dict</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Memo Dict</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getMemoDict()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_MemoDict();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -414,6 +422,27 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	EReference getPrefs_DescDict();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>User Prefs</em>'.
+	 * @see org.homeunix.drummer.prefs.UserPrefs
+	 * @generated
+	 */
+	EClass getUserPrefs();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.UserPrefs#getPrefs <em>Prefs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Prefs</em>'.
+	 * @see org.homeunix.drummer.prefs.UserPrefs#getPrefs()
+	 * @see #getUserPrefs()
+	 * @generated
+	 */
+	EReference getUserPrefs_Prefs();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.WindowAttributes <em>Window Attributes</em>}'.

@@ -36,12 +36,11 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowDeletedAccounts <em>Show Deleted Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDateFormat <em>Date Format</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMemoDict <em>Memo Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -149,14 +148,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String dateFormat = DATE_FORMAT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getMemoDict() <em>Memo Dict</em>}' containment reference list.
+	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMemoDict()
+	 * @see #getMainWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList memoDict = null;
+	protected WindowAttributes mainWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescDict()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList descDict = null;
 
 	/**
 	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
@@ -187,26 +196,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected WindowAttributes reportsWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList descDict = null;
-
-	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes mainWindow = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -465,18 +454,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMemoDict() {
-		if (memoDict == null) {
-			memoDict = new EObjectContainmentEList(DictEntry.class, this, PrefsPackage.PREFS__MEMO_DICT);
-		}
-		return memoDict;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public WindowAttributes getReportsWindow() {
 		return reportsWindow;
 	}
@@ -535,18 +512,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case PrefsPackage.PREFS__MEMO_DICT:
-					return ((InternalEList)getMemoDict()).basicRemove(otherEnd, msgs);
+				case PrefsPackage.PREFS__MAIN_WINDOW:
+					return basicSetMainWindow(null, msgs);
+				case PrefsPackage.PREFS__DESC_DICT:
+					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
 				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 					return basicSetTransactionsWindow(null, msgs);
 				case PrefsPackage.PREFS__GRAPHS_WINDOW:
 					return basicSetGraphsWindow(null, msgs);
 				case PrefsPackage.PREFS__REPORTS_WINDOW:
 					return basicSetReportsWindow(null, msgs);
-				case PrefsPackage.PREFS__DESC_DICT:
-					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-				case PrefsPackage.PREFS__MAIN_WINDOW:
-					return basicSetMainWindow(null, msgs);
 				default:
 					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
 			}
@@ -571,18 +546,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isShowDeletedCategories() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				return getDateFormat();
-			case PrefsPackage.PREFS__MEMO_DICT:
-				return getMemoDict();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
+			case PrefsPackage.PREFS__DESC_DICT:
+				return getDescDict();
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				return getTransactionsWindow();
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return getReportsWindow();
-			case PrefsPackage.PREFS__DESC_DICT:
-				return getDescDict();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -610,9 +583,12 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				setDateFormat((String)newValue);
 				return;
-			case PrefsPackage.PREFS__MEMO_DICT:
-				getMemoDict().clear();
-				getMemoDict().addAll((Collection)newValue);
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
+				getDescDict().addAll((Collection)newValue);
 				return;
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)newValue);
@@ -622,13 +598,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				getDescDict().addAll((Collection)newValue);
-				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -656,8 +625,11 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				setDateFormat(DATE_FORMAT_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__MEMO_DICT:
-				getMemoDict().clear();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
 				return;
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)null);
@@ -667,12 +639,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
 				return;
 		}
 		eDynamicUnset(eFeature);
@@ -695,18 +661,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return showDeletedCategories != SHOW_DELETED_CATEGORIES_EDEFAULT;
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				return DATE_FORMAT_EDEFAULT == null ? dateFormat != null : !DATE_FORMAT_EDEFAULT.equals(dateFormat);
-			case PrefsPackage.PREFS__MEMO_DICT:
-				return memoDict != null && !memoDict.isEmpty();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
+			case PrefsPackage.PREFS__DESC_DICT:
+				return descDict != null && !descDict.isEmpty();
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				return transactionsWindow != null;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return reportsWindow != null;
-			case PrefsPackage.PREFS__DESC_DICT:
-				return descDict != null && !descDict.isEmpty();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
 		}
 		return eDynamicIsSet(eFeature);
 	}

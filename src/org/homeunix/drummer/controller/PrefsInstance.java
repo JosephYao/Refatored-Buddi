@@ -23,6 +23,7 @@ import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsPackage;
+import org.homeunix.drummer.prefs.UserPrefs;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
@@ -42,7 +43,7 @@ public class PrefsInstance {
 		private static PrefsInstance instance = new PrefsInstance();		
 	}
 	
-	private Prefs prefs;
+	private UserPrefs userPrefs;
 	private PrefsFactory prefsFactory = PrefsFactoryImpl.eINSTANCE;
 
 	//Provide backing for the autocomplete text fields
@@ -96,13 +97,15 @@ public class PrefsInstance {
 			// Print the contents of the resource to System.out.
 			EList contents = resource.getContents();
 			if (contents.size() > 0){
-				prefs = (Prefs) contents.get(0);
+				userPrefs = (UserPrefs) contents.get(0);
 			}
 		}
 		//If there is a problem opening the file, we will prompt to make a new one
 		catch (Exception e){
 			//If the file does not exist, we make a new one w/o prompting.
-			prefs = prefsFactory.createPrefs();
+			userPrefs = prefsFactory.createUserPrefs();
+			Prefs prefs = prefsFactory.createPrefs();
+			userPrefs.setPrefs(prefs);
 			
 			//Create sane defaults for all the properties
 			//Ask the user where to put the data file.  This could possibly be on encrypted disk, etc.
@@ -158,7 +161,7 @@ public class PrefsInstance {
 			}
 			URI fileURI = URI.createFileURI(locationFile.getAbsolutePath());			
 			Resource resource = resourceSet.createResource(fileURI);			
-			resource.getContents().add(prefs);
+			resource.getContents().add(userPrefs);
 			
 			try{
 				resource.save(Collections.EMPTY_MAP);
@@ -167,7 +170,7 @@ public class PrefsInstance {
 		}
 		
 		//Load the auto complete entries into the dictionary
-		for (Object o : prefs.getDescDict()) {
+		for (Object o : userPrefs.getPrefs().getDescDict()) {
 			if (o instanceof DictEntry) {
 				descDict.add(((DictEntry) o).getEntry());
 			}
@@ -187,11 +190,11 @@ public class PrefsInstance {
 		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 		
 		//Translate between Set<String> (the dictionary) and the persistence model
-		prefs.getDescDict().retainAll(new Vector());
+		userPrefs.getPrefs().getDescDict().retainAll(new Vector());
 		for (String s : descDict) {
 			DictEntry d = prefsFactory.createDictEntry();
 			d.setEntry(s);
-			prefs.getDescDict().add(d);
+			userPrefs.getPrefs().getDescDict().add(d);
 		}
 //		prefs.getMemoDict().retainAll(new Vector());
 //		for (String s : memoDict) {
@@ -209,7 +212,7 @@ public class PrefsInstance {
 			
 			Resource resource = resourceSet.createResource(fileURI);
 			
-			resource.getContents().add(getPrefs());
+			resource.getContents().add(userPrefs);
 			
 			resource.save(Collections.EMPTY_MAP);
 		}
@@ -219,7 +222,7 @@ public class PrefsInstance {
 	}
 	
 	public Prefs getPrefs(){
-		return prefs;
+		return userPrefs.getPrefs();
 	}
 		
 	public static void setLocation(String location){
@@ -278,6 +281,7 @@ public class PrefsInstance {
 	}
 
 	public void checkSanity(){
+		Prefs prefs = getPrefs();
 		if (prefs.getMainWindow() == null)
 			prefs.setMainWindow(prefsFactory.createWindowAttributes());
 		if (prefs.getTransactionsWindow() == null)

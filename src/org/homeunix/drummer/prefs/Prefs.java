@@ -23,12 +23,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowDeletedAccounts <em>Show Deleted Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDateFormat <em>Date Format</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMemoDict <em>Memo Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -244,22 +243,6 @@ public interface Prefs extends EObject{
 	 * @generated
 	 */
 	void setMainWindow(WindowAttributes value);
-
-	/**
-	 * Returns the value of the '<em><b>Memo Dict</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.DictEntry}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Memo Dict</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Memo Dict</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_MemoDict()
-	 * @model type="org.homeunix.drummer.prefs.DictEntry" containment="true"
-	 * @generated
-	 */
-	EList getMemoDict();
 
 	/**
 	 * Returns the value of the '<em><b>Reports Window</b></em>' containment reference.
