@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
@@ -67,7 +67,7 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		int numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
 		
 		for (Category c : cats) {
-			sb.append("<tr><td>").append(Strings.inst().get(c.getName())).append("</td>");
+			sb.append("<tr><td>").append(Translate.inst().get(c.getName())).append("</td>");
 			long budgetedAmount = c.getBudgetedAmount() * numberOfMonths;
 			sb.append("<td>")
 					.append(Formatter.getInstance().getDecimalFormat().format(budgetedAmount / 100))

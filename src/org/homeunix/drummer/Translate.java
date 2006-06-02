@@ -12,7 +12,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 
-public class Strings {
+public class Translate {
 	//The list of constants, used as keys.  Makes it easier to rememebr the keys.
 	public final static String ABOUT_COPYRIGHT = "ABOUT_COPYRIGHT";
 	public final static String ABOUT_EMAIL = "ABOUT_EMAIL";
@@ -174,17 +174,17 @@ public class Strings {
 	
 	private final Properties translations = new Properties();
 	
-	public static Strings inst() {
+	public static Translate inst() {
 		return SingletonHolder.instance;
 	}
 	
 	private static class SingletonHolder {
-		private static Strings instance = new Strings();		
+		private static Translate instance = new Translate();		
 	}
 	
-	private Strings(){}
+	private Translate(){}
 	
-	public Strings loadLanguage(String language){
+	public Translate loadLanguage(String language){
 		String languageFile = Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
 		try{
 			translations.load(new BufferedInputStream(new FileInputStream(languageFile)));

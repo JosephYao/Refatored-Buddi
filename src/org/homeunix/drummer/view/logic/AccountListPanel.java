@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
@@ -50,14 +50,14 @@ public class AccountListPanel extends ListPanelLayout {
 					
 					Account a = getSelectedAccount();
 					
-					if (deleteButton.getText().equals(Strings.inst().get(Strings.DELETE))){
+					if (deleteButton.getText().equals(Translate.inst().get(Translate.DELETE))){
 						
 						//If there are no transactions using this source, ask if user wants to permanently delete source
 						if (DataInstance.getInstance().getTransactions(a).size() > 0 
 								|| JOptionPane.showConfirmDialog(
 										AccountListPanel.this,
-										Strings.inst().get(Strings.NO_TRANSACTIONS_USING_ACCOUNT),
-										Strings.inst().get(Strings.PERMANENT_DELETE_ACCOUNT),
+										Translate.inst().get(Translate.NO_TRANSACTIONS_USING_ACCOUNT),
+										Translate.inst().get(Translate.PERMANENT_DELETE_ACCOUNT),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
 							
@@ -123,7 +123,7 @@ public class AccountListPanel extends ListPanelLayout {
 		else
 			balanceLabel.setForeground(Color.RED);
 		
-		balanceLabel.setText(Strings.inst().get(Strings.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Strings.inst().get(Strings.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
+		balanceLabel.setText(Translate.inst().get(Translate.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Translate.inst().get(Translate.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
 		treeModel.reload(root);
 		

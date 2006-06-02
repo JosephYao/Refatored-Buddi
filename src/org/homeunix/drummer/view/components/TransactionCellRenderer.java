@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
@@ -120,7 +120,7 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 				Formatter.getInstance().getDateFormat().format(new Date()))
 		);
 		number.setText("");
-		description.setText(Strings.inst().get(Strings.NEW_TRANSACTION));
+		description.setText(Translate.inst().get(Translate.NEW_TRANSACTION));
 		balance.setText("");
 		memo.setText("");
 		amount.setText("");

@@ -21,7 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -54,10 +54,10 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane listScroller = new JScrollPane(tree);
 		
-		newButton = new JButton(Strings.inst().get(Strings.NEW));
-		editButton = new JButton(Strings.inst().get(Strings.EDIT));
-		deleteButton = new JButton(Strings.inst().get(Strings.DELETE));
-		openButton = new JButton(Strings.inst().get(Strings.OPEN));
+		newButton = new JButton(Translate.inst().get(Translate.NEW));
+		editButton = new JButton(Translate.inst().get(Translate.EDIT));
+		deleteButton = new JButton(Translate.inst().get(Translate.DELETE));
+		openButton = new JButton(Translate.inst().get(Translate.OPEN));
 		balanceLabel = new JLabel();
 		
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -152,7 +152,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			openButton.setEnabled(false);
-			deleteButton.setText(Strings.inst().get(Strings.DELETE));
+			deleteButton.setText(Translate.inst().get(Translate.DELETE));
 		}
 		else{
 			editButton.setEnabled(true);
@@ -160,9 +160,9 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			openButton.setEnabled(true);
 			
 			if (selectedSource.isDeleted())
-				deleteButton.setText(Strings.inst().get(Strings.UNDELETE));
+				deleteButton.setText(Translate.inst().get(Translate.UNDELETE));
 			else
-				deleteButton.setText(Strings.inst().get(Strings.DELETE));
+				deleteButton.setText(Translate.inst().get(Translate.DELETE));
 		}
 		return this;
 	}

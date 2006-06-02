@@ -20,7 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
@@ -40,7 +40,7 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	}
 	
 	public GraphFrameLayout(Date startDate, Date endDate){
-		okButton = new JButton(Strings.inst().get(Strings.OK));
+		okButton = new JButton(Translate.inst().get(Translate.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

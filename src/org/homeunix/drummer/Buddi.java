@@ -87,7 +87,7 @@ public class Buddi {
 			}
 		}
 
-		Strings.inst().loadLanguage(
+		Translate.inst().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage()
 		);
 		

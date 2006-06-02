@@ -17,7 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
 
 public abstract class ReportPanelLayout extends AbstractBudgetPanel {
@@ -101,14 +101,14 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		
 		JPanel reportsPanel = new JPanel();
 		reportsPanel.setLayout(new BoxLayout(reportsPanel, BoxLayout.Y_AXIS));
-		reportsPanel.setBorder(BorderFactory.createTitledBorder(Strings.inst().get(Strings.REPORTS)));
+		reportsPanel.setBorder(BorderFactory.createTitledBorder(Translate.inst().get(Translate.REPORTS)));
 		JPanel graphsPanel = new JPanel();
 		graphsPanel.setLayout(new BoxLayout(graphsPanel, BoxLayout.Y_AXIS));
-		graphsPanel.setBorder(BorderFactory.createTitledBorder(Strings.inst().get(Strings.GRAPHS)));
+		graphsPanel.setBorder(BorderFactory.createTitledBorder(Translate.inst().get(Translate.GRAPHS)));
 		
 		JPanel r1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		r1.add(new JLabel(Strings.inst().get(Strings.REPORT_FOR)));
+		r1.add(new JLabel(Translate.inst().get(Translate.REPORT_FOR)));
 		r1.add(incomeExpenseReportIntervalChooser);
 		
 		
@@ -118,19 +118,19 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		JPanel g4 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel g5 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
-		g1.add(new JLabel(Strings.inst().get(Strings.EXPENSE_PIE_GRAPH)));
+		g1.add(new JLabel(Translate.inst().get(Translate.EXPENSE_PIE_GRAPH)));
 		g1.add(expensePieGraphIntervalChooser);
 
-		g2.add(new JLabel(Strings.inst().get(Strings.INCOME_PIE_GRAPH)));
+		g2.add(new JLabel(Translate.inst().get(Translate.INCOME_PIE_GRAPH)));
 		g2.add(incomePieGraphIntervalChooser);
 		
-		g3.add(new JLabel(Strings.inst().get(Strings.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH)));
+		g3.add(new JLabel(Translate.inst().get(Translate.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH)));
 		g3.add(revenueExpenseBarGraphIntervalChooser);
 
-		g4.add(new JLabel(Strings.inst().get(Strings.NETWORTH_PIE_GRAPH)));
+		g4.add(new JLabel(Translate.inst().get(Translate.NETWORTH_PIE_GRAPH)));
 		g4.add(netWorthPieGraphIntervalChooser);
 
-		g5.add(new JLabel(Strings.inst().get(Strings.NETWORTH_LINE_GRAPH)));
+		g5.add(new JLabel(Translate.inst().get(Translate.NETWORTH_LINE_GRAPH)));
 		g5.add(netWorthOverTimeLineGraphIntervalChooser);
 
 		

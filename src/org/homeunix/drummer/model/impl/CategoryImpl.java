@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
@@ -335,10 +335,10 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 */
 	public String toString() {
 		if (getParent() == null) {
-			return Strings.inst().get(getName());
+			return Translate.inst().get(getName());
 		}
 		else {
-			return getParent().toString() + " " + Strings.inst().get(getName());
+			return getParent().toString() + " " + Translate.inst().get(getName());
 		}
 	}
 	
@@ -346,7 +346,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 		StringBuffer sb = new StringBuffer();
 		sb.append(toString());
 		sb.append(" : ");
-		sb.append(Strings.inst().get(Strings.CURRENCY_SIGN));
+		sb.append(Translate.inst().get(Translate.CURRENCY_SIGN));
 		sb.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) getBudgetedAmount() / 100.0)));
 		
 		return sb.toString();

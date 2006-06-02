@@ -9,7 +9,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Type;
@@ -21,14 +21,14 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 
 	public AccountModifyDialog(){
 		super(MainBudgetFrame.getInstance());
-		amountLabel.setText(Strings.inst().get(Strings.STARTING_BALANCE));
-		pulldownLabel.setText(Strings.inst().get(Strings.ACCOUNT_TYPE));
+		amountLabel.setText(Translate.inst().get(Translate.STARTING_BALANCE));
+		pulldownLabel.setText(Translate.inst().get(Translate.ACCOUNT_TYPE));
 		check.setVisible(false);
 		gap.setVisible(false);
 	}
 
 	protected String getType(){
-		return Strings.inst().get(Strings.ACCOUNT);
+		return Translate.inst().get(Translate.ACCOUNT);
 	}
 		
 	@Override
@@ -38,8 +38,8 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 				if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
 					JOptionPane.showMessageDialog(
 							AccountModifyDialog.this, 
-							Strings.inst().get(Strings.ENTER_ACCOUNT_NAME_AND_TYPE),
-							Strings.inst().get(Strings.MORE_INFO_NEEDED),
+							Translate.inst().get(Translate.ENTER_ACCOUNT_NAME_AND_TYPE),
+							Translate.inst().get(Translate.MORE_INFO_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				else{

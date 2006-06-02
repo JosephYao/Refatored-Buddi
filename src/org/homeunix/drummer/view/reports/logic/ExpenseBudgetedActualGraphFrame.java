@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
@@ -48,12 +48,12 @@ public class ExpenseBudgetedActualGraphFrame extends GraphFrameLayout {
 		}
 		
 		for (Category c : cats) {
-			barData.addValue((Number) new Double(categories.get(c) / 100.0), Strings.inst().get(Strings.ACTUAL), Strings.inst().get(c.getName()));
-			barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfMonths / 100.0), Strings.inst().get(Strings.BUDGETED), Strings.inst().get(c.getName()));
+			barData.addValue((Number) new Double(categories.get(c) / 100.0), Translate.inst().get(Translate.ACTUAL), Translate.inst().get(c.getName()));
+			barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfMonths / 100.0), Translate.inst().get(Translate.BUDGETED), Translate.inst().get(c.getName()));
 		}
 		
 		JFreeChart chart = ChartFactory.createBarChart(
-				Strings.inst().get(Strings.EXPENSE_ACTUAL_BUDGET)
+				Translate.inst().get(Translate.EXPENSE_ACTUAL_BUDGET)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

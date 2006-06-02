@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.components.JNumberField;
@@ -47,10 +47,10 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	protected ModifyDialogLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Strings.inst().get(Strings.OK));
-		cancelButton = new JButton(Strings.inst().get(Strings.CANCEL));
+		okButton = new JButton(Translate.inst().get(Translate.OK));
+		cancelButton = new JButton(Translate.inst().get(Translate.CANCEL));
 				
-		nameLabel = new JLabel(Strings.inst().get(Strings.NAME));
+		nameLabel = new JLabel(Translate.inst().get(Translate.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
 		amount = new JNumberField(Formatter.getInstance().getDecimalFormat());
@@ -64,7 +64,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		cancelButton.setPreferredSize(buttonSize);
 		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
 		
-		check = new JCheckBox(Strings.inst().get(Strings.INCOME));
+		check = new JCheckBox(Translate.inst().get(Translate.INCOME));
 		
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
 		textPanel.add(nameLabel);
@@ -112,13 +112,13 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		pulldown.setSelectedItem(null);
 		check.setSelected(false);
 		this.source = null;
-		this.setTitle(Strings.inst().get(Strings.NEW) + " " + getType());
+		this.setTitle(Translate.inst().get(Translate.NEW) + " " + getType());
 		return this;
 	}
 	
 	public AbstractBudgetDialog loadSource(SourceType source){
 		this.source = source;
-		this.setTitle(Strings.inst().get(Strings.EDIT) + " " + getType());
+		this.setTitle(Translate.inst().get(Translate.EDIT) + " " + getType());
 		return this;
 	}
 	

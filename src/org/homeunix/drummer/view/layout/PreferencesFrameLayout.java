@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 
 public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
@@ -37,24 +37,24 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected PreferencesFrameLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Strings.inst().get(Strings.OK));
-		cancelButton = new JButton(Strings.inst().get(Strings.CANCEL));
+		okButton = new JButton(Translate.inst().get(Translate.OK));
+		cancelButton = new JButton(Translate.inst().get(Translate.CANCEL));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 				
-		JLabel languageLabel = new JLabel(Strings.inst().get(Strings.LANGUAGE));
+		JLabel languageLabel = new JLabel(Translate.inst().get(Translate.LANGUAGE));
 		languageModel = new DefaultComboBoxModel();
 		language = new JComboBox(languageModel);
 		
-		JLabel dateFormatLabel = new JLabel(Strings.inst().get(Strings.DATE_FORMAT));
+		JLabel dateFormatLabel = new JLabel(Translate.inst().get(Translate.DATE_FORMAT));
 		
 		//Add the date formats defined in Const.
 		dateFormat = new JComboBox(Const.dateFormats);
 		
-		showDeletedAccounts = new JCheckBox(Strings.inst().get(Strings.SHOW_DELETED_ACCOUNTS));
-		showDeletedCategories = new JCheckBox(Strings.inst().get(Strings.SHOW_DELETED_CATEGORIES));
+		showDeletedAccounts = new JCheckBox(Translate.inst().get(Translate.SHOW_DELETED_ACCOUNTS));
+		showDeletedCategories = new JCheckBox(Translate.inst().get(Translate.SHOW_DELETED_CATEGORIES));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -97,7 +97,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		this.setTitle(Strings.inst().get(Strings.PREFERENCES));
+		this.setTitle(Translate.inst().get(Translate.PREFERENCES));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);

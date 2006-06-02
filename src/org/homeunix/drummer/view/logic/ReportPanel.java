@@ -11,7 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -111,26 +111,26 @@ public class ReportPanel extends ReportPanelLayout {
 		intervals.add(new DateChoice(
 				DateUtil.getBeginOfMonth(DateUtil.getStartDate(new Date()), 0),
 				DateUtil.getEndOfMonth(DateUtil.getEndDate(new Date()), 0),
-				Strings.inst().get(Strings.THIS_MONTH)
+				Translate.inst().get(Translate.THIS_MONTH)
 		));
 		intervals.add(new DateChoice(
 				DateUtil.getBeginOfMonth(DateUtil.getStartDate(new Date()), -1),
 				DateUtil.getEndOfMonth(DateUtil.getEndDate(new Date()), -1),
-				Strings.inst().get(Strings.LAST_MONTH)
+				Translate.inst().get(Translate.LAST_MONTH)
 		));
 		intervals.add(new DateChoice(
 				DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR)),
 				DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR)),
-				Strings.inst().get(Strings.THIS_YEAR)
+				Translate.inst().get(Translate.THIS_YEAR)
 		));
 		
 		intervals.add(new DateChoice(
 				DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1),
 				DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1),
-				Strings.inst().get(Strings.LAST_YEAR)
+				Translate.inst().get(Translate.LAST_YEAR)
 		));
 		intervals.add(new DateChoice(
-				Strings.inst().get(Strings.OTHER)
+				Translate.inst().get(Translate.OTHER)
 		));
 		
 		return intervals;
@@ -144,30 +144,30 @@ public class ReportPanel extends ReportPanelLayout {
 		endDates.add(new DateChoice(
 				null,
 				new Date(),
-				Strings.inst().get(Strings.TODAY)
+				Translate.inst().get(Translate.TODAY)
 		));
 		endDates.add(new DateChoice(
 				null,
 				DateUtil.getNextNDay(new Date(), -1),
-				Strings.inst().get(Strings.YESTERDAY)
+				Translate.inst().get(Translate.YESTERDAY)
 		));
 		endDates.add(new DateChoice(
 				null,
 				DateUtil.getNextNDay(new Date(), -8),
-				Strings.inst().get(Strings.LAST_WEEK)
+				Translate.inst().get(Translate.LAST_WEEK)
 		));
 		endDates.add(new DateChoice(
 				null,
 				DateUtil.getNextNDay(new Date(), -30),
-				Strings.inst().get(Strings.LAST_MONTH)
+				Translate.inst().get(Translate.LAST_MONTH)
 		));
 		endDates.add(new DateChoice(
 				null,
 				DateUtil.getNextNDay(new Date(), -365),
-				Strings.inst().get(Strings.LAST_YEAR)
+				Translate.inst().get(Translate.LAST_YEAR)
 		));
 		endDates.add(new DateChoice(
-				Strings.inst().get(Strings.OTHER)
+				Translate.inst().get(Translate.OTHER)
 		));
 		
 
@@ -183,27 +183,27 @@ public class ReportPanel extends ReportPanelLayout {
 		startDates.add(new DateChoice(
 				DateUtil.getNextNDay(new Date(), -30),
 				null,
-				Strings.inst().get(Strings.ONE_MONTH)
+				Translate.inst().get(Translate.ONE_MONTH)
 		));
 		startDates.add(new DateChoice(
 				DateUtil.getNextNDay(new Date(), -60),
 				null,
-				Strings.inst().get(Strings.TWO_MONTHS)
+				Translate.inst().get(Translate.TWO_MONTHS)
 		));
 		startDates.add(new DateChoice(
 				DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -6),
 				null,
-				Strings.inst().get(Strings.SIX_MONTHS)
+				Translate.inst().get(Translate.SIX_MONTHS)
 		));
 		
 		startDates.add(new DateChoice(
 				DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -12),
 				null,
-				Strings.inst().get(Strings.YEAR)
+				Translate.inst().get(Translate.YEAR)
 		));
 		
 		startDates.add(new DateChoice(
-				Strings.inst().get(Strings.OTHER)
+				Translate.inst().get(Translate.OTHER)
 		));
 		
 		return startDates;

@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
@@ -53,8 +53,8 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 				if (endDate.before(startDate)){
 					JOptionPane.showMessageDialog(
 							null, 
-							Strings.inst().get(Strings.START_DATE_AFTER_END_DATE), 
-							Strings.inst().get(Strings.REPORT_DATE_ERROR), 
+							Translate.inst().get(Translate.START_DATE_AFTER_END_DATE), 
+							Translate.inst().get(Translate.REPORT_DATE_ERROR), 
 							JOptionPane.ERROR_MESSAGE
 					);
 					return;
@@ -100,7 +100,7 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 	}
 	
 	protected void setVisibility(){
-		mainLabel.setText(Strings.inst().get(Strings.REPORT_BETWEEN));
-		middleLabel.setText(Strings.inst().get(Strings.AND));		
+		mainLabel.setText(Translate.inst().get(Translate.REPORT_BETWEEN));
+		middleLabel.setText(Translate.inst().get(Translate.AND));		
 	}	
 }

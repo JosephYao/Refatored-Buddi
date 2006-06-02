@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Type;
 
@@ -212,7 +212,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 //		result.append(')');
 //		return result.toString();
 		
-		return Strings.inst().get(name);
+		return Translate.inst().get(name);
 	}
 	
 	public int compareTo(Type arg0) {

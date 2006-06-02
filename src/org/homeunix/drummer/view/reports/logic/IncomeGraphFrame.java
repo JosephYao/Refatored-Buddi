@@ -11,7 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -40,11 +40,11 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 		
 		for (Category c : cats) {
 			if (categories.get(c) > 0)
-				pieData.setValue(Strings.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
+				pieData.setValue(Translate.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
-				Strings.inst().get(Strings.INCOME)
+				Translate.inst().get(Translate.INCOME)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

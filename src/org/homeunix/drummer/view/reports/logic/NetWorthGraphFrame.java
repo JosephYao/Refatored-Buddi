@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -38,7 +38,7 @@ public class NetWorthGraphFrame extends GraphFrameLayout {
 		}
 				
 		JFreeChart chart = ChartFactory.createBarChart(
-				Strings.inst().get(Strings.NET_WORTH)
+				Translate.inst().get(Translate.NET_WORTH)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ")",

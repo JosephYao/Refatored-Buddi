@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.Strings;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Accounts;
 import org.homeunix.drummer.model.Categories;
@@ -175,18 +175,18 @@ public class DataInstance {
 				
 				//Default starting categories
 				String[] expenseNames = {
-						Strings.AUTO, 
-						Strings.ENTERTAINMENT, 
-						Strings.HOUSEHOLD, 
-						Strings.GROCERIES, 
-						Strings.INVESTMENT_EXPENSES, 
-						Strings.MISC_EXPENSES, 
-						Strings.UTILITIES
+						Translate.AUTO, 
+						Translate.ENTERTAINMENT, 
+						Translate.HOUSEHOLD, 
+						Translate.GROCERIES, 
+						Translate.INVESTMENT_EXPENSES, 
+						Translate.MISC_EXPENSES, 
+						Translate.UTILITIES
 				};
 				String[] incomeNames = {
-						Strings.BONUS, 
-						Strings.SALARY, 
-						Strings.INVESTMENT_INCOME
+						Translate.BONUS, 
+						Translate.SALARY, 
+						Translate.INVESTMENT_INCOME
 				};
 				
 				for (String s : expenseNames){
@@ -206,10 +206,10 @@ public class DataInstance {
 				
 				//Default starting types - debit
 				String[] debitNames = {
-						Strings.CASH, 
-						Strings.SAVINGS,
-						Strings.CHEQUING,
-						Strings.INVESTMENT				
+						Translate.CASH, 
+						Translate.SAVINGS,
+						Translate.CHEQUING,
+						Translate.INVESTMENT				
 				};
 				
 				for (String s : debitNames){
@@ -218,9 +218,9 @@ public class DataInstance {
 
 				//Default starting types - credit
 				String[] creditNames = {
-						Strings.LIABILITY,
-						Strings.CREDIT_CARD, 
-						Strings.LINE_OF_CREDIT
+						Translate.LIABILITY,
+						Translate.CREDIT_CARD, 
+						Translate.LINE_OF_CREDIT
 				};
 				
 				for (String s : creditNames){
