@@ -7,7 +7,6 @@
 package org.homeunix.drummer.model.impl;
 
 import java.util.Date;
-
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -15,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
@@ -320,7 +320,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		result.append("): ");
 		if ((isCredit() ^ balance <= 0) && balance != 0)
 			result.append("-");
-		result.append(Translate.inst().get(Translate.CURRENCY_SIGN));
+		result.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN));
 		result.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)));
 		return result.toString();
 	}

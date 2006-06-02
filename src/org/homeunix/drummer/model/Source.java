@@ -107,6 +107,6 @@ public interface Source extends EObject, Comparable<Source> {
 	 */
 	void setCreationDate(Date value);
 
-	public String toStringLong();
+//	public String toStringLong();
 
 } // Source

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Accounts;
 import org.homeunix.drummer.model.Categories;
@@ -174,57 +174,57 @@ public class DataInstance {
 				dataModel.setAllTypes(types);
 				
 				//Default starting categories
-				String[] expenseNames = {
-						Translate.AUTO, 
-						Translate.ENTERTAINMENT, 
-						Translate.HOUSEHOLD, 
-						Translate.GROCERIES, 
-						Translate.INVESTMENT_EXPENSES, 
-						Translate.MISC_EXPENSES, 
-						Translate.UTILITIES
+				TranslateKeys[] expenseNames = {
+						TranslateKeys.AUTO, 
+						TranslateKeys.ENTERTAINMENT, 
+						TranslateKeys.HOUSEHOLD, 
+						TranslateKeys.GROCERIES, 
+						TranslateKeys.INVESTMENT_EXPENSES, 
+						TranslateKeys.MISC_EXPENSES, 
+						TranslateKeys.UTILITIES
 				};
-				String[] incomeNames = {
-						Translate.BONUS, 
-						Translate.SALARY, 
-						Translate.INVESTMENT_INCOME
+				TranslateKeys[] incomeNames = {
+						TranslateKeys.BONUS, 
+						TranslateKeys.SALARY, 
+						TranslateKeys.INVESTMENT_INCOME
 				};
 				
-				for (String s : expenseNames){
+				for (TranslateKeys s : expenseNames){
 					Category c = getDataModelFactory().createCategory();
-					c.setName(s);
+					c.setName(s.toString());
 					c.setBudgetedAmount(0);
 					c.setIncome(false);
 					categories.getCategories().add(c);
 				}
-				for (String s : incomeNames){
+				for (TranslateKeys s : incomeNames){
 					Category c = getDataModelFactory().createCategory();
-					c.setName(s);
+					c.setName(s.toString());
 					c.setBudgetedAmount(0);
 					c.setIncome(true);
 					categories.getCategories().add(c);
 				}
 				
 				//Default starting types - debit
-				String[] debitNames = {
-						Translate.CASH, 
-						Translate.SAVINGS,
-						Translate.CHEQUING,
-						Translate.INVESTMENT				
+				TranslateKeys[] debitNames = {
+						TranslateKeys.CASH, 
+						TranslateKeys.SAVINGS,
+						TranslateKeys.CHEQUING,
+						TranslateKeys.INVESTMENT				
 				};
 				
-				for (String s : debitNames){
-					addType(s, false);
+				for (TranslateKeys s : debitNames){
+					addType(s.toString(), false);
 				}				
 
 				//Default starting types - credit
-				String[] creditNames = {
-						Translate.LIABILITY,
-						Translate.CREDIT_CARD, 
-						Translate.LINE_OF_CREDIT
+				TranslateKeys[] creditNames = {
+						TranslateKeys.LIABILITY,
+						TranslateKeys.CREDIT_CARD, 
+						TranslateKeys.LINE_OF_CREDIT
 				};
 				
-				for (String s : creditNames){
-					addType(s, true);
+				for (TranslateKeys s : creditNames){
+					addType(s.toString(), true);
 				}				
 				
 				ResourceSet resourceSet = new ResourceSetImpl();			

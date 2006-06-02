@@ -7,7 +7,6 @@
 package org.homeunix.drummer.model.impl;
 
 import java.util.Collection;
-
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -21,7 +20,6 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
-import org.homeunix.drummer.util.Formatter;
 
 /**
  * <!-- begin-user-doc -->
@@ -342,15 +340,15 @@ public class CategoryImpl extends SourceImpl implements Category {
 		}
 	}
 	
-	public String toStringLong(){
-		StringBuffer sb = new StringBuffer();
-		sb.append(toString());
-		sb.append(" : ");
-		sb.append(Translate.inst().get(Translate.CURRENCY_SIGN));
-		sb.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) getBudgetedAmount() / 100.0)));
-		
-		return sb.toString();
-	}
+//	public String toStringLong(){
+//		StringBuffer sb = new StringBuffer();
+//		sb.append(toString());
+//		sb.append(" : ");
+//		sb.append(Translate.inst().get(Strings.CURRENCY_SIGN));
+//		sb.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) getBudgetedAmount() / 100.0)));
+//		
+//		return sb.toString();
+//	}
 
 	@Override
 	public int compareTo(Source arg0) {
