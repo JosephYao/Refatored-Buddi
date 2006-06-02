@@ -5,6 +5,7 @@ package org.homeunix.drummer.view.components;
 
 import javax.swing.JLabel;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.Formatter;
 
@@ -13,7 +14,7 @@ public class JDecimalLabel extends JLabel {
 	
 	public void setValue(Long value){
 		super.setText(
-				Translate.inst().get(Translate.CURRENCY_SIGN)
+				Translate.inst().get(TranslateKeys.CURRENCY_SIGN)
 				+ Formatter.getInstance().getDecimalFormat().format((double) value / 100.0)
 		);
 	}

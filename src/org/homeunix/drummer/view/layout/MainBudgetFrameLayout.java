@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -33,13 +34,13 @@ public abstract class MainBudgetFrameLayout extends AbstractBudgetFrame {
 		accountListPanel = new AccountListPanel();
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
-		tabs.addTab(Translate.inst().get(Translate.MY_ACCOUNTS), accountListPanel);
-		tabs.addTab(Translate.inst().get(Translate.MY_BUDGET), categoryListPanel);
-		tabs.addTab(Translate.inst().get(Translate.REPORTS), reportPanel);
+		tabs.addTab(Translate.inst().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
+		tabs.addTab(Translate.inst().get(TranslateKeys.MY_BUDGET), categoryListPanel);
+		tabs.addTab(Translate.inst().get(TranslateKeys.REPORTS), reportPanel);
 		
 		mainPanel.add(tabs, BorderLayout.CENTER);
 		
-		this.setTitle(Translate.inst().get(Translate.BUDDI));
+		this.setTitle(Translate.inst().get(TranslateKeys.BUDDI));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 	}

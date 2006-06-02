@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Formatter;
@@ -44,7 +45,7 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
-				Translate.inst().get(Translate.INCOME)
+				Translate.inst().get(TranslateKeys.INCOME)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

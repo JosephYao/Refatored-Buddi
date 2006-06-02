@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
@@ -47,10 +48,10 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	protected ModifyDialogLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Translate.inst().get(Translate.OK));
-		cancelButton = new JButton(Translate.inst().get(Translate.CANCEL));
+		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
+		cancelButton = new JButton(Translate.inst().get(TranslateKeys.CANCEL));
 				
-		nameLabel = new JLabel(Translate.inst().get(Translate.NAME));
+		nameLabel = new JLabel(Translate.inst().get(TranslateKeys.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
 		amount = new JNumberField(Formatter.getInstance().getDecimalFormat());
@@ -64,7 +65,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		cancelButton.setPreferredSize(buttonSize);
 		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
 		
-		check = new JCheckBox(Translate.inst().get(Translate.INCOME));
+		check = new JCheckBox(Translate.inst().get(TranslateKeys.INCOME));
 		
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
 		textPanel.add(nameLabel);
@@ -112,13 +113,13 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		pulldown.setSelectedItem(null);
 		check.setSelected(false);
 		this.source = null;
-		this.setTitle(Translate.inst().get(Translate.NEW) + " " + getType());
+		this.setTitle(Translate.inst().get(TranslateKeys.NEW) + " " + getType());
 		return this;
 	}
 	
 	public AbstractBudgetDialog loadSource(SourceType source){
 		this.source = source;
-		this.setTitle(Translate.inst().get(Translate.EDIT) + " " + getType());
+		this.setTitle(Translate.inst().get(TranslateKeys.EDIT) + " " + getType());
 		return this;
 	}
 	

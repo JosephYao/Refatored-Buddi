@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.Log;
@@ -34,7 +35,7 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	
 	public ReportFrameLayout(Date startDate, Date endDate){
 		reportLabel = new JLabel();
-		okButton = new JButton(Translate.inst().get(Translate.OK));
+		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

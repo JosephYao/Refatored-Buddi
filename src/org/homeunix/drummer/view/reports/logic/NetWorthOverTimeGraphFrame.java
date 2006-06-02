@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.util.DateUtil;
@@ -67,13 +68,13 @@ public class NetWorthOverTimeGraphFrame extends GraphFrameLayout {
 //				barData.addValue((Number) new Double(accounts.get(a) / 100.0), Formatter.getInstance().getDateFormat().format(d), a.getName());
 				total += accounts.get(a);
 			}
-			barData.addValue((Number) new Double(total / 100.0), Translate.inst().get(Translate.NET_WORTH), Formatter.getInstance().getShortDateFormat().format(d));
+			barData.addValue((Number) new Double(total / 100.0), Translate.inst().get(TranslateKeys.NET_WORTH), Formatter.getInstance().getShortDateFormat().format(d));
 		}
 		
 		
 		
 		JFreeChart chart = ChartFactory.createLineChart(
-				Translate.inst().get(Translate.NET_WORTH)				
+				Translate.inst().get(TranslateKeys.NET_WORTH)				
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

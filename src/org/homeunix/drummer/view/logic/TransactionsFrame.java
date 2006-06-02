@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
@@ -33,7 +34,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		this.account = account;
 		
-		this.setTitle(Translate.inst().get(Translate.TRANSACTIONS) + " - " + account.getName());
+		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		
 		editableTransaction.clearTransaction();
 		updateContent();
@@ -68,15 +69,15 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						|| editableTransaction.getTransferFrom() == null
 						|| (editableTransaction.getTransferFrom() != account
 								&& editableTransaction.getTransferTo() != account)){
-					JOptionPane.showMessageDialog(TransactionsFrame.this, Translate.inst().get(Translate.RECORD_BUTTON_ERROR));
+					JOptionPane.showMessageDialog(TransactionsFrame.this, Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR));
 					return;
 				}
 
 				
 				Transaction t;
-				if (recordButton.getText().equals(Translate.inst().get(Translate.RECORD)))
+				if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
 					t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-				else if (recordButton.getText().equals(Translate.inst().get(Translate.UPDATE)))
+				else if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.UPDATE)))
 					t = (Transaction) list.getSelectedValue();
 				else {
 					Log.error("Unknown record button state: " + recordButton.getText());
@@ -98,7 +99,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				t.setMemo(editableTransaction.getMemo());
 				t.setNumber(editableTransaction.getNumber());
 				
-				if (recordButton.getText().equals(Translate.inst().get(Translate.RECORD)))
+				if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
 					DataInstance.getInstance().addTransaction(t);
 				else {
 					DataInstance.getInstance().calculateAllBalances();
@@ -119,8 +120,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				if (JOptionPane.showConfirmDialog(
 						TransactionsFrame.this,
-						Translate.inst().get(Translate.CLEAR_TRANSACTION_LOSE_CHANGES),
-						Translate.inst().get(Translate.CLEAR_TRANSACTION),
+						Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
+						Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION),
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
@@ -138,8 +139,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				if (JOptionPane.showConfirmDialog(
 						TransactionsFrame.this, 
-						Translate.inst().get(Translate.DELETE_TRANSACTION_LOSE_CHANGES),
-						Translate.inst().get(Translate.DELETE_TRANSACTION),
+						Translate.inst().get(TranslateKeys.DELETE_TRANSACTION_LOSE_CHANGES),
+						Translate.inst().get(TranslateKeys.DELETE_TRANSACTION),
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
@@ -183,7 +184,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 	
 	protected AbstractBudgetFrame initContent(){
-		this.setTitle(account.getName() + " - " + Translate.inst().get(Translate.TRANSACTIONS));
+		this.setTitle(account.getName() + " - " + Translate.inst().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
 		editableTransaction.clearTransaction();
 		
@@ -209,13 +210,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public AbstractBudgetFrame updateButtons(){
 		if (editableTransaction == null 
 				|| editableTransaction.getTransaction() == null){
-			recordButton.setText(Translate.inst().get(Translate.RECORD));
-			clearButton.setText(Translate.inst().get(Translate.CLEAR));
+			recordButton.setText(Translate.inst().get(TranslateKeys.RECORD));
+			clearButton.setText(Translate.inst().get(TranslateKeys.CLEAR));
 			deleteButton.setEnabled(false);
 		}
 		else{
-			recordButton.setText(Translate.inst().get(Translate.UPDATE));
-			clearButton.setText(Translate.inst().get(Translate.NEW));
+			recordButton.setText(Translate.inst().get(TranslateKeys.UPDATE));
+			clearButton.setText(Translate.inst().get(TranslateKeys.NEW));
 			deleteButton.setEnabled(true);
 		}
 		

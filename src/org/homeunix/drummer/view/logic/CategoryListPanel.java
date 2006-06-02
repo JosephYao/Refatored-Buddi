@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Category;
@@ -55,15 +56,15 @@ public class CategoryListPanel extends ListPanelLayout {
 				if (getSelectedCategory() != null) {
 					Category c = getSelectedCategory();
 					
-					if (deleteButton.getText().equals(Translate.inst().get(Translate.DELETE))){
+					if (deleteButton.getText().equals(Translate.inst().get(TranslateKeys.DELETE))){
 						
 						//If there are no transactions using this source, ask if user wants to permanently delete source
 						if (DataInstance.getInstance().getTransactions(c).size() > 0 
 								|| c.getChildren().size() > 0
 								|| JOptionPane.showConfirmDialog(
 										CategoryListPanel.this,
-										Translate.inst().get(Translate.NO_TRANSACTIONS_USING_CATEGORY),
-										Translate.inst().get(Translate.PERMANENT_DELETE_CATEGORY),
+										Translate.inst().get(TranslateKeys.NO_TRANSACTIONS_USING_CATEGORY),
+										Translate.inst().get(TranslateKeys.PERMANENT_DELETE_CATEGORY),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
 							
@@ -142,10 +143,10 @@ public class CategoryListPanel extends ListPanelLayout {
 			balanceLabel.setForeground(Color.BLACK);
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append(Translate.inst().get(Translate.BUDGET_NET_INCOME))
+		sb.append(Translate.inst().get(TranslateKeys.BUDGET_NET_INCOME))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
-				.append(Translate.inst().get(Translate.CURRENCY_SIGN))
+				.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
 				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)));
 		
 		balanceLabel.setText(sb.toString());

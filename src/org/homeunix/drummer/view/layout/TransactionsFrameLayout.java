@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -45,16 +46,16 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
 		
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.inst().get(Translate.TRANSACTIONS)));
+		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.inst().get(TranslateKeys.TRANSACTIONS)));
 		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
 		
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
 		editableTransaction.updateContent();
 		
-		recordButton = new JButton(Translate.inst().get(Translate.RECORD));
-		clearButton = new JButton(Translate.inst().get(Translate.CLEAR));
-		deleteButton = new JButton(Translate.inst().get(Translate.DELETE));
+		recordButton = new JButton(Translate.inst().get(TranslateKeys.RECORD));
+		clearButton = new JButton(Translate.inst().get(TranslateKeys.CLEAR));
+		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
 		
 		Dimension buttonSize = new Dimension(100, recordButton.getPreferredSize().height);
 		recordButton.setPreferredSize(buttonSize);

@@ -14,6 +14,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
@@ -96,7 +97,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
-					.append(Translate.inst().get(Translate.CURRENCY_SIGN))
+					.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
 					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");
@@ -151,7 +152,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
-					.append(Translate.inst().get(Translate.CURRENCY_SIGN))
+					.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
 					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");

@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.Log;
@@ -31,8 +32,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 						|| !PrefsInstance.getInstance().getPrefs().getDateFormat().equals(dateFormat.getSelectedItem().toString()))
 					JOptionPane.showMessageDialog(
 							PreferencesFrame.this,
-							Translate.inst().get(Translate.RESTART),
-							Translate.inst().get(Translate.RESTART_NEEDED),
+							Translate.inst().get(TranslateKeys.RESTART),
+							Translate.inst().get(TranslateKeys.RESTART_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
 				
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());

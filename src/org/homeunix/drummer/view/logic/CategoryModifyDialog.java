@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Category;
@@ -20,12 +21,12 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	
 	public CategoryModifyDialog(){
 		super(MainBudgetFrame.getInstance());
-		amountLabel.setText(Translate.inst().get(Translate.BUDGETED_AMOUNT));
-		pulldownLabel.setText(Translate.inst().get(Translate.PARENT_CATEGORY));
+		amountLabel.setText(Translate.inst().get(TranslateKeys.BUDGETED_AMOUNT));
+		pulldownLabel.setText(Translate.inst().get(TranslateKeys.PARENT_CATEGORY));
 	}
 
 	protected String getType(){
-		return Translate.inst().get(Translate.CATEGORY);
+		return Translate.inst().get(TranslateKeys.CATEGORY);
 	}
 		
 	@Override
@@ -36,8 +37,8 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 				if (name.getText().length() == 0){
 					JOptionPane.showMessageDialog(
 							CategoryModifyDialog.this, 
-							Translate.inst().get(Translate.ENTER_CATEGORY_NAME),
-							Translate.inst().get(Translate.MORE_INFO_NEEDED),
+							Translate.inst().get(TranslateKeys.ENTER_CATEGORY_NAME),
+							Translate.inst().get(TranslateKeys.MORE_INFO_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				else{
@@ -56,7 +57,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 								pulldown.setSelectedItem(c.getParent());
 							}
 							else
-								pulldown.setSelectedItem(Translate.inst().get(Translate.NO_PARENT));
+								pulldown.setSelectedItem(Translate.inst().get(TranslateKeys.NO_PARENT));
 							return;
 						}
 						while (temp.getParent() != null){
@@ -65,7 +66,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 								if (c.getParent() != null)
 									pulldown.setSelectedItem(c.getParent());
 								else
-									pulldown.setSelectedItem(Translate.inst().get(Translate.NO_PARENT));
+									pulldown.setSelectedItem(Translate.inst().get(TranslateKeys.NO_PARENT));
 								return;
 							}
 							
@@ -143,7 +144,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 			updateContent();
 			name.setText("");
 			amount.setValue(0);
-			pulldown.setSelectedItem(Translate.inst().get(Translate.NO_PARENT));
+			pulldown.setSelectedItem(Translate.inst().get(TranslateKeys.NO_PARENT));
 			check.setSelected(false);
 		}
 		else{
@@ -161,7 +162,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 				pulldown.setSelectedItem(source.getParent());
 			}
 			else
-				pulldown.setSelectedItem(Translate.inst().get(Translate.NO_PARENT));
+				pulldown.setSelectedItem(Translate.inst().get(TranslateKeys.NO_PARENT));
 		}
 		
 		
@@ -171,7 +172,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 
 	public AbstractBudgetDialog updateContent(){
 		pulldownModel.removeAllElements();
-		pulldownModel.addElement(Translate.inst().get(Translate.NO_PARENT));
+		pulldownModel.addElement(Translate.inst().get(TranslateKeys.NO_PARENT));
 
 		for (Category c : DataInstance.getInstance().getCategories()) {
 			if (source == null 

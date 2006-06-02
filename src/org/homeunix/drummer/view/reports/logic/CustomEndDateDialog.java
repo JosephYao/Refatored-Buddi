@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
@@ -50,8 +51,8 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 				if (endDate.after(DateUtil.getEndDate(new Date()))){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.inst().get(Translate.DATE_AFTER_TODAY), 
-							Translate.inst().get(Translate.REPORT_DATE_ERROR), 
+							Translate.inst().get(TranslateKeys.DATE_AFTER_TODAY), 
+							Translate.inst().get(TranslateKeys.REPORT_DATE_ERROR), 
 							JOptionPane.ERROR_MESSAGE
 					);
 					return;
@@ -92,7 +93,7 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 	}
 	
 	protected void setVisibility(){
-		mainLabel.setText(Translate.inst().get(Translate.REPORT_AS_OF_DATE));
+		mainLabel.setText(Translate.inst().get(TranslateKeys.REPORT_AS_OF_DATE));
 		middleLabel.setVisible(false);
 		
 		startDateCombo.setVisible(false);

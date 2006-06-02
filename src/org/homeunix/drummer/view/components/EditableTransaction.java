@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
@@ -88,13 +89,13 @@ public class EditableTransaction extends JPanel {
 		transferFrom.setPreferredSize(comboDimension);
 		transferTo.setPreferredSize(comboDimension);
 		
-		date.setToolTipText(Translate.inst().get(Translate.TOOLTIP_DATE));
-		amount.setToolTipText(Translate.inst().get(Translate.TOOLTIP_AMOUNT));
-		transferFrom.setToolTipText(Translate.inst().get(Translate.TOOLTIP_FROM));
-		transferTo.setToolTipText(Translate.inst().get(Translate.TOOLTIP_TO));
-		number.setToolTipText(Translate.inst().get(Translate.TOOLTIP_NUMBER));
-		description.setToolTipText(Translate.inst().get(Translate.TOOLTIP_DESC));
-		memo.setToolTipText(Translate.inst().get(Translate.TOOLTIP_MEMO));
+		date.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DATE));
+		amount.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_AMOUNT));
+		transferFrom.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_FROM));
+		transferTo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_TO));
+		number.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_NUMBER));
+		description.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DESC));
+		memo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_MEMO));
 		
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
@@ -127,7 +128,7 @@ public class EditableTransaction extends JPanel {
 		topLeftPanel.add(amount);
 		
 		topRightPanel.add(transferFrom);
-		topRightPanel.add(new JLabel(Translate.inst().get(Translate.TO)));
+		topRightPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
 		topRightPanel.add(transferTo);
 
 		bottomLeftPanel.add(number);

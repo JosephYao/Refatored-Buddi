@@ -21,6 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.util.Log;
@@ -54,10 +55,10 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane listScroller = new JScrollPane(tree);
 		
-		newButton = new JButton(Translate.inst().get(Translate.NEW));
-		editButton = new JButton(Translate.inst().get(Translate.EDIT));
-		deleteButton = new JButton(Translate.inst().get(Translate.DELETE));
-		openButton = new JButton(Translate.inst().get(Translate.OPEN));
+		newButton = new JButton(Translate.inst().get(TranslateKeys.NEW));
+		editButton = new JButton(Translate.inst().get(TranslateKeys.EDIT));
+		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
+		openButton = new JButton(Translate.inst().get(TranslateKeys.OPEN));
 		balanceLabel = new JLabel();
 		
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -152,7 +153,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			openButton.setEnabled(false);
-			deleteButton.setText(Translate.inst().get(Translate.DELETE));
+			deleteButton.setText(Translate.inst().get(TranslateKeys.DELETE));
 		}
 		else{
 			editButton.setEnabled(true);
@@ -160,9 +161,9 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			openButton.setEnabled(true);
 			
 			if (selectedSource.isDeleted())
-				deleteButton.setText(Translate.inst().get(Translate.UNDELETE));
+				deleteButton.setText(Translate.inst().get(TranslateKeys.UNDELETE));
 			else
-				deleteButton.setText(Translate.inst().get(Translate.DELETE));
+				deleteButton.setText(Translate.inst().get(TranslateKeys.DELETE));
 		}
 		return this;
 	}

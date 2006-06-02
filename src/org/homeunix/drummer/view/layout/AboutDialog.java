@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.logic.MainBudgetFrame;
@@ -27,7 +28,7 @@ public class AboutDialog extends AbstractBudgetDialog {
 	public AboutDialog(){
 		super(MainBudgetFrame.getInstance());
 		
-		okButton = new JButton(Translate.inst().get(Translate.OK));
+		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 
@@ -37,13 +38,13 @@ public class AboutDialog extends AbstractBudgetDialog {
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
 				"<html><center><h1>")
-				.append(	Translate.inst().get(Translate.BUDDI))
+				.append(	Translate.inst().get(TranslateKeys.BUDDI))
 				.append("</h1>");
 
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
 				"<html><h5>")
-				.append(Translate.inst().get(Translate.VERSION))
+				.append(Translate.inst().get(TranslateKeys.VERSION))
 				.append(" ")
 				.append(Buddi.version)
 				.append("</h5></html");
@@ -60,17 +61,17 @@ public class AboutDialog extends AbstractBudgetDialog {
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(
 				"<html><center>")
-				.append(Translate.inst().get(Translate.ABOUT_TEXT))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_TEXT))
 				.append("<br><br>")
-				.append(Translate.inst().get(Translate.ABOUT_COPYRIGHT))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_COPYRIGHT))
 				.append("<br>&lt;")
-				.append(Translate.inst().get(Translate.ABOUT_EMAIL))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_EMAIL))
 				.append("&gt;<br><a href='")
-				.append(Translate.inst().get(Translate.ABOUT_WEBPAGE))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_WEBPAGE))
 				.append("'>")
-				.append(Translate.inst().get(Translate.ABOUT_WEBPAGE))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_WEBPAGE))
 				.append("</a><br><br>")
-				.append(Translate.inst().get(Translate.ABOUT_GPL))
+				.append(Translate.inst().get(TranslateKeys.ABOUT_GPL))
 				.append("</center></html>");
 
 		JLabel text = new JLabel(sbText.toString());

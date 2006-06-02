@@ -16,6 +16,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
@@ -35,8 +36,8 @@ public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
 	public CustomDateDialogLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Translate.inst().get(Translate.OK));
-		cancelButton = new JButton(Translate.inst().get(Translate.CANCEL));
+		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
+		cancelButton = new JButton(Translate.inst().get(TranslateKeys.CANCEL));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
@@ -90,7 +91,7 @@ public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
-		this.setTitle(Translate.inst().get(Translate.CHOOSE_DATE_INTERVAL));
+		this.setTitle(Translate.inst().get(TranslateKeys.CHOOSE_DATE_INTERVAL));
 		
 		setVisibility();
 		
