@@ -106,9 +106,10 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					DataInstance.getInstance().saveDataModel();
 				}
 				
-				if (editableTransaction.getMemo().length() > 0){
-					PrefsInstance.getInstance().addMemoEntry(editableTransaction.getMemo());
-				}
+//				Removed when I removed the memo field
+//				if (editableTransaction.getMemo().length() > 0){
+//					PrefsInstance.getInstance().addMemoEntry(editableTransaction.getMemo());
+//				}
 				PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
 				
 				editableTransaction.clearTransaction();

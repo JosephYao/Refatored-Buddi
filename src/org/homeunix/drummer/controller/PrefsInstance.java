@@ -47,7 +47,7 @@ public class PrefsInstance {
 
 	//Provide backing for the autocomplete text fields
 	private final DefaultDictionary descDict;
-	private final DefaultDictionary memoDict;
+//	private final DefaultDictionary memoDict;
 
 	private ResourceSet resourceSet;
 	
@@ -55,7 +55,7 @@ public class PrefsInstance {
 
 	private PrefsInstance(){
 		descDict = new DefaultDictionary();
-		memoDict = new DefaultDictionary();
+//		memoDict = new DefaultDictionary();
 		
 		if (location == null){
 			if (Buddi.isMac()){
@@ -173,11 +173,11 @@ public class PrefsInstance {
 			}
 		}
 
-		for (Object o : prefs.getMemoDict()) {
-			if (o instanceof DictEntry) {
-				memoDict.add(((DictEntry) o).getEntry());
-			}
-		}
+//		for (Object o : prefs.getMemoDict()) {
+//			if (o instanceof DictEntry) {
+//				memoDict.add(((DictEntry) o).getEntry());
+//			}
+//		}
 
 	}
 	
@@ -193,12 +193,12 @@ public class PrefsInstance {
 			d.setEntry(s);
 			prefs.getDescDict().add(d);
 		}
-		prefs.getMemoDict().retainAll(new Vector());
-		for (String s : memoDict) {
-			DictEntry d = prefsFactory.createDictEntry();
-			d.setEntry(s);
-			prefs.getMemoDict().add(d);
-		}
+//		prefs.getMemoDict().retainAll(new Vector());
+//		for (String s : memoDict) {
+//			DictEntry d = prefsFactory.createDictEntry();
+//			d.setEntry(s);
+//			prefs.getMemoDict().add(d);
+//		}
 		
 		try{
 			FileFunctions.copyFile(saveLocation, backupLocation);
@@ -231,17 +231,13 @@ public class PrefsInstance {
 		savePrefs();
 	}
 
-	public void addMemoEntry(String entry){
-		memoDict.add(entry);
-		savePrefs();
-	}
+//	public void addMemoEntry(String entry){
+//		memoDict.add(entry);
+//		savePrefs();
+//	}
 
 	public DefaultDictionary getDescDict() {
 		return descDict;
-	}
-
-	public DefaultDictionary getMemoDict() {
-		return memoDict;
 	}
 	
 	public static String chooseDataFile(){

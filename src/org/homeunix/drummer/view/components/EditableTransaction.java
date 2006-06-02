@@ -69,7 +69,6 @@ public class EditableTransaction extends JPanel {
 		transferTo = new JComboBox();
 		number = new JTextField();
 		description = new AutoCompleteTextField(PrefsInstance.getInstance().getDescDict());
-//		memo = new AutoCompleteTextField(PrefsInstance.getInstance().getMemoDict());
 		memo = new JTextArea();
 		
 		components = new Vector<JComponent>();
@@ -99,17 +98,7 @@ public class EditableTransaction extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-		
-//		JPanel topRightPanel = new JPanel();
-//		JPanel topLeftPanel = new JPanel();
-//		JPanel bottomRightPanel = new JPanel();
-//		JPanel bottomLeftPanel = new JPanel();
-
-//		topRightPanel.setLayout(new BoxLayout(topRightPanel, BoxLayout.X_AXIS));
-//		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.X_AXIS));
-//		bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.X_AXIS));
-//		bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.X_AXIS));
-				
+						
 		components.add(date);
 		components.add(amount);
 		components.add(transferFrom);
@@ -118,24 +107,16 @@ public class EditableTransaction extends JPanel {
 		components.add(number);
 		components.add(description);
 		components.add(memo);
-//		components.add(this);
 		
 		topPanel.add(date);
 		topPanel.add(description);
 		topPanel.add(number);
-//		topRightPanel.add(memo);
 
 		bottomPanel.add(amount);
 		
 		bottomPanel.add(transferFrom);
 		bottomPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
-		bottomPanel.add(transferTo);
-
-//		topPanel.add(topLeftPanel);
-//		topPanel.add(topRightPanel);
-//		bottomPanel.add(bottomLeftPanel);
-//		bottomPanel.add(bottomRightPanel);
-		
+		bottomPanel.add(transferTo);		
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -160,14 +141,7 @@ public class EditableTransaction extends JPanel {
 		transferTo.setPreferredSize(transferFrom.getPreferredSize());
 		
 		memoScroller.setPreferredSize(new Dimension(300, memo.getPreferredSize().height));
-		
-//		topRightPanel.setPreferredSize(new Dimension(400, topRightPanel.getPreferredSize().height));
-//		topLeftPanel.setPreferredSize(new Dimension(200, topLeftPanel.getPreferredSize().height));
-//		bottomRightPanel.setPreferredSize(new Dimension(400, bottomRightPanel.getPreferredSize().height));
-//		bottomLeftPanel.setPreferredSize(new Dimension(50, bottomLeftPanel.getPreferredSize().height));
-		
-		
-		
+				
 		initActions();
 		
 		//updateContent();
