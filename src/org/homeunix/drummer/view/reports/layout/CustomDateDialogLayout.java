@@ -12,14 +12,15 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.util.Formatter;
+import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
+
+import com.toedter.calendar.JDateChooser;
 
 public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
 	
@@ -29,8 +30,8 @@ public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
 	protected final JLabel mainLabel;
 	protected final JLabel middleLabel;
 	
-	protected final JFormattedTextField startDateCombo;
-	protected final JFormattedTextField endDateCombo;
+	protected final JDateChooser startDateCombo;
+	protected final JDateChooser endDateCombo;
 
 	
 	public CustomDateDialogLayout(Frame owner){
@@ -43,16 +44,19 @@ public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 		
-		startDateCombo = new JFormattedTextField(Formatter.getInstance().getDateFormat());
-		endDateCombo = new JFormattedTextField(Formatter.getInstance().getDateFormat());
+		startDateCombo = new JDateChooser();
+		endDateCombo = new JDateChooser();
+		
+		startDateCombo.setDateFormatString(PrefsInstance.getInstance().getPrefs().getDateFormat());
+		endDateCombo.setDateFormatString(PrefsInstance.getInstance().getPrefs().getDateFormat());
 		
 		Dimension textFieldSize = new Dimension(120, startDateCombo.getPreferredSize().height);
 		
 		startDateCombo.setPreferredSize(textFieldSize);
 		endDateCombo.setPreferredSize(textFieldSize);
 		
-		startDateCombo.setValue(new Date());
-		endDateCombo.setValue(new Date());
+		startDateCombo.setDate(new Date());
+		endDateCombo.setDate(new Date());
 
 		JPanel r1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel r2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));

@@ -26,8 +26,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Category;
@@ -38,6 +38,8 @@ import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.autocomplete.AutoCompleteTextField;
 import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
 
+import com.toedter.calendar.JDateChooser;
+
 public class EditableTransaction extends JPanel {
 	public static final long serialVersionUID = 0;
 	
@@ -45,7 +47,8 @@ public class EditableTransaction extends JPanel {
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
 	
-	private final JFormattedTextField date;
+//	private final JFormattedTextField date;
+	private final JDateChooser date;
 	private final JNumberField amount;
 	private final JComboBox transferFrom;
 	private final JComboBox transferTo;
@@ -58,12 +61,13 @@ public class EditableTransaction extends JPanel {
 		
 	private TransactionsFrameLayout parent;
 	
-	private boolean changed = false;
-		
+	private boolean changed;
+	
 	public EditableTransaction(TransactionsFrameLayout parent){
 		this.parent = parent;
 				
-		date = new JFormattedTextField(Formatter.getInstance().getDateFormat());
+//		date = new JFormattedTextField(Formatter.getInstance().getDateFormat());
+		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
 		amount = new JNumberField(Formatter.getInstance().getDecimalFormat());
 		transferFrom = new JComboBox();
 		transferTo = new JComboBox();
@@ -132,7 +136,7 @@ public class EditableTransaction extends JPanel {
 		this.add(memoScroller);
 		
 		int textHeight = date.getPreferredSize().height;
-		date.setPreferredSize(new Dimension(80, textHeight));
+		date.setPreferredSize(new Dimension(100, textHeight));
 		description.setPreferredSize(new Dimension(200, textHeight));
 		number.setPreferredSize(new Dimension(80, textHeight));
 		
@@ -148,60 +152,65 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public void setTransaction(Transaction transaction){
-		//SimpleDateFormat sdf = new SimpleDateFormat(TransactionCell.dateFormat);
-		date.setValue(transaction.getDate());
-		
-		number.setText(transaction.getNumber());
-		description.setText(transaction.getDescription());
-		//balance.setText("");
-		memo.setText(transaction.getMemo());
-		
-		amount.setValue((double) transaction.getAmount() / 100.0);
-		
-		transferFrom.setSelectedItem(transaction.getFrom());
-		transferTo.setSelectedItem(transaction.getTo());
+		if (transaction != null){
+//			SimpleDateFormat sdf = new SimpleDateFormat(TransactionCell.dateFormat);
+//			date.setValue(transaction.getDate());
+			date.setDate(transaction.getDate());
+			
+			number.setText(transaction.getNumber());
+			description.setText(transaction.getDescription());
+			//balance.setText("");
+			memo.setText(transaction.getMemo());
+			
+			amount.setValue((double) transaction.getAmount() / 100.0);
+			
+			transferFrom.setSelectedItem(transaction.getFrom());
+			transferTo.setSelectedItem(transaction.getTo());
+		}
+		else{
+			clearTransaction();
+		}
 		
 		this.transaction = transaction;
-		
-		//Reset change flag
-		setChanged(false);
 	}
 	
 	public void clearTransaction(){
-		if (date.getValue() == null)
-			date.setValue(new Date());
+		if (date.getDate() == null)
+			date.setDate(new Date());
 		number.setText("");
 		description.setText("");
 		amount.setValue(0);
-		//balance.setText("");
+//		balance.setText("");
 		transferTo.setSelectedIndex(0);
 		transferFrom.setSelectedIndex(0);
 		memo.setText("");
 		
 		date.requestFocus();
 		
-		//Reset change flag
 		setChanged(false);
-		
+				
 		//Reset transaction ID
 		transaction = null;
 	}
-	
-	protected void setChanged(){
-		changed = true;
-		parent.updateButtons();
-	}
-	
-	protected void setChanged(boolean changed){
-		this.changed = changed;		
-	}
-	
+			
 	public boolean isChanged(){
-		return changed;
+		return (changed == true);
+//				|| transaction == null
+//				|| (!transaction.getDescription().equals(getDescription()))
+//				|| (!transaction.getNumber().equals(getNumber()))
+//				|| (transaction.getAmount() != (getAmount()))
+//				|| (!transaction.getFrom().equals(getTransferFrom()))
+//				|| (!transaction.getTo().equals(getTransferTo()))
+//				|| (!transaction.getDate().equals(getDate()))
+//		);
+	}
+	
+	public void setChanged(boolean changed){
+		this.changed = changed;
 	}
 	
 	public Date getDate(){
-		return (Date) date.getValue();
+		return date.getDate();
 	}
 	
 	public String getNumber(){
@@ -272,9 +281,10 @@ public class EditableTransaction extends JPanel {
 	
 	private void initActions(){
 		for (JComponent c : components) {
-			c.addKeyListener(new KeyAdapter() {
+			c.addKeyListener(new KeyAdapter(){
 				public void keyTyped(KeyEvent arg0) {
-					EditableTransaction.this.setChanged();
+					EditableTransaction.this.setChanged(true);
+					super.keyTyped(arg0);
 				}
 			});
 			
@@ -291,7 +301,7 @@ public class EditableTransaction extends JPanel {
 		
 		transferFrom.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				EditableTransaction.this.setChanged();
+				EditableTransaction.this.setChanged(true);
 				if (parent.getAccount() != null) {
 					if (!parent.getAccount().equals(transferFrom.getSelectedItem())){
 						transferTo.setSelectedItem(parent.getAccount());
@@ -307,7 +317,7 @@ public class EditableTransaction extends JPanel {
 		
 		transferTo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				EditableTransaction.this.setChanged();
+				EditableTransaction.this.setChanged(true);
 				if (transferTo.getSelectedItem() instanceof Source) {
 					if (!parent.getAccount().equals(transferTo.getSelectedItem())){
 						transferFrom.setSelectedItem(parent.getAccount());

@@ -22,9 +22,9 @@ import org.homeunix.drummer.view.logic.MainBudgetFrame;
  *
  */
 public class Buddi {
-
+	
 	public static final String version = "0.95 Beta";
-
+	
 	private static Boolean isMac;
 	private static final boolean UI_DEBUG = false; 
 	
@@ -48,7 +48,7 @@ public class Buddi {
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)";
 		
-				
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
@@ -69,8 +69,8 @@ public class Buddi {
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
 		}
-				
-	if (isMac()){
+		
+		if (isMac()){
 			// set system properties here that affect Quaqua
 			// for example the default layout policy for tabbed
 			// panes:
@@ -86,18 +86,18 @@ public class Buddi {
 				Log.error(e);
 			}
 		}
-
+		
 		Translate.inst().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage()
 		);
 		
 		MRJAdapter.setFramelessJMenuBar(new BudgetMenu(null));
-
-				
+		
+		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-	            launchGUI();
-	        }
-	    });		
+				launchGUI();
+			}
+		});		
 	}
 }

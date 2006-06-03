@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
@@ -44,32 +44,66 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	protected AbstractBudgetFrame initActions(){
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
-				if (list.getSelectedValue() instanceof Transaction) {
-					Transaction t = (Transaction) list.getSelectedValue();
+				if (!arg0.getValueIsAdjusting()){
+					if (editableTransaction.isChanged()){
+						int ret;
+						
+						if (isValidRecord()){
+							ret = JOptionPane.showConfirmDialog(
+								null, 
+								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_MESSAGE), 
+								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
+								JOptionPane.YES_NO_CANCEL_OPTION);
+							if (ret == JOptionPane.YES_OPTION){
+								recordButton.doClick();
+							}
+							else if (ret == JOptionPane.CANCEL_OPTION){
+								editableTransaction.setChanged(false);
+								list.setSelectedValue(editableTransaction.getTransaction(), true);
+								editableTransaction.setChanged(true);
+								return;
+							}
+						}
+						else{
+							ret = JOptionPane.showConfirmDialog(
+									null, 
+									Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_INVALID_MESSAGE), 
+									Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
+									JOptionPane.YES_NO_OPTION);
+							if (ret == JOptionPane.NO_OPTION){
+								editableTransaction.setChanged(false);
+								list.setSelectedValue(editableTransaction.getTransaction(), true);
+								editableTransaction.setChanged(true);
+								return;
+							}
+						}
+					}
 					
-					editableTransaction.setTransaction(t);
-				}
-				else{
-					editableTransaction.clearTransaction();
-					editableTransaction.updateContent();
+					if (list.getSelectedValue() instanceof Transaction) {
+						Transaction t = (Transaction) list.getSelectedValue();
+						
+						editableTransaction.setTransaction(t);
+					}
+					else{
+						editableTransaction.clearTransaction();
+						editableTransaction.updateContent();
+						
+					}
 					
+					updateButtons();
 				}
-				
-				updateButtons();
 			}
 		});
 		
 		recordButton.addActionListener(new ActionListener(){
-//			[TODO] Do we want to check if amount == 0 here?
 			public void actionPerformed(ActionEvent arg0) {
-				if (editableTransaction.getDescription().length() == 0 
-						|| editableTransaction.getDate() == null
-						|| editableTransaction.getAmount() < 0
-						|| editableTransaction.getTransferTo() == null
-						|| editableTransaction.getTransferFrom() == null
-						|| (editableTransaction.getTransferFrom() != account
-								&& editableTransaction.getTransferTo() != account)){
-					JOptionPane.showMessageDialog(TransactionsFrame.this, Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR));
+				if (!isValidRecord()){
+					JOptionPane.showMessageDialog(
+							TransactionsFrame.this,
+							Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR),
+							Translate.inst().get(TranslateKeys.ERROR),
+							JOptionPane.ERROR_MESSAGE
+					);
 					return;
 				}
 
@@ -243,4 +277,21 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		return list;
 	}
 
+	@Override
+	public AbstractBudgetFrame openWindow() {
+		list.setSelectedIndex(list.getModel().getSize() - 1);
+		return super.openWindow();
+	}
+
+	protected boolean isValidRecord(){
+		return (!(
+				editableTransaction.getDescription().length() == 0 
+				|| editableTransaction.getDate() == null
+				|| editableTransaction.getAmount() < 0
+				|| editableTransaction.getTransferTo() == null
+				|| editableTransaction.getTransferFrom() == null
+				|| (editableTransaction.getTransferFrom() != account
+						&& editableTransaction.getTransferTo() != account)
+		));
+	}
 }

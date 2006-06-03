@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -23,8 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
@@ -70,12 +69,12 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 		this.setLayout(new GridLayout(2, 4));
 						
 		this.add(date);
+		this.add(description);
+		this.add(number);
+		this.add(memo);
 		this.add(amount);
 		this.add(transferFrom);
 		this.add(transferTo);
-		this.add(number);
-		this.add(description);
-		this.add(memo);
 		this.add(balance);
 		
 		if (Buddi.isMac()){
@@ -117,9 +116,10 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 	}
 	
 	private void clearTransaction(){
-		date.setText(Formatter.getInstance().getLengthFormat().format(
-				Formatter.getInstance().getDateFormat().format(new Date()))
-		);
+//		date.setText(Formatter.getInstance().getLengthFormat().format(
+//				Formatter.getInstance().getDateFormat().format(new Date()))
+//		);
+		date.setText("");
 		number.setText("");
 		description.setText(Translate.inst().get(TranslateKeys.NEW_TRANSACTION));
 		balance.setText("");

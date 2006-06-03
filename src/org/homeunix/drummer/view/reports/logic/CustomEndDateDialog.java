@@ -40,13 +40,7 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Date endDate;
-				if (endDateCombo.getValue() instanceof Date){
-					endDate = DateUtil.getEndDate((Date) endDateCombo.getValue());
-				}
-				else{
-					Log.debug("Start and End interval not of type date");
-					return;
-				}
+				endDate = DateUtil.getEndDate(endDateCombo.getDate());
 				
 				if (endDate.after(DateUtil.getEndDate(new Date()))){
 					JOptionPane.showMessageDialog(

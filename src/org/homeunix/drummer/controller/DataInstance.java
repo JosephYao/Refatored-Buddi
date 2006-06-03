@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Accounts;
@@ -85,12 +86,10 @@ public class DataInstance {
 			while (locationFile == null || !locationFile.getParentFile().exists()){
 				JOptionPane.showMessageDialog(
 						null,
-						"There was a problem reading the data file:\n"
-						+ locationFile.getAbsolutePath() + "\n"
-						+ "The requested directory does not exist.\n"
-						+ "Please choose an existing data file, or a\n"
-						+ "folder in which to create a new data file.",
-						"Missing Data File",
+						Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+						+ locationFile.getAbsolutePath() 
+						+ Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
+						Translate.inst().get(TranslateKeys.MISSING_DATA_FILE),
 						JOptionPane.ERROR_MESSAGE);
 				
 				String file = PrefsInstance.chooseDataFile();
@@ -143,22 +142,21 @@ public class DataInstance {
 			
 			if (forceNewFile || !locationFile.exists() || JOptionPane.showConfirmDialog(
 					null,
-					"There was a problem reading the data file:\n" 
-					+ locationFile.getAbsolutePath() + ".\n"
-					+ "The data file exists, but it appears to be corrupted.  " 
-					+ "Do you want to overwrite it, and create a new file?\n" 
-					+ "All information currently in the file will be lost.",
-					"Create new Datastore?",
+					Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
+					+ locationFile.getAbsolutePath()
+					+ Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_CORRUPTED),
+					Translate.inst().get(TranslateKeys.CREATE_NEW_DATA_FILE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
 				
 				if (!locationFile.exists() && !forceNewFile){
 					JOptionPane.showMessageDialog(
 							null,
-							"Created a new data file:\n"
+							Translate.inst().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
 							+ locationFile.getAbsolutePath(),
-							"Created new Data File",
-							JOptionPane.INFORMATION_MESSAGE);
+							Translate.inst().get(TranslateKeys.CREATED_NEW_DATA_FILE),
+							JOptionPane.INFORMATION_MESSAGE
+					);
 				}
 				
 				Accounts accounts = getDataModelFactory().createAccounts();
@@ -244,8 +242,8 @@ public class DataInstance {
 			else{
 				JOptionPane.showMessageDialog(
 						null, 
-						"I cannot read file, and you requested that I do not overwrite the old one.  Exiting.",
-						"Exiting Program",
+						Translate.inst().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.inst().get(TranslateKeys.EXITING_PROGRAM),
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(0);
 			}

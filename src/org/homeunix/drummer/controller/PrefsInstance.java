@@ -266,12 +266,22 @@ public class PrefsInstance {
 				}
 			}
 			else{
-				JOptionPane.showMessageDialog(null, "Error choosing file.  Exiting.");
+				JOptionPane.showMessageDialog(
+						null,
+						"Error choosing file.",
+						"Exiting.",
+						JOptionPane.ERROR_MESSAGE
+				);
 				return null;					
 			}
 		}
 		else{
-			JOptionPane.showMessageDialog(null, "Did not choose data directory.");
+			JOptionPane.showMessageDialog(
+					null,
+					"Did not choose data directory.",
+					"Exiting",
+					JOptionPane.ERROR_MESSAGE
+			);
 			return null;
 		}
 		

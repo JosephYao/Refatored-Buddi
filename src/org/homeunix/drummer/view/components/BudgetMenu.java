@@ -149,7 +149,12 @@ public class BudgetMenu extends JScreenMenuBar {
 				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION));
 				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
+						JOptionPane.showMessageDialog(
+								null, 
+								Translate.inst().get(TranslateKeys.CANNOT_SAVE_OVER_DIR),
+								Translate.inst().get(TranslateKeys.ERROR),
+								JOptionPane.ERROR_MESSAGE
+						);
 					else{
 						if (jfc.getSelectedFile().exists()){
 							if (JOptionPane.showConfirmDialog(
@@ -170,7 +175,12 @@ public class BudgetMenu extends JScreenMenuBar {
 						DataInstance.getInstance().loadDataModel(new File(location), true);
 						PrefsInstance.getInstance().getPrefs().setDataFile(location);
 						MainBudgetFrame.getInstance().updateContent();
-						JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.NEW_DATA_FILE_SAVED) + location, Translate.inst().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(
+								null,
+								Translate.inst().get(TranslateKeys.NEW_DATA_FILE_SAVED) + location, 
+								Translate.inst().get(TranslateKeys.FILE_SAVED), 
+								JOptionPane.INFORMATION_MESSAGE
+						);
 					}
 				}
 			}
@@ -209,10 +219,20 @@ public class BudgetMenu extends JScreenMenuBar {
 							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
 							PrefsInstance.getInstance().savePrefs();
 							MainBudgetFrame.getInstance().updateContent();
-							JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Translate.inst().get(TranslateKeys.OPENED_FILE), JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(
+									null, 
+									Translate.inst().get(TranslateKeys.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(),
+									Translate.inst().get(TranslateKeys.OPENED_FILE), 
+									JOptionPane.INFORMATION_MESSAGE
+							);
 						}
 						else
-							JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD_MESSAGE), Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD), JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(
+									null,
+									Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD_MESSAGE), 
+									Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD),
+									JOptionPane.INFORMATION_MESSAGE
+							);
 					}
 				}
 			}
@@ -276,14 +296,29 @@ public class BudgetMenu extends JScreenMenuBar {
 								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
 								DataInstance.getInstance().loadDataModel(oldFile, false);
 								MainBudgetFrame.getInstance().updateContent();
-								JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), Translate.inst().get(TranslateKeys.RESTORED_FILE), JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(
+										null, 
+										Translate.inst().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
+										Translate.inst().get(TranslateKeys.RESTORED_FILE), 
+										JOptionPane.INFORMATION_MESSAGE
+								);
 							}
 							catch (IOException ioe){
-								JOptionPane.showMessageDialog(null, ioe, "Flagrant System Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(
+										null, 
+										ioe, 
+										"Flagrant System Error",
+										JOptionPane.ERROR_MESSAGE
+								);
 							}
 						}
 						else
-							JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), Translate.inst().get(TranslateKeys.CANCELLED_FILE_RESTORE), JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(
+									null, 
+									Translate.inst().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
+									Translate.inst().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
+									JOptionPane.INFORMATION_MESSAGE
+							);
 					}
 				}
 			}
@@ -304,7 +339,8 @@ public class BudgetMenu extends JScreenMenuBar {
 								null, 
 								Translate.inst().get(TranslateKeys.NOTHING_TO_PRINT),
 								Translate.inst().get(TranslateKeys.PRINT_ERROR),
-								JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.INFORMATION_MESSAGE
+						);
 				}
 			}
 		});

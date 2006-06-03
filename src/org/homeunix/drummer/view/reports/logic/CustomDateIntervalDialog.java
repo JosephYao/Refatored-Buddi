@@ -39,17 +39,8 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
-				Date startDate;
-				Date endDate;
-				if (startDateCombo.getValue() instanceof Date
-						&& endDateCombo.getValue() instanceof Date){
-					startDate = DateUtil.getStartDate((Date) startDateCombo.getValue());
-					endDate = DateUtil.getEndDate((Date) endDateCombo.getValue());
-				}
-				else{
-					Log.debug("Start and End interval not of type date");
-					return;
-				}
+				Date startDate = DateUtil.getStartDate(startDateCombo.getDate());
+				Date endDate = DateUtil.getEndDate(endDateCombo.getDate());
 				
 				if (endDate.before(startDate)){
 					JOptionPane.showMessageDialog(

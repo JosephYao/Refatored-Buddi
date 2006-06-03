@@ -4,22 +4,27 @@
 package org.homeunix.drummer.view.layout;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 
 public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
@@ -53,6 +58,17 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		//Add the date formats defined in Const.
 		dateFormat = new JComboBox(Const.dateFormats);
+		dateFormat.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
+				if (obj instanceof String){
+					String str = (String) obj;
+					this.setText(new SimpleDateFormat(str).format(new Date()));
+				}
+				
+				return this;
+			}
+		});
 		
 		showDeletedAccounts = new JCheckBox(Translate.inst().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
 		showDeletedCategories = new JCheckBox(Translate.inst().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
