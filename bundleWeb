@@ -38,6 +38,7 @@ for X in `ls $HELPDIR/*/*.php`;
 rm -f $HELPDIR/*/*.php
 rm -f $HELPDIR/*/*.bak
 rm -rf $HELPDIR/*/inc
+rm -rf $HELPDIR/inc
 
 if [ "$1" != "--local" ]; then
 	#Tar the pages
