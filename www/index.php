@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Buddi - Please Choose a Language</title>
+<title>Buddi - Personal budget software for the rest of us
 </head>
 <body>
 <h1>Welcome to Buddi</h1>

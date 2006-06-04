@@ -37,12 +37,12 @@ cp -R $DEST/$SOURCE/Licenses $OSX
 
 #Tar the source and give to each distro
 tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
-cp -R $DEST/$SOURCE.tgz $GENERIC
-cp -R $DEST/$SOURCE.tgz $OSX
+#cp -R $DEST/$SOURCE.tgz $GENERIC
+#cp -R $DEST/$SOURCE.tgz $OSX
 
 #Remove the src directories
 rm -rf $DEST/$SOURCE
-rm $DEST/$SOURCE.tgz
+#rm $DEST/$SOURCE.tgz
 
 if [ "$1" != "" ]; then
 	#Zip and DMG the bundles
@@ -56,6 +56,8 @@ if [ "$1" != "" ]; then
 	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-$1.dmg
 	rm -rf $OSXROOT
 	rm -rf $GENERIC
+
+	mv $DEST/$SOURCE.tgz $DEST/Buddi-$1.src.tgz
 fi
 
 open $DEST
