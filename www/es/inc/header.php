@@ -38,4 +38,4 @@ How to use Buddi:
 </ul>
 </div>
 
-<? include '../../inc/lang.php'; ?>
+<? include '../inc/lang.php'; ?>

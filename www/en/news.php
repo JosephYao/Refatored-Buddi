@@ -2,6 +2,16 @@
 
 <h1>News</h1>
 
+<h2>1.0 RC 1 (June 4 2006)</h2>
+<ul>
+<li>The first release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
+<li>Warn if you have unsaved changes to a transaction, and you click on a different one.</li>
+<li>Changed the transaction edit screen's format to be (hopefully) layed out in a more logical manner.</li>
+<li>Misc. UI improvements</li>
+<li>Misc. changes to file layout structure, to prepare for translations.  Put all help documentation (both on the website and offline) under a subfolder matchine the language name (e.g., Help/en/index.html).</li>
+<li>Change to the preferences file structure.  Buddi will automatically create a new file, but you will lose your preferences (such as data file location, language, screen positions, etc).  It's all OK; don't panic.</li>
+</ul>
+
 <h2>RSS Support Added (May 30 2006)</h2>
 <ul>
 <li>

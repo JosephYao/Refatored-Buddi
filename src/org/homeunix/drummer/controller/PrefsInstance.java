@@ -127,7 +127,7 @@ public class PrefsInstance {
 			
 			//Set meaningful defaults
 			prefs.setDataFile(dataFileName);
-			prefs.setLanguage("en-US");
+			prefs.setLanguage("en");
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
 			prefs.setDateFormat("yyyy/MMM/d");

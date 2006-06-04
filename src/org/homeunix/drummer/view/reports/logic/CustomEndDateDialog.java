@@ -40,7 +40,7 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Date endDate;
-				endDate = DateUtil.getEndDate(endDateCombo.getDate());
+				endDate = DateUtil.getEndDate(endDateChooser.getDate());
 				
 				if (endDate.after(DateUtil.getEndDate(new Date()))){
 					JOptionPane.showMessageDialog(
@@ -90,6 +90,6 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 		mainLabel.setText(Translate.inst().get(TranslateKeys.REPORT_AS_OF_DATE));
 		middleLabel.setVisible(false);
 		
-		startDateCombo.setVisible(false);
+		startDateChooser.setVisible(false);
 	}
 }

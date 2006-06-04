@@ -39,8 +39,8 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
-				Date startDate = DateUtil.getStartDate(startDateCombo.getDate());
-				Date endDate = DateUtil.getEndDate(endDateCombo.getDate());
+				Date startDate = DateUtil.getStartDate(startDateChooser.getDate());
+				Date endDate = DateUtil.getEndDate(endDateChooser.getDate());
 				
 				if (endDate.before(startDate)){
 					JOptionPane.showMessageDialog(
