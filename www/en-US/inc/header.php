@@ -3,7 +3,7 @@
 <title>
 Buddi - Personal budget software for the rest of us
 </title>
-<link rel='stylesheet' href='css/style.css' type='text/css' media='screen' />
+<link rel='stylesheet' href='../css/style.css' type='text/css' media='screen' />
 </head>
 <body>
 <div id=header>
@@ -12,10 +12,17 @@ Buddi - Personal budget software for the rest of us
 <h2>Personal budget software for the rest of us</h2>
 </div>
 </div>
+
 <div class=content>
+
+<div class=language_bar>
+<a href='../en-US'>en-US</a>
+</div>
+
+
 <div class=sidebar>
 <ul>
-<li><a href='.'>Home</a></li>
+<li><a href='./index.php'>Home</a></li>
 <li><a href='./news.php'>News</a></li>
 <li><a href='http://sourceforge.net/projects/buddi/'>Download</a></li>
 <li><a href='./screenshots.php'>Screenshots</a></li>

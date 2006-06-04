@@ -22,13 +22,13 @@ Just like <a href='./accounts.php'>accounts</a>, you can add new categories by c
 If you set the Parent Category, you can create sub categories:
 </p>
 
-<img src='./img/categories/add.png' alt="Adding a subcategory Fuel under the parent category Auto">
+<img src='../img/categories/add.png' alt="Adding a subcategory Fuel under the parent category Auto">
 
 <p>
 After you have created a sub category, it shows underneath its parent:
 </p>
 
-<img src='./img/categories/after.png' alt="Sub categories Fuel and Maintenance under Auto">
+<img src='../img/categories/after.png' alt="Sub categories Fuel and Maintenance under Auto">
 
 
 
