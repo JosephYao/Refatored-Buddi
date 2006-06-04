@@ -5,7 +5,7 @@
 DEST=/Users/wyatt/Desktop/
 WWWDIR="$DEST/www"
 HELPDIR="Help"
-INCLUDE="$HELPDIR/inc"
+#INCLUDE="$HELPDIR/inc"
 
 
 #Export the SVN source
@@ -18,21 +18,26 @@ cp -r $WWWDIR/* $HELPDIR
 #Replace internal occurrences (in the header) of .php with .html
 sed -i .bak  -e 's/.php/.html/' $INCLUDE/header.php
 
-for X in `ls $HELPDIR/*.php`;
+for X in `ls $HELPDIR/*/*.php`;
 	do
+	
 	#Replace internal occurrences of .php with .html
-	sed -i .bak  -e 's/.php/.html/' $X
+	sed -i .bak -e 's/.php/.html/' $X
 
 	#Rename files to be .html, and add header / footer to them.
+	INCLUDE=`echo $X | cut -f 1,2 -d /`
+	INCLUDE=$INCLUDE/inc
 	XNEW=`echo $X | cut -f 1 -d .`
-	cat $INCLUDE/header.php > $XNEW.html
+	
+	cat $INCLUDE/header.php | sed -e 's/.php/.html/' > $XNEW.html
+	cat $HELPDIR/inc/lang.php | sed -e 's/.php/.html/' >> $XNEW.html
 	cat $X | grep -v '<? include ' >> $XNEW.html
-	cat $INCLUDE/footer.php | grep -v 'http://sourceforge.net' >> $XNEW.html
+	cat $INCLUDE/footer.php | grep -v 'http://sourceforge.net' | sed -e 's/.php/.html/' >> $XNEW.html
 	done
 
-rm -f $HELPDIR/*.php
-rm -f $HELPDIR/*.bak
-rm -rf $HELPDIR/inc
+rm -f $HELPDIR/*/*.php
+rm -f $HELPDIR/*/*.bak
+rm -rf $HELPDIR/*/inc
 
 if [ "$1" != "--local" ]; then
 	#Tar the pages

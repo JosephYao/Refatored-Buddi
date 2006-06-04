@@ -14,12 +14,6 @@ Buddi - Personal budget software for the rest of us
 </div>
 
 <div class=content>
-
-<div class=language_bar>
-<a href='../en-US'>en-US</a>
-</div>
-
-
 <div class=sidebar>
 <ul>
 <li><a href='./index.php'>Home</a></li>
@@ -43,4 +37,5 @@ How to use Buddi:
 <li><a href='./thanks.php'>Thanks</a></li>
 </ul>
 </div>
-<div class=contentText>
+
+<? include '../../inc/lang.php'; ?>
