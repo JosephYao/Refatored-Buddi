@@ -140,8 +140,8 @@ public class EditableTransaction extends JPanel {
 		description.setPreferredSize(new Dimension(200, textHeight));
 		number.setPreferredSize(new Dimension(80, textHeight));
 		
-		amount.setPreferredSize(new Dimension(250, textHeight));
-		transferFrom.setPreferredSize(new Dimension(300, transferFrom.getPreferredSize().height));
+		amount.setMinimumSize(new Dimension(100, textHeight));
+		transferFrom.setPreferredSize(new Dimension(250, transferFrom.getPreferredSize().height));
 		transferTo.setPreferredSize(transferFrom.getPreferredSize());
 		
 		memoScroller.setPreferredSize(new Dimension(300, memo.getPreferredSize().height));
@@ -152,6 +152,18 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public void setTransaction(Transaction transaction){
+		//If the new transaction is not the same as the old one, then we 
+		// want to reset the form.  Since this can include nulls, we need
+		// to consider a few cases.
+		// 1) Both are null - do nothing
+		// 2) Both are not null - check the equals() method:
+		//   a) Both are equal - do nothing
+		//   b) Both are not equal - update
+		// 3) One is null, the other is not - update.
+		if (this.transaction == null && transaction == null)
+			return;
+		if (this.transaction != null && this.transaction.equals(transaction))
+			return;
 		if (transaction != null){
 //			SimpleDateFormat sdf = new SimpleDateFormat(TransactionCell.dateFormat);
 //			date.setValue(transaction.getDate());
@@ -168,29 +180,22 @@ public class EditableTransaction extends JPanel {
 			transferTo.setSelectedItem(transaction.getTo());
 		}
 		else{
-			clearTransaction();
+			if (date.getDate() == null)
+				date.setDate(new Date());
+			number.setText("");
+			description.setText("");
+			amount.setValue(0);
+//			balance.setText("");
+			transferTo.setSelectedIndex(0);
+			transferFrom.setSelectedIndex(0);
+			memo.setText("");
+			
+			date.requestFocus();
+			
+			setChanged(false);
 		}
 		
 		this.transaction = transaction;
-	}
-	
-	public void clearTransaction(){
-		if (date.getDate() == null)
-			date.setDate(new Date());
-		number.setText("");
-		description.setText("");
-		amount.setValue(0);
-//		balance.setText("");
-		transferTo.setSelectedIndex(0);
-		transferFrom.setSelectedIndex(0);
-		memo.setText("");
-		
-		date.requestFocus();
-		
-		setChanged(false);
-				
-		//Reset transaction ID
-		transaction = null;
 	}
 			
 	public boolean isChanged(){
@@ -228,8 +233,9 @@ public class EditableTransaction extends JPanel {
 	public int getAmount(){
 		int amount = 0;
 		
-		//We record the amount in cents, to avoid decimal point issues
-		amount = (int) (Double.parseDouble(this.amount.getValue().toString()) * 100);
+		if (this.amount != null)
+			//We record the amount in cents, to avoid decimal point issues
+			amount = (int) (Double.parseDouble(this.amount.getValue().toString()) * 100);
 		
 		return amount;
 	}
@@ -301,7 +307,7 @@ public class EditableTransaction extends JPanel {
 		
 		transferFrom.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				EditableTransaction.this.setChanged(true);
+//				EditableTransaction.this.setChanged(true);
 				if (parent.getAccount() != null) {
 					if (!parent.getAccount().equals(transferFrom.getSelectedItem())){
 						transferTo.setSelectedItem(parent.getAccount());
@@ -317,7 +323,7 @@ public class EditableTransaction extends JPanel {
 		
 		transferTo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				EditableTransaction.this.setChanged(true);
+//				EditableTransaction.this.setChanged(true);
 				if (transferTo.getSelectedItem() instanceof Source) {
 					if (!parent.getAccount().equals(transferTo.getSelectedItem())){
 						transferFrom.setSelectedItem(parent.getAccount());

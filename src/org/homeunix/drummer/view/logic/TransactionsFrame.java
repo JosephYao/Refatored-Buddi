@@ -36,7 +36,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		
-		editableTransaction.clearTransaction();
+		editableTransaction.setTransaction(null);
 		updateContent();
 		openWindow();
 	}
@@ -45,7 +45,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (!arg0.getValueIsAdjusting()){
-					if (editableTransaction.isChanged()){
+					if (editableTransaction.isChanged() 
+							&& editableTransaction.getTransaction() != (Transaction) list.getSelectedValue()){
 						int ret;
 						
 						if (isValidRecord()){
@@ -55,7 +56,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
 								JOptionPane.YES_NO_CANCEL_OPTION);
 							if (ret == JOptionPane.YES_OPTION){
-								recordButton.doClick();
+								recordTransaction();
+								editableTransaction.setChanged(false);
+							}
+							else if (ret == JOptionPane.NO_OPTION){
+								editableTransaction.setChanged(false);
+//								list.setSelectedValue(editableTransaction.getTransaction(), true);
+//								return;
 							}
 							else if (ret == JOptionPane.CANCEL_OPTION){
 								editableTransaction.setChanged(false);
@@ -72,9 +79,16 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 									JOptionPane.YES_NO_OPTION);
 							if (ret == JOptionPane.NO_OPTION){
 								editableTransaction.setChanged(false);
-								list.setSelectedValue(editableTransaction.getTransaction(), true);
+								
+								if (editableTransaction.getTransaction() == null)
+									list.setSelectedIndex(list.getModel().getSize() - 1);
+								else
+									list.setSelectedValue(editableTransaction.getTransaction(), true);
 								editableTransaction.setChanged(true);
 								return;
+							}
+							else if (ret == JOptionPane.YES_OPTION){
+								editableTransaction.setChanged(false);
 							}
 						}
 					}
@@ -84,10 +98,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						
 						editableTransaction.setTransaction(t);
 					}
-					else{
-						editableTransaction.clearTransaction();
+					else if (list.getSelectedValue() == null){
+						editableTransaction.setTransaction(null);
 						editableTransaction.updateContent();
-						
 					}
 					
 					updateButtons();
@@ -97,56 +110,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		recordButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (!isValidRecord()){
-					JOptionPane.showMessageDialog(
-							TransactionsFrame.this,
-							Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR),
-							Translate.inst().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE
-					);
-					return;
-				}
-
-				
-				Transaction t;
-				if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
-					t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-				else if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.UPDATE)))
-					t = (Transaction) list.getSelectedValue();
-				else {
-					Log.error("Unknown record button state: " + recordButton.getText());
-					return;
-				}
-				
-				if (editableTransaction.getTransferFrom().getCreationDate() != null
-						&& editableTransaction.getTransferFrom().getCreationDate().after(editableTransaction.getDate()))
-					editableTransaction.getTransferFrom().setCreationDate(editableTransaction.getDate());
-				if (editableTransaction.getTransferTo().getCreationDate() != null
-						&& editableTransaction.getTransferTo().getCreationDate().after(editableTransaction.getDate()))
-					editableTransaction.getTransferTo().setCreationDate(editableTransaction.getDate());
-				
-				t.setDate(editableTransaction.getDate());
-				t.setDescription(editableTransaction.getDescription());
-				t.setAmount(editableTransaction.getAmount());
-				t.setTo(editableTransaction.getTransferTo());
-				t.setFrom(editableTransaction.getTransferFrom());
-				t.setMemo(editableTransaction.getMemo());
-				t.setNumber(editableTransaction.getNumber());
-				
-				if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
-					DataInstance.getInstance().addTransaction(t);
-				else {
-					DataInstance.getInstance().calculateAllBalances();
-					DataInstance.getInstance().saveDataModel();
-				}
-				
-//				Removed when I removed the memo field
-//				if (editableTransaction.getMemo().length() > 0){
-//					PrefsInstance.getInstance().addMemoEntry(editableTransaction.getMemo());
-//				}
-				PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
-				
-				editableTransaction.clearTransaction();
+				recordTransaction();
+				editableTransaction.setTransaction(null);
 				updateContent();
 			}
 		});
@@ -160,7 +125,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
-					editableTransaction.clearTransaction();
+					editableTransaction.setTransaction(null);
 					editableTransaction.updateContent();
 					list.clearSelection();
 					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
@@ -181,7 +146,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					
 					Transaction t = (Transaction) list.getSelectedValue();
 					DataInstance.getInstance().deleteTransaction(t);
-					editableTransaction.clearTransaction();
+					editableTransaction.setTransaction(null);
 					list.clearSelection();
 					
 					updateContent();
@@ -218,10 +183,64 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		return this;
 	}
 	
+	private void recordTransaction(){
+		if (!isValidRecord()){
+			JOptionPane.showMessageDialog(
+					TransactionsFrame.this,
+					Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR),
+					Translate.inst().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE
+			);
+			return;
+		}
+
+		
+		Transaction t;
+		if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
+			t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+		else if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.UPDATE)))
+//			t = (Transaction) list.getSelectedValue();
+			t = editableTransaction.getTransaction();
+		else {
+			Log.error("Unknown record button state: " + recordButton.getText());
+			return;
+		}
+		
+		if (editableTransaction.getTransferFrom().getCreationDate() != null
+				&& editableTransaction.getTransferFrom().getCreationDate().after(editableTransaction.getDate()))
+			editableTransaction.getTransferFrom().setCreationDate(editableTransaction.getDate());
+		if (editableTransaction.getTransferTo().getCreationDate() != null
+				&& editableTransaction.getTransferTo().getCreationDate().after(editableTransaction.getDate()))
+			editableTransaction.getTransferTo().setCreationDate(editableTransaction.getDate());
+		
+		t.setDate(editableTransaction.getDate());
+		t.setDescription(editableTransaction.getDescription());
+		t.setAmount(editableTransaction.getAmount());
+		t.setTo(editableTransaction.getTransferTo());
+		t.setFrom(editableTransaction.getTransferFrom());
+		t.setMemo(editableTransaction.getMemo());
+		t.setNumber(editableTransaction.getNumber());
+		
+		if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
+			DataInstance.getInstance().addTransaction(t);
+		else {
+			DataInstance.getInstance().calculateAllBalances();
+			DataInstance.getInstance().saveDataModel();
+		}
+		
+//		Removed when I removed the memo field
+//		if (editableTransaction.getMemo().length() > 0){
+//			PrefsInstance.getInstance().addMemoEntry(editableTransaction.getMemo());
+//		}
+		PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
+		
+//		editableTransaction.setChanged(false);
+	}
+	
 	protected AbstractBudgetFrame initContent(){
 		this.setTitle(account.getName() + " - " + Translate.inst().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
-		editableTransaction.clearTransaction();
+		editableTransaction.setTransaction(null);
 		
 		return this;
 	}
