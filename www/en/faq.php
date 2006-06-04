@@ -2,6 +2,12 @@
 
 <h1>Frequently Asked Questions</h1>
 
+<h2>How do I run the program?</h2>
+
+<p>
+That depends on what operating system you are running.  If you are in Windows, simply double click on the Buddi.jar file.  If you are on a Macintosh, double click on the Buddi application bundle.  If you are on Linux or some other platform where the association of .jar to the Java VM has not been set up, type 'java -jar Buddi.jar' on the command line.
+</p>
+
 <h2>Why doesn't this stupid program work?</h2>
 
 <p>

@@ -7,11 +7,15 @@ If you are interested in adding to my project in any way, please do so!  The sou
 </p>
 
 <p>
-If you are interested in translating Buddi into another language, there is just one file which you need to duplicate and modify: en-US.lang, located in the Language directory.  (If you are running on Macintosh OS X, you will need to ctrl-click on the application package, select Show Package Contents, and go into the Contents -> Resources -> Java -> Languages folder.)  Once you duplicate it, rename the file to the correct language name, for instance en-US (for US Engligh),  or ja-JP (for Japanese).
+If you are interested in translating Buddi into another language, there is just one file which you need to duplicate and modify: en.lang, located in the Language directory.  (If you are running on Macintosh OS X, you will need to ctrl-click on the application package, select Show Package Contents, and go into the Contents -> Resources -> Java -> Languages folder.)  Once you duplicate it, rename the file to the correct language code, for instance en (for Engligh), or ja (for Japanese).
 </p>
 
 <p>
 The .lang file contains pairs of keywords and values, in the format 'KEYWORD=Value String'.  This file is used for all text within the program itself.  Simply replace the english value string with the equivalent text from the language you are translating into.
+</p>
+
+<p>
+If there are special characters (represented by Unicode) in your translation, you will have to use the Java unicode escape sequences, in the form /uXXXX.  The program native2ascii, included with the Java SDK, should be able to automate this.  If you have questions, please ask me.
 </p>
 
 <p>
