@@ -3,7 +3,7 @@
 <h1>Developer Information</h1>
 
 <p>
-If you are interested in adding to my project in any way, please do so!  The source is included with each distributed version in the source.zip file.  I use Eclipse with the EMF plugin for editing and compilation.  If you load the unzipped source into a new Eclipse project, everything should work just fine.
+If you are interested in adding to my project in any way, please do so!  The source is can be downloaded freely from <a href='http://sourceforge.net/projects/buddi'>http://sourceforge.net/projects/buddi</a>.  I use Eclipse with the EMF plugin for editing and compilation.  If you load the unpacked source into a new Eclipse project, everything should work just fine.
 </p>
 
 <p>

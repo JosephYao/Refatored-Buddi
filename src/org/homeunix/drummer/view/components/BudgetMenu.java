@@ -373,14 +373,14 @@ public class BudgetMenu extends JScreenMenuBar {
 					File localHelp = new File(
 							Const.HELP_FOLDER 
 							+ File.separator
-							+ PrefsInstance.getInstance().getPrefs().getLanguage()
+							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
 							+ File.separator
 							+ Const.HELP_FILE);
 					final String location;
 					if (localHelp.exists())
 						location = "file://" + localHelp.getAbsolutePath();
 					else
-						location = "http://buddi.sourceforge.net/" + PrefsInstance.getInstance().getPrefs().getLanguage();
+						location = "http://buddi.sourceforge.net/" + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "");
 					
 					Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher.openURL(location);
