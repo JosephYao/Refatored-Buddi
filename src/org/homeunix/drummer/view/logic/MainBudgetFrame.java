@@ -35,18 +35,6 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 	
 	private MainBudgetFrame(){
 		super();
-		
-		if (Buddi.isMac()){
-			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			Application.getInstance().addReopenApplicationListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					MainBudgetFrame.this.setVisible(true);
-				}
-			});
-		}
-		else{
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		}
 	
 		DataInstance.getInstance().calculateAllBalances();
 		
@@ -60,28 +48,33 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 			public void componentResized(ComponentEvent arg0) {
 				Log.debug("Main window resized");
 				
-				PrefsInstance.getInstance().checkSanity();
-				
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
+				MainBudgetFrame.this.savePosition();
+								
 				super.componentResized(arg0);
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkSanity();
+				Log.debug("Main Window hidden");
 				
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getMainWindow().setY(arg0.getComponent().getY());
-				
-				PrefsInstance.getInstance().savePrefs();
+				MainBudgetFrame.this.savePosition();
 				
 				super.componentHidden(arg0);
 			}
 		});
+		
+		if (Buddi.isMac()){
+			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			Application.getInstance().addReopenApplicationListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					if (!MainBudgetFrame.this.isVisible())
+						MainBudgetFrame.this.setVisible(true);
+				}
+			});
+		}
+		else{
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		}
 		
 		return this;
 	}
@@ -112,6 +105,18 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 		}
 		else
 			return null;
+	}
+	
+	public void savePosition(){
+		PrefsInstance.getInstance().checkSanity();
+		
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(this.getHeight());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(this.getWidth());
+		
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setX(this.getX());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setY(this.getY());
+		
+		PrefsInstance.getInstance().savePrefs();
 	}
 
 }

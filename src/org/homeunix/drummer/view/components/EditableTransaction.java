@@ -148,10 +148,10 @@ public class EditableTransaction extends JPanel {
 				
 		initActions();
 		
-		//updateContent();
+//		updateContent();
 	}
 	
-	public void setTransaction(Transaction transaction){
+	public void setTransaction(Transaction transaction, boolean force){
 		//If the new transaction is not the same as the old one, then we 
 		// want to reset the form.  Since this can include nulls, we need
 		// to consider a few cases.
@@ -160,9 +160,9 @@ public class EditableTransaction extends JPanel {
 		//   a) Both are equal - do nothing
 		//   b) Both are not equal - update
 		// 3) One is null, the other is not - update.
-		if (this.transaction == null && transaction == null)
+		if (!force && this.transaction == null && transaction == null)
 			return;
-		if (this.transaction != null && this.transaction.equals(transaction))
+		if (!force && this.transaction != null && this.transaction.equals(transaction))
 			return;
 		if (transaction != null){
 //			SimpleDateFormat sdf = new SimpleDateFormat(TransactionCell.dateFormat);
@@ -283,6 +283,8 @@ public class EditableTransaction extends JPanel {
 			else
 				toModel.addElement(c);	
 		}
+		
+//		date.requestFocus();
 	}
 	
 	private void initActions(){
@@ -343,11 +345,10 @@ public class EditableTransaction extends JPanel {
 		for (JComponent c : components) {
 			c.setEnabled(arg0);
 		}
-		
 	}
 	
 	public void select(){
-		amount.requestFocus();
-		amount.selectAll();
+		date.requestFocusInWindow();
+//		amount.selectAll();
 	}
 }

@@ -204,7 +204,7 @@ public class BudgetMenu extends JScreenMenuBar {
 						return Translate.inst().get(TranslateKeys.BUDDI_FILE_DESC);
 					}
 				});
-				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.LOAD_BACKUP_FILE));
+				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
 				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						Log.debug(Translate.inst().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
@@ -426,6 +426,7 @@ public class BudgetMenu extends JScreenMenuBar {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
+					MainBudgetFrame.getInstance().savePosition();
 					Log.debug("Exiting");
 					System.exit(0);
 				}

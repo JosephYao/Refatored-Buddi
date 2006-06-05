@@ -36,7 +36,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		
-		editableTransaction.setTransaction(null);
+		editableTransaction.setTransaction(null, true);
 		updateContent();
 		openWindow();
 	}
@@ -96,10 +96,10 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					if (list.getSelectedValue() instanceof Transaction) {
 						Transaction t = (Transaction) list.getSelectedValue();
 						
-						editableTransaction.setTransaction(t);
+						editableTransaction.setTransaction(t, false);
 					}
 					else if (list.getSelectedValue() == null){
-						editableTransaction.setTransaction(null);
+						editableTransaction.setTransaction(null, false);
 						editableTransaction.updateContent();
 					}
 					
@@ -111,23 +111,24 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		recordButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				recordTransaction();
-				editableTransaction.setTransaction(null);
+				editableTransaction.setTransaction(null, true);
 				updateContent();
 			}
 		});
 		
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (JOptionPane.showConfirmDialog(
-						TransactionsFrame.this,
-						Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
-						Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION),
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+				if (!editableTransaction.isChanged()
+						|| JOptionPane.showConfirmDialog(
+								TransactionsFrame.this,
+								Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
+								Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
-					editableTransaction.setTransaction(null);
+					editableTransaction.setTransaction(null, true);
 					editableTransaction.updateContent();
-					list.clearSelection();
+					list.setSelectedIndex(list.getModel().getSize() - 1);
 					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 					
 					updateButtons();
@@ -146,7 +147,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					
 					Transaction t = (Transaction) list.getSelectedValue();
 					DataInstance.getInstance().deleteTransaction(t);
-					editableTransaction.setTransaction(null);
+					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 					
 					updateContent();
@@ -240,7 +241,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	protected AbstractBudgetFrame initContent(){
 		this.setTitle(account.getName() + " - " + Translate.inst().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
-		editableTransaction.setTransaction(null);
+		editableTransaction.setTransaction(null, true);
 		
 		return this;
 	}
@@ -299,6 +300,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	@Override
 	public AbstractBudgetFrame openWindow() {
 		list.setSelectedIndex(list.getModel().getSize() - 1);
+		editableTransaction.select();
 		return super.openWindow();
 	}
 
