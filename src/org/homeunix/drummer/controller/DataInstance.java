@@ -83,11 +83,11 @@ public class DataInstance {
 	public void loadDataModel(File locationFile, boolean forceNewFile){
 		
 		if (!forceNewFile){
-			while (locationFile == null || !locationFile.getParentFile().exists()){
+			if (locationFile == null || !locationFile.getParentFile().exists()){
 				JOptionPane.showMessageDialog(
 						null,
 						Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
-						+ locationFile.getAbsolutePath() 
+						+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() ) 
 						+ Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
 						Translate.inst().get(TranslateKeys.MISSING_DATA_FILE),
 						JOptionPane.ERROR_MESSAGE);
@@ -97,6 +97,10 @@ public class DataInstance {
 					locationFile = new File(file);
 				else
 					locationFile = null;
+			}
+			
+			if (locationFile == null){
+				System.exit(0);
 			}
 			
 			if (!locationFile.exists() && locationFile.getParentFile().exists()){

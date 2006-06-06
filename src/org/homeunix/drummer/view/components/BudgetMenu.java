@@ -426,7 +426,8 @@ public class BudgetMenu extends JScreenMenuBar {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					MainBudgetFrame.getInstance().savePosition();
+					if (MainBudgetFrame.getInstance() != null)
+						MainBudgetFrame.getInstance().savePosition();
 					Log.debug("Exiting");
 					System.exit(0);
 				}
