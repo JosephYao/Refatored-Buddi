@@ -2,6 +2,12 @@
 
 <h1>News</h1>
 
+<h2>1.0 RC 2 (June 6 2006)</h2>
+<ul>
+<li>The second release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
+<li>Misc. UI improvements</li>
+</ul>
+
 <h2>1.0 RC 1 (June 4 2006)</h2>
 <ul>
 <li>The first release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
