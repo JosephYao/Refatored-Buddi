@@ -35,6 +35,7 @@ How to use Buddi:
 </ul>
 </li>
 <li><a href='./thanks.php'>Thanks</a></li>
+<li><a href='./links.php'>Links</a></li>
 </ul>
 </div>
 
