@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
@@ -62,7 +63,16 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
-		sb.append("<tr><th>Category</th><th>Budgeted</th><th>Actual</th><th>Difference</th></tr>");
+		sb.append(
+				"<tr><th>"
+				+ Translate.inst().get(TranslateKeys.CATEGORY)
+				+ "</th><th>"
+				+ Translate.inst().get(TranslateKeys.BUDGETED)
+				+ "</th><th>"
+				+ Translate.inst().get(TranslateKeys.ACTUAL)
+				+ "</th><th>"
+				+ Translate.inst().get(TranslateKeys.DIFFERENCE)
+				+ "</th></tr>");
 		
 		int numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
 		

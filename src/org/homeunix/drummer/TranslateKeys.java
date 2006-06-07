@@ -175,5 +175,6 @@ public enum TranslateKeys {
 	YESTERDAY,
 	ZOOM,
 
-	OPEN_DATA_FILE_TITLE
+	OPEN_DATA_FILE_TITLE,
+	DIFFERENCE
 }
