@@ -2,6 +2,13 @@
 
 <h1>News</h1>
 
+<h2>1.0.0 RC 3 (June 8 2006)</h2>
+<ul>
+<li>The third release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
+<li>Fixed reports screen if there was many categories (scroll bar did not work before)</li>
+<li>Misc. UI improvements</li>
+</ul>
+
 <h2>1.0 RC 2 (June 6 2006)</h2>
 <ul>
 <li>The second release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>

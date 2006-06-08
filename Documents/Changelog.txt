@@ -3,7 +3,6 @@
 -Fixed reports screen if there was many categories (scroll bar did not work before)
 -Misc. UI improvements
 
-
 1.0.0 RC 2 (June 6 2006)
 -The second release cantidate for 1.0 stable.  Please report any bugs that you may find to wyatt.olson@gmail.com
 -Misc. UI improvements
