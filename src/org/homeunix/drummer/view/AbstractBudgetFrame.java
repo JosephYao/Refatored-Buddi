@@ -90,10 +90,10 @@ public abstract class AbstractBudgetFrame extends JFrame{
 					PrefsInstance.getInstance().getPrefs().getReportsWindow().getY()
 			);
 			d = null;
-//			d = new Dimension(
-//					PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(),
-//					PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()					
-//			);
+			d = new Dimension(
+					PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(),
+					PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()					
+			);
 		}
 		else{
 			Log.debug("Not of a known type");

@@ -34,7 +34,7 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	protected final JButton okButton;
 	
 	public ReportFrameLayout(Date startDate, Date endDate){
-		reportLabel = new JLabel();
+		reportLabel = new JLabel(buildReport(startDate, endDate));
 		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
@@ -69,9 +69,11 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
 		
-		reportLabel.setText(buildReport(startDate, endDate));
-		
-		reportLabel.setPreferredSize(new Dimension(reportLabel.getPreferredSize().width, Math.min(400, reportLabel.getPreferredSize().height)));
+//		this.setPreferredSize(new Dimension(reportLabel.getPreferredSize().width, Math.max(400, reportLabel.getPreferredSize().height)));
+//		this.setPreferredSize(new Dimension(
+//				PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(), 
+//				PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()
+//		));
 		
 		//Call the method to add actions to the buttons
 		initActions();
