@@ -135,6 +135,10 @@ public class DataInstance {
 			if (contents.size() > 0){
 				dataModel = (DataModel) contents.get(0);
 			}
+			
+			//Save the location to the prefs file, in case we changed it.
+			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
+			PrefsInstance.getInstance().savePrefs();
 		}
 		//If there is a problem opening the file, we will prompt to make a new one
 		catch (Exception e){

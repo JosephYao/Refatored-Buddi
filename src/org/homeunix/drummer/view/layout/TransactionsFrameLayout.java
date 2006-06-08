@@ -57,10 +57,9 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		clearButton = new JButton(Translate.inst().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
 		
-		Dimension buttonSize = new Dimension(130, recordButton.getPreferredSize().height);
-		recordButton.setPreferredSize(buttonSize);
-		clearButton.setPreferredSize(buttonSize);
-		deleteButton.setPreferredSize(buttonSize);
+		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
+		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
+		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 
 		this.getRootPane().setDefaultButton(recordButton);
 		
