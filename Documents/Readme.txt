@@ -1,5 +1,5 @@
 ----------------------------------------
-Buddi - Cross platform personal finance software
+Buddi - Personal budget software for the rest of us
 Copyright (C) 2006 Wyatt Olson
 
 This program is free software; you can redistribute it and/or
@@ -17,7 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ----------------------------------------
 
-Buddi is personal finance / budget software, intended for use by those without much accounting experience.  I have tried to keep it as simple as possible, without compromising essential functionality.
+I created Buddi because I wanted a simple to use budgeting software which does not require a degree in accounting to use.  All software which I previously tried to use seemed either too complex or did not do what I wanted.
+
+Buddi is my attempt to remedy this problem.  It is written in Java (Java 1.5 required), so it can run on most operating systems.  I have tried to keep it as simple as possible, focusing on three main functions:
 
 Buddi's core functions include:
 1) Setting up accounts and expense / income categories, and recording transactions between them.
