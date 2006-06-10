@@ -1,3 +1,10 @@
+1.0.0 Stable
+-Made the amount field larger in the transaction edit pane.
+-Sometimes the cents get rounded down, probably due to double rounding errors.  Replaced the JNumberField with a DecimalField class modified from http://rangiroa.essi.fr/cours/turorial%20java/uiswing/components/textfield.html.  I moved the double -> long conversion to this class, as well.
+-Maximum value for decimalField was about 200,000.00, due to int overflow errors; this is fixed, and it is now in the hundred trillions.
+-Changed order of fields on the transactions list screen.  Now it is different from the editable transaction pane, but it seems to flow better.
+-Added German translation (many thanks to Torsten Hinsche).
+
 1.0.0 RC 3 (June 8 2006)
 -The third release cantidate for 1.0 stable.  Please report any bugs that you may find to wyatt.olson@gmail.com
 -Fixed reports screen if there was many categories (scroll bar did not work before)
