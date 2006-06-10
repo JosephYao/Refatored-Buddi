@@ -9,7 +9,6 @@ package org.homeunix.drummer.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.Vector;
@@ -64,23 +63,19 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 		components.add(memo);
 		components.add(this);
 
-		JPanel topPanel = new JPanel(new GridBagLayout());
-		JPanel bottomPanel = new JPanel(new GridBagLayout());
 		this.setLayout(new GridLayout(2, 4));
 						
 		this.add(date);
 		this.add(description);
-		this.add(number);
-		this.add(memo);
 		this.add(amount);
+		this.add(balance);
+		this.add(number);
 		this.add(transferFrom);
 		this.add(transferTo);
-		this.add(balance);
+		this.add(memo);		
 		
 		if (Buddi.isMac()){
 			this.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
-			bottomPanel.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
-			topPanel.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 			for (JComponent c : components) {
 				c.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 			}

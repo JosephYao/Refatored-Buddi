@@ -106,8 +106,8 @@ public class CategoryListPanel extends ListPanelLayout {
 	}
 	
 	public AbstractBudgetPanel updateContent(){
-		int expenses = 0;
-		int income = 0;
+		long expenses = 0;
+		long income = 0;
 
 		root.removeAllChildren();
 		selectedSource = null;

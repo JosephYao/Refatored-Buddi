@@ -18,11 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.components.JNumberField;
+import org.homeunix.drummer.view.components.JDecimalField;
 
 public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;
@@ -31,7 +31,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	protected final JButton cancelButton;
 	
 	protected final JTextField name;
-	protected final JNumberField amount;
+	protected final JDecimalField amount;
 	protected final JComboBox pulldown;
 	protected final JCheckBox check;
 	
@@ -54,7 +54,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		nameLabel = new JLabel(Translate.inst().get(TranslateKeys.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
-		amount = new JNumberField(Formatter.getInstance().getDecimalFormat());
+		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();

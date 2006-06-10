@@ -302,11 +302,12 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer();
-		result.append("[ ");
+//		result.append("[ ");
 		result.append(name);
 		result.append(" (");
 		result.append(accountType);
-		result.append(") ]");
+		result.append(")");
+//		result.append(") ]");
 
 		return result.toString();
 	}

@@ -6,6 +6,7 @@ package org.homeunix.drummer;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import net.roydesign.mac.MRJAdapter;
@@ -94,7 +95,7 @@ public class Buddi {
 		MRJAdapter.setFramelessJMenuBar(new BudgetMenu(null));
 		
 		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				launchGUI();
 			}

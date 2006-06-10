@@ -47,9 +47,8 @@ public class EditableTransaction extends JPanel {
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
 	
-//	private final JFormattedTextField date;
 	private final JDateChooser date;
-	private final JNumberField amount;
+	private final JDecimalField amount;
 	private final JComboBox transferFrom;
 	private final JComboBox transferTo;
 	private final JTextField number;
@@ -66,9 +65,8 @@ public class EditableTransaction extends JPanel {
 	public EditableTransaction(TransactionsFrameLayout parent){
 		this.parent = parent;
 				
-//		date = new JFormattedTextField(Formatter.getInstance().getDateFormat());
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
-		amount = new JNumberField(Formatter.getInstance().getDecimalFormat());
+		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
 		transferFrom = new JComboBox();
 		transferTo = new JComboBox();
 		number = new JTextField();
@@ -140,15 +138,13 @@ public class EditableTransaction extends JPanel {
 		description.setPreferredSize(new Dimension(200, textHeight));
 		number.setPreferredSize(new Dimension(80, textHeight));
 		
-		amount.setMinimumSize(new Dimension(100, textHeight));
+		amount.setMinimumSize(new Dimension(150, textHeight));
 		transferFrom.setPreferredSize(new Dimension(250, transferFrom.getPreferredSize().height));
 		transferTo.setPreferredSize(transferFrom.getPreferredSize());
 		
 		memoScroller.setPreferredSize(new Dimension(300, memo.getPreferredSize().height));
 				
 		initActions();
-		
-//		updateContent();
 	}
 	
 	public void setTransaction(Transaction transaction, boolean force){
@@ -165,17 +161,11 @@ public class EditableTransaction extends JPanel {
 		if (!force && this.transaction != null && this.transaction.equals(transaction))
 			return;
 		if (transaction != null){
-//			SimpleDateFormat sdf = new SimpleDateFormat(TransactionCell.dateFormat);
-//			date.setValue(transaction.getDate());
-			date.setDate(transaction.getDate());
-			
+			date.setDate(transaction.getDate());			
 			number.setText(transaction.getNumber());
 			description.setText(transaction.getDescription());
-			//balance.setText("");
 			memo.setText(transaction.getMemo());
-			
-			amount.setValue((double) transaction.getAmount() / 100.0);
-			
+			amount.setValue(transaction.getAmount());
 			transferFrom.setSelectedItem(transaction.getFrom());
 			transferTo.setSelectedItem(transaction.getTo());
 		}
@@ -185,13 +175,10 @@ public class EditableTransaction extends JPanel {
 			number.setText("");
 			description.setText("");
 			amount.setValue(0);
-//			balance.setText("");
 			transferTo.setSelectedIndex(0);
 			transferFrom.setSelectedIndex(0);
 			memo.setText("");
-			
 			date.requestFocus();
-			
 			setChanged(false);
 		}
 		
@@ -230,14 +217,11 @@ public class EditableTransaction extends JPanel {
 		return transaction;
 	}
 	
-	public int getAmount(){
-		int amount = 0;
-		
+	public long getAmount(){
 		if (this.amount != null)
-			//We record the amount in cents, to avoid decimal point issues
-			amount = (int) (Double.parseDouble(this.amount.getValue().toString()) * 100);
-		
-		return amount;
+			return this.amount.getValue();
+		else
+			return 0;
 	}
 	
 	public Source getTransferFrom(){
@@ -277,14 +261,15 @@ public class EditableTransaction extends JPanel {
 			fromModel.addElement(source);
 		}
 		
+		toModel.addElement(null);
+		fromModel.addElement(null);		
+		
 		for (Category c : DataInstance.getInstance().getCategories()){
 			if (c.isIncome())
 				fromModel.addElement(c);
 			else
 				toModel.addElement(c);	
 		}
-		
-//		date.requestFocus();
 	}
 	
 	private void initActions(){
@@ -349,6 +334,5 @@ public class EditableTransaction extends JPanel {
 	
 	public void select(){
 		date.requestFocusInWindow();
-//		amount.selectAll();
 	}
 }

@@ -105,7 +105,7 @@ public class AccountListPanel extends ListPanelLayout {
 	}
 	
 	public AbstractBudgetPanel updateContent(){
-		int balance = 0;
+		long balance = 0;
 		
 		root.removeAllChildren(); 
 		selectedSource = null;

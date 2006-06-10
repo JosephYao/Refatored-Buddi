@@ -52,7 +52,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 					a.setName(name.getText());
 					
 					a.setAccountType((Type) pulldown.getSelectedItem());
-					int startingBalance = (int) (Double.parseDouble(amount.getValue().toString()) * 100);
+					long startingBalance = amount.getValue();
 					if (a.isCredit())
 						startingBalance = Math.abs(startingBalance) * -1;
 					
@@ -119,7 +119,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 		}
 		else{
 			name.setText(source.getName());
-			amount.setValue(Math.abs((double) source.getStartingBalance() / 100.0));
+			amount.setValue(source.getStartingBalance());
 	
 			pulldown.setSelectedItem(source.getAccountType());
 //			amount.setEnabled(false);

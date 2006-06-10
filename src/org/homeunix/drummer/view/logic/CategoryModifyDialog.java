@@ -75,7 +75,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 					}
 					
 					c.setName(name.getText());
-					c.setBudgetedAmount((int) (Double.parseDouble(amount.getValue().toString()) * 100));
+					c.setBudgetedAmount(amount.getValue());
 
 					//We need to clear out any old, obsolete references to parents
 					// and children.
@@ -149,7 +149,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 		}
 		else{
 			name.setText(Translate.inst().get(source.getName()));
-			amount.setValue((double) source.getBudgetedAmount() / 100.0);
+			amount.setValue(source.getBudgetedAmount());
 			if (source.isIncome())
 				check.setSelected(true);
 			else
