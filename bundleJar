@@ -44,20 +44,22 @@ tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
 rm -rf $DEST/$SOURCE
 #rm $DEST/$SOURCE.tgz
 
-if [ "$1" != "" ]; then
+VERSION=`grep VERSION src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+
+if [ "$VERSION" != "" ]; then
 	#Zip and DMG the bundles
-	sed -i .bak  -e "s/BUDDI_VERSION/$1/" $OSX/Buddi.app/Contents/Info.plist
+	sed -i .bak  -e "s/BUDDI_VERSION/$VERSION/" $OSX/Buddi.app/Contents/Info.plist
 	rm $OSX/Buddi.app/Contents/Info.plist.bak
 	cd $DEST
-	zip -r Buddi-$1.zip Buddi
+	zip -r Buddi-$VERSION.zip Buddi
 	rm -rf $GENERIC
 	mkdir $GENERIC
 	mv $OSX $GENERIC/Buddi
-	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-$1.dmg
+	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-$VERSION.dmg
 	rm -rf $OSXROOT
 	rm -rf $GENERIC
 
-	mv $DEST/$SOURCE.tgz $DEST/Buddi-$1.src.tgz
+	mv $DEST/$SOURCE.tgz $DEST/Buddi-$VERSION.src.tgz
 fi
 
 open $DEST

@@ -14,9 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.logic.MainBudgetFrame;
 
@@ -46,7 +46,7 @@ public class AboutDialog extends AbstractBudgetDialog {
 				"<html><h5>")
 				.append(Translate.inst().get(TranslateKeys.VERSION))
 				.append(" ")
-				.append(Buddi.version)
+				.append(Const.VERSION)
 				.append("</h5></html");
 		JLabel version = new JLabel(sbVersion.toString());
 		

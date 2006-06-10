@@ -57,7 +57,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		JLabel dateFormatLabel = new JLabel(Translate.inst().get(TranslateKeys.DATE_FORMAT));
 		
 		//Add the date formats defined in Const.
-		dateFormat = new JComboBox(Const.dateFormats);
+		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		dateFormat.setRenderer(new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
