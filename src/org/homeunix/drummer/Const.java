@@ -21,7 +21,8 @@ public class Const {
 		"yyyy/MM/dd",
 		"MMM dd yyyy",
 		"MMMM dd, yyyy",
-		"dd/MM/yyyy"
+		"dd/MM/yyyy",
+		"dd.MM.yyyy"
 	};
 	
 	private Const(){}
