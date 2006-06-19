@@ -4,9 +4,11 @@
 
 <h2>1.0.0 RC 4 (June 19 2006)</h2>
 <ul>
-<li>The fourth release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
-<li>Added German translations: de, de-DE, de-CH (much thanks to Torsten Hinsche)</li>
-<li>Misc. UI improvements</li>
+<li>Made the amount field larger in the transaction edit pane.</li>
+<li>Sometimes the cents get rounded down, probably due to double rounding errors.  Replaced the JNumberField with a DecimalField class modified from http://rangiroa.essi.fr/cours/turorial%20java/uiswing/components/textfield.html.  I moved the double -> long conversion to this class, as well.</li>
+<li>Maximum value for decimalField was about 200,000.00, due to int overflow errors; this is fixed, and it is now in the hundred trillions.</li>
+<li>Changed order of fields on the transactions list screen.  Now it is different from the editable transaction pane, but it seems to flow better.</li>
+<li>Added German translation (many thanks to Torsten Hinsche).</li>
 </ul>
 
 <h2>1.0.0 RC 3 (June 8 2006)</h2>

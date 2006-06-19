@@ -1,4 +1,4 @@
-1.0.0 Stable
+1.0.0 RC 4 (June 19 2006)
 -Made the amount field larger in the transaction edit pane.
 -Sometimes the cents get rounded down, probably due to double rounding errors.  Replaced the JNumberField with a DecimalField class modified from http://rangiroa.essi.fr/cours/turorial%20java/uiswing/components/textfield.html.  I moved the double -> long conversion to this class, as well.
 -Maximum value for decimalField was about 200,000.00, due to int overflow errors; this is fixed, and it is now in the hundred trillions.
