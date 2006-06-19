@@ -2,6 +2,13 @@
 
 <h1>News</h1>
 
+<h2>1.0.0 RC 4 (June 19 2006)</h2>
+<ul>
+<li>The fourth release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
+<li>Added German translations: de, de-DE, de-CH (much thanks to Torsten Hinsche)</li>
+<li>Misc. UI improvements</li>
+</ul>
+
 <h2>1.0.0 RC 3 (June 8 2006)</h2>
 <ul>
 <li>The third release cantidate for 1.0 stable.  Please report any bugs that you may find.</li>
