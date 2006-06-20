@@ -17,12 +17,13 @@ public class Const {
 	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
 	public final static String[] DATE_FORMATS = {
+		"MMMM dd, yyyy",
+		"MMM dd yyyy",
 		"yyyy/MMM/d",
 		"yyyy/MM/dd",
-		"MMM dd yyyy",
-		"MMMM dd, yyyy",
-		"dd/MM/yyyy",
-		"dd.MM.yyyy"
+		"dd.MM.yyyy",
+		"dd/MM/yyyy"
+		
 	};
 	
 	private Const(){}

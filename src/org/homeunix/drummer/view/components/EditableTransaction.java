@@ -5,6 +5,7 @@
  */
 package org.homeunix.drummer.view.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
@@ -80,14 +82,8 @@ public class EditableTransaction extends JPanel {
 		
 		transferTo.setModel(toModel);
 		transferFrom.setModel(fromModel);
-				
-		number.setPreferredSize(new Dimension(34, number.getPreferredSize().height));
-		description.setPreferredSize(new Dimension(100, number.getPreferredSize().height));
 		
-		Dimension comboDimension = new Dimension(50, transferFrom.getPreferredSize().height);
-		transferFrom.setPreferredSize(comboDimension);
-		transferTo.setPreferredSize(comboDimension);
-		
+		//Add the tooltips
 		date.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DATE));
 		amount.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_AMOUNT));
 		transferFrom.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_FROM));
@@ -95,6 +91,11 @@ public class EditableTransaction extends JPanel {
 		number.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_NUMBER));
 		description.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DESC));
 		memo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_MEMO));
+		
+		//Add the default text
+		addHintListeners(description, Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
+		addHintListeners(number, Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
+		addHintListeners(memo, Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
 		
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
@@ -134,15 +135,16 @@ public class EditableTransaction extends JPanel {
 		this.add(memoScroller);
 		
 		int textHeight = date.getPreferredSize().height;
-		date.setPreferredSize(new Dimension(100, textHeight));
-		description.setPreferredSize(new Dimension(200, textHeight));
-		number.setPreferredSize(new Dimension(80, textHeight));
+		date.setPreferredSize(new Dimension(50, textHeight));
+		description.setPreferredSize(new Dimension(100, textHeight));
+		number.setPreferredSize(new Dimension(40, textHeight));
 		
-		amount.setMinimumSize(new Dimension(150, textHeight));
-		transferFrom.setPreferredSize(new Dimension(250, transferFrom.getPreferredSize().height));
+		amount.setMinimumSize(new Dimension(180, textHeight));
+		amount.setMaximumSize(new Dimension(210, textHeight));
+		transferFrom.setPreferredSize(new Dimension(100, transferFrom.getPreferredSize().height));
 		transferTo.setPreferredSize(transferFrom.getPreferredSize());
 		
-		memoScroller.setPreferredSize(new Dimension(300, memo.getPreferredSize().height));
+		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));
 				
 		initActions();
 	}
@@ -182,6 +184,12 @@ public class EditableTransaction extends JPanel {
 			setChanged(false);
 		}
 		
+		setDefaultText(true, description, Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
+		setDefaultText(true, number, Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
+		setDefaultText(true, memo, Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
+		
+		setChanged(false);
+		
 		this.transaction = transaction;
 	}
 			
@@ -206,11 +214,17 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public String getNumber(){
-		return number.getText();
+		if (number.getForeground().equals(Color.GRAY))
+			return "";
+		else
+			return number.getText();
 	}
 	
 	public String getDescription(){
-		return description.getText();
+		if (description.getForeground().equals(Color.GRAY))
+			return "";
+		else
+			return description.getText();
 	}
 	
 	public Transaction getTransaction(){
@@ -245,7 +259,10 @@ public class EditableTransaction extends JPanel {
 
 	
 	public String getMemo(){
-		return memo.getText();
+		if (memo.getForeground().equals(Color.GRAY))
+			return "";
+		else
+			return memo.getText();
 	}
 	
 	public void updateContent(){
@@ -334,5 +351,41 @@ public class EditableTransaction extends JPanel {
 	
 	public void select(){
 		date.requestFocusInWindow();
+	}
+	
+	private void addHintListeners(final JTextComponent c, final String hint){
+		c.setText(hint);
+		c.setForeground(Color.GRAY);
+		c.addFocusListener(new FocusAdapter(){
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				setDefaultText(false, c, hint);
+				super.focusGained(arg0);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				setDefaultText(true, c, hint);
+				super.focusLost(arg0);
+			}
+		});
+	}
+	
+	private void setDefaultText(boolean on, JTextComponent c, String hint){
+		if (on){
+			if (c.getText().equals("")){
+				c.setText(hint);
+				c.setForeground(Color.GRAY);
+			}
+			else{
+				c.setForeground(Color.BLACK);
+			}
+		}
+		else{
+			if (c.getText().equals(hint)){
+				c.setText("");
+			}
+			c.setForeground(Color.BLACK);			
+		}
 	}
 }

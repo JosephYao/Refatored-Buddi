@@ -56,8 +56,11 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
 								JOptionPane.YES_NO_CANCEL_OPTION);
 							if (ret == JOptionPane.YES_OPTION){
-								recordTransaction();
-								editableTransaction.setChanged(false);
+								try{
+									recordTransaction();
+									editableTransaction.setChanged(false);
+								}
+								catch (InvalidTransactionException ite){}
 							}
 							else if (ret == JOptionPane.NO_OPTION){
 								editableTransaction.setChanged(false);
@@ -110,9 +113,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		recordButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				recordTransaction();
-				editableTransaction.setTransaction(null, true);
-				updateContent();
+				try{
+					recordTransaction();
+					editableTransaction.setTransaction(null, true);
+					updateContent();
+					editableTransaction.setChanged(false);
+				}
+				catch(InvalidTransactionException ite){}
 			}
 		});
 		
@@ -184,7 +191,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		return this;
 	}
 	
-	private void recordTransaction(){
+	private void recordTransaction() throws InvalidTransactionException {
 		if (!isValidRecord()){
 			JOptionPane.showMessageDialog(
 					TransactionsFrame.this,
@@ -192,7 +199,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					Translate.inst().get(TranslateKeys.ERROR),
 					JOptionPane.ERROR_MESSAGE
 			);
-			return;
+			throw new InvalidTransactionException();
 		}
 
 		
@@ -204,7 +211,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			t = editableTransaction.getTransaction();
 		else {
 			Log.error("Unknown record button state: " + recordButton.getText());
-			return;
+			throw new InvalidTransactionException();
 		}
 		
 		if (editableTransaction.getTransferFrom().getCreationDate() != null
@@ -314,5 +321,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				|| (editableTransaction.getTransferFrom() != account
 						&& editableTransaction.getTransferTo() != account)
 		));
+	}
+	
+	private class InvalidTransactionException extends Exception {
+		public final static long serialVersionUID = 0;
 	}
 }

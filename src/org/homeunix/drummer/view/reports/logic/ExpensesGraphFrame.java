@@ -39,7 +39,10 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
+		long totalExpenses = 0;
+		
 		for (Category c : cats) {
+			totalExpenses += categories.get(c);
 			if (categories.get(c) > 0)
 				pieData.setValue(Translate.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
 		}
@@ -50,7 +53,9 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
-				+ ")",
+				+ ") "
+				+ Translate.inst().get(TranslateKeys.CURRENCY_SIGN)
+				+ Formatter.getInstance().getDecimalFormat().format((double) totalExpenses / 100.0),
 				pieData,             // data
 				true,               // include legend
 				true,

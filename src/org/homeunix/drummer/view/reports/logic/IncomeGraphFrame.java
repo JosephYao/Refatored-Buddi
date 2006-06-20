@@ -39,7 +39,11 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
+		long totalIncome = 0;
+		
 		for (Category c : cats) {
+			totalIncome += categories.get(c);
+			
 			if (categories.get(c) > 0)
 				pieData.setValue(Translate.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
 		}
@@ -50,7 +54,9 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
-				+ ")",
+				+ ") "
+				+ Translate.inst().get(TranslateKeys.CURRENCY_SIGN)
+				+ Formatter.getInstance().getDecimalFormat().format((double) totalIncome / 100.0),
 				pieData,             // data
 				true,               // include legend
 				true,

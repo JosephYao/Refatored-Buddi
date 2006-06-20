@@ -17,4 +17,10 @@ Special thanks go out to the people who helped in the creation of Buddi.  These 
 <li><a href='http://sourceforge.net/'>Sourceforge.net</a>: Hosting for many open source Unix applications</li>
 </ul>
 
+<p>
+Of course, I give a special thank you to all of the project donors:
+</p>
+
+<? include "../inc/donors.php" ?>
+
 <? include "./inc/footer.php" ?>
