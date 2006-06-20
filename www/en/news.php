@@ -4,7 +4,7 @@
 
 <h2>1.0.0 RC5 (June 20 2006)</h2>
 <ul>
-<li>Added grayed out description fields to empty fields (<Description>, etc)</li>
+<li>Added grayed out description fields to empty fields (Description, etc)</li>
 <li>Fixed transactions window to allow smaller window sizes without cutting portions off</li>
 <li>Fixed problem when recording without all fields, the fields already entered were deleted</li>
 <li>Fixed translation problems</li>
