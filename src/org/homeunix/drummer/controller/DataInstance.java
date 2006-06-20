@@ -452,6 +452,7 @@ public class DataInstance {
 	}
 	
 	//[TODO] Test boundary conditions: does this overlap dates or not?
+	// Update - I think that is should be working....
 	public Vector<Transaction> getTransactions(Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions();
 		Vector<Transaction> v = new Vector<Transaction>();
