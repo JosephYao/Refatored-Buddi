@@ -457,8 +457,8 @@ public class DataInstance {
 		Vector<Transaction> v = new Vector<Transaction>();
 		
 		for (Transaction t : transactions) {
-			if (t.getDate().after(startDate) && 
-					t.getDate().before(endDate)){
+			if ((t.getDate().after(startDate) || t.getDate().equals(startDate)) 
+					&& (t.getDate().before(endDate) || t.getDate().equals(endDate))){
 				v.add(t);
 			}
 		}

@@ -77,22 +77,24 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		int numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
 		
 		for (Category c : cats) {
-			sb.append("<tr><td>").append(Translate.inst().get(c.getName())).append("</td>");
-			long budgetedAmount = c.getBudgetedAmount() * numberOfMonths;
-			sb.append("<td>")
-					.append(Formatter.getInstance().getDecimalFormat().format(budgetedAmount / 100))
-					.append("</td>");
-			sb.append("<td>")
-					.append(Formatter.getInstance().getDecimalFormat().format((double) categories.get(c) / 100))
-					.append("</td>");
-			long difference = (budgetedAmount - categories.get(c)); 
-			if (c.isIncome() && difference != 0)
-				difference *= -1;	
-			sb.append("<td>")
-					.append((difference < 0 ? "<font color='red'>" : ""))
-					.append(Formatter.getInstance().getDecimalFormat().format((double) (difference) / 100))
-					.append((difference < 0 ? "</font>" : ""))
-					.append("</td>");
+			if (c.getBudgetedAmount() > 0 || categories.get(c) > 0){
+				sb.append("<tr><td>").append(Translate.inst().get(c.getName())).append("</td>");
+				long budgetedAmount = c.getBudgetedAmount() * numberOfMonths;
+				sb.append("<td>")
+				.append(Formatter.getInstance().getDecimalFormat().format(budgetedAmount / 100))
+				.append("</td>");
+				sb.append("<td>")
+				.append(Formatter.getInstance().getDecimalFormat().format((double) categories.get(c) / 100))
+				.append("</td>");
+				long difference = (budgetedAmount - categories.get(c)); 
+				if (c.isIncome() && difference != 0)
+					difference *= -1;	
+				sb.append("<td>")
+				.append((difference < 0 ? "<font color='red'>" : ""))
+				.append(Formatter.getInstance().getDecimalFormat().format((double) (difference) / 100))
+				.append((difference < 0 ? "</font>" : ""))
+				.append("</td>");
+			}
 		}
 		
 		sb.append("</table></body></html>");

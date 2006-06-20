@@ -110,24 +110,24 @@ public class ReportPanel extends ReportPanelLayout {
 		
 		intervals.add(null);
 		intervals.add(new DateChoice(
-				DateUtil.getBeginOfMonth(DateUtil.getStartDate(new Date()), 0),
-				DateUtil.getEndOfMonth(DateUtil.getEndDate(new Date()), 0),
+				DateUtil.getStartDate(DateUtil.getBeginOfMonth(new Date(), 0)),
+				DateUtil.getEndDate(DateUtil.getEndOfMonth(new Date(), 0)),
 				Translate.inst().get(TranslateKeys.THIS_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getBeginOfMonth(DateUtil.getStartDate(new Date()), -1),
-				DateUtil.getEndOfMonth(DateUtil.getEndDate(new Date()), -1),
+				DateUtil.getStartDate(DateUtil.getBeginOfMonth(new Date(), -1)),
+				DateUtil.getEndDate(DateUtil.getEndOfMonth(new Date(), -1)),
 				Translate.inst().get(TranslateKeys.LAST_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR)),
-				DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR)),
+				DateUtil.getStartDate(DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR))),
+				DateUtil.getEndDate(DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR))),
 				Translate.inst().get(TranslateKeys.THIS_YEAR)
 		));
 		
 		intervals.add(new DateChoice(
-				DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1),
-				DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1),
+				DateUtil.getStartDate(DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1)),
+				DateUtil.getEndDate(DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1)),
 				Translate.inst().get(TranslateKeys.LAST_YEAR)
 		));
 		intervals.add(new DateChoice(
@@ -144,27 +144,27 @@ public class ReportPanel extends ReportPanelLayout {
 		endDates.add(null);
 		endDates.add(new DateChoice(
 				null,
-				new Date(),
+				DateUtil.getEndDate(new Date()),
 				Translate.inst().get(TranslateKeys.TODAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getNextNDay(new Date(), -1),
+				DateUtil.getEndDate(DateUtil.getNextNDay(new Date(), -1)),
 				Translate.inst().get(TranslateKeys.YESTERDAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getNextNDay(new Date(), -8),
+				DateUtil.getEndDate(DateUtil.getNextNDay(new Date(), -8)),
 				Translate.inst().get(TranslateKeys.LAST_WEEK)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getNextNDay(new Date(), -30),
+				DateUtil.getEndDate(DateUtil.getNextNDay(new Date(), -30)),
 				Translate.inst().get(TranslateKeys.LAST_MONTH)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getNextNDay(new Date(), -365),
+				DateUtil.getEndDate(DateUtil.getNextNDay(new Date(), -365)),
 				Translate.inst().get(TranslateKeys.LAST_YEAR)
 		));
 		endDates.add(new DateChoice(
@@ -182,23 +182,23 @@ public class ReportPanel extends ReportPanelLayout {
 		
 		startDates.add(null);
 		startDates.add(new DateChoice(
-				DateUtil.getNextNDay(new Date(), -30),
+				DateUtil.getStartDate(DateUtil.getNextNDay(new Date(), -30)),
 				null,
 				Translate.inst().get(TranslateKeys.ONE_MONTH)
 		));
 		startDates.add(new DateChoice(
-				DateUtil.getNextNDay(new Date(), -60),
+				DateUtil.getStartDate(DateUtil.getNextNDay(new Date(), -60)),
 				null,
 				Translate.inst().get(TranslateKeys.TWO_MONTHS)
 		));
 		startDates.add(new DateChoice(
-				DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -6),
+				DateUtil.getStartDate(DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -6)),
 				null,
 				Translate.inst().get(TranslateKeys.SIX_MONTHS)
 		));
 		
 		startDates.add(new DateChoice(
-				DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -12),
+				DateUtil.getStartDate(DateUtil.getEndOfMonth(DateUtil.getStartDate(new Date()), -12)),
 				null,
 				Translate.inst().get(TranslateKeys.YEAR)
 		));
