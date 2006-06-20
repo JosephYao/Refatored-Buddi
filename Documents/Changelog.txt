@@ -1,3 +1,11 @@
+1.0.0 RC5 (June 20 2006)
+-Added grayed out description fields to empty fields (<Description>, etc)
+-Fixed transactions window to allow smaller window sizes without cutting portions off
+-Fixed problem when recording without all fields, the fields already entered were deleted
+-Fixed translation problems
+-Added the total for expense / income on pie graph title
+-Changed to not show categories in certain graphs that don't have any activity for this time period.
+
 1.0.0 RC 4 (June 19 2006)
 -Made the amount field larger in the transaction edit pane.
 -Sometimes the cents get rounded down, probably due to double rounding errors.  Replaced the JNumberField with a DecimalField class modified from http://rangiroa.essi.fr/cours/turorial%20java/uiswing/components/textfield.html.  I moved the double -> long conversion to this class, as well.

@@ -2,6 +2,16 @@
 
 <h1>News</h1>
 
+<h2>1.0.0 RC5 (June 20 2006)</h2>
+<ul>
+<li>Added grayed out description fields to empty fields (<Description>, etc)</li>
+<li>Fixed transactions window to allow smaller window sizes without cutting portions off</li>
+<li>Fixed problem when recording without all fields, the fields already entered were deleted</li>
+<li>Fixed translation problems</li>
+<li>Added the total for expense / income on pie graph title</li>
+<li>Changed to not show categories in certain graphs that don't have any activity for this time period.</li>
+</ul>
+
 <h2>1.0.0 RC 4 (June 19 2006)</h2>
 <ul>
 <li>Made the amount field larger in the transaction edit pane.</li>
