@@ -2,6 +2,12 @@
 
 <h1>News</h1>
 
+<h2>1.0.0(June 23 2006)</h2>
+<ul>
+<li>Official stable version</li>
+<li>Finalized German translations</li>
+</ul>
+
 <h2>1.0.0 RC5 (June 20 2006)</h2>
 <ul>
 <li>Added grayed out description fields to empty fields (Description, etc)</li>

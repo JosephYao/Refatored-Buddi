@@ -1,4 +1,5 @@
 1.0.0 (June 23 2006)
+-Official stable version
 -Finalized German translation
 
 1.0.0 RC5 (June 20 2006)
