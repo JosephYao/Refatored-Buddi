@@ -1,3 +1,6 @@
+1.0.0 (June 23 2006)
+-Finalized German translation
+
 1.0.0 RC5 (June 20 2006)
 -Added grayed out description fields to empty fields (<Description>, etc)
 -Fixed transactions window to allow smaller window sizes without cutting portions off
