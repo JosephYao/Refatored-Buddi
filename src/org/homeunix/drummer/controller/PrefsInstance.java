@@ -6,6 +6,8 @@ package org.homeunix.drummer.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -19,6 +21,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
@@ -48,15 +51,14 @@ public class PrefsInstance {
 
 	//Provide backing for the autocomplete text fields
 	private final DefaultDictionary descDict;
-//	private final DefaultDictionary memoDict;
+	private final Map<String, DictData> defaultsMap;
 
 	private ResourceSet resourceSet;
-	
 	private static String location;
 
 	private PrefsInstance(){
 		descDict = new DefaultDictionary();
-//		memoDict = new DefaultDictionary();
+		defaultsMap = new HashMap<String, DictData>();
 		
 		if (location == null){
 			if (Buddi.isMac()){
@@ -170,18 +172,15 @@ public class PrefsInstance {
 		}
 		
 		//Load the auto complete entries into the dictionary
+		// and create the autocomplete map, between 
+		// description and other fields.
 		for (Object o : userPrefs.getPrefs().getDescDict()) {
 			if (o instanceof DictEntry) {
-				descDict.add(((DictEntry) o).getEntry());
+				DictEntry entry = (DictEntry) o;
+				descDict.add(entry.getEntry());
+				defaultsMap.put(entry.getEntry(), entry.getData());
 			}
 		}
-
-//		for (Object o : prefs.getMemoDict()) {
-//			if (o instanceof DictEntry) {
-//				memoDict.add(((DictEntry) o).getEntry());
-//			}
-//		}
-
 	}
 	
 	public void savePrefs(){		
@@ -194,14 +193,9 @@ public class PrefsInstance {
 		for (String s : descDict) {
 			DictEntry d = prefsFactory.createDictEntry();
 			d.setEntry(s);
+			d.setData(defaultsMap.get(s));
 			userPrefs.getPrefs().getDescDict().add(d);
 		}
-//		prefs.getMemoDict().retainAll(new Vector());
-//		for (String s : memoDict) {
-//			DictEntry d = prefsFactory.createDictEntry();
-//			d.setEntry(s);
-//			prefs.getMemoDict().add(d);
-//		}
 		
 		try{
 			FileFunctions.copyFile(saveLocation, backupLocation);
@@ -234,13 +228,24 @@ public class PrefsInstance {
 		savePrefs();
 	}
 
-//	public void addMemoEntry(String entry){
-//		memoDict.add(entry);
-//		savePrefs();
-//	}
-
 	public DefaultDictionary getDescDict() {
 		return descDict;
+	}
+	
+	public void setAutoCompleteEntry(String description, 
+			String number, long amount, String from, String to, String memo){
+		DictData dd = prefsFactory.createDictData();
+		dd.setNumber(number);
+		dd.setAmount(amount);
+		dd.setFrom(from);
+		dd.setTo(to);
+		dd.setMemo(memo);
+		
+		defaultsMap.put(description, dd);
+	}
+	
+	public DictData getAutoCompleteEntry(String description){
+		return defaultsMap.get(description);
 	}
 	
 	public static String chooseDataFile(){
@@ -290,7 +295,7 @@ public class PrefsInstance {
 		return dataFileName;
 	}
 
-	public void checkSanity(){
+	public void checkWindowSanity(){
 		Prefs prefs = getPrefs();
 		if (prefs.getMainWindow() == null)
 			prefs.setMainWindow(prefsFactory.createWindowAttributes());

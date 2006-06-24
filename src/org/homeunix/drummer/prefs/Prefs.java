@@ -23,10 +23,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowDeletedAccounts <em>Show Deleted Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDateFormat <em>Date Format</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getBudgetPeriod <em>Budget Period</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
  * </ul>
  * </p>
@@ -165,6 +166,32 @@ public interface Prefs extends EObject{
 	 * @generated
 	 */
 	void setDateFormat(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Budget Period</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Budget Period</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Budget Period</em>' attribute.
+	 * @see #setBudgetPeriod(String)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_BudgetPeriod()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getBudgetPeriod();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getBudgetPeriod <em>Budget Period</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Budget Period</em>' attribute.
+	 * @see #getBudgetPeriod()
+	 * @generated
+	 */
+	void setBudgetPeriod(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Transactions Window</b></em>' containment reference.

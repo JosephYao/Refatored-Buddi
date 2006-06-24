@@ -51,7 +51,7 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		Point p;
 		Dimension d;
 		
-		PrefsInstance.getInstance().checkSanity();
+		PrefsInstance.getInstance().checkWindowSanity();
 		
 		if (this instanceof MainBudgetFrame){
 			p = new Point(

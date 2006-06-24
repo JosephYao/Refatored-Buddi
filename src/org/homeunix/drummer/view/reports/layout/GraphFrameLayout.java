@@ -106,7 +106,7 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkSanity();
+				PrefsInstance.getInstance().checkWindowSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setY(arg0.getComponent().getY());

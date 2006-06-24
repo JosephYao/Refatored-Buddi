@@ -273,6 +273,12 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 		return this.toString().compareTo(arg0.toString());
 	}
 	
-	
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 != null)
+			return toString().equals(arg0.toString());
+		else
+			return false;
+	}
 
 } //SourceImpl

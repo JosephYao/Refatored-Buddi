@@ -36,10 +36,11 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowDeletedAccounts <em>Show Deleted Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDateFormat <em>Date Format</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getBudgetPeriod <em>Budget Period</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
  * </ul>
  * </p>
@@ -148,24 +149,34 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String dateFormat = DATE_FORMAT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * The default value of the '{@link #getBudgetPeriod() <em>Budget Period</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
+	 * @see #getBudgetPeriod()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes mainWindow = null;
+	protected static final String BUDGET_PERIOD_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * The cached value of the '{@link #getBudgetPeriod() <em>Budget Period</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
+	 * @see #getBudgetPeriod()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList descDict = null;
+	protected String budgetPeriod = BUDGET_PERIOD_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGraphsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes graphsWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
@@ -178,14 +189,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes transactionsWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGraphsWindow()
+	 * @see #getDescDict()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes graphsWindow = null;
+	protected EList descDict = null;
+
+	/**
+	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMainWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes mainWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
@@ -318,6 +339,27 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		dateFormat = newDateFormat;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__DATE_FORMAT, oldDateFormat, dateFormat));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getBudgetPeriod() {
+		return budgetPeriod;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBudgetPeriod(String newBudgetPeriod) {
+		String oldBudgetPeriod = budgetPeriod;
+		budgetPeriod = newBudgetPeriod;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__BUDGET_PERIOD, oldBudgetPeriod, budgetPeriod));
 	}
 
 	/**
@@ -512,14 +554,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case PrefsPackage.PREFS__MAIN_WINDOW:
-					return basicSetMainWindow(null, msgs);
-				case PrefsPackage.PREFS__DESC_DICT:
-					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-					return basicSetTransactionsWindow(null, msgs);
 				case PrefsPackage.PREFS__GRAPHS_WINDOW:
 					return basicSetGraphsWindow(null, msgs);
+				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+					return basicSetTransactionsWindow(null, msgs);
+				case PrefsPackage.PREFS__DESC_DICT:
+					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+				case PrefsPackage.PREFS__MAIN_WINDOW:
+					return basicSetMainWindow(null, msgs);
 				case PrefsPackage.PREFS__REPORTS_WINDOW:
 					return basicSetReportsWindow(null, msgs);
 				default:
@@ -546,14 +588,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isShowDeletedCategories() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				return getDateFormat();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
-			case PrefsPackage.PREFS__DESC_DICT:
-				return getDescDict();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
+			case PrefsPackage.PREFS__BUDGET_PERIOD:
+				return getBudgetPeriod();
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
+			case PrefsPackage.PREFS__DESC_DICT:
+				return getDescDict();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return getReportsWindow();
 		}
@@ -583,18 +627,21 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				setDateFormat((String)newValue);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__BUDGET_PERIOD:
+				setBudgetPeriod((String)newValue);
+				return;
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)newValue);
@@ -625,17 +672,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				setDateFormat(DATE_FORMAT_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__BUDGET_PERIOD:
+				setBudgetPeriod(BUDGET_PERIOD_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)null);
@@ -661,14 +711,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return showDeletedCategories != SHOW_DELETED_CATEGORIES_EDEFAULT;
 			case PrefsPackage.PREFS__DATE_FORMAT:
 				return DATE_FORMAT_EDEFAULT == null ? dateFormat != null : !DATE_FORMAT_EDEFAULT.equals(dateFormat);
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
-			case PrefsPackage.PREFS__DESC_DICT:
-				return descDict != null && !descDict.isEmpty();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
+			case PrefsPackage.PREFS__BUDGET_PERIOD:
+				return BUDGET_PERIOD_EDEFAULT == null ? budgetPeriod != null : !BUDGET_PERIOD_EDEFAULT.equals(budgetPeriod);
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
+			case PrefsPackage.PREFS__DESC_DICT:
+				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return reportsWindow != null;
 		}
@@ -694,6 +746,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(showDeletedCategories);
 		result.append(", dateFormat: ");
 		result.append(dateFormat);
+		result.append(", budgetPeriod: ");
+		result.append(budgetPeriod);
 		result.append(')');
 		return result.toString();
 	}

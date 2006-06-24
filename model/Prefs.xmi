@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jun 02 15:02:03 MDT 2006'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jun 24 09:21:24 MDT 2006'>
   <XMI.header>  <XMI.header>
     <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
@@ -8,19 +8,19 @@
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>  </XMI.header>
 </XMI.header>
   <XMI.content>
-    <UML:Model xmi.id = '.:0000000000000875' name = 'BuddiPrefs' isSpecification = 'false'
+    <UML:Model xmi.id = '.:0000000000000876' name = 'BuddiPrefs' isSpecification = 'false'
       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
       <UML:Namespace.ownedElement>
-        <UML:Package xmi.id = '.:000000000000086F' name = 'org' isSpecification = 'false'
+        <UML:Package xmi.id = '.:0000000000000870' name = 'org' isSpecification = 'false'
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
           <UML:Namespace.ownedElement>
-            <UML:Package xmi.id = '.:000000000000086E' name = 'homeunix' isSpecification = 'false'
+            <UML:Package xmi.id = '.:000000000000086F' name = 'homeunix' isSpecification = 'false'
               isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
               <UML:Namespace.ownedElement>
-                <UML:Package xmi.id = '.:000000000000086D' name = 'drummer' isSpecification = 'false'
+                <UML:Package xmi.id = '.:000000000000086E' name = 'drummer' isSpecification = 'false'
                   isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                   <UML:Namespace.ownedElement>
-                    <UML:Package xmi.id = '.:000000000000086C' name = 'prefs' isSpecification = 'false'
+                    <UML:Package xmi.id = '.:000000000000086D' name = 'prefs' isSpecification = 'false'
                       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                       <UML:Namespace.ownedElement>
                         <UML:Class xmi.id = '.:0000000000000830' name = 'Prefs' visibility = 'public'
@@ -38,7 +38,7 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:Class xmi.idref = '.:0000000000000871'/>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                             <UML:Attribute xmi.id = '.:0000000000000826' name = 'language' visibility = 'public'
@@ -52,7 +52,7 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:Class xmi.idref = '.:0000000000000871'/>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                             <UML:Attribute xmi.id = '.:0000000000000829' name = 'showDeletedAccounts'
@@ -66,7 +66,7 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000874'/>
+                                <UML:DataType xmi.idref = '.:0000000000000875'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                             <UML:Attribute xmi.id = '.:000000000000082C' name = 'showDeletedCategories'
@@ -80,7 +80,7 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000874'/>
+                                <UML:DataType xmi.idref = '.:0000000000000875'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                             <UML:Attribute xmi.id = '.:000000000000082F' name = 'dateFormat' visibility = 'public'
@@ -94,7 +94,21 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:Class xmi.idref = '.:0000000000000871'/>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:00000000000008A9' name = 'budgetPeriod' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:00000000000008AA'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:00000000000008AB' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                           </UML:Classifier.feature>
@@ -114,7 +128,7 @@
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:Class xmi.idref = '.:0000000000000871'/>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                           </UML:Classifier.feature>
@@ -152,70 +166,103 @@
                             </UML:AssociationEnd>
                           </UML:Association.connection>
                         </UML:Association>
-                        <UML:Class xmi.id = '.:000000000000084F' name = 'WindowAttributes' visibility = 'public'
+                        <UML:Class xmi.id = '.:0000000000000848' name = 'WindowAttributes' visibility = 'public'
                           isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
                           isActive = 'false'>
                           <UML:Classifier.feature>
-                            <UML:Attribute xmi.id = '.:0000000000000845' name = 'x' visibility = 'public'
+                            <UML:Attribute xmi.id = '.:000000000000083E' name = 'x' visibility = 'public'
                               isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
                               targetScope = 'instance'>
                               <UML:StructuralFeature.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000844'>
+                                <UML:Multiplicity xmi.id = '.:000000000000083D'>
                                   <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000843' lower = '1' upper = '1'/>
+                                    <UML:MultiplicityRange xmi.id = '.:000000000000083C' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000870'/>
+                                <UML:DataType xmi.idref = '.:0000000000000871'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
-                            <UML:Attribute xmi.id = '.:0000000000000848' name = 'y' visibility = 'public'
+                            <UML:Attribute xmi.id = '.:0000000000000841' name = 'y' visibility = 'public'
                               isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
                               targetScope = 'instance'>
                               <UML:StructuralFeature.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000847'>
+                                <UML:Multiplicity xmi.id = '.:0000000000000840'>
                                   <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000846' lower = '1' upper = '1'/>
+                                    <UML:MultiplicityRange xmi.id = '.:000000000000083F' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000870'/>
+                                <UML:DataType xmi.idref = '.:0000000000000871'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
-                            <UML:Attribute xmi.id = '.:000000000000084B' name = 'width' visibility = 'public'
+                            <UML:Attribute xmi.id = '.:0000000000000844' name = 'width' visibility = 'public'
                               isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
                               targetScope = 'instance'>
                               <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:0000000000000843'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000842' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:0000000000000871'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:0000000000000847' name = 'height' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:0000000000000846'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000845' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:0000000000000871'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                          </UML:Classifier.feature>
+                        </UML:Class>
+                        <UML:Association xmi.id = '.:000000000000084F' name = 'mainWindow' isSpecification = 'false'
+                          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+                          <UML:Association.connection>
+                            <UML:AssociationEnd xmi.id = '.:000000000000084B' visibility = 'public'
+                              isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
+                              targetScope = 'instance' changeability = 'changeable'>
+                              <UML:AssociationEnd.multiplicity>
                                 <UML:Multiplicity xmi.id = '.:000000000000084A'>
                                   <UML:Multiplicity.range>
                                     <UML:MultiplicityRange xmi.id = '.:0000000000000849' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
-                              </UML:StructuralFeature.multiplicity>
-                              <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000870'/>
-                              </UML:StructuralFeature.type>
-                            </UML:Attribute>
-                            <UML:Attribute xmi.id = '.:000000000000084E' name = 'height' visibility = 'public'
-                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
-                              targetScope = 'instance'>
-                              <UML:StructuralFeature.multiplicity>
+                              </UML:AssociationEnd.multiplicity>
+                              <UML:AssociationEnd.participant>
+                                <UML:Class xmi.idref = '.:0000000000000830'/>
+                              </UML:AssociationEnd.participant>
+                            </UML:AssociationEnd>
+                            <UML:AssociationEnd xmi.id = '.:000000000000084E' visibility = 'public'
+                              isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                              targetScope = 'instance' changeability = 'changeable'>
+                              <UML:AssociationEnd.multiplicity>
                                 <UML:Multiplicity xmi.id = '.:000000000000084D'>
                                   <UML:Multiplicity.range>
                                     <UML:MultiplicityRange xmi.id = '.:000000000000084C' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
-                              </UML:StructuralFeature.multiplicity>
-                              <UML:StructuralFeature.type>
-                                <UML:DataType xmi.idref = '.:0000000000000870'/>
-                              </UML:StructuralFeature.type>
-                            </UML:Attribute>
-                          </UML:Classifier.feature>
-                        </UML:Class>
-                        <UML:Association xmi.id = '.:0000000000000856' name = 'mainWindow' isSpecification = 'false'
-                          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+                              </UML:AssociationEnd.multiplicity>
+                              <UML:AssociationEnd.participant>
+                                <UML:Class xmi.idref = '.:0000000000000848'/>
+                              </UML:AssociationEnd.participant>
+                            </UML:AssociationEnd>
+                          </UML:Association.connection>
+                        </UML:Association>
+                        <UML:Association xmi.id = '.:0000000000000856' name = 'transactionsWindow'
+                          isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                           <UML:Association.connection>
                             <UML:AssociationEnd xmi.id = '.:0000000000000852' visibility = 'public'
                               isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
@@ -242,13 +289,13 @@
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
                               <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:000000000000084F'/>
+                                <UML:Class xmi.idref = '.:0000000000000848'/>
                               </UML:AssociationEnd.participant>
                             </UML:AssociationEnd>
                           </UML:Association.connection>
                         </UML:Association>
-                        <UML:Association xmi.id = '.:000000000000085D' name = 'transactionsWindow'
-                          isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+                        <UML:Association xmi.id = '.:000000000000085D' name = 'reportsWindow' isSpecification = 'false'
+                          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                           <UML:Association.connection>
                             <UML:AssociationEnd xmi.id = '.:0000000000000859' visibility = 'public'
                               isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
@@ -275,12 +322,12 @@
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
                               <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:000000000000084F'/>
+                                <UML:Class xmi.idref = '.:0000000000000848'/>
                               </UML:AssociationEnd.participant>
                             </UML:AssociationEnd>
                           </UML:Association.connection>
                         </UML:Association>
-                        <UML:Association xmi.id = '.:0000000000000864' name = 'reportsWindow' isSpecification = 'false'
+                        <UML:Association xmi.id = '.:0000000000000864' name = 'graphsWindow' isSpecification = 'false'
                           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                           <UML:Association.connection>
                             <UML:AssociationEnd xmi.id = '.:0000000000000860' visibility = 'public'
@@ -308,76 +355,152 @@
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
                               <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:000000000000084F'/>
+                                <UML:Class xmi.idref = '.:0000000000000848'/>
                               </UML:AssociationEnd.participant>
                             </UML:AssociationEnd>
                           </UML:Association.connection>
                         </UML:Association>
-                        <UML:Association xmi.id = '.:000000000000086B' name = 'graphsWindow' isSpecification = 'false'
-                          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
-                          <UML:Association.connection>
-                            <UML:AssociationEnd xmi.id = '.:0000000000000867' visibility = 'public'
-                              isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
-                              targetScope = 'instance' changeability = 'changeable'>
-                              <UML:AssociationEnd.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000866'>
-                                  <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000865' lower = '1' upper = '1'/>
-                                  </UML:Multiplicity.range>
-                                </UML:Multiplicity>
-                              </UML:AssociationEnd.multiplicity>
-                              <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:0000000000000830'/>
-                              </UML:AssociationEnd.participant>
-                            </UML:AssociationEnd>
-                            <UML:AssociationEnd xmi.id = '.:000000000000086A' visibility = 'public'
-                              isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
-                              targetScope = 'instance' changeability = 'changeable'>
-                              <UML:AssociationEnd.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000869'>
-                                  <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000868' lower = '1' upper = '1'/>
-                                  </UML:Multiplicity.range>
-                                </UML:Multiplicity>
-                              </UML:AssociationEnd.multiplicity>
-                              <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:000000000000084F'/>
-                              </UML:AssociationEnd.participant>
-                            </UML:AssociationEnd>
-                          </UML:Association.connection>
-                        </UML:Association>
-                        <UML:Class xmi.id = '.:000000000000087B' name = 'UserPrefs' visibility = 'public'
+                        <UML:Class xmi.id = '.:0000000000000865' name = 'UserPrefs' visibility = 'public'
                           isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
                           isActive = 'false'/>
-                        <UML:Association xmi.id = '.:000000000000087D' name = 'prefs' isSpecification = 'false'
+                        <UML:Association xmi.id = '.:000000000000086C' name = 'prefs' isSpecification = 'false'
                           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
                           <UML:Association.connection>
-                            <UML:AssociationEnd xmi.id = '.:000000000000087E' visibility = 'public'
+                            <UML:AssociationEnd xmi.id = '.:0000000000000868' visibility = 'public'
                               isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
                               targetScope = 'instance' changeability = 'changeable'>
                               <UML:AssociationEnd.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:000000000000087F'>
+                                <UML:Multiplicity xmi.id = '.:0000000000000867'>
                                   <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000880' lower = '1' upper = '1'/>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000866' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
                               <UML:AssociationEnd.participant>
-                                <UML:Class xmi.idref = '.:000000000000087B'/>
+                                <UML:Class xmi.idref = '.:0000000000000865'/>
                               </UML:AssociationEnd.participant>
                             </UML:AssociationEnd>
-                            <UML:AssociationEnd xmi.id = '.:0000000000000881' visibility = 'public'
+                            <UML:AssociationEnd xmi.id = '.:000000000000086B' visibility = 'public'
                               isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
                               targetScope = 'instance' changeability = 'changeable'>
                               <UML:AssociationEnd.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000882'>
+                                <UML:Multiplicity xmi.id = '.:000000000000086A'>
                                   <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000883' lower = '1' upper = '1'/>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000869' lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
                               <UML:AssociationEnd.participant>
                                 <UML:Class xmi.idref = '.:0000000000000830'/>
+                              </UML:AssociationEnd.participant>
+                            </UML:AssociationEnd>
+                          </UML:Association.connection>
+                        </UML:Association>
+                        <UML:Class xmi.id = '.:000000000000088B' name = 'DictData' visibility = 'public'
+                          isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+                          isActive = 'false'>
+                          <UML:Classifier.feature>
+                            <UML:Attribute xmi.id = '.:000000000000088D' name = 'number' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:000000000000088E'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:000000000000088F' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:0000000000000890' name = 'memo' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:0000000000000891'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000892' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:0000000000000893' name = 'amount' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:0000000000000894'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000895' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:0000000000000884'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:0000000000000896' name = 'to' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:0000000000000897'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:0000000000000898' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '.:0000000000000899' name = 'from' visibility = 'public'
+                              isSpecification = 'false' ownerScope = 'instance' changeability = 'changeable'
+                              targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:000000000000089A'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:000000000000089B' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:0000000000000872'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                          </UML:Classifier.feature>
+                        </UML:Class>
+                        <UML:Association xmi.id = '.:00000000000008A2' name = 'data' isSpecification = 'false'
+                          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+                          <UML:Association.connection>
+                            <UML:AssociationEnd xmi.id = '.:00000000000008A3' visibility = 'public'
+                              isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
+                              targetScope = 'instance' changeability = 'changeable'>
+                              <UML:AssociationEnd.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:00000000000008A4'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:00000000000008A5' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:AssociationEnd.multiplicity>
+                              <UML:AssociationEnd.participant>
+                                <UML:Class xmi.idref = '.:0000000000000834'/>
+                              </UML:AssociationEnd.participant>
+                            </UML:AssociationEnd>
+                            <UML:AssociationEnd xmi.id = '.:00000000000008A6' visibility = 'public'
+                              isSpecification = 'false' isNavigable = 'true' ordering = 'unordered' aggregation = 'none'
+                              targetScope = 'instance' changeability = 'changeable'>
+                              <UML:AssociationEnd.multiplicity>
+                                <UML:Multiplicity xmi.id = '.:00000000000008A7'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '.:00000000000008A8' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:AssociationEnd.multiplicity>
+                              <UML:AssociationEnd.participant>
+                                <UML:Class xmi.idref = '.:000000000000088B'/>
                               </UML:AssociationEnd.participant>
                             </UML:AssociationEnd>
                           </UML:Association.connection>
@@ -390,21 +513,23 @@
             </UML:Package>
           </UML:Namespace.ownedElement>
         </UML:Package>
-        <UML:DataType xmi.id = '.:0000000000000870' name = 'int' isSpecification = 'false'
+        <UML:DataType xmi.id = '.:0000000000000871' name = 'int' isSpecification = 'false'
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
-        <UML:Package xmi.id = '.:0000000000000873' name = 'java' isSpecification = 'false'
+        <UML:Package xmi.id = '.:0000000000000874' name = 'java' isSpecification = 'false'
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
           <UML:Namespace.ownedElement>
-            <UML:Package xmi.id = '.:0000000000000872' name = 'lang' isSpecification = 'false'
+            <UML:Package xmi.id = '.:0000000000000873' name = 'lang' isSpecification = 'false'
               isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
               <UML:Namespace.ownedElement>
-                <UML:Class xmi.id = '.:0000000000000871' name = 'String' isSpecification = 'false'
+                <UML:Class xmi.id = '.:0000000000000872' name = 'String' isSpecification = 'false'
                   isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
               </UML:Namespace.ownedElement>
             </UML:Package>
           </UML:Namespace.ownedElement>
         </UML:Package>
-        <UML:DataType xmi.id = '.:0000000000000874' name = 'boolean' isSpecification = 'false'
+        <UML:DataType xmi.id = '.:0000000000000875' name = 'boolean' isSpecification = 'false'
+          isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
+        <UML:DataType xmi.id = '.:0000000000000884' name = 'long' isSpecification = 'false'
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
       </UML:Namespace.ownedElement>
     </UML:Model>

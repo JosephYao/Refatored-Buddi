@@ -35,6 +35,7 @@ import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.autocomplete.AutoCompleteTextField;
@@ -51,8 +52,8 @@ public class EditableTransaction extends JPanel {
 	
 	private final JDateChooser date;
 	private final JDecimalField amount;
-	private final JComboBox transferFrom;
-	private final JComboBox transferTo;
+	private final JComboBox from;
+	private final JComboBox to;
 	private final JTextField number;
 	private final AutoCompleteTextField description;
 	private final JTextArea memo;
@@ -69,8 +70,8 @@ public class EditableTransaction extends JPanel {
 				
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
-		transferFrom = new JComboBox();
-		transferTo = new JComboBox();
+		from = new JComboBox();
+		to = new JComboBox();
 		number = new JTextField();
 		description = new AutoCompleteTextField(PrefsInstance.getInstance().getDescDict());
 		memo = new JTextArea();
@@ -80,14 +81,14 @@ public class EditableTransaction extends JPanel {
 		toModel = new DefaultComboBoxModel();
 		fromModel = new DefaultComboBoxModel();
 		
-		transferTo.setModel(toModel);
-		transferFrom.setModel(fromModel);
+		to.setModel(toModel);
+		from.setModel(fromModel);
 		
 		//Add the tooltips
 		date.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DATE));
 		amount.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_AMOUNT));
-		transferFrom.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_FROM));
-		transferTo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_TO));
+		from.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_FROM));
+		to.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_TO));
 		number.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_NUMBER));
 		description.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DESC));
 		memo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_MEMO));
@@ -104,8 +105,8 @@ public class EditableTransaction extends JPanel {
 						
 		components.add(date);
 		components.add(amount);
-		components.add(transferFrom);
-		components.add(transferTo);
+		components.add(from);
+		components.add(to);
 
 		components.add(number);
 		components.add(description);
@@ -117,9 +118,9 @@ public class EditableTransaction extends JPanel {
 
 		bottomPanel.add(amount);
 		
-		bottomPanel.add(transferFrom);
+		bottomPanel.add(from);
 		bottomPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
-		bottomPanel.add(transferTo);		
+		bottomPanel.add(to);		
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -141,8 +142,8 @@ public class EditableTransaction extends JPanel {
 		
 		amount.setMinimumSize(new Dimension(180, textHeight));
 		amount.setMaximumSize(new Dimension(210, textHeight));
-		transferFrom.setPreferredSize(new Dimension(100, transferFrom.getPreferredSize().height));
-		transferTo.setPreferredSize(transferFrom.getPreferredSize());
+		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
+		to.setPreferredSize(from.getPreferredSize());
 		
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));
 				
@@ -168,8 +169,8 @@ public class EditableTransaction extends JPanel {
 			description.setText(transaction.getDescription());
 			memo.setText(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
-			transferFrom.setSelectedItem(transaction.getFrom());
-			transferTo.setSelectedItem(transaction.getTo());
+			from.setSelectedItem(transaction.getFrom());
+			to.setSelectedItem(transaction.getTo());
 		}
 		else{
 			if (date.getDate() == null)
@@ -177,8 +178,8 @@ public class EditableTransaction extends JPanel {
 			number.setText("");
 			description.setText("");
 			amount.setValue(0);
-			transferTo.setSelectedIndex(0);
-			transferFrom.setSelectedIndex(0);
+			to.setSelectedIndex(0);
+			from.setSelectedIndex(0);
 			memo.setText("");
 			date.requestFocus();
 			setChanged(false);
@@ -238,20 +239,20 @@ public class EditableTransaction extends JPanel {
 			return 0;
 	}
 	
-	public Source getTransferFrom(){
-		if (transferFrom.getSelectedItem() instanceof Source) {
-			return (Source) transferFrom.getSelectedItem();	
+	public Source getFrom(){
+		if (from.getSelectedItem() instanceof Source) {
+			return (Source) from.getSelectedItem();	
 		}
-		else if (transferFrom.getSelectedItem() != null)
+		else if (from.getSelectedItem() != null)
 			Log.error("Unknown object selected in TransferFrom combobox; returning null.");
 		return null;
 	}
 
-	public Source getTransferTo(){
-		if (transferTo.getSelectedItem() instanceof Source) {
-			return (Source) transferTo.getSelectedItem();	
+	public Source getTo(){
+		if (to.getSelectedItem() instanceof Source) {
+			return (Source) to.getSelectedItem();	
 		}
-		else if (transferTo.getSelectedItem() != null)
+		else if (to.getSelectedItem() != null)
 			Log.error("Unknown object selected in TransferTo combobox; returning null.");
 		
 		return null;
@@ -309,33 +310,77 @@ public class EditableTransaction extends JPanel {
 			});
 		}
 		
-		transferFrom.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-//				EditableTransaction.this.setChanged(true);
-				if (parent.getAccount() != null) {
-					if (!parent.getAccount().equals(transferFrom.getSelectedItem())){
-						transferTo.setSelectedItem(parent.getAccount());
-					}
-					
-					if (parent.getAccount().equals(transferFrom.getSelectedItem())
-							&& parent.getAccount().equals(transferTo.getSelectedItem())){
-						transferTo.setSelectedItem(null);
+		description.addFocusListener(new FocusAdapter(){
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				//If we loose focus on the description field, we check if
+				// there is something there.  If so, we fill in others with
+				// the dictionary map.
+				if (description.getText().length() > 0 
+						&& description.getForeground().equals(Color.BLACK)){
+					DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
+					if (dd != null){
+						if (dd.getNumber() != null){
+							number.setText(dd.getNumber());
+							number.setForeground(Color.BLACK);
+						}
+						amount.setValue(dd.getAmount());
+						if (dd.getMemo() != null){
+							memo.setText(dd.getMemo());
+							memo.setForeground(Color.BLACK);
+						}
+						
+						//TODO This doesn't always work when you go to a different account...
+						if (dd.getFrom() != null){
+							for (int i = 0; i < from.getModel().getSize(); i++){
+								if (from.getModel().getElementAt(i) != null
+										&& from.getModel().getElementAt(i).toString().equals(dd.getFrom())){
+									from.setSelectedIndex(i);
+									break;
+								}
+							}
+						}
+						if (dd.getTo() != null){
+							for (int i = 0; i < to.getModel().getSize(); i++){
+								if (to.getModel().getElementAt(i) != null
+										&& to.getModel().getElementAt(i).toString().equals(dd.getTo())){
+									to.setSelectedIndex(i);
+									break;
+								}
+							}
+						}
 					}
 				}
 			}
 		});
 		
-		transferTo.addActionListener(new ActionListener(){
+		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (transferTo.getSelectedItem() instanceof Source) {
-					if (!parent.getAccount().equals(transferTo.getSelectedItem())){
-						transferFrom.setSelectedItem(parent.getAccount());
+				if (parent.getAccount() != null) {
+					if (!parent.getAccount().equals(from.getSelectedItem())){
+						to.setSelectedItem(parent.getAccount());
+					}
+					
+					if (parent.getAccount().equals(from.getSelectedItem())
+							&& parent.getAccount().equals(to.getSelectedItem())){
+						to.setSelectedItem(null);
+					}
+				}
+			}
+		});
+		
+		to.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+//				EditableTransaction.this.setChanged(true);
+				if (to.getSelectedItem() instanceof Source) {
+					if (!parent.getAccount().equals(to.getSelectedItem())){
+						from.setSelectedItem(parent.getAccount());
 					}
 
-					if (parent.getAccount().equals(transferFrom.getSelectedItem())
-							&& parent.getAccount().equals(transferTo.getSelectedItem())){
-						transferFrom.setSelectedItem(null);
+					if (parent.getAccount().equals(from.getSelectedItem())
+							&& parent.getAccount().equals(to.getSelectedItem())){
+						from.setSelectedItem(null);
 					}
 				}
 			}

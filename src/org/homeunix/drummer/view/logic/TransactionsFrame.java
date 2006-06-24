@@ -177,7 +177,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkSanity();
+				PrefsInstance.getInstance().checkWindowSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setY(arg0.getComponent().getY());
@@ -214,18 +214,18 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			throw new InvalidTransactionException();
 		}
 		
-		if (editableTransaction.getTransferFrom().getCreationDate() != null
-				&& editableTransaction.getTransferFrom().getCreationDate().after(editableTransaction.getDate()))
-			editableTransaction.getTransferFrom().setCreationDate(editableTransaction.getDate());
-		if (editableTransaction.getTransferTo().getCreationDate() != null
-				&& editableTransaction.getTransferTo().getCreationDate().after(editableTransaction.getDate()))
-			editableTransaction.getTransferTo().setCreationDate(editableTransaction.getDate());
+		if (editableTransaction.getFrom().getCreationDate() != null
+				&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
+			editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
+		if (editableTransaction.getTo().getCreationDate() != null
+				&& editableTransaction.getTo().getCreationDate().after(editableTransaction.getDate()))
+			editableTransaction.getTo().setCreationDate(editableTransaction.getDate());
 		
 		t.setDate(editableTransaction.getDate());
 		t.setDescription(editableTransaction.getDescription());
 		t.setAmount(editableTransaction.getAmount());
-		t.setTo(editableTransaction.getTransferTo());
-		t.setFrom(editableTransaction.getTransferFrom());
+		t.setTo(editableTransaction.getTo());
+		t.setFrom(editableTransaction.getFrom());
 		t.setMemo(editableTransaction.getMemo());
 		t.setNumber(editableTransaction.getNumber());
 		
@@ -236,13 +236,15 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			DataInstance.getInstance().saveDataModel();
 		}
 		
-//		Removed when I removed the memo field
-//		if (editableTransaction.getMemo().length() > 0){
-//			PrefsInstance.getInstance().addMemoEntry(editableTransaction.getMemo());
-//		}
+		//Update the autocomplete entries
 		PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
-		
-//		editableTransaction.setChanged(false);
+		PrefsInstance.getInstance().setAutoCompleteEntry(
+				editableTransaction.getDescription(),
+				editableTransaction.getNumber(),
+				editableTransaction.getAmount(),
+				editableTransaction.getFrom().toString(),
+				editableTransaction.getTo().toString(),
+				editableTransaction.getMemo());
 	}
 	
 	protected AbstractBudgetFrame initContent(){
@@ -316,10 +318,10 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				editableTransaction.getDescription().length() == 0 
 				|| editableTransaction.getDate() == null
 				|| editableTransaction.getAmount() < 0
-				|| editableTransaction.getTransferTo() == null
-				|| editableTransaction.getTransferFrom() == null
-				|| (editableTransaction.getTransferFrom() != account
-						&& editableTransaction.getTransferTo() != account)
+				|| editableTransaction.getTo() == null
+				|| editableTransaction.getFrom() == null
+				|| (editableTransaction.getFrom() != account
+						&& editableTransaction.getTo() != account)
 		));
 	}
 	

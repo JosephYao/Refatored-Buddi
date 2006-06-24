@@ -108,7 +108,7 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 	}
 	
 	public void savePosition(){
-		PrefsInstance.getInstance().checkSanity();
+		PrefsInstance.getInstance().checkWindowSanity();
 		
 		PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(this.getHeight());
 		PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(this.getWidth());

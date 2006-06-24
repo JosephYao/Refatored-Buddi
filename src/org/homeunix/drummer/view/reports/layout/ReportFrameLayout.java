@@ -106,7 +106,7 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkSanity();
+				PrefsInstance.getInstance().checkWindowSanity();
 				
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
