@@ -1,3 +1,8 @@
+1.1.0 (June 27 2006)
+-Moved EMF jars to source, for better use of source code
+-Automatically completes transaction number, memo, to and from based on description
+-Change of preferences file to support new features; data file format still the same.  Preferences can be upgraded automatically from previous versions, but previous versions will not recognize the new format; if you care about preferences, backup the original file before running the new version.
+
 1.0.0 (June 23 2006)
 -Official stable version
 -Finalized German translation
