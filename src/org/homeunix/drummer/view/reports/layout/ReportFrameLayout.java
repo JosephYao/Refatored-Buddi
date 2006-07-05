@@ -16,37 +16,54 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 
 public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	public static final long serialVersionUID = 0;
 
-	protected final JLabel reportLabel;
+	protected final JTree reportTree;
 	protected final JButton okButton;
+	protected final JButton editButton;
+	
+	protected DefaultMutableTreeNode selectedNode;
 	
 	public ReportFrameLayout(Date startDate, Date endDate){
-		reportLabel = new JLabel(buildReport(startDate, endDate));
+		reportTree = new JTree(buildReport(startDate, endDate));
+		reportTree.setRootVisible(false);
+		reportTree.setShowsRootHandles(true);
+		reportTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		reportTree.setCellRenderer(getTreeCellRenderer());
+
 		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
+		editButton = new JButton(Translate.inst().get(TranslateKeys.EDIT));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
+		editButton.setPreferredSize(buttonSize);
 		
-		reportLabel.setBackground(Color.WHITE);
+		reportTree.setBackground(Color.WHITE);
 						
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.add(editButton);
 		buttonPanel.add(okButton);
 		
-		JScrollPane reportLabelScroller = new JScrollPane(reportLabel);
-		reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);				
+		editButton.setEnabled(false);
+		
+		JScrollPane reportLabelScroller = new JScrollPane(reportTree);
 		
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
 		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -66,15 +83,11 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
 		
 		if (Buddi.isMac()){
+			reportTree.putClientProperty("Quaqua.Tree.style", "striped");
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
-		
-//		this.setPreferredSize(new Dimension(reportLabel.getPreferredSize().width, Math.max(400, reportLabel.getPreferredSize().height)));
-//		this.setPreferredSize(new Dimension(
-//				PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(), 
-//				PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()
-//		));
-		
+				
 		//Call the method to add actions to the buttons
 		initActions();
 		
@@ -82,27 +95,29 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 		openWindow();
 	}
 	
-	protected abstract String buildReport(Date startDate, Date endDate);
+	protected abstract TreeModel buildReport(Date startDate, Date endDate);
+	
+	protected abstract TreeCellRenderer getTreeCellRenderer();
 	
 	@Override
 	public Component getPrintedComponent() {
-		return reportLabel;
+		return reportTree;
 	}
 	
 	@Override
 	protected AbstractBudgetFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Reports window resized");
-				
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
-				super.componentResized(arg0);
-			}
+//			@Override
+//			public void componentResized(ComponentEvent arg0) {
+//				Log.debug("Reports window resized");
+//				
+//				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+//				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
+//				
+//				PrefsInstance.getInstance().savePrefs();
+//				
+//				super.componentResized(arg0);
+//			}
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
@@ -110,7 +125,9 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 				
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
-				
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+								
 				PrefsInstance.getInstance().savePrefs();
 				
 				super.componentHidden(arg0);
@@ -122,6 +139,18 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 				ReportFrameLayout.this.setVisible(false);
 			}
 		});
+		
+		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
+			public void valueChanged(TreeSelectionEvent arg0) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getLastSelectedPathComponent();
+				
+				if (node == null)
+					return;
+				
+				selectedNode = node;
+			}
+		});
+
 		
 		return this;
 	}

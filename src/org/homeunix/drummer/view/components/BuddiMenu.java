@@ -40,12 +40,12 @@ import org.homeunix.drummer.view.logic.MainBudgetFrame;
 import org.homeunix.drummer.view.logic.PreferencesFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
 
-public class BudgetMenu extends JScreenMenuBar {
+public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
 	
 	private final JFrame frame;
 	
-	public BudgetMenu(JFrame frame){
+	public BuddiMenu(JFrame frame){
 		super();
 		
 		this.frame = frame;
@@ -326,8 +326,8 @@ public class BudgetMenu extends JScreenMenuBar {
 		
 		print.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (BudgetMenu.this.frame instanceof AbstractBudgetFrame){
-					Component toPrint = ((AbstractBudgetFrame) BudgetMenu.this.frame).getPrintedComponent();
+				if (BuddiMenu.this.frame instanceof AbstractBudgetFrame){
+					Component toPrint = ((AbstractBudgetFrame) BuddiMenu.this.frame).getPrintedComponent();
 					
 					if (toPrint != null){
 						PrintUtilities pu = new PrintUtilities(toPrint);
@@ -347,15 +347,15 @@ public class BudgetMenu extends JScreenMenuBar {
 		
 		close.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (BudgetMenu.this.frame != null)
-					BudgetMenu.this.frame.setVisible(false);
+				if (BuddiMenu.this.frame != null)
+					BuddiMenu.this.frame.setVisible(false);
 			}
 		});
 		
 		minimize.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (BudgetMenu.this.frame != null)
-					BudgetMenu.this.frame.setExtendedState(JFrame.ICONIFIED);
+				if (BuddiMenu.this.frame != null)
+					BuddiMenu.this.frame.setExtendedState(JFrame.ICONIFIED);
 			}
 		});
 

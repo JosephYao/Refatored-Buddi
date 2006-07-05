@@ -15,7 +15,7 @@ import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.ParseCommands;
 import org.homeunix.drummer.util.ParseCommands.ParseException;
-import org.homeunix.drummer.view.components.BudgetMenu;
+import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.drummer.view.logic.MainBudgetFrame;
 
 /**
@@ -90,7 +90,7 @@ public class Buddi {
 				PrefsInstance.getInstance().getPrefs().getLanguage()
 		);
 		
-		MRJAdapter.setFramelessJMenuBar(new BudgetMenu(null));
+		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
 		
 		
 		SwingUtilities.invokeLater(new Runnable() {

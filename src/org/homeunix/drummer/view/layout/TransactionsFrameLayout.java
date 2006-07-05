@@ -6,6 +6,8 @@ package org.homeunix.drummer.view.layout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,8 +17,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.components.EditableTransaction;
@@ -25,6 +27,8 @@ import org.homeunix.drummer.view.components.TransactionCellRenderer;
 public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 	public static final long serialVersionUID = 0;
 
+	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();
+	
 	protected final JList list;
 	protected final EditableTransaction editableTransaction;
 	protected final JButton recordButton;
@@ -32,6 +36,11 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 	protected final JButton deleteButton;
 	
 	public TransactionsFrameLayout(Account account){
+		if (transactionInstances.get(account) != null)
+			transactionInstances.get(account).setVisible(false);
+
+		transactionInstances.put(account, this);
+		
 		//Set up the transaction list
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

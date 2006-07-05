@@ -92,17 +92,17 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	@Override
 	protected AbstractBudgetFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Graphs window resized");
-				
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
-				super.componentResized(arg0);
-			}
+//			@Override
+//			public void componentResized(ComponentEvent arg0) {
+//				Log.debug("Graphs window resized");
+//				
+//				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
+//				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
+//				
+//				PrefsInstance.getInstance().savePrefs();
+//				
+//				super.componentResized(arg0);
+//			}
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
@@ -110,6 +110,8 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 				
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
+				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
 				
 				PrefsInstance.getInstance().savePrefs();
 				

@@ -25,20 +25,25 @@ import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
-	public static final long serialVersionUID = 0;
-	
+	public static final long serialVersionUID = 0;	
+
 	private Account account;
 	
 	public TransactionsFrame(Account account){
 		super(account);
-		
+				
 		this.account = account;
 		
 		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		
 		editableTransaction.setTransaction(null, true);
 		updateContent();
-		openWindow();
+	}
+	
+	public TransactionsFrame(Account account, Transaction transaction) {
+		this(account);
+		
+		list.setSelectedValue(transaction, true);
 	}
 	
 	protected AbstractBudgetFrame initActions(){
@@ -163,17 +168,17 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		});
 		
 		this.addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Transactions window resized");
-				
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
-				
-				PrefsInstance.getInstance().savePrefs();
-				
-				super.componentResized(arg0);
-			}
+//			@Override
+//			public void componentResized(ComponentEvent arg0) {
+//				Log.debug("Transactions window resized");
+//				
+//				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
+//				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
+//				
+//				PrefsInstance.getInstance().savePrefs();
+//				
+//				super.componentResized(arg0);
+//			}
 			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
@@ -181,8 +186,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setX(arg0.getComponent().getX());
 				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
 				
 				PrefsInstance.getInstance().savePrefs();
+				
+				transactionInstances.put(account, null);
 				
 				super.componentHidden(arg0);
 			}

@@ -82,8 +82,9 @@ public class AccountListPanel extends ListPanelLayout {
 		
 		openButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (getSelectedAccount() != null)
+				if (getSelectedAccount() != null){
 					new TransactionsFrame(getSelectedAccount());
+				}
 			}
 		});
 		
