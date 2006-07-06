@@ -18,6 +18,7 @@ svn export . $DEST/$SOURCE
 #Create the platform independent directory
 mkdir -p $GENERIC
 cp Buddi.jar $GENERIC
+cp buddi32.ico $GENERIC
 cp -R $DEST/$SOURCE/Languages $GENERIC
 cp -R Help $GENERIC
 cp -R $DEST/$SOURCE/Documents $GENERIC
