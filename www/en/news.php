@@ -2,6 +2,12 @@
 
 <h1>News</h1>
 
+<h2>1.0.1 (July 7 2006)</h2>
+<ul>
+<li>Moved model (EMF) jars to source code.  This should make it easier for users to view / edit the source code, as you shouldn't have to modify Eclipse plugins</li>
+</ul>
+
+
 <h2>1.0.0 (June 23 2006)</h2>
 <ul>
 <li>Official stable version</li>
