@@ -59,8 +59,8 @@ public abstract class AbstractBudgetFrame extends JFrame{
 					PrefsInstance.getInstance().getPrefs().getMainWindow().getY()
 			);
 			d = new Dimension(
-					PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(),
-					PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight()					
+					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(), 400),
+					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight(), 300)					
 			);
 		}
 		else if (this instanceof TransactionsFrame){
@@ -69,8 +69,8 @@ public abstract class AbstractBudgetFrame extends JFrame{
 					PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getY()
 			); 
 			d = new Dimension(
-					PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getWidth(),
-					PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getHeight()					
+					Math.max(PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getWidth(), 400),
+					Math.max(PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getHeight(), 300)	
 			);	
 		}
 		else if (this instanceof GraphFrameLayout){
@@ -91,8 +91,8 @@ public abstract class AbstractBudgetFrame extends JFrame{
 			);
 //			d = null;
 			d = new Dimension(
-					PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(),
-					PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight()					
+					Math.max(PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(), 300),
+					Math.max(PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight(), 400)					
 			);
 		}
 		else{

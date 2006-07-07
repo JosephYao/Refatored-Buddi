@@ -37,6 +37,7 @@ import org.homeunix.drummer.model.impl.ModelFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
+import org.homeunix.drummer.util.SwingWorker;
 
 @SuppressWarnings("unchecked")
 public class DataInstance {
@@ -262,27 +263,33 @@ public class DataInstance {
 		saveDataModel(PrefsInstance.getInstance().getPrefs().getDataFile());
 	}
 	
-	public void saveDataModel(String location){		
-		File saveLocation = new File(location);
-		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
+	synchronized public void saveDataModel(final String location){
+		new SwingWorker(){
+			@Override
+			public Object construct() {
+				File saveLocation = new File(location);
+				File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 
-		try{
-			if (saveLocation.exists())
-				FileFunctions.copyFile(saveLocation, backupLocation);
-			
-			URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
-			
-			Log.debug("Data saved to " + location);
-			
-			Resource resource = resourceSet.createResource(fileURI);
-			
-			resource.getContents().add(getDataModel());
-			
-			resource.save(Collections.EMPTY_MAP);
-		}
-		catch (IOException ioe){
-			Log.critical("Error when saving file: " + ioe);
-		}
+				try{
+					if (saveLocation.exists())
+						FileFunctions.copyFile(saveLocation, backupLocation);
+					
+					URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
+					
+					Log.debug("Data saved to " + location);
+					
+					Resource resource = resourceSet.createResource(fileURI);
+					
+					resource.getContents().add(getDataModel());
+					
+					resource.save(Collections.EMPTY_MAP);
+				}
+				catch (IOException ioe){
+					Log.critical("Error when saving file: " + ioe);
+				}
+				return null;
+			}			
+		}.start();
 	}
 	
 	public DataModel getDataModel(){

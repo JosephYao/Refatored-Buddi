@@ -110,6 +110,8 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		reportTree.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				editButton.setEnabled(selectedNode != null && selectedNode.getUserObject() instanceof Transaction);
+				
 				if (arg0.getClickCount() >= 2){
 					editButton.doClick();
 				}
