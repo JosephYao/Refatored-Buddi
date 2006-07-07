@@ -1,3 +1,10 @@
+1.1.1 (July 7 2006)
+-Reports show what transactions contribute to the value
+-Reports allow 'hyperlinking' to individual transactions
+
+1.0.1 (July 7 2006)
+-Moved EMF jars to source, for better use of source code
+
 1.1.0 (June 27 2006)
 -Moved EMF jars to source, for better use of source code
 -Automatically completes transaction number, memo, to and from based on description
