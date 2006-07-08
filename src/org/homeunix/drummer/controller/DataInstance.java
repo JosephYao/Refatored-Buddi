@@ -400,21 +400,27 @@ public class DataInstance {
 	}
 
 	public Vector<Transaction> getTransactions(){
-		Vector<Transaction> v = new Vector<Transaction>(getDataModel().getAllTransactions().getTransactions());
-		Collections.sort(v);
-		return v;
+		Vector<Transaction> transactions = new Vector<Transaction>(getDataModel().getAllTransactions().getTransactions());
+		Collections.sort(transactions);
+		return transactions;
 	}
 	
+	/**
+	 * Returns all transactions which go to or from a given source.
+	 * @param source
+	 * @return
+	 */
 	public Vector<Transaction> getTransactions(Source source){
-		Vector<Transaction> transactions = new Vector<Transaction>();
+		Vector<Transaction> v = new Vector<Transaction>();
 		
 		for (Transaction transaction : getTransactions()) {
 			if (transaction.getFrom() != null && transaction.getTo() != null && 
 					(transaction.getFrom().equals(source) || transaction.getTo().equals(source)))
-				transactions.add(transaction);
+				v.add(transaction);
 		}
 		
-		return transactions;
+		Collections.sort(v);		
+		return v;
 	}
 	
 	/**
@@ -440,6 +446,7 @@ public class DataInstance {
 			}
 		}
 		
+		Collections.sort(v);
 		return v;
 	}
 
@@ -449,12 +456,13 @@ public class DataInstance {
 		Vector<Transaction> v = new Vector<Transaction>();
 		
 		for (Transaction t : transactions) {
-			if (t.getDate().after(startDate) && 
-					t.getDate().before(endDate)){
+			if ((t.getDate().after(startDate) || t.getDate().equals(startDate)) 
+					&& (t.getDate().before(endDate) || t.getDate().equals(endDate))){
 				v.add(t);
 			}
 		}
 		
+		Collections.sort(v);
 		return v;
 	}
 	
@@ -471,6 +479,7 @@ public class DataInstance {
 			}
 		}
 		
+		Collections.sort(v);
 		return v;
 	}
 }

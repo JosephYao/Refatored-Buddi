@@ -11,6 +11,8 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.util.Log;
+
 
 public class Translate {
 	private final Properties translations = new Properties();
@@ -42,6 +44,10 @@ public class Translate {
 	}
 
 	public String get(String key){
+		if (key == null){
+			Log.debug("Null translation key");
+			return key;
+		}
 		String ret = translations.getProperty(key);
 		if (ret == null)
 			return key;

@@ -232,7 +232,7 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 				
 				sb.append(
 						"<html><table><tr><td width=130px>")
-						.append(Translate.inst().get(entry.getCategory().getName()))
+						.append(Translate.inst().get(entry.getCategory().toString()))
 						.append("</td><td width=70px>")
 						.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
