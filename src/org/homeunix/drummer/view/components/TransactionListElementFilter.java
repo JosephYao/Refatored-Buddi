@@ -17,7 +17,9 @@ public class TransactionListElementFilter implements ListElementFilter {
 			Transaction t = (Transaction) arg0;
 			if (t.getDescription().toLowerCase().contains(filterText.toLowerCase()) 
 					|| t.getNumber().toLowerCase().contains(filterText.toLowerCase())
-					|| t.getMemo().toLowerCase().contains(filterText.toLowerCase()))
+					|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
+					|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
+					|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase()))
 				return true;
 			else
 				return false;
