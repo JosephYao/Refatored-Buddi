@@ -44,7 +44,22 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		filteredListModel = new FilteredStaticListModel();
 		
 		filteredListModel.setFilter(transactionFilter);
+				
+		this.account = account;
 		
+		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
+		
+		editableTransaction.setTransaction(null, true);
+		updateContent();
+	}
+	
+	public TransactionsFrame(Account account, Transaction transaction) {
+		this(account);
+		
+		list.setSelectedValue(transaction, true);
+	}
+	
+	protected AbstractBudgetFrame initActions(){
 		searchField.getDocument().addDocumentListener(new DocumentListener(){
 			private void update(){
 				if (!searchField.getText().equals(searchField.getHint()))
@@ -68,22 +83,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				update();				
 			};
 		});
-				
-		this.account = account;
 		
-		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
-		
-		editableTransaction.setTransaction(null, true);
-		updateContent();
-	}
-	
-	public TransactionsFrame(Account account, Transaction transaction) {
-		this(account);
-		
-		list.setSelectedValue(transaction, true);
-	}
-	
-	protected AbstractBudgetFrame initActions(){
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (!arg0.getValueIsAdjusting()){
@@ -202,6 +202,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					
 					updateContent();
 				}
+			}
+		});
+		
+		clearSearchField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				TransactionsFrame.this.searchField.setValue("");
+				
 			}
 		});
 		
