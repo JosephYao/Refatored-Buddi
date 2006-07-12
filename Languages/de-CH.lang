@@ -53,6 +53,7 @@ DELETE_TRANSACTION_LOSE_CHANGES=Wollen sie diese Transaktion wirklich l\u00f6sch
 DEFAULT_DESCRIPTION=<Beschreibung>
 DEFAULT_MEMO=<Notiz>
 DEFAULT_NUMBER=<Nummer>
+DEFAULT_SEARCH=<Suche>
 DESTINATION=<Ziel>
 DIFFERENCE=Differenz
 EDIT=Bearbeiten

@@ -23,6 +23,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
+import org.homeunix.drummer.view.components.text.JHintTextField;
 
 public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 	public static final long serialVersionUID = 0;
@@ -30,10 +31,14 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();
 	
 	protected final JList list;
+//	protected final DefaultListModel model;
+	
 	protected final EditableTransaction editableTransaction;
 	protected final JButton recordButton;
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
+	protected final JHintTextField searchField;
+	protected final JButton clearSearchField;
 	
 	public TransactionsFrameLayout(Account account){
 		if (transactionInstances.get(account) != null)
@@ -55,7 +60,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
 		
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.inst().get(TranslateKeys.TRANSACTIONS)));
+		scrollPanel.setBorder(BorderFactory.createTitledBorder(""));
 		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
 		
 		//Set up the editing portion
@@ -65,11 +70,20 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		recordButton = new JButton(Translate.inst().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.inst().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
+		searchField = new JHintTextField(Translate.inst().get(TranslateKeys.DEFAULT_SEARCH));
+		clearSearchField = new JButton("x");
 		
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
+		searchField.setPreferredSize(new Dimension(200, searchField.getPreferredSize().height));
+//		clearSearchField.setPreferredSize(new Dimension(clearSearchField.getPreferredSize().width, searchField.getPreferredSize().height));
 
+		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+		searchPanel.add(searchField);
+		searchPanel.add(clearSearchField);
+		
 		this.getRootPane().setDefaultButton(recordButton);
 		
 		JPanel buttonPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -93,24 +107,25 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		editPanelHolder.add(editPanel, BorderLayout.CENTER);
 
 		scrollPanel.add(editPanelHolder, BorderLayout.SOUTH);
+		scrollPanel.add(searchPanel, BorderLayout.NORTH);
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 
 		
+//		mainPanel.add(searchPanel, BorderLayout.NORTH);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-//		this.setPreferredSize(new Dimension(700, 350));
-		
 		if (Buddi.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			//listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,12,12));
+//			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,12,12));
+			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
 		}
 		
 		//Call the method to add actions to the buttons

@@ -22,7 +22,7 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.components.JDecimalField;
+import org.homeunix.drummer.view.components.text.JDecimalField;
 
 public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;

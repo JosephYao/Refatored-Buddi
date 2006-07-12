@@ -1,7 +1,7 @@
 /*
  * Created on May 14, 2006 by wyatt
  */
-package org.homeunix.drummer.view.components;
+package org.homeunix.drummer.view.components.text;
 
 import javax.swing.JLabel;
 

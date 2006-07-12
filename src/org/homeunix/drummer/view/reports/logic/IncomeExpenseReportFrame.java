@@ -254,12 +254,12 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 				StringBuffer sb = new StringBuffer();
 				
 				sb.append(
-						"<html><table><tr><td width=120px>")
+						"<html><table><tr><td width=150px>")
 						.append(transaction.getDescription())
 						.append("</td><td width=80px>")
 						.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
-						.append("</td><td width=180px>");
+						.append("</td><td width=200px>");
 						if (transaction.getTo() instanceof Account){
 							sb.append(transaction.getTo());
 						}

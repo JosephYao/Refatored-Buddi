@@ -11,6 +11,8 @@ import java.awt.event.ComponentEvent;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -22,15 +24,50 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.components.TransactionListElementFilter;
 import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
+
+import de.schlichtherle.swing.filter.FilteredStaticListModel;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
 	public static final long serialVersionUID = 0;	
-
+	
+	protected final FilteredStaticListModel filteredListModel;
+	protected final TransactionListElementFilter transactionFilter;
+	
 	private Account account;
 	
 	public TransactionsFrame(Account account){
 		super(account);
+		
+		transactionFilter = new TransactionListElementFilter();
+		filteredListModel = new FilteredStaticListModel();
+		
+		filteredListModel.setFilter(transactionFilter);
+		
+		searchField.getDocument().addDocumentListener(new DocumentListener(){
+			private void update(){
+				if (!searchField.getText().equals(searchField.getHint()))
+					transactionFilter.setFilterText(searchField.getText());
+				else
+					transactionFilter.setFilterText("");
+				
+				filteredListModel.update();
+				Log.debug(transactionFilter.getFilterText());
+			}
+			
+			public void changedUpdate(DocumentEvent arg0) {
+				update();
+			}
+
+			public void insertUpdate(DocumentEvent arg0) {
+				update();				
+			}
+
+			public void removeUpdate(DocumentEvent arg0) {
+				update();				
+			};
+		});
 				
 		this.account = account;
 		
@@ -120,6 +157,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					recordTransaction();
+					editableTransaction.resetSelection();
 					editableTransaction.setTransaction(null, true);
 					updateContent();
 					editableTransaction.setChanged(false);
@@ -268,6 +306,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
 		data.add(null);
 		list.setListData(data);
+
+		//Update the search
+		if (filteredListModel != null && list != null){
+			filteredListModel.setSource(list.getModel());
+			list.setModel(filteredListModel);
+		}
 		
 		editableTransaction.updateContent();
 		
@@ -318,7 +362,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	@Override
 	public AbstractBudgetFrame openWindow() {
 		list.setSelectedIndex(list.getModel().getSize() - 1);
-		editableTransaction.select();
+		editableTransaction.resetSelection();
 		return super.openWindow();
 	}
 
@@ -337,4 +381,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	private class InvalidTransactionException extends Exception {
 		public final static long serialVersionUID = 0;
 	}
+	
+
+	
+
 }

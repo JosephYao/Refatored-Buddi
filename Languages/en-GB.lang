@@ -52,6 +52,7 @@ DELETE_TRANSACTION_LOSE_CHANGES=Are you sure you want to delete this transaction
 DEFAULT_DESCRIPTION=<Description>
 DEFAULT_MEMO=<Memo>
 DEFAULT_NUMBER=<Number>
+DEFAULT_SEARCH=<Search>
 DESTINATION=<Destination>
 DIFFERENCE=Difference
 EDIT=Edit

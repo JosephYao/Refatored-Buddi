@@ -26,6 +26,7 @@ import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
+import org.homeunix.drummer.view.components.text.JDecimalLabel;
 
 public class TransactionCellRenderer extends JPanel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;

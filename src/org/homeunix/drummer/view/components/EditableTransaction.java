@@ -5,7 +5,6 @@
  */
 package org.homeunix.drummer.view.components;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,9 +23,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
@@ -38,7 +35,10 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.components.autocomplete.AutoCompleteTextField;
+import org.homeunix.drummer.view.components.text.JDecimalField;
+import org.homeunix.drummer.view.components.text.JHintAutoCompleteTextField;
+import org.homeunix.drummer.view.components.text.JHintTextArea;
+import org.homeunix.drummer.view.components.text.JHintTextField;
 import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
 
 import com.toedter.calendar.JDateChooser;
@@ -54,9 +54,9 @@ public class EditableTransaction extends JPanel {
 	private final JDecimalField amount;
 	private final JComboBox from;
 	private final JComboBox to;
-	private final JTextField number;
-	private final AutoCompleteTextField description;
-	private final JTextArea memo;
+	private final JHintTextField number;
+	private final JHintAutoCompleteTextField description;
+	private final JHintTextArea memo;
 	
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
@@ -72,9 +72,9 @@ public class EditableTransaction extends JPanel {
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
 		from = new JComboBox();
 		to = new JComboBox();
-		number = new JTextField();
-		description = new AutoCompleteTextField(PrefsInstance.getInstance().getDescDict());
-		memo = new JTextArea();
+		number = new JHintTextField(Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
+		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
+		memo = new JHintTextArea(Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
 		
 		components = new Vector<JComponent>();
 		
@@ -92,12 +92,7 @@ public class EditableTransaction extends JPanel {
 		number.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_NUMBER));
 		description.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DESC));
 		memo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_MEMO));
-		
-		//Add the default text
-		addHintListeners(description, Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
-		addHintListeners(number, Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
-		addHintListeners(memo, Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
-		
+				
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -165,9 +160,9 @@ public class EditableTransaction extends JPanel {
 			return;
 		if (transaction != null){
 			date.setDate(transaction.getDate());			
-			number.setText(transaction.getNumber());
-			description.setText(transaction.getDescription());
-			memo.setText(transaction.getMemo());
+			number.setValue(transaction.getNumber());
+			description.setValue(transaction.getDescription());
+			memo.setValue(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
@@ -175,19 +170,14 @@ public class EditableTransaction extends JPanel {
 		else{
 			if (date.getDate() == null)
 				date.setDate(new Date());
-			number.setText("");
-			description.setText("");
+			number.setValue("");
+			description.setValue("");
 			amount.setValue(0);
 			to.setSelectedIndex(0);
 			from.setSelectedIndex(0);
-			memo.setText("");
+			memo.setValue("");
 			date.requestFocus();
-			setChanged(false);
 		}
-		
-		setDefaultText(true, description, Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
-		setDefaultText(true, number, Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
-		setDefaultText(true, memo, Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
 		
 		setChanged(false);
 		
@@ -215,17 +205,11 @@ public class EditableTransaction extends JPanel {
 	}
 	
 	public String getNumber(){
-		if (number.getForeground().equals(Color.GRAY))
-			return "";
-		else
-			return number.getText();
+		return number.getValue();
 	}
 	
 	public String getDescription(){
-		if (description.getForeground().equals(Color.GRAY))
-			return "";
-		else
-			return description.getText();
+		return description.getValue();
 	}
 	
 	public Transaction getTransaction(){
@@ -260,10 +244,7 @@ public class EditableTransaction extends JPanel {
 
 	
 	public String getMemo(){
-		if (memo.getForeground().equals(Color.GRAY))
-			return "";
-		else
-			return memo.getText();
+		return memo.getValue();
 	}
 	
 	public void updateContent(){
@@ -316,19 +297,14 @@ public class EditableTransaction extends JPanel {
 				//If we loose focus on the description field, we check if
 				// there is something there.  If so, we fill in others with
 				// the dictionary map.
-				if (description.getText().length() > 0 
-						&& description.getForeground().equals(Color.BLACK)){
+				if (description.getValue().length() > 0){
 					DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
 					if (dd != null){
-						if (dd.getNumber() != null){
-							number.setText(dd.getNumber());
-							number.setForeground(Color.BLACK);
-						}
+						if (dd.getNumber() != null)
+							number.setValue(dd.getNumber());
 						amount.setValue(dd.getAmount());
-						if (dd.getMemo() != null){
-							memo.setText(dd.getMemo());
-							memo.setForeground(Color.BLACK);
-						}
+						if (dd.getMemo() != null)
+							memo.setValue(dd.getMemo());
 						
 						//TODO This doesn't always work when you go to a different account...
 						if (dd.getFrom() != null){
@@ -394,43 +370,7 @@ public class EditableTransaction extends JPanel {
 		}
 	}
 	
-	public void select(){
+	public void resetSelection(){
 		date.requestFocusInWindow();
-	}
-	
-	private void addHintListeners(final JTextComponent c, final String hint){
-		c.setText(hint);
-		c.setForeground(Color.GRAY);
-		c.addFocusListener(new FocusAdapter(){
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				setDefaultText(false, c, hint);
-				super.focusGained(arg0);
-			}
-
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				setDefaultText(true, c, hint);
-				super.focusLost(arg0);
-			}
-		});
-	}
-	
-	private void setDefaultText(boolean on, JTextComponent c, String hint){
-		if (on){
-			if (c.getText().equals("")){
-				c.setText(hint);
-				c.setForeground(Color.GRAY);
-			}
-			else{
-				c.setForeground(Color.BLACK);
-			}
-		}
-		else{
-			if (c.getText().equals(hint)){
-				c.setText("");
-			}
-			c.setForeground(Color.BLACK);			
-		}
 	}
 }

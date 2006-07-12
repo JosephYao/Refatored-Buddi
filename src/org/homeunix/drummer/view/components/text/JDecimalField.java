@@ -1,4 +1,4 @@
-package org.homeunix.drummer.view.components;
+package org.homeunix.drummer.view.components.text;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;

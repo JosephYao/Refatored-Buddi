@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/emf/org.eclipse.emf.ecore.change_2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/emf/org.eclipse.emf.ecore_2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/emf/org.eclipse.emf.common_2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/truefilter.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
