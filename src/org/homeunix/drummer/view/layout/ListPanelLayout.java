@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,6 +25,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -142,6 +145,36 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 				}
 				
 				ListPanelLayout.this.updateButtons();
+			}
+		});
+		
+		tree.addTreeExpansionListener(new TreeExpansionListener(){
+			public void treeCollapsed(TreeExpansionEvent arg0) {				
+				Object o = arg0.getPath().getLastPathComponent();
+				
+				Log.debug("Rolled node: " + o.toString());
+				
+				if (o instanceof DefaultMutableTreeNode){
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+					PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), false);
+				}
+				else {
+					Log.error("Unknown object in treeExpansionListener: " + o);
+				}
+			}
+
+			public void treeExpanded(TreeExpansionEvent arg0) {
+				Object o = arg0.getPath().getLastPathComponent();
+				
+				Log.debug("Unrolled node: " + o.toString());
+				
+				if (o instanceof DefaultMutableTreeNode){
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+					PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), true);
+				}
+				else {
+					Log.error("Unknown object in treeExpansionListener: " + o);
+				}				
 			}
 		});
 

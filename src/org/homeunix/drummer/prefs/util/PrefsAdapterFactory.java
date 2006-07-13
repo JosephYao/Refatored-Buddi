@@ -76,6 +76,12 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object caseDictEntry(DictEntry object) {
 				return createDictEntryAdapter();
 			}
+			public Object caseListAttributes(ListAttributes object) {
+				return createListAttributesAdapter();
+			}
+			public Object caseListEntry(ListEntry object) {
+				return createListEntryAdapter();
+			}
 			public Object casePrefs(Prefs object) {
 				return createPrefsAdapter();
 			}
@@ -128,6 +134,34 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDictEntryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.ListAttributes <em>List Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.ListAttributes
+	 * @generated
+	 */
+	public Adapter createListAttributesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.ListEntry <em>List Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.ListEntry
+	 * @generated
+	 */
+	public Adapter createListEntryAdapter() {
 		return null;
 	}
 

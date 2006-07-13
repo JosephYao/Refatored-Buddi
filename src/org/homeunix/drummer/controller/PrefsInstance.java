@@ -23,6 +23,8 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
+import org.homeunix.drummer.prefs.ListAttributes;
+import org.homeunix.drummer.prefs.ListEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsPackage;
@@ -52,6 +54,7 @@ public class PrefsInstance {
 	//Provide backing for the autocomplete text fields
 	private final DefaultDictionary descDict;
 	private final Map<String, DictData> defaultsMap;
+	private final Map<String, ListAttributes> listAttributesMap;
 
 	private ResourceSet resourceSet;
 	private static String location;
@@ -59,6 +62,7 @@ public class PrefsInstance {
 	private PrefsInstance(){
 		descDict = new DefaultDictionary();
 		defaultsMap = new HashMap<String, DictData>();
+		listAttributesMap = new HashMap<String, ListAttributes>();
 		
 		if (location == null){
 			if (Buddi.isMac()){
@@ -181,6 +185,14 @@ public class PrefsInstance {
 				defaultsMap.put(entry.getEntry(), entry.getData());
 			}
 		}
+		
+		//Load the state for the list entries
+		for (Object o : userPrefs.getPrefs().getListEntries()) {
+			if (o instanceof ListEntry){
+				ListEntry l = (ListEntry) o;
+				listAttributesMap.put(l.getEntry(), l.getAttributes());
+			}
+		}
 	}
 	
 	public void savePrefs(){		
@@ -195,6 +207,17 @@ public class PrefsInstance {
 			d.setEntry(s);
 			d.setData(defaultsMap.get(s));
 			userPrefs.getPrefs().getDescDict().add(d);
+		}
+		
+		//Translate between Map<String, ListAttribute> (the list attributes) and the persistance model
+		userPrefs.getPrefs().getListEntries().retainAll(new Vector());
+		for (String s : listAttributesMap.keySet()){
+			//Create an entry in the listEntry structure
+			ListEntry l = prefsFactory.createListEntry();
+			l.setEntry(s);
+			l.setAttributes(listAttributesMap.get(s));
+			
+			userPrefs.getPrefs().getListEntries().add(l);
 		}
 		
 		try{
@@ -246,6 +269,22 @@ public class PrefsInstance {
 	
 	public DictData getAutoCompleteEntry(String description){
 		return defaultsMap.get(description);
+	}
+	
+	public void setListAttributes(String entryName, boolean unrolled){
+		ListAttributes l;
+		if (listAttributesMap.get(entryName) != null)
+			l = listAttributesMap.get(entryName);
+		else
+			l = prefsFactory.createListAttributes();
+		
+		l.setUnrolled(unrolled);
+		
+		listAttributesMap.put(entryName, l);
+	}
+	
+	public ListAttributes getListAttributes(String entryName){
+		return listAttributesMap.get(entryName);
 	}
 	
 	public static String chooseDataFile(){

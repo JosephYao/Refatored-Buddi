@@ -44,6 +44,24 @@ public interface PrefsFactory extends EFactory{
 	DictEntry createDictEntry();
 
 	/**
+	 * Returns a new object of class '<em>List Attributes</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Attributes</em>'.
+	 * @generated
+	 */
+	ListAttributes createListAttributes();
+
+	/**
+	 * Returns a new object of class '<em>List Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>List Entry</em>'.
+	 * @generated
+	 */
+	ListEntry createListEntry();
+
+	/**
 	 * Returns a new object of class '<em>Prefs</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

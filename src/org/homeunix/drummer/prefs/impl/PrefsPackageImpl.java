@@ -13,6 +13,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
+import org.homeunix.drummer.prefs.ListAttributes;
+import org.homeunix.drummer.prefs.ListEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsPackage;
@@ -40,6 +42,20 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 	 * @generated
 	 */
 	private EClass dictEntryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass listAttributesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass listEntryEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -216,6 +232,51 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getListAttributes() {
+		return listAttributesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getListAttributes_Unrolled() {
+		return (EAttribute)listAttributesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getListEntry() {
+		return listEntryEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getListEntry_Entry() {
+		return (EAttribute)listEntryEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getListEntry_Attributes() {
+		return (EReference)listEntryEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPrefs() {
 		return prefsEClass;
 	}
@@ -280,15 +341,6 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 	 * @generated
 	 */
 	public EReference getPrefs_TransactionsWindow() {
-		return (EReference)prefsEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPrefs_GraphsWindow() {
 		return (EReference)prefsEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -297,8 +349,26 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrefs_MainWindow() {
+	public EReference getPrefs_GraphsWindow() {
 		return (EReference)prefsEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrefs_MainWindow() {
+		return (EReference)prefsEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrefs_ListEntries() {
+		return (EReference)prefsEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -316,7 +386,7 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 	 * @generated
 	 */
 	public EReference getPrefs_DescDict() {
-		return (EReference)prefsEClass.getEStructuralFeatures().get(8);
+		return (EReference)prefsEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -421,6 +491,13 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 		createEAttribute(dictEntryEClass, DICT_ENTRY__ENTRY);
 		createEReference(dictEntryEClass, DICT_ENTRY__DATA);
 
+		listAttributesEClass = createEClass(LIST_ATTRIBUTES);
+		createEAttribute(listAttributesEClass, LIST_ATTRIBUTES__UNROLLED);
+
+		listEntryEClass = createEClass(LIST_ENTRY);
+		createEAttribute(listEntryEClass, LIST_ENTRY__ENTRY);
+		createEReference(listEntryEClass, LIST_ENTRY__ATTRIBUTES);
+
 		prefsEClass = createEClass(PREFS);
 		createEAttribute(prefsEClass, PREFS__DATA_FILE);
 		createEAttribute(prefsEClass, PREFS__LANGUAGE);
@@ -428,11 +505,12 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 		createEAttribute(prefsEClass, PREFS__SHOW_DELETED_CATEGORIES);
 		createEAttribute(prefsEClass, PREFS__DATE_FORMAT);
 		createEAttribute(prefsEClass, PREFS__BUDGET_PERIOD);
-		createEReference(prefsEClass, PREFS__GRAPHS_WINDOW);
 		createEReference(prefsEClass, PREFS__TRANSACTIONS_WINDOW);
-		createEReference(prefsEClass, PREFS__DESC_DICT);
 		createEReference(prefsEClass, PREFS__MAIN_WINDOW);
+		createEReference(prefsEClass, PREFS__LIST_ENTRIES);
+		createEReference(prefsEClass, PREFS__GRAPHS_WINDOW);
 		createEReference(prefsEClass, PREFS__REPORTS_WINDOW);
+		createEReference(prefsEClass, PREFS__DESC_DICT);
 
 		userPrefsEClass = createEClass(USER_PREFS);
 		createEReference(userPrefsEClass, USER_PREFS__PREFS);
@@ -481,6 +559,13 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 		initEAttribute(getDictEntry_Entry(), ecorePackage.getEString(), "entry", null, 1, 1, DictEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDictEntry_Data(), this.getDictData(), null, "data", null, 1, 1, DictEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(listAttributesEClass, ListAttributes.class, "ListAttributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getListAttributes_Unrolled(), ecorePackage.getEBoolean(), "unrolled", null, 1, 1, ListAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(listEntryEClass, ListEntry.class, "ListEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getListEntry_Entry(), ecorePackage.getEString(), "entry", null, 1, 1, ListEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getListEntry_Attributes(), this.getListAttributes(), null, "attributes", null, 1, 1, ListEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(prefsEClass, Prefs.class, "Prefs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPrefs_DataFile(), ecorePackage.getEString(), "dataFile", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPrefs_Language(), ecorePackage.getEString(), "language", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -488,11 +573,12 @@ public class PrefsPackageImpl extends EPackageImpl implements PrefsPackage {
 		initEAttribute(getPrefs_ShowDeletedCategories(), ecorePackage.getEBoolean(), "showDeletedCategories", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPrefs_DateFormat(), ecorePackage.getEString(), "dateFormat", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPrefs_BudgetPeriod(), ecorePackage.getEString(), "budgetPeriod", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPrefs_GraphsWindow(), this.getWindowAttributes(), null, "graphsWindow", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrefs_TransactionsWindow(), this.getWindowAttributes(), null, "transactionsWindow", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPrefs_DescDict(), this.getDictEntry(), null, "descDict", null, 0, -1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrefs_MainWindow(), this.getWindowAttributes(), null, "mainWindow", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrefs_ListEntries(), this.getListEntry(), null, "listEntries", null, 0, -1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrefs_GraphsWindow(), this.getWindowAttributes(), null, "graphsWindow", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrefs_ReportsWindow(), this.getWindowAttributes(), null, "reportsWindow", null, 1, 1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrefs_DescDict(), this.getDictEntry(), null, "descDict", null, 0, -1, Prefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(userPrefsEClass, UserPrefs.class, "UserPrefs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUserPrefs_Prefs(), this.getPrefs(), null, "prefs", null, 1, 1, UserPrefs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

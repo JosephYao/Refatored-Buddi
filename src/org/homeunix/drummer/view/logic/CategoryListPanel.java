@@ -19,7 +19,9 @@ import javax.swing.tree.TreePath;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -155,7 +157,9 @@ public class CategoryListPanel extends ListPanelLayout {
 		
 		//Expand all the nodes
 		for (DefaultMutableTreeNode node : nodes) {
-			tree.expandPath(new TreePath(node.getPath()));
+			ListAttributes l = PrefsInstance.getInstance().getListAttributes(node.getUserObject().toString());
+			if (l != null && l.isUnrolled())
+				tree.expandPath(new TreePath(node.getPath()));
 		}
 		
 		return this;

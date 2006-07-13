@@ -8,15 +8,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Type;
+import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -95,7 +101,7 @@ public class AccountListPanel extends ListPanelLayout {
 				super.mouseClicked(arg0);
 			}
 		});
-
+		
 		return this;
 	}
 	
@@ -111,9 +117,24 @@ public class AccountListPanel extends ListPanelLayout {
 		root.removeAllChildren(); 
 		selectedSource = null;
 		
+		Map<Type, DefaultMutableTreeNode> accountTypes = new HashMap<Type, DefaultMutableTreeNode>();
+		Vector<DefaultMutableTreeNode> nodes = new Vector<DefaultMutableTreeNode>();
+		
 		for (Account a : DataInstance.getInstance().getAccounts()) {
-			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts())
-				root.add(new DefaultMutableTreeNode(a));
+			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts()){
+				DefaultMutableTreeNode accountType;
+				if (accountTypes.get(a.getAccountType()) != null)
+					accountType = accountTypes.get(a.getAccountType());
+				else {
+					accountType = new DefaultMutableTreeNode(a.getAccountType());
+					accountTypes.put(a.getAccountType(), accountType);
+					root.add(accountType);
+					nodes.add(accountType);
+				}
+				DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
+				accountType.add(account);
+				nodes.add(account);
+			}
 			
 			Log.debug(a);
 			
@@ -128,6 +149,12 @@ public class AccountListPanel extends ListPanelLayout {
 		balanceLabel.setText(Translate.inst().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Translate.inst().get(TranslateKeys.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
 		treeModel.reload(root);
+
+		for (DefaultMutableTreeNode node : nodes) {
+			ListAttributes l = PrefsInstance.getInstance().getListAttributes(node.getUserObject().toString());
+			if (l != null && l.isUnrolled())
+				tree.expandPath(new TreePath(node.getPath()));
+		}
 		
 		return this;
 	}

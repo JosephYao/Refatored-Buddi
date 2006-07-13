@@ -99,6 +99,18 @@ public class PrefsSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PrefsPackage.LIST_ATTRIBUTES: {
+				ListAttributes listAttributes = (ListAttributes)theEObject;
+				Object result = caseListAttributes(listAttributes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PrefsPackage.LIST_ENTRY: {
+				ListEntry listEntry = (ListEntry)theEObject;
+				Object result = caseListEntry(listEntry);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.PREFS: {
 				Prefs prefs = (Prefs)theEObject;
 				Object result = casePrefs(prefs);
@@ -148,6 +160,36 @@ public class PrefsSwitch {
 	 * @generated
 	 */
 	public Object caseDictEntry(DictEntry object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>List Attributes</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>List Attributes</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseListAttributes(ListAttributes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>List Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>List Entry</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseListEntry(ListEntry object) {
 		return null;
 	}
 
