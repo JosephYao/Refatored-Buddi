@@ -38,12 +38,14 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDateFormat <em>Date Format</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getBudgetPeriod <em>Budget Period</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAccountTypes <em>Show Account Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
  * </ul>
  * </p>
  *
@@ -171,34 +173,44 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String budgetPeriod = BUDGET_PERIOD_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
+	 * The default value of the '{@link #isShowAccountTypes() <em>Show Account Types</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
+	 * @see #isShowAccountTypes()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes transactionsWindow = null;
+	protected static final boolean SHOW_ACCOUNT_TYPES_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * The cached value of the '{@link #isShowAccountTypes() <em>Show Account Types</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
+	 * @see #isShowAccountTypes()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes mainWindow = null;
+	protected boolean showAccountTypes = SHOW_ACCOUNT_TYPES_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
+	 * The default value of the '{@link #isEnableUpdateNotifications() <em>Enable Update Notifications</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getListEntries()
+	 * @see #isEnableUpdateNotifications()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList listEntries = null;
+	protected static final boolean ENABLE_UPDATE_NOTIFICATIONS_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isEnableUpdateNotifications() <em>Enable Update Notifications</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEnableUpdateNotifications()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean enableUpdateNotifications = ENABLE_UPDATE_NOTIFICATIONS_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
@@ -211,6 +223,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes graphsWindow = null;
 
 	/**
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescDict()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList descDict = null;
+
+	/**
 	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -221,14 +243,34 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes reportsWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
+	 * @see #getMainWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList descDict = null;
+	protected WindowAttributes mainWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTransactionsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes transactionsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getListEntries()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList listEntries = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -372,6 +414,48 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		budgetPeriod = newBudgetPeriod;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__BUDGET_PERIOD, oldBudgetPeriod, budgetPeriod));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isShowAccountTypes() {
+		return showAccountTypes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setShowAccountTypes(boolean newShowAccountTypes) {
+		boolean oldShowAccountTypes = showAccountTypes;
+		showAccountTypes = newShowAccountTypes;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SHOW_ACCOUNT_TYPES, oldShowAccountTypes, showAccountTypes));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isEnableUpdateNotifications() {
+		return enableUpdateNotifications;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEnableUpdateNotifications(boolean newEnableUpdateNotifications) {
+		boolean oldEnableUpdateNotifications = enableUpdateNotifications;
+		enableUpdateNotifications = newEnableUpdateNotifications;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__ENABLE_UPDATE_NOTIFICATIONS, oldEnableUpdateNotifications, enableUpdateNotifications));
 	}
 
 	/**
@@ -578,18 +662,18 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
 		if (featureID >= 0) {
 			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-					return basicSetTransactionsWindow(null, msgs);
-				case PrefsPackage.PREFS__MAIN_WINDOW:
-					return basicSetMainWindow(null, msgs);
-				case PrefsPackage.PREFS__LIST_ENTRIES:
-					return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
 				case PrefsPackage.PREFS__GRAPHS_WINDOW:
 					return basicSetGraphsWindow(null, msgs);
-				case PrefsPackage.PREFS__REPORTS_WINDOW:
-					return basicSetReportsWindow(null, msgs);
 				case PrefsPackage.PREFS__DESC_DICT:
 					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+				case PrefsPackage.PREFS__REPORTS_WINDOW:
+					return basicSetReportsWindow(null, msgs);
+				case PrefsPackage.PREFS__MAIN_WINDOW:
+					return basicSetMainWindow(null, msgs);
+				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+					return basicSetTransactionsWindow(null, msgs);
+				case PrefsPackage.PREFS__LIST_ENTRIES:
+					return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
 				default:
 					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
 			}
@@ -616,18 +700,22 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return getDateFormat();
 			case PrefsPackage.PREFS__BUDGET_PERIOD:
 				return getBudgetPeriod();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return getListEntries();
+			case PrefsPackage.PREFS__SHOW_ACCOUNT_TYPES:
+				return isShowAccountTypes() ? Boolean.TRUE : Boolean.FALSE;
+			case PrefsPackage.PREFS__ENABLE_UPDATE_NOTIFICATIONS:
+				return isEnableUpdateNotifications() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return getReportsWindow();
 			case PrefsPackage.PREFS__DESC_DICT:
 				return getDescDict();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return getReportsWindow();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return getListEntries();
 		}
 		return eDynamicGet(eFeature, resolve);
 	}
@@ -658,25 +746,31 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__BUDGET_PERIOD:
 				setBudgetPeriod((String)newValue);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__SHOW_ACCOUNT_TYPES:
+				setShowAccountTypes(((Boolean)newValue).booleanValue());
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				getListEntries().addAll((Collection)newValue);
+			case PrefsPackage.PREFS__ENABLE_UPDATE_NOTIFICATIONS:
+				setEnableUpdateNotifications(((Boolean)newValue).booleanValue());
 				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)newValue);
 				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
-				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
+				return;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				getListEntries().addAll((Collection)newValue);
 				return;
 		}
 		eDynamicSet(eFeature, newValue);
@@ -707,23 +801,29 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__BUDGET_PERIOD:
 				setBudgetPeriod(BUDGET_PERIOD_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__SHOW_ACCOUNT_TYPES:
+				setShowAccountTypes(SHOW_ACCOUNT_TYPES_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
+			case PrefsPackage.PREFS__ENABLE_UPDATE_NOTIFICATIONS:
+				setEnableUpdateNotifications(ENABLE_UPDATE_NOTIFICATIONS_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)null);
 				return;
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
+				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
 				return;
 		}
 		eDynamicUnset(eFeature);
@@ -748,18 +848,22 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return DATE_FORMAT_EDEFAULT == null ? dateFormat != null : !DATE_FORMAT_EDEFAULT.equals(dateFormat);
 			case PrefsPackage.PREFS__BUDGET_PERIOD:
 				return BUDGET_PERIOD_EDEFAULT == null ? budgetPeriod != null : !BUDGET_PERIOD_EDEFAULT.equals(budgetPeriod);
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__SHOW_ACCOUNT_TYPES:
+				return showAccountTypes != SHOW_ACCOUNT_TYPES_EDEFAULT;
+			case PrefsPackage.PREFS__ENABLE_UPDATE_NOTIFICATIONS:
+				return enableUpdateNotifications != ENABLE_UPDATE_NOTIFICATIONS_EDEFAULT;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return reportsWindow != null;
 			case PrefsPackage.PREFS__DESC_DICT:
 				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return reportsWindow != null;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return listEntries != null && !listEntries.isEmpty();
 		}
 		return eDynamicIsSet(eFeature);
 	}
@@ -785,6 +889,10 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(dateFormat);
 		result.append(", budgetPeriod: ");
 		result.append(budgetPeriod);
+		result.append(", showAccountTypes: ");
+		result.append(showAccountTypes);
+		result.append(", enableUpdateNotifications: ");
+		result.append(enableUpdateNotifications);
 		result.append(')');
 		return result.toString();
 	}

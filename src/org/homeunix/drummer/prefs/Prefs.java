@@ -24,12 +24,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowDeletedCategories <em>Show Deleted Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDateFormat <em>Date Format</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getBudgetPeriod <em>Budget Period</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAccountTypes <em>Show Account Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
  * </ul>
  * </p>
  *
@@ -193,6 +195,58 @@ public interface Prefs extends EObject{
 	 * @generated
 	 */
 	void setBudgetPeriod(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Show Account Types</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Show Account Types</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Show Account Types</em>' attribute.
+	 * @see #setShowAccountTypes(boolean)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_ShowAccountTypes()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isShowAccountTypes();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#isShowAccountTypes <em>Show Account Types</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Show Account Types</em>' attribute.
+	 * @see #isShowAccountTypes()
+	 * @generated
+	 */
+	void setShowAccountTypes(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Enable Update Notifications</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Enable Update Notifications</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Enable Update Notifications</em>' attribute.
+	 * @see #setEnableUpdateNotifications(boolean)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_EnableUpdateNotifications()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isEnableUpdateNotifications();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications <em>Enable Update Notifications</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Enable Update Notifications</em>' attribute.
+	 * @see #isEnableUpdateNotifications()
+	 * @generated
+	 */
+	void setEnableUpdateNotifications(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Transactions Window</b></em>' containment reference.

@@ -6,6 +6,7 @@ package org.homeunix.drummer;
 
 public class Const {
 	public static final String VERSION = "1.1.4";
+	public static final String BRANCH = "UNSTABLE";
 	
 	public final static String LANGUAGE_EXTENSION = ".lang";
 	public final static String LANGUAGE_FOLDER = "Languages";
@@ -25,7 +26,6 @@ public class Const {
 		"yyyy/MM/dd",
 		"dd.MM.yyyy",
 		"dd/MM/yyyy"
-		
 	};
 	
 	private Const(){}

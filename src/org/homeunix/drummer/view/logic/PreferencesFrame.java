@@ -35,13 +35,15 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 							Translate.getInstance().get(TranslateKeys.RESTART),
 							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
-				
+								
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setDateFormat(dateFormat.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedAccounts(showDeletedAccounts.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
+				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());
+				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				PrefsInstance.getInstance().savePrefs();
-								
+												
 				PreferencesFrame.this.setVisible(false);
 				MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
 				MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
@@ -68,6 +70,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 		dateFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getDateFormat());
 		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
 		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());
+		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());
+		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
 		
 		return this;
 	}

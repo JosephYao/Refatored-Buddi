@@ -291,31 +291,22 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__BUDGET_PERIOD = 5;
 
 	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Show Account Types</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__TRANSACTIONS_WINDOW = 6;
+	int PREFS__SHOW_ACCOUNT_TYPES = 6;
 
 	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Enable Update Notifications</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MAIN_WINDOW = 7;
-
-	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 8;
+	int PREFS__ENABLE_UPDATE_NOTIFICATIONS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
@@ -324,7 +315,16 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 9;
+	int PREFS__GRAPHS_WINDOW = 8;
+
+	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__DESC_DICT = 9;
 
 	/**
 	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
@@ -336,13 +336,31 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__REPORTS_WINDOW = 10;
 
 	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 11;
+	int PREFS__MAIN_WINDOW = 11;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__TRANSACTIONS_WINDOW = 12;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LIST_ENTRIES = 13;
 
 	/**
 	 * The number of structural features of the the '<em>Prefs</em>' class.
@@ -351,7 +369,7 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 12;
+	int PREFS_FEATURE_COUNT = 14;
 
 
 	/**
@@ -663,6 +681,28 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	EAttribute getPrefs_BudgetPeriod();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#isShowAccountTypes <em>Show Account Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Show Account Types</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#isShowAccountTypes()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_ShowAccountTypes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications <em>Enable Update Notifications</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enable Update Notifications</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_EnableUpdateNotifications();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}'.

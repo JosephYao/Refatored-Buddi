@@ -122,18 +122,35 @@ public class AccountListPanel extends ListPanelLayout {
 		
 		for (Account a : DataInstance.getInstance().getAccounts()) {
 			if (!a.isDeleted() || PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts()){
-				DefaultMutableTreeNode accountType;
-				if (accountTypes.get(a.getAccountType()) != null)
-					accountType = accountTypes.get(a.getAccountType());
-				else {
-					accountType = new DefaultMutableTreeNode(a.getAccountType());
-					accountTypes.put(a.getAccountType(), accountType);
-					root.add(accountType);
-					nodes.add(accountType);
+				if (PrefsInstance.getInstance().getPrefs().isShowAccountTypes()){
+					DefaultMutableTreeNode accountType;
+					if (accountTypes.get(a.getAccountType()) != null) {
+						accountType = accountTypes.get(a.getAccountType());
+						if (accountType.getUserObject() instanceof TypeTotal){
+							TypeTotal tt = (TypeTotal) accountType.getUserObject();
+							tt.add(a.getBalance());
+						}
+					}
+					else {
+						accountType = new DefaultMutableTreeNode(new TypeTotal(a.getAccountType()));
+						if (accountType.getUserObject() instanceof TypeTotal){
+							TypeTotal tt = (TypeTotal) accountType.getUserObject();
+							tt.add(a.getBalance());
+						}
+						accountTypes.put(a.getAccountType(), accountType);
+						root.add(accountType);
+						nodes.add(accountType);
+					}
+					DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
+					accountType.add(account);
+					nodes.add(account);
 				}
-				DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
-				accountType.add(account);
-				nodes.add(account);
+				//Don't show categories
+				else {
+					DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
+					root.add(account);
+					nodes.add(account);
+				}
 			}
 			
 			Log.debug(a);
@@ -166,5 +183,27 @@ public class AccountListPanel extends ListPanelLayout {
 			return (Account) selectedSource;
 		else
 			return null;
+	}
+	
+	public class TypeTotal {
+		private final Type type;
+		private long amount;
+		
+		public TypeTotal(Type type){
+			this.type = type;
+			amount = 0;
+		}
+		
+		public Type getType(){
+			return type;
+		}
+		
+		public void add(long amount){
+			this.amount += amount;
+		}
+		
+		public long getAmount(){
+			return amount;
+		}
 	}
 }

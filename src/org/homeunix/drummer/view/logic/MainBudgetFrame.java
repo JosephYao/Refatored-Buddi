@@ -8,15 +8,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import net.roydesign.app.Application;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
+import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.Log;
+import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.ListPanelLayout;
 import org.homeunix.drummer.view.layout.MainBudgetFrameLayout;
@@ -35,10 +45,11 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 	
 	private MainBudgetFrame(){
 		super();
-	
+
 		DataInstance.getInstance().calculateAllBalances();
-		
 		initActions();
+		
+		startUpdateCheck();
 	}
 
 	@Override
@@ -119,4 +130,74 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 		PrefsInstance.getInstance().savePrefs();
 	}
 
+	public void startUpdateCheck(){
+		if (PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
+			SwingWorker updateWorker = new SwingWorker(){
+
+				@Override
+				public Object construct() {
+					try{
+						Properties versions = new Properties();
+						URL mostRecentVersion = new URL("http://buddi.sourceforge.net/version.txt");
+						
+						versions.load(mostRecentVersion.openStream());
+						
+						if (Const.VERSION.compareTo(versions.get(Const.BRANCH).toString()) < 0){
+							return versions.get(Const.BRANCH);
+						}
+					}
+					catch (MalformedURLException mue){
+						Log.error(mue);
+					}
+					catch (IOException ioe){
+						Log.error(ioe);
+					}
+					
+					return null;
+				}
+
+				@Override
+				public void finished() {
+					if (get() != null){
+						String[] buttons = new String[2];
+						buttons[0] = Translate.getInstance().get(TranslateKeys.DOWNLOAD);
+						buttons[1] = Translate.getInstance().get(TranslateKeys.CANCEL);
+						
+						int reply = JOptionPane.showOptionDialog(
+								MainBudgetFrame.this, 
+								Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE)
+								+ " " + get() + "\n"
+								+ Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE_2),
+								Translate.getInstance().get(TranslateKeys.NEW_VERSION),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								buttons,
+								buttons[0]);
+						
+						if (reply == JOptionPane.YES_OPTION){
+							String fileLocation = "http://prdownloads.sourceforge.net/buddi/Buddi-" + get();
+							
+							if (Buddi.isMac())
+								fileLocation += ".dmg?download";
+							else
+								fileLocation += ".zip?download";
+							
+							try{
+								BrowserLauncher.openURL(fileLocation);
+							}
+							catch (IOException ioe){
+								Log.error(ioe);
+							}
+						}
+					}
+					
+					super.finished();
+				}
+			};
+			
+			Log.debug("Starting update checking...");
+			updateWorker.start();
+		}
+	}
 }

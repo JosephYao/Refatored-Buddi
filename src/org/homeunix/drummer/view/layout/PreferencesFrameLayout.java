@@ -37,6 +37,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected final JComboBox dateFormat;
 	protected final JCheckBox showDeletedAccounts;
 	protected final JCheckBox showDeletedCategories;
+	protected final JCheckBox showAccountTypes;
+	protected final JCheckBox enableUpdateNotifications;
 	
 	protected final DefaultComboBoxModel languageModel;
 	
@@ -72,11 +74,15 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		showDeletedAccounts = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
 		showDeletedCategories = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
+		showAccountTypes = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ACCOUNT_TYPES));
+		enableUpdateNotifications = new JCheckBox(Translate.getInstance().get(TranslateKeys.ENABLE_UPDATE_NOTIFICATIONS));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel deletePanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
@@ -88,11 +94,17 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		deletePanel2.add(showDeletedCategories);
 		
+		accountPanel.add(showAccountTypes);
+		
+		updatePanel.add(enableUpdateNotifications);
+		
 		JPanel textPanel = new JPanel(new GridLayout(0, 1));
 		textPanel.add(languagePanel);
 		textPanel.add(dateFormatPanel);
 		textPanel.add(deletePanel1);
 		textPanel.add(deletePanel2);
+		textPanel.add(accountPanel);
+		textPanel.add(updatePanel);
 		
 		JPanel textPanelSpacer = new JPanel();
 		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));

@@ -18,8 +18,8 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.util.Formatter;
+import org.homeunix.drummer.view.logic.AccountListPanel.TypeTotal;
 
 
 public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
@@ -110,12 +110,13 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			
 			this.setText(sb.toString());
 		}
-		else if (obj instanceof Type) {			
-			Type t = (Type) obj;
+		//This is a wrapper class for Type which includes the total for all accounts of this type
+		else if (obj instanceof TypeTotal) {			
+			TypeTotal t = (TypeTotal) obj;
 			StringBuffer sbOpen = new StringBuffer();
 			StringBuffer sbClose = new StringBuffer();
 						
-			if (t.isCredit()){
+			if (t.getType().isCredit()){
 				sbOpen.append("<font color='red'>");
 				sbClose.insert(0, "</font>");
 			}
@@ -125,7 +126,12 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			
 			sb.append("<html><table><tr><td width=200px>")
 					.append(sbOpen.toString())
-					.append(t.toString())
+					.append(t.getType().toString())
+					.append(sbClose.toString())
+					.append("</td><td width=70px>")
+					.append(sbOpen.toString())
+					.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");
 			
