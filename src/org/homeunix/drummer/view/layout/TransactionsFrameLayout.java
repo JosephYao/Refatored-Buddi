@@ -67,10 +67,10 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		editableTransaction = new EditableTransaction(this);
 		editableTransaction.updateContent();
 		
-		recordButton = new JButton(Translate.inst().get(TranslateKeys.RECORD));
-		clearButton = new JButton(Translate.inst().get(TranslateKeys.CLEAR));
-		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
-		searchField = new JHintTextField(Translate.inst().get(TranslateKeys.DEFAULT_SEARCH));
+		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
+		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
+		searchField = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
 		clearSearchField = new JButton("x");
 		
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));

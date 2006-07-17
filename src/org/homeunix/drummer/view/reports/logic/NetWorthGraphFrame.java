@@ -39,7 +39,7 @@ public class NetWorthGraphFrame extends GraphFrameLayout {
 		}
 				
 		JFreeChart chart = ChartFactory.createBarChart(
-				Translate.inst().get(TranslateKeys.NET_WORTH)
+				Translate.getInstance().get(TranslateKeys.NET_WORTH)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ")",

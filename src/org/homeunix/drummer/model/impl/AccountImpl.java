@@ -321,7 +321,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		result.append("): ");
 		if ((isCredit() ^ balance <= 0) && balance != 0)
 			result.append("-");
-		result.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN));
+		result.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN));
 		result.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)));
 		return result.toString();
 	}

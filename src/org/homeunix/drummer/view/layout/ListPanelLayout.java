@@ -58,10 +58,10 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane listScroller = new JScrollPane(tree);
 		
-		newButton = new JButton(Translate.inst().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.inst().get(TranslateKeys.EDIT));
-		deleteButton = new JButton(Translate.inst().get(TranslateKeys.DELETE));
-		openButton = new JButton(Translate.inst().get(TranslateKeys.OPEN));
+		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
+		openButton = new JButton(Translate.getInstance().get(TranslateKeys.OPEN));
 		balanceLabel = new JLabel();
 		
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -186,7 +186,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			openButton.setEnabled(false);
-			deleteButton.setText(Translate.inst().get(TranslateKeys.DELETE));
+			deleteButton.setText(Translate.getInstance().get(TranslateKeys.DELETE));
 		}
 		else{
 			editButton.setEnabled(true);
@@ -194,9 +194,9 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 			openButton.setEnabled(true);
 			
 			if (selectedSource.isDeleted())
-				deleteButton.setText(Translate.inst().get(TranslateKeys.UNDELETE));
+				deleteButton.setText(Translate.getInstance().get(TranslateKeys.UNDELETE));
 			else
-				deleteButton.setText(Translate.inst().get(TranslateKeys.DELETE));
+				deleteButton.setText(Translate.getInstance().get(TranslateKeys.DELETE));
 		}
 		return this;
 	}

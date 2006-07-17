@@ -17,7 +17,7 @@ import org.homeunix.drummer.util.Log;
 public class Translate {
 	private final Properties translations = new Properties();
 	
-	public static Translate inst() {
+	public static Translate getInstance() {
 		return SingletonHolder.instance;
 	}
 	

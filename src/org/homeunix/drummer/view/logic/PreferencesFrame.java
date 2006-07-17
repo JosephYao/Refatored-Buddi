@@ -32,8 +32,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 						|| !PrefsInstance.getInstance().getPrefs().getDateFormat().equals(dateFormat.getSelectedItem().toString()))
 					JOptionPane.showMessageDialog(
 							PreferencesFrame.this,
-							Translate.inst().get(TranslateKeys.RESTART),
-							Translate.inst().get(TranslateKeys.RESTART_NEEDED),
+							Translate.getInstance().get(TranslateKeys.RESTART),
+							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
 				
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());

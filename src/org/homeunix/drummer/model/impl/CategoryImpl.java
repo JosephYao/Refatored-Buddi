@@ -333,10 +333,10 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 */
 	public String toString() {
 		if (getParent() == null) {
-			return Translate.inst().get(getName());
+			return Translate.getInstance().get(getName());
 		}
 		else {
-			return getParent().toString() + " " + Translate.inst().get(getName());
+			return getParent().toString() + " " + Translate.getInstance().get(getName());
 		}
 	}
 	

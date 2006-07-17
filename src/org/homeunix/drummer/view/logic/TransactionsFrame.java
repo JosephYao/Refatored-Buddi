@@ -47,7 +47,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				
 		this.account = account;
 		
-		this.setTitle(Translate.inst().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		
 		editableTransaction.setTransaction(null, true);
 		updateContent();
@@ -94,8 +94,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						if (isValidRecord()){
 							ret = JOptionPane.showConfirmDialog(
 								null, 
-								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_MESSAGE), 
-								Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
+								Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_MESSAGE), 
+								Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
 								JOptionPane.YES_NO_CANCEL_OPTION);
 							if (ret == JOptionPane.YES_OPTION){
 								try{
@@ -119,8 +119,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						else{
 							ret = JOptionPane.showConfirmDialog(
 									null, 
-									Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_INVALID_MESSAGE), 
-									Translate.inst().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
+									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_INVALID_MESSAGE), 
+									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
 									JOptionPane.YES_NO_OPTION);
 							if (ret == JOptionPane.NO_OPTION){
 								editableTransaction.setChanged(false);
@@ -171,8 +171,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				if (!editableTransaction.isChanged()
 						|| JOptionPane.showConfirmDialog(
 								TransactionsFrame.this,
-								Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
-								Translate.inst().get(TranslateKeys.CLEAR_TRANSACTION),
+								Translate.getInstance().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
+								Translate.getInstance().get(TranslateKeys.CLEAR_TRANSACTION),
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
@@ -190,8 +190,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				if (JOptionPane.showConfirmDialog(
 						TransactionsFrame.this, 
-						Translate.inst().get(TranslateKeys.DELETE_TRANSACTION_LOSE_CHANGES),
-						Translate.inst().get(TranslateKeys.DELETE_TRANSACTION),
+						Translate.getInstance().get(TranslateKeys.DELETE_TRANSACTION_LOSE_CHANGES),
+						Translate.getInstance().get(TranslateKeys.DELETE_TRANSACTION),
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					
@@ -249,8 +249,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		if (!isValidRecord()){
 			JOptionPane.showMessageDialog(
 					TransactionsFrame.this,
-					Translate.inst().get(TranslateKeys.RECORD_BUTTON_ERROR),
-					Translate.inst().get(TranslateKeys.ERROR),
+					Translate.getInstance().get(TranslateKeys.RECORD_BUTTON_ERROR),
+					Translate.getInstance().get(TranslateKeys.ERROR),
 					JOptionPane.ERROR_MESSAGE
 			);
 			throw new InvalidTransactionException();
@@ -258,9 +258,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 		
 		Transaction t;
-		if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
+		if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
 			t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-		else if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.UPDATE)))
+		else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE)))
 //			t = (Transaction) list.getSelectedValue();
 			t = editableTransaction.getTransaction();
 		else {
@@ -283,7 +283,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		t.setMemo(editableTransaction.getMemo());
 		t.setNumber(editableTransaction.getNumber());
 		
-		if (recordButton.getText().equals(Translate.inst().get(TranslateKeys.RECORD)))
+		if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
 			DataInstance.getInstance().addTransaction(t);
 		else {
 			DataInstance.getInstance().calculateAllBalances();
@@ -302,7 +302,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 	
 	protected AbstractBudgetFrame initContent(){
-		this.setTitle(account.getName() + " - " + Translate.inst().get(TranslateKeys.TRANSACTIONS));
+		this.setTitle(account.getName() + " - " + Translate.getInstance().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
 		editableTransaction.setTransaction(null, true);
 		
@@ -334,13 +334,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public AbstractBudgetFrame updateButtons(){
 		if (editableTransaction == null 
 				|| editableTransaction.getTransaction() == null){
-			recordButton.setText(Translate.inst().get(TranslateKeys.RECORD));
-			clearButton.setText(Translate.inst().get(TranslateKeys.CLEAR));
+			recordButton.setText(Translate.getInstance().get(TranslateKeys.RECORD));
+			clearButton.setText(Translate.getInstance().get(TranslateKeys.CLEAR));
 			deleteButton.setEnabled(false);
 		}
 		else{
-			recordButton.setText(Translate.inst().get(TranslateKeys.UPDATE));
-			clearButton.setText(Translate.inst().get(TranslateKeys.NEW));
+			recordButton.setText(Translate.getInstance().get(TranslateKeys.UPDATE));
+			clearButton.setText(Translate.getInstance().get(TranslateKeys.NEW));
 			deleteButton.setEnabled(true);
 		}
 		

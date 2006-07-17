@@ -28,7 +28,7 @@ public class AboutDialog extends AbstractBudgetDialog {
 	public AboutDialog(){
 		super(MainBudgetFrame.getInstance());
 		
-		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 
@@ -38,13 +38,13 @@ public class AboutDialog extends AbstractBudgetDialog {
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
 				"<html><center><h1>")
-				.append(	Translate.inst().get(TranslateKeys.BUDDI))
+				.append(	Translate.getInstance().get(TranslateKeys.BUDDI))
 				.append("</h1>");
 
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
 				"<html><h5>")
-				.append(Translate.inst().get(TranslateKeys.VERSION))
+				.append(Translate.getInstance().get(TranslateKeys.VERSION))
 				.append(" ")
 				.append(Const.VERSION)
 				.append("</h5></html");
@@ -61,17 +61,17 @@ public class AboutDialog extends AbstractBudgetDialog {
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(
 				"<html><center>")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_TEXT))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_TEXT))
 				.append("<br><br>")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_COPYRIGHT))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_COPYRIGHT))
 				.append("<br>&lt;")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_EMAIL))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_EMAIL))
 				.append("&gt;<br><a href='")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_WEBPAGE))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_WEBPAGE))
 				.append("'>")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_WEBPAGE))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_WEBPAGE))
 				.append("</a><br><br>")
-				.append(Translate.inst().get(TranslateKeys.ABOUT_GPL))
+				.append(Translate.getInstance().get(TranslateKeys.ABOUT_GPL))
 				.append("</center></html>");
 
 		JLabel text = new JLabel(sbText.toString());

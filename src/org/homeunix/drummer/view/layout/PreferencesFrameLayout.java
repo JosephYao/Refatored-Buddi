@@ -43,18 +43,18 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected PreferencesFrameLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.inst().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 				
-		JLabel languageLabel = new JLabel(Translate.inst().get(TranslateKeys.LANGUAGE));
+		JLabel languageLabel = new JLabel(Translate.getInstance().get(TranslateKeys.LANGUAGE));
 		languageModel = new DefaultComboBoxModel();
 		language = new JComboBox(languageModel);
 		
-		JLabel dateFormatLabel = new JLabel(Translate.inst().get(TranslateKeys.DATE_FORMAT));
+		JLabel dateFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FORMAT));
 		
 		//Add the date formats defined in Const.
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
@@ -70,8 +70,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 			}
 		});
 		
-		showDeletedAccounts = new JCheckBox(Translate.inst().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
-		showDeletedCategories = new JCheckBox(Translate.inst().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
+		showDeletedAccounts = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
+		showDeletedCategories = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -114,7 +114,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		this.setTitle(Translate.inst().get(TranslateKeys.PREFERENCES));
+		this.setTitle(Translate.getInstance().get(TranslateKeys.PREFERENCES));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);

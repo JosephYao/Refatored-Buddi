@@ -58,15 +58,15 @@ public class CategoryListPanel extends ListPanelLayout {
 				if (getSelectedCategory() != null) {
 					Category c = getSelectedCategory();
 					
-					if (deleteButton.getText().equals(Translate.inst().get(TranslateKeys.DELETE))){
+					if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
 						
 						//If there are no transactions using this source, ask if user wants to permanently delete source
 						if (DataInstance.getInstance().getTransactions(c).size() > 0 
 								|| c.getChildren().size() > 0
 								|| JOptionPane.showConfirmDialog(
 										CategoryListPanel.this,
-										Translate.inst().get(TranslateKeys.NO_TRANSACTIONS_USING_CATEGORY),
-										Translate.inst().get(TranslateKeys.PERMANENT_DELETE_CATEGORY),
+										Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_CATEGORY),
+										Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_CATEGORY),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
 							
@@ -145,10 +145,10 @@ public class CategoryListPanel extends ListPanelLayout {
 			balanceLabel.setForeground(Color.BLACK);
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append(Translate.inst().get(TranslateKeys.BUDGET_NET_INCOME))
+		sb.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
-				.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
+				.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)));
 		
 		balanceLabel.setText(sb.toString());

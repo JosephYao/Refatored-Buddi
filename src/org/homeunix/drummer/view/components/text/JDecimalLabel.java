@@ -14,7 +14,7 @@ public class JDecimalLabel extends JLabel {
 	
 	public void setValue(Long value){
 		super.setText(
-				Translate.inst().get(TranslateKeys.CURRENCY_SIGN)
+				Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN)
 				+ Formatter.getInstance().getDecimalFormat().format((double) value / 100.0)
 		);
 	}

@@ -45,17 +45,17 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 			totalIncome += categories.get(c);
 			
 			if (categories.get(c) > 0)
-				pieData.setValue(Translate.inst().get(c.getName()), new Double((double) categories.get(c) / 100.0));
+				pieData.setValue(Translate.getInstance().get(c.getName()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
-				Translate.inst().get(TranslateKeys.INCOME)
+				Translate.getInstance().get(TranslateKeys.INCOME)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ") "
-				+ Translate.inst().get(TranslateKeys.CURRENCY_SIGN)
+				+ Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN)
 				+ Formatter.getInstance().getDecimalFormat().format((double) totalIncome / 100.0),
 				pieData,             // data
 				true,               // include legend

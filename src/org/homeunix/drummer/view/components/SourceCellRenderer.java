@@ -72,7 +72,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
-					.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
+					.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");
@@ -103,7 +103,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 					.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
-					.append(Translate.inst().get(TranslateKeys.CURRENCY_SIGN))
+					.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0)))
 					.append(sbClose.toString())
 					.append("</td></tr></table></html>");

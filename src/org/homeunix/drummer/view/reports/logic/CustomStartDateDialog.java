@@ -45,8 +45,8 @@ public class CustomStartDateDialog extends CustomDateDialogLayout {
 				if (startDate.after(new Date())){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.inst().get(TranslateKeys.DATE_AFTER_TODAY), 
-							Translate.inst().get(TranslateKeys.REPORT_DATE_ERROR), 
+							Translate.getInstance().get(TranslateKeys.DATE_AFTER_TODAY), 
+							Translate.getInstance().get(TranslateKeys.REPORT_DATE_ERROR), 
 							JOptionPane.ERROR_MESSAGE
 					);
 					return;
@@ -88,7 +88,7 @@ public class CustomStartDateDialog extends CustomDateDialogLayout {
 	}
 	
 	protected void setVisibility(){
-		mainLabel.setText(Translate.inst().get(TranslateKeys.REPORT_AS_OF_DATE));
+		mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_AS_OF_DATE));
 		middleLabel.setVisible(false);
 		
 		endDateChooser.setVisible(false);

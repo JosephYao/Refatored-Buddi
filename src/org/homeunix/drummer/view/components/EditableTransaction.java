@@ -72,9 +72,9 @@ public class EditableTransaction extends JPanel {
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
 		from = new JComboBox();
 		to = new JComboBox();
-		number = new JHintTextField(Translate.inst().get(TranslateKeys.DEFAULT_NUMBER));
-		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.inst().get(TranslateKeys.DEFAULT_DESCRIPTION));
-		memo = new JHintTextArea(Translate.inst().get(TranslateKeys.DEFAULT_MEMO));
+		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));
+		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.DEFAULT_DESCRIPTION));
+		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.DEFAULT_MEMO));
 		
 		components = new Vector<JComponent>();
 		
@@ -85,13 +85,13 @@ public class EditableTransaction extends JPanel {
 		from.setModel(fromModel);
 		
 		//Add the tooltips
-		date.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DATE));
-		amount.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_AMOUNT));
-		from.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_FROM));
-		to.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_TO));
-		number.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_NUMBER));
-		description.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_DESC));
-		memo.setToolTipText(Translate.inst().get(TranslateKeys.TOOLTIP_MEMO));
+		date.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_DATE));
+		amount.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_AMOUNT));
+		from.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_FROM));
+		to.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_TO));
+		number.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_NUMBER));
+		description.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_DESC));
+		memo.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_MEMO));
 				
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
@@ -114,7 +114,7 @@ public class EditableTransaction extends JPanel {
 		bottomPanel.add(amount);
 		
 		bottomPanel.add(from);
-		bottomPanel.add(new JLabel(Translate.inst().get(TranslateKeys.TO)));
+		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
 		bottomPanel.add(to);		
 		
 		JPanel mainPanel = new JPanel();

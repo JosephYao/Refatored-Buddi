@@ -212,7 +212,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 //		result.append(')');
 //		return result.toString();
 		
-		return Translate.inst().get(name);
+		return Translate.getInstance().get(name);
 	}
 	
 	public int compareTo(Type arg0) {

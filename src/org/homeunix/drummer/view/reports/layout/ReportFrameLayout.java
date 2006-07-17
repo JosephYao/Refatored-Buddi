@@ -48,8 +48,8 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 		reportTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		reportTree.setCellRenderer(getTreeCellRenderer());
 
-		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
-		editButton = new JButton(Translate.inst().get(TranslateKeys.EDIT));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

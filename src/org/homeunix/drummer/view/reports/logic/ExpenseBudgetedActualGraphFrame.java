@@ -50,13 +50,13 @@ public class ExpenseBudgetedActualGraphFrame extends GraphFrameLayout {
 		
 		for (Category c : cats) {
 			if (categories.get(c) > 0 || c.getBudgetedAmount() > 0){
-				barData.addValue((Number) new Double(categories.get(c) / 100.0), Translate.inst().get(TranslateKeys.ACTUAL), Translate.inst().get(c.getName()));
-				barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfMonths / 100.0), Translate.inst().get(TranslateKeys.BUDGETED), Translate.inst().get(c.getName()));
+				barData.addValue((Number) new Double(categories.get(c) / 100.0), Translate.getInstance().get(TranslateKeys.ACTUAL), Translate.getInstance().get(c.getName()));
+				barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfMonths / 100.0), Translate.getInstance().get(TranslateKeys.BUDGETED), Translate.getInstance().get(c.getName()));
 			}
 		}
 		
 		JFreeChart chart = ChartFactory.createBarChart(
-				Translate.inst().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET)
+				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

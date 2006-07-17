@@ -87,10 +87,10 @@ public class DataInstance {
 			if (locationFile == null || !locationFile.getParentFile().exists()){
 				JOptionPane.showMessageDialog(
 						null,
-						Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+						Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
 						+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() ) 
-						+ Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
-						Translate.inst().get(TranslateKeys.MISSING_DATA_FILE),
+						+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
+						Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
 						JOptionPane.ERROR_MESSAGE);
 				
 				String file = PrefsInstance.chooseDataFile();
@@ -151,19 +151,19 @@ public class DataInstance {
 			
 			if (forceNewFile || !locationFile.exists() || JOptionPane.showConfirmDialog(
 					null,
-					Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
+					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
 					+ locationFile.getAbsolutePath()
-					+ Translate.inst().get(TranslateKeys.PROBLEM_READING_DATA_FILE_CORRUPTED),
-					Translate.inst().get(TranslateKeys.CREATE_NEW_DATA_FILE),
+					+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_CORRUPTED),
+					Translate.getInstance().get(TranslateKeys.CREATE_NEW_DATA_FILE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
 				
 				if (!locationFile.exists() && !forceNewFile){
 					JOptionPane.showMessageDialog(
 							null,
-							Translate.inst().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
+							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
 							+ locationFile.getAbsolutePath(),
-							Translate.inst().get(TranslateKeys.CREATED_NEW_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
 							JOptionPane.INFORMATION_MESSAGE
 					);
 				}
@@ -251,8 +251,8 @@ public class DataInstance {
 			else{
 				JOptionPane.showMessageDialog(
 						null, 
-						Translate.inst().get(TranslateKeys.CANNOT_READ_DATA_FILE),
-						Translate.inst().get(TranslateKeys.EXITING_PROGRAM),
+						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.EXITING_PROGRAM),
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(0);
 			}

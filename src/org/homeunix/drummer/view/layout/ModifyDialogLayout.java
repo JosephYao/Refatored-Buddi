@@ -48,10 +48,10 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	protected ModifyDialogLayout(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.inst().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
 				
-		nameLabel = new JLabel(Translate.inst().get(TranslateKeys.NAME));
+		nameLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
@@ -65,7 +65,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		cancelButton.setPreferredSize(buttonSize);
 		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
 		
-		check = new JCheckBox(Translate.inst().get(TranslateKeys.INCOME));
+		check = new JCheckBox(Translate.getInstance().get(TranslateKeys.INCOME));
 		
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
 		textPanel.add(nameLabel);
@@ -113,13 +113,13 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		pulldown.setSelectedItem(null);
 		check.setSelected(false);
 		this.source = null;
-		this.setTitle(Translate.inst().get(TranslateKeys.NEW) + " " + getType());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.NEW) + " " + getType());
 		return this;
 	}
 	
 	public AbstractBudgetDialog loadSource(SourceType source){
 		this.source = source;
-		this.setTitle(Translate.inst().get(TranslateKeys.EDIT) + " " + getType());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
 		return this;
 	}
 	

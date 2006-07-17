@@ -117,7 +117,7 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 //		);
 		date.setText("");
 		number.setText("");
-		description.setText(Translate.inst().get(TranslateKeys.NEW_TRANSACTION));
+		description.setText(Translate.getInstance().get(TranslateKeys.NEW_TRANSACTION));
 		balance.setText("");
 		memo.setText("");
 		amount.setText("");

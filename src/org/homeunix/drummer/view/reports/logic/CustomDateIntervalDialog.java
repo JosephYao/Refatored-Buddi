@@ -45,8 +45,8 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 				if (endDate.before(startDate)){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.inst().get(TranslateKeys.START_DATE_AFTER_END_DATE), 
-							Translate.inst().get(TranslateKeys.REPORT_DATE_ERROR), 
+							Translate.getInstance().get(TranslateKeys.START_DATE_AFTER_END_DATE), 
+							Translate.getInstance().get(TranslateKeys.REPORT_DATE_ERROR), 
 							JOptionPane.ERROR_MESSAGE
 					);
 					return;
@@ -92,7 +92,7 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 	}
 	
 	protected void setVisibility(){
-		mainLabel.setText(Translate.inst().get(TranslateKeys.REPORT_BETWEEN));
-		middleLabel.setText(Translate.inst().get(TranslateKeys.AND));		
+		mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_BETWEEN));
+		middleLabel.setText(Translate.getInstance().get(TranslateKeys.AND));		
 	}	
 }

@@ -53,10 +53,10 @@ public class BuddiMenu extends JScreenMenuBar {
 		// Get the application instance
 		final Application app = Application.getInstance();
 		
-		final JScreenMenu file = new JScreenMenu(Translate.inst().get(TranslateKeys.FILE));
-		final JScreenMenu edit = new JScreenMenu(Translate.inst().get(TranslateKeys.EDIT));
-		final JScreenMenu window = new JScreenMenu(Translate.inst().get(TranslateKeys.WINDOW));
-		final JScreenMenu help = new JScreenMenu(Translate.inst().get(TranslateKeys.HELP));
+		final JScreenMenu file = new JScreenMenu(Translate.getInstance().get(TranslateKeys.FILE));
+		final JScreenMenu edit = new JScreenMenu(Translate.getInstance().get(TranslateKeys.EDIT));
+		final JScreenMenu window = new JScreenMenu(Translate.getInstance().get(TranslateKeys.WINDOW));
+		final JScreenMenu help = new JScreenMenu(Translate.getInstance().get(TranslateKeys.HELP));
 		
 		this.add(file);
 		this.add(edit);
@@ -64,12 +64,12 @@ public class BuddiMenu extends JScreenMenuBar {
 		this.add(help);
 		
 		//File menu items
-		final JScreenMenuItem open = new JScreenMenuItem(Translate.inst().get(TranslateKeys.OPEN_DATA_FILE));
-		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.inst().get(TranslateKeys.NEW_DATA_FILE));
-		final JScreenMenuItem backup = new JScreenMenuItem(Translate.inst().get(TranslateKeys.BACKUP_DATA_FILE));
-		final JScreenMenuItem restore = new JScreenMenuItem(Translate.inst().get(TranslateKeys.RESTORE_DATA_FILE));
-		final JScreenMenuItem print = new JScreenMenuItem(Translate.inst().get(TranslateKeys.PRINT));
-		final JScreenMenuItem close = new JScreenMenuItem(Translate.inst().get(TranslateKeys.CLOSE_WINDOW));
+		final JScreenMenuItem open = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE));
+		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE));
+		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_DATA_FILE));
+		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
+		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
+		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
 		
 		newFile.addUserFrame(MainBudgetFrame.class);
 		open.addUserFrame(MainBudgetFrame.class);
@@ -103,9 +103,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		
 		//Edit menu items
-		final JScreenMenuItem cut = new JScreenMenuItem(Translate.inst().get(TranslateKeys.CUT));
-		final JScreenMenuItem copy = new JScreenMenuItem(Translate.inst().get(TranslateKeys.COPY));
-		final JScreenMenuItem paste = new JScreenMenuItem(Translate.inst().get(TranslateKeys.PASTE));
+		final JScreenMenuItem cut = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CUT));
+		final JScreenMenuItem copy = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.COPY));
+		final JScreenMenuItem paste = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PASTE));
 		
 		cut.addUserFrame(TransactionsFrame.class);
 		copy.addUserFrame(TransactionsFrame.class);
@@ -125,7 +125,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		
 		//Window menu items
-		final JScreenMenuItem minimize = new JScreenMenuItem(Translate.inst().get(TranslateKeys.MINIMIZE));
+		final JScreenMenuItem minimize = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MINIMIZE));
 		//final JScreenMenuItem zoom = new JScreenMenuItem(Strings.inst().get(Strings.ZOOM));
 		
 		minimize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
@@ -136,7 +136,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		
 		//Help menu items
-		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.inst().get(TranslateKeys.BUDDI_HELP));
+		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BUDDI_HELP));
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		
@@ -146,21 +146,21 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION));
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION));
 				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						JOptionPane.showMessageDialog(
 								null, 
-								Translate.inst().get(TranslateKeys.CANNOT_SAVE_OVER_DIR),
-								Translate.inst().get(TranslateKeys.ERROR),
+								Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR),
+								Translate.getInstance().get(TranslateKeys.ERROR),
 								JOptionPane.ERROR_MESSAGE
 						);
 					else{
 						if (jfc.getSelectedFile().exists()){
 							if (JOptionPane.showConfirmDialog(
 									null, 
-									Translate.inst().get(TranslateKeys.OVERWRITE_EXISTING_FILE_MESSAGE) + jfc.getSelectedFile(),
-									Translate.inst().get(TranslateKeys.OVERWRITE_EXISTING_FILE),
+									Translate.getInstance().get(TranslateKeys.OVERWRITE_EXISTING_FILE_MESSAGE) + jfc.getSelectedFile(),
+									Translate.getInstance().get(TranslateKeys.OVERWRITE_EXISTING_FILE),
 									JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
 								return;
 							}
@@ -177,8 +177,8 @@ public class BuddiMenu extends JScreenMenuBar {
 						MainBudgetFrame.getInstance().updateContent();
 						JOptionPane.showMessageDialog(
 								null,
-								Translate.inst().get(TranslateKeys.NEW_DATA_FILE_SAVED) + location, 
-								Translate.inst().get(TranslateKeys.FILE_SAVED), 
+								Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE_SAVED) + location, 
+								Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
 								JOptionPane.INFORMATION_MESSAGE
 						);
 					}
@@ -201,19 +201,19 @@ public class BuddiMenu extends JScreenMenuBar {
 					}
 
 					public String getDescription() {
-						return Translate.inst().get(TranslateKeys.BUDDI_FILE_DESC);
+						return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
 					}
 				});
-				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
 				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.inst().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
 					else{
 						if (JOptionPane.showConfirmDialog(
 								null, 
-								Translate.inst().get(TranslateKeys.CONFIRM_LOAD_BACKUP_FILE), 
-								Translate.inst().get(TranslateKeys.CLOSE_DATA_FILE),
+								Translate.getInstance().get(TranslateKeys.CONFIRM_LOAD_BACKUP_FILE), 
+								Translate.getInstance().get(TranslateKeys.CLOSE_DATA_FILE),
 								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile(), false);
 							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
@@ -221,16 +221,16 @@ public class BuddiMenu extends JScreenMenuBar {
 							MainBudgetFrame.getInstance().updateContent();
 							JOptionPane.showMessageDialog(
 									null, 
-									Translate.inst().get(TranslateKeys.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(),
-									Translate.inst().get(TranslateKeys.OPENED_FILE), 
+									Translate.getInstance().get(TranslateKeys.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(),
+									Translate.getInstance().get(TranslateKeys.OPENED_FILE), 
 									JOptionPane.INFORMATION_MESSAGE
 							);
 						}
 						else
 							JOptionPane.showMessageDialog(
 									null,
-									Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD_MESSAGE), 
-									Translate.inst().get(TranslateKeys.CANCELLED_FILE_LOAD),
+									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_LOAD_MESSAGE), 
+									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_LOAD),
 									JOptionPane.INFORMATION_MESSAGE
 							);
 					}
@@ -243,10 +243,10 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.CHOOSE_BACKUP_FILE));
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
 				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.inst().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
+						Log.debug(Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
 					
 					else{
 						final String location;
@@ -256,7 +256,7 @@ public class BuddiMenu extends JScreenMenuBar {
 							location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
 						
 						DataInstance.getInstance().saveDataModel(location);
-						JOptionPane.showMessageDialog(null, Translate.inst().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.inst().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
@@ -277,19 +277,19 @@ public class BuddiMenu extends JScreenMenuBar {
 					}
 
 					public String getDescription() {
-						return Translate.inst().get(TranslateKeys.BUDDI_FILE_DESC);
+						return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
 					}
 				});
-				jfc.setDialogTitle(Translate.inst().get(TranslateKeys.RESTORE_DATA_FILE));
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
 				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.inst().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
 					else{
 						if (JOptionPane.showConfirmDialog(
 								null, 
-								Translate.inst().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
-								Translate.inst().get(TranslateKeys.RESTORE_DATA_FILE),
+								Translate.getInstance().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
+								Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE),
 								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 							try{
@@ -298,8 +298,8 @@ public class BuddiMenu extends JScreenMenuBar {
 								MainBudgetFrame.getInstance().updateContent();
 								JOptionPane.showMessageDialog(
 										null, 
-										Translate.inst().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
-										Translate.inst().get(TranslateKeys.RESTORED_FILE), 
+										Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
+										Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
 										JOptionPane.INFORMATION_MESSAGE
 								);
 							}
@@ -315,8 +315,8 @@ public class BuddiMenu extends JScreenMenuBar {
 						else
 							JOptionPane.showMessageDialog(
 									null, 
-									Translate.inst().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
-									Translate.inst().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
+									Translate.getInstance().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
+									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
 									JOptionPane.INFORMATION_MESSAGE
 							);
 					}
@@ -337,8 +337,8 @@ public class BuddiMenu extends JScreenMenuBar {
 					else
 						JOptionPane.showMessageDialog(
 								null, 
-								Translate.inst().get(TranslateKeys.NOTHING_TO_PRINT),
-								Translate.inst().get(TranslateKeys.PRINT_ERROR),
+								Translate.getInstance().get(TranslateKeys.NOTHING_TO_PRINT),
+								Translate.getInstance().get(TranslateKeys.PRINT_ERROR),
 								JOptionPane.INFORMATION_MESSAGE
 						);
 				}
@@ -394,7 +394,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		// Get an About item instance. Here it's for Swing but there
 		// are also AWT variants like getAboutMenuItem().
 		AboutJMenuItem about = app.getAboutJMenuItem();
-		about.setText(Translate.inst().get(TranslateKeys.ABOUT_MENU_ITEM));
+		about.setText(Translate.getInstance().get(TranslateKeys.ABOUT_MENU_ITEM));
 		about.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -410,7 +410,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		// Do the same thing for the Preferences and Quit items
 		PreferencesJMenuItem preferences = app.getPreferencesJMenuItem();
-		preferences.setText(Translate.inst().get(TranslateKeys.PREFERENCES_MENU_ITEM));
+		preferences.setText(Translate.getInstance().get(TranslateKeys.PREFERENCES_MENU_ITEM));
 		preferences.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -421,7 +421,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		if (!PreferencesJMenuItem.isAutomaticallyPresent())
 			edit.add(preferences);
 		QuitJMenuItem quit = app.getQuitJMenuItem();
-		quit.setText(Translate.inst().get(TranslateKeys.QUIT_MENU_ITEM));
+		quit.setText(Translate.getInstance().get(TranslateKeys.QUIT_MENU_ITEM));
 		quit.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)

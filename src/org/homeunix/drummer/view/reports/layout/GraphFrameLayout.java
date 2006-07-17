@@ -41,7 +41,7 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	}
 	
 	public GraphFrameLayout(Date startDate, Date endDate){
-		okButton = new JButton(Translate.inst().get(TranslateKeys.OK));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

@@ -68,13 +68,13 @@ public class NetWorthOverTimeGraphFrame extends GraphFrameLayout {
 //				barData.addValue((Number) new Double(accounts.get(a) / 100.0), Formatter.getInstance().getDateFormat().format(d), a.getName());
 				total += accounts.get(a);
 			}
-			barData.addValue((Number) new Double(total / 100.0), Translate.inst().get(TranslateKeys.NET_WORTH), Formatter.getInstance().getShortDateFormat().format(d));
+			barData.addValue((Number) new Double(total / 100.0), Translate.getInstance().get(TranslateKeys.NET_WORTH), Formatter.getInstance().getShortDateFormat().format(d));
 		}
 		
 		
 		
 		JFreeChart chart = ChartFactory.createLineChart(
-				Translate.inst().get(TranslateKeys.NET_WORTH)				
+				Translate.getInstance().get(TranslateKeys.NET_WORTH)				
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "

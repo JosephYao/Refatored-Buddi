@@ -57,14 +57,14 @@ public class AccountListPanel extends ListPanelLayout {
 					
 					Account a = getSelectedAccount();
 					
-					if (deleteButton.getText().equals(Translate.inst().get(TranslateKeys.DELETE))){
+					if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
 						
 						//If there are no transactions using this source, ask if user wants to permanently delete source
 						if (DataInstance.getInstance().getTransactions(a).size() > 0 
 								|| JOptionPane.showConfirmDialog(
 										AccountListPanel.this,
-										Translate.inst().get(TranslateKeys.NO_TRANSACTIONS_USING_ACCOUNT),
-										Translate.inst().get(TranslateKeys.PERMANENT_DELETE_ACCOUNT),
+										Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_ACCOUNT),
+										Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_ACCOUNT),
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
 							
@@ -146,7 +146,7 @@ public class AccountListPanel extends ListPanelLayout {
 		else
 			balanceLabel.setForeground(Color.RED);
 		
-		balanceLabel.setText(Translate.inst().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Translate.inst().get(TranslateKeys.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
+		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
 		treeModel.reload(root);
 

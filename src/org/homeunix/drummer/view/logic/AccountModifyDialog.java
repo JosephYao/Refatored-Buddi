@@ -22,14 +22,14 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 
 	public AccountModifyDialog(){
 		super(MainBudgetFrame.getInstance());
-		amountLabel.setText(Translate.inst().get(TranslateKeys.STARTING_BALANCE));
-		pulldownLabel.setText(Translate.inst().get(TranslateKeys.ACCOUNT_TYPE));
+		amountLabel.setText(Translate.getInstance().get(TranslateKeys.STARTING_BALANCE));
+		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.ACCOUNT_TYPE));
 		check.setVisible(false);
 		gap.setVisible(false);
 	}
 
 	protected String getType(){
-		return Translate.inst().get(TranslateKeys.ACCOUNT);
+		return Translate.getInstance().get(TranslateKeys.ACCOUNT);
 	}
 		
 	@Override
@@ -39,8 +39,8 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 				if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
 					JOptionPane.showMessageDialog(
 							AccountModifyDialog.this, 
-							Translate.inst().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
-							Translate.inst().get(TranslateKeys.MORE_INFO_NEEDED),
+							Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
+							Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				else{
