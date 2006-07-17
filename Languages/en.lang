@@ -130,7 +130,8 @@ REPORTS=Reports
 REPORT_AS_OF_DATE=Show the report using the date
 REPORT_BETWEEN=Use data between the dates
 REPORT_DATE_ERROR=Report Date Error
-REPORT_FOR=Show me my income and expenses for
+REPORT_INCOME_EXPENSES_BY_CATEGORY=Show me my income and expenses by Category for
+REPORT_INCOME_EXPENSES_BY_DESCRIPTION=Show me my income and expenses by Description for
 RESTART=Your changes will take effect next time you start the program
 RESTART_NEEDED=Restart Needed
 RESTORED_FILE=Restored Data File
@@ -172,6 +173,7 @@ WINDOW=Window
 YEAR=Year
 YESTERDAY=Yesterday
 ZOOM=Zoom
+
 ENABLE_UPDATE_NOTIFICATIONS=Enable Update Notifications on Startup
 SHOW_ACCOUNT_TYPES=Show Account Types
 NEW_VERSION=New Version Available

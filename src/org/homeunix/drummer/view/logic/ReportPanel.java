@@ -11,8 +11,8 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
@@ -22,7 +22,8 @@ import org.homeunix.drummer.view.reports.logic.CustomEndDateDialog;
 import org.homeunix.drummer.view.reports.logic.CustomStartDateDialog;
 import org.homeunix.drummer.view.reports.logic.ExpenseBudgetedActualGraphFrame;
 import org.homeunix.drummer.view.reports.logic.ExpensesGraphFrame;
-import org.homeunix.drummer.view.reports.logic.IncomeExpenseReportFrame;
+import org.homeunix.drummer.view.reports.logic.IncomeExpenseByCategoryReportFrame;
+import org.homeunix.drummer.view.reports.logic.IncomeExpenseByDescriptionReportFrame;
 import org.homeunix.drummer.view.reports.logic.IncomeGraphFrame;
 import org.homeunix.drummer.view.reports.logic.NetWorthGraphFrame;
 import org.homeunix.drummer.view.reports.logic.NetWorthOverTimeGraphFrame;
@@ -47,7 +48,8 @@ public class ReportPanel extends ReportPanelLayout {
 									ReportType type = (ReportType) jComboBoxes.get(box);
 									if (choice.isCustom()){
 										if (type.equals(ReportType.REVENUE_EXPENSE)
-												|| type.equals(ReportType.INCOME_EXPENSE)
+												|| type.equals(ReportType.INCOME_EXPENSE_BY_CATEGORY)
+												|| type.equals(ReportType.INCOME_EXPENSE_BY_DESCRIPTION)
 												|| type.equals(ReportType.EXPENSES)
 												|| type.equals(ReportType.INCOME))
 											new CustomDateIntervalDialog(
@@ -79,8 +81,10 @@ public class ReportPanel extends ReportPanelLayout {
 											new ExpenseBudgetedActualGraphFrame(choice.getStartDate(), choice.getEndDate());
 										else if(type.equals(ReportType.NETWORTH_OVER_TIME))
 											new NetWorthOverTimeGraphFrame(choice.getStartDate());
-										else if(type.equals(ReportType.INCOME_EXPENSE))
-											new IncomeExpenseReportFrame(choice.getStartDate(), choice.getEndDate());
+										else if(type.equals(ReportType.INCOME_EXPENSE_BY_CATEGORY))
+											new IncomeExpenseByCategoryReportFrame(choice.getStartDate(), choice.getEndDate());
+										else if(type.equals(ReportType.INCOME_EXPENSE_BY_DESCRIPTION))
+											new IncomeExpenseByDescriptionReportFrame(choice.getStartDate(), choice.getEndDate());
 									}
 								}
 							}

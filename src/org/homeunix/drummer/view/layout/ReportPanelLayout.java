@@ -28,7 +28,8 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 	
 	public enum ReportType {
 		//Reports
-		INCOME_EXPENSE,
+		INCOME_EXPENSE_BY_CATEGORY,
+		INCOME_EXPENSE_BY_DESCRIPTION,
 		
 		//Graphs
 		EXPENSES,
@@ -80,14 +81,14 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		Vector<DateChoice> startDates = getStartDates();
 				
 		//Reports
-		final JComboBox incomeExpenseReportIntervalChooser = new JComboBox(intervals);
+		final JComboBox incomeExpenseByCategoryReportIntervalChooser = new JComboBox(intervals);
+		final JComboBox incomeExpenseByDescriptionReportIntervalChooser = new JComboBox(intervals);
 		
 		//Graphs
 		final JComboBox expensePieGraphIntervalChooser = new JComboBox(intervals);
 		final JComboBox incomePieGraphIntervalChooser = new JComboBox(intervals);
 		final JComboBox netWorthPieGraphIntervalChooser = new JComboBox(endDates);
 		final JComboBox revenueExpenseBarGraphIntervalChooser = new JComboBox(intervals);
-//		[TODO] Use difference combo box values for this guy
 		final JComboBox netWorthOverTimeLineGraphIntervalChooser = new JComboBox(startDates);
 		
 		jComboBoxes = new HashMap<JComboBox, ReportType>();
@@ -97,8 +98,8 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		jComboBoxes.put(revenueExpenseBarGraphIntervalChooser, ReportType.REVENUE_EXPENSE);
 		jComboBoxes.put(netWorthOverTimeLineGraphIntervalChooser, ReportType.NETWORTH_OVER_TIME);
 		
-		jComboBoxes.put(incomeExpenseReportIntervalChooser, ReportType.INCOME_EXPENSE);
-		
+		jComboBoxes.put(incomeExpenseByCategoryReportIntervalChooser, ReportType.INCOME_EXPENSE_BY_CATEGORY);
+		jComboBoxes.put(incomeExpenseByDescriptionReportIntervalChooser, ReportType.INCOME_EXPENSE_BY_DESCRIPTION);
 		
 		JPanel reportsPanel = new JPanel();
 		reportsPanel.setLayout(new BoxLayout(reportsPanel, BoxLayout.Y_AXIS));
@@ -108,10 +109,13 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		graphsPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.GRAPHS)));
 		
 		JPanel r1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel r2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		r1.add(new JLabel(Translate.getInstance().get(TranslateKeys.REPORT_FOR)));
-		r1.add(incomeExpenseReportIntervalChooser);
-		
+		r1.add(new JLabel(Translate.getInstance().get(TranslateKeys.REPORT_INCOME_EXPENSES_BY_CATEGORY)));		
+		r1.add(incomeExpenseByCategoryReportIntervalChooser);
+
+		r2.add(new JLabel(Translate.getInstance().get(TranslateKeys.REPORT_INCOME_EXPENSES_BY_DESCRIPTION)));
+		r2.add(incomeExpenseByDescriptionReportIntervalChooser);
 		
 		JPanel g1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel g2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -136,6 +140,7 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 
 		
 		reportsPanel.add(r1);
+		reportsPanel.add(r2);
 		
 		graphsPanel.add(g1);
 		graphsPanel.add(g2);
@@ -150,7 +155,7 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		mainPanel.add(reportsPanel);
 		mainPanel.add(graphsPanel);
 		
-		Dimension comboBoxSize = incomeExpenseReportIntervalChooser.getPreferredSize();
+		Dimension comboBoxSize = incomeExpenseByCategoryReportIntervalChooser.getPreferredSize();
 		for (JComboBox box : jComboBoxes.keySet()) {
 			box.setPreferredSize(comboBoxSize);
 		}

@@ -7,6 +7,13 @@ OSXROOT=$DEST/Buddi_OSX
 OSX=$OSXROOT/Buddi
 GENERIC=$DEST/Buddi
 SOURCE=source
+VERSION=`grep VERSION src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+
+grep -q "^$VERSION (" Documents/Changelog.txt
+if [ "$?" != 0 ]; then
+	echo "Changelog not updated.  Exiting."
+	exit 1
+fi
 
 ./bundleWeb --local
 
@@ -45,7 +52,16 @@ tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
 rm -rf $DEST/$SOURCE
 #rm $DEST/$SOURCE.tgz
 
-VERSION=`grep VERSION src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+if [ "$1" == "--release" ]; then
+	# Update the version.txt
+	VERSION_UNSTABLE=`grep VERSION ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+	VERSION_STABLE=`grep VERSION ../Buddi\ 1.0/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+	
+	echo "STABLE=$VERSION_STABLE" > version.txt
+	echo "UNSTABLE=$VERSION_UNSTABLE" >> version.txt
+	
+	scp version.txt olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs/version.txt
+fi
 
 if [ "$VERSION" != "" ]; then
 	#Zip and DMG the bundles
@@ -61,6 +77,23 @@ if [ "$VERSION" != "" ]; then
 	rm -rf $GENERIC
 
 	mv $DEST/$SOURCE.tgz $DEST/Buddi-$VERSION.src.tgz
+fi
+
+if [ "$1" == "--release" ]; then
+	# Upload release files
+	USER=anonymous
+	PASS=pass
+	ftp -n upload.sf.net << END_OF_FTP
+user $USER $PASS
+cd /incoming
+lcd $DEST
+bin
+put Buddi-$VERSION.zip
+put Buddi-$VERSION.dmg
+put Buddi-$VERSION.src.tgz
+bye
+END_OF_FTP
+	echo Upload Complete
 fi
 
 open $DEST

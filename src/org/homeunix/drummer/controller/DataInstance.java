@@ -449,6 +449,37 @@ public class DataInstance {
 		Collections.sort(v);
 		return v;
 	}
+	
+	public Vector<Transaction> getTransactions(String description, Date startDate, Date endDate){
+		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = new Vector<Transaction>();
+		
+		for (Transaction transaction : allTransactions) {
+			if (transaction.getDescription().equals(description))
+				transactions.add(transaction);
+		}
+		
+		return transactions;
+	}
+	
+	public Vector<Transaction> getTransactions(Boolean isIncome, Date startDate, Date endDate){
+		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = new Vector<Transaction>();
+		
+		for (Transaction transaction : allTransactions) {
+			Category c = null;
+			if (transaction.getFrom() instanceof Category)
+				c = (Category) transaction.getFrom();
+			else if (transaction.getTo() instanceof Category)
+				c = (Category) transaction.getTo();
+			
+			if (c != null && c.isIncome() == isIncome){
+				transactions.add(transaction);
+			}
+		}
+		
+		return transactions;
+	}
 
 	//[TODO] Test boundary conditions: does this overlap dates or not?
 	public Vector<Transaction> getTransactions(Source source, Date startDate, Date endDate){

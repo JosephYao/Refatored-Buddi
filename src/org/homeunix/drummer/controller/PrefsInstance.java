@@ -136,6 +136,8 @@ public class PrefsInstance {
 			prefs.setLanguage("en");
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
+			prefs.setShowAccountTypes(true);
+			prefs.setEnableUpdateNotifications(true);
 			prefs.setDateFormat("yyyy/MMM/d");
 			
 			WindowAttributes main = prefsFactory.createWindowAttributes();

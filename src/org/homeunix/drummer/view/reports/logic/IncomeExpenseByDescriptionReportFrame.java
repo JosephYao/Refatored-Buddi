@@ -30,45 +30,46 @@ import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
 import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
 
-public class IncomeExpenseReportFrame extends ReportFrameLayout {
+public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 	public static final long serialVersionUID = 0;
 	
-	public IncomeExpenseReportFrame(Date startDate, Date endDate){
+	public IncomeExpenseByDescriptionReportFrame(Date startDate, Date endDate){
 		super(startDate, endDate);		
 	}
 	
 	@Override
 	protected TreeModel buildReport(Date startDate, Date endDate) {
 		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
-		Map<Category, Long> categories = new HashMap<Category, Long>();
-		
-		//This map is where we store the totals for this time period.
-		for (Category category : DataInstance.getInstance().getCategories()) {
-			categories.put(category, new Long(0));
-		}
+		Map<String, Long> descriptions = new HashMap<String, Long>();
+		long total = 0;
 		
 		for (Transaction transaction : transactions) {
 			//Sum up the amounts for each category.
-			if (transaction.getFrom() instanceof Category){
-				Category c = (Category) transaction.getFrom();
-				Long l = categories.get(c);
+			Category c = null;
+			if (transaction.getFrom() instanceof Category)
+				c = (Category) transaction.getFrom(); 
+			else if (transaction.getTo() instanceof Category)
+				c = (Category) transaction.getTo();
+			
+			if (c != null){
+				String description = transaction.getDescription();
+				Long l = descriptions.get(description);
+				if (l == null){
+					l = new Long(0);
+				}
 				l += transaction.getAmount();
-				categories.put(c, l);
-				Log.debug("Added a source");
-			}
-			else if (transaction.getTo() instanceof Category){
-				Category c = (Category) transaction.getTo();
-				Long l = categories.get(c);
-				l += transaction.getAmount();
-				categories.put(c, l);
-				Log.debug("Added a destination");
+				if (c.isIncome())
+					total += transaction.getAmount();
+				else
+					total -= transaction.getAmount();
+				descriptions.put(description, l);
+				Log.debug("Added a source / destination");
 			}
 			else
 				Log.debug("Didn't add anything...");
@@ -79,28 +80,27 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 		TreeModel model = new DefaultTreeModel(root);
 		
-		Vector<Category> cats = new Vector<Category>(categories.keySet());
-		Collections.sort(cats);
-				
-		int numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
+		Vector<String> descs = new Vector<String>(descriptions.keySet());
+		Collections.sort(descs);
 		
-		for (Category c : cats) {
-			if (c.getBudgetedAmount() > 0 || categories.get(c) > 0){
-				long budgeted = c.getBudgetedAmount() * numberOfMonths;
-				long actual = categories.get(c);
-				long difference = (budgeted - actual);
-				IncomeExpenseReportEntry entry = new IncomeExpenseReportEntry(c, budgeted, actual, difference);
-				DefaultMutableTreeNode node = new DefaultMutableTreeNode(entry);
-				root.add(node);
-				
-				//Add each transaction as a subitem of the total.
-				Vector<Transaction> t = DataInstance.getInstance().getTransactions(c, startDate, endDate);
-				for (Transaction transaction : t) {					
-					DefaultMutableTreeNode transactionNode = new DefaultMutableTreeNode(transaction);
-					node.add(transactionNode);
-				}
+		for (String desc : descs) {
+			long actual = descriptions.get(desc);
+			IncomeExpenseReportEntry entry = new IncomeExpenseReportEntry(desc, actual);
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(entry);
+			root.add(node);
+						
+			//Add each transaction as a subitem of the total.
+			Vector<Transaction> t = DataInstance.getInstance().getTransactions(desc, startDate, endDate);
+			for (Transaction transaction : t) {					
+				DefaultMutableTreeNode transactionNode = new DefaultMutableTreeNode(transaction);
+				node.add(transactionNode);
 			}
 		}
+		
+		root.add(new DefaultMutableTreeNode(null));
+		ReportEntryTotal ret = new ReportEntryTotal(total);
+		DefaultMutableTreeNode totalNode = new DefaultMutableTreeNode(ret);
+		root.add(totalNode);
 				
 		return model;
 	}
@@ -162,17 +162,29 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		return this;
 	}
 	
-	public class IncomeExpenseReportEntry {
-		private Category category;
-		private long budgeted;
-		private long actual;
-		private long difference;
+	public class ReportEntryTotal {
+		private long total;
+
+		public ReportEntryTotal(long total){
+			this.total = total;
+		}
 		
-		public IncomeExpenseReportEntry(Category name, long budgeted, long actual, long difference) {
-			this.category = name;
-			this.budgeted = budgeted;
+		public long getTotal() {
+			return total;
+		}
+
+		public void setTotal(long total) {
+			this.total = total;
+		}
+	}
+	
+	public class IncomeExpenseReportEntry {
+		private String description;
+		private long actual;
+		
+		public IncomeExpenseReportEntry(String name, long actual) {
+			this.description = name;
 			this.actual = actual;
-			this.difference = difference;
 		}
 			
 		public long getActual() {
@@ -181,23 +193,11 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 		public void setActual(long actual) {
 			this.actual = actual;
 		}
-		public long getBudgeted() {
-			return budgeted;
+		public String getDescription() {
+			return description;
 		}
-		public void setBudgeted(long budgeted) {
-			this.budgeted = budgeted;
-		}
-		public long getDifference() {
-			return difference;
-		}
-		public void setDifference(long difference) {
-			this.difference = difference;
-		}
-		public Category getCategory() {
-			return category;
-		}
-		public void setCategory(Category name) {
-			this.category = name;
+		public void setCategory(String name) {
+			this.description = name;
 		}
 	}
 	
@@ -220,30 +220,38 @@ public class IncomeExpenseReportFrame extends ReportFrameLayout {
 			
 			this.setBorder(BorderFactory.createEmptyBorder());
 			
-			if (obj instanceof IncomeExpenseReportEntry){
-				IncomeExpenseReportEntry entry = (IncomeExpenseReportEntry) obj;
-
-				long difference = (entry.getBudgeted() - entry.getActual()); 
-				if (entry.getCategory().isIncome() && difference != 0)
-					difference *= -1;
+			if (obj == null){
+				this.setText("");
+			}
+			else if (obj instanceof ReportEntryTotal){
+				ReportEntryTotal entry = (ReportEntryTotal) obj;
 				
+				StringBuffer sb = new StringBuffer();
+				
+				sb.append(
+						"<html><table><tr><td width=200px><b>")
+						.append(Translate.getInstance().get(TranslateKeys.TOTAL))
+						.append("</b></td><td width=70px><b>")
+						.append((entry.getTotal() < 0 ? "<font color='red'>" : ""))
+						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
+						.append((entry.getTotal() < 0 ? "</font>" : ""))
+						.append("</b></td></tr></table></html>");
+				
+				this.setText(sb.toString());
+			}
+			else if (obj instanceof IncomeExpenseReportEntry){
+				IncomeExpenseReportEntry entry = (IncomeExpenseReportEntry) obj;
+ 				
 				StringBuffer sb = new StringBuffer();
 				
 				
 				sb.append(
-						"<html><table><tr><td width=130px>")
-						.append(Translate.getInstance().get(entry.getCategory().toString()))
-						.append("</td><td width=70px>")
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
-						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
-						.append("</td><td width=70px>")
+						"<html><table><tr><td width=200px><u>")
+						.append(Translate.getInstance().get(entry.getDescription().toString()))
+						.append("</u></td><td width=70px>")
 						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
-						.append("</td><td width=70px>")
-						.append((difference < 0 ? "<font color='red'>" : ""))
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
-						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getDifference() / 100.0)))
-						.append((difference < 0 ? "</font>" : ""))
 						.append("</td></tr></table></html>");
 				
 				this.setText(sb.toString());

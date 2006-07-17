@@ -54,8 +54,14 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 				
 				Log.debug("Getting transactions between " + startDate + " and " + endDate);
 				
-				if (reportType.equals(ReportType.INCOME_EXPENSE))
-					new IncomeExpenseReportFrame(startDate, endDate);
+				if (reportType.equals(ReportType.INCOME_EXPENSE_BY_CATEGORY))
+					new IncomeExpenseByCategoryReportFrame(startDate, endDate);
+				else if (reportType.equals(ReportType.INCOME_EXPENSE_BY_DESCRIPTION))
+					new IncomeExpenseByDescriptionReportFrame(startDate, endDate);
+				else if (reportType.equals(ReportType.EXPENSES))
+					new ExpensesGraphFrame(startDate, endDate);
+				else if (reportType.equals(ReportType.INCOME))
+					new IncomeGraphFrame(startDate, endDate);
 				else if (reportType.equals(ReportType.REVENUE_EXPENSE))
 					new ExpenseBudgetedActualGraphFrame(startDate, endDate);
 				else
