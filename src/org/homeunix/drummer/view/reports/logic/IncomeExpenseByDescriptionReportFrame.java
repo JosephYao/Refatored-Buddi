@@ -246,8 +246,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				StringBuffer sb = new StringBuffer();
 				
 				
-				sb.append(
-						"<html><table><tr><td width=200px><u>")
+				sb.append("<html><table><tr><td width=200px><u>")
 						.append(Translate.getInstance().get(entry.getDescription().toString()))
 						.append("</u></td><td width=70px>")
 						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
@@ -261,20 +260,16 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				
 				StringBuffer sb = new StringBuffer();
 				
-				sb.append(
-						"<html><table><tr><td width=150px>")
-						.append(transaction.getDescription())
-						.append("</td><td width=80px>")
+				sb.append("<html><table><tr><td width=80px>")
 						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
-						.append("</td><td width=200px>");
-						if (transaction.getTo() instanceof Account){
-							sb.append(transaction.getTo());
-						}
-						else{
-							sb.append(transaction.getFrom());							
-						}
-						sb.append("</td></tr></table></html>");
+						.append("</td><td width=250px>")
+						.append(transaction.getFrom())
+						.append(" ")
+						.append(Translate.getInstance().get(TranslateKeys.TO))
+						.append(" ")
+						.append(transaction.getTo())							
+						.append("</td></tr></table></html>");
 				
 				this.setText(sb.toString());
 			}
@@ -287,7 +282,6 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 					this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 				}
 			}
-
 			
 			return this;
 		}		
