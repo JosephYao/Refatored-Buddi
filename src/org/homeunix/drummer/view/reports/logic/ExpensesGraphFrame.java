@@ -44,7 +44,7 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 		for (Category c : cats) {
 			totalExpenses += categories.get(c);
 			if (categories.get(c) > 0)
-				pieData.setValue(Translate.getInstance().get(c.getName()), new Double((double) categories.get(c) / 100.0));
+				pieData.setValue(Translate.getInstance().get(c.toString()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(

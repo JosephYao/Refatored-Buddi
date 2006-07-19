@@ -45,7 +45,7 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 			totalIncome += categories.get(c);
 			
 			if (categories.get(c) > 0)
-				pieData.setValue(Translate.getInstance().get(c.getName()), new Double((double) categories.get(c) / 100.0));
+				pieData.setValue(Translate.getInstance().get(c.toString()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(

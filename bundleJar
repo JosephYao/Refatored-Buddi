@@ -9,10 +9,12 @@ GENERIC=$DEST/Buddi
 SOURCE=source
 VERSION=`grep VERSION src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
 
-grep -q "^$VERSION (" Documents/Changelog.txt
-if [ "$?" != 0 ]; then
-	echo "Changelog not updated.  Exiting."
-	exit 1
+if [ "$1" == "--release" ]; then
+	grep -q "^$VERSION (" Documents/Changelog.txt
+	if [ "$?" != 0 ]; then
+		echo "Changelog not updated.  Exiting."
+		exit 1
+	fi
 fi
 
 ./bundleWeb --local
