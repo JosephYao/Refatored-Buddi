@@ -1,3 +1,7 @@
+1.1.5 (July 19 2006)
+-Added new report type (Income / Expense by Description)
+-Fixed some UI bugs
+
 1.1.4 (July 17 2006)
 -Added ability to turn on / off account sorting by type
 -Added update notification - when a new version is released, Buddi will look for it at startup; this can be disabled through the preferences
