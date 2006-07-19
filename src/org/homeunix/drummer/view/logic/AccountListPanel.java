@@ -205,5 +205,10 @@ public class AccountListPanel extends ListPanelLayout {
 		public long getAmount(){
 			return amount;
 		}
+		
+		@Override
+		public String toString() {
+			return type.toString();
+		}
 	}
 }
