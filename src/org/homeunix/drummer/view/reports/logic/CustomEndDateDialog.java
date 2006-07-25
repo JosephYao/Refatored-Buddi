@@ -40,9 +40,9 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Date endDate;
-				endDate = DateUtil.getEndDate(endDateChooser.getDate());
+				endDate = DateUtil.getEndOfDay(endDateChooser.getDate());
 				
-				if (endDate.after(DateUtil.getEndDate(new Date()))){
+				if (endDate.after(DateUtil.getEndOfDay(new Date()))){
 					JOptionPane.showMessageDialog(
 							null, 
 							Translate.getInstance().get(TranslateKeys.DATE_AFTER_TODAY), 

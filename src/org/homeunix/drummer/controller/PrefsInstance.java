@@ -21,8 +21,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
+import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.prefs.Intervals;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.ListEntry;
 import org.homeunix.drummer.prefs.Prefs;
@@ -105,6 +108,13 @@ public class PrefsInstance {
 			if (contents.size() > 0){
 				userPrefs = (UserPrefs) contents.get(0);
 			}
+			
+			//Do some final sanity checks.  Probably not needed for everyday use, but
+			// needed for some upgrades (i.e., from 1.1.5 to 1.1.6).
+			if (userPrefs.getPrefs().getSelectedInterval() == null 
+					|| userPrefs.getPrefs().getIntervals() == null
+					|| userPrefs.getPrefs().getIntervals().getAllIntervals() == null)
+				throw new Exception();
 		}
 		//If there is a problem opening the file, we will prompt to make a new one
 		catch (Exception e){
@@ -155,6 +165,29 @@ public class PrefsInstance {
 			prefs.setTransactionsWindow(transactions);
 			prefs.setGraphsWindow(graphs);
 			prefs.setReportsWindow(reports);
+			
+			Intervals intervals = prefsFactory.createIntervals();
+			prefs.setIntervals(intervals);
+			
+			Interval month = prefsFactory.createInterval();
+			month.setName(TranslateKeys.MONTH.toString());
+			month.setLength(1);
+			month.setDays(false);  //If days is false, then we assume the length is in months.
+			prefs.getIntervals().getAllIntervals().add(month);
+
+			Interval week = prefsFactory.createInterval();
+			week.setName(TranslateKeys.WEEK.toString());
+			week.setLength(7);
+			week.setDays(true);
+			prefs.getIntervals().getAllIntervals().add(week);
+			
+			Interval fortnight = prefsFactory.createInterval();
+			fortnight.setName(TranslateKeys.FORTNIGHT.toString());
+			fortnight.setLength(14);
+			fortnight.setDays(true);
+			prefs.getIntervals().getAllIntervals().add(fortnight);
+			
+			prefs.setSelectedInterval(month.toString());
 			
 			ResourceSet resourceSet = new ResourceSetImpl();			
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -287,6 +320,33 @@ public class PrefsInstance {
 	
 	public ListAttributes getListAttributes(String entryName){
 		return listAttributesMap.get(entryName);
+	}
+	
+	public Vector<Interval> getIntervals(){
+		Vector<Interval> intervals = new Vector<Interval>();
+		
+		for (Object o : userPrefs.getPrefs().getIntervals().getAllIntervals()) {
+			if (o instanceof Interval){
+				Interval interval = (Interval) o;
+				intervals.add(interval);
+				Log.debug("Added interval: " + interval);
+			}
+		}
+		
+		return intervals;
+	}
+	
+	public Interval getSelectedInterval(){
+		for (Object o : userPrefs.getPrefs().getIntervals().getAllIntervals()) {
+			if (o instanceof Interval){
+				Interval interval = (Interval) o;
+				if (interval.getName().equals(userPrefs.getPrefs().getSelectedInterval()))
+					return interval;
+			}
+		}
+		
+		Log.debug("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
+		return null;
 	}
 	
 	public static String chooseDataFile(){

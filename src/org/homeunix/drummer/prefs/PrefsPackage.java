@@ -162,6 +162,80 @@ public interface PrefsPackage extends EPackage{
 	int DICT_ENTRY_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.IntervalImpl <em>Interval</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.IntervalImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getInterval()
+	 * @generated
+	 */
+	int INTERVAL = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Length</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL__LENGTH = 1;
+
+	/**
+	 * The feature id for the '<em><b>Days</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL__DAYS = 2;
+
+	/**
+	 * The number of structural features of the the '<em>Interval</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.IntervalsImpl <em>Intervals</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.IntervalsImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getIntervals()
+	 * @generated
+	 */
+	int INTERVALS = 3;
+
+	/**
+	 * The feature id for the '<em><b>All Intervals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVALS__ALL_INTERVALS = 0;
+
+	/**
+	 * The number of structural features of the the '<em>Intervals</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVALS_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.ListAttributesImpl <em>List Attributes</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -169,7 +243,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListAttributes()
 	 * @generated
 	 */
-	int LIST_ATTRIBUTES = 2;
+	int LIST_ATTRIBUTES = 4;
 
 	/**
 	 * The feature id for the '<em><b>Unrolled</b></em>' attribute.
@@ -197,7 +271,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListEntry()
 	 * @generated
 	 */
-	int LIST_ENTRY = 3;
+	int LIST_ENTRY = 5;
 
 	/**
 	 * The feature id for the '<em><b>Entry</b></em>' attribute.
@@ -234,7 +308,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPrefs()
 	 * @generated
 	 */
-	int PREFS = 4;
+	int PREFS = 6;
 
 	/**
 	 * The feature id for the '<em><b>Data File</b></em>' attribute.
@@ -309,31 +383,31 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__ENABLE_UPDATE_NOTIFICATIONS = 7;
 
 	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Selected Interval</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 8;
+	int PREFS__SELECTED_INTERVAL = 8;
 
 	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 9;
+	int PREFS__LIST_ENTRIES = 9;
 
 	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__REPORTS_WINDOW = 10;
+	int PREFS__INTERVALS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
@@ -354,13 +428,31 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__TRANSACTIONS_WINDOW = 12;
 
 	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LIST_ENTRIES = 13;
+	int PREFS__REPORTS_WINDOW = 13;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__GRAPHS_WINDOW = 14;
+
+	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__DESC_DICT = 15;
 
 	/**
 	 * The number of structural features of the the '<em>Prefs</em>' class.
@@ -369,7 +461,7 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 14;
+	int PREFS_FEATURE_COUNT = 16;
 
 
 	/**
@@ -380,7 +472,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
 	 * @generated
 	 */
-	int USER_PREFS = 5;
+	int USER_PREFS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Prefs</b></em>' containment reference.
@@ -408,7 +500,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 6;
+	int WINDOW_ATTRIBUTES = 8;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -552,6 +644,70 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	EReference getDictEntry_Data();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Interval <em>Interval</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Interval</em>'.
+	 * @see org.homeunix.drummer.prefs.Interval
+	 * @generated
+	 */
+	EClass getInterval();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Interval#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.homeunix.drummer.prefs.Interval#getName()
+	 * @see #getInterval()
+	 * @generated
+	 */
+	EAttribute getInterval_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Interval#getLength <em>Length</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Length</em>'.
+	 * @see org.homeunix.drummer.prefs.Interval#getLength()
+	 * @see #getInterval()
+	 * @generated
+	 */
+	EAttribute getInterval_Length();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Interval#isDays <em>Days</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Days</em>'.
+	 * @see org.homeunix.drummer.prefs.Interval#isDays()
+	 * @see #getInterval()
+	 * @generated
+	 */
+	EAttribute getInterval_Days();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Intervals <em>Intervals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Intervals</em>'.
+	 * @see org.homeunix.drummer.prefs.Intervals
+	 * @generated
+	 */
+	EClass getIntervals();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Intervals#getAllIntervals <em>All Intervals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>All Intervals</em>'.
+	 * @see org.homeunix.drummer.prefs.Intervals#getAllIntervals()
+	 * @see #getIntervals()
+	 * @generated
+	 */
+	EReference getIntervals_AllIntervals();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.ListAttributes <em>List Attributes</em>}'.
@@ -749,6 +905,17 @@ public interface PrefsPackage extends EPackage{
 	EReference getPrefs_ListEntries();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Intervals</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getIntervals()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_Intervals();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -769,6 +936,17 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	EReference getPrefs_DescDict();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getSelectedInterval <em>Selected Interval</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Selected Interval</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getSelectedInterval()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_SelectedInterval();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.

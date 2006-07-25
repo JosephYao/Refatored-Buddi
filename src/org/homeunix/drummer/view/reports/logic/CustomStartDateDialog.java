@@ -40,7 +40,7 @@ public class CustomStartDateDialog extends CustomDateDialogLayout {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Date startDate;
-				startDate = DateUtil.getStartDate(startDateChooser.getDate());
+				startDate = DateUtil.getStartOfDay(startDateChooser.getDate());
 				
 				if (startDate.after(new Date())){
 					JOptionPane.showMessageDialog(

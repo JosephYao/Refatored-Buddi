@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class DateUtil {
 	static GregorianCalendar calendar = new GregorianCalendar();
-	public static Date getStartDate(Date date){
+	public static Date getStartOfDay(Date date){
 		calendar.setTime(date);
 		calendar.set(GregorianCalendar.HOUR_OF_DAY, calendar.getActualMinimum(GregorianCalendar.HOUR_OF_DAY));
 		calendar.set(GregorianCalendar.MINUTE, calendar.getActualMinimum(GregorianCalendar.MINUTE));
@@ -19,7 +19,7 @@ public class DateUtil {
 		calendar.set(GregorianCalendar.MILLISECOND, calendar.getActualMinimum(GregorianCalendar.MILLISECOND));		
 		return (Date) calendar.getTime().clone();
 	}
-	public static Date getEndDate(Date date){
+	public static Date getEndOfDay(Date date){
 		calendar.setTime(date);
 		calendar.set(GregorianCalendar.HOUR_OF_DAY, calendar.getActualMaximum(GregorianCalendar.HOUR_OF_DAY));
 		calendar.set(GregorianCalendar.MINUTE, calendar.getActualMaximum(GregorianCalendar.MINUTE));

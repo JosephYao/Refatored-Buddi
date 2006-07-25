@@ -146,6 +146,8 @@ public class CategoryListPanel extends ListPanelLayout {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
+				.append(" ")
+				.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
 				.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))

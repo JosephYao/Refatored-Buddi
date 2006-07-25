@@ -44,6 +44,24 @@ public interface PrefsFactory extends EFactory{
 	DictEntry createDictEntry();
 
 	/**
+	 * Returns a new object of class '<em>Interval</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Interval</em>'.
+	 * @generated
+	 */
+	Interval createInterval();
+
+	/**
+	 * Returns a new object of class '<em>Intervals</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Intervals</em>'.
+	 * @generated
+	 */
+	Intervals createIntervals();
+
+	/**
 	 * Returns a new object of class '<em>List Attributes</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -27,9 +27,11 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
@@ -82,12 +84,20 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 				
-		int numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
+		long numberOfBudgetPeriods;
+		Interval interval = PrefsInstance.getInstance().getSelectedInterval();
+		if (!interval.isDays()){
+			numberOfBudgetPeriods = (DateUtil.monthsBetween(startDate, endDate) + 1) / interval.getLength();
+		}
+		else{
+			numberOfBudgetPeriods = (DateUtil.daysBetween(startDate, endDate) + 1) / interval.getLength();
+		}
+			
 		long total = 0;
 		
 		for (Category c : cats) {
 			if (c.getBudgetedAmount() > 0 || categories.get(c) > 0){
-				long budgeted = c.getBudgetedAmount() * numberOfMonths;
+				long budgeted = c.getBudgetedAmount() * numberOfBudgetPeriods;
 				long actual = categories.get(c);
 				long difference = (budgeted - actual);
 				if (c.isIncome())

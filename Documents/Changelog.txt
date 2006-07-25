@@ -1,3 +1,6 @@
+1.1.6 (July 25 2006)
+-Added ability to change budget period
+
 1.1.5 (July 19 2006)
 -Added new report type (Income / Expense by Description)
 -Fixed some UI bugs

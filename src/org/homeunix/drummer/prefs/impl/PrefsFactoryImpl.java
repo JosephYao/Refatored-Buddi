@@ -39,6 +39,8 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 		switch (eClass.getClassifierID()) {
 			case PrefsPackage.DICT_DATA: return createDictData();
 			case PrefsPackage.DICT_ENTRY: return createDictEntry();
+			case PrefsPackage.INTERVAL: return createInterval();
+			case PrefsPackage.INTERVALS: return createIntervals();
 			case PrefsPackage.LIST_ATTRIBUTES: return createListAttributes();
 			case PrefsPackage.LIST_ENTRY: return createListEntry();
 			case PrefsPackage.PREFS: return createPrefs();
@@ -67,6 +69,26 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public DictEntry createDictEntry() {
 		DictEntryImpl dictEntry = new DictEntryImpl();
 		return dictEntry;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Interval createInterval() {
+		IntervalImpl interval = new IntervalImpl();
+		return interval;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Intervals createIntervals() {
+		IntervalsImpl intervals = new IntervalsImpl();
+		return intervals;
 	}
 
 	/**

@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -40,18 +42,24 @@ public class ExpenseBudgetedActualGraphFrame extends GraphFrameLayout {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
-		double numberOfMonths;
-		if (DateUtil.daysBetween(startDate, endDate) <= 25){
-			numberOfMonths = DateUtil.daysBetween(startDate, endDate) / 30;
+		double numberOfBudgetPeriods;
+		Interval interval = PrefsInstance.getInstance().getSelectedInterval();
+		if (!interval.isDays()){
+			if (DateUtil.daysBetween(startDate, endDate) <= 25){
+				numberOfBudgetPeriods = DateUtil.daysBetween(startDate, endDate) / (30 * interval.getLength());
+			}
+			else{
+				numberOfBudgetPeriods = (DateUtil.monthsBetween(startDate, endDate) + 1) / interval.getLength();
+			}
 		}
 		else{
-			numberOfMonths = DateUtil.monthsBetween(startDate, endDate) + 1;
+			numberOfBudgetPeriods = (DateUtil.daysBetween(startDate, endDate) + 1) / interval.getLength();
 		}
 		
 		for (Category c : cats) {
 			if (categories.get(c) > 0 || c.getBudgetedAmount() > 0){
 				barData.addValue((Number) new Double(categories.get(c) / 100.0), Translate.getInstance().get(TranslateKeys.ACTUAL), Translate.getInstance().get(c.toString()));
-				barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfMonths / 100.0), Translate.getInstance().get(TranslateKeys.BUDGETED), Translate.getInstance().get(c.toString()));
+				barData.addValue((Number) new Double(c.getBudgetedAmount() * numberOfBudgetPeriods / 100.0), Translate.getInstance().get(TranslateKeys.BUDGETED), Translate.getInstance().get(c.toString()));
 			}
 		}
 		

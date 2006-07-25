@@ -99,6 +99,18 @@ public class PrefsSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PrefsPackage.INTERVAL: {
+				Interval interval = (Interval)theEObject;
+				Object result = caseInterval(interval);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PrefsPackage.INTERVALS: {
+				Intervals intervals = (Intervals)theEObject;
+				Object result = caseIntervals(intervals);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.LIST_ATTRIBUTES: {
 				ListAttributes listAttributes = (ListAttributes)theEObject;
 				Object result = caseListAttributes(listAttributes);
@@ -160,6 +172,36 @@ public class PrefsSwitch {
 	 * @generated
 	 */
 	public Object caseDictEntry(DictEntry object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Interval</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Interval</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseInterval(Interval object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Intervals</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Intervals</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseIntervals(Intervals object) {
 		return null;
 	}
 

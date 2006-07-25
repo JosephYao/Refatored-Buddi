@@ -10,9 +10,11 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.layout.PreferencesFrameLayout;
@@ -28,22 +30,29 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 	protected AbstractBudgetDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (!PrefsInstance.getInstance().getPrefs().getLanguage().equals(language.getSelectedItem().toString()) 
-						|| !PrefsInstance.getInstance().getPrefs().getDateFormat().equals(dateFormat.getSelectedItem().toString()))
+				if (!PrefsInstance.getInstance().getPrefs().getLanguage().equals(language.getSelectedItem().toString())){
 					JOptionPane.showMessageDialog(
 							PreferencesFrame.this,
 							Translate.getInstance().get(TranslateKeys.RESTART),
 							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
 							JOptionPane.INFORMATION_MESSAGE);
-								
+				
+					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
+				}
+				
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setDateFormat(dateFormat.getSelectedItem().toString());
+				if (budgetInterval.getSelectedItem() instanceof Interval)
+					PrefsInstance.getInstance().getPrefs().setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
+				else
+					Log.debug("Unknown type (should be Interval): " + budgetInterval.getSelectedItem());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedAccounts(showDeletedAccounts.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());
 				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				PrefsInstance.getInstance().savePrefs();
 												
+				Formatter.getInstance().reloadDateFormat();
 				PreferencesFrame.this.setVisible(false);
 				MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
 				MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
@@ -68,6 +77,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 
 		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
 		dateFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getDateFormat());
+		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
 		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
 		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());
 		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());

@@ -76,6 +76,12 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object caseDictEntry(DictEntry object) {
 				return createDictEntryAdapter();
 			}
+			public Object caseInterval(Interval object) {
+				return createIntervalAdapter();
+			}
+			public Object caseIntervals(Intervals object) {
+				return createIntervalsAdapter();
+			}
 			public Object caseListAttributes(ListAttributes object) {
 				return createListAttributesAdapter();
 			}
@@ -134,6 +140,34 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDictEntryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Interval <em>Interval</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.Interval
+	 * @generated
+	 */
+	public Adapter createIntervalAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Intervals <em>Intervals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.Intervals
+	 * @generated
+	 */
+	public Adapter createIntervalsAdapter() {
 		return null;
 	}
 

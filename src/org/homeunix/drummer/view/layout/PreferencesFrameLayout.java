@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 
 public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
@@ -35,6 +36,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	
 	protected final JComboBox language;
 	protected final JComboBox dateFormat;
+	protected final JComboBox budgetInterval;
 	protected final JCheckBox showDeletedAccounts;
 	protected final JCheckBox showDeletedCategories;
 	protected final JCheckBox showAccountTypes;
@@ -72,6 +74,9 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 			}
 		});
 		
+		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
+		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());
+		
 		showDeletedAccounts = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
 		showDeletedCategories = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
 		showAccountTypes = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ACCOUNT_TYPES));
@@ -79,6 +84,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel deletePanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -89,6 +95,9 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		dateFormatPanel.add(dateFormatLabel);
 		dateFormatPanel.add(dateFormat);
+		
+		budgetIntervalPanel.add(budgetIntervalLabel);
+		budgetIntervalPanel.add(budgetInterval);
 		
 		deletePanel1.add(showDeletedAccounts);
 		
@@ -101,6 +110,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		JPanel textPanel = new JPanel(new GridLayout(0, 1));
 		textPanel.add(languagePanel);
 		textPanel.add(dateFormatPanel);
+		textPanel.add(budgetIntervalPanel);
 		textPanel.add(deletePanel1);
 		textPanel.add(deletePanel2);
 		textPanel.add(accountPanel);

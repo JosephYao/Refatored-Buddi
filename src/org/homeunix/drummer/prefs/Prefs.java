@@ -26,12 +26,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getBudgetPeriod <em>Budget Period</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAccountTypes <em>Show Account Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getSelectedInterval <em>Selected Interval</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
  * </ul>
  * </p>
  *
@@ -343,6 +345,32 @@ public interface Prefs extends EObject{
 	EList getListEntries();
 
 	/**
+	 * Returns the value of the '<em><b>Intervals</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Intervals</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Intervals</em>' containment reference.
+	 * @see #setIntervals(Intervals)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_Intervals()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	Intervals getIntervals();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Intervals</em>' containment reference.
+	 * @see #getIntervals()
+	 * @generated
+	 */
+	void setIntervals(Intervals value);
+
+	/**
 	 * Returns the value of the '<em><b>Reports Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -383,5 +411,31 @@ public interface Prefs extends EObject{
 	 * @generated
 	 */
 	EList getDescDict();
+
+	/**
+	 * Returns the value of the '<em><b>Selected Interval</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Selected Interval</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Selected Interval</em>' attribute.
+	 * @see #setSelectedInterval(String)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_SelectedInterval()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getSelectedInterval();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getSelectedInterval <em>Selected Interval</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Selected Interval</em>' attribute.
+	 * @see #getSelectedInterval()
+	 * @generated
+	 */
+	void setSelectedInterval(String value);
 
 } // Prefs
