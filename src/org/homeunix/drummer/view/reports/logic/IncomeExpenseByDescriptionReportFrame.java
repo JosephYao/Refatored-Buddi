@@ -63,11 +63,15 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				if (l == null){
 					l = new Long(0);
 				}
-				l += transaction.getAmount();
-				if (c.isIncome())
+				
+				if (c.isIncome()){
 					total += transaction.getAmount();
-				else
+					l += transaction.getAmount();
+				}
+				else{
 					total -= transaction.getAmount();
+					l -= transaction.getAmount();
+				}
 				descriptions.put(description, l);
 				Log.debug("Added a source / destination");
 			}
@@ -229,7 +233,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				StringBuffer sb = new StringBuffer();
 				
 				sb.append(
-						"<html><table><tr><td width=200px><b>")
+						"<html><table><tr><td width=250px><b>")
 						.append(Translate.getInstance().get(TranslateKeys.TOTAL))
 						.append("</b></td><td width=70px><b>")
 						.append((entry.getTotal() < 0 ? "<font color='red'>" : ""))
@@ -246,11 +250,13 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				StringBuffer sb = new StringBuffer();
 				
 				
-				sb.append("<html><table><tr><td width=200px><u>")
+				sb.append("<html><table><tr><td width=250px><u>")
 						.append(Translate.getInstance().get(entry.getDescription().toString()))
 						.append("</u></td><td width=70px>")
+						.append(entry.getActual() < 0 ? "<font color='red'>" : "")
 						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
+						.append(entry.getActual() < 0 ? "</font>" : "")
 						.append("</td></tr></table></html>");
 				
 				this.setText(sb.toString());
@@ -260,10 +266,20 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				
 				StringBuffer sb = new StringBuffer();
 				
+				
+				boolean isExpense;
+				if (transaction.getTo() instanceof Category
+						&& !((Category) transaction.getTo()).isIncome())
+					isExpense = true;
+				else
+					isExpense = false;
+				
 				sb.append("<html><table><tr><td width=80px>")
+						.append((isExpense ? "<font color='red'>" : ""))
 						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
-						.append("</td><td width=250px>")
+						.append((isExpense ? "</font>" : ""))
+						.append("</td><td width=350px>")
 						.append(transaction.getFrom())
 						.append(" ")
 						.append(Translate.getInstance().get(TranslateKeys.TO))

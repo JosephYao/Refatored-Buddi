@@ -1,3 +1,5 @@
+-Added color to the Report by Description based on whether it is income or expense
+
 1.1.6 (July 25 2006)
 -Added ability to change budget period
 
