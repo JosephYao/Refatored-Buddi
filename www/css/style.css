@@ -1,6 +1,6 @@
 /* General style */
 body {
-	background-color: #e3e27d;
+	background-color: #e3e2a9;
 	border-top: 0.5em solid black;
 	color: #222;
 	min-width: 600px;
@@ -11,7 +11,7 @@ body {
 	background: url('../img/buddi.png');
 	background-repeat: no-repeat;
 	background-position: 50px center;
-	background-color: #a8c90a;
+	background-color: #236bc3;
 	height: 150px;
 	
 /*	border-bottom: 3px solid #8e92ac; 
@@ -95,7 +95,7 @@ body {
 	display: inline;
 	width: 15em;
 	
-	background-color: #cbe127;
+	background-color: #80b4ea;
 /*	margin-right: -40px;
 	border-left: 5px solid black;
 	padding-left: 5px;
@@ -104,7 +104,7 @@ body {
 	margin-right: 2em;
 	margin-bottom: 1em;
 
-	border-bottom: 0.15em solid black;
+/*	border-bottom: 0.15em solid black; */
 	border-right: 0.3em solid black;
 /*	
 	border-top: 3px solid #8e92ac;
@@ -158,13 +158,26 @@ p, ul {
 }
 
 /* Color links nicely */
-a:link, a:visited, a:active {
-	color: #325400;
+.sidebar a:link, .sidebar a:visited, .sidebar a:active {
+	color: #022346;
 	background-color: transparent;
+	text-decoration: none;
+}
+.sidebar a:hover {
+	color: #022346;
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+a:link, a:visited, a:active {
+	color: #236ab3;
+	background-color: transparent;
+	text-decoration: none;
 }
 a:hover {
-	color: #4f8700;
+	color: #084788;
 	background-color: transparent;
+	text-decoration: underline;
 }
 
 

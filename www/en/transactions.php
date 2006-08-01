@@ -16,36 +16,29 @@ To enter the transactions screen, click on the account to want to transfer to (o
 This screen contains quite a bit of data, so it is useful to describe each part of it.
 </p>
 <p>
-First, there is the history of past transactions.  This is sorted in order of date, and details all the transactions which have gone either to or from this account.
-</p>
-<img src='../img/transactions/history.png' alt="Transactions window, detailing the transaction history">
-
-<p>
-Next there is the the date and amount fields.  Both of these are neccesary to record the transaction, and should be filled in.  The amount must be non-zero, and the date must be valid, in the format specified in the <a href='./preferences.php'>Preferences</a> window.
+First, in the center of the window, there is the history of past transactions.  This is sorted in order of date, and details all the transactions which have gone either to or from this account.
 </p>
 
-<img src='../img/transactions/date_and_amount.png' alt="Transactions window, detailing the date and amount fields">
-
 <p>
-The source and destination pulldowns contain all the accounts and categories currently in the system.  This setup was chosen to be more intuitive than a traditional accounting ledger: you can read it off as a sentence to think what accounts should go where.  "I want to transfer from &lt;Source&gt; to &lt;Destination&gt;."  Both of these have to be set to some value before you can record the transaction.
+At the bottom of the window is the transaction edit panel.  This allows you to enter new transactions, or to edit existing ones.  To create a new one, you fill in the needed information and hit "Record".  To edit an existing one, click on the desired transaction in the transaction history section, modify what fields you want, and hit "Update".
 </p>
 
-<img src='../img/transactions/to_and_from.png' alt="Transactions window, detailing the source and destination pulldowns">
-
 <p>
-The box in the bottom left corner of the screen is the transaction number.  This could be cheque number, reference ID, or whatever else you want.  It is not required to enter anything in this field if you don't want to.
+Before you can successfully record a transaction, you must enter all of the needed fields.  These include the Date, Description, Amount (must be non-zero), and the To and From pulldowns.
 </p>
 
-<img src='../img/transactions/number.png' alt="Transactions window, detailing the transaction number field">
+<img src='../img/transactions/edit.png' alt="Transactions window, when editing a transaction">
 
 <p>
-Finally, we have the description and memo fields.  The description field (the middle field on the bottom row) is required; this is the field where you should put the store name (if recording a purchase from a store), person name (if cashing a personal cheque, for instance), etc.  The memo field is not required, but you can enter additional details about the transaction in it.
+The source and destination pulldowns contain all the accounts and categories currently in the system.  This setup was chosen to be more intuitive than a traditional accounting ledger: you can read it off as a sentence to think what accounts should go where.  "I want to transfer from &lt;Source&gt; to &lt;Destination&gt;."
 </p>
 
-<img src='../img/transactions/description_and_memo.png' alt="Transactions window, detailing the description and memo fields">
+<p>
+The two optional fields, Number and Memo, can be used however you see fit.  The Number field was meant to include whatever unique transaction number could be assigned; this could be cheque number, transaction reference ID, or whatever else you want.  The memo is meant for including notes to yourself on the transaction.
+</p>
 
 <p>
-Once you are done, you can hit 'Record' (if creating a new transaction), or 'Update' (if you are editing an existing one) to save your changes.  If you want to cancel without saving, you can hit 'Clear' (if this is a new transaction), or 'New' (if you are editing an existing one).
+As you probably noticed in the prior two screenshots, the buttons on the lower right of the transactions window change labels between "Clear / Record" and "New / Update", depending on if you are creating a new transaction or editing an existing one.  The buttons essentially function the same way regardless of the label; the text change is just for clarification on what exactly is happening.
 </p>
 
 
