@@ -1,4 +1,4 @@
-1.2.0rc1
+1.2.0rc1 (August 3 2006)
 -Added color to the Report by Description based on whether it is income or expense
 -First release cantidate for stable version 1.2
 
