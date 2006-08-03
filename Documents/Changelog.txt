@@ -1,4 +1,6 @@
+1.2.0rc1
 -Added color to the Report by Description based on whether it is income or expense
+-First release cantidate for stable version 1.2
 
 1.1.6 (July 25 2006)
 -Added ability to change budget period
