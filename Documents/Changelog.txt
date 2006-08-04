@@ -1,3 +1,8 @@
+1.2.0rc2 (August 4 2006)
+-Updated libraries
+-Fixed bug with hints in JHintTextComponent
+-Minor updates to documentation
+
 1.2.0rc1 (August 3 2006)
 -Added color to the Report by Description based on whether it is income or expense
 -First release cantidate for stable version 1.2

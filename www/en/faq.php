@@ -17,7 +17,10 @@ You need to have Java 1.5 installed for Buddi to work. If you are running OS X, 
 <h2>What's up with your stupid version numbers!</h2>
 
 <p>
-I use a versioning scheme similar to the Linux kernels: X.Y.Z, where X is the major release, Y is the minor version, and Z is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered unstable, or at least development.  For instance the first stable version is 1.0.0; the first bugfix will be 1.0.1, etc.  At the time of release, the code branched into two: the 1.0 branch, which will receive no new features, but will continue to benefit from bugfixes, and the 1.1 line, which will continue with major development.  Once it is considered complete, it will become 1.2.0, the next stable version, and so on.
+I use a versioning scheme similar to the Linux kernels: X.Y.Z, where X is the major release, Y is the minor version, and Z is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered development code.  For instance the first stable version is 1.0.0; the first bugfix will be 1.0.1, etc.  At the time of release, the code branched into two: the 1.0 branch, which will receive no new features, but will continue to benefit from bugfixes, and the 1.1 line, which will continue with major development.  Once it is considered complete, it will become 1.2.0, the next stable version, and so on.
+</p>
+<p>
+The terms 'Stable' and 'Development' may be misleading - any program which I release has passed at least rudimentary testing, and I consider it to be pretty good.  In fact, I use the development versions for my own finances.  However, there may be file format changes, or minor bugs, which are introduced in the development versions, which would not be in the stable version.
 </p>
 
 <h2>Why doesn't Buddi do {X}?  I want it to do {X}!</h2>
