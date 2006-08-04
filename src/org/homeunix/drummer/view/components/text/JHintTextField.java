@@ -84,6 +84,9 @@ public class JHintTextField extends JTextField implements JTextComponentHint {
 	 * Enables / disables the hint depending on state of value.
 	 */
 	public void showHint(boolean on){
+		if (this.getValue().equals(this.getHint()))
+			this.setValue("");
+		
 		if (on && this.getValue().equals("")){
 			this.setText(hint);
 			this.setForeground(Color.GRAY);

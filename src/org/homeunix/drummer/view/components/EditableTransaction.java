@@ -176,7 +176,8 @@ public class EditableTransaction extends JPanel {
 			to.setSelectedIndex(0);
 			from.setSelectedIndex(0);
 			memo.setValue("");
-			date.requestFocus();
+			
+			resetSelection();
 		}
 		
 		setChanged(false);
@@ -185,7 +186,7 @@ public class EditableTransaction extends JPanel {
 	}
 			
 	public boolean isChanged(){
-		return (changed == true);
+		return changed;
 //				|| transaction == null
 //				|| (!transaction.getDescription().equals(getDescription()))
 //				|| (!transaction.getNumber().equals(getNumber()))

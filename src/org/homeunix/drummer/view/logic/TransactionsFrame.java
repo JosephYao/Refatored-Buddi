@@ -157,7 +157,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					recordTransaction();
-					editableTransaction.resetSelection();
 					editableTransaction.setTransaction(null, true);
 					updateContent();
 					editableTransaction.setChanged(false);

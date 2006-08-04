@@ -35,9 +35,7 @@ cp -R $DEST/$SOURCE/Licenses $GENERIC
 
 #Create the OSX directory
 mkdir -p $OSXROOT
-cp -R Buddi_OSX_Folder $OSX
-#mv $OSXROOT/Buddi_OSX_Folder $OSX
-#mv $DEST/$SOURCE/Buddi.app $OSX
+cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
 cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
 cp -R $DEST/$SOURCE/Languages $OSX/Buddi.app/Contents/Resources/Java/
 cp -R Help $OSX/Buddi.app/Contents/Resources/Java/
