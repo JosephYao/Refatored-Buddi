@@ -20,6 +20,19 @@ You need to have Java 1.5 installed for Buddi to work. If you are running OS X, 
 I use a versioning scheme similar to the Linux kernels: X.Y.Z, where X is the major release, Y is the minor version, and Z is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered unstable, or at least development.  For instance the first stable version is 1.0.0; the first bugfix will be 1.0.1, etc.  At the time of release, the code branched into two: the 1.0 branch, which will receive no new features, but will continue to benefit from bugfixes, and the 1.1 line, which will continue with major development.  Once it is considered complete, it will become 1.2.0, the next stable version, and so on.
 </p>
 
+<h2>Why doesn't Buddi do {X}?  I want it to do {X}!</h2>
+
+<p>
+Drop me a line, and I will see what I can do.  Many features currently in Buddi originated from requests from people who tried it, and wanted a little bit more.
+</p>
+<p>
+That being said, I am quite busy with other things in my life (family, job, etc), and cannot guarantee that all suggestions will be implemented.  If you really want something done, and I am taking too long you can try <a href="http://sourceforge.net/donate/index.php?group_id=167026">bribing me with a donation</a>, and I will probably put some more effort into it. 8-)
+</p>
+<p>
+Of course, I will not implement features that distract from the main purpose of the program - to provide a simple budgeting program for non-accountants.  If you want something that is geared more towards professional accountants, try something like GNUCash.
+</p>
+
+
 <p>
 I've not gotten enough feedback yet to see what the most frequent questions are. If you're stuck on something, feel free to <a href='&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>ask me</a>.
 </p>
