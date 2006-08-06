@@ -2,6 +2,11 @@
 
 <h1>News</h1>
 
+<h2>1.2.0 (August 6 2006)</h2>
+<ul>
+<li>New official stable version, with plenty of new features.  Some of the more important ones include new reports, searchable transactions, etc.  It is recommended for all current users of the Stable branch to upgrade to this new version.  There is a change to the preferences file format, which means that you will have to select the location of your data file again when you first start the program; however, the data file format is still unchanged.
+</ul>
+
 <h2>1.0.1 (July 7 2006)</h2>
 <ul>
 <li>Moved model (EMF) jars to source code.  This should make it easier for users to view / edit the source code, as you shouldn't have to modify Eclipse plugins</li>
