@@ -1,3 +1,6 @@
+1.2.0 (August 6 2006)
+-Stable release 1.2.0
+
 1.2.0rc2 (August 4 2006)
 -Updated libraries
 -Fixed bug with hints in JHintTextComponent
