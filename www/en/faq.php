@@ -23,6 +23,11 @@ I use a versioning scheme similar to the Linux kernels: X.Y.Z, where X is the ma
 The terms 'Stable' and 'Development' may be misleading - any program which I release has passed at least rudimentary testing, and I consider it to be pretty good.  In fact, I use the development versions for my own finances.  However, there may be file format changes, or minor bugs, which are introduced in the development versions, which would not be in the stable version.
 </p>
 
+<h2>Whenever I restart Buddi, it looses all the information, giving me the message "There was  a problem reading the data file: /Users/Christopher/Documents/Buddi/ Data.buddi The data file exists, but it appears to be corrupted. Do  you want to overwrite, and create a new file? All information  currently in the file will be lost.".  What is happening?
+<p>
+This can happen if you use special characters for the account or category names.  I am not aware of a solution at this time; a workaround is to avoid using special characters in the account or category names.
+</p>
+
 <h2>Why doesn't Buddi do {X}?  I want it to do {X}!</h2>
 
 <p>
@@ -37,7 +42,8 @@ Of course, I will not implement features that distract from the main purpose of 
 
 
 <p>
-I've not gotten enough feedback yet to see what the most frequent questions are. If you're stuck on something, feel free to <a href='&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>ask me</a>.
+I've not gotten enough feedback yet to see what the most frequent questions are. If you're stuck on something, feel free to <a 
+href='&#109;&#097;&#105;&#108;&#116;&#111;:&#119;&#121;&#097;&#116;&#116;&#046;&#111;&#108;&#115;&#111;&#110;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;'>ask me</a>.
 </p>
 
 <? include "./inc/footer.php" ?>
