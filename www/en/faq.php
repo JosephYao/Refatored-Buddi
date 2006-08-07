@@ -11,7 +11,7 @@ That depends on what operating system you are running.  If you are in Windows, s
 <h2>Why doesn't this stupid program work?</h2>
 
 <p>
-You need to have Java 1.5 installed for Buddi to work. If you are running OS X, you need to have Tiger installed and the Java 1.5 update installed. If you are running on a different platform, please consult the documentation for that system.
+You need to have Java 1.5 installed for Buddi to work. If you are running OS X, you need to have Tiger installed and the <a href="http://www.apple.com/support/downloads/java2se50release1.html">Java 1.5 update installed</a>. If you are running on a different platform, please consult the documentation for that system.
 </p>
 
 <h2>What's up with your stupid version numbers!</h2>
