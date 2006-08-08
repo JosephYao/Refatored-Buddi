@@ -251,7 +251,7 @@ public class DataInstance {
 			else{
 				JOptionPane.showMessageDialog(
 						null, 
-						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.CANNOT_READ_FILE),
 						Translate.getInstance().get(TranslateKeys.EXITING_PROGRAM),
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(0);

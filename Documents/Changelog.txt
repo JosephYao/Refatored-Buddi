@@ -1,3 +1,5 @@
+-Added Norwegian translation (thanks to Gudbrand Hegge)
+-Fixed incorrect translation key
 -Updated some items in en-US localization
 
 1.3.0 (August 6 2006)

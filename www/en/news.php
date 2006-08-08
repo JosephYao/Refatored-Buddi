@@ -2,6 +2,14 @@
 
 <h1>News</h1>
 
+<h2>1.2.1</h2>
+
+<ul>
+<li>Added Norwegian translation (thanks to Gudbrand Hegge)</li>
+<li>Fixed incorrect translation key</li>
+<li>Updated some items in en-US localization</li>
+</ul>
+
 <h2>1.2.0 (August 6 2006)</h2>
 <ul>
 <li>New official stable version, with plenty of new features.  Some of the more important ones include new reports, searchable transactions, etc.  It is recommended for all current users of the Stable branch to upgrade to this new version.  There is a change to the preferences file format, which means that you will have to select the location of your data file again when you first start the program; however, the data file format is still unchanged.
