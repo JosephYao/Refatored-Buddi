@@ -1,6 +1,7 @@
 -Added Norwegian translation (thanks to Gudbrand Hegge)
 -Fixed incorrect translation key
 -Updated some items in en-US localization
+-Upgraded to EMF 2.2 (used in conjunction with Eclipse 3.2)
 
 1.3.0 (August 6 2006)
 -New development branch.  1.3.0 Development is the same as 1.2.0 Stable.
