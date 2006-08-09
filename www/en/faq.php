@@ -27,6 +27,10 @@ The terms 'Stable' and 'Development' may be misleading - any program which I rel
 <p>
 This can happen if you use special characters for the account or category names.  I am not aware of a solution at this time; a workaround is to avoid using special characters in the account or category names.
 </p>
+<h3>Update</h3>
+<p>
+I have upgraded the EMF libraries to version 2.2 in Buddi version 1.3.1 (and assuming there are no reported problems, will also include it shortly in Stable version 1.2.1).  Note that this does not fix existing files with the problem, but all new additions with special characters should work correctly.
+</p>
 
 <h2>Why doesn't Buddi do {X}?  I want it to do {X}!</h2>
 
