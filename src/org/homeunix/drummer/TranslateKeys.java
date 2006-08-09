@@ -196,7 +196,6 @@ public enum TranslateKeys {
     YESTERDAY,
     ZOOM,
 	
-	ANNUAL,
 	QUARTER,
 	THIS_QUARTER,
 	LAST_QUARTER

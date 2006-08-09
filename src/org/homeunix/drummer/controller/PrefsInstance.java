@@ -194,7 +194,7 @@ public class PrefsInstance {
 			prefs.getIntervals().getAllIntervals().add(quarter);
 
 			Interval year = prefsFactory.createInterval();
-			year.setName(TranslateKeys.ANNUAL.toString());
+			year.setName(TranslateKeys.YEAR.toString());
 			year.setLength(12);
 			year.setDays(false);
 			prefs.getIntervals().getAllIntervals().add(year);
