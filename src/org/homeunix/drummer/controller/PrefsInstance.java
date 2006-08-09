@@ -186,6 +186,20 @@ public class PrefsInstance {
 			fortnight.setLength(14);
 			fortnight.setDays(true);
 			prefs.getIntervals().getAllIntervals().add(fortnight);
+
+			Interval quarter = prefsFactory.createInterval();
+			quarter.setName(TranslateKeys.QUARTER.toString());
+			quarter.setLength(3);
+			quarter.setDays(false);
+			prefs.getIntervals().getAllIntervals().add(quarter);
+
+			Interval year = prefsFactory.createInterval();
+			year.setName(TranslateKeys.ANNUAL.toString());
+			year.setLength(12);
+			year.setDays(false);
+			prefs.getIntervals().getAllIntervals().add(year);
+
+			
 			
 			prefs.setSelectedInterval(month.toString());
 			

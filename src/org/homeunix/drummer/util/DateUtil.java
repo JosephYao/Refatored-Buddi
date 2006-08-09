@@ -54,6 +54,41 @@ public class DateUtil {
 		return (Date) calendar.getTime().clone();
 	}
 	
+	/**
+	 * Returns the date at the beginning of the quarter, modified by quarterOffset.
+	 * @param date Date to use
+	 * @param quarterOffset How many quarters before (negative) / after (positive) to use.
+	 * @return
+	 */
+	public static Date getBeginOfQuarter(Date date, int quarterOffset){
+		calendar.setTime(date);
+		if (quarterOffset!=0)
+			calendar.add(GregorianCalendar.MONTH, quarterOffset * 3); //3 months in a quarter
+		int quarterNumber = calendar.get(GregorianCalendar.MONTH) / 3;
+		
+		if (quarterNumber < 0 || quarterNumber > 3)
+			System.out.println("Error when calculating quarter: date = " + date + " results in quarter = " + quarterNumber);
+		
+		calendar.set(GregorianCalendar.MONTH, quarterNumber * 3);
+		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMinimum(GregorianCalendar.DAY_OF_MONTH));
+		return (Date) calendar.getTime().clone();
+	}
+	
+	/**
+	 * Returns the date at the end of the quarter, modified by quarterOffset.
+	 * @param date Date to use
+	 * @param quarterOffset How many quarters before (negative) / after (positive) to use.
+	 * @return
+	 */
+	public static Date getEndOfQuarter(Date date, int quarterOffset){
+		calendar.setTime(date);
+		//We get the end of the quarter by incrementing one to the offset, and then at the end returning the day before.
+		// The day before the beginning of next quarter is by definition the end of this one!  8-)
+		quarterOffset++;
+
+		return getNextNDay(getBeginOfQuarter(date, quarterOffset), -1);
+	}
+	
 	public static Date getBeginOfYear(int year){
 		calendar.set(GregorianCalendar.YEAR, year);
 		calendar.set(GregorianCalendar.MONTH, calendar

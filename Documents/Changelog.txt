@@ -1,3 +1,6 @@
+-Added Quarter and Year to budget intervals
+-Added This Quarter and Last Quarter to report intervals
+
 1.3.1 (August 8 2006)
 -Added Norwegian translation (thanks to Gudbrand Hegge)
 -Fixed incorrect translation key

@@ -134,6 +134,16 @@ public class ReportPanel extends ReportPanelLayout {
 				Translate.getInstance().get(TranslateKeys.PAST_FORTNIGHT)
 		));
 		intervals.add(new DateChoice(
+				DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(new Date(), 0)),
+				DateUtil.getStartOfDay(DateUtil.getEndOfQuarter(new Date(), 0)),
+				Translate.getInstance().get(TranslateKeys.THIS_QUARTER)
+		));
+		intervals.add(new DateChoice(
+				DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(new Date(), -1)),
+				DateUtil.getStartOfDay(DateUtil.getEndOfQuarter(new Date(), -1)),
+				Translate.getInstance().get(TranslateKeys.LAST_QUARTER)
+		));
+		intervals.add(new DateChoice(
 				DateUtil.getStartOfDay(DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR))),
 				DateUtil.getEndOfDay(DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR))),
 				Translate.getInstance().get(TranslateKeys.THIS_YEAR)
