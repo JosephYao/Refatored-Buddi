@@ -343,36 +343,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 	
 	@Override
 	public String getHtmlReport() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"); 
-		sb.append("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
-		sb.append("<html>\n");
-		sb.append("<head>\n");
-		sb.append("<title>");
-		sb.append(Translate.getInstance().get(TranslateKeys.REPORT_BY_CATEGORY_HEADER));
-		sb.append("</title>\n");
-		
-		sb.append("<style type=\"text/css\">\n");
-		sb.append(".red { color: red; }");
-		sb.append("h1 { font-size: large; }");
-		sb.append("table.main { background-color: black; }\n");
-		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
-		sb.append("table.main tr { padding-bottom: 1em; }\n");
-		sb.append("table.main td { width: 20%; background-color: white}\n");
-		sb.append("table.transactions td { width: 30%; background-color: white}\n");
-		sb.append("</style>\n");
-		
-		sb.append("</head>\n");
-		sb.append("<body>\n");
-		
-		sb.append("<h1>");
-		sb.append(Translate.getInstance().get(TranslateKeys.REPORT_BY_CATEGORY_HEADER));
-		sb.append(" ("); 
-		sb.append(Formatter.getInstance().getDateFormat().format(startDate));
-		sb.append(" - ");
-		sb.append(Formatter.getInstance().getDateFormat().format(endDate));
-		sb.append(") ");
-		sb.append("</h1>\n");
+		StringBuffer sb = getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER);
 		
 		sb.append("<table class='main'>\n");
 		

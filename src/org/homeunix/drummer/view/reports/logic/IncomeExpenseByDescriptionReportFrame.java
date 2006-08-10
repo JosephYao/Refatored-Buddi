@@ -305,6 +305,78 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 	
 	@Override
 	public String getHtmlReport() {
-		return "Stuff";
+		StringBuffer sb = getHtmlHeader(TranslateKeys.REPORT_BY_DESCRIPTION_HEADER);
+		
+		sb.append("<table class='main'>\n");
+		
+		if (reportTree.getModel().getRoot() instanceof DefaultMutableTreeNode){
+			DefaultMutableTreeNode root = (DefaultMutableTreeNode) reportTree.getModel().getRoot();
+
+			for (int i = 0; i < root.getChildCount(); i++) {
+				DefaultMutableTreeNode child = (DefaultMutableTreeNode) root.getChildAt(i);
+				Object userObject = child.getUserObject();
+				if (userObject instanceof IncomeExpenseReportEntry){
+					IncomeExpenseReportEntry entry = (IncomeExpenseReportEntry) userObject;
+					
+					sb.append("<tr><td>")
+							.append(Translate.getInstance().get(entry.getDescription().toString()))
+							.append("</td>")
+							.append(entry.getActual() < 0 ? "<td class='red'>" : "<td>")
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
+							.append("</td></tr>\n");
+					
+					if (child.getChildCount() > 0){
+						sb.append("<tr><td colspan=2><table class='transactions'>");
+						for (int j = 0; j < child.getChildCount(); j++) {
+							sb.append("<tr>");
+							DefaultMutableTreeNode subChild = (DefaultMutableTreeNode) child.getChildAt(j);
+							Object subUserObject = subChild.getUserObject();
+							if (subUserObject instanceof Transaction){
+								Transaction t = (Transaction) subUserObject;
+								
+								boolean isExpense;
+								if (t.getTo() instanceof Category
+										&& !((Category) t.getTo()).isIncome())
+									isExpense = true;
+								else
+									isExpense = false;
+								
+								sb.append((isExpense ? "<td class='red'>" : "<td>"))
+										.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+										.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
+										.append("</td><td>")
+										.append(t.getFrom())
+										.append(" ")
+										.append(Translate.getInstance().get(TranslateKeys.TO))
+										.append(" ")
+										.append(t.getTo())							
+										.append("</td>");
+							}
+							sb.append("</tr>");
+						}
+						sb.append("</table></td></tr>");
+					}
+				}
+				else if (userObject instanceof ReportEntryTotal){
+					ReportEntryTotal entry = (ReportEntryTotal) userObject;
+					
+					sb.append(
+							"<tr><td><b>")
+							.append(Translate.getInstance().get(TranslateKeys.TOTAL))
+							.append("</b></td>")
+							.append((entry.getTotal() < 0 ? "<td class='red'>" : "<td>"))
+							.append("<b>")
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
+							.append("</b></td>")
+							.append("</tr>");
+				}
+			}
+		}
+		
+		sb.append("</table>\n</body>\n</html>");
+		
+		return sb.toString();
 	}
 }

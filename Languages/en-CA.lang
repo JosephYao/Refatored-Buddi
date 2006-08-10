@@ -191,3 +191,6 @@ ANNUAL=Annual
 QUARTER=Quarter
 THIS_QUARTER=This Quarter
 LAST_QUARTER=Last Quarter
+EXPORT_TO_HTML=Export to HTML
+REPORT_BY_CATEGORY_HEADER=Transaction Report by Budget Category
+REPORT_BY_DESCRIPTION_HEADER=Transaction Report by Description
