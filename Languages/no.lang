@@ -1,8 +1,17 @@
+#
+# Unicode for norwegian characters;
+# æ = \u00E6
+# ø = \u00F8 
+# å = \u00E5
+# Æ = \u00C6
+# Ø = \u00D8
+# Å = \u00C5
+#
 ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson
 ABOUT_EMAIL=wyatt.olson@gmail.com
 ABOUT_GPL=Released under the GNU General Public License
 ABOUT_MENU_ITEM=Om Buddi
-ABOUT_TEXT=Personlig \u00F8konomi og budsjetterings program
+ABOUT_TEXT=Program for personlig \u00F8konomi og budsjettering.\nKommentarer til norsk oversettelse kan sendes gudbrand@users.sourceforge.net\neller korriger og send oppdatert spr\u00E5kfil til Wyatt Olson.
 ABOUT_WEBPAGE=http://buddi.sourceforge.net
 ACCOUNT=Konto
 ACCOUNT_TYPE=Konto Type
@@ -16,7 +25,7 @@ BUDDI_FILE_DESC=Buddi Data Filer
 BUDDI_HELP=Buddi Hjelp
 BUDGETED=Budsjett
 BUDGETED_AMOUNT=Budsjettert bel\u00F8p
-BUDGET_NET_INCOME=Budsjettert netto inntekt /
+BUDGET_NET_INCOME=Budsjettert netto inntekt pr 
 CANCEL=Avbryt
 CANCELLED_FILE_LOAD=Avbrutt innlasting av fil
 CANCELLED_FILE_LOAD_MESSAGE=Beholder eksisterende data fil \u00E5pen
@@ -31,7 +40,7 @@ CHOOSE_BACKUP_FILE=Velg backup fil...
 CHOOSE_DATASTORE_LOCATION=Velg hvor data fil skal lagers...
 CHOOSE_DATE_INTERVAL=Velg dato intervall
 CLEAR=Nullstill
-CLEAR_TRANSACTION=Clear Transaction (avbryt eller godkjenn transaksjon)
+CLEAR_TRANSACTION=Avbryt transaksjon
 CLEAR_TRANSACTION_LOSE_CHANGES=Vil du avbryte gjeldende transaksjon?\nAlle ulagrede data g\u00E5r tapt.
 CLOSE_DATA_FILE=Lukk data fil...
 CLOSE_WINDOW=Lukk vindu
@@ -137,7 +146,7 @@ RESTART_NEEDED=Det er behov for \u00E5 starte programmet p\u00E5 nytt.
 RESTORED_FILE=Gjennopprettet data fil
 RESTORE_DATA_FILE=Gjennopprett fra bakup fil...
 SALARY=Inntekt
-SAVINGS=Oppsparte midler
+SAVINGS=Likvider
 SHOW_DELETED_ACCOUNTS=Vis slettede kontoer
 SHOW_DELETED_CATEGORIES=Vis slettede kategorier
 SIX_MONTHS=Seks m\u00E5neder

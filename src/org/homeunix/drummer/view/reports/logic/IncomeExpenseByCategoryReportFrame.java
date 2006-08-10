@@ -340,4 +340,119 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 			return this;
 		}		
 	}
+	
+	@Override
+	public String getHtmlReport() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"); 
+		sb.append("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+		sb.append("<html>\n");
+		sb.append("<head>\n");
+		sb.append("<title>");
+		sb.append(Translate.getInstance().get(TranslateKeys.REPORT_BY_CATEGORY_HEADER));
+		sb.append("</title>\n");
+		
+		sb.append("<style type=\"text/css\">\n");
+		sb.append(".red { color: red; }");
+		sb.append("h1 { font-size: large; }");
+		sb.append("table.main { background-color: black; }\n");
+		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
+		sb.append("table.main tr { padding-bottom: 1em; }\n");
+		sb.append("table.main td { width: 20%; background-color: white}\n");
+		sb.append("table.transactions td { width: 30%; background-color: white}\n");
+		sb.append("</style>\n");
+		
+		sb.append("</head>\n");
+		sb.append("<body>\n");
+		
+		sb.append("<h1>");
+		sb.append(Translate.getInstance().get(TranslateKeys.REPORT_BY_CATEGORY_HEADER));
+		sb.append(" ("); 
+		sb.append(Formatter.getInstance().getDateFormat().format(startDate));
+		sb.append(" - ");
+		sb.append(Formatter.getInstance().getDateFormat().format(endDate));
+		sb.append(") ");
+		sb.append("</h1>\n");
+		
+		sb.append("<table class='main'>\n");
+		
+		if (reportTree.getModel().getRoot() instanceof DefaultMutableTreeNode){
+			DefaultMutableTreeNode root = (DefaultMutableTreeNode) reportTree.getModel().getRoot();
+
+			for (int i = 0; i < root.getChildCount(); i++) {
+				DefaultMutableTreeNode child = (DefaultMutableTreeNode) root.getChildAt(i);
+				Object userObject = child.getUserObject();
+				if (userObject instanceof IncomeExpenseReportEntry){
+					IncomeExpenseReportEntry entry = (IncomeExpenseReportEntry) userObject;
+					
+					long difference = (entry.getBudgeted() - entry.getActual()); 
+					if (entry.getCategory().isIncome() && difference != 0)
+						difference *= -1;
+					
+					
+					sb.append(
+							"<tr><td>")
+							.append(Translate.getInstance().get(entry.getCategory().toString()))
+							.append("</td><td>")
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
+							.append("</td><td>")
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
+							.append("</td>")
+							.append((difference < 0 ? "<td class='red'>" : "<td>"))
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getDifference() / 100.0)))
+							.append("</td></tr>\n");
+					
+					if (child.getChildCount() > 0){
+						sb.append("<tr><td colspan=4><table class='transactions'>");
+						for (int j = 0; j < child.getChildCount(); j++) {
+							sb.append("<tr>");
+							DefaultMutableTreeNode subChild = (DefaultMutableTreeNode) child.getChildAt(j);
+							Object subUserObject = subChild.getUserObject();
+							if (subUserObject instanceof Transaction){
+								Transaction t = (Transaction) subUserObject;
+								sb.append(
+								"<td>")
+								.append(t.getDescription())
+								.append("</td><td>")
+								.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+								.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
+								.append("</td><td>");
+								if (t.getTo() instanceof Account){
+									sb.append(t.getTo());
+								}
+								else{
+									sb.append(t.getFrom());							
+								}
+								sb.append("</td>");
+
+							}
+							sb.append("</tr>");
+						}
+						sb.append("</table></td></tr>");
+					}
+				}
+				else if (userObject instanceof ReportEntryTotal){
+					ReportEntryTotal entry = (ReportEntryTotal) userObject;
+					
+					sb.append(
+							"<tr><td colspan=3><b>")
+							.append(Translate.getInstance().get(TranslateKeys.TOTAL))
+							.append("</b></td>")
+							.append((entry.getTotal() < 0 ? "<td class='red'>" : "<td>"))
+							.append("<b>")
+							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
+							.append("</b></td>")
+							.append("</tr>");
+				}
+			}
+		}
+		
+		sb.append("</table>\n</body>\n</html>");
+		
+		return sb.toString();
+	}
 }

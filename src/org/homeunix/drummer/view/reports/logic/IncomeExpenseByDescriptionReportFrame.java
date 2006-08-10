@@ -302,4 +302,9 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 			return this;
 		}		
 	}
+	
+	@Override
+	public String getHtmlReport() {
+		return "Stuff";
+	}
 }

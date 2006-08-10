@@ -38,10 +38,14 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	protected final JTree reportTree;
 	protected final JButton okButton;
 	protected final JButton editButton;
+	protected final Date startDate;
+	protected final Date endDate;
 	
 	protected DefaultMutableTreeNode selectedNode;
 	
 	public ReportFrameLayout(Date startDate, Date endDate){
+		this.startDate = startDate;
+		this.endDate = endDate;
 		reportTree = new JTree(buildReport(startDate, endDate));
 		reportTree.setRootVisible(false);
 		reportTree.setShowsRootHandles(true);
@@ -103,6 +107,8 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	public Component getPrintedComponent() {
 		return reportTree;
 	}
+	
+	public abstract String getHtmlReport();
 	
 	@Override
 	protected AbstractBudgetFrame initActions() {

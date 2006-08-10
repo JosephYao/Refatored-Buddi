@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,8 +28,8 @@ import net.roydesign.ui.JScreenMenuBar;
 import net.roydesign.ui.JScreenMenuItem;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.BrowserLauncher;
@@ -39,6 +41,9 @@ import org.homeunix.drummer.view.layout.AboutDialog;
 import org.homeunix.drummer.view.logic.MainBudgetFrame;
 import org.homeunix.drummer.view.logic.PreferencesFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
+import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
+import org.homeunix.drummer.view.reports.logic.IncomeExpenseByCategoryReportFrame;
+import org.homeunix.drummer.view.reports.logic.IncomeExpenseByDescriptionReportFrame;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
@@ -69,12 +74,15 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_DATA_FILE));
 		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
+		final JScreenMenuItem export = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML));
 		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
 		
 		newFile.addUserFrame(MainBudgetFrame.class);
 		open.addUserFrame(MainBudgetFrame.class);
 		backup.addUserFrame(MainBudgetFrame.class);
 		restore.addUserFrame(MainBudgetFrame.class);
+		export.addUserFrame(IncomeExpenseByCategoryReportFrame.class);
+		export.addUserFrame(IncomeExpenseByDescriptionReportFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
 		
 		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -87,6 +95,8 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		export.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
@@ -98,6 +108,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.add(restore);
 		file.addSeparator();
 		file.add(print);
+		file.add(export);
 		file.addSeparator();
 		file.add(close);
 		
@@ -341,6 +352,29 @@ public class BuddiMenu extends JScreenMenuBar {
 								Translate.getInstance().get(TranslateKeys.PRINT_ERROR),
 								JOptionPane.INFORMATION_MESSAGE
 						);
+				}
+			}
+		});
+		
+		export.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (BuddiMenu.this.frame instanceof ReportFrameLayout){
+					String htmlReport = ((ReportFrameLayout) BuddiMenu.this.frame).getHtmlReport();
+					
+					File tempFile = new File(new File(PrefsInstance.getInstance().getPrefs().getDataFile()).getParent() + File.separatorChar + "report_" + (int) (Math.random() * 1000) + ".html");
+					
+					try{
+						PrintStream out = new PrintStream(new FileOutputStream(tempFile));
+						out.println(htmlReport);
+						out.close();
+						
+						tempFile.deleteOnExit();
+						
+						BrowserLauncher.openURL("file://" + tempFile.getAbsolutePath());
+					}
+					catch (IOException ioe){
+						Log.error(ioe);
+					}
 				}
 			}
 		});
