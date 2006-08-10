@@ -2,8 +2,7 @@
 
 <h1>News</h1>
 
-<h2>1.2.1</h2>
-
+<h2>1.2.1 (August 10 2006)</h2>
 <ul>
 <li>Added Norwegian translation (thanks to Gudbrand Hegge)</li>
 <li>Fixed incorrect translation key</li>
