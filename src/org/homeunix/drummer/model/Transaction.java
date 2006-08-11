@@ -214,6 +214,32 @@ public interface Transaction extends EObject, Comparable<Transaction> {
 	void setBalanceTo(long value);
 
 	/**
+	 * Returns the value of the '<em><b>Scheduled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Scheduled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Scheduled</em>' attribute.
+	 * @see #setScheduled(boolean)
+	 * @see org.homeunix.drummer.model.ModelPackage#getTransaction_Scheduled()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isScheduled();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Transaction#isScheduled <em>Scheduled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Scheduled</em>' attribute.
+	 * @see #isScheduled()
+	 * @generated
+	 */
+	void setScheduled(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>

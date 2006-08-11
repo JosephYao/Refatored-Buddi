@@ -12,7 +12,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -31,8 +30,8 @@ import org.homeunix.drummer.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAccounts <em>Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,7 +63,7 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getAccounts();
+		return ModelPackage.Literals.ACCOUNTS;
 	}
 
 	/**
@@ -86,7 +85,17 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public DataModel getAllAccounts() {
 		if (eContainerFeatureID != ModelPackage.ACCOUNTS__ALL_ACCOUNTS) return null;
-		return (DataModel)eContainer;
+		return (DataModel)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAllAccounts(DataModel newAllAccounts, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newAllAccounts, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
+		return msgs;
 	}
 
 	/**
@@ -95,15 +104,15 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * @generated
 	 */
 	public void setAllAccounts(DataModel newAllAccounts) {
-		if (newAllAccounts != eContainer || (eContainerFeatureID != ModelPackage.ACCOUNTS__ALL_ACCOUNTS && newAllAccounts != null)) {
+		if (newAllAccounts != eInternalContainer() || (eContainerFeatureID != ModelPackage.ACCOUNTS__ALL_ACCOUNTS && newAllAccounts != null)) {
 			if (EcoreUtil.isAncestor(this, newAllAccounts))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (eContainer != null)
+			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newAllAccounts != null)
 				msgs = ((InternalEObject)newAllAccounts).eInverseAdd(this, ModelPackage.DATA_MODEL__ALL_ACCOUNTS, DataModel.class, msgs);
-			msgs = eBasicSetContainer((InternalEObject)newAllAccounts, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
+			msgs = basicSetAllAccounts(newAllAccounts, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
@@ -115,71 +124,57 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-					if (eContainer != null)
-						msgs = eBasicRemoveFromContainer(msgs);
-					return eBasicSetContainer(otherEnd, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
-				default:
-					return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		if (eContainer != null)
-			msgs = eBasicRemoveFromContainer(msgs);
-		return eBasicSetContainer(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-					return eBasicSetContainer(null, ModelPackage.ACCOUNTS__ALL_ACCOUNTS, msgs);
-				case ModelPackage.ACCOUNTS__ACCOUNTS:
-					return ((InternalEList)getAccounts()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eBasicRemoveFromContainer(NotificationChain msgs) {
-		if (eContainerFeatureID >= 0) {
-			switch (eContainerFeatureID) {
-				case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-					return eContainer.eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_ACCOUNTS, DataModel.class, msgs);
-				default:
-					return eDynamicBasicRemoveFromContainer(msgs);
-			}
-		}
-		return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts();
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetAllAccounts((DataModel)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.ACCOUNTS__ACCOUNTS:
+				return ((InternalEList)getAccounts()).basicRemove(otherEnd, msgs);
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return basicSetAllAccounts(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return eInternalContainer().eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_ACCOUNTS, DataModel.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return getAccounts();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -188,17 +183,17 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)newValue);
-				return;
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
 				getAccounts().addAll((Collection)newValue);
 				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)newValue);
+				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -206,16 +201,16 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)null);
-				return;
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
 				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)null);
+				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -223,14 +218,14 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts() != null;
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return accounts != null && !accounts.isEmpty();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts() != null;
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 } //AccountsImpl

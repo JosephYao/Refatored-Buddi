@@ -7,13 +7,9 @@
 package org.homeunix.drummer.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Type;
@@ -32,7 +28,7 @@ import org.homeunix.drummer.model.Type;
  *
  * @generated
  */
-public class TypeImpl extends EObjectImpl implements Type {
+public class TypeImpl extends EObjectImpl implements Type, Comparable<Type> {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -88,7 +84,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getType();
+		return ModelPackage.Literals.TYPE;
 	}
 
 	/**
@@ -138,14 +134,14 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.TYPE__NAME:
 				return getName();
 			case ModelPackage.TYPE__CREDIT:
 				return isCredit() ? Boolean.TRUE : Boolean.FALSE;
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -153,8 +149,8 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.TYPE__NAME:
 				setName((String)newValue);
 				return;
@@ -162,7 +158,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 				setCredit(((Boolean)newValue).booleanValue());
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -170,8 +166,8 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -179,7 +175,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 				setCredit(CREDIT_EDEFAULT);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -187,14 +183,14 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ModelPackage.TYPE__CREDIT:
 				return credit != CREDIT_EDEFAULT;
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

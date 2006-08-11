@@ -334,14 +334,16 @@ public class EditableTransaction extends JPanel {
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (parent.getAccount() != null) {
-					if (!parent.getAccount().equals(from.getSelectedItem())){
-						to.setSelectedItem(parent.getAccount());
-					}
-					
-					if (parent.getAccount().equals(from.getSelectedItem())
-							&& parent.getAccount().equals(to.getSelectedItem())){
-						to.setSelectedItem(null);
+				if (parent != null){
+					if (parent.getAccount() != null) {
+						if (!parent.getAccount().equals(from.getSelectedItem())){
+							to.setSelectedItem(parent.getAccount());
+						}
+
+						if (parent.getAccount().equals(from.getSelectedItem())
+								&& parent.getAccount().equals(to.getSelectedItem())){
+							to.setSelectedItem(null);
+						}
 					}
 				}
 			}
@@ -350,14 +352,16 @@ public class EditableTransaction extends JPanel {
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (to.getSelectedItem() instanceof Source) {
-					if (!parent.getAccount().equals(to.getSelectedItem())){
-						from.setSelectedItem(parent.getAccount());
-					}
+				if (parent != null){
+					if (to.getSelectedItem() instanceof Source) {
+						if (!parent.getAccount().equals(to.getSelectedItem())){
+							from.setSelectedItem(parent.getAccount());
+						}
 
-					if (parent.getAccount().equals(from.getSelectedItem())
-							&& parent.getAccount().equals(to.getSelectedItem())){
-						from.setSelectedItem(null);
+						if (parent.getAccount().equals(from.getSelectedItem())
+								&& parent.getAccount().equals(to.getSelectedItem())){
+							from.setSelectedItem(null);
+						}
 					}
 				}
 			}

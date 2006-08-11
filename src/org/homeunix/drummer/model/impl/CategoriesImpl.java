@@ -12,7 +12,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -64,7 +63,7 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getCategories();
+		return ModelPackage.Literals.CATEGORIES;
 	}
 
 	/**
@@ -74,7 +73,17 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public DataModel getAllCategories() {
 		if (eContainerFeatureID != ModelPackage.CATEGORIES__ALL_CATEGORIES) return null;
-		return (DataModel)eContainer;
+		return (DataModel)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAllCategories(DataModel newAllCategories, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newAllCategories, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
+		return msgs;
 	}
 
 	/**
@@ -83,19 +92,128 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 * @generated
 	 */
 	public void setAllCategories(DataModel newAllCategories) {
-		if (newAllCategories != eContainer || (eContainerFeatureID != ModelPackage.CATEGORIES__ALL_CATEGORIES && newAllCategories != null)) {
+		if (newAllCategories != eInternalContainer() || (eContainerFeatureID != ModelPackage.CATEGORIES__ALL_CATEGORIES && newAllCategories != null)) {
 			if (EcoreUtil.isAncestor(this, newAllCategories))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (eContainer != null)
+			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newAllCategories != null)
 				msgs = ((InternalEObject)newAllCategories).eInverseAdd(this, ModelPackage.DATA_MODEL__ALL_CATEGORIES, DataModel.class, msgs);
-			msgs = eBasicSetContainer((InternalEObject)newAllCategories, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
+			msgs = basicSetAllCategories(newAllCategories, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CATEGORIES__ALL_CATEGORIES, newAllCategories, newAllCategories));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetAllCategories((DataModel)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__CATEGORIES:
+				return ((InternalEList)getCategories()).basicRemove(otherEnd, msgs);
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return basicSetAllCategories(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return eInternalContainer().eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_CATEGORIES, DataModel.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__CATEGORIES:
+				return getCategories();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__CATEGORIES:
+				getCategories().clear();
+				getCategories().addAll((Collection)newValue);
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__CATEGORIES:
+				getCategories().clear();
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case ModelPackage.CATEGORIES__CATEGORIES:
+				return categories != null && !categories.isEmpty();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories() != null;
+		}
+		return super.eIsSet(featureID);
 	}
 
 	/**
@@ -108,129 +226,6 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 			categories = new EObjectContainmentEList(Category.class, this, ModelPackage.CATEGORIES__CATEGORIES);
 		}
 		return categories;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-					if (eContainer != null)
-						msgs = eBasicRemoveFromContainer(msgs);
-					return eBasicSetContainer(otherEnd, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
-				default:
-					return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		if (eContainer != null)
-			msgs = eBasicRemoveFromContainer(msgs);
-		return eBasicSetContainer(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.CATEGORIES__CATEGORIES:
-					return ((InternalEList)getCategories()).basicRemove(otherEnd, msgs);
-				case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-					return eBasicSetContainer(null, ModelPackage.CATEGORIES__ALL_CATEGORIES, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eBasicRemoveFromContainer(NotificationChain msgs) {
-		if (eContainerFeatureID >= 0) {
-			switch (eContainerFeatureID) {
-				case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-					return eContainer.eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_CATEGORIES, DataModel.class, msgs);
-				default:
-					return eDynamicBasicRemoveFromContainer(msgs);
-			}
-		}
-		return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__CATEGORIES:
-				return getCategories();
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories();
-		}
-		return eDynamicGet(eFeature, resolve);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__CATEGORIES:
-				getCategories().clear();
-				getCategories().addAll((Collection)newValue);
-				return;
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)newValue);
-				return;
-		}
-		eDynamicSet(eFeature, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__CATEGORIES:
-				getCategories().clear();
-				return;
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)null);
-				return;
-		}
-		eDynamicUnset(eFeature);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORIES__CATEGORIES:
-				return categories != null && !categories.isEmpty();
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories() != null;
-		}
-		return eDynamicIsSet(eFeature);
 	}
 
 } //CategoriesImpl

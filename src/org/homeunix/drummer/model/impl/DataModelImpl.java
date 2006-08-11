@@ -8,20 +8,15 @@ package org.homeunix.drummer.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.model.Accounts;
 import org.homeunix.drummer.model.Categories;
 import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Transactions;
-
 import org.homeunix.drummer.model.Types;
 
 /**
@@ -31,9 +26,9 @@ import org.homeunix.drummer.model.Types;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTransactions <em>All Transactions</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllAccounts <em>All Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTransactions <em>All Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllCategories <em>All Categories</em>}</li>
  * </ul>
  * </p>
@@ -42,14 +37,14 @@ import org.homeunix.drummer.model.Types;
  */
 public class DataModelImpl extends EObjectImpl implements DataModel {
 	/**
-	 * The cached value of the '{@link #getAllTransactions() <em>All Transactions</em>}' containment reference.
+	 * The cached value of the '{@link #getAllTypes() <em>All Types</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAllTransactions()
+	 * @see #getAllTypes()
 	 * @generated
 	 * @ordered
 	 */
-	protected Transactions allTransactions = null;
+	protected Types allTypes = null;
 
 	/**
 	 * The cached value of the '{@link #getAllAccounts() <em>All Accounts</em>}' containment reference.
@@ -62,14 +57,14 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	protected Accounts allAccounts = null;
 
 	/**
-	 * The cached value of the '{@link #getAllTypes() <em>All Types</em>}' containment reference.
+	 * The cached value of the '{@link #getAllTransactions() <em>All Transactions</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAllTypes()
+	 * @see #getAllTransactions()
 	 * @generated
 	 * @ordered
 	 */
-	protected Types allTypes = null;
+	protected Transactions allTransactions = null;
 
 	/**
 	 * The cached value of the '{@link #getAllCategories() <em>All Categories</em>}' containment reference.
@@ -96,7 +91,7 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getDataModel();
+		return ModelPackage.Literals.DATA_MODEL;
 	}
 
 	/**
@@ -140,6 +135,136 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DATA_MODEL__ALL_CATEGORIES, newAllCategories, newAllCategories));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				if (allTypes != null)
+					msgs = ((InternalEObject)allTypes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TYPES, null, msgs);
+				return basicSetAllTypes((Types)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				if (allAccounts != null)
+					msgs = ((InternalEObject)allAccounts).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_ACCOUNTS, null, msgs);
+				return basicSetAllAccounts((Accounts)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				if (allTransactions != null)
+					msgs = ((InternalEObject)allTransactions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, null, msgs);
+				return basicSetAllTransactions((Transactions)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				if (allCategories != null)
+					msgs = ((InternalEObject)allCategories).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_CATEGORIES, null, msgs);
+				return basicSetAllCategories((Categories)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				return basicSetAllTypes(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return basicSetAllAccounts(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return basicSetAllTransactions(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return basicSetAllCategories(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				return getAllTypes();
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return getAllAccounts();
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return getAllTransactions();
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return getAllCategories();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				setAllTypes((Types)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				setAllAccounts((Accounts)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				setAllTransactions((Transactions)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				setAllCategories((Categories)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				setAllTypes((Types)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				setAllAccounts((Accounts)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				setAllTransactions((Transactions)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				setAllCategories((Categories)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case ModelPackage.DATA_MODEL__ALL_TYPES:
+				return allTypes != null;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return allAccounts != null;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return allTransactions != null;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return allCategories != null;
+		}
+		return super.eIsSet(featureID);
 	}
 
 	/**
@@ -269,146 +394,6 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DATA_MODEL__ALL_ACCOUNTS, newAllAccounts, newAllAccounts));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-					if (allTransactions != null)
-						msgs = ((InternalEObject)allTransactions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, null, msgs);
-					return basicSetAllTransactions((Transactions)otherEnd, msgs);
-				case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-					if (allAccounts != null)
-						msgs = ((InternalEObject)allAccounts).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_ACCOUNTS, null, msgs);
-					return basicSetAllAccounts((Accounts)otherEnd, msgs);
-				case ModelPackage.DATA_MODEL__ALL_TYPES:
-					if (allTypes != null)
-						msgs = ((InternalEObject)allTypes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TYPES, null, msgs);
-					return basicSetAllTypes((Types)otherEnd, msgs);
-				case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-					if (allCategories != null)
-						msgs = ((InternalEObject)allCategories).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_CATEGORIES, null, msgs);
-					return basicSetAllCategories((Categories)otherEnd, msgs);
-				default:
-					return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		if (eContainer != null)
-			msgs = eBasicRemoveFromContainer(msgs);
-		return eBasicSetContainer(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-					return basicSetAllTransactions(null, msgs);
-				case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-					return basicSetAllAccounts(null, msgs);
-				case ModelPackage.DATA_MODEL__ALL_TYPES:
-					return basicSetAllTypes(null, msgs);
-				case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-					return basicSetAllCategories(null, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				return getAllTransactions();
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				return getAllAccounts();
-			case ModelPackage.DATA_MODEL__ALL_TYPES:
-				return getAllTypes();
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				return getAllCategories();
-		}
-		return eDynamicGet(eFeature, resolve);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				setAllTransactions((Transactions)newValue);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				setAllAccounts((Accounts)newValue);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_TYPES:
-				setAllTypes((Types)newValue);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				setAllCategories((Categories)newValue);
-				return;
-		}
-		eDynamicSet(eFeature, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				setAllTransactions((Transactions)null);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				setAllAccounts((Accounts)null);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_TYPES:
-				setAllTypes((Types)null);
-				return;
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				setAllCategories((Categories)null);
-				return;
-		}
-		eDynamicUnset(eFeature);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				return allTransactions != null;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				return allAccounts != null;
-			case ModelPackage.DATA_MODEL__ALL_TYPES:
-				return allTypes != null;
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				return allCategories != null;
-		}
-		return eDynamicIsSet(eFeature);
 	}
 
 } //DataModelImpl

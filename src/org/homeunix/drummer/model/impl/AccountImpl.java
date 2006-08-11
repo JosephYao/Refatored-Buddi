@@ -6,16 +6,14 @@
  */
 package org.homeunix.drummer.model.impl;
 
-import java.util.Date;
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.ModelPackage;
@@ -106,7 +104,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getAccount();
+		return ModelPackage.Literals.ACCOUNT;
 	}
 
 	/**
@@ -158,8 +156,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	 */
 	public Type getAccountType() {
 		if (accountType != null && accountType.eIsProxy()) {
-			Type oldAccountType = accountType;
-			accountType = (Type)eResolveProxy((InternalEObject)accountType);
+			InternalEObject oldAccountType = (InternalEObject)accountType;
+			accountType = (Type)eResolveProxy(oldAccountType);
 			if (accountType != oldAccountType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.ACCOUNT__ACCOUNT_TYPE, oldAccountType, accountType));
@@ -194,14 +192,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNT__NAME:
-				return getName();
-			case ModelPackage.ACCOUNT__DELETED:
-				return isDeleted() ? Boolean.TRUE : Boolean.FALSE;
-			case ModelPackage.ACCOUNT__CREATION_DATE:
-				return getCreationDate();
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNT__BALANCE:
 				return new Long(getBalance());
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
@@ -210,7 +202,7 @@ public class AccountImpl extends SourceImpl implements Account {
 				if (resolve) return getAccountType();
 				return basicGetAccountType();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -218,17 +210,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNT__NAME:
-				setName((String)newValue);
-				return;
-			case ModelPackage.ACCOUNT__DELETED:
-				setDeleted(((Boolean)newValue).booleanValue());
-				return;
-			case ModelPackage.ACCOUNT__CREATION_DATE:
-				setCreationDate((Date)newValue);
-				return;
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNT__BALANCE:
 				setBalance(((Long)newValue).longValue());
 				return;
@@ -239,7 +222,7 @@ public class AccountImpl extends SourceImpl implements Account {
 				setAccountType((Type)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -247,17 +230,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNT__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case ModelPackage.ACCOUNT__DELETED:
-				setDeleted(DELETED_EDEFAULT);
-				return;
-			case ModelPackage.ACCOUNT__CREATION_DATE:
-				setCreationDate(CREATION_DATE_EDEFAULT);
-				return;
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNT__BALANCE:
 				setBalance(BALANCE_EDEFAULT);
 				return;
@@ -268,7 +242,7 @@ public class AccountImpl extends SourceImpl implements Account {
 				setAccountType((Type)null);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -276,14 +250,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.ACCOUNT__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case ModelPackage.ACCOUNT__DELETED:
-				return deleted != DELETED_EDEFAULT;
-			case ModelPackage.ACCOUNT__CREATION_DATE:
-				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.ACCOUNT__BALANCE:
 				return balance != BALANCE_EDEFAULT;
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
@@ -291,7 +259,7 @@ public class AccountImpl extends SourceImpl implements Account {
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				return accountType != null;
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

@@ -7,12 +7,10 @@
 package org.homeunix.drummer.model.impl;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -37,7 +35,7 @@ import org.homeunix.drummer.model.Source;
  *
  * @generated
  */
-public class CategoryImpl extends SourceImpl implements Category {
+public class CategoryImpl extends SourceImpl implements Category, Comparable<Source> {
 	/**
 	 * The default value of the '{@link #getBudgetedAmount() <em>Budgeted Amount</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -113,7 +111,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getCategory();
+		return ModelPackage.Literals.CATEGORY;
 	}
 
 	/**
@@ -165,8 +163,8 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 */
 	public Category getParent() {
 		if (parent != null && parent.eIsProxy()) {
-			Category oldParent = parent;
-			parent = (Category)eResolveProxy((InternalEObject)parent);
+			InternalEObject oldParent = (InternalEObject)parent;
+			parent = (Category)eResolveProxy(oldParent);
 			if (parent != oldParent) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CATEGORY__PARENT, oldParent, parent));
@@ -199,29 +197,10 @@ public class CategoryImpl extends SourceImpl implements Category {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 */
-	public void setParent(Category newParent) {
-		if (newParent != this){
-			Category oldParent = parent;
-			parent = newParent;
-			if (eNotificationRequired())
-				eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CATEGORY__PARENT, oldParent, parent));
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORY__NAME:
-				return getName();
-			case ModelPackage.CATEGORY__DELETED:
-				return isDeleted() ? Boolean.TRUE : Boolean.FALSE;
-			case ModelPackage.CATEGORY__CREATION_DATE:
-				return getCreationDate();
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.CATEGORY__BUDGETED_AMOUNT:
 				return new Long(getBudgetedAmount());
 			case ModelPackage.CATEGORY__INCOME:
@@ -232,7 +211,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 			case ModelPackage.CATEGORY__CHILDREN:
 				return getChildren();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -241,17 +220,8 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORY__NAME:
-				setName((String)newValue);
-				return;
-			case ModelPackage.CATEGORY__DELETED:
-				setDeleted(((Boolean)newValue).booleanValue());
-				return;
-			case ModelPackage.CATEGORY__CREATION_DATE:
-				setCreationDate((Date)newValue);
-				return;
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.CATEGORY__BUDGETED_AMOUNT:
 				setBudgetedAmount(((Long)newValue).longValue());
 				return;
@@ -266,7 +236,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 				getChildren().addAll((Collection)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -274,17 +244,8 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORY__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case ModelPackage.CATEGORY__DELETED:
-				setDeleted(DELETED_EDEFAULT);
-				return;
-			case ModelPackage.CATEGORY__CREATION_DATE:
-				setCreationDate(CREATION_DATE_EDEFAULT);
-				return;
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.CATEGORY__BUDGETED_AMOUNT:
 				setBudgetedAmount(BUDGETED_AMOUNT_EDEFAULT);
 				return;
@@ -298,7 +259,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 				getChildren().clear();
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -306,14 +267,8 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.CATEGORY__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case ModelPackage.CATEGORY__DELETED:
-				return deleted != DELETED_EDEFAULT;
-			case ModelPackage.CATEGORY__CREATION_DATE:
-				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.CATEGORY__BUDGETED_AMOUNT:
 				return budgetedAmount != BUDGETED_AMOUNT_EDEFAULT;
 			case ModelPackage.CATEGORY__INCOME:
@@ -323,7 +278,20 @@ public class CategoryImpl extends SourceImpl implements Category {
 			case ModelPackage.CATEGORY__CHILDREN:
 				return children != null && !children.isEmpty();
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 */
+	public void setParent(Category newParent) {
+		if (newParent != this){
+			Category oldParent = parent;
+			parent = newParent;
+			if (eNotificationRequired())
+				eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.CATEGORY__PARENT, oldParent, parent));
+		}
 	}
 
 	/**

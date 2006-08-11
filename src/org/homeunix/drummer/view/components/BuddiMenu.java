@@ -38,6 +38,7 @@ import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.AboutDialog;
+import org.homeunix.drummer.view.logic.EditScheduledTransactionsFrame;
 import org.homeunix.drummer.view.logic.MainBuddiFrame;
 import org.homeunix.drummer.view.logic.PreferencesFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
@@ -117,10 +118,13 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem cut = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CUT));
 		final JScreenMenuItem copy = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.COPY));
 		final JScreenMenuItem paste = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PASTE));
+		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_TRANSACTIONS));
 		
 		cut.addUserFrame(TransactionsFrame.class);
 		copy.addUserFrame(TransactionsFrame.class);
 		paste.addUserFrame(TransactionsFrame.class);
+		editAutomaticTransactions.addUserFrame(MainBuddiFrame.class);
+		editAutomaticTransactions.addUserFrame(TransactionsFrame.class);
 
 		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -133,6 +137,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		edit.add(cut);
 		edit.add(copy);
 		edit.add(paste);
+		edit.addSeparator();
+		edit.add(editAutomaticTransactions);
 		
 		
 		//Window menu items
@@ -376,6 +382,12 @@ public class BuddiMenu extends JScreenMenuBar {
 						Log.error(ioe);
 					}
 				}
+			}
+		});
+		
+		editAutomaticTransactions.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new EditScheduledTransactionsFrame().openWindow();
 			}
 		});
 		

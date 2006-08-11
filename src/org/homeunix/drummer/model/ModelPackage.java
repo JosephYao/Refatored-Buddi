@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface ModelPackage extends EPackage{
+public interface ModelPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -68,7 +68,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSource()
 	 * @generated
 	 */
-	int SOURCE = 5;
+	int SOURCE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -98,7 +98,7 @@ public interface ModelPackage extends EPackage{
 	int SOURCE__CREATION_DATE = 2;
 
 	/**
-	 * The number of structural features of the the '<em>Source</em>' class.
+	 * The number of structural features of the '<em>Source</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -171,7 +171,7 @@ public interface ModelPackage extends EPackage{
 	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the the '<em>Account</em>' class.
+	 * The number of structural features of the '<em>Account</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -190,25 +190,25 @@ public interface ModelPackage extends EPackage{
 	int ACCOUNTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACCOUNTS__ALL_ACCOUNTS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Accounts</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNTS__ACCOUNTS = 1;
+	int ACCOUNTS__ACCOUNTS = 0;
 
 	/**
-	 * The number of structural features of the the '<em>Accounts</em>' class.
+	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNTS__ALL_ACCOUNTS = 1;
+
+	/**
+	 * The number of structural features of the '<em>Accounts</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -245,7 +245,7 @@ public interface ModelPackage extends EPackage{
 	int CATEGORIES__ALL_CATEGORIES = 1;
 
 	/**
-	 * The number of structural features of the the '<em>Categories</em>' class.
+	 * The number of structural features of the '<em>Categories</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -327,7 +327,7 @@ public interface ModelPackage extends EPackage{
 	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 3;
 
 	/**
-	 * The number of structural features of the the '<em>Category</em>' class.
+	 * The number of structural features of the '<em>Category</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -346,13 +346,13 @@ public interface ModelPackage extends EPackage{
 	int DATA_MODEL = 4;
 
 	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
+	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 0;
+	int DATA_MODEL__ALL_TYPES = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
@@ -364,13 +364,13 @@ public interface ModelPackage extends EPackage{
 	int DATA_MODEL__ALL_ACCOUNTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
+	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TYPES = 2;
+	int DATA_MODEL__ALL_TRANSACTIONS = 2;
 
 	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
@@ -382,13 +382,86 @@ public interface ModelPackage extends EPackage{
 	int DATA_MODEL__ALL_CATEGORIES = 3;
 
 	/**
-	 * The number of structural features of the the '<em>Data Model</em>' class.
+	 * The number of structural features of the '<em>Data Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int DATA_MODEL_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.ScheduleImpl <em>Schedule</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.model.impl.ScheduleImpl
+	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSchedule()
+	 * @generated
+	 */
+	int SCHEDULE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__START_DATE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Frequency Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__FREQUENCY_TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Schedule Day</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__SCHEDULE_DAY = 2;
+
+	/**
+	 * The feature id for the '<em><b>Last Date Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__LAST_DATE_CREATED = 3;
+
+	/**
+	 * The feature id for the '<em><b>End Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__END_DATE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Sample Transaction</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__SAMPLE_TRANSACTION = 5;
+
+	/**
+	 * The number of structural features of the '<em>Schedule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionImpl <em>Transaction</em>}' class.
@@ -398,7 +471,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransaction()
 	 * @generated
 	 */
-	int TRANSACTION = 6;
+	int TRANSACTION = 7;
 
 	/**
 	 * The feature id for the '<em><b>Amount</b></em>' attribute.
@@ -464,13 +537,22 @@ public interface ModelPackage extends EPackage{
 	int TRANSACTION__BALANCE_TO = 6;
 
 	/**
+	 * The feature id for the '<em><b>Scheduled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__SCHEDULED = 7;
+
+	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__TO = 7;
+	int TRANSACTION__TO = 8;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
@@ -479,16 +561,16 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__FROM = 8;
+	int TRANSACTION__FROM = 9;
 
 	/**
-	 * The number of structural features of the the '<em>Transaction</em>' class.
+	 * The number of structural features of the '<em>Transaction</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION_FEATURE_COUNT = 9;
+	int TRANSACTION_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionsImpl <em>Transactions</em>}' class.
@@ -498,16 +580,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransactions()
 	 * @generated
 	 */
-	int TRANSACTIONS = 7;
-
-	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 0;
+	int TRANSACTIONS = 8;
 
 	/**
 	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
@@ -516,16 +589,34 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__TRANSACTIONS = 1;
+	int TRANSACTIONS__TRANSACTIONS = 0;
 
 	/**
-	 * The number of structural features of the the '<em>Transactions</em>' class.
+	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS_FEATURE_COUNT = 2;
+	int TRANSACTIONS__ALL_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 2;
+
+	/**
+	 * The number of structural features of the '<em>Transactions</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TypeImpl <em>Type</em>}' class.
@@ -535,7 +626,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 8;
+	int TYPE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -556,7 +647,7 @@ public interface ModelPackage extends EPackage{
 	int TYPE__CREDIT = 1;
 
 	/**
-	 * The number of structural features of the the '<em>Type</em>' class.
+	 * The number of structural features of the '<em>Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -572,7 +663,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTypes()
 	 * @generated
 	 */
-	int TYPES = 9;
+	int TYPES = 10;
 
 	/**
 	 * The feature id for the '<em><b>All Types</b></em>' container reference.
@@ -593,7 +684,7 @@ public interface ModelPackage extends EPackage{
 	int TYPES__TYPES = 1;
 
 	/**
-	 * The number of structural features of the the '<em>Types</em>' class.
+	 * The number of structural features of the '<em>Types</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -609,7 +700,7 @@ public interface ModelPackage extends EPackage{
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDate()
 	 * @generated
 	 */
-	int DATE = 10;
+	int DATE = 11;
 
 
 	/**
@@ -795,6 +886,82 @@ public interface ModelPackage extends EPackage{
 	EReference getDataModel_AllCategories();
 
 	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Schedule <em>Schedule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Schedule</em>'.
+	 * @see org.homeunix.drummer.model.Schedule
+	 * @generated
+	 */
+	EClass getSchedule();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getStartDate <em>Start Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Start Date</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getStartDate()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_StartDate();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getFrequencyType <em>Frequency Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Frequency Type</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getFrequencyType()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_FrequencyType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getScheduleDay <em>Schedule Day</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Schedule Day</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getScheduleDay()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_ScheduleDay();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getLastDateCreated <em>Last Date Created</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Last Date Created</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getLastDateCreated()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_LastDateCreated();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getEndDate <em>End Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>End Date</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getEndDate()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_EndDate();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.Schedule#getSampleTransaction <em>Sample Transaction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Sample Transaction</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getSampleTransaction()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EReference getSchedule_SampleTransaction();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.DataModel#getAllTypes <em>All Types</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -958,6 +1125,17 @@ public interface ModelPackage extends EPackage{
 	EAttribute getTransaction_BalanceTo();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Transaction#isScheduled <em>Scheduled</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Scheduled</em>'.
+	 * @see org.homeunix.drummer.model.Transaction#isScheduled()
+	 * @see #getTransaction()
+	 * @generated
+	 */
+	EAttribute getTransaction_Scheduled();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.Transaction#getFrom <em>From</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1076,6 +1254,17 @@ public interface ModelPackage extends EPackage{
 	EReference getTransactions_AllTransactions();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.model.Transactions#getScheduledTransactions <em>Scheduled Transactions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Scheduled Transactions</em>'.
+	 * @see org.homeunix.drummer.model.Transactions#getScheduledTransactions()
+	 * @see #getTransactions()
+	 * @generated
+	 */
+	EReference getTransactions_ScheduledTransactions();
+
+	/**
 	 * Returns the meta object for data type '{@link java.util.Date <em>Date</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1094,5 +1283,468 @@ public interface ModelPackage extends EPackage{
 	 * @generated
 	 */
 	ModelFactory getModelFactory();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Defines literals for the meta objects that represent
+	 * <ul>
+	 *   <li>each class,</li>
+	 *   <li>each feature of each class,</li>
+	 *   <li>each enum,</li>
+	 *   <li>and each data type</li>
+	 * </ul>
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	interface Literals  {
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.AccountImpl <em>Account</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.AccountImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getAccount()
+		 * @generated
+		 */
+		EClass ACCOUNT = eINSTANCE.getAccount();
+
+		/**
+		 * The meta object literal for the '<em><b>Balance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACCOUNT__BALANCE = eINSTANCE.getAccount_Balance();
+
+		/**
+		 * The meta object literal for the '<em><b>Starting Balance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACCOUNT__STARTING_BALANCE = eINSTANCE.getAccount_StartingBalance();
+
+		/**
+		 * The meta object literal for the '<em><b>Account Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ACCOUNT__ACCOUNT_TYPE = eINSTANCE.getAccount_AccountType();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.AccountsImpl <em>Accounts</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.AccountsImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getAccounts()
+		 * @generated
+		 */
+		EClass ACCOUNTS = eINSTANCE.getAccounts();
+
+		/**
+		 * The meta object literal for the '<em><b>Accounts</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ACCOUNTS__ACCOUNTS = eINSTANCE.getAccounts_Accounts();
+
+		/**
+		 * The meta object literal for the '<em><b>All Accounts</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ACCOUNTS__ALL_ACCOUNTS = eINSTANCE.getAccounts_AllAccounts();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.CategoriesImpl <em>Categories</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.CategoriesImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getCategories()
+		 * @generated
+		 */
+		EClass CATEGORIES = eINSTANCE.getCategories();
+
+		/**
+		 * The meta object literal for the '<em><b>Categories</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORIES__CATEGORIES = eINSTANCE.getCategories_Categories();
+
+		/**
+		 * The meta object literal for the '<em><b>All Categories</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORIES__ALL_CATEGORIES = eINSTANCE.getCategories_AllCategories();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.CategoryImpl <em>Category</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.CategoryImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getCategory()
+		 * @generated
+		 */
+		EClass CATEGORY = eINSTANCE.getCategory();
+
+		/**
+		 * The meta object literal for the '<em><b>Budgeted Amount</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CATEGORY__BUDGETED_AMOUNT = eINSTANCE.getCategory_BudgetedAmount();
+
+		/**
+		 * The meta object literal for the '<em><b>Income</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CATEGORY__INCOME = eINSTANCE.getCategory_Income();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORY__PARENT = eINSTANCE.getCategory_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORY__CHILDREN = eINSTANCE.getCategory_Children();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.DataModelImpl <em>Data Model</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.DataModelImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDataModel()
+		 * @generated
+		 */
+		EClass DATA_MODEL = eINSTANCE.getDataModel();
+
+		/**
+		 * The meta object literal for the '<em><b>All Types</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_TYPES = eINSTANCE.getDataModel_AllTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>All Accounts</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_ACCOUNTS = eINSTANCE.getDataModel_AllAccounts();
+
+		/**
+		 * The meta object literal for the '<em><b>All Transactions</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_TRANSACTIONS = eINSTANCE.getDataModel_AllTransactions();
+
+		/**
+		 * The meta object literal for the '<em><b>All Categories</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_CATEGORIES = eINSTANCE.getDataModel_AllCategories();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.ScheduleImpl <em>Schedule</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.ScheduleImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSchedule()
+		 * @generated
+		 */
+		EClass SCHEDULE = eINSTANCE.getSchedule();
+
+		/**
+		 * The meta object literal for the '<em><b>Start Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__START_DATE = eINSTANCE.getSchedule_StartDate();
+
+		/**
+		 * The meta object literal for the '<em><b>Frequency Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__FREQUENCY_TYPE = eINSTANCE.getSchedule_FrequencyType();
+
+		/**
+		 * The meta object literal for the '<em><b>Schedule Day</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__SCHEDULE_DAY = eINSTANCE.getSchedule_ScheduleDay();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Date Created</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__LAST_DATE_CREATED = eINSTANCE.getSchedule_LastDateCreated();
+
+		/**
+		 * The meta object literal for the '<em><b>End Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__END_DATE = eINSTANCE.getSchedule_EndDate();
+
+		/**
+		 * The meta object literal for the '<em><b>Sample Transaction</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCHEDULE__SAMPLE_TRANSACTION = eINSTANCE.getSchedule_SampleTransaction();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.SourceImpl <em>Source</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.SourceImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSource()
+		 * @generated
+		 */
+		EClass SOURCE = eINSTANCE.getSource();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE__NAME = eINSTANCE.getSource_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Deleted</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE__DELETED = eINSTANCE.getSource_Deleted();
+
+		/**
+		 * The meta object literal for the '<em><b>Creation Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOURCE__CREATION_DATE = eINSTANCE.getSource_CreationDate();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.TransactionImpl <em>Transaction</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.TransactionImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransaction()
+		 * @generated
+		 */
+		EClass TRANSACTION = eINSTANCE.getTransaction();
+
+		/**
+		 * The meta object literal for the '<em><b>Amount</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__AMOUNT = eINSTANCE.getTransaction_Amount();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__DESCRIPTION = eINSTANCE.getTransaction_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__DATE = eINSTANCE.getTransaction_Date();
+
+		/**
+		 * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__NUMBER = eINSTANCE.getTransaction_Number();
+
+		/**
+		 * The meta object literal for the '<em><b>Memo</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__MEMO = eINSTANCE.getTransaction_Memo();
+
+		/**
+		 * The meta object literal for the '<em><b>Balance From</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__BALANCE_FROM = eINSTANCE.getTransaction_BalanceFrom();
+
+		/**
+		 * The meta object literal for the '<em><b>Balance To</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__BALANCE_TO = eINSTANCE.getTransaction_BalanceTo();
+
+		/**
+		 * The meta object literal for the '<em><b>Scheduled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__SCHEDULED = eINSTANCE.getTransaction_Scheduled();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTION__TO = eINSTANCE.getTransaction_To();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTION__FROM = eINSTANCE.getTransaction_From();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.TransactionsImpl <em>Transactions</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.TransactionsImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransactions()
+		 * @generated
+		 */
+		EClass TRANSACTIONS = eINSTANCE.getTransactions();
+
+		/**
+		 * The meta object literal for the '<em><b>Transactions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTIONS__TRANSACTIONS = eINSTANCE.getTransactions_Transactions();
+
+		/**
+		 * The meta object literal for the '<em><b>All Transactions</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTIONS__ALL_TRANSACTIONS = eINSTANCE.getTransactions_AllTransactions();
+
+		/**
+		 * The meta object literal for the '<em><b>Scheduled Transactions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTIONS__SCHEDULED_TRANSACTIONS = eINSTANCE.getTransactions_ScheduledTransactions();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.TypeImpl <em>Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.TypeImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getType()
+		 * @generated
+		 */
+		EClass TYPE = eINSTANCE.getType();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE__NAME = eINSTANCE.getType_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Credit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE__CREDIT = eINSTANCE.getType_Credit();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.TypesImpl <em>Types</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.TypesImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTypes()
+		 * @generated
+		 */
+		EClass TYPES = eINSTANCE.getTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>All Types</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPES__ALL_TYPES = eINSTANCE.getTypes_AllTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Types</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPES__TYPES = eINSTANCE.getTypes_Types();
+
+		/**
+		 * The meta object literal for the '<em>Date</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Date
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDate()
+		 * @generated
+		 */
+		EDataType DATE = eINSTANCE.getDate();
+
+	}
 
 } //ModelPackage

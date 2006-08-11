@@ -10,7 +10,6 @@ import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -177,6 +176,26 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	protected long balanceTo = BALANCE_TO_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isScheduled() <em>Scheduled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isScheduled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SCHEDULED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isScheduled() <em>Scheduled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isScheduled()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean scheduled = SCHEDULED_EDEFAULT;
+
+	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -211,7 +230,7 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getTransaction();
+		return ModelPackage.Literals.TRANSACTION;
 	}
 
 	/**
@@ -366,10 +385,31 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isScheduled() {
+		return scheduled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setScheduled(boolean newScheduled) {
+		boolean oldScheduled = scheduled;
+		scheduled = newScheduled;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__SCHEDULED, oldScheduled, scheduled));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Source getFrom() {
 		if (from != null && from.eIsProxy()) {
-			Source oldFrom = from;
-			from = (Source)eResolveProxy((InternalEObject)from);
+			InternalEObject oldFrom = (InternalEObject)from;
+			from = (Source)eResolveProxy(oldFrom);
 			if (from != oldFrom) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TRANSACTION__FROM, oldFrom, from));
@@ -404,10 +444,156 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case ModelPackage.TRANSACTION__AMOUNT:
+				return new Long(getAmount());
+			case ModelPackage.TRANSACTION__DESCRIPTION:
+				return getDescription();
+			case ModelPackage.TRANSACTION__DATE:
+				return getDate();
+			case ModelPackage.TRANSACTION__NUMBER:
+				return getNumber();
+			case ModelPackage.TRANSACTION__MEMO:
+				return getMemo();
+			case ModelPackage.TRANSACTION__BALANCE_FROM:
+				return new Long(getBalanceFrom());
+			case ModelPackage.TRANSACTION__BALANCE_TO:
+				return new Long(getBalanceTo());
+			case ModelPackage.TRANSACTION__SCHEDULED:
+				return isScheduled() ? Boolean.TRUE : Boolean.FALSE;
+			case ModelPackage.TRANSACTION__TO:
+				if (resolve) return getTo();
+				return basicGetTo();
+			case ModelPackage.TRANSACTION__FROM:
+				if (resolve) return getFrom();
+				return basicGetFrom();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case ModelPackage.TRANSACTION__AMOUNT:
+				setAmount(((Long)newValue).longValue());
+				return;
+			case ModelPackage.TRANSACTION__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case ModelPackage.TRANSACTION__DATE:
+				setDate((Date)newValue);
+				return;
+			case ModelPackage.TRANSACTION__NUMBER:
+				setNumber((String)newValue);
+				return;
+			case ModelPackage.TRANSACTION__MEMO:
+				setMemo((String)newValue);
+				return;
+			case ModelPackage.TRANSACTION__BALANCE_FROM:
+				setBalanceFrom(((Long)newValue).longValue());
+				return;
+			case ModelPackage.TRANSACTION__BALANCE_TO:
+				setBalanceTo(((Long)newValue).longValue());
+				return;
+			case ModelPackage.TRANSACTION__SCHEDULED:
+				setScheduled(((Boolean)newValue).booleanValue());
+				return;
+			case ModelPackage.TRANSACTION__TO:
+				setTo((Source)newValue);
+				return;
+			case ModelPackage.TRANSACTION__FROM:
+				setFrom((Source)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case ModelPackage.TRANSACTION__AMOUNT:
+				setAmount(AMOUNT_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__DATE:
+				setDate(DATE_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__NUMBER:
+				setNumber(NUMBER_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__MEMO:
+				setMemo(MEMO_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__BALANCE_FROM:
+				setBalanceFrom(BALANCE_FROM_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__BALANCE_TO:
+				setBalanceTo(BALANCE_TO_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__SCHEDULED:
+				setScheduled(SCHEDULED_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__TO:
+				setTo((Source)null);
+				return;
+			case ModelPackage.TRANSACTION__FROM:
+				setFrom((Source)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case ModelPackage.TRANSACTION__AMOUNT:
+				return amount != AMOUNT_EDEFAULT;
+			case ModelPackage.TRANSACTION__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case ModelPackage.TRANSACTION__DATE:
+				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
+			case ModelPackage.TRANSACTION__NUMBER:
+				return NUMBER_EDEFAULT == null ? number != null : !NUMBER_EDEFAULT.equals(number);
+			case ModelPackage.TRANSACTION__MEMO:
+				return MEMO_EDEFAULT == null ? memo != null : !MEMO_EDEFAULT.equals(memo);
+			case ModelPackage.TRANSACTION__BALANCE_FROM:
+				return balanceFrom != BALANCE_FROM_EDEFAULT;
+			case ModelPackage.TRANSACTION__BALANCE_TO:
+				return balanceTo != BALANCE_TO_EDEFAULT;
+			case ModelPackage.TRANSACTION__SCHEDULED:
+				return scheduled != SCHEDULED_EDEFAULT;
+			case ModelPackage.TRANSACTION__TO:
+				return to != null;
+			case ModelPackage.TRANSACTION__FROM:
+				return from != null;
+		}
+		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Source getTo() {
 		if (to != null && to.eIsProxy()) {
-			Source oldTo = to;
-			to = (Source)eResolveProxy((InternalEObject)to);
+			InternalEObject oldTo = (InternalEObject)to;
+			to = (Source)eResolveProxy(oldTo);
 			if (to != oldTo) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TRANSACTION__TO, oldTo, to));
@@ -442,142 +628,6 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTION__AMOUNT:
-				return new Long(getAmount());
-			case ModelPackage.TRANSACTION__DESCRIPTION:
-				return getDescription();
-			case ModelPackage.TRANSACTION__DATE:
-				return getDate();
-			case ModelPackage.TRANSACTION__NUMBER:
-				return getNumber();
-			case ModelPackage.TRANSACTION__MEMO:
-				return getMemo();
-			case ModelPackage.TRANSACTION__BALANCE_FROM:
-				return new Long(getBalanceFrom());
-			case ModelPackage.TRANSACTION__BALANCE_TO:
-				return new Long(getBalanceTo());
-			case ModelPackage.TRANSACTION__TO:
-				if (resolve) return getTo();
-				return basicGetTo();
-			case ModelPackage.TRANSACTION__FROM:
-				if (resolve) return getFrom();
-				return basicGetFrom();
-		}
-		return eDynamicGet(eFeature, resolve);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTION__AMOUNT:
-				setAmount(((Long)newValue).longValue());
-				return;
-			case ModelPackage.TRANSACTION__DESCRIPTION:
-				setDescription((String)newValue);
-				return;
-			case ModelPackage.TRANSACTION__DATE:
-				setDate((Date)newValue);
-				return;
-			case ModelPackage.TRANSACTION__NUMBER:
-				setNumber((String)newValue);
-				return;
-			case ModelPackage.TRANSACTION__MEMO:
-				setMemo((String)newValue);
-				return;
-			case ModelPackage.TRANSACTION__BALANCE_FROM:
-				setBalanceFrom(((Long)newValue).longValue());
-				return;
-			case ModelPackage.TRANSACTION__BALANCE_TO:
-				setBalanceTo(((Long)newValue).longValue());
-				return;
-			case ModelPackage.TRANSACTION__TO:
-				setTo((Source)newValue);
-				return;
-			case ModelPackage.TRANSACTION__FROM:
-				setFrom((Source)newValue);
-				return;
-		}
-		eDynamicSet(eFeature, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTION__AMOUNT:
-				setAmount(AMOUNT_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__DESCRIPTION:
-				setDescription(DESCRIPTION_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__DATE:
-				setDate(DATE_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__NUMBER:
-				setNumber(NUMBER_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__MEMO:
-				setMemo(MEMO_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__BALANCE_FROM:
-				setBalanceFrom(BALANCE_FROM_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__BALANCE_TO:
-				setBalanceTo(BALANCE_TO_EDEFAULT);
-				return;
-			case ModelPackage.TRANSACTION__TO:
-				setTo((Source)null);
-				return;
-			case ModelPackage.TRANSACTION__FROM:
-				setFrom((Source)null);
-				return;
-		}
-		eDynamicUnset(eFeature);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTION__AMOUNT:
-				return amount != AMOUNT_EDEFAULT;
-			case ModelPackage.TRANSACTION__DESCRIPTION:
-				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-			case ModelPackage.TRANSACTION__DATE:
-				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
-			case ModelPackage.TRANSACTION__NUMBER:
-				return NUMBER_EDEFAULT == null ? number != null : !NUMBER_EDEFAULT.equals(number);
-			case ModelPackage.TRANSACTION__MEMO:
-				return MEMO_EDEFAULT == null ? memo != null : !MEMO_EDEFAULT.equals(memo);
-			case ModelPackage.TRANSACTION__BALANCE_FROM:
-				return balanceFrom != BALANCE_FROM_EDEFAULT;
-			case ModelPackage.TRANSACTION__BALANCE_TO:
-				return balanceTo != BALANCE_TO_EDEFAULT;
-			case ModelPackage.TRANSACTION__TO:
-				return to != null;
-			case ModelPackage.TRANSACTION__FROM:
-				return from != null;
-		}
-		return eDynamicIsSet(eFeature);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -596,6 +646,8 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 		result.append(balanceFrom);
 		result.append(", balanceTo: ");
 		result.append(balanceTo);
+		result.append(", scheduled: ");
+		result.append(scheduled);
 		result.append(')');
 		return result.toString();
 	}

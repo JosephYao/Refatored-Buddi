@@ -16,14 +16,14 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.homeunix.drummer.model.ModelPackage
  * @generated
  */
-public interface ModelFactory extends EFactory{
+public interface ModelFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	ModelFactory eINSTANCE = new org.homeunix.drummer.model.impl.ModelFactoryImpl();
+	ModelFactory eINSTANCE = org.homeunix.drummer.model.impl.ModelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Account</em>'.
@@ -69,6 +69,15 @@ public interface ModelFactory extends EFactory{
 	 * @generated
 	 */
 	DataModel createDataModel();
+
+	/**
+	 * Returns a new object of class '<em>Schedule</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Schedule</em>'.
+	 * @generated
+	 */
+	Schedule createSchedule();
 
 	/**
 	 * Returns a new object of class '<em>Transaction</em>'.

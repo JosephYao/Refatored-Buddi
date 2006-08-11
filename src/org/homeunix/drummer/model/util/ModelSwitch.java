@@ -119,6 +119,12 @@ public class ModelSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ModelPackage.SCHEDULE: {
+				Schedule schedule = (Schedule)theEObject;
+				Object result = caseSchedule(schedule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ModelPackage.SOURCE: {
 				Source source = (Source)theEObject;
 				Object result = caseSource(source);
@@ -225,6 +231,21 @@ public class ModelSwitch {
 	 * @generated
 	 */
 	public Object caseDataModel(DataModel object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Schedule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Schedule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseSchedule(Schedule object) {
 		return null;
 	}
 

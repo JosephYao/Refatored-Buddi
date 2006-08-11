@@ -10,22 +10,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelPackage;
+import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Transactions;
 
@@ -36,8 +31,9 @@ import org.homeunix.drummer.model.Transactions;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getAllTransactions <em>All Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getTransactions <em>Transactions</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getAllTransactions <em>All Transactions</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,6 +51,16 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	protected EList transactions = null;
 
 	/**
+	 * The cached value of the '{@link #getScheduledTransactions() <em>Scheduled Transactions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduledTransactions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList scheduledTransactions = null;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -69,7 +75,7 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getTransactions();
+		return ModelPackage.Literals.TRANSACTIONS;
 	}
 
 	/**
@@ -91,7 +97,17 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public DataModel getAllTransactions() {
 		if (eContainerFeatureID != ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS) return null;
-		return (DataModel)eContainer;
+		return (DataModel)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAllTransactions(DataModel newAllTransactions, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newAllTransactions, ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS, msgs);
+		return msgs;
 	}
 
 	/**
@@ -100,15 +116,15 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * @generated
 	 */
 	public void setAllTransactions(DataModel newAllTransactions) {
-		if (newAllTransactions != eContainer || (eContainerFeatureID != ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS && newAllTransactions != null)) {
+		if (newAllTransactions != eInternalContainer() || (eContainerFeatureID != ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS && newAllTransactions != null)) {
 			if (EcoreUtil.isAncestor(this, newAllTransactions))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (eContainer != null)
+			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newAllTransactions != null)
 				msgs = ((InternalEObject)newAllTransactions).eInverseAdd(this, ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, DataModel.class, msgs);
-			msgs = eBasicSetContainer((InternalEObject)newAllTransactions, ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS, msgs);
+			msgs = basicSetAllTransactions(newAllTransactions, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
@@ -120,20 +136,11 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-					if (eContainer != null)
-						msgs = eBasicRemoveFromContainer(msgs);
-					return eBasicSetContainer(otherEnd, ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS, msgs);
-				default:
-					return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-			}
+	public EList getScheduledTransactions() {
+		if (scheduledTransactions == null) {
+			scheduledTransactions = new EObjectContainmentEList(Schedule.class, this, ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS);
 		}
-		if (eContainer != null)
-			msgs = eBasicRemoveFromContainer(msgs);
-		return eBasicSetContainer(otherEnd, featureID, msgs);
+		return scheduledTransactions;
 	}
 
 	/**
@@ -141,50 +148,61 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-					return eBasicSetContainer(null, ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS, msgs);
-				case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-					return ((InternalEList)getTransactions()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
-		}
-		return eBasicSetContainer(null, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eBasicRemoveFromContainer(NotificationChain msgs) {
-		if (eContainerFeatureID >= 0) {
-			switch (eContainerFeatureID) {
-				case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-					return eContainer.eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, DataModel.class, msgs);
-				default:
-					return eDynamicBasicRemoveFromContainer(msgs);
-			}
-		}
-		return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-				return getAllTransactions();
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetAllTransactions((DataModel)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				return ((InternalEList)getTransactions()).basicRemove(otherEnd, msgs);
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				return basicSetAllTransactions(null, msgs);
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return ((InternalEList)getScheduledTransactions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				return eInternalContainer().eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, DataModel.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				return getTransactions();
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				return getAllTransactions();
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return getScheduledTransactions();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -193,17 +211,21 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-				setAllTransactions((DataModel)newValue);
-				return;
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				getTransactions().clear();
 				getTransactions().addAll((Collection)newValue);
 				return;
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				setAllTransactions((DataModel)newValue);
+				return;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				getScheduledTransactions().clear();
+				getScheduledTransactions().addAll((Collection)newValue);
+				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -211,16 +233,19 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-				setAllTransactions((DataModel)null);
-				return;
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				getTransactions().clear();
 				return;
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				setAllTransactions((DataModel)null);
+				return;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				getScheduledTransactions().clear();
+				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -228,14 +253,16 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
-			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
-				return getAllTransactions() != null;
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				return transactions != null && !transactions.isEmpty();
+			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
+				return getAllTransactions() != null;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return scheduledTransactions != null && !scheduledTransactions.isEmpty();
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 } //TransactionsImpl

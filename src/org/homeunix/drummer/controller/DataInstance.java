@@ -28,6 +28,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.ModelPackage;
+import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Transactions;
@@ -512,5 +513,15 @@ public class DataInstance {
 		
 		Collections.sort(v);
 		return v;
+	}
+	
+	public Vector<Schedule> getScheduledTransactions(){
+		Vector<Schedule> v = new Vector<Schedule>(dataModel.getAllTransactions().getScheduledTransactions());
+
+		return v;
+	}
+	
+	public void addSchedule(Date startDate, String frequencyType){
+		
 	}
 }

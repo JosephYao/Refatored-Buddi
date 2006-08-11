@@ -12,7 +12,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import org.homeunix.drummer.model.*;
 
@@ -23,6 +27,25 @@ import org.homeunix.drummer.model.*;
  * @generated
  */
 public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
+	/**
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static ModelFactory init() {
+		try {
+			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("urn:org.homeunix.drummer.model.ecore"); 
+			if (theModelFactory != null) {
+				return theModelFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new ModelFactoryImpl();
+	}
+
 	/**
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -45,6 +68,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.CATEGORIES: return createCategories();
 			case ModelPackage.CATEGORY: return createCategory();
 			case ModelPackage.DATA_MODEL: return createDataModel();
+			case ModelPackage.SCHEDULE: return createSchedule();
 			case ModelPackage.TRANSACTION: return createTransaction();
 			case ModelPackage.TRANSACTIONS: return createTransactions();
 			case ModelPackage.TYPE: return createType();
@@ -130,6 +154,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public DataModel createDataModel() {
 		DataModelImpl dataModel = new DataModelImpl();
 		return dataModel;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Schedule createSchedule() {
+		ScheduleImpl schedule = new ScheduleImpl();
+		return schedule;
 	}
 
 	/**

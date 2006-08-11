@@ -9,13 +9,9 @@ package org.homeunix.drummer.model.impl;
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
 
@@ -110,7 +106,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getSource();
+		return ModelPackage.Literals.SOURCE;
 	}
 
 	/**
@@ -181,8 +177,8 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.SOURCE__NAME:
 				return getName();
 			case ModelPackage.SOURCE__DELETED:
@@ -190,7 +186,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 			case ModelPackage.SOURCE__CREATION_DATE:
 				return getCreationDate();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -198,8 +194,8 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.SOURCE__NAME:
 				setName((String)newValue);
 				return;
@@ -210,7 +206,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 				setCreationDate((Date)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -218,8 +214,8 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.SOURCE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -230,7 +226,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 				setCreationDate(CREATION_DATE_EDEFAULT);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -238,8 +234,8 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.SOURCE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ModelPackage.SOURCE__DELETED:
@@ -247,7 +243,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 			case ModelPackage.SOURCE__CREATION_DATE:
 				return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

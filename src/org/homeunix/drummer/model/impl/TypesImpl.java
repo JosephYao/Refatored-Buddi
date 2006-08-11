@@ -10,20 +10,14 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Type;
@@ -69,7 +63,7 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return ModelPackage.eINSTANCE.getTypes();
+		return ModelPackage.Literals.TYPES;
 	}
 
 	/**
@@ -79,7 +73,17 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public DataModel getAllTypes() {
 		if (eContainerFeatureID != ModelPackage.TYPES__ALL_TYPES) return null;
-		return (DataModel)eContainer;
+		return (DataModel)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAllTypes(DataModel newAllTypes, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newAllTypes, ModelPackage.TYPES__ALL_TYPES, msgs);
+		return msgs;
 	}
 
 	/**
@@ -88,15 +92,15 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * @generated
 	 */
 	public void setAllTypes(DataModel newAllTypes) {
-		if (newAllTypes != eContainer || (eContainerFeatureID != ModelPackage.TYPES__ALL_TYPES && newAllTypes != null)) {
+		if (newAllTypes != eInternalContainer() || (eContainerFeatureID != ModelPackage.TYPES__ALL_TYPES && newAllTypes != null)) {
 			if (EcoreUtil.isAncestor(this, newAllTypes))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (eContainer != null)
+			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newAllTypes != null)
 				msgs = ((InternalEObject)newAllTypes).eInverseAdd(this, ModelPackage.DATA_MODEL__ALL_TYPES, DataModel.class, msgs);
-			msgs = eBasicSetContainer((InternalEObject)newAllTypes, ModelPackage.TYPES__ALL_TYPES, msgs);
+			msgs = basicSetAllTypes(newAllTypes, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
@@ -120,20 +124,14 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.TYPES__ALL_TYPES:
-					if (eContainer != null)
-						msgs = eBasicRemoveFromContainer(msgs);
-					return eBasicSetContainer(otherEnd, ModelPackage.TYPES__ALL_TYPES, msgs);
-				default:
-					return eDynamicInverseAdd(otherEnd, featureID, baseClass, msgs);
-			}
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.TYPES__ALL_TYPES:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetAllTypes((DataModel)otherEnd, msgs);
 		}
-		if (eContainer != null)
-			msgs = eBasicRemoveFromContainer(msgs);
-		return eBasicSetContainer(otherEnd, featureID, msgs);
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -141,18 +139,14 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case ModelPackage.TYPES__ALL_TYPES:
-					return eBasicSetContainer(null, ModelPackage.TYPES__ALL_TYPES, msgs);
-				case ModelPackage.TYPES__TYPES:
-					return ((InternalEList)getTypes()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ModelPackage.TYPES__ALL_TYPES:
+				return basicSetAllTypes(null, msgs);
+			case ModelPackage.TYPES__TYPES:
+				return ((InternalEList)getTypes()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -160,16 +154,12 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eBasicRemoveFromContainer(NotificationChain msgs) {
-		if (eContainerFeatureID >= 0) {
-			switch (eContainerFeatureID) {
-				case ModelPackage.TYPES__ALL_TYPES:
-					return eContainer.eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_TYPES, DataModel.class, msgs);
-				default:
-					return eDynamicBasicRemoveFromContainer(msgs);
-			}
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID) {
+			case ModelPackage.TYPES__ALL_TYPES:
+				return eInternalContainer().eInverseRemove(this, ModelPackage.DATA_MODEL__ALL_TYPES, DataModel.class, msgs);
 		}
-		return eContainer.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - eContainerFeatureID, null, msgs);
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -177,14 +167,14 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case ModelPackage.TYPES__ALL_TYPES:
 				return getAllTypes();
 			case ModelPackage.TYPES__TYPES:
 				return getTypes();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -193,8 +183,8 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case ModelPackage.TYPES__ALL_TYPES:
 				setAllTypes((DataModel)newValue);
 				return;
@@ -203,7 +193,7 @@ public class TypesImpl extends EObjectImpl implements Types {
 				getTypes().addAll((Collection)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -211,8 +201,8 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TYPES__ALL_TYPES:
 				setAllTypes((DataModel)null);
 				return;
@@ -220,7 +210,7 @@ public class TypesImpl extends EObjectImpl implements Types {
 				getTypes().clear();
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -228,14 +218,14 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case ModelPackage.TYPES__ALL_TYPES:
 				return getAllTypes() != null;
 			case ModelPackage.TYPES__TYPES:
 				return types != null && !types.isEmpty();
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 } //TypesImpl

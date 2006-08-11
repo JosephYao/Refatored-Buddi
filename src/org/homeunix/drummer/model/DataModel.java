@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.DataModel#getAllTransactions <em>All Transactions</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.DataModel#getAllAccounts <em>All Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.DataModel#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.DataModel#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.DataModel#getAllTransactions <em>All Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.DataModel#getAllCategories <em>All Categories</em>}</li>
  * </ul>
  * </p>
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface DataModel extends EObject{
+public interface DataModel extends EObject {
 	/**
 	 * Returns the value of the '<em><b>All Categories</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link org.homeunix.drummer.model.Categories#getAllCategories <em>All Categories</em>}'.

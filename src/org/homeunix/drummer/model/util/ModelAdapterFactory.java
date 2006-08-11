@@ -85,6 +85,9 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			public Object caseDataModel(DataModel object) {
 				return createDataModelAdapter();
 			}
+			public Object caseSchedule(Schedule object) {
+				return createScheduleAdapter();
+			}
 			public Object caseSource(Source object) {
 				return createSourceAdapter();
 			}
@@ -185,6 +188,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataModelAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.model.Schedule <em>Schedule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.model.Schedule
+	 * @generated
+	 */
+	public Adapter createScheduleAdapter() {
 		return null;
 	}
 

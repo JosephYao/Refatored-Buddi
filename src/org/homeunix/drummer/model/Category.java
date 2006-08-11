@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Category extends Source{
+public interface Category extends Source {
 	/**
 	 * Returns the value of the '<em><b>Budgeted Amount</b></em>' attribute.
 	 * <!-- begin-user-doc -->
