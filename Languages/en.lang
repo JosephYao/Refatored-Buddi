@@ -194,6 +194,6 @@ REPORT_BY_CATEGORY_HEADER=Transaction Report by Budget Category
 REPORT_BY_DESCRIPTION_HEADER=Transaction Report by Description
 DONATE=Donate
 NOT_NOW=Not Now
-DONATE_MESSAGE=Please consider sending a donation to help further my work on Buddi.\nI write and support Buddi in my spare time, and appreciate all help I get.\n\nThis message only appears once when you upgrade to a new version.
+DONATE_MESSAGE=Please consider sending a donation to help further my work on Buddi.\nI write and support Buddi in my spare time, and appreciate all help I get.\n\nThis message only appears once when you upgrade to a new version.\nIf you want to donate later, there is a button on the About panel.
 DONATE_HEADER=Please Donate to Buddi
 ABOUT_TEXT=Personal finance and budget program,<br>for those with little financial experience
