@@ -195,3 +195,12 @@ FORTNIGHT=To uker
 PAST_WEEK=Sist uke
 PAST_FORTNIGHT=Siste to uker
 BUDGET_INTERVAL=Budsjett intervall
+
+ANNUAL=\u00C5rlig
+QUARTER=Kvartal
+THIS_QUARTER=Dette kvartal
+LAST_QUARTER=Forrige kvartal
+EXPORT_TO_HTML=Eksporter til HTML
+REPORT_BY_CATEGORY_HEADER=Transaksjonsrapport fordelt p\u00E5 budjettert kategori
+REPORT_BY_DESCRIPTION_HEADER=Transaksjonsrapport etter beskrivelse
+
