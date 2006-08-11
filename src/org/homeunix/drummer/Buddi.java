@@ -16,7 +16,7 @@ import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.ParseCommands;
 import org.homeunix.drummer.util.ParseCommands.ParseException;
 import org.homeunix.drummer.view.components.BuddiMenu;
-import org.homeunix.drummer.view.logic.MainBudgetFrame;
+import org.homeunix.drummer.view.logic.MainBuddiFrame;
 
 /**
  * @author wyatt
@@ -36,7 +36,7 @@ public class Buddi {
 	}
 	
 	private static void launchGUI(){
-		MainBudgetFrame.getInstance().openWindow();
+		MainBuddiFrame.getInstance().openWindow();
 	}
 	
 	public static void main(String[] args) {

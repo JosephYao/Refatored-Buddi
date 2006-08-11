@@ -21,7 +21,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	public static final long serialVersionUID = 0;
 
 	public AccountModifyDialog(){
-		super(MainBudgetFrame.getInstance());
+		super(MainBuddiFrame.getInstance());
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.STARTING_BALANCE));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.ACCOUNT_TYPE));
 		check.setVisible(false);
@@ -92,7 +92,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 						DataInstance.getInstance().saveDataModel();
 										
 					AccountModifyDialog.this.setVisible(false);
-					MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
+					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				}
 			}
 		});
@@ -100,7 +100,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				AccountModifyDialog.this.setVisible(false);
-				MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
+				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 			}
 		});
 		

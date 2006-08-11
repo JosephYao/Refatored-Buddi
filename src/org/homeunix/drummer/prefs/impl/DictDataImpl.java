@@ -7,13 +7,9 @@
 package org.homeunix.drummer.prefs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.PrefsPackage;
 
@@ -150,7 +146,7 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.eINSTANCE.getDictData();
+		return PrefsPackage.Literals.DICT_DATA;
 	}
 
 	/**
@@ -263,8 +259,8 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case PrefsPackage.DICT_DATA__NUMBER:
 				return getNumber();
 			case PrefsPackage.DICT_DATA__MEMO:
@@ -276,7 +272,7 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 			case PrefsPackage.DICT_DATA__FROM:
 				return getFrom();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -284,8 +280,8 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case PrefsPackage.DICT_DATA__NUMBER:
 				setNumber((String)newValue);
 				return;
@@ -302,7 +298,7 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 				setFrom((String)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -310,8 +306,8 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.DICT_DATA__NUMBER:
 				setNumber(NUMBER_EDEFAULT);
 				return;
@@ -328,7 +324,7 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 				setFrom(FROM_EDEFAULT);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -336,8 +332,8 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.DICT_DATA__NUMBER:
 				return NUMBER_EDEFAULT == null ? number != null : !NUMBER_EDEFAULT.equals(number);
 			case PrefsPackage.DICT_DATA__MEMO:
@@ -349,7 +345,7 @@ public class DictDataImpl extends EObjectImpl implements DictData {
 			case PrefsPackage.DICT_DATA__FROM:
 				return FROM_EDEFAULT == null ? from != null : !FROM_EDEFAULT.equals(from);
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

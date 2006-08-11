@@ -32,6 +32,7 @@ import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsPackage;
 import org.homeunix.drummer.prefs.UserPrefs;
+import org.homeunix.drummer.prefs.Version;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
@@ -302,6 +303,28 @@ public class PrefsInstance {
 
 	public DefaultDictionary getDescDict() {
 		return descDict;
+	}
+	
+	public String getLastVersionRun(){
+		Version version = userPrefs.getPrefs().getLastVersionRun();
+		if (version == null){
+			version = prefsFactory.createVersion();
+			version.setVersion(Const.VERSION);
+			userPrefs.getPrefs().setLastVersionRun(version);
+		}
+		savePrefs();
+		return version.getVersion();
+	}
+	
+	public void updateVersion(){
+		Version version = userPrefs.getPrefs().getLastVersionRun();
+		if (version == null){
+			version = prefsFactory.createVersion();
+			userPrefs.getPrefs().setLastVersionRun(version);
+		}
+		
+		version.setVersion(Const.VERSION);
+		savePrefs();
 	}
 	
 	public void setAutoCompleteEntry(String description, 

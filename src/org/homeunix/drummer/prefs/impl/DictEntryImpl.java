@@ -7,17 +7,11 @@
 package org.homeunix.drummer.prefs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.PrefsPackage;
@@ -82,7 +76,7 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.eINSTANCE.getDictEntry();
+		return PrefsPackage.Literals.DICT_ENTRY;
 	}
 
 	/**
@@ -154,16 +148,12 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case PrefsPackage.DICT_ENTRY__DATA:
-					return basicSetData(null, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case PrefsPackage.DICT_ENTRY__DATA:
+				return basicSetData(null, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -171,14 +161,14 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case PrefsPackage.DICT_ENTRY__ENTRY:
 				return getEntry();
 			case PrefsPackage.DICT_ENTRY__DATA:
 				return getData();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -186,8 +176,8 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case PrefsPackage.DICT_ENTRY__ENTRY:
 				setEntry((String)newValue);
 				return;
@@ -195,7 +185,7 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 				setData((DictData)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -203,8 +193,8 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.DICT_ENTRY__ENTRY:
 				setEntry(ENTRY_EDEFAULT);
 				return;
@@ -212,7 +202,7 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 				setData((DictData)null);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -220,14 +210,14 @@ public class DictEntryImpl extends EObjectImpl implements DictEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.DICT_ENTRY__ENTRY:
 				return ENTRY_EDEFAULT == null ? entry != null : !ENTRY_EDEFAULT.equals(entry);
 			case PrefsPackage.DICT_ENTRY__DATA:
 				return data != null;
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

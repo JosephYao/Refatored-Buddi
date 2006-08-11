@@ -53,17 +53,17 @@ public class ReportPanel extends ReportPanelLayout {
 												|| type.equals(ReportType.EXPENSES)
 												|| type.equals(ReportType.INCOME))
 											new CustomDateIntervalDialog(
-													MainBudgetFrame.getInstance(),
+													MainBuddiFrame.getInstance(),
 													type
 											).openWindow();
 										else if (type.equals(ReportType.NETWORTH_OVER_TIME))
 											new CustomStartDateDialog(
-													MainBudgetFrame.getInstance(),
+													MainBuddiFrame.getInstance(),
 													type
 											).openWindow();
 										else if (type.equals(ReportType.NETWORTH))
 											new CustomEndDateDialog(
-													MainBudgetFrame.getInstance(),
+													MainBuddiFrame.getInstance(),
 													type
 											).openWindow();
 

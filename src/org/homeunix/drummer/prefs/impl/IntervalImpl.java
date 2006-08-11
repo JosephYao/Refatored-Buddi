@@ -7,13 +7,9 @@
 package org.homeunix.drummer.prefs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsPackage;
@@ -109,7 +105,7 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.eINSTANCE.getInterval();
+		return PrefsPackage.Literals.INTERVAL;
 	}
 
 	/**
@@ -180,8 +176,8 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case PrefsPackage.INTERVAL__NAME:
 				return getName();
 			case PrefsPackage.INTERVAL__LENGTH:
@@ -189,7 +185,7 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 			case PrefsPackage.INTERVAL__DAYS:
 				return isDays() ? Boolean.TRUE : Boolean.FALSE;
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -197,8 +193,8 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case PrefsPackage.INTERVAL__NAME:
 				setName((String)newValue);
 				return;
@@ -209,7 +205,7 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 				setDays(((Boolean)newValue).booleanValue());
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -217,8 +213,8 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.INTERVAL__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -229,7 +225,7 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 				setDays(DAYS_EDEFAULT);
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -237,8 +233,8 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.INTERVAL__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case PrefsPackage.INTERVAL__LENGTH:
@@ -246,7 +242,7 @@ public class IntervalImpl extends EObjectImpl implements Interval {
 			case PrefsPackage.INTERVAL__DAYS:
 				return days != DAYS_EDEFAULT;
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
 	}
 
 	/**

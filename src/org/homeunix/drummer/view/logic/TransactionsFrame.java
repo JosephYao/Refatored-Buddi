@@ -324,8 +324,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 		updateButtons();
 		
-		MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
-		MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
+		MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+		MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 		
 		return this;
 	}

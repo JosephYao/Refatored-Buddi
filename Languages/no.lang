@@ -12,7 +12,6 @@ ABOUT_EMAIL=wyatt.olson@gmail.com
 ABOUT_GPL=Released under the GNU General Public License
 ABOUT_MENU_ITEM=Om Buddi
 ABOUT_TEXT=Program for personlig \u00F8konomi og budsjettering.\nKommentarer til norsk oversettelse kan sendes gudbrand@users.sourceforge.net\neller korriger og send oppdatert spr\u00E5kfil til Wyatt Olson.
-ABOUT_WEBPAGE=http://buddi.sourceforge.net
 ACCOUNT=Konto
 ACCOUNT_TYPE=Konto Type
 ACTUAL=Faktisk

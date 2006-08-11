@@ -20,7 +20,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	public static final long serialVersionUID = 0;
 	
 	public CategoryModifyDialog(){
-		super(MainBudgetFrame.getInstance());
+		super(MainBuddiFrame.getInstance());
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGETED_AMOUNT));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.PARENT_CATEGORY));
 	}
@@ -104,7 +104,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 						DataInstance.getInstance().saveDataModel();
 					
 					CategoryModifyDialog.this.setVisible(false);
-					MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
+					MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 				}
 			}
 		});
@@ -112,7 +112,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				CategoryModifyDialog.this.setVisible(false);
-				MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
+				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 		});
 		

@@ -38,7 +38,7 @@ import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.AboutDialog;
-import org.homeunix.drummer.view.logic.MainBudgetFrame;
+import org.homeunix.drummer.view.logic.MainBuddiFrame;
 import org.homeunix.drummer.view.logic.PreferencesFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
 import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
@@ -77,10 +77,10 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem export = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML));
 		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
 		
-		newFile.addUserFrame(MainBudgetFrame.class);
-		open.addUserFrame(MainBudgetFrame.class);
-		backup.addUserFrame(MainBudgetFrame.class);
-		restore.addUserFrame(MainBudgetFrame.class);
+		newFile.addUserFrame(MainBuddiFrame.class);
+		open.addUserFrame(MainBuddiFrame.class);
+		backup.addUserFrame(MainBuddiFrame.class);
+		restore.addUserFrame(MainBuddiFrame.class);
 		export.addUserFrame(IncomeExpenseByCategoryReportFrame.class);
 		export.addUserFrame(IncomeExpenseByDescriptionReportFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
@@ -158,7 +158,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION));
-				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						JOptionPane.showMessageDialog(
 								null, 
@@ -185,7 +185,7 @@ public class BuddiMenu extends JScreenMenuBar {
 						
 						DataInstance.getInstance().loadDataModel(new File(location), true);
 						PrefsInstance.getInstance().getPrefs().setDataFile(location);
-						MainBudgetFrame.getInstance().updateContent();
+						MainBuddiFrame.getInstance().updateContent();
 						JOptionPane.showMessageDialog(
 								null,
 								Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE_SAVED) + location, 
@@ -216,7 +216,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					}
 				});
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
-				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+				if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
@@ -229,7 +229,7 @@ public class BuddiMenu extends JScreenMenuBar {
 							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile(), false);
 							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
 							PrefsInstance.getInstance().savePrefs();
-							MainBudgetFrame.getInstance().updateContent();
+							MainBuddiFrame.getInstance().updateContent();
 							JOptionPane.showMessageDialog(
 									null, 
 									Translate.getInstance().get(TranslateKeys.SUCCESSFUL_OPEN_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(),
@@ -255,7 +255,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
-				if (jfc.showSaveDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						Log.debug(Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
 					
@@ -292,7 +292,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					}
 				});
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
-				if (jfc.showOpenDialog(MainBudgetFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+				if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
@@ -306,7 +306,7 @@ public class BuddiMenu extends JScreenMenuBar {
 							try{
 								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
 								DataInstance.getInstance().loadDataModel(oldFile, false);
-								MainBudgetFrame.getInstance().updateContent();
+								MainBuddiFrame.getInstance().updateContent();
 								JOptionPane.showMessageDialog(
 										null, 
 										Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
@@ -414,7 +414,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					if (localHelp.exists())
 						location = "file://" + localHelp.getAbsolutePath();
 					else
-						location = "http://buddi.sourceforge.net/" + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "");
+						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "");
 					
 					Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher.openURL(location);
@@ -460,8 +460,8 @@ public class BuddiMenu extends JScreenMenuBar {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					if (MainBudgetFrame.getInstance() != null)
-						MainBudgetFrame.getInstance().savePosition();
+					if (MainBuddiFrame.getInstance() != null)
+						MainBuddiFrame.getInstance().savePosition();
 					Log.debug("Exiting");
 					System.exit(0);
 				}

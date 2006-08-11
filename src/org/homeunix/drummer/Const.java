@@ -17,6 +17,13 @@ public class Const {
 	public final static String DATA_FILE_EXTENSION = ".buddi";
 	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
+	public final static String DONATE_URL = "http://sourceforge.net/donate/index.php?group_id=167026";
+	public final static String PROJECT_URL = "http://buddi.sourceforge.net/";
+	public final static String DOWNLOAD_URL = "http://prdownloads.sourceforge.net/buddi/Buddi-";
+	public final static String DOWNLOAD_URL_DMG = ".dmg?download";
+	public final static String DOWNLOAD_URL_ZIP = ".zip?download";
+	public final static String VERSION_FILE = "version.txt";
+	
 	public final static String[] DATE_FORMATS = {
 		"yyyy-MM-dd",
 		"yyyy-MMM-dd",

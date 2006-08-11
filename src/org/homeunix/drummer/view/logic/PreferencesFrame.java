@@ -23,7 +23,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 	public static final long serialVersionUID = 0;
 
 	public PreferencesFrame(){
-		super(MainBudgetFrame.getInstance());
+		super(MainBuddiFrame.getInstance());
 	}
 		
 	@Override
@@ -54,8 +54,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 												
 				Formatter.getInstance().reloadDateFormat();
 				PreferencesFrame.this.setVisible(false);
-				MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
-				MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
+				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 		});
 		
@@ -63,8 +63,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				PreferencesFrame.this.setVisible(false);
 				
-				MainBudgetFrame.getInstance().getAccountListPanel().updateContent();
-				MainBudgetFrame.getInstance().getCategoryListPanel().updateContent();
+				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 		});
 		

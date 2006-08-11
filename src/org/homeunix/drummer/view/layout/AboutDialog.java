@@ -8,6 +8,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,24 +20,33 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.util.BrowserLauncher;
+import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.logic.MainBudgetFrame;
+import org.homeunix.drummer.view.logic.MainBuddiFrame;
 
 public class AboutDialog extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;
 	
 	private final JButton okButton;
+	private final JButton donateButton;
+	private final JLabel text;
 	
 	public AboutDialog(){
-		super(MainBudgetFrame.getInstance());
+		super(MainBuddiFrame.getInstance());
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
+		donateButton = new JButton(Translate.getInstance().get(TranslateKeys.DONATE));
+		
+		Dimension buttonSize = new Dimension(Math.max(100, donateButton.getPreferredSize().width), donateButton.getPreferredSize().height);
+
 		okButton.setPreferredSize(buttonSize);
+		donateButton.setPreferredSize(buttonSize);
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.add(donateButton);
 		buttonPanel.add(okButton);
-		
+				
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
 				"<html><center><h1>")
@@ -67,14 +79,14 @@ public class AboutDialog extends AbstractBudgetDialog {
 				.append("<br>&lt;")
 				.append(Translate.getInstance().get(TranslateKeys.ABOUT_EMAIL))
 				.append("&gt;<br><a href='")
-				.append(Translate.getInstance().get(TranslateKeys.ABOUT_WEBPAGE))
+				.append(Translate.getInstance().get(Const.PROJECT_URL))
 				.append("'>")
-				.append(Translate.getInstance().get(TranslateKeys.ABOUT_WEBPAGE))
+				.append(Translate.getInstance().get(Const.PROJECT_URL))
 				.append("</a><br><br>")
 				.append(Translate.getInstance().get(TranslateKeys.ABOUT_GPL))
 				.append("</center></html>");
 
-		JLabel text = new JLabel(sbText.toString());
+		text = new JLabel(sbText.toString());
 		
 		JPanel inlayPanel = new JPanel(new BorderLayout());
 		inlayPanel.setBorder(BorderFactory.createTitledBorder(""));
@@ -103,6 +115,30 @@ public class AboutDialog extends AbstractBudgetDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				AboutDialog.this.setVisible(false);
 				AboutDialog.this.dispose();
+			}
+		});
+		
+		donateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try{
+					BrowserLauncher.openURL(Const.DONATE_URL);
+				}
+				catch (IOException ioe){
+					Log.error(ioe);
+				}
+			}
+		});
+		
+		text.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try{
+					BrowserLauncher.openURL(Const.PROJECT_URL);
+				}
+				catch (IOException ioe){
+					Log.error(ioe);
+				}
+				super.mouseClicked(e);
 			}
 		});
 		return this;

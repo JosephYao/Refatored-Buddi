@@ -16,14 +16,14 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.homeunix.drummer.prefs.PrefsPackage
  * @generated
  */
-public interface PrefsFactory extends EFactory{
+public interface PrefsFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	PrefsFactory eINSTANCE = new org.homeunix.drummer.prefs.impl.PrefsFactoryImpl();
+	PrefsFactory eINSTANCE = org.homeunix.drummer.prefs.impl.PrefsFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Dict Data</em>'.
@@ -96,6 +96,15 @@ public interface PrefsFactory extends EFactory{
 	 * @generated
 	 */
 	UserPrefs createUserPrefs();
+
+	/**
+	 * Returns a new object of class '<em>Version</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Version</em>'.
+	 * @generated
+	 */
+	Version createVersion();
 
 	/**
 	 * Returns a new object of class '<em>Window Attributes</em>'.

@@ -9,7 +9,11 @@ package org.homeunix.drummer.prefs.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import org.homeunix.drummer.prefs.*;
 
@@ -20,6 +24,25 @@ import org.homeunix.drummer.prefs.*;
  * @generated
  */
 public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
+	/**
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static PrefsFactory init() {
+		try {
+			PrefsFactory thePrefsFactory = (PrefsFactory)EPackage.Registry.INSTANCE.getEFactory("urn:org.homeunix.drummer.prefs.ecore"); 
+			if (thePrefsFactory != null) {
+				return thePrefsFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new PrefsFactoryImpl();
+	}
+
 	/**
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -45,6 +68,7 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			case PrefsPackage.LIST_ENTRY: return createListEntry();
 			case PrefsPackage.PREFS: return createPrefs();
 			case PrefsPackage.USER_PREFS: return createUserPrefs();
+			case PrefsPackage.VERSION: return createVersion();
 			case PrefsPackage.WINDOW_ATTRIBUTES: return createWindowAttributes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -129,6 +153,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public UserPrefs createUserPrefs() {
 		UserPrefsImpl userPrefs = new UserPrefsImpl();
 		return userPrefs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Version createVersion() {
+		VersionImpl version = new VersionImpl();
+		return version;
 	}
 
 	/**

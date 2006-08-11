@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface PrefsPackage extends EPackage{
+public interface PrefsPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -116,7 +116,7 @@ public interface PrefsPackage extends EPackage{
 	int DICT_DATA__FROM = 4;
 
 	/**
-	 * The number of structural features of the the '<em>Dict Data</em>' class.
+	 * The number of structural features of the '<em>Dict Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -153,7 +153,7 @@ public interface PrefsPackage extends EPackage{
 	int DICT_ENTRY__DATA = 1;
 
 	/**
-	 * The number of structural features of the the '<em>Dict Entry</em>' class.
+	 * The number of structural features of the '<em>Dict Entry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -199,7 +199,7 @@ public interface PrefsPackage extends EPackage{
 	int INTERVAL__DAYS = 2;
 
 	/**
-	 * The number of structural features of the the '<em>Interval</em>' class.
+	 * The number of structural features of the '<em>Interval</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -227,7 +227,7 @@ public interface PrefsPackage extends EPackage{
 	int INTERVALS__ALL_INTERVALS = 0;
 
 	/**
-	 * The number of structural features of the the '<em>Intervals</em>' class.
+	 * The number of structural features of the '<em>Intervals</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -255,7 +255,7 @@ public interface PrefsPackage extends EPackage{
 	int LIST_ATTRIBUTES__UNROLLED = 0;
 
 	/**
-	 * The number of structural features of the the '<em>List Attributes</em>' class.
+	 * The number of structural features of the '<em>List Attributes</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -292,7 +292,7 @@ public interface PrefsPackage extends EPackage{
 	int LIST_ENTRY__ATTRIBUTES = 1;
 
 	/**
-	 * The number of structural features of the the '<em>List Entry</em>' class.
+	 * The number of structural features of the '<em>List Entry</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -392,31 +392,31 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__SELECTED_INTERVAL = 8;
 
 	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 9;
-
-	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__INTERVALS = 10;
+	int PREFS__INTERVALS = 9;
 
 	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MAIN_WINDOW = 11;
+	int PREFS__GRAPHS_WINDOW = 10;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__REPORTS_WINDOW = 11;
 
 	/**
 	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
@@ -428,22 +428,31 @@ public interface PrefsPackage extends EPackage{
 	int PREFS__TRANSACTIONS_WINDOW = 12;
 
 	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__REPORTS_WINDOW = 13;
+	int PREFS__LIST_ENTRIES = 13;
 
 	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 14;
+	int PREFS__MAIN_WINDOW = 14;
+
+	/**
+	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LAST_VERSION_RUN = 15;
 
 	/**
 	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
@@ -452,16 +461,16 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 15;
+	int PREFS__DESC_DICT = 16;
 
 	/**
-	 * The number of structural features of the the '<em>Prefs</em>' class.
+	 * The number of structural features of the '<em>Prefs</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 16;
+	int PREFS_FEATURE_COUNT = 17;
 
 
 	/**
@@ -484,13 +493,41 @@ public interface PrefsPackage extends EPackage{
 	int USER_PREFS__PREFS = 0;
 
 	/**
-	 * The number of structural features of the the '<em>User Prefs</em>' class.
+	 * The number of structural features of the '<em>User Prefs</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
 	int USER_PREFS_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.VersionImpl <em>Version</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.VersionImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getVersion()
+	 * @generated
+	 */
+	int VERSION = 8;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION__VERSION = 0;
+
+	/**
+	 * The number of structural features of the '<em>Version</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.WindowAttributesImpl <em>Window Attributes</em>}' class.
@@ -500,7 +537,7 @@ public interface PrefsPackage extends EPackage{
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 8;
+	int WINDOW_ATTRIBUTES = 9;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -539,7 +576,7 @@ public interface PrefsPackage extends EPackage{
 	int WINDOW_ATTRIBUTES__HEIGHT = 3;
 
 	/**
-	 * The number of structural features of the the '<em>Window Attributes</em>' class.
+	 * The number of structural features of the '<em>Window Attributes</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -894,6 +931,17 @@ public interface PrefsPackage extends EPackage{
 	EReference getPrefs_MainWindow();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Last Version Run</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getLastVersionRun()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_LastVersionRun();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -970,6 +1018,27 @@ public interface PrefsPackage extends EPackage{
 	EReference getUserPrefs_Prefs();
 
 	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Version <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version</em>'.
+	 * @see org.homeunix.drummer.prefs.Version
+	 * @generated
+	 */
+	EClass getVersion();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Version#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see org.homeunix.drummer.prefs.Version#getVersion()
+	 * @see #getVersion()
+	 * @generated
+	 */
+	EAttribute getVersion_Version();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.WindowAttributes <em>Window Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1031,5 +1100,416 @@ public interface PrefsPackage extends EPackage{
 	 * @generated
 	 */
 	PrefsFactory getPrefsFactory();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Defines literals for the meta objects that represent
+	 * <ul>
+	 *   <li>each class,</li>
+	 *   <li>each feature of each class,</li>
+	 *   <li>each enum,</li>
+	 *   <li>and each data type</li>
+	 * </ul>
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	interface Literals  {
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.DictDataImpl <em>Dict Data</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.DictDataImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictData()
+		 * @generated
+		 */
+		EClass DICT_DATA = eINSTANCE.getDictData();
+
+		/**
+		 * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_DATA__NUMBER = eINSTANCE.getDictData_Number();
+
+		/**
+		 * The meta object literal for the '<em><b>Memo</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_DATA__MEMO = eINSTANCE.getDictData_Memo();
+
+		/**
+		 * The meta object literal for the '<em><b>Amount</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_DATA__AMOUNT = eINSTANCE.getDictData_Amount();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_DATA__TO = eINSTANCE.getDictData_To();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_DATA__FROM = eINSTANCE.getDictData_From();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.DictEntryImpl <em>Dict Entry</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.DictEntryImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictEntry()
+		 * @generated
+		 */
+		EClass DICT_ENTRY = eINSTANCE.getDictEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Entry</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DICT_ENTRY__ENTRY = eINSTANCE.getDictEntry_Entry();
+
+		/**
+		 * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DICT_ENTRY__DATA = eINSTANCE.getDictEntry_Data();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.IntervalImpl <em>Interval</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.IntervalImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getInterval()
+		 * @generated
+		 */
+		EClass INTERVAL = eINSTANCE.getInterval();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERVAL__NAME = eINSTANCE.getInterval_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Length</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERVAL__LENGTH = eINSTANCE.getInterval_Length();
+
+		/**
+		 * The meta object literal for the '<em><b>Days</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERVAL__DAYS = eINSTANCE.getInterval_Days();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.IntervalsImpl <em>Intervals</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.IntervalsImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getIntervals()
+		 * @generated
+		 */
+		EClass INTERVALS = eINSTANCE.getIntervals();
+
+		/**
+		 * The meta object literal for the '<em><b>All Intervals</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INTERVALS__ALL_INTERVALS = eINSTANCE.getIntervals_AllIntervals();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.ListAttributesImpl <em>List Attributes</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.ListAttributesImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListAttributes()
+		 * @generated
+		 */
+		EClass LIST_ATTRIBUTES = eINSTANCE.getListAttributes();
+
+		/**
+		 * The meta object literal for the '<em><b>Unrolled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LIST_ATTRIBUTES__UNROLLED = eINSTANCE.getListAttributes_Unrolled();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.ListEntryImpl <em>List Entry</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.ListEntryImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListEntry()
+		 * @generated
+		 */
+		EClass LIST_ENTRY = eINSTANCE.getListEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Entry</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LIST_ENTRY__ENTRY = eINSTANCE.getListEntry_Entry();
+
+		/**
+		 * The meta object literal for the '<em><b>Attributes</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIST_ENTRY__ATTRIBUTES = eINSTANCE.getListEntry_Attributes();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.PrefsImpl <em>Prefs</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.PrefsImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPrefs()
+		 * @generated
+		 */
+		EClass PREFS = eINSTANCE.getPrefs();
+
+		/**
+		 * The meta object literal for the '<em><b>Data File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__DATA_FILE = eINSTANCE.getPrefs_DataFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Language</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__LANGUAGE = eINSTANCE.getPrefs_Language();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Deleted Accounts</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_DELETED_ACCOUNTS = eINSTANCE.getPrefs_ShowDeletedAccounts();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Deleted Categories</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_DELETED_CATEGORIES = eINSTANCE.getPrefs_ShowDeletedCategories();
+
+		/**
+		 * The meta object literal for the '<em><b>Date Format</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__DATE_FORMAT = eINSTANCE.getPrefs_DateFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Budget Period</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__BUDGET_PERIOD = eINSTANCE.getPrefs_BudgetPeriod();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Account Types</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_ACCOUNT_TYPES = eINSTANCE.getPrefs_ShowAccountTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Enable Update Notifications</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__ENABLE_UPDATE_NOTIFICATIONS = eINSTANCE.getPrefs_EnableUpdateNotifications();
+
+		/**
+		 * The meta object literal for the '<em><b>Selected Interval</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SELECTED_INTERVAL = eINSTANCE.getPrefs_SelectedInterval();
+
+		/**
+		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__INTERVALS = eINSTANCE.getPrefs_Intervals();
+
+		/**
+		 * The meta object literal for the '<em><b>Graphs Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__GRAPHS_WINDOW = eINSTANCE.getPrefs_GraphsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Reports Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__REPORTS_WINDOW = eINSTANCE.getPrefs_ReportsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Transactions Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__TRANSACTIONS_WINDOW = eINSTANCE.getPrefs_TransactionsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>List Entries</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__LIST_ENTRIES = eINSTANCE.getPrefs_ListEntries();
+
+		/**
+		 * The meta object literal for the '<em><b>Main Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__MAIN_WINDOW = eINSTANCE.getPrefs_MainWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Version Run</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__LAST_VERSION_RUN = eINSTANCE.getPrefs_LastVersionRun();
+
+		/**
+		 * The meta object literal for the '<em><b>Desc Dict</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__DESC_DICT = eINSTANCE.getPrefs_DescDict();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.UserPrefsImpl <em>User Prefs</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.UserPrefsImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
+		 * @generated
+		 */
+		EClass USER_PREFS = eINSTANCE.getUserPrefs();
+
+		/**
+		 * The meta object literal for the '<em><b>Prefs</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference USER_PREFS__PREFS = eINSTANCE.getUserPrefs_Prefs();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.VersionImpl <em>Version</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.VersionImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getVersion()
+		 * @generated
+		 */
+		EClass VERSION = eINSTANCE.getVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION__VERSION = eINSTANCE.getVersion_Version();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.WindowAttributesImpl <em>Window Attributes</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.WindowAttributesImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
+		 * @generated
+		 */
+		EClass WINDOW_ATTRIBUTES = eINSTANCE.getWindowAttributes();
+
+		/**
+		 * The meta object literal for the '<em><b>X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WINDOW_ATTRIBUTES__X = eINSTANCE.getWindowAttributes_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WINDOW_ATTRIBUTES__Y = eINSTANCE.getWindowAttributes_Y();
+
+		/**
+		 * The meta object literal for the '<em><b>Width</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WINDOW_ATTRIBUTES__WIDTH = eINSTANCE.getWindowAttributes_Width();
+
+		/**
+		 * The meta object literal for the '<em><b>Height</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WINDOW_ATTRIBUTES__HEIGHT = eINSTANCE.getWindowAttributes_Height();
+
+	}
 
 } //PrefsPackage

@@ -7,52 +7,55 @@
 package org.homeunix.drummer.prefs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.homeunix.drummer.prefs.ListAttributes;
+
 import org.homeunix.drummer.prefs.PrefsPackage;
+import org.homeunix.drummer.prefs.Version;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>List Attributes</b></em>'.
+ * An implementation of the model object '<em><b>Version</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.impl.ListAttributesImpl#isUnrolled <em>Unrolled</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.VersionImpl#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
+public class VersionImpl extends EObjectImpl implements Version {
 	/**
-	 * The default value of the '{@link #isUnrolled() <em>Unrolled</em>}' attribute.
+	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isUnrolled()
+	 * @see #getVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean UNROLLED_EDEFAULT = false;
+	protected static final String VERSION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #isUnrolled() <em>Unrolled</em>}' attribute.
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isUnrolled()
+	 * @see #getVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean unrolled = UNROLLED_EDEFAULT;
+	protected String version = VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ListAttributesImpl() {
+	protected VersionImpl() {
 		super();
 	}
 
@@ -62,7 +65,7 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.Literals.LIST_ATTRIBUTES;
+		return PrefsPackage.Literals.VERSION;
 	}
 
 	/**
@@ -70,8 +73,8 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isUnrolled() {
-		return unrolled;
+	public String getVersion() {
+		return version;
 	}
 
 	/**
@@ -79,11 +82,11 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setUnrolled(boolean newUnrolled) {
-		boolean oldUnrolled = unrolled;
-		unrolled = newUnrolled;
+	public void setVersion(String newVersion) {
+		String oldVersion = version;
+		version = newVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.LIST_ATTRIBUTES__UNROLLED, oldUnrolled, unrolled));
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.VERSION__VERSION, oldVersion, version));
 	}
 
 	/**
@@ -93,8 +96,8 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PrefsPackage.LIST_ATTRIBUTES__UNROLLED:
-				return isUnrolled() ? Boolean.TRUE : Boolean.FALSE;
+			case PrefsPackage.VERSION__VERSION:
+				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -106,8 +109,8 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 */
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PrefsPackage.LIST_ATTRIBUTES__UNROLLED:
-				setUnrolled(((Boolean)newValue).booleanValue());
+			case PrefsPackage.VERSION__VERSION:
+				setVersion((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -120,8 +123,8 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.LIST_ATTRIBUTES__UNROLLED:
-				setUnrolled(UNROLLED_EDEFAULT);
+			case PrefsPackage.VERSION__VERSION:
+				setVersion(VERSION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -134,8 +137,8 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.LIST_ATTRIBUTES__UNROLLED:
-				return unrolled != UNROLLED_EDEFAULT;
+			case PrefsPackage.VERSION__VERSION:
+				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -149,10 +152,10 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (unrolled: ");
-		result.append(unrolled);
+		result.append(" (version: ");
+		result.append(version);
 		result.append(')');
 		return result.toString();
 	}
 
-} //ListAttributesImpl
+} //VersionImpl

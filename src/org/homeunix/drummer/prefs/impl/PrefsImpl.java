@@ -12,7 +12,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -23,6 +22,7 @@ import org.homeunix.drummer.prefs.Intervals;
 import org.homeunix.drummer.prefs.ListEntry;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsPackage;
+import org.homeunix.drummer.prefs.Version;
 import org.homeunix.drummer.prefs.WindowAttributes;
 
 /**
@@ -41,12 +41,13 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAccountTypes <em>Show Account Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getSelectedInterval <em>Selected Interval</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
  * </ul>
  * </p>
@@ -235,16 +236,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String selectedInterval = SELECTED_INTERVAL_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListEntries()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList listEntries = null;
-
-	/**
 	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -255,24 +246,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected Intervals intervals = null;
 
 	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
+	 * @see #getGraphsWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes mainWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes transactionsWindow = null;
+	protected WindowAttributes graphsWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
@@ -285,14 +266,44 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes reportsWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGraphsWindow()
+	 * @see #getTransactionsWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes graphsWindow = null;
+	protected WindowAttributes transactionsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getListEntries()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList listEntries = null;
+
+	/**
+	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMainWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes mainWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLastVersionRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected Version lastVersionRun = null;
 
 	/**
 	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
@@ -319,7 +330,7 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.eINSTANCE.getPrefs();
+		return PrefsPackage.Literals.PREFS;
 	}
 
 	/**
@@ -624,6 +635,49 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Version getLastVersionRun() {
+		return lastVersionRun;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetLastVersionRun(Version newLastVersionRun, NotificationChain msgs) {
+		Version oldLastVersionRun = lastVersionRun;
+		lastVersionRun = newLastVersionRun;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LAST_VERSION_RUN, oldLastVersionRun, newLastVersionRun);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLastVersionRun(Version newLastVersionRun) {
+		if (newLastVersionRun != lastVersionRun) {
+			NotificationChain msgs = null;
+			if (lastVersionRun != null)
+				msgs = ((InternalEObject)lastVersionRun).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__LAST_VERSION_RUN, null, msgs);
+			if (newLastVersionRun != null)
+				msgs = ((InternalEObject)newLastVersionRun).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__LAST_VERSION_RUN, null, msgs);
+			msgs = basicSetLastVersionRun(newLastVersionRun, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LAST_VERSION_RUN, newLastVersionRun, newLastVersionRun));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList getListEntries() {
 		if (listEntries == null) {
 			listEntries = new EObjectContainmentEList(ListEntry.class, this, PrefsPackage.PREFS__LIST_ENTRIES);
@@ -734,49 +788,26 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getSelectedInterval() {
-		return selectedInterval;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSelectedInterval(String newSelectedInterval) {
-		String oldSelectedInterval = selectedInterval;
-		selectedInterval = newSelectedInterval;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SELECTED_INTERVAL, oldSelectedInterval, selectedInterval));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class baseClass, NotificationChain msgs) {
-		if (featureID >= 0) {
-			switch (eDerivedStructuralFeatureID(featureID, baseClass)) {
-				case PrefsPackage.PREFS__LIST_ENTRIES:
-					return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
-				case PrefsPackage.PREFS__INTERVALS:
-					return basicSetIntervals(null, msgs);
-				case PrefsPackage.PREFS__MAIN_WINDOW:
-					return basicSetMainWindow(null, msgs);
-				case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-					return basicSetTransactionsWindow(null, msgs);
-				case PrefsPackage.PREFS__REPORTS_WINDOW:
-					return basicSetReportsWindow(null, msgs);
-				case PrefsPackage.PREFS__GRAPHS_WINDOW:
-					return basicSetGraphsWindow(null, msgs);
-				case PrefsPackage.PREFS__DESC_DICT:
-					return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-				default:
-					return eDynamicInverseRemove(otherEnd, featureID, baseClass, msgs);
-			}
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case PrefsPackage.PREFS__INTERVALS:
+				return basicSetIntervals(null, msgs);
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				return basicSetGraphsWindow(null, msgs);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return basicSetReportsWindow(null, msgs);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return basicSetTransactionsWindow(null, msgs);
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return basicSetMainWindow(null, msgs);
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return basicSetLastVersionRun(null, msgs);
+			case PrefsPackage.PREFS__DESC_DICT:
+				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
 		}
-		return eBasicSetContainer(null, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -784,8 +815,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object eGet(EStructuralFeature eFeature, boolean resolve) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 			case PrefsPackage.PREFS__DATA_FILE:
 				return getDataFile();
 			case PrefsPackage.PREFS__LANGUAGE:
@@ -804,22 +835,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isEnableUpdateNotifications() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__SELECTED_INTERVAL:
 				return getSelectedInterval();
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return getListEntries();
 			case PrefsPackage.PREFS__INTERVALS:
 				return getIntervals();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return getReportsWindow();
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return getReportsWindow();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return getListEntries();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return getLastVersionRun();
 			case PrefsPackage.PREFS__DESC_DICT:
 				return getDescDict();
 		}
-		return eDynamicGet(eFeature, resolve);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -828,8 +861,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public void eSet(EStructuralFeature eFeature, Object newValue) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 			case PrefsPackage.PREFS__DATA_FILE:
 				setDataFile((String)newValue);
 				return;
@@ -857,31 +890,34 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SELECTED_INTERVAL:
 				setSelectedInterval((String)newValue);
 				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				getListEntries().addAll((Collection)newValue);
-				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)newValue);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)newValue);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				getListEntries().addAll((Collection)newValue);
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)newValue);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
 				return;
 		}
-		eDynamicSet(eFeature, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -889,8 +925,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void eUnset(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public void eUnset(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.PREFS__DATA_FILE:
 				setDataFile(DATA_FILE_EDEFAULT);
 				return;
@@ -918,29 +954,32 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SELECTED_INTERVAL:
 				setSelectedInterval(SELECTED_INTERVAL_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)null);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)null);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				return;
 		}
-		eDynamicUnset(eFeature);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -948,8 +987,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean eIsSet(EStructuralFeature eFeature) {
-		switch (eDerivedStructuralFeatureID(eFeature)) {
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 			case PrefsPackage.PREFS__DATA_FILE:
 				return DATA_FILE_EDEFAULT == null ? dataFile != null : !DATA_FILE_EDEFAULT.equals(dataFile);
 			case PrefsPackage.PREFS__LANGUAGE:
@@ -968,22 +1007,45 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return enableUpdateNotifications != ENABLE_UPDATE_NOTIFICATIONS_EDEFAULT;
 			case PrefsPackage.PREFS__SELECTED_INTERVAL:
 				return SELECTED_INTERVAL_EDEFAULT == null ? selectedInterval != null : !SELECTED_INTERVAL_EDEFAULT.equals(selectedInterval);
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return listEntries != null && !listEntries.isEmpty();
 			case PrefsPackage.PREFS__INTERVALS:
 				return intervals != null;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return reportsWindow != null;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return reportsWindow != null;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return lastVersionRun != null;
 			case PrefsPackage.PREFS__DESC_DICT:
 				return descDict != null && !descDict.isEmpty();
 		}
-		return eDynamicIsSet(eFeature);
+		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getSelectedInterval() {
+		return selectedInterval;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSelectedInterval(String newSelectedInterval) {
+		String oldSelectedInterval = selectedInterval;
+		selectedInterval = newSelectedInterval;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SELECTED_INTERVAL, oldSelectedInterval, selectedInterval));
 	}
 
 	/**

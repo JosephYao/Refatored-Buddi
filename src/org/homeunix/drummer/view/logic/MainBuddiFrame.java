@@ -32,24 +32,25 @@ import org.homeunix.drummer.view.layout.ListPanelLayout;
 import org.homeunix.drummer.view.layout.MainBudgetFrameLayout;
 
 
-public class MainBudgetFrame extends MainBudgetFrameLayout {
+public class MainBuddiFrame extends MainBudgetFrameLayout {
 	public static final long serialVersionUID = 0;
 	
-	public static MainBudgetFrame getInstance() {
+	public static MainBuddiFrame getInstance() {
 		return SingletonHolder.instance;
 	}
 	
 	private static class SingletonHolder {
-		private static MainBudgetFrame instance = new MainBudgetFrame();
+		private static MainBuddiFrame instance = new MainBuddiFrame();
 	}
 	
-	private MainBudgetFrame(){
+	private MainBuddiFrame(){
 		super();
 
 		DataInstance.getInstance().calculateAllBalances();
 		initActions();
 		
 		startUpdateCheck();
+		startVersionCheck();
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 			public void componentResized(ComponentEvent arg0) {
 				Log.debug("Main window resized");
 				
-				MainBudgetFrame.this.savePosition();
+				MainBuddiFrame.this.savePosition();
 								
 				super.componentResized(arg0);
 			}
@@ -68,7 +69,7 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 			public void componentHidden(ComponentEvent arg0) {
 				Log.debug("Main Window hidden");
 				
-				MainBudgetFrame.this.savePosition();
+				MainBuddiFrame.this.savePosition();
 				
 				super.componentHidden(arg0);
 			}
@@ -78,8 +79,8 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			Application.getInstance().addReopenApplicationListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					if (!MainBudgetFrame.this.isVisible())
-						MainBudgetFrame.this.setVisible(true);
+					if (!MainBuddiFrame.this.isVisible())
+						MainBuddiFrame.this.setVisible(true);
 				}
 			});
 		}
@@ -138,7 +139,7 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 				public Object construct() {
 					try{
 						Properties versions = new Properties();
-						URL mostRecentVersion = new URL("http://buddi.sourceforge.net/version.txt");
+						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
 						
 						versions.load(mostRecentVersion.openStream());
 						
@@ -164,7 +165,7 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 						buttons[1] = Translate.getInstance().get(TranslateKeys.CANCEL);
 						
 						int reply = JOptionPane.showOptionDialog(
-								MainBudgetFrame.this, 
+								MainBuddiFrame.this, 
 								Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE)
 								+ " " + get() + "\n"
 								+ Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE_2),
@@ -176,12 +177,12 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 								buttons[0]);
 						
 						if (reply == JOptionPane.YES_OPTION){
-							String fileLocation = "http://prdownloads.sourceforge.net/buddi/Buddi-" + get();
+							String fileLocation = Const.DOWNLOAD_URL + get();
 							
 							if (Buddi.isMac())
-								fileLocation += ".dmg?download";
+								fileLocation += Const.DOWNLOAD_URL_DMG;
 							else
-								fileLocation += ".zip?download";
+								fileLocation += Const.DOWNLOAD_URL_ZIP;
 							
 							try{
 								BrowserLauncher.openURL(fileLocation);
@@ -198,6 +199,50 @@ public class MainBudgetFrame extends MainBudgetFrameLayout {
 			
 			Log.debug("Starting update checking...");
 			updateWorker.start();
+		}
+	}
+	
+	private void startVersionCheck(){
+		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+			PrefsInstance.getInstance().updateVersion();
+			
+			SwingWorker worker = new SwingWorker() {
+			
+				@Override
+				public Object construct() {
+					return null;
+				}
+				
+				@Override
+				public void finished() {
+					String[] buttons = new String[2];
+					buttons[0] = Translate.getInstance().get(TranslateKeys.DONATE);
+					buttons[1] = Translate.getInstance().get(TranslateKeys.NOT_NOW);
+					
+					int reply = JOptionPane.showOptionDialog(
+							MainBuddiFrame.this, 
+							Translate.getInstance().get(TranslateKeys.DONATE_MESSAGE),
+							Translate.getInstance().get(TranslateKeys.DONATE_HEADER),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
+					
+					if (reply == JOptionPane.YES_OPTION){
+						try{
+							BrowserLauncher.openURL(Const.DONATE_URL);
+						}
+						catch (IOException ioe){
+							Log.error(ioe);
+						}
+					}
+					
+					super.finished();
+				}
+			};
+			
+			worker.start();
 		}
 	}
 }

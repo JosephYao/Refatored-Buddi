@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.BuddiMenu;
-import org.homeunix.drummer.view.logic.MainBudgetFrame;
+import org.homeunix.drummer.view.logic.MainBuddiFrame;
 import org.homeunix.drummer.view.logic.TransactionsFrame;
 import org.homeunix.drummer.view.reports.layout.GraphFrameLayout;
 import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
@@ -53,7 +53,7 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		
 		PrefsInstance.getInstance().checkWindowSanity();
 		
-		if (this instanceof MainBudgetFrame){
+		if (this instanceof MainBuddiFrame){
 			p = new Point(
 					PrefsInstance.getInstance().getPrefs().getMainWindow().getX(),
 					PrefsInstance.getInstance().getPrefs().getMainWindow().getY()
