@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -158,7 +161,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				try{
 					recordTransaction();
 					editableTransaction.setTransaction(null, true);
-					updateContent();
+					updateAllTransactionWindows();
 					editableTransaction.setChanged(false);
 				}
 				catch(InvalidTransactionException ite){}
@@ -208,6 +211,15 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				TransactionsFrame.this.searchField.setValue("");
 				
+			}
+		});
+		
+		this.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Log.debug("Closed window; removing from list");
+				transactionInstances.put(TransactionsFrame.this.account, null);
+				super.windowClosed(e);
 			}
 		});
 		
@@ -388,7 +400,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		public final static long serialVersionUID = 0;
 	}
 	
-
-	
-
+	/**
+	 * Force an update of every transaction window  
+	 */
+	public static void updateAllTransactionWindows(){
+		for (TransactionsFrameLayout tfl : Collections.unmodifiableCollection(transactionInstances.values())) {
+			tfl.updateContent();
+		}
+	}
 }

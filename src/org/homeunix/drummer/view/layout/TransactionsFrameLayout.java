@@ -134,6 +134,6 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		//Show the window
 		openWindow();
 	}
-	
+		
 	public abstract Account getAccount();
 }

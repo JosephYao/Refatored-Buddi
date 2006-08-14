@@ -10,6 +10,8 @@ import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
@@ -49,13 +51,24 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if (ModifyScheduleDialog.this.ensureInfoCorrect()){
-					ModifyScheduleDialog.this.saveSchedule();
-					ModifyScheduleDialog.this.setVisible(false);
-					ModifyScheduleDialog.this.dispose();
+					if (!ModifyScheduleDialog.this.startDateChooser.getDate().before(new Date())
+							|| schedule != null		//If the schedule has already been defined, we won't bother people again 
+							|| JOptionPane.showConfirmDialog(ModifyScheduleDialog.this, 
+									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST), 
+									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
+									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+						ModifyScheduleDialog.this.saveSchedule();
+						MainBuddiFrame.getInstance().updateScheduledTransactions();
+						TransactionsFrame.updateAllTransactionWindows();
+						ModifyScheduleDialog.this.setVisible(false);
+						ModifyScheduleDialog.this.dispose();
+					}
 				}
 				else {
-					// TODO Show a message explaining what needs to be filled in
-					Log.error("You didn't fill in everything.");
+					JOptionPane.showMessageDialog(ModifyScheduleDialog.this, 
+							Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO),
+							Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

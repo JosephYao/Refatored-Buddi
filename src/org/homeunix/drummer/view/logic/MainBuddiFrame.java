@@ -254,7 +254,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		}
 	}
 	
-	private void updateScheduledTransactions(){
+	public void updateScheduledTransactions(){
 		//Update any scheduled transactions
 		final Date today = DateUtil.getEndOfDay(new Date());
 		final Calendar tempCal = Calendar.getInstance();

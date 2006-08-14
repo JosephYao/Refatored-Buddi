@@ -39,7 +39,6 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.util.SwingWorker;
 
 @SuppressWarnings("unchecked")
 public class DataInstance {
