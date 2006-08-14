@@ -28,8 +28,8 @@ import org.homeunix.drummer.model.Types;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTypes <em>All Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllAccounts <em>All Accounts</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTransactions <em>All Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllCategories <em>All Categories</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTransactions <em>All Transactions</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,16 +57,6 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	protected Accounts allAccounts = null;
 
 	/**
-	 * The cached value of the '{@link #getAllTransactions() <em>All Transactions</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAllTransactions()
-	 * @generated
-	 * @ordered
-	 */
-	protected Transactions allTransactions = null;
-
-	/**
 	 * The cached value of the '{@link #getAllCategories() <em>All Categories</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -75,6 +65,16 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 * @ordered
 	 */
 	protected Categories allCategories = null;
+
+	/**
+	 * The cached value of the '{@link #getAllTransactions() <em>All Transactions</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAllTransactions()
+	 * @generated
+	 * @ordered
+	 */
+	protected Transactions allTransactions = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -152,14 +152,14 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 				if (allAccounts != null)
 					msgs = ((InternalEObject)allAccounts).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_ACCOUNTS, null, msgs);
 				return basicSetAllAccounts((Accounts)otherEnd, msgs);
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				if (allTransactions != null)
-					msgs = ((InternalEObject)allTransactions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, null, msgs);
-				return basicSetAllTransactions((Transactions)otherEnd, msgs);
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				if (allCategories != null)
 					msgs = ((InternalEObject)allCategories).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_CATEGORIES, null, msgs);
 				return basicSetAllCategories((Categories)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				if (allTransactions != null)
+					msgs = ((InternalEObject)allTransactions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, null, msgs);
+				return basicSetAllTransactions((Transactions)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -175,10 +175,10 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 				return basicSetAllTypes(null, msgs);
 			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
 				return basicSetAllAccounts(null, msgs);
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				return basicSetAllTransactions(null, msgs);
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				return basicSetAllCategories(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return basicSetAllTransactions(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -194,10 +194,10 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 				return getAllTypes();
 			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
 				return getAllAccounts();
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				return getAllTransactions();
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				return getAllCategories();
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return getAllTransactions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -215,11 +215,11 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
 				setAllAccounts((Accounts)newValue);
 				return;
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				setAllTransactions((Transactions)newValue);
-				return;
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				setAllCategories((Categories)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				setAllTransactions((Transactions)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -238,11 +238,11 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
 				setAllAccounts((Accounts)null);
 				return;
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				setAllTransactions((Transactions)null);
-				return;
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				setAllCategories((Categories)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				setAllTransactions((Transactions)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -259,10 +259,10 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 				return allTypes != null;
 			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
 				return allAccounts != null;
-			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
-				return allTransactions != null;
 			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
 				return allCategories != null;
+			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
+				return allTransactions != null;
 		}
 		return super.eIsSet(featureID);
 	}

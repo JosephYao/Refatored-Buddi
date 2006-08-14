@@ -35,5 +35,15 @@ public class Const {
 		"dd/MM/yyyy"
 	};
 	
+	public final static String[] DAYS_IN_WEEK = {
+		"SUNDAY",
+		"MONDAY",
+		"TUESDAY",
+		"WEDNESDAY",
+		"THURSDAY",
+		"FRIDAY",
+		"SATURDAY"
+	};
+	
 	private Const(){}
 }

@@ -11,10 +11,13 @@ import java.awt.GridLayout;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
@@ -29,11 +32,14 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 	protected final JButton okButton;
 	protected final JButton cancelButton;
 	
+	protected final JTextField scheduleName;
 	protected final JComboBox frequencyPulldown;
 	protected final JComboBox schedulePulldown;
 	protected final JDateChooser startDateChooser;
 	
 	protected final EditableTransaction transaction;
+	
+	protected final DefaultComboBoxModel scheduleModel;
 	
 	protected ModifyScheduleDialogLayout(Frame owner){
 		super(owner);
@@ -46,15 +52,19 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 		JLabel frequencyPulldownLabel = new JLabel(Translate.getInstance().get(TranslateKeys.FREQUENCY));
 		JLabel schedulePulldownLabel = new JLabel(Translate.getInstance().get(TranslateKeys.EVERY));
 		JLabel startDateChooserLabel = new JLabel(Translate.getInstance().get(TranslateKeys.START_DATE));
-
+		JLabel scheduleNameLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NAME));
+		
 		Vector<String> frequencyChoices = new Vector<String>();
 		frequencyChoices.add(TranslateKeys.WEEK.toString());
 		frequencyChoices.add(TranslateKeys.MONTH.toString());
 		
+		scheduleName = new JTextField();
 		frequencyPulldown = new JComboBox(frequencyChoices);
 		schedulePulldown = new JComboBox();
 		startDateChooser = new JDateChooser();
-		
+
+		scheduleModel = new DefaultComboBoxModel();
+		schedulePulldown.setModel(scheduleModel);
 		
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
@@ -66,8 +76,11 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 
 		Dimension textSize = new Dimension(pulldownSize.width, startDateChooser.getPreferredSize().height);
 		startDateChooser.setPreferredSize(textSize);
+		scheduleName.setPreferredSize(textSize);
 		
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
+		textPanel.add(scheduleNameLabel);
+		textPanel.add(scheduleName);
 		textPanel.add(frequencyPulldownLabel);
 		textPanel.add(frequencyPulldown);
 		textPanel.add(schedulePulldownLabel);

@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.Accounts#getAccounts <em>Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Accounts#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Accounts#getAccounts <em>Accounts</em>}</li>
  * </ul>
  * </p>
  *

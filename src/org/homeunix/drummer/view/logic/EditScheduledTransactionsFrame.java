@@ -31,7 +31,9 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 		
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				new ModifyScheduleDialog(null).openWindow();	
+				new ModifyScheduleDialog(null).openWindow();
+				Log.debug("Done creating");
+				updateContent();
 			}
 		});
 		
@@ -42,6 +44,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 					Schedule s = (Schedule) o;
 					new ModifyScheduleDialog(s).openWindow();
 					Log.debug("Done editing.");
+					updateContent();
 				}
 			}
 		});
@@ -49,7 +52,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 		deleteButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				updateContent();
 			}
 		});
 		

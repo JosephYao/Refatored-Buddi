@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleDay <em>Schedule Day</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getLastDateCreated <em>Last Date Created</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.Schedule#getSampleTransaction <em>Sample Transaction</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleName <em>Schedule Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Schedule extends EObject {
+public interface Schedule extends Transaction {
 	/**
 	 * Returns the value of the '<em><b>Start Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -67,12 +67,12 @@ public interface Schedule extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Frequency Type</em>' attribute.
-	 * @see #setFrequencyType(int)
+	 * @see #setFrequencyType(String)
 	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_FrequencyType()
 	 * @model required="true"
 	 * @generated
 	 */
-	int getFrequencyType();
+	String getFrequencyType();
 
 	/**
 	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getFrequencyType <em>Frequency Type</em>}' attribute.
@@ -82,7 +82,7 @@ public interface Schedule extends EObject {
 	 * @see #getFrequencyType()
 	 * @generated
 	 */
-	void setFrequencyType(int value);
+	void setFrequencyType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Schedule Day</b></em>' attribute.
@@ -163,29 +163,29 @@ public interface Schedule extends EObject {
 	void setEndDate(Date value);
 
 	/**
-	 * Returns the value of the '<em><b>Sample Transaction</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Schedule Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Sample Transaction</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Schedule Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sample Transaction</em>' containment reference.
-	 * @see #setSampleTransaction(Transaction)
-	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_SampleTransaction()
-	 * @model containment="true" required="true"
+	 * @return the value of the '<em>Schedule Name</em>' attribute.
+	 * @see #setScheduleName(String)
+	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_ScheduleName()
+	 * @model required="true"
 	 * @generated
 	 */
-	Transaction getSampleTransaction();
+	String getScheduleName();
 
 	/**
-	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getSampleTransaction <em>Sample Transaction</em>}' containment reference.
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getScheduleName <em>Schedule Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Sample Transaction</em>' containment reference.
-	 * @see #getSampleTransaction()
+	 * @param value the new value of the '<em>Schedule Name</em>' attribute.
+	 * @see #getScheduleName()
 	 * @generated
 	 */
-	void setSampleTransaction(Transaction value);
+	void setScheduleName(String value);
 
 } // Schedule

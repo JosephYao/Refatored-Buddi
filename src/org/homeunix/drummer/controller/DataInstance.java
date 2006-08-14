@@ -521,7 +521,25 @@ public class DataInstance {
 		return v;
 	}
 	
-	public void addSchedule(Date startDate, String frequencyType){
+	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Transaction transaction){
+		Schedule s = dataModelFactory.createSchedule();
+		s.setScheduleName(name);
+		s.setStartDate(startDate);
+		s.setEndDate(endDate);
+		s.setFrequencyType(frequencyType);
+		s.setScheduleDay(scheduleDay);
+		s.setAmount(transaction.getAmount());
+		s.setDescription(transaction.getDescription());
+		s.setNumber(transaction.getNumber());
+		s.setMemo(transaction.getMemo());
+		s.setTo(transaction.getTo());
+		s.setFrom(transaction.getFrom());
 		
+		dataModel.getAllTransactions().getScheduledTransactions().add(s);
+		saveDataModel();
+	}
+	
+	public void removeSchedule(Schedule s){
+		dataModel.getAllTransactions().getScheduledTransactions().remove(s);
 	}
 }

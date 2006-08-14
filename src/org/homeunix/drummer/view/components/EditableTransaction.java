@@ -141,7 +141,10 @@ public class EditableTransaction extends JPanel {
 		to.setPreferredSize(from.getPreferredSize());
 		
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));
-				
+		
+		if (parent == null)
+			date.setVisible(false);
+		
 		initActions();
 	}
 	
@@ -166,6 +169,10 @@ public class EditableTransaction extends JPanel {
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
+			Log.debug("Set to: " + transaction.getTo());
+			Log.debug("Set from: " + transaction.getFrom());
+			Log.debug("Selected to: " + to.getSelectedItem());
+			Log.debug("Selected from: " + from.getSelectedItem());
 		}
 		else{
 			if (date.getDate() == null)

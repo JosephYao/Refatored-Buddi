@@ -241,7 +241,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getAccounts_Accounts() {
-		return (EReference)accountsEClass.getEStructuralFeatures().get(0);
+		return (EReference)accountsEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getAccounts_AllAccounts() {
-		return (EReference)accountsEClass.getEStructuralFeatures().get(1);
+		return (EReference)accountsEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getDataModel_AllCategories() {
-		return (EReference)dataModelEClass.getEStructuralFeatures().get(3);
+		return (EReference)dataModelEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -402,8 +402,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSchedule_SampleTransaction() {
-		return (EReference)scheduleEClass.getEStructuralFeatures().get(5);
+	public EAttribute getSchedule_ScheduleName() {
+		return (EAttribute)scheduleEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -421,7 +421,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getDataModel_AllTransactions() {
-		return (EReference)dataModelEClass.getEStructuralFeatures().get(2);
+		return (EReference)dataModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -583,7 +583,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getTransactions_Transactions() {
-		return (EReference)transactionsEClass.getEStructuralFeatures().get(0);
+		return (EReference)transactionsEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -628,15 +628,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getTypes_AllTypes() {
-		return (EReference)typesEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTypes_Types() {
 		return (EReference)typesEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -645,8 +636,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTypes_Types() {
+		return (EReference)typesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getTransactions_AllTransactions() {
-		return (EReference)transactionsEClass.getEStructuralFeatures().get(1);
+		return (EReference)transactionsEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -655,7 +655,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @generated
 	 */
 	public EReference getTransactions_ScheduledTransactions() {
-		return (EReference)transactionsEClass.getEStructuralFeatures().get(2);
+		return (EReference)transactionsEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -701,8 +701,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(accountEClass, ACCOUNT__ACCOUNT_TYPE);
 
 		accountsEClass = createEClass(ACCOUNTS);
-		createEReference(accountsEClass, ACCOUNTS__ACCOUNTS);
 		createEReference(accountsEClass, ACCOUNTS__ALL_ACCOUNTS);
+		createEReference(accountsEClass, ACCOUNTS__ACCOUNTS);
 
 		categoriesEClass = createEClass(CATEGORIES);
 		createEReference(categoriesEClass, CATEGORIES__CATEGORIES);
@@ -717,8 +717,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		dataModelEClass = createEClass(DATA_MODEL);
 		createEReference(dataModelEClass, DATA_MODEL__ALL_TYPES);
 		createEReference(dataModelEClass, DATA_MODEL__ALL_ACCOUNTS);
-		createEReference(dataModelEClass, DATA_MODEL__ALL_TRANSACTIONS);
 		createEReference(dataModelEClass, DATA_MODEL__ALL_CATEGORIES);
+		createEReference(dataModelEClass, DATA_MODEL__ALL_TRANSACTIONS);
 
 		scheduleEClass = createEClass(SCHEDULE);
 		createEAttribute(scheduleEClass, SCHEDULE__START_DATE);
@@ -726,7 +726,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEAttribute(scheduleEClass, SCHEDULE__SCHEDULE_DAY);
 		createEAttribute(scheduleEClass, SCHEDULE__LAST_DATE_CREATED);
 		createEAttribute(scheduleEClass, SCHEDULE__END_DATE);
-		createEReference(scheduleEClass, SCHEDULE__SAMPLE_TRANSACTION);
+		createEAttribute(scheduleEClass, SCHEDULE__SCHEDULE_NAME);
 
 		sourceEClass = createEClass(SOURCE);
 		createEAttribute(sourceEClass, SOURCE__NAME);
@@ -746,17 +746,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(transactionEClass, TRANSACTION__FROM);
 
 		transactionsEClass = createEClass(TRANSACTIONS);
+		createEReference(transactionsEClass, TRANSACTIONS__SCHEDULED_TRANSACTIONS);
 		createEReference(transactionsEClass, TRANSACTIONS__TRANSACTIONS);
 		createEReference(transactionsEClass, TRANSACTIONS__ALL_TRANSACTIONS);
-		createEReference(transactionsEClass, TRANSACTIONS__SCHEDULED_TRANSACTIONS);
 
 		typeEClass = createEClass(TYPE);
 		createEAttribute(typeEClass, TYPE__NAME);
 		createEAttribute(typeEClass, TYPE__CREDIT);
 
 		typesEClass = createEClass(TYPES);
-		createEReference(typesEClass, TYPES__ALL_TYPES);
 		createEReference(typesEClass, TYPES__TYPES);
+		createEReference(typesEClass, TYPES__ALL_TYPES);
 
 		// Create data types
 		dateEDataType = createEDataType(DATE);
@@ -789,6 +789,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		// Add supertypes to classes
 		accountEClass.getESuperTypes().add(this.getSource());
 		categoryEClass.getESuperTypes().add(this.getSource());
+		scheduleEClass.getESuperTypes().add(this.getTransaction());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(accountEClass, Account.class, "Account", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -797,8 +798,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getAccount_AccountType(), this.getType(), null, "accountType", null, 1, 1, Account.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(accountsEClass, Accounts.class, "Accounts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAccounts_Accounts(), this.getAccount(), null, "accounts", null, 0, -1, Accounts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAccounts_AllAccounts(), this.getDataModel(), this.getDataModel_AllAccounts(), "allAccounts", null, 1, 1, Accounts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAccounts_Accounts(), this.getAccount(), null, "accounts", null, 0, -1, Accounts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categoriesEClass, Categories.class, "Categories", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCategories_Categories(), this.getCategory(), null, "categories", null, 0, -1, Categories.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -813,16 +814,16 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEClass(dataModelEClass, DataModel.class, "DataModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataModel_AllTypes(), this.getTypes(), this.getTypes_AllTypes(), "allTypes", null, 1, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataModel_AllAccounts(), this.getAccounts(), this.getAccounts_AllAccounts(), "allAccounts", null, 1, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataModel_AllTransactions(), this.getTransactions(), this.getTransactions_AllTransactions(), "allTransactions", null, 1, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataModel_AllCategories(), this.getCategories(), this.getCategories_AllCategories(), "allCategories", null, 1, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataModel_AllTransactions(), this.getTransactions(), this.getTransactions_AllTransactions(), "allTransactions", null, 1, 1, DataModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSchedule_StartDate(), this.getDate(), "startDate", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSchedule_FrequencyType(), ecorePackage.getEInt(), "frequencyType", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSchedule_FrequencyType(), ecorePackage.getEString(), "frequencyType", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedule_ScheduleDay(), ecorePackage.getEInt(), "scheduleDay", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedule_LastDateCreated(), this.getDate(), "lastDateCreated", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedule_EndDate(), this.getDate(), "endDate", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSchedule_SampleTransaction(), this.getTransaction(), null, "sampleTransaction", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSchedule_ScheduleName(), ecorePackage.getEString(), "scheduleName", null, 1, 1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(sourceEClass, Source.class, "Source", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSource_Name(), ecorePackage.getEString(), "name", null, 1, 1, Source.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -842,17 +843,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getTransaction_From(), this.getSource(), null, "from", null, 1, 1, Transaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transactionsEClass, Transactions.class, "Transactions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTransactions_ScheduledTransactions(), this.getSchedule(), null, "scheduledTransactions", null, 0, -1, Transactions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTransactions_Transactions(), this.getTransaction(), null, "transactions", null, 0, -1, Transactions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTransactions_AllTransactions(), this.getDataModel(), this.getDataModel_AllTransactions(), "allTransactions", null, 1, 1, Transactions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTransactions_ScheduledTransactions(), this.getSchedule(), null, "scheduledTransactions", null, 0, -1, Transactions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getType_Name(), ecorePackage.getEString(), "name", null, 1, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getType_Credit(), ecorePackage.getEBoolean(), "credit", null, 1, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(typesEClass, Types.class, "Types", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTypes_AllTypes(), this.getDataModel(), this.getDataModel_AllTypes(), "allTypes", null, 1, 1, Types.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTypes_Types(), this.getType(), null, "types", null, 0, -1, Types.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypes_AllTypes(), this.getDataModel(), this.getDataModel_AllTypes(), "allTypes", null, 1, 1, Types.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(dateEDataType, Date.class, "Date", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

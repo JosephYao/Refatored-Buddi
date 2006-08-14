@@ -35,7 +35,7 @@ import org.homeunix.drummer.model.Source;
  *
  * @generated
  */
-public class CategoryImpl extends SourceImpl implements Category, Comparable<Source> {
+public class CategoryImpl extends SourceImpl implements Category {
 	/**
 	 * The default value of the '{@link #getBudgetedAmount() <em>Budgeted Amount</em>}' attribute.
 	 * <!-- begin-user-doc -->

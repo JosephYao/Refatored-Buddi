@@ -28,7 +28,7 @@ import org.homeunix.drummer.model.Type;
  *
  * @generated
  */
-public class TypeImpl extends EObjectImpl implements Type, Comparable<Type> {
+public class TypeImpl extends EObjectImpl implements Type {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

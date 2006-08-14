@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Categories extends EObject{
+public interface Categories extends EObject {
 	/**
 	 * Returns the value of the '<em><b>All Categories</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.homeunix.drummer.model.DataModel#getAllCategories <em>All Categories</em>}'.

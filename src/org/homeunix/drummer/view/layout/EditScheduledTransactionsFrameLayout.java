@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 import org.homeunix.drummer.Buddi;
@@ -97,5 +98,4 @@ public abstract class EditScheduledTransactionsFrameLayout extends AbstractBudge
 		
 		return this;
 	}
-
 }

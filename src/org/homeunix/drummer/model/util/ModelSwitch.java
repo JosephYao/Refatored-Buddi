@@ -122,6 +122,7 @@ public class ModelSwitch {
 			case ModelPackage.SCHEDULE: {
 				Schedule schedule = (Schedule)theEObject;
 				Object result = caseSchedule(schedule);
+				if (result == null) result = caseTransaction(schedule);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

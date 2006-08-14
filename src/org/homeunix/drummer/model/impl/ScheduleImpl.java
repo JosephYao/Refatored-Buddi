@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.util.Formatter;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,13 +34,13 @@ import org.homeunix.drummer.model.Transaction;
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleDay <em>Schedule Day</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getLastDateCreated <em>Last Date Created</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getEndDate <em>End Date</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getSampleTransaction <em>Sample Transaction</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleName <em>Schedule Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ScheduleImpl extends EObjectImpl implements Schedule {
+public class ScheduleImpl extends TransactionImpl implements Schedule {
 	/**
 	 * The default value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -68,7 +69,7 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int FREQUENCY_TYPE_EDEFAULT = 0;
+	protected static final String FREQUENCY_TYPE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getFrequencyType() <em>Frequency Type</em>}' attribute.
@@ -78,7 +79,7 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * @generated
 	 * @ordered
 	 */
-	protected int frequencyType = FREQUENCY_TYPE_EDEFAULT;
+	protected String frequencyType = FREQUENCY_TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getScheduleDay() <em>Schedule Day</em>}' attribute.
@@ -141,14 +142,24 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	protected Date endDate = END_DATE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getSampleTransaction() <em>Sample Transaction</em>}' containment reference.
+	 * The default value of the '{@link #getScheduleName() <em>Schedule Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSampleTransaction()
+	 * @see #getScheduleName()
 	 * @generated
 	 * @ordered
 	 */
-	protected Transaction sampleTransaction = null;
+	protected static final String SCHEDULE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getScheduleName() <em>Schedule Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduleName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String scheduleName = SCHEDULE_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,7 +205,7 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getFrequencyType() {
+	public String getFrequencyType() {
 		return frequencyType;
 	}
 
@@ -203,8 +214,8 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFrequencyType(int newFrequencyType) {
-		int oldFrequencyType = frequencyType;
+	public void setFrequencyType(String newFrequencyType) {
+		String oldFrequencyType = frequencyType;
 		frequencyType = newFrequencyType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__FREQUENCY_TYPE, oldFrequencyType, frequencyType));
@@ -278,8 +289,8 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Transaction getSampleTransaction() {
-		return sampleTransaction;
+	public String getScheduleName() {
+		return scheduleName;
 	}
 
 	/**
@@ -287,46 +298,11 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSampleTransaction(Transaction newSampleTransaction, NotificationChain msgs) {
-		Transaction oldSampleTransaction = sampleTransaction;
-		sampleTransaction = newSampleTransaction;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__SAMPLE_TRANSACTION, oldSampleTransaction, newSampleTransaction);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSampleTransaction(Transaction newSampleTransaction) {
-		if (newSampleTransaction != sampleTransaction) {
-			NotificationChain msgs = null;
-			if (sampleTransaction != null)
-				msgs = ((InternalEObject)sampleTransaction).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.SCHEDULE__SAMPLE_TRANSACTION, null, msgs);
-			if (newSampleTransaction != null)
-				msgs = ((InternalEObject)newSampleTransaction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.SCHEDULE__SAMPLE_TRANSACTION, null, msgs);
-			msgs = basicSetSampleTransaction(newSampleTransaction, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__SAMPLE_TRANSACTION, newSampleTransaction, newSampleTransaction));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ModelPackage.SCHEDULE__SAMPLE_TRANSACTION:
-				return basicSetSampleTransaction(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+	public void setScheduleName(String newScheduleName) {
+		String oldScheduleName = scheduleName;
+		scheduleName = newScheduleName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__SCHEDULE_NAME, oldScheduleName, scheduleName));
 	}
 
 	/**
@@ -339,15 +315,15 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 			case ModelPackage.SCHEDULE__START_DATE:
 				return getStartDate();
 			case ModelPackage.SCHEDULE__FREQUENCY_TYPE:
-				return new Integer(getFrequencyType());
+				return getFrequencyType();
 			case ModelPackage.SCHEDULE__SCHEDULE_DAY:
 				return new Integer(getScheduleDay());
 			case ModelPackage.SCHEDULE__LAST_DATE_CREATED:
 				return getLastDateCreated();
 			case ModelPackage.SCHEDULE__END_DATE:
 				return getEndDate();
-			case ModelPackage.SCHEDULE__SAMPLE_TRANSACTION:
-				return getSampleTransaction();
+			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
+				return getScheduleName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -363,7 +339,7 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 				setStartDate((Date)newValue);
 				return;
 			case ModelPackage.SCHEDULE__FREQUENCY_TYPE:
-				setFrequencyType(((Integer)newValue).intValue());
+				setFrequencyType((String)newValue);
 				return;
 			case ModelPackage.SCHEDULE__SCHEDULE_DAY:
 				setScheduleDay(((Integer)newValue).intValue());
@@ -374,8 +350,8 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 			case ModelPackage.SCHEDULE__END_DATE:
 				setEndDate((Date)newValue);
 				return;
-			case ModelPackage.SCHEDULE__SAMPLE_TRANSACTION:
-				setSampleTransaction((Transaction)newValue);
+			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
+				setScheduleName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -403,8 +379,8 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 			case ModelPackage.SCHEDULE__END_DATE:
 				setEndDate(END_DATE_EDEFAULT);
 				return;
-			case ModelPackage.SCHEDULE__SAMPLE_TRANSACTION:
-				setSampleTransaction((Transaction)null);
+			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
+				setScheduleName(SCHEDULE_NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -420,15 +396,15 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 			case ModelPackage.SCHEDULE__START_DATE:
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case ModelPackage.SCHEDULE__FREQUENCY_TYPE:
-				return frequencyType != FREQUENCY_TYPE_EDEFAULT;
+				return FREQUENCY_TYPE_EDEFAULT == null ? frequencyType != null : !FREQUENCY_TYPE_EDEFAULT.equals(frequencyType);
 			case ModelPackage.SCHEDULE__SCHEDULE_DAY:
 				return scheduleDay != SCHEDULE_DAY_EDEFAULT;
 			case ModelPackage.SCHEDULE__LAST_DATE_CREATED:
 				return LAST_DATE_CREATED_EDEFAULT == null ? lastDateCreated != null : !LAST_DATE_CREATED_EDEFAULT.equals(lastDateCreated);
 			case ModelPackage.SCHEDULE__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
-			case ModelPackage.SCHEDULE__SAMPLE_TRANSACTION:
-				return sampleTransaction != null;
+			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
+				return SCHEDULE_NAME_EDEFAULT == null ? scheduleName != null : !SCHEDULE_NAME_EDEFAULT.equals(scheduleName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -436,23 +412,13 @@ public class ScheduleImpl extends EObjectImpl implements Schedule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
 	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (startDate: ");
-		result.append(startDate);
-		result.append(", frequencyType: ");
-		result.append(frequencyType);
-		result.append(", scheduleDay: ");
-		result.append(scheduleDay);
-		result.append(", lastDateCreated: ");
-		result.append(lastDateCreated);
-		result.append(", endDate: ");
-		result.append(endDate);
-		result.append(')');
+		StringBuffer result = new StringBuffer();
+		result.append(this.getScheduleName());
+
 		return result.toString();
 	}
 
