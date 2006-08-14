@@ -14,7 +14,6 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
-import org.homeunix.drummer.model.DataModel;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.DateUtil;
@@ -31,6 +30,9 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 		super(MainBuddiFrame.getInstance());
 		
 		this.schedule = schedule;
+		startDateChooser.setEnabled(schedule == null);
+		frequencyPulldown.setEnabled(schedule == null);
+		schedulePulldown.setEnabled(schedule == null);
 		initContent();
 		updateSchedulePulldown();
 		transaction.updateContent();
@@ -46,15 +48,22 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 	protected AbstractBudgetDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				ModifyScheduleDialog.this.saveSchedule();
-				ModifyScheduleDialog.this.setVisible(false);
-				ModifyScheduleDialog.this.dispose();
+				if (ModifyScheduleDialog.this.ensureInfoCorrect()){
+					ModifyScheduleDialog.this.saveSchedule();
+					ModifyScheduleDialog.this.setVisible(false);
+					ModifyScheduleDialog.this.dispose();
+				}
+				else {
+					// TODO Show a message explaining what needs to be filled in
+					Log.error("You didn't fill in everything.");
+				}
 			}
 		});
 		
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				ModifyScheduleDialog.this.setVisible(false);
+				ModifyScheduleDialog.this.dispose();
 			}
 		});
 		
@@ -101,6 +110,18 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 		}
 	}
 	
+	private boolean ensureInfoCorrect(){
+		if ((scheduleName.getText().length() > 0)
+				&& (startDateChooser.getDate() != null)
+				&& (transaction.getAmount() != 0)
+				&& (transaction.getDescription().length() > 0)
+				&& (transaction.getTo() != null)
+				&& (transaction.getFrom() != null))
+			return true;
+		else
+			return false;
+	}
+	
 	private void saveSchedule(){
 		if (this.schedule == null){
 			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
@@ -134,6 +155,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 			transaction.updateContent();
 			updateSchedulePulldown();
 			
+			scheduleName.setText(s.getScheduleName());
 			startDateChooser.setDate(s.getStartDate());
 			frequencyPulldown.setSelectedItem(s.getFrequencyType());
 			schedulePulldown.setSelectedIndex(s.getScheduleDay());

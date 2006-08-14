@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
@@ -51,8 +54,22 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 		
 		deleteButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				Object o = list.getSelectedValue();
+				if (o instanceof Schedule){
+					Schedule s = (Schedule) o;
+					DataInstance.getInstance().removeSchedule(s);
+					Log.debug("Deleted schedule.");
+				}
+				else {
+					Log.error("Schedule not selected.");
+				}
 				updateContent();
+			}
+		});
+		
+		list.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				EditScheduledTransactionsFrame.this.updateButtons();
 			}
 		});
 		

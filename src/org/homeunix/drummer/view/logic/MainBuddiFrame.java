@@ -11,6 +11,8 @@ import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JFrame;
@@ -24,15 +26,18 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.model.Schedule;
+import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.BrowserLauncher;
+import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.ListPanelLayout;
-import org.homeunix.drummer.view.layout.MainBudgetFrameLayout;
+import org.homeunix.drummer.view.layout.MainBuddiFrameLayout;
 
 
-public class MainBuddiFrame extends MainBudgetFrameLayout {
+public class MainBuddiFrame extends MainBuddiFrameLayout {
 	public static final long serialVersionUID = 0;
 	
 	public static MainBuddiFrame getInstance() {
@@ -46,6 +51,9 @@ public class MainBuddiFrame extends MainBudgetFrameLayout {
 	private MainBuddiFrame(){
 		super();
 
+		//Check that there are no scheduled transactions which should be happening...
+		updateScheduledTransactions();
+		
 		DataInstance.getInstance().calculateAllBalances();
 		initActions();
 		
@@ -243,6 +251,51 @@ public class MainBuddiFrame extends MainBudgetFrameLayout {
 			};
 			
 			worker.start();
+		}
+	}
+	
+	private void updateScheduledTransactions(){
+		//Update any scheduled transactions
+		final Date today = DateUtil.getEndOfDay(new Date());
+		final Calendar tempCal = Calendar.getInstance();
+		for (Schedule s : DataInstance.getInstance().getScheduledTransactionsBeforeToday()) {
+			Date tempDate = s.getLastDateCreated();
+			if (tempDate == null)
+				tempDate = s.getStartDate();
+			tempDate = DateUtil.getStartOfDay(tempDate);
+			
+			while(tempDate.before(today)){
+				Log.debug("Trying date " + tempDate);				
+				tempCal.setTime(tempDate);
+				
+				//Log, extremely ugly expression to check if tempDay is a day on which we need to make a transaction.
+				if ((s.getFrequencyType().equals(TranslateKeys.WEEK.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK))
+						|| (s.getFrequencyType().equals(TranslateKeys.MONTH.toString())
+								&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_MONTH))){
+					Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+
+					t.setDate(tempDate);
+					t.setDescription(s.getDescription());
+					t.setAmount(s.getAmount());
+					t.setTo(s.getTo());
+					t.setFrom(s.getFrom());
+					t.setMemo(s.getMemo());
+					t.setNumber(s.getNumber());
+					t.setScheduled(true);
+
+//					if (s.getLastDateCreated() == null 
+//					|| s.getLastDateCreated().before(DateUtil.getStartOfDay(DateUtil.getNextDay(tempDate)))){
+					s.setLastDateCreated(DateUtil.getStartOfDay(DateUtil.getNextDay(tempDate)));
+//					DataInstance.getInstance().saveDataModel();
+//					}
+
+					DataInstance.getInstance().addTransaction(t);
+					Log.debug("Added scheduled transaction " + t);
+				}
+
+				tempDate = DateUtil.getNextDay(tempDate);
+			}
 		}
 	}
 }

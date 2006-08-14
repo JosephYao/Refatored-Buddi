@@ -92,7 +92,6 @@ public class Buddi {
 		
 		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
 		
-		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				launchGUI();

@@ -4,18 +4,21 @@
 package org.homeunix.drummer.view.layout;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -61,10 +64,38 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 		scheduleName = new JTextField();
 		frequencyPulldown = new JComboBox(frequencyChoices);
 		schedulePulldown = new JComboBox();
-		startDateChooser = new JDateChooser();
+		startDateChooser = new JDateChooser(new Date());
 
 		scheduleModel = new DefaultComboBoxModel();
 		schedulePulldown.setModel(scheduleModel);
+		
+		frequencyPulldown.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
+				if (obj instanceof String){
+					String str = (String) obj;
+					this.setText(Translate.getInstance().get(str));
+				}
+				else
+					this.setText(obj.toString());
+				
+				return this;
+			}
+		});
+		
+		schedulePulldown.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
+				if (obj instanceof String){
+					String str = (String) obj;
+					this.setText(Translate.getInstance().get(str));
+				}
+				else
+					this.setText(obj.toString());
+				
+				return this;
+			}
+		});
 		
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

@@ -35,6 +35,7 @@ import org.homeunix.drummer.model.Transactions;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.Types;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
+import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
@@ -265,9 +266,9 @@ public class DataInstance {
 	}
 	
 	synchronized public void saveDataModel(final String location){
-		new SwingWorker(){
-			@Override
-			public Object construct() {
+//		new SwingWorker(){
+//			@Override
+//			public Object construct() {
 				File saveLocation = new File(location);
 				File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 
@@ -288,9 +289,9 @@ public class DataInstance {
 				catch (IOException ioe){
 					Log.critical("Error when saving file: " + ioe);
 				}
-				return null;
-			}			
-		}.start();
+//				return null;
+//			}			
+//		}.start();
 	}
 	
 	public DataModel getDataModel(){
@@ -541,5 +542,19 @@ public class DataInstance {
 	
 	public void removeSchedule(Schedule s){
 		dataModel.getAllTransactions().getScheduledTransactions().remove(s);
+	}
+	
+	public Vector<Schedule> getScheduledTransactionsBeforeToday(){
+		Vector<Schedule> v = getScheduledTransactions();
+		Vector<Schedule> newV = new Vector<Schedule>();
+		
+		for (Schedule schedule : v) {
+			if (schedule.getStartDate().before(DateUtil.getStartOfDay(new Date()))
+					&& (schedule.getLastDateCreated() == null 
+							|| schedule.getLastDateCreated().before(DateUtil.getStartOfDay(new Date()))))
+				newV.add(schedule);
+		}
+		
+		return newV;
 	}
 }

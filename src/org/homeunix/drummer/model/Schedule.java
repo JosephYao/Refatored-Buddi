@@ -8,8 +8,6 @@ package org.homeunix.drummer.model;
 
 import java.util.Date;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Schedule</b></em>'.

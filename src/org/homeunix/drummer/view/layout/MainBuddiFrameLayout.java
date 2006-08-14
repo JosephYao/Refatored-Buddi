@@ -19,14 +19,14 @@ import org.homeunix.drummer.view.logic.CategoryListPanel;
 import org.homeunix.drummer.view.logic.ReportPanel;
 
 
-public abstract class MainBudgetFrameLayout extends AbstractBudgetFrame {
+public abstract class MainBuddiFrameLayout extends AbstractBudgetFrame {
 	public static final long serialVersionUID = 0;
 	private final AccountListPanel accountListPanel;
 	private final CategoryListPanel categoryListPanel;
 	private final ReportPanel reportPanel;
 	private final JTabbedPane tabs;
 		
-	protected MainBudgetFrameLayout(){
+	protected MainBuddiFrameLayout(){
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
