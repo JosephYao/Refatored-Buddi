@@ -120,9 +120,12 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 		textPanel.add(startDateChooserLabel);
 		textPanel.add(startDateChooser);
 		
+		JPanel textPanelHolder = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		textPanelHolder.add(textPanel);
+		
 		JPanel textPanelSpacer = new JPanel(new BorderLayout());
 		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		textPanelSpacer.add(textPanel, BorderLayout.NORTH);
+		textPanelSpacer.add(textPanelHolder, BorderLayout.NORTH);
 		textPanelSpacer.add(transaction, BorderLayout.SOUTH);
 		
 		JPanel mainBorderPanel = new JPanel();
@@ -142,6 +145,7 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		this.setLayout(new BorderLayout());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTION));
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
 		this.setPreferredSize(new Dimension(700, 300));

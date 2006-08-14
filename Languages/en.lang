@@ -214,3 +214,4 @@ START_DATE_IN_THE_PAST=You have set the Start Date to be a date in the past.  Al
 START_DATE_IN_THE_PAST_TITLE=Start Date in the past
 SCHEDULED_NOT_ENOUGH_INFO=The Scheduled Transaction is not complete.  You need to enter the\nName, Start Date, Description, Amount, From, and To fields.
 SCHEDULED_NOT_ENOUGH_INFO_TITLE=Scheduled Transaction not Complete
+SCHEDULED_TRANSACTION=Scheduled Transaction

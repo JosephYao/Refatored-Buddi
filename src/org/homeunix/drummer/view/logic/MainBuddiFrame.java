@@ -50,7 +50,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 	
 	private MainBuddiFrame(){
 		super();
-
+		
 		//Check that there are no scheduled transactions which should be happening...
 		updateScheduledTransactions();
 		

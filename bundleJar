@@ -7,7 +7,7 @@ OSXROOT=$DEST/Buddi_OSX
 OSX=$OSXROOT/Buddi
 GENERIC=$DEST/Buddi
 SOURCE=source
-VERSION=`grep VERSION src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+VERSION=`grep 'String VERSION = ' src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
 
 if [ "$1" == "--release" ]; then
 	grep -q "^$VERSION (" Documents/Changelog.txt

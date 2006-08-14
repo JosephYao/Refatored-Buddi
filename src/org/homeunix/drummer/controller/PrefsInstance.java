@@ -309,7 +309,7 @@ public class PrefsInstance {
 		Version version = userPrefs.getPrefs().getLastVersionRun();
 		if (version == null){
 			version = prefsFactory.createVersion();
-			version.setVersion(Const.VERSION);
+			version.setVersion("");
 			userPrefs.getPrefs().setLastVersionRun(version);
 		}
 		savePrefs();
