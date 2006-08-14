@@ -64,7 +64,10 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 						ModifyScheduleDialog.this.dispose();
 					}
 					else
-						JOptionPane.showMessageDialog(null, "Error");
+						JOptionPane.showMessageDialog(null,
+								Translate.getInstance().get(TranslateKeys.ERROR) + ": ModifyScheduleDialog.java",
+								Translate.getInstance().get(TranslateKeys.ERROR),
+								JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					JOptionPane.showMessageDialog(ModifyScheduleDialog.this, 
