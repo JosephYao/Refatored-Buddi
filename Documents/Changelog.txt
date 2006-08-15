@@ -1,3 +1,8 @@
+1.4.0rc1 (August 15 2006)
+-Code cleanup
+-Norwegian Translation update
+-Data format change notification
+
 1.3.4 (August 15 2006)
 -Fixed a null pointer exception relating to updating transaction window
 -Improved style of report export to HTML, and fixed bug with it
