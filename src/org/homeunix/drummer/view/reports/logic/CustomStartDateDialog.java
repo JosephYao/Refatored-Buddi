@@ -56,7 +56,7 @@ public class CustomStartDateDialog extends CustomDateDialogLayout {
 					new NetWorthOverTimeGraphFrame(startDate);
 				else
 					Log.debug("Don't know what to do with type " + reportType);
-				//[TODO] Add more types as needed...
+				//TODO Add more types as needed...
 				//else if (reportType.equals(ReportType.meetBudget))
 		
 				CustomStartDateDialog.this.setVisible(false);

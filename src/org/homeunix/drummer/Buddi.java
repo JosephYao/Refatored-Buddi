@@ -37,7 +37,7 @@ public class Buddi {
 	}
 	
 	private static void launchGUI(){
-		// TODO - Remove this from versions after 1.4.0
+		// TODO Remove this from versions after 1.4.0
 		//Temporary notice stating the data format has changed.
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			if (JOptionPane.showConfirmDialog(null, 

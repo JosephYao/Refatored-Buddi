@@ -482,7 +482,7 @@ public class DataInstance {
 		return transactions;
 	}
 
-	//[TODO] Test boundary conditions: does this overlap dates or not?
+	//TODO Test boundary conditions: does this overlap dates or not?
 	public Vector<Transaction> getTransactions(Source source, Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions(source);
 		Vector<Transaction> v = new Vector<Transaction>();
@@ -498,7 +498,7 @@ public class DataInstance {
 		return v;
 	}
 	
-	//[TODO] Test boundary conditions: does this overlap dates or not?
+	//TODO Test boundary conditions: does this overlap dates or not?
 	// Update - I think that is should be working....
 	public Vector<Transaction> getTransactions(Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions();

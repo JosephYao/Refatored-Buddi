@@ -34,50 +34,6 @@ public class JHintTextField extends JTextField implements JTextComponentHint {
 		});
 		
 		showHint(true);
-		
-//		this.getDocument().addDocumentListener(new DocumentListener(){
-//
-//			public void changedUpdate(DocumentEvent arg0) {
-//				// TODO Auto-generated method stub
-//				if (!JHintTextField.this.getText().equals(JHintTextField.this.hint))
-//					JHintTextField.this.setValueInternal(JHintTextField.this.getText());
-//				else
-//					JHintTextField.this.setValueInternal("");
-//			}
-//
-//			public void insertUpdate(DocumentEvent arg0) {
-//				// TODO Auto-generated method stub
-//				if (!JHintTextField.this.getText().equals(JHintTextField.this.hint))
-//					JHintTextField.this.setValueInternal(JHintTextField.this.getText());
-//				else
-//					JHintTextField.this.setValueInternal("");
-//				
-//			}
-//
-//			public void removeUpdate(DocumentEvent arg0) {
-//				// TODO Auto-generated method stub
-//				if (!JHintTextField.this.getText().equals(JHintTextField.this.hint))
-//					JHintTextField.this.setValueInternal(JHintTextField.this.getText());
-//				else
-//					JHintTextField.this.setValueInternal("");
-//
-//			}
-//			
-//		});
-		
-//		this.addKeyListener(new KeyListener(){
-//			public void keyPressed(KeyEvent arg0) {
-//				JHintTextField.this.setValueInternal(JHintTextField.this.getText());
-//			}
-//
-//			public void keyReleased(KeyEvent arg0) {
-//				JHintTextField.this.setValueInternal(JHintTextField.this.getText());				
-//			}
-//
-//			public void keyTyped(KeyEvent arg0) {
-//				JHintTextField.this.setValueInternal(JHintTextField.this.getText());				
-//			}
-//		});
 	}
 	
 	/**

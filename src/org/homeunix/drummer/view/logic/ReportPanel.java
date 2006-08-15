@@ -70,7 +70,7 @@ public class ReportPanel extends ReportPanelLayout {
 											
 									}
 									else{
-										//[TODO] Add more report / graph types here as needed.
+										// TODO Add more report / graph types here as needed.
 										if (type.equals(ReportType.EXPENSES))
 											new ExpensesGraphFrame(choice.getStartDate(), choice.getEndDate());
 										else if (type.equals(ReportType.INCOME))

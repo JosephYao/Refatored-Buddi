@@ -56,7 +56,7 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 					new NetWorthGraphFrame(endDate);
 				else
 					Log.debug("Don't know what to do with type " + reportType);
-				//[TODO] Add more types as needed...
+				//TODO Add more types as needed...
 		
 				CustomEndDateDialog.this.setVisible(false);
 			}
