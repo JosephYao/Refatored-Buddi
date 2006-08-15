@@ -37,6 +37,18 @@ public class Buddi {
 	}
 	
 	private static void launchGUI(){
+		// TODO - Remove this from versions after 1.4.0
+		//Temporary notice stating the data format has changed.
+		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+			if (JOptionPane.showConfirmDialog(null, 
+					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
+					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE
+			) == JOptionPane.CANCEL_OPTION)
+				System.exit(0);
+		}
+		
 		MainBuddiFrame.getInstance().openWindow();
 	}
 	
@@ -90,24 +102,6 @@ public class Buddi {
 		Translate.getInstance().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage()
 		);
-		
-		// TODO - Remove this from production version
-		//Temporary notice that this is new code, and you should be careful with it.
-		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
-			if (JOptionPane.showConfirmDialog(null, 
-					"NOTICE: This version introduced a change in the data file\n"
-					+ "format, to allow scheduled transactions.  If you any data\n"
-					+ "files with this version, you will no longer be able to\n"
-					+ "read the data in previous versions of Buddi.  Please backup\n"
-					+ "your data files now!\n\n"
-					+ "If you want to backup the data files, hit Cancel and do it now.\n\n"
-					+ "This message will only show the first time you run Buddi.",
-					"Data Format Change",
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE
-			) == JOptionPane.CANCEL_OPTION)
-				System.exit(0);
-		}
 		
 		
 		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
