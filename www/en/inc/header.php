@@ -32,6 +32,7 @@ How to use Buddi:
 <li><a href='./reports.php'>Reports and Graphs</a></li>
 <li><a href='./backup.php'>Backup and Restore</a></li>
 <li><a href='./preferences.php'>Preferences</a></li>
+<li><a href='./scheduled.php'>Scheduled Transactions</a></li>
 </ul>
 </li>
 <li><a href='./thanks.php'>Thanks</a></li>
