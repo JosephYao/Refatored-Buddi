@@ -312,6 +312,12 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 		if (reportTree.getModel().getRoot() instanceof DefaultMutableTreeNode){
 			DefaultMutableTreeNode root = (DefaultMutableTreeNode) reportTree.getModel().getRoot();
 
+			sb.append("<tr><th>")
+			.append(Translate.getInstance().get(TranslateKeys.DESCRIPTION))
+			.append("</th><th>")
+			.append(Translate.getInstance().get(TranslateKeys.AMOUNT))
+			.append("</th></tr>\n");
+			
 			for (int i = 0; i < root.getChildCount(); i++) {
 				DefaultMutableTreeNode child = (DefaultMutableTreeNode) root.getChildAt(i);
 				Object userObject = child.getUserObject();
@@ -342,15 +348,16 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 								else
 									isExpense = false;
 								
-								sb.append((isExpense ? "<td class='red'>" : "<td>"))
-										.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
-										.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
-										.append("</td><td>")
+								sb.append("<td>")
 										.append(t.getFrom())
 										.append(" ")
 										.append(Translate.getInstance().get(TranslateKeys.TO))
 										.append(" ")
 										.append(t.getTo())							
+										.append("</td>")
+										.append((isExpense ? "<td class='red'>" : "<td>"))
+										.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+										.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
 										.append("</td>");
 							}
 							sb.append("</tr>");
@@ -362,14 +369,14 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 					ReportEntryTotal entry = (ReportEntryTotal) userObject;
 					
 					sb.append(
-							"<tr><td><b>")
+							"<tr><th><b>")
 							.append(Translate.getInstance().get(TranslateKeys.TOTAL))
-							.append("</b></td>")
-							.append((entry.getTotal() < 0 ? "<td class='red'>" : "<td>"))
+							.append("</b></th>")
+							.append((entry.getTotal() < 0 ? "<th class='red'>" : "<th>"))
 							.append("<b>")
 							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
-							.append("</b></td>")
+							.append("</b></th>")
 							.append("</tr>");
 				}
 			}

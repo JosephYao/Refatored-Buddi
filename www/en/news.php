@@ -2,6 +2,15 @@
 
 <h1>News</h1>
 
+<h2>Scheduled Transactions (August 14 2004)</h2>
+<p>
+Scheduled transactions have been added to Development version 1.3.3. This means that repetitive transactions (putting aside $20 a month for a rainly day, paying weekly bills, etc) can be automated. 
+</p><p> 
+This new feature comes at the cost of changing the data format - you can use your old data in the new version, but once modified, you cannot go back. Please make backups of your data files before you run this version. 
+</p><p> 
+I would greatly appreciate all the feedback and bug reports that I can get on this new feature before I include it in the stable version. Feel free to use the tracker system, or just email me. 
+</p>
+
 <h2>1.2.1 (August 10 2006)</h2>
 <ul>
 <li>Added Norwegian translation (thanks to Gudbrand Hegge)</li>

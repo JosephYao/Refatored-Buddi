@@ -350,6 +350,17 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 		if (reportTree.getModel().getRoot() instanceof DefaultMutableTreeNode){
 			DefaultMutableTreeNode root = (DefaultMutableTreeNode) reportTree.getModel().getRoot();
 
+			sb.append(
+					"<tr><th>")
+					.append(Translate.getInstance().get(TranslateKeys.CATEGORY))
+					.append("</th><th>")
+					.append(Translate.getInstance().get(TranslateKeys.BUDGETED))
+					.append("</th><th>")
+					.append(Translate.getInstance().get(TranslateKeys.ACTUAL))
+					.append("</th><th>")
+					.append(Translate.getInstance().get(TranslateKeys.DIFFERENCE))
+					.append("</th></tr>\n");
+			
 			for (int i = 0; i < root.getChildCount(); i++) {
 				DefaultMutableTreeNode child = (DefaultMutableTreeNode) root.getChildAt(i);
 				Object userObject = child.getUserObject();
@@ -409,14 +420,14 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 					ReportEntryTotal entry = (ReportEntryTotal) userObject;
 					
 					sb.append(
-							"<tr><td colspan=3><b>")
+							"<tr><th colspan=3><b>")
 							.append(Translate.getInstance().get(TranslateKeys.TOTAL))
-							.append("</b></td>")
-							.append((entry.getTotal() < 0 ? "<td class='red'>" : "<td>"))
+							.append("</b></th>")
+							.append((entry.getTotal() < 0 ? "<th class='red'>" : "<th>"))
 							.append("<b>")
 							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
-							.append("</b></td>")
+							.append("</b></th>")
 							.append("</tr>");
 				}
 			}

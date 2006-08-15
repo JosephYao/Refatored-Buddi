@@ -405,7 +405,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	 */
 	public static void updateAllTransactionWindows(){
 		for (TransactionsFrameLayout tfl : Collections.unmodifiableCollection(transactionInstances.values())) {
-			tfl.updateContent();
+			if (tfl != null)
+				tfl.updateContent();
 		}
 	}
 }

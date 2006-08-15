@@ -178,7 +178,8 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 		sb.append("table.main { background-color: black; width: 100%; }\n");
 		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
 		sb.append("table.main tr { padding-bottom: 1em; }\n");
-		sb.append("table.main td { width: 20%; background-color: white}\n");
+		sb.append("table.main th { width: 20%; background-color: #DDE}\n");
+		sb.append("table.main td { width: 20%; background-color: #EEF}\n");
 		sb.append("table.transactions td { width: 30%; background-color: white}\n");
 		sb.append("</style>\n");
 		

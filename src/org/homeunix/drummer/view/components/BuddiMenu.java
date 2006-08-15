@@ -364,10 +364,25 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		export.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				Log.debug("Exporting HTML");
 				if (BuddiMenu.this.frame instanceof ReportFrameLayout){
 					String htmlReport = ((ReportFrameLayout) BuddiMenu.this.frame).getHtmlReport();
+
+					String reportPath = 
+						new File(
+								PrefsInstance.getInstance().getPrefs().getDataFile()
+						).getParent() 
+						+ File.separatorChar;
 					
-					File tempFile = new File(new File(PrefsInstance.getInstance().getPrefs().getDataFile()).getParent() + File.separatorChar + "report_" + (int) (Math.random() * 1000) + ".html");
+					
+
+					File tempFile = new File(
+							(!reportPath.matches("^\\S*[ ]\\S*$") ? reportPath : "")
+							+ "report_" 
+							+ (int) (Math.random() * 1000) 
+							+ ".html"
+					);
+					Log.debug("Tempfile: " + tempFile.getAbsolutePath());
 					
 					try{
 						PrintStream out = new PrintStream(new FileOutputStream(tempFile));
@@ -376,11 +391,16 @@ public class BuddiMenu extends JScreenMenuBar {
 						
 						tempFile.deleteOnExit();
 						
+						Log.debug("Opening file...");
 						BrowserLauncher.openURL("file://" + tempFile.getAbsolutePath());
+						Log.debug("Finished opening file...");
 					}
 					catch (IOException ioe){
 						Log.error(ioe);
 					}
+				}
+				else {
+					Log.error ("This is not an instance of ReportFrameLayout");
 				}
 			}
 		});
