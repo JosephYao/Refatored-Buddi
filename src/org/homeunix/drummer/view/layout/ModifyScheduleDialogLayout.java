@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.components.EditableTransaction;
@@ -65,7 +66,7 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 		scheduleName = new JTextField();
 		frequencyPulldown = new JComboBox(frequencyChoices);
 		schedulePulldown = new JComboBox();
-		startDateChooser = new JDateChooser(DateUtil.getNextDay(new Date()));
+		startDateChooser = new JDateChooser(DateUtil.getNextDay(new Date()), PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		scheduleModel = new DefaultComboBoxModel();
 		schedulePulldown.setModel(scheduleModel);
