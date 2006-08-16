@@ -1,13 +1,13 @@
 #
-#
+# 
 # Unicode for norwegian characters;
 # Å = \u00C5
 # å = \u00E5
 # Æ = \u00C6
 # Ø = \u00D8
 # æ = \u00E6
-# ø = \u00F8 
-ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson
+# ø = \u00F8
+ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson, Norsk oversettelse Gudbrand Hegge
 ABOUT_EMAIL=wyatt.olson@gmail.com
 ABOUT_GPL=Released under the GNU General Public License
 ABOUT_MENU_ITEM=Om Buddi
@@ -19,7 +19,7 @@ AMOUNT=Bel\u00F8p
 AND=og
 ANNUAL=\u00C5rlig
 AUTO=Auto
-AUTO_COMPLETE_TRANSACTION_INFORMATION=Informasjon om automatisk f\u00F8rte transaksjoner
+AUTO_COMPLETE_TRANSACTION_INFORMATION=Automatisk utfylling av transaksjoner
 BACKUP_DATA_FILE=Backup Data Fil...
 BONUS=Bonus
 BUDDI=Buddi
@@ -131,7 +131,7 @@ NEW_VERSION=Ny versjon tilgjengelig
 NEW_VERSION_MESSAGE=En ny versjon av Buddi er tilgjengelig:
 NEW_VERSION_MESSAGE_2=Velg last ned for \u00E5 hente siste versjon
 NOTHING_TO_PRINT=Ingen informasjon for utskrift.
-NOT_NOW=Ikke n\u00E5.
+NOT_NOW=Ikke n\u00E5
 NO_PARENT=<Ingen overordnet>
 NO_TRANSACTIONS_USING_ACCOUNT=Det er ingen transaksjoner som benytter valgt konto.\nSkal den slettes permanent?
 NO_TRANSACTIONS_USING_CATEGORY=Det er ingen transaksjoner som benytter valgt kategori.\nSkal den slettes permanent?
@@ -217,7 +217,7 @@ TWO_MONTHS=To m\u00E5neder
 UNDELETE=Gjennopprett
 UPDATE=Oppdater
 UPGRADE_NOTICE=ADVARSEL: Versjon 1.4.x introduserer endring i format for datafilen\nfra versjon 1.2.x for \u00E5 kunne registrere betalingplan.\nN\u00E5r en \u00E5pner datafiler fra versjon 1.2.x i ny versjon\nvil du ikke lengre kunne datafilen i tidligere versjoner av Buddi.\nVennligst ta sikkerhetskopi av datafilen n\u00E5!\n\nHvis det er f\u00F8rste gang du benytter Buddi kan du se bort fra denne meldingen.\n\nHvis du \u00F8nsker \u00E5 ta sikkerhetskopi av eksisterende fil avbryt,\nutf\u00F8r sikkerhetskopi og start Buddi p\u00E5 ny.\n\nDenne meldingen vises kun f\u00F8rste gang du starter Buddi.
-UPGRADE_NOTICE_TITLE=Endrig i data format
+UPGRADE_NOTICE_TITLE=Endring i data format
 UTILITIES=Utilities
 VERSION=Versjon
 WARNING=Advarsel
