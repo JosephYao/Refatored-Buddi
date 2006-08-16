@@ -49,6 +49,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				PrefsInstance.getInstance().getPrefs().setShowDeletedAccounts(showDeletedAccounts.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());
+				PrefsInstance.getInstance().getPrefs().setShowAutoComplete(showAutoComplete.isSelected());
 				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				PrefsInstance.getInstance().savePrefs();
 												
@@ -81,6 +82,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
 		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());
 		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());
+		showAutoComplete.setSelected(PrefsInstance.getInstance().getPrefs().isShowAutoComplete());
 		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
 		
 		return this;

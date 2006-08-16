@@ -40,6 +40,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected final JCheckBox showDeletedAccounts;
 	protected final JCheckBox showDeletedCategories;
 	protected final JCheckBox showAccountTypes;
+	protected final JCheckBox showAutoComplete;
 	protected final JCheckBox enableUpdateNotifications;
 	
 	protected final DefaultComboBoxModel languageModel;
@@ -81,6 +82,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		showDeletedCategories = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
 		showAccountTypes = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ACCOUNT_TYPES));
 		enableUpdateNotifications = new JCheckBox(Translate.getInstance().get(TranslateKeys.ENABLE_UPDATE_NOTIFICATIONS));
+		showAutoComplete = new JCheckBox(Translate.getInstance().get(TranslateKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -89,6 +91,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
@@ -105,6 +108,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		accountPanel.add(showAccountTypes);
 		
+		autoCompletePanel.add(showAutoComplete);
+		
 		updatePanel.add(enableUpdateNotifications);
 		
 		JPanel textPanel = new JPanel(new GridLayout(0, 1));
@@ -114,6 +119,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		textPanel.add(deletePanel1);
 		textPanel.add(deletePanel2);
 		textPanel.add(accountPanel);
+		textPanel.add(autoCompletePanel);
 		textPanel.add(updatePanel);
 		
 		JPanel textPanelSpacer = new JPanel();

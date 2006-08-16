@@ -1,3 +1,6 @@
+1.4.0rc2 (August 16 2006)
+-Added Autocomplete as an option
+
 1.4.0rc1 (August 15 2006)
 -Code cleanup
 -Norwegian Translation update

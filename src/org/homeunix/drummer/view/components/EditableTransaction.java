@@ -305,31 +305,33 @@ public class EditableTransaction extends JPanel {
 				//If we loose focus on the description field, we check if
 				// there is something there.  If so, we fill in others with
 				// the dictionary map.
-				if (description.getValue().length() > 0){
-					DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
-					if (dd != null){
-						if (dd.getNumber() != null)
-							number.setValue(dd.getNumber());
-						amount.setValue(dd.getAmount());
-						if (dd.getMemo() != null)
-							memo.setValue(dd.getMemo());
-						
-						//TODO This doesn't always work when you go to a different account...
-						if (dd.getFrom() != null){
-							for (int i = 0; i < from.getModel().getSize(); i++){
-								if (from.getModel().getElementAt(i) != null
-										&& from.getModel().getElementAt(i).toString().equals(dd.getFrom())){
-									from.setSelectedIndex(i);
-									break;
+				if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
+					if (description.getValue().length() > 0){
+						DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
+						if (dd != null){
+							if (dd.getNumber() != null)
+								number.setValue(dd.getNumber());
+							amount.setValue(dd.getAmount());
+							if (dd.getMemo() != null)
+								memo.setValue(dd.getMemo());
+
+							//TODO This doesn't always work when you go to a different account...
+							if (dd.getFrom() != null){
+								for (int i = 0; i < from.getModel().getSize(); i++){
+									if (from.getModel().getElementAt(i) != null
+											&& from.getModel().getElementAt(i).toString().equals(dd.getFrom())){
+										from.setSelectedIndex(i);
+										break;
+									}
 								}
 							}
-						}
-						if (dd.getTo() != null){
-							for (int i = 0; i < to.getModel().getSize(); i++){
-								if (to.getModel().getElementAt(i) != null
-										&& to.getModel().getElementAt(i).toString().equals(dd.getTo())){
-									to.setSelectedIndex(i);
-									break;
+							if (dd.getTo() != null){
+								for (int i = 0; i < to.getModel().getSize(); i++){
+									if (to.getModel().getElementAt(i) != null
+											&& to.getModel().getElementAt(i).toString().equals(dd.getTo())){
+										to.setSelectedIndex(i);
+										break;
+									}
 								}
 							}
 						}

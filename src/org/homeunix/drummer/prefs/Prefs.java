@@ -27,13 +27,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAccountTypes <em>Show Account Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getSelectedInterval <em>Selected Interval</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAutoComplete <em>Show Auto Complete</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
  * </ul>
  * </p>
@@ -464,5 +465,31 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setSelectedInterval(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Show Auto Complete</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Show Auto Complete</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Show Auto Complete</em>' attribute.
+	 * @see #setShowAutoComplete(boolean)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_ShowAutoComplete()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isShowAutoComplete();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#isShowAutoComplete <em>Show Auto Complete</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Show Auto Complete</em>' attribute.
+	 * @see #isShowAutoComplete()
+	 * @generated
+	 */
+	void setShowAutoComplete(boolean value);
 
 } // Prefs

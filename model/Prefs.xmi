@@ -1,12 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Aug 11 12:14:21 MDT 2006'>
-  <XMI.header>  <XMI.header>
-    <XMI.documentation>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Aug 16 08:43:34 MDT 2006'>
+  <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
     </XMI.documentation>
-    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>  </XMI.header>
-</XMI.header>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
     <UML:Model xmi.id = '.:00000000000009CF' name = 'BuddiPrefs' isSpecification = 'false'
       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
@@ -151,6 +149,21 @@
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
                                 <UML:Class xmi.idref = '.:00000000000009C9'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-50--499e8eaa:10d176d3ed6:-8000:0000000000000899'
+                              name = 'showAutoComplete' visibility = 'public' isSpecification = 'false'
+                              ownerScope = 'instance' changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-50--499e8eaa:10d176d3ed6:-8000:000000000000089A'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-50--499e8eaa:10d176d3ed6:-8000:000000000000089B'
+                                      lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000009CD'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                           </UML:Classifier.feature>

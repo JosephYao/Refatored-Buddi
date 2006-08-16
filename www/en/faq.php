@@ -70,6 +70,11 @@ The terms 'Stable' and 'Development' may be misleading - any version which I rel
 If you don't like downloading new versions every few weeks, then use the stable version.  If you want to always keep up to date with current features, use the development version.
 </p>
 
+<h2>Export Reports to HTML doesn't work for me</h2>
+<p>
+If, from a Report window, you click on Export to HTML and it does not do anything, make sure that there are no spaces in the path to your data store (where Data.buddi is kept).  There seems to be a problem with the package that I use to open the web browser, which doesn't like spaces in the path name.  I am not aware of a solution at this time; as a workaround, you can manually open the .html file (is should be called report_XXX.html, in the same directory as the data store).  Note that this is a temporary file, and will be deleted when Buddi exits.
+</p>
+
 
 <hr>
 

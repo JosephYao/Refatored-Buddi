@@ -368,16 +368,18 @@ public class BuddiMenu extends JScreenMenuBar {
 				if (BuddiMenu.this.frame instanceof ReportFrameLayout){
 					String htmlReport = ((ReportFrameLayout) BuddiMenu.this.frame).getHtmlReport();
 
-					String reportPath = 
-						new File(
-								PrefsInstance.getInstance().getPrefs().getDataFile()
-						).getParent() 
-						+ File.separatorChar;
-					
-					
+//					String reportPath = 
+//						new File(
+//								PrefsInstance.getInstance().getPrefs().getDataFile()
+//						).getParent() 
+//						+ File.separatorChar;
 
 					File tempFile = new File(
-							(!reportPath.matches("^\\S*[ ]\\S*$") ? reportPath : "")
+//							(!reportPath.matches("^\\S*[ ]\\S*$") ? reportPath : "")
+							new File(
+									PrefsInstance.getInstance().getPrefs().getDataFile()
+							).getParent() 
+							+ File.separatorChar
 							+ "report_" 
 							+ (int) (Math.random() * 1000) 
 							+ ".html"
