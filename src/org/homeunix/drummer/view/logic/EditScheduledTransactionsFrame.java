@@ -58,6 +58,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 				if (o instanceof Schedule){
 					Schedule s = (Schedule) o;
 					DataInstance.getInstance().removeSchedule(s);
+					DataInstance.getInstance().saveDataModel();
 					Log.debug("Deleted schedule.");
 				}
 				else {
