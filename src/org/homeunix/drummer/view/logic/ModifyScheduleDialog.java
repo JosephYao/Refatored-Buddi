@@ -56,7 +56,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 							|| JOptionPane.showConfirmDialog(ModifyScheduleDialog.this, 
 									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST), 
 									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
-									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+									JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 						ModifyScheduleDialog.this.saveSchedule();
 						MainBuddiFrame.getInstance().updateScheduledTransactions();
 						TransactionsFrame.updateAllTransactionWindows();
@@ -64,10 +64,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 						ModifyScheduleDialog.this.dispose();
 					}
 					else
-						JOptionPane.showMessageDialog(null,
-								Translate.getInstance().get(TranslateKeys.ERROR) + ": ModifyScheduleDialog.java",
-								Translate.getInstance().get(TranslateKeys.ERROR),
-								JOptionPane.ERROR_MESSAGE);
+						Log.debug("Cancelled from either start date in the past, or info not correct");
 				}
 				else {
 					JOptionPane.showMessageDialog(ModifyScheduleDialog.this, 
