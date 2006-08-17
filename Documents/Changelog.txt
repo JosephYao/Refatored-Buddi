@@ -1,3 +1,6 @@
+1.5.0 (August 17 2006)
+-New development branch.  1.5.0 Development is the same as 1.4.0 Stable.
+
 1.4.0 (August 17 2006)
 -First stable version to include scheduled transactions and HTML export
 
