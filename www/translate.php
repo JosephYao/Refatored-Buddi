@@ -6,7 +6,7 @@ Buddi - Personal budget software for the rest of us
 <link rel='stylesheet' href='../css/style.css' type='text/css' media='screen' />
 </head>
 <frameset rows="35,*">
-	<frame src="http://buddi.sourceforge.net/language.php" 
+	<frame src="http://buddi.sourceforge.net/language_bar.php" 
 noresize="noresize" frameborder=no framespacing=0>
 <? 
 if ($lang=='')
