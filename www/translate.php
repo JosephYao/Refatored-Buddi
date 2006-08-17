@@ -9,10 +9,12 @@ Buddi - Personal budget software for the rest of us
 	<frame src="http://buddi.sourceforge.net/language_bar.php" 
 noresize="noresize" frameborder=no framespacing=0>
 <? 
-if ($lang=='')
-	$lang='en';
+if ($lang == '')
+	$lang = 'en';
+if ($page == '')
+	$page = 'index.php'
 ?>
-	<frame src="http://buddi.sourceforge.net/<? echo $lang; ?>/index.php" 
+	<frame src="http://buddi.sourceforge.net/<? echo $lang . '/' . $page; ?>" 
 name="body" noresize="noresize" frameborder=no framespacing=0>
 </frameset>
 </html>
