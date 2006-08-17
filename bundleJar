@@ -54,8 +54,8 @@ rm -rf $DEST/$SOURCE
 
 if [ "$1" == "--release" ]; then
 	# Update the version.txt
-	VERSION_UNSTABLE=`grep "^$VERSION (" ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
-	VERSION_STABLE=`grep "^$VERSION (" ../Buddi\ Stable/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+	VERSION_UNSTABLE=`grep 'String VERSION = ' ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+	VERSION_STABLE=`grep 'String VERSION = ' ../Buddi\ Stable/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
 	
 	echo "STABLE=$VERSION_STABLE" > version.txt
 	echo "UNSTABLE=$VERSION_UNSTABLE" >> version.txt
@@ -97,5 +97,3 @@ bye
 END_OF_FTP
 	echo Upload Complete
 fi
-
-open $DEST
