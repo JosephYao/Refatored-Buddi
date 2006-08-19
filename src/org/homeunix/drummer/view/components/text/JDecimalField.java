@@ -1,7 +1,11 @@
 package org.homeunix.drummer.view.components.text;
 
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -26,13 +30,42 @@ public class JDecimalField extends JTextField {
 	public static final long serialVersionUID = 0;
 	
 	private NumberFormat format;
+	private final NumberFormat decimalFormat;
 	private final static String badchars = "-`~!@#$%^&*()_+=\\|\"':;?/>< ";
+	
 	
 	public JDecimalField(long value, int columns, NumberFormat f) {
 		super(columns);
 		setDocument(new FormattedDocument(f));
 		format = f;
+
+		decimalFormat = DecimalFormat.getInstance();
+		decimalFormat.setMaximumFractionDigits(2);
+		decimalFormat.setMinimumFractionDigits(2);
+
 		setValue(value);
+		this.addFocusListener(new FocusAdapter(){
+			@Override
+			public void focusLost(FocusEvent e) {
+				checkFormat();
+				super.focusLost(e);
+			}
+		});
+		
+		this.addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER){
+					checkFormat();
+				}
+				super.keyPressed(e);
+			}
+		});
+	}
+	
+	private void checkFormat(){
+		double value = Double.parseDouble(this.getText());
+		this.setText(decimalFormat.format(value));
 	}
 	
 	public long getValue() {
