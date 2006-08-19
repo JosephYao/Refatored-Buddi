@@ -2,6 +2,18 @@
 
 <h1>News</h1>
 
+
+<h2>1.4.1 (August 19 2006)</h2>
+<ul>
+<li>Fixed a bug relating to Double rounding error when reading the value from JDecimalField.  This could result in some numbers (e.g., 19.74) which were impossible to enter.  Now it converts directly to long from String, eliminating any possible trouble with rounding errors.
+</ul>
+
+<h2>1.4.0 (August 17 2006)</h2>
+<ul>
+<li>Incorporated Scheduled Transactions into the Stable Version</li>
+<li>Added Export to HTML to the Stable Version</li>
+</ul>
+
 <h2>Scheduled Transactions (August 14 2004)</h2>
 <p>
 Scheduled transactions have been added to Development version 1.3.3. This means that repetitive transactions (putting aside $20 a month for a rainly day, paying weekly bills, etc) can be automated. 

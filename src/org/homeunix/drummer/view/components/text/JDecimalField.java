@@ -36,25 +36,29 @@ public class JDecimalField extends JTextField {
 	}
 	
 	public long getValue() {
-		double retVal = 0.0;
+//		double retVal = 0.0;
 		
-		try {
-			retVal = format.parse(getText()).doubleValue();
-		} catch (ParseException e) {
-			// This should never happen because insertString allows
-			// only properly formatted data to get in the field.
-			Toolkit.getDefaultToolkit().beep();
-			Log.error("getValue: could not parse: " + getText());
-		}
+		String value = getText().replaceAll("\\D", "");
 		
-		Log.debug("Double value: " + retVal);
-		Log.debug(retVal * 10000.0);
+		long amount = Long.parseLong(value);
 		
-		
-		// The weird 10000 / 100 instead of simple *100 is to try
-		// to bypass rounding errors when converting from double
-		// to int.  This seems to work fine now.
-		long amount = (long) (retVal * 10000.0) / 100;
+//		try {
+//			retVal = format.parse(getText()).doubleValue();
+//		} catch (ParseException e) {
+//			// This should never happen because insertString allows
+//			// only properly formatted data to get in the field.
+//			Toolkit.getDefaultToolkit().beep();
+//			Log.error("getValue: could not parse: " + getText());
+//		}
+//		
+//		Log.debug("Double value: " + retVal);
+//		Log.debug(retVal * 100000.0);
+//		
+//		
+//		// The weird 100000 / 1000 instead of simple *100 is to try
+//		// to bypass rounding errors when converting from double
+//		// to int.  This seems to work fine now.
+//		long amount = (long) (retVal * 100000.0) / 1000;
 		Log.debug("Long value: " + amount);
 		return amount;
 	}

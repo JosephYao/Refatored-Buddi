@@ -18,8 +18,8 @@ Buddi - Personal budget software for the rest of us
 <ul>
 <li><a href='./index.php'>Home</a></li>
 <li><a href='./news.php'>News</a></li>
-<li><a href='/translate.php'>Languages</a></li>
-<li><a href='http://sourceforge.net/projects/buddi/'>Download</a></li>
+<li><a href='/translate.php' target='_top'>Languages</a></li>
+<li><a href='http://sourceforge.net/projects/buddi/' target='_top'>Download</a></li>
 <li><a href='./screenshots.php'>Screenshots</a></li>
 <li><a href='./faq.php'>FAQ</a></li>
 <li><a href='./developers.php'>Developers</a></li>
