@@ -42,14 +42,15 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isEnableUpdateNotifications <em>Enable Update Notifications</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getSelectedInterval <em>Selected Interval</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAutoComplete <em>Show Auto Complete</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getCurrencySymbol <em>Currency Symbol</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -257,44 +258,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected boolean showAutoComplete = SHOW_AUTO_COMPLETE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * The default value of the '{@link #getCurrencySymbol() <em>Currency Symbol</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLastVersionRun()
+	 * @see #getCurrencySymbol()
 	 * @generated
 	 * @ordered
 	 */
-	protected Version lastVersionRun = null;
+	protected static final String CURRENCY_SYMBOL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * The cached value of the '{@link #getCurrencySymbol() <em>Currency Symbol</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReportsWindow()
+	 * @see #getCurrencySymbol()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes reportsWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGraphsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes graphsWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListEntries()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList listEntries = null;
+	protected String currencySymbol = CURRENCY_SYMBOL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
@@ -305,6 +286,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected WindowAttributes transactionsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReportsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes reportsWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
@@ -335,6 +326,36 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected EList descDict = null;
+
+	/**
+	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getListEntries()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList listEntries = null;
+
+	/**
+	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGraphsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes graphsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLastVersionRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected Version lastVersionRun = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -811,22 +832,22 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return basicSetLastVersionRun(null, msgs);
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return basicSetReportsWindow(null, msgs);
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return basicSetGraphsWindow(null, msgs);
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				return basicSetTransactionsWindow(null, msgs);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return basicSetReportsWindow(null, msgs);
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return basicSetMainWindow(null, msgs);
 			case PrefsPackage.PREFS__INTERVALS:
 				return basicSetIntervals(null, msgs);
 			case PrefsPackage.PREFS__DESC_DICT:
 				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				return basicSetGraphsWindow(null, msgs);
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return basicSetLastVersionRun(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -858,22 +879,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return getSelectedInterval();
 			case PrefsPackage.PREFS__SHOW_AUTO_COMPLETE:
 				return isShowAutoComplete() ? Boolean.TRUE : Boolean.FALSE;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return getLastVersionRun();
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return getReportsWindow();
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return getGraphsWindow();
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return getListEntries();
+			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
+				return getCurrencySymbol();
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				return getTransactionsWindow();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return getReportsWindow();
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return getMainWindow();
 			case PrefsPackage.PREFS__INTERVALS:
 				return getIntervals();
 			case PrefsPackage.PREFS__DESC_DICT:
 				return getDescDict();
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return getListEntries();
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				return getGraphsWindow();
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return getLastVersionRun();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -916,21 +939,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_AUTO_COMPLETE:
 				setShowAutoComplete(((Boolean)newValue).booleanValue());
 				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)newValue);
-				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				getListEntries().addAll((Collection)newValue);
+			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
+				setCurrencySymbol((String)newValue);
 				return;
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)newValue);
@@ -941,6 +957,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				getListEntries().addAll((Collection)newValue);
+				return;
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -983,20 +1009,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_AUTO_COMPLETE:
 				setShowAutoComplete(SHOW_AUTO_COMPLETE_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)null);
-				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
+			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
+				setCurrencySymbol(CURRENCY_SYMBOL_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)null);
@@ -1006,6 +1026,15 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
+				return;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				return;
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1038,22 +1067,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return SELECTED_INTERVAL_EDEFAULT == null ? selectedInterval != null : !SELECTED_INTERVAL_EDEFAULT.equals(selectedInterval);
 			case PrefsPackage.PREFS__SHOW_AUTO_COMPLETE:
 				return showAutoComplete != SHOW_AUTO_COMPLETE_EDEFAULT;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return lastVersionRun != null;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return reportsWindow != null;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return graphsWindow != null;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
+				return CURRENCY_SYMBOL_EDEFAULT == null ? currencySymbol != null : !CURRENCY_SYMBOL_EDEFAULT.equals(currencySymbol);
 			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
 				return transactionsWindow != null;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return reportsWindow != null;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return mainWindow != null;
 			case PrefsPackage.PREFS__INTERVALS:
 				return intervals != null;
 			case PrefsPackage.PREFS__DESC_DICT:
 				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				return graphsWindow != null;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return lastVersionRun != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1105,6 +1136,27 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCurrencySymbol() {
+		return currencySymbol;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurrencySymbol(String newCurrencySymbol) {
+		String oldCurrencySymbol = currencySymbol;
+		currencySymbol = newCurrencySymbol;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__CURRENCY_SYMBOL, oldCurrencySymbol, currencySymbol));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1129,6 +1181,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(selectedInterval);
 		result.append(", showAutoComplete: ");
 		result.append(showAutoComplete);
+		result.append(", currencySymbol: ");
+		result.append(currencySymbol);
 		result.append(')');
 		return result.toString();
 	}

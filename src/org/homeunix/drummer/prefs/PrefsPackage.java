@@ -401,40 +401,13 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__SHOW_AUTO_COMPLETE = 9;
 
 	/**
-	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
+	 * The feature id for the '<em><b>Currency Symbol</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 10;
-
-	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__REPORTS_WINDOW = 11;
-
-	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__GRAPHS_WINDOW = 12;
-
-	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 13;
+	int PREFS__CURRENCY_SYMBOL = 10;
 
 	/**
 	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
@@ -443,7 +416,16 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__TRANSACTIONS_WINDOW = 14;
+	int PREFS__TRANSACTIONS_WINDOW = 11;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__REPORTS_WINDOW = 12;
 
 	/**
 	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
@@ -452,7 +434,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MAIN_WINDOW = 15;
+	int PREFS__MAIN_WINDOW = 13;
 
 	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
@@ -461,7 +443,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__INTERVALS = 16;
+	int PREFS__INTERVALS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
@@ -470,7 +452,34 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 17;
+	int PREFS__DESC_DICT = 15;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LIST_ENTRIES = 16;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__GRAPHS_WINDOW = 17;
+
+	/**
+	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LAST_VERSION_RUN = 18;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -479,7 +488,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 18;
+	int PREFS_FEATURE_COUNT = 19;
 
 
 	/**
@@ -1017,6 +1026,17 @@ public interface PrefsPackage extends EPackage {
 	EAttribute getPrefs_ShowAutoComplete();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getCurrencySymbol <em>Currency Symbol</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Currency Symbol</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getCurrencySymbol()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_CurrencySymbol();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1395,6 +1415,14 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREFS__SHOW_AUTO_COMPLETE = eINSTANCE.getPrefs_ShowAutoComplete();
+
+		/**
+		 * The meta object literal for the '<em><b>Currency Symbol</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__CURRENCY_SYMBOL = eINSTANCE.getPrefs_CurrencySymbol();
 
 		/**
 		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.

@@ -27,6 +27,7 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
@@ -237,7 +238,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 						.append(Translate.getInstance().get(TranslateKeys.TOTAL))
 						.append("</b></td><td width=70px><b>")
 						.append((entry.getTotal() < 0 ? "<font color='red'>" : ""))
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
 						.append((entry.getTotal() < 0 ? "</font>" : ""))
 						.append("</b></td></tr></table></html>");
@@ -254,7 +255,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 						.append(Translate.getInstance().get(entry.getDescription().toString()))
 						.append("</u></td><td width=70px>")
 						.append(entry.getActual() < 0 ? "<font color='red'>" : "")
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
 						.append(entry.getActual() < 0 ? "</font>" : "")
 						.append("</td></tr></table></html>");
@@ -276,7 +277,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				
 				sb.append("<html><table><tr><td width=80px>")
 						.append((isExpense ? "<font color='red'>" : ""))
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
 						.append((isExpense ? "</font>" : ""))
 						.append("</td><td width=350px>")
@@ -328,7 +329,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 							.append(Translate.getInstance().get(entry.getDescription().toString()))
 							.append("</td>")
 							.append(entry.getActual() < 0 ? "<td class='red'>" : "<td>")
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
 							.append("</td></tr>\n");
 					
@@ -356,7 +357,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 										.append(t.getTo())							
 										.append("</td>")
 										.append((isExpense ? "<td class='red'>" : "<td>"))
-										.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+										.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 										.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
 										.append("</td>");
 							}
@@ -374,7 +375,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 							.append("</b></th>")
 							.append((entry.getTotal() < 0 ? "<th class='red'>" : "<th>"))
 							.append("<b>")
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
 							.append("</b></th>")
 							.append("</tr>");

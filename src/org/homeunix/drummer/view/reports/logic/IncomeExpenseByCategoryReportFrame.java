@@ -273,14 +273,14 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 						"<html><table><tr><td width=130px><u>")
 						.append(Translate.getInstance().get(entry.getCategory().toString()))
 						.append("</u></td><td width=70px>")
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
 						.append("</td><td width=70px>")
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
 						.append("</td><td width=70px>")
 						.append((difference < 0 ? "<font color='red'>" : ""))
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getDifference() / 100.0)))
 						.append((difference < 0 ? "</font>" : ""))
 						.append("</td></tr></table></html>");
@@ -297,7 +297,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 						.append(Translate.getInstance().get(TranslateKeys.TOTAL))
 						.append("</b></td><td width=70px><b>")
 						.append((entry.getTotal() < 0 ? "<font color='red'>" : ""))
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
 						.append((entry.getTotal() < 0 ? "</font>" : ""))
 						.append("</b></td></tr></table></html>");
@@ -313,7 +313,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 						"<html><table><tr><td width=150px>")
 						.append(transaction.getDescription())
 						.append("</td><td width=80px>")
-						.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
 						.append("</td><td width=200px>");
 						if (transaction.getTo() instanceof Account){
@@ -376,14 +376,14 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 							"<tr><td>")
 							.append(Translate.getInstance().get(entry.getCategory().toString()))
 							.append("</td><td>")
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
 							.append("</td><td>")
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
 							.append("</td>")
 							.append((difference < 0 ? "<td class='red'>" : "<td>"))
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getDifference() / 100.0)))
 							.append("</td></tr>\n");
 					
@@ -399,7 +399,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 								"<td>")
 								.append(t.getDescription())
 								.append("</td><td>")
-								.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+								.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 								.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
 								.append("</td><td>");
 								if (t.getTo() instanceof Account){
@@ -425,7 +425,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 							.append("</b></th>")
 							.append((entry.getTotal() < 0 ? "<th class='red'>" : "<th>"))
 							.append("<b>")
-							.append(Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN))
+							.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
 							.append("</b></th>")
 							.append("</tr>");

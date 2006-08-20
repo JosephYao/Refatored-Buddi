@@ -151,6 +151,7 @@ public class PrefsInstance {
 			prefs.setShowAccountTypes(true);
 			prefs.setEnableUpdateNotifications(true);
 			prefs.setDateFormat("yyyy/MMM/d");
+			prefs.setCurrencySymbol(Const.CURRENCY_FORMATS[0]);
 			
 			WindowAttributes main = prefsFactory.createWindowAttributes();
 			WindowAttributes transactions = prefsFactory.createWindowAttributes();

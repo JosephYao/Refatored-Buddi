@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
@@ -55,7 +56,7 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ") "
-				+ Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN)
+				+ PrefsInstance.getInstance().getPrefs().getCurrencySymbol()
 				+ Formatter.getInstance().getDecimalFormat().format((double) totalIncome / 100.0),
 				pieData,             // data
 				true,               // include legend

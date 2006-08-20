@@ -36,6 +36,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	
 	protected final JComboBox language;
 	protected final JComboBox dateFormat;
+	protected final JComboBox currencyFormat;
 	protected final JComboBox budgetInterval;
 	protected final JCheckBox showDeletedAccounts;
 	protected final JCheckBox showDeletedCategories;
@@ -60,8 +61,10 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		language = new JComboBox(languageModel);
 		
 		JLabel dateFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FORMAT));
+		JLabel currencyFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CURRENCY));
 		
 		//Add the date formats defined in Const.
+		currencyFormat = new JComboBox(Const.CURRENCY_FORMATS);
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		dateFormat.setRenderer(new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
@@ -75,6 +78,10 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 			}
 		});
 		
+//		Dimension dropdownSize = dateFormat.getPreferredSize();
+//		language.setPreferredSize(dropdownSize);
+//		currencyFormat.setPreferredSize(dropdownSize);
+		
 		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());
 		
@@ -86,6 +93,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel deletePanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -95,6 +103,9 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
+		
+		currencyFormatPanel.add(currencyFormatLabel);
+		currencyFormatPanel.add(currencyFormat);
 		
 		dateFormatPanel.add(dateFormatLabel);
 		dateFormatPanel.add(dateFormat);
@@ -112,24 +123,44 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		updatePanel.add(enableUpdateNotifications);
 		
-		JPanel textPanel = new JPanel(new GridLayout(0, 1));
-		textPanel.add(languagePanel);
-		textPanel.add(dateFormatPanel);
-		textPanel.add(budgetIntervalPanel);
-		textPanel.add(deletePanel1);
-		textPanel.add(deletePanel2);
-		textPanel.add(accountPanel);
-		textPanel.add(autoCompletePanel);
-		textPanel.add(updatePanel);
+		JPanel localePanel = new JPanel(new GridLayout(0, 1));
+		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
+//		JPanel otherPanel = new JPanel(new GridLayout(0, 1));
 		
-		JPanel textPanelSpacer = new JPanel();
-		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		textPanelSpacer.add(textPanel);
+//		localePanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+//		viewPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+//		otherPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
-		JPanel mainBorderPanel = new JPanel();
-		mainBorderPanel.setLayout(new BorderLayout());
-		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
-		mainBorderPanel.add(textPanelSpacer);
+		localePanel.setBorder(BorderFactory.createTitledBorder(""));
+		viewPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		otherPanel.setBorder(BorderFactory.createTitledBorder(""));
+		
+//		JPanel textPanel = new JPanel(new GridLayout(0, 1));
+		localePanel.add(languagePanel);		
+		localePanel.add(currencyFormatPanel);
+		localePanel.add(dateFormatPanel);
+		localePanel.add(new JLabel());
+		localePanel.add(new JLabel());
+		localePanel.add(updatePanel);		
+				
+		viewPanel.add(deletePanel1);
+		viewPanel.add(deletePanel2);
+		viewPanel.add(accountPanel);
+		viewPanel.add(autoCompletePanel);
+		viewPanel.add(budgetIntervalPanel);
+		viewPanel.add(new JLabel());  // Line up view and locale panels
+
+		
+//		JPanel textPanelSpacer = new JPanel();
+//		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+//		textPanelSpacer.add(textPanel);
+		
+		JPanel mainBorderPanel = new JPanel(new GridLayout(1, 0));
+//		mainBorderPanel.setLayout(new BorderLayout());
+//		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
+		mainBorderPanel.add(localePanel);
+		mainBorderPanel.add(viewPanel);
+//		mainBorderPanel.add(otherPanel);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);

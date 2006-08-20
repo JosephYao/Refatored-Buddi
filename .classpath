@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.0.v200606271057.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.0.v200606271057.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.0.v200606271057.jar"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

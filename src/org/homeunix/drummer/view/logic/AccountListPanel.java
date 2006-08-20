@@ -163,7 +163,7 @@ public class AccountListPanel extends ListPanelLayout {
 		else
 			balanceLabel.setForeground(Color.RED);
 		
-		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + Translate.getInstance().get(TranslateKeys.CURRENCY_SIGN) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
+		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
 		treeModel.reload(root);
 

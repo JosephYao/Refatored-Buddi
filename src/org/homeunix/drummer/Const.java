@@ -35,6 +35,19 @@ public class Const {
 		"dd/MM/yyyy"
 	};
 	
+	public final static String[] CURRENCY_FORMATS = {
+		"$",
+		"\u00a3",  //British Pounds
+		"\u20ac",  //Euro
+		"\u00a5",  //Yen
+		"\u20b1",  //Peso
+		"\u20a3",  //French Franc
+		"S\u20a3", //Swiss Franc (?)
+		"\u20a8", //Indian Rupees
+		"Kr"  //Norwegian
+		
+	};
+	
 	public final static String[] DAYS_IN_WEEK = {
 		"SUNDAY",
 		"MONDAY",

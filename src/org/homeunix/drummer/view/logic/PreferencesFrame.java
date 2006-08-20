@@ -42,6 +42,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setDateFormat(dateFormat.getSelectedItem().toString());
+				PrefsInstance.getInstance().getPrefs().setCurrencySymbol(currencyFormat.getSelectedItem().toString());
 				if (budgetInterval.getSelectedItem() instanceof Interval)
 					PrefsInstance.getInstance().getPrefs().setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
 				else
@@ -78,6 +79,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 
 		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
 		dateFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getDateFormat());
+		currencyFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
 		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
 		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
 		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());

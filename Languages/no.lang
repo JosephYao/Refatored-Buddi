@@ -54,7 +54,6 @@ CREATED_NEW_DATA_FILE=Opprettet ny data fil
 CREATED_NEW_DATA_FILE_MESSAGE=Opprettet ny data fil:\n
 CREATE_NEW_DATA_FILE=Opprette ny datafil?
 CREDIT_CARD=Kreditt kort
-CURRENCY_SIGN=Kr
 CUT=Klipp ut
 DATE_AFTER_TODAY=Spesifisert dato m\u00E5 v\u00E6re f\u00F8r dagens dato
 DATE_FORMAT=Dato format
@@ -227,3 +226,5 @@ WINDOW=Vindu
 YEAR=\u00C5r
 YESTERDAY=I g\u00E5r
 ZOOM=Zoom
+
+CURRENCY=Currency Format
