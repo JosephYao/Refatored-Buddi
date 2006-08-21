@@ -1,3 +1,4 @@
+1.5.3 (August 21 2006)
 -Added Interest Rate and Credit Limit to accounts.  Interest Rate is only for your records - it does not calculate interest or anything, and only shows up if you select it in Preferences.  If you enter a Credit Limit, you can see in the Transactions Window how much credit you have left.
 -Improved Preferences user interface.
 -Fixed additional minor problem with JDecimalField.

@@ -6,6 +6,7 @@ package org.homeunix.drummer;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -36,9 +37,10 @@ public class Buddi {
 	}
 	
 	private static void launchGUI(){
-		// TODO Remove this from versions after 1.4.0
+		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
-/*		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+///*	
+		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			if (JOptionPane.showConfirmDialog(null, 
 					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
 					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
@@ -47,7 +49,7 @@ public class Buddi {
 			) == JOptionPane.CANCEL_OPTION)
 				System.exit(0);
 		}
-*/
+//*/
 		
 		MainBuddiFrame.getInstance().openWindow();
 	}

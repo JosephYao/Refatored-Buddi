@@ -35,10 +35,23 @@ public class Translate {
 		catch(IOException ioe){
 			JOptionPane.showMessageDialog(
 					null, 
-					"Error loading language file " + languageFile + ": " + ioe,
+					"Error loading language file " + languageFile + ":\n" + ioe + "\nTrying to load en.lang... After Buddi starts, you can change\nthe language in the Preferences screen.",
 					"Error Loading Language File",
 					JOptionPane.ERROR_MESSAGE
 			);
+
+			try{
+				languageFile = Const.LANGUAGE_FOLDER + File.separator + "en" + Const.LANGUAGE_EXTENSION;
+				translations.load(new BufferedInputStream(new FileInputStream(languageFile)));
+			}
+			catch (IOException ioe2){
+				JOptionPane.showMessageDialog(
+						null, 
+						"Error loading language file en.lang.  Please check that\nyour Languages directory exists, and contains at least en.lang",
+						"Error Loading Language File",
+						JOptionPane.ERROR_MESSAGE
+				);
+			}
 		}
 		return this;
 	}
