@@ -54,13 +54,13 @@ rm -rf $DEST/$SOURCE
 
 if [ "$1" == "--release" ]; then
 	# Update the version.txt
-	VERSION_UNSTABLE=`grep 'String VERSION = ' ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
-	VERSION_STABLE=`grep 'String VERSION = ' ../Buddi\ Stable/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
-	
-	echo "STABLE=$VERSION_STABLE" > version.txt
-	echo "UNSTABLE=$VERSION_UNSTABLE" >> version.txt
-	
-	scp version.txt olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs/version.txt	
+#	VERSION_UNSTABLE=`grep 'String VERSION = ' ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+#	VERSION_STABLE=`grep 'String VERSION = ' ../Buddi\ Stable/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+#	
+#	echo "STABLE=$VERSION_STABLE" > version.txt
+#	echo "UNSTABLE=$VERSION_UNSTABLE" >> version.txt
+#	
+#	scp version.txt olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs/version.txt	
 	
 	svn copy https://svn.sourceforge.net/svnroot/buddi/trunk https://svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
 fi

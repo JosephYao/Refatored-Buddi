@@ -116,6 +116,11 @@ public class PrefsInstance {
 					|| userPrefs.getPrefs().getIntervals() == null
 					|| userPrefs.getPrefs().getIntervals().getAllIntervals() == null)
 				throw new Exception();
+			
+			if (userPrefs.getPrefs().getCurrencySymbol() == null){
+				userPrefs.getPrefs().setCurrencySymbol("$");
+				savePrefs();
+			}
 		}
 		//If there is a problem opening the file, we will prompt to make a new one
 		catch (Exception e){

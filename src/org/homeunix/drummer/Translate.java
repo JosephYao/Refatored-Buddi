@@ -35,7 +35,7 @@ public class Translate {
 		catch(IOException ioe){
 			JOptionPane.showMessageDialog(
 					null, 
-					"Error loading language file " + languageFile + ":\n" + ioe + "\nTrying to load en.lang... After Buddi starts, you can change\nthe language in the Preferences screen.",
+					"Error loading language file " + languageFile + ":\n" + ioe + "\nTrying to load en.lang...\n\nAfter Buddi starts, you need to set the language in Preferences.",
 					"Error Loading Language File",
 					JOptionPane.ERROR_MESSAGE
 			);
