@@ -42,6 +42,9 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected final JCheckBox showDeletedCategories;
 	protected final JCheckBox showAccountTypes;
 	protected final JCheckBox showAutoComplete;
+	protected final JCheckBox showCreditLimit;
+	protected final JCheckBox showInterestRate;
+
 	protected final JCheckBox enableUpdateNotifications;
 	
 	protected final DefaultComboBoxModel languageModel;
@@ -90,6 +93,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		showAccountTypes = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ACCOUNT_TYPES));
 		enableUpdateNotifications = new JCheckBox(Translate.getInstance().get(TranslateKeys.ENABLE_UPDATE_NOTIFICATIONS));
 		showAutoComplete = new JCheckBox(Translate.getInstance().get(TranslateKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
+		showCreditLimit = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CREDIT_LIMIT));
+		showInterestRate = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_INTEREST_RATE));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -100,6 +105,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel interestRatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
@@ -123,6 +130,10 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		updatePanel.add(enableUpdateNotifications);
 		
+		creditLimitPanel.add(showCreditLimit);
+		
+		interestRatePanel.add(showInterestRate);
+		
 		JPanel localePanel = new JPanel(new GridLayout(0, 1));
 		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
 //		JPanel otherPanel = new JPanel(new GridLayout(0, 1));
@@ -141,11 +152,15 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		localePanel.add(dateFormatPanel);
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
+		localePanel.add(new JLabel());
+		localePanel.add(new JLabel());
 		localePanel.add(updatePanel);		
 				
 		viewPanel.add(deletePanel1);
 		viewPanel.add(deletePanel2);
 		viewPanel.add(accountPanel);
+		viewPanel.add(interestRatePanel);
+		viewPanel.add(creditLimitPanel);
 		viewPanel.add(autoCompletePanel);
 		viewPanel.add(budgetIntervalPanel);
 		viewPanel.add(new JLabel());  // Line up view and locale panels

@@ -43,13 +43,15 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getSelectedInterval <em>Selected Interval</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAutoComplete <em>Show Auto Complete</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getCurrencySymbol <em>Currency Symbol</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowCreditLimit <em>Show Credit Limit</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowInterestRate <em>Show Interest Rate</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
  * </ul>
  * </p>
@@ -278,14 +280,44 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String currencySymbol = CURRENCY_SYMBOL_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
+	 * The default value of the '{@link #isShowCreditLimit() <em>Show Credit Limit</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
+	 * @see #isShowCreditLimit()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes transactionsWindow = null;
+	protected static final boolean SHOW_CREDIT_LIMIT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isShowCreditLimit() <em>Show Credit Limit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isShowCreditLimit()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean showCreditLimit = SHOW_CREDIT_LIMIT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isShowInterestRate() <em>Show Interest Rate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isShowInterestRate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SHOW_INTEREST_RATE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isShowInterestRate() <em>Show Interest Rate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isShowInterestRate()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean showInterestRate = SHOW_INTEREST_RATE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
@@ -298,14 +330,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes reportsWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
+	 * @see #getDescDict()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes mainWindow = null;
+	protected EList descDict = null;
 
 	/**
 	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
@@ -318,16 +350,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected Intervals intervals = null;
 
 	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList descDict = null;
-
-	/**
 	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -338,6 +360,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected EList listEntries = null;
 
 	/**
+	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTransactionsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes transactionsWindow = null;
+
+	/**
 	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -346,6 +378,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected WindowAttributes graphsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMainWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes mainWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
@@ -832,20 +874,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return basicSetTransactionsWindow(null, msgs);
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return basicSetReportsWindow(null, msgs);
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return basicSetMainWindow(null, msgs);
-			case PrefsPackage.PREFS__INTERVALS:
-				return basicSetIntervals(null, msgs);
 			case PrefsPackage.PREFS__DESC_DICT:
 				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__INTERVALS:
+				return basicSetIntervals(null, msgs);
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return basicSetTransactionsWindow(null, msgs);
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return basicSetGraphsWindow(null, msgs);
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return basicSetMainWindow(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
 		}
@@ -881,20 +923,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isShowAutoComplete() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
 				return getCurrencySymbol();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
+			case PrefsPackage.PREFS__SHOW_CREDIT_LIMIT:
+				return isShowCreditLimit() ? Boolean.TRUE : Boolean.FALSE;
+			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
+				return isShowInterestRate() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return getReportsWindow();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
-			case PrefsPackage.PREFS__INTERVALS:
-				return getIntervals();
 			case PrefsPackage.PREFS__DESC_DICT:
 				return getDescDict();
+			case PrefsPackage.PREFS__INTERVALS:
+				return getIntervals();
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return getListEntries();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
 		}
@@ -942,28 +988,34 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
 				setCurrencySymbol((String)newValue);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__SHOW_CREDIT_LIMIT:
+				setShowCreditLimit(((Boolean)newValue).booleanValue());
+				return;
+			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
+				setShowInterestRate(((Boolean)newValue).booleanValue());
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)newValue);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
 				return;
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)newValue);
+				return;
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				getListEntries().clear();
 				getListEntries().addAll((Collection)newValue);
 				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
+				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)newValue);
@@ -1012,26 +1064,32 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
 				setCurrencySymbol(CURRENCY_SYMBOL_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__SHOW_CREDIT_LIMIT:
+				setShowCreditLimit(SHOW_CREDIT_LIMIT_EDEFAULT);
+				return;
+			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
+				setShowInterestRate(SHOW_INTEREST_RATE_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				setReportsWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
 				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)null);
 				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				return;
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				getListEntries().clear();
 				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)null);
+				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)null);
@@ -1069,20 +1127,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return showAutoComplete != SHOW_AUTO_COMPLETE_EDEFAULT;
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL:
 				return CURRENCY_SYMBOL_EDEFAULT == null ? currencySymbol != null : !CURRENCY_SYMBOL_EDEFAULT.equals(currencySymbol);
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
+			case PrefsPackage.PREFS__SHOW_CREDIT_LIMIT:
+				return showCreditLimit != SHOW_CREDIT_LIMIT_EDEFAULT;
+			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
+				return showInterestRate != SHOW_INTEREST_RATE_EDEFAULT;
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return reportsWindow != null;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
-			case PrefsPackage.PREFS__INTERVALS:
-				return intervals != null;
 			case PrefsPackage.PREFS__DESC_DICT:
 				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__INTERVALS:
+				return intervals != null;
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
 		}
@@ -1157,6 +1219,48 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isShowCreditLimit() {
+		return showCreditLimit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setShowCreditLimit(boolean newShowCreditLimit) {
+		boolean oldShowCreditLimit = showCreditLimit;
+		showCreditLimit = newShowCreditLimit;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SHOW_CREDIT_LIMIT, oldShowCreditLimit, showCreditLimit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isShowInterestRate() {
+		return showInterestRate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setShowInterestRate(boolean newShowInterestRate) {
+		boolean oldShowInterestRate = showInterestRate;
+		showInterestRate = newShowInterestRate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SHOW_INTEREST_RATE, oldShowInterestRate, showInterestRate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1183,6 +1287,10 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(showAutoComplete);
 		result.append(", currencySymbol: ");
 		result.append(currencySymbol);
+		result.append(", showCreditLimit: ");
+		result.append(showCreditLimit);
+		result.append(", showInterestRate: ");
+		result.append(showInterestRate);
 		result.append(')');
 		return result.toString();
 	}

@@ -31,6 +31,8 @@ import org.homeunix.drummer.util.Log;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getBalance <em>Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getStartingBalance <em>Starting Balance</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getCreditLimit <em>Credit Limit</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getInterestRate <em>Interest Rate</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getAccountType <em>Account Type</em>}</li>
  * </ul>
  * </p>
@@ -77,6 +79,46 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * @ordered
 	 */
 	protected long startingBalance = STARTING_BALANCE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCreditLimit() <em>Credit Limit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreditLimit()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final long CREDIT_LIMIT_EDEFAULT = 0L;
+
+	/**
+	 * The cached value of the '{@link #getCreditLimit() <em>Credit Limit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreditLimit()
+	 * @generated
+	 * @ordered
+	 */
+	protected long creditLimit = CREDIT_LIMIT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getInterestRate() <em>Interest Rate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterestRate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final long INTEREST_RATE_EDEFAULT = 0L;
+
+	/**
+	 * The cached value of the '{@link #getInterestRate() <em>Interest Rate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterestRate()
+	 * @generated
+	 * @ordered
+	 */
+	protected long interestRate = INTEREST_RATE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAccountType() <em>Account Type</em>}' reference.
@@ -153,6 +195,48 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public long getCreditLimit() {
+		return creditLimit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCreditLimit(long newCreditLimit) {
+		long oldCreditLimit = creditLimit;
+		creditLimit = newCreditLimit;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ACCOUNT__CREDIT_LIMIT, oldCreditLimit, creditLimit));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public long getInterestRate() {
+		return interestRate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInterestRate(long newInterestRate) {
+		long oldInterestRate = interestRate;
+		interestRate = newInterestRate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ACCOUNT__INTEREST_RATE, oldInterestRate, interestRate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Type getAccountType() {
 		if (accountType != null && accountType.eIsProxy()) {
 			InternalEObject oldAccountType = (InternalEObject)accountType;
@@ -197,6 +281,10 @@ public class AccountImpl extends SourceImpl implements Account {
 				return new Long(getBalance());
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
 				return new Long(getStartingBalance());
+			case ModelPackage.ACCOUNT__CREDIT_LIMIT:
+				return new Long(getCreditLimit());
+			case ModelPackage.ACCOUNT__INTEREST_RATE:
+				return new Long(getInterestRate());
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				if (resolve) return getAccountType();
 				return basicGetAccountType();
@@ -216,6 +304,12 @@ public class AccountImpl extends SourceImpl implements Account {
 				return;
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
 				setStartingBalance(((Long)newValue).longValue());
+				return;
+			case ModelPackage.ACCOUNT__CREDIT_LIMIT:
+				setCreditLimit(((Long)newValue).longValue());
+				return;
+			case ModelPackage.ACCOUNT__INTEREST_RATE:
+				setInterestRate(((Long)newValue).longValue());
 				return;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)newValue);
@@ -237,6 +331,12 @@ public class AccountImpl extends SourceImpl implements Account {
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
 				setStartingBalance(STARTING_BALANCE_EDEFAULT);
 				return;
+			case ModelPackage.ACCOUNT__CREDIT_LIMIT:
+				setCreditLimit(CREDIT_LIMIT_EDEFAULT);
+				return;
+			case ModelPackage.ACCOUNT__INTEREST_RATE:
+				setInterestRate(INTEREST_RATE_EDEFAULT);
+				return;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)null);
 				return;
@@ -255,6 +355,10 @@ public class AccountImpl extends SourceImpl implements Account {
 				return balance != BALANCE_EDEFAULT;
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
 				return startingBalance != STARTING_BALANCE_EDEFAULT;
+			case ModelPackage.ACCOUNT__CREDIT_LIMIT:
+				return creditLimit != CREDIT_LIMIT_EDEFAULT;
+			case ModelPackage.ACCOUNT__INTEREST_RATE:
+				return interestRate != INTEREST_RATE_EDEFAULT;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				return accountType != null;
 		}

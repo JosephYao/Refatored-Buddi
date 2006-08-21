@@ -162,13 +162,31 @@ public interface ModelPackage extends EPackage {
 	int ACCOUNT__STARTING_BALANCE = SOURCE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Credit Limit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNT__CREDIT_LIMIT = SOURCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Interest Rate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNT__INTEREST_RATE = SOURCE_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Account Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 2;
+	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Account</em>' class.
@@ -177,7 +195,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 3;
+	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.AccountsImpl <em>Accounts</em>}' class.
@@ -190,22 +208,22 @@ public interface ModelPackage extends EPackage {
 	int ACCOUNTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACCOUNTS__ALL_ACCOUNTS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Accounts</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNTS__ACCOUNTS = 1;
+	int ACCOUNTS__ACCOUNTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Accounts</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNTS__ALL_ACCOUNTS = 1;
 
 	/**
 	 * The number of structural features of the '<em>Accounts</em>' class.
@@ -227,22 +245,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORIES = 2;
 
 	/**
-	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIES__CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIES__ALL_CATEGORIES = 1;
+	int CATEGORIES__ALL_CATEGORIES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIES__CATEGORIES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Categories</em>' class.
@@ -346,31 +364,13 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL = 4;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_TYPES = 0;
-
-	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 1;
-
-	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_CATEGORIES = 2;
+	int DATA_MODEL__ALL_CATEGORIES = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
@@ -379,7 +379,25 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 3;
+	int DATA_MODEL__ALL_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_TYPES = 2;
+
+	/**
+	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_ACCOUNTS = 3;
 
 	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
@@ -682,22 +700,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__TRANSACTIONS = 1;
-
-	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 2;
+	int TRANSACTIONS__ALL_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__TRANSACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Transactions</em>' class.
@@ -824,6 +842,28 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAccount_StartingBalance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Account#getCreditLimit <em>Credit Limit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Credit Limit</em>'.
+	 * @see org.homeunix.drummer.model.Account#getCreditLimit()
+	 * @see #getAccount()
+	 * @generated
+	 */
+	EAttribute getAccount_CreditLimit();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Account#getInterestRate <em>Interest Rate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Interest Rate</em>'.
+	 * @see org.homeunix.drummer.model.Account#getInterestRate()
+	 * @see #getAccount()
+	 * @generated
+	 */
+	EAttribute getAccount_InterestRate();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.Account#getAccountType <em>Account Type</em>}'.
@@ -1412,6 +1452,22 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ACCOUNT__STARTING_BALANCE = eINSTANCE.getAccount_StartingBalance();
+
+		/**
+		 * The meta object literal for the '<em><b>Credit Limit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACCOUNT__CREDIT_LIMIT = eINSTANCE.getAccount_CreditLimit();
+
+		/**
+		 * The meta object literal for the '<em><b>Interest Rate</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACCOUNT__INTEREST_RATE = eINSTANCE.getAccount_InterestRate();
 
 		/**
 		 * The meta object literal for the '<em><b>Account Type</b></em>' reference feature.

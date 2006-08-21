@@ -5,12 +5,14 @@ package org.homeunix.drummer.view.logic;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Type;
@@ -59,6 +61,13 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 					a.setStartingBalance(startingBalance);
 					
 					a.setCreationDate(new Date());
+					
+					if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
+						a.setCreditLimit(creditLimit.getValue());
+					
+					if (interestRate.getValue() != 0)
+						a.setInterestRate(interestRate.getValue());
+					
 //					We now don't check if starting balance is 0, so that you can change the balance later.
 //					if (startingBalance != 0){
 //					Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
@@ -104,6 +113,21 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 			}
 		});
 		
+		pulldown.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				boolean creditVisible;
+				if (pulldown.getSelectedItem() instanceof Type){
+					Type t = (Type) pulldown.getSelectedItem();
+					creditVisible = t.isCredit();
+				}
+				else
+					creditVisible = false;
+				
+				creditLimit.setEnabled(creditVisible);
+				creditLimitLabel.setEnabled(creditVisible);	
+			}
+		});
+		
 		return this;
 	}
 
@@ -114,15 +138,19 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 		if (source == null){
 			name.setText("");
 			amount.setValue(0);
+			creditLimit.setValue(0);
+			interestRate.setValue(0);
 			pulldown.setSelectedItem(null);
-//			amount.setEnabled(true);
+			pulldown.setEnabled(true);
 		}
 		else{
 			name.setText(source.getName());
 			amount.setValue(source.getStartingBalance());
+			creditLimit.setValue(source.getCreditLimit());
+			interestRate.setValue(source.getInterestRate());
 	
 			pulldown.setSelectedItem(source.getAccountType());
-//			amount.setEnabled(false);
+			pulldown.setEnabled(false);
 		}
 		
 		return this;

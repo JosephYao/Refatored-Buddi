@@ -30,8 +30,8 @@ import org.homeunix.drummer.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAccounts <em>Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountsImpl#getAllAccounts <em>All Accounts</em>}</li>
  * </ul>
  * </p>
  *
@@ -141,10 +141,10 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return basicSetAllAccounts(null, msgs);
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return ((InternalEList)getAccounts()).basicRemove(otherEnd, msgs);
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return basicSetAllAccounts(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -169,10 +169,10 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts();
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return getAccounts();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,12 +185,12 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)newValue);
-				return;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
 				getAccounts().addAll((Collection)newValue);
+				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -203,11 +203,11 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				setAllAccounts((DataModel)null);
-				return;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				getAccounts().clear();
+				return;
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				setAllAccounts((DataModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -220,10 +220,10 @@ public class AccountsImpl extends EObjectImpl implements Accounts {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
-				return getAllAccounts() != null;
 			case ModelPackage.ACCOUNTS__ACCOUNTS:
 				return accounts != null && !accounts.isEmpty();
+			case ModelPackage.ACCOUNTS__ALL_ACCOUNTS:
+				return getAllAccounts() != null;
 		}
 		return super.eIsSet(featureID);
 	}

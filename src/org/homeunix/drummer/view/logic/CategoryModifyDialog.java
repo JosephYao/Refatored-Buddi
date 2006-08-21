@@ -23,6 +23,11 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 		super(MainBuddiFrame.getInstance());
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGETED_AMOUNT));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.PARENT_CATEGORY));
+		
+		creditLimit.setVisible(false);
+		creditLimitLabel.setVisible(false);
+		interestRate.setVisible(false);
+		interestRateLabel.setVisible(false);
 	}
 
 	protected String getType(){

@@ -228,7 +228,8 @@ public class DataInstance {
 				TranslateKeys[] creditNames = {
 						TranslateKeys.LIABILITY,
 						TranslateKeys.CREDIT_CARD, 
-						TranslateKeys.LINE_OF_CREDIT
+						TranslateKeys.LINE_OF_CREDIT,
+						TranslateKeys.LOAN
 				};
 				
 				for (TranslateKeys s : creditNames){

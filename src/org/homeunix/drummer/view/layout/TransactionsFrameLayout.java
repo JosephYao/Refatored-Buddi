@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,6 +40,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 	protected final JButton deleteButton;
 	protected final JHintTextField searchField;
 	protected final JButton clearSearchField;
+	protected final JLabel creditRemaining;
 	
 	public TransactionsFrameLayout(Account account){
 		if (transactionInstances.get(account) != null)
@@ -49,6 +51,8 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		//Set up the transaction list
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		creditRemaining = new JLabel();
 		
 		TransactionCellRenderer renderer = new TransactionCellRenderer();
 		renderer.setAccount(account);
@@ -84,6 +88,14 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		searchPanel.add(searchField);
 		searchPanel.add(clearSearchField);
 		
+		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+		creditRemainingPanel.add(creditRemaining);
+		
+		JPanel topPanel = new JPanel(new BorderLayout());
+		topPanel.add(searchPanel, BorderLayout.EAST);
+		topPanel.add(creditRemainingPanel, BorderLayout.WEST);
+		
 		this.getRootPane().setDefaultButton(recordButton);
 		
 		JPanel buttonPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -107,7 +119,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		editPanelHolder.add(editPanel, BorderLayout.CENTER);
 
 		scrollPanel.add(editPanelHolder, BorderLayout.SOUTH);
-		scrollPanel.add(searchPanel, BorderLayout.NORTH);
+		scrollPanel.add(topPanel, BorderLayout.NORTH);
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());

@@ -98,8 +98,14 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			
 			sb.append("<html><table><tr><td width=200px>")
 					.append(sbOpen.toString())
-					.append(a.toString())
-					.append(sbClose.toString())
+					.append(a.toString());
+			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
+					&& (a.getInterestRate() != 0)){
+				sb.append(" (")
+						.append(Formatter.getInstance().getDecimalFormat().format(((double) a.getInterestRate()) / 100))
+						.append("%)");
+			}
+			sb.append(sbClose.toString())
 					.append("</td><td width=70px>")
 					.append(sbOpen.toString())
 					.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())

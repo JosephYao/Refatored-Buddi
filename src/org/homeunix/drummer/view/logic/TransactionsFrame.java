@@ -25,6 +25,7 @@ import org.homeunix.drummer.controller.DataInstance;
 import org.homeunix.drummer.controller.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.components.TransactionListElementFilter;
@@ -324,6 +325,31 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
 		data.add(null);
 		list.setListData(data);
+		
+		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
+				&& account != null 
+				&& account.getAccountType().isCredit() 
+				&& account.getCreditLimit() != 0){
+			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
+			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
+			
+			StringBuffer sb = new StringBuffer();
+			if (amountLeft < 0)
+				sb.append("<html><font color='red'>");
+			sb.append(Translate.getInstance().get(TranslateKeys.AVAILABLE_CREDIT))
+				.append(": ")
+				.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+				.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
+				.append(" (")
+				.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
+				.append("%)");
+			if (amountLeft < 0)
+				sb.append("</font></html>");
+
+			creditRemaining.setText(sb.toString());
+		}
+		else
+			creditRemaining.setText("");
 
 		//Update the search
 		if (filteredListModel != null && list != null){

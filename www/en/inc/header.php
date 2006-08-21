@@ -36,6 +36,16 @@ How to use Buddi:
 <li><a href='./scheduled.php'>Scheduled Transactions</a></li>
 </ul>
 </li>
+<br>
+Support
+<li>
+<ul>
+<li><a href='http://sourceforge.net/forum/?group_id=167026' target='_top'>Forums</a></li>
+<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841302' target='_top'>Bugs</a></li>
+<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841305' target='_top'>Feature Requests</a></li>
+</ul>
+</li>
+
 <li><a href='./thanks.php'>Thanks</a></li>
 <li><a href='./links.php'>Links</a></li>
 </ul>

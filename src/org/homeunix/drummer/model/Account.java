@@ -18,6 +18,8 @@ package org.homeunix.drummer.model;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.Account#getBalance <em>Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getStartingBalance <em>Starting Balance</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Account#getCreditLimit <em>Credit Limit</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Account#getInterestRate <em>Interest Rate</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getAccountType <em>Account Type</em>}</li>
  * </ul>
  * </p>
@@ -26,7 +28,7 @@ package org.homeunix.drummer.model;
  * @model
  * @generated
  */
-public interface Account extends Source{
+public interface Account extends Source {
 	/**
 	 * Returns the value of the '<em><b>Balance</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -78,6 +80,58 @@ public interface Account extends Source{
 	 * @generated
 	 */
 	void setStartingBalance(long value);
+
+	/**
+	 * Returns the value of the '<em><b>Credit Limit</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Credit Limit</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Credit Limit</em>' attribute.
+	 * @see #setCreditLimit(long)
+	 * @see org.homeunix.drummer.model.ModelPackage#getAccount_CreditLimit()
+	 * @model
+	 * @generated
+	 */
+	long getCreditLimit();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Account#getCreditLimit <em>Credit Limit</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Credit Limit</em>' attribute.
+	 * @see #getCreditLimit()
+	 * @generated
+	 */
+	void setCreditLimit(long value);
+
+	/**
+	 * Returns the value of the '<em><b>Interest Rate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Interest Rate</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Interest Rate</em>' attribute.
+	 * @see #setInterestRate(long)
+	 * @see org.homeunix.drummer.model.ModelPackage#getAccount_InterestRate()
+	 * @model
+	 * @generated
+	 */
+	long getInterestRate();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Account#getInterestRate <em>Interest Rate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Interest Rate</em>' attribute.
+	 * @see #getInterestRate()
+	 * @generated
+	 */
+	void setInterestRate(long value);
 
 	/**
 	 * Returns the value of the '<em><b>Account Type</b></em>' reference.

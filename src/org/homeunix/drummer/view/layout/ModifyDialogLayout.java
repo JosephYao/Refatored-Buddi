@@ -34,10 +34,14 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	protected final JDecimalField amount;
 	protected final JComboBox pulldown;
 	protected final JCheckBox check;
+	protected final JDecimalField creditLimit;
+	protected final JDecimalField interestRate;
 	
 	protected final JLabel nameLabel;
 	protected final JLabel amountLabel;
 	protected final JLabel pulldownLabel;
+	protected final JLabel creditLimitLabel;
+	protected final JLabel interestRateLabel;
 	protected final JLabel gap = new JLabel();
 	
 	
@@ -55,15 +59,20 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		name = new JTextField();
 		amountLabel = new JLabel();
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
+		creditLimit = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
+		interestRate = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();
 		pulldown = new JComboBox(pulldownModel);
 		
-		Dimension buttonSize = new Dimension(150, okButton.getPreferredSize().height);
+		creditLimitLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CREDIT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
+		interestRateLabel = new JLabel(Translate.getInstance().get(TranslateKeys.INTEREST_RATE) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
+		
+		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
-		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
+//		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
 		
 		check = new JCheckBox(Translate.getInstance().get(TranslateKeys.INCOME));
 		
@@ -74,6 +83,10 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		textPanel.add(amount);
 		textPanel.add(pulldownLabel);
 		textPanel.add(pulldown);
+		textPanel.add(creditLimitLabel);
+		textPanel.add(creditLimit);
+		textPanel.add(interestRateLabel);
+		textPanel.add(interestRate);		
 		textPanel.add(gap);
 		textPanel.add(check);
 		

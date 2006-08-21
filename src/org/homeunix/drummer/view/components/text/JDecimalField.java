@@ -15,6 +15,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
 /**
@@ -47,7 +48,8 @@ public class JDecimalField extends JTextField {
 		this.addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent e) {
-				checkFormat();
+				if (!checkFormat())
+					return;
 				super.focusLost(e);
 			}
 		});
@@ -56,16 +58,24 @@ public class JDecimalField extends JTextField {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER){
-					checkFormat();
+					if (!checkFormat())
+						return;
 				}
 				super.keyPressed(e);
 			}
 		});
 	}
 	
-	private void checkFormat(){
-		double value = Double.parseDouble(this.getText());
-		this.setText(decimalFormat.format(value));
+	private boolean checkFormat(){
+		try{
+			Number value = Formatter.getInstance().getDecimalFormat().parse(this.getText());
+			this.setText(decimalFormat.format(value));
+			return true;
+		}
+		catch (ParseException pe){
+			return false;
+		}
+		
 	}
 	
 	public long getValue() {

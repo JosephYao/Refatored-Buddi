@@ -410,13 +410,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__CURRENCY_SYMBOL = 10;
 
 	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Show Credit Limit</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__TRANSACTIONS_WINDOW = 11;
+	int PREFS__SHOW_CREDIT_LIMIT = 11;
+
+	/**
+	 * The feature id for the '<em><b>Show Interest Rate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__SHOW_INTEREST_RATE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
@@ -425,25 +434,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__REPORTS_WINDOW = 12;
-
-	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__MAIN_WINDOW = 13;
-
-	/**
-	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__INTERVALS = 14;
+	int PREFS__REPORTS_WINDOW = 13;
 
 	/**
 	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
@@ -452,7 +443,16 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 15;
+	int PREFS__DESC_DICT = 14;
+
+	/**
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__INTERVALS = 15;
 
 	/**
 	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
@@ -464,13 +464,31 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__LIST_ENTRIES = 16;
 
 	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__TRANSACTIONS_WINDOW = 17;
+
+	/**
 	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 17;
+	int PREFS__GRAPHS_WINDOW = 18;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__MAIN_WINDOW = 19;
 
 	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
@@ -479,7 +497,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 18;
+	int PREFS__LAST_VERSION_RUN = 20;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -488,7 +506,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 19;
+	int PREFS_FEATURE_COUNT = 21;
 
 
 	/**
@@ -1037,6 +1055,28 @@ public interface PrefsPackage extends EPackage {
 	EAttribute getPrefs_CurrencySymbol();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#isShowCreditLimit <em>Show Credit Limit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Show Credit Limit</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#isShowCreditLimit()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_ShowCreditLimit();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#isShowInterestRate <em>Show Interest Rate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Show Interest Rate</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#isShowInterestRate()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_ShowInterestRate();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1423,6 +1463,22 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREFS__CURRENCY_SYMBOL = eINSTANCE.getPrefs_CurrencySymbol();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Credit Limit</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_CREDIT_LIMIT = eINSTANCE.getPrefs_ShowCreditLimit();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Interest Rate</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_INTEREST_RATE = eINSTANCE.getPrefs_ShowInterestRate();
 
 		/**
 		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.

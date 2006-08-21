@@ -228,3 +228,10 @@ YESTERDAY=I g\u00E5r
 ZOOM=Zoom
 
 CURRENCY=Currency Format
+LOAN=Loan
+CREDIT_LIMIT=Credit Limit
+INTEREST_RATE=Interest Rate
+AVAILABLE_CREDIT=Available Credit
+OPTIONAL_TAG=(optional)
+SHOW_CREDIT_LIMIT=Show Credit Limit Information
+SHOW_INTEREST_RATE=Show Interest Rate

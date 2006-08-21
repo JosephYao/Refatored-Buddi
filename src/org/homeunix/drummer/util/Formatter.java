@@ -20,7 +20,7 @@ public class Formatter {
 		private static Formatter instance = new Formatter();		
 	}
 	
-	private final NumberFormat decimalFormat; 
+	private final NumberFormat decimalFormat;
 	private SimpleDateFormat dateFormat;
 	private final SimpleDateFormat shortDateFormat;
 	private final SimpleDateFormat filenameDateFormat;
@@ -30,7 +30,7 @@ public class Formatter {
 		decimalFormat = DecimalFormat.getInstance();
 		decimalFormat.setMaximumFractionDigits(2);
 		decimalFormat.setMinimumFractionDigits(2);
-		
+				
 		shortDateFormat = new SimpleDateFormat("MM/dd");
 		filenameDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -48,7 +48,7 @@ public class Formatter {
 	public NumberFormat getDecimalFormat(){
 		return decimalFormat;
 	}
-	
+		
 	public SimpleDateFormat getDateFormat(){
 		return dateFormat;
 	}

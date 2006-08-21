@@ -1,12 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Aug 13 20:17:03 MDT 2006'>
-  <XMI.header>  <XMI.header>
-    <XMI.documentation>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Aug 20 22:36:33 MDT 2006'>
+  <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
     </XMI.documentation>
-    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>  </XMI.header>
-</XMI.header>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
     <UML:Model xmi.id = '.:00000000000008E6' name = 'Buddi' isSpecification = 'false'
       isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
@@ -99,6 +97,36 @@
                                 <UML:Multiplicity xmi.id = '.:000000000000082F'>
                                   <UML:Multiplicity.range>
                                     <UML:MultiplicityRange xmi.id = '.:000000000000082E' lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000008E4'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008AF'
+                              name = 'creditLimit' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008BF'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008BE'
+                                      lower = '0' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000008E4'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008B2'
+                              name = 'interestRate' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008BD'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008BC'
+                                      lower = '0' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:StructuralFeature.multiplicity>
@@ -926,6 +954,9 @@
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
         <UML:DataType xmi.id = '.:00000000000008E5' name = 'boolean' isSpecification = 'false'
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
+        <UML:DataType xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008AE'
+          name = 'double' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'/>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>

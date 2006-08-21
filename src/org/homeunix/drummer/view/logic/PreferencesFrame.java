@@ -51,6 +51,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowAutoComplete(showAutoComplete.isSelected());
+				PrefsInstance.getInstance().getPrefs().setShowCreditLimit(showCreditLimit.isSelected());
+				PrefsInstance.getInstance().getPrefs().setShowInterestRate(showInterestRate.isSelected());
 				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				PrefsInstance.getInstance().savePrefs();
 												
@@ -58,6 +60,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				PreferencesFrame.this.setVisible(false);
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
+				TransactionsFrame.updateAllTransactionWindows();
 			}
 		});
 		
@@ -86,6 +89,8 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());
 		showAutoComplete.setSelected(PrefsInstance.getInstance().getPrefs().isShowAutoComplete());
 		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
+		showCreditLimit.setSelected(PrefsInstance.getInstance().getPrefs().isShowCreditLimit());
+		showInterestRate.setSelected(PrefsInstance.getInstance().getPrefs().isShowInterestRate());
 		
 		return this;
 	}
