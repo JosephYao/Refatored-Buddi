@@ -1,3 +1,6 @@
+-Added Interest Rate and Credit Limit to accounts.  Interest Rate is only for your records - it does not calculate interest or anything, and only shows up if you select it in Preferences.  If you enter a Credit Limit, you can see in the Transactions Window how much credit you have left.
+-Improved Preferences user interface.
+-Fixed additional minor problem with JDecimalField.
 -Removed CURRENCY_SYMBOL from the language file, and moved it to preferences.  This lets you choose currency independent of the language settings.
 
 1.5.2 (August 19 2006)

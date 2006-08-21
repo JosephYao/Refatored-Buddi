@@ -124,7 +124,9 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 					creditVisible = false;
 				
 				creditLimit.setEnabled(creditVisible);
-				creditLimitLabel.setEnabled(creditVisible);	
+				creditLimitLabel.setEnabled(creditVisible);
+				if (!creditVisible)
+					creditLimit.setValue(0);
 			}
 		});
 		
