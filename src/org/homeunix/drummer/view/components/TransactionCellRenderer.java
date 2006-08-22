@@ -126,18 +126,19 @@ public class TransactionCellRenderer extends JPanel implements ListCellRenderer 
 	}
 	
 	private void setTransaction(Transaction transaction){
-		date.setText(Formatter.getInstance().getLengthFormat().format(
+		date.setText(Formatter.getInstance().getLengthFormat(20).format(
 				Formatter.getInstance().getDateFormat().format(transaction.getDate()))
 		);
 		
-		number.setText(Formatter.getInstance().getLengthFormat().format(transaction.getNumber()));
-		description.setText(Formatter.getInstance().getLengthFormat().format(transaction.getDescription()));
+		number.setText(Formatter.getInstance().getLengthFormat(20).format(transaction.getNumber()));
+		description.setText(Formatter.getInstance().getLengthFormat(20).format(transaction.getDescription()));
+//		description.setText(transaction.getDescription());
 		balance.setText("");
-		memo.setText(Formatter.getInstance().getLengthFormat().format(transaction.getMemo()));
+		memo.setText(Formatter.getInstance().getLengthFormat(20).format(transaction.getMemo()));
 
 		amount.setValue(transaction.getAmount());
-		transferFrom.setText(Formatter.getInstance().getLengthFormat().format(transaction.getFrom().toString()));
-		transferTo.setText(Formatter.getInstance().getLengthFormat().format(transaction.getTo().toString()));
+		transferFrom.setText(Formatter.getInstance().getLengthFormat(20).format(transaction.getFrom().toString()));
+		transferTo.setText(Formatter.getInstance().getLengthFormat(20).format(transaction.getTo().toString()));
 		
 		
 		long balanceValue;

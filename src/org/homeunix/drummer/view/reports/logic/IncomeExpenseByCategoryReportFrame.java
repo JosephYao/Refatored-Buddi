@@ -271,7 +271,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 				
 				sb.append(
 						"<html><table><tr><td width=130px><u>")
-						.append(Translate.getInstance().get(entry.getCategory().toString()))
+						.append(Translate.getInstance().get(Formatter.getInstance().getLengthFormat(25).format(entry.getCategory().toString())))
 						.append("</u></td><td width=70px>")
 						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getBudgeted() / 100.0)))
@@ -311,7 +311,7 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 				
 				sb.append(
 						"<html><table><tr><td width=150px>")
-						.append(transaction.getDescription())
+						.append(Formatter.getInstance().getLengthFormat(25).format(transaction.getDescription()))
 						.append("</td><td width=80px>")
 						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))

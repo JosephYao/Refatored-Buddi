@@ -252,7 +252,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 				
 				
 				sb.append("<html><table><tr><td width=250px><u>")
-						.append(Translate.getInstance().get(entry.getDescription().toString()))
+						.append(Formatter.getInstance().getLengthFormat(25).format(entry.getDescription().toString()))
 						.append("</u></td><td width=70px>")
 						.append(entry.getActual() < 0 ? "<font color='red'>" : "")
 						.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
@@ -281,11 +281,11 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
 						.append((isExpense ? "</font>" : ""))
 						.append("</td><td width=350px>")
-						.append(transaction.getFrom())
+						.append(Formatter.getInstance().getLengthFormat(25).format(transaction.getFrom()))
 						.append(" ")
 						.append(Translate.getInstance().get(TranslateKeys.TO))
 						.append(" ")
-						.append(transaction.getTo())							
+						.append(Formatter.getInstance().getLengthFormat(25).format(transaction.getTo()))							
 						.append("</td></tr></table></html>");
 				
 				this.setText(sb.toString());

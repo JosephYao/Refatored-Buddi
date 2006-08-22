@@ -57,6 +57,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 		TransactionCellRenderer renderer = new TransactionCellRenderer();
 		renderer.setAccount(account);
 		list.setCellRenderer(renderer);
+		
 		JScrollPane listScroller = new JScrollPane(list);
 				
 		JPanel scrollBorderPanel = new JPanel(new BorderLayout());

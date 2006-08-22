@@ -37,7 +37,6 @@ public class Formatter {
 		reloadDateFormat();
 		
 		lengthFormat = new LengthFormat();
-		lengthFormat.setLength(17);
 	}
 	
 	public void reloadDateFormat(){
@@ -53,7 +52,8 @@ public class Formatter {
 		return dateFormat;
 	}
 	
-	public LengthFormat getLengthFormat(){
+	public LengthFormat getLengthFormat(int length){
+		lengthFormat.setLength(length);
 		return lengthFormat;
 	}
 	
