@@ -1,3 +1,6 @@
+1.5.4 (August 22 2006)
+-Reworked the list in the Transaction window.  It now has some intelligence to know where to chop off lines to avoid overflow, but still show as much as the window size allows.  To the testers: please ensure that this works on all platforms, at all screen resolutions, etc, and give me any feedback.  If this works well, I may do a similar thing for the Reports window.
+
 1.5.3 (August 21 2006)
 -Added Interest Rate and Credit Limit to accounts.  Interest Rate is only for your records - it does not calculate interest or anything, and only shows up if you select it in Preferences.  If you enter a Credit Limit, you can see in the Transactions Window how much credit you have left.
 -Improved Preferences user interface.
