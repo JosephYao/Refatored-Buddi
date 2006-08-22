@@ -303,14 +303,16 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		}
 		
 		//Update the autocomplete entries
-		PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
-		PrefsInstance.getInstance().setAutoCompleteEntry(
-				editableTransaction.getDescription(),
-				editableTransaction.getNumber(),
-				editableTransaction.getAmount(),
-				editableTransaction.getFrom().toString(),
-				editableTransaction.getTo().toString(),
-				editableTransaction.getMemo());
+		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
+			PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
+			PrefsInstance.getInstance().setAutoCompleteEntry(
+					editableTransaction.getDescription(),
+					editableTransaction.getNumber(),
+					editableTransaction.getAmount(),
+					editableTransaction.getFrom().toString(),
+					editableTransaction.getTo().toString(),
+					editableTransaction.getMemo());
+		}
 	}
 	
 	protected AbstractBudgetFrame initContent(){
