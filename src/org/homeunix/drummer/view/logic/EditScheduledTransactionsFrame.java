@@ -10,7 +10,7 @@ import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;

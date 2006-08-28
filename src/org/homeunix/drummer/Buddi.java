@@ -12,7 +12,7 @@ import javax.swing.UIManager;
 
 import net.roydesign.mac.MRJAdapter;
 
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.ParseCommands;
 import org.homeunix.drummer.util.ParseCommands.ParseException;

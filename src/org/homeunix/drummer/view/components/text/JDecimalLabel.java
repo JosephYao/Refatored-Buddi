@@ -5,7 +5,7 @@ package org.homeunix.drummer.view.components.text;
 
 import javax.swing.JLabel;
 
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 
 public class JDecimalLabel extends JLabel {

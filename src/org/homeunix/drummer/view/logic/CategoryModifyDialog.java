@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;

@@ -1,7 +1,7 @@
 /*
  * Created on May 12, 2006 by wyatt
  */
-package org.homeunix.drummer.controller;
+package org.homeunix.drummer.controller.model;
 
 import java.io.File;
 import java.io.IOException;

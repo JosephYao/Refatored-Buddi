@@ -29,7 +29,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 

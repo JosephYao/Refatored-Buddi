@@ -21,17 +21,17 @@ import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.DataInstance;
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.DataInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.components.TransactionListElementFilter;
 import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
 
 import de.schlichtherle.swing.filter.FilteredStaticListModel;
+import de.schlichtherle.swing.filter.ListElementFilter;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
 	public static final long serialVersionUID = 0;	
@@ -426,6 +426,40 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	
 	private class InvalidTransactionException extends Exception {
 		public final static long serialVersionUID = 0;
+	}
+	
+	public class TransactionListElementFilter implements ListElementFilter {
+		static final long serialVersionUID = 0;
+		
+		private String filterText = "";
+		
+		public boolean accept(Object arg0) {
+			if (arg0 instanceof Transaction){
+				Transaction t = (Transaction) arg0;
+				if (t.getDescription().toLowerCase().contains(filterText.toLowerCase()) 
+						|| t.getNumber().toLowerCase().contains(filterText.toLowerCase())
+						|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
+						|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
+						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase()))
+					return true;
+				else
+					return false;
+			}
+			else if (arg0 == null) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public String getFilterText() {
+			return filterText;
+		}
+
+		public void setFilterText(String filterText) {
+			this.filterText = filterText;
+		}
 	}
 	
 	/**

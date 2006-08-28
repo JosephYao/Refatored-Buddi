@@ -10,9 +10,9 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.util.DateUtil;

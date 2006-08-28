@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 
 public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {

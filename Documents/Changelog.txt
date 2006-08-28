@@ -1,4 +1,4 @@
-1.6.0 (August 27 2006)
+1.6.0rc1 (August 27 2006)
 -Updated Norwegian translation
 -First release cantidate for stable version 1.6
 

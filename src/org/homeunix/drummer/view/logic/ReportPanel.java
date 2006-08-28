@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.DataInstance;
+import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
 import org.homeunix.drummer.view.layout.ReportPanelLayout;

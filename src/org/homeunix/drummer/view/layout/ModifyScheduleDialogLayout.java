@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.PrefsInstance;
+import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.components.EditableTransaction;
