@@ -29,6 +29,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.layout.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
@@ -36,7 +37,6 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
-import org.homeunix.drummer.view.logic.AccountListPanel.TypeTotal;
 
 public abstract class ListPanelLayout extends AbstractBudgetPanel {
 	public static final long serialVersionUID = 0;

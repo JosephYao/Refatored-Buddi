@@ -20,10 +20,10 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.layout.MainBuddiFrame;
 import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.logic.MainBuddiFrame;
 
 public class AboutDialog extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;

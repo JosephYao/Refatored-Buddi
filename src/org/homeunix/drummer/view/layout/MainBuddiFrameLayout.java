@@ -11,12 +11,12 @@ import javax.swing.JTabbedPane;
 
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.layout.AccountListPanel;
+import org.homeunix.drummer.controller.layout.CategoryListPanel;
+import org.homeunix.drummer.controller.layout.ReportPanel;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
-import org.homeunix.drummer.view.logic.AccountListPanel;
-import org.homeunix.drummer.view.logic.CategoryListPanel;
-import org.homeunix.drummer.view.logic.ReportPanel;
 
 
 public abstract class MainBuddiFrameLayout extends AbstractBudgetFrame {
