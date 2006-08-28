@@ -11,8 +11,6 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.reports.CustomDateIntervalDialog;
 import org.homeunix.drummer.controller.reports.CustomEndDateDialog;

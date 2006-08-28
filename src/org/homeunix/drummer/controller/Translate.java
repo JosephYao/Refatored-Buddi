@@ -1,7 +1,7 @@
 /*
  * Created on May 8, 2006 by wyatt
  */
-package org.homeunix.drummer;
+package org.homeunix.drummer.controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.util.Log;
 
 

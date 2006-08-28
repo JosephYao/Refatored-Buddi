@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.Interval;

@@ -27,8 +27,8 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;

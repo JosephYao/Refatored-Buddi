@@ -16,8 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Category;

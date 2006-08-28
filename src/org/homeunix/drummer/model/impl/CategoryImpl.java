@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;

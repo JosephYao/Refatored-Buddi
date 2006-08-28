@@ -13,8 +13,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;

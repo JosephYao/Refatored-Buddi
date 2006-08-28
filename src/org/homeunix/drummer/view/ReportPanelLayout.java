@@ -17,8 +17,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 
 public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 	public static final long serialVersionUID = 0;

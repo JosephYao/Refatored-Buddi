@@ -19,8 +19,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;

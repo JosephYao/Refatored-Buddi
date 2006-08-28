@@ -9,8 +9,8 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.Translate;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;

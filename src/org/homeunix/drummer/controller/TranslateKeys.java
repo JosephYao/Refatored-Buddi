@@ -1,7 +1,7 @@
 /*
  * Created on Jun 2, 2006 by wyatt
  */
-package org.homeunix.drummer;
+package org.homeunix.drummer.controller;
 
 public enum TranslateKeys {
 

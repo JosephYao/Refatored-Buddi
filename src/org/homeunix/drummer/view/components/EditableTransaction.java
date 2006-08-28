@@ -25,8 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Category;
