@@ -1,7 +1,7 @@
 /*
  * Created on May 20, 2006 by wyatt
  */
-package org.homeunix.drummer.view.reports.logic;
+package org.homeunix.drummer.controller.layout.reports;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

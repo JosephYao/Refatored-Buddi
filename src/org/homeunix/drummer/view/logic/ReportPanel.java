@@ -13,20 +13,20 @@ import javax.swing.JComboBox;
 
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.layout.reports.CustomDateIntervalDialog;
+import org.homeunix.drummer.controller.layout.reports.CustomEndDateDialog;
+import org.homeunix.drummer.controller.layout.reports.CustomStartDateDialog;
+import org.homeunix.drummer.controller.layout.reports.ExpenseBudgetedActualGraphFrame;
+import org.homeunix.drummer.controller.layout.reports.ExpensesGraphFrame;
+import org.homeunix.drummer.controller.layout.reports.IncomeExpenseByCategoryReportFrame;
+import org.homeunix.drummer.controller.layout.reports.IncomeExpenseByDescriptionReportFrame;
+import org.homeunix.drummer.controller.layout.reports.IncomeGraphFrame;
+import org.homeunix.drummer.controller.layout.reports.NetWorthGraphFrame;
+import org.homeunix.drummer.controller.layout.reports.NetWorthOverTimeGraphFrame;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
 import org.homeunix.drummer.view.layout.ReportPanelLayout;
-import org.homeunix.drummer.view.reports.logic.CustomDateIntervalDialog;
-import org.homeunix.drummer.view.reports.logic.CustomEndDateDialog;
-import org.homeunix.drummer.view.reports.logic.CustomStartDateDialog;
-import org.homeunix.drummer.view.reports.logic.ExpenseBudgetedActualGraphFrame;
-import org.homeunix.drummer.view.reports.logic.ExpensesGraphFrame;
-import org.homeunix.drummer.view.reports.logic.IncomeExpenseByCategoryReportFrame;
-import org.homeunix.drummer.view.reports.logic.IncomeExpenseByDescriptionReportFrame;
-import org.homeunix.drummer.view.reports.logic.IncomeGraphFrame;
-import org.homeunix.drummer.view.reports.logic.NetWorthGraphFrame;
-import org.homeunix.drummer.view.reports.logic.NetWorthOverTimeGraphFrame;
 
 public class ReportPanel extends ReportPanelLayout {
 	public static final long serialVersionUID = 0;

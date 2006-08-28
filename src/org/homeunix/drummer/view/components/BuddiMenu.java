@@ -34,6 +34,8 @@ import org.homeunix.drummer.controller.layout.EditScheduledTransactionsFrame;
 import org.homeunix.drummer.controller.layout.MainBuddiFrame;
 import org.homeunix.drummer.controller.layout.PreferencesFrame;
 import org.homeunix.drummer.controller.layout.TransactionsFrame;
+import org.homeunix.drummer.controller.layout.reports.IncomeExpenseByCategoryReportFrame;
+import org.homeunix.drummer.controller.layout.reports.IncomeExpenseByDescriptionReportFrame;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.BrowserLauncher;
@@ -43,8 +45,6 @@ import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.AboutDialog;
 import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
-import org.homeunix.drummer.view.reports.logic.IncomeExpenseByCategoryReportFrame;
-import org.homeunix.drummer.view.reports.logic.IncomeExpenseByDescriptionReportFrame;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;

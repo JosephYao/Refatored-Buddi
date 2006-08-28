@@ -1,7 +1,7 @@
 /*
  * Created on May 19, 2006 by wyatt
  */
-package org.homeunix.drummer.view.reports.logic;
+package org.homeunix.drummer.controller.layout.reports;
 
 import java.util.Collections;
 import java.util.Date;

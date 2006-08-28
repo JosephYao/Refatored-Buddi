@@ -1,7 +1,7 @@
 /*
  * Created on May 20, 2006 by wyatt
  */
-package org.homeunix.drummer.view.reports.logic;
+package org.homeunix.drummer.controller.layout.reports;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,12 +18,12 @@ import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.layout.ReportPanelLayout.ReportType;
 import org.homeunix.drummer.view.reports.layout.CustomDateDialogLayout;
 
-public class CustomDateIntervalDialog extends CustomDateDialogLayout {
+public class CustomStartDateDialog extends CustomDateDialogLayout {
 	public static final long serialVersionUID = 0;
 	
 	private ReportType reportType;
 
-	public CustomDateIntervalDialog(JFrame parent, ReportType reportType){
+	public CustomStartDateDialog(JFrame parent, ReportType reportType){
 		super(parent);
 		
 		this.reportType = reportType;
@@ -39,43 +39,33 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
-				Date startDate = DateUtil.getStartOfDay(startDateChooser.getDate());
-				Date endDate = DateUtil.getEndOfDay(endDateChooser.getDate());
+				Date startDate;
+				startDate = DateUtil.getStartOfDay(startDateChooser.getDate());
 				
-				if (endDate.before(startDate)){
+				if (startDate.after(new Date())){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.START_DATE_AFTER_END_DATE), 
+							Translate.getInstance().get(TranslateKeys.DATE_AFTER_TODAY), 
 							Translate.getInstance().get(TranslateKeys.REPORT_DATE_ERROR), 
 							JOptionPane.ERROR_MESSAGE
 					);
 					return;
 				}
-				
-				Log.debug("Getting transactions between " + startDate + " and " + endDate);
-				
-				if (reportType.equals(ReportType.INCOME_EXPENSE_BY_CATEGORY))
-					new IncomeExpenseByCategoryReportFrame(startDate, endDate);
-				else if (reportType.equals(ReportType.INCOME_EXPENSE_BY_DESCRIPTION))
-					new IncomeExpenseByDescriptionReportFrame(startDate, endDate);
-				else if (reportType.equals(ReportType.EXPENSES))
-					new ExpensesGraphFrame(startDate, endDate);
-				else if (reportType.equals(ReportType.INCOME))
-					new IncomeGraphFrame(startDate, endDate);
-				else if (reportType.equals(ReportType.REVENUE_EXPENSE))
-					new ExpenseBudgetedActualGraphFrame(startDate, endDate);
+								
+				if (reportType.equals(ReportType.NETWORTH_OVER_TIME))
+					new NetWorthOverTimeGraphFrame(startDate);
 				else
 					Log.debug("Don't know what to do with type " + reportType);
 				//TODO Add more types as needed...
 				//else if (reportType.equals(ReportType.meetBudget))
 		
-				CustomDateIntervalDialog.this.setVisible(false);
+				CustomStartDateDialog.this.setVisible(false);
 			}
 		});
 		
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				CustomDateIntervalDialog.this.setVisible(false);
+				CustomStartDateDialog.this.setVisible(false);
 			}
 		});
 		
@@ -98,7 +88,9 @@ public class CustomDateIntervalDialog extends CustomDateDialogLayout {
 	}
 	
 	protected void setVisibility(){
-		mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_BETWEEN));
-		middleLabel.setText(Translate.getInstance().get(TranslateKeys.AND));		
-	}	
+		mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_AS_OF_DATE));
+		middleLabel.setVisible(false);
+		
+		endDateChooser.setVisible(false);
+	}
 }
