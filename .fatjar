@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Mon Aug 21 11:23:40 MDT 2006
+#Tue Aug 22 10:32:23 MDT 2006
 onejar.license.required=false
 manifest.classpath=
 manifest.removesigners=true
@@ -10,5 +10,5 @@ manifest.mainclass=org.homeunix.drummer.Buddi
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
-excludes=<po|Buddi>~.svn/;<jar|org.eclipse.core.runtime_3.2.0.v20060603.jar>;<jar|org.eclipse.osgi_3.2.0.v20060601.jar>;<jar|org.eclipse.equinox.common_3.2.0.v20060603.jar>;<jar|org.eclipse.core.jobs_3.2.0.v20060603.jar>;<jar|runtime_registry_compatibility.jar>;<jar|org.eclipse.equinox.registry_3.2.0.v20060601.jar>;<jar|org.eclipse.equinox.preferences_3.2.0.v20060601.jar>;<jar|org.eclipse.core.contenttype_3.2.0.v20060603.jar>;<jar|org.eclipse.emf.ecore_2.2.0.v200606271057.jar>;<jar|org.eclipse.emf.common_2.2.0.v200606271057.jar>
+excludes=<po|Buddi>~.svn/
 includes=
