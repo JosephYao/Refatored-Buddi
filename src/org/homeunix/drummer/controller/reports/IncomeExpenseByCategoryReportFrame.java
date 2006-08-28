@@ -1,7 +1,7 @@
 /*
  * Created on May 19, 2006 by wyatt
  */
-package org.homeunix.drummer.controller.layout.reports;
+package org.homeunix.drummer.controller.reports;
 
 import java.awt.Color;
 import java.awt.Component;

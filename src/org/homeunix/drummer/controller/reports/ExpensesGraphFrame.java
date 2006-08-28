@@ -1,7 +1,7 @@
 /*
  * Created on May 19, 2006 by wyatt
  */
-package org.homeunix.drummer.controller.layout.reports;
+package org.homeunix.drummer.controller.reports;
 
 import java.awt.Font;
 import java.util.Collections;
@@ -24,10 +24,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
-public class IncomeGraphFrame extends GraphFrameLayout {
+public class ExpensesGraphFrame extends GraphFrameLayout {
 	public static final long serialVersionUID = 0;
 	
-	public IncomeGraphFrame(Date startDate, Date endDate){
+	public ExpensesGraphFrame(Date startDate, Date endDate){
 		super(startDate, endDate);
 	}
 	
@@ -35,29 +35,28 @@ public class IncomeGraphFrame extends GraphFrameLayout {
 	protected JPanel buildReport(Date startDate, Date endDate) {
 		DefaultPieDataset pieData = new DefaultPieDataset();
 		
-		Map<Category, Long> categories = getIncomeBetween(startDate, endDate);
+		Map<Category, Long> categories = getExpensesBetween(startDate, endDate);
 		
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
-		long totalIncome = 0;
+		long totalExpenses = 0;
 		
 		for (Category c : cats) {
-			totalIncome += categories.get(c);
-			
+			totalExpenses += categories.get(c);
 			if (categories.get(c) > 0)
 				pieData.setValue(Translate.getInstance().get(c.toString()), new Double((double) categories.get(c) / 100.0));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
-				Translate.getInstance().get(TranslateKeys.INCOME)
+				Translate.getInstance().get(TranslateKeys.EXPENSES)
 				+ " (" 
 				+ Formatter.getInstance().getDateFormat().format(startDate)
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ") "
 				+ PrefsInstance.getInstance().getPrefs().getCurrencySymbol()
-				+ Formatter.getInstance().getDecimalFormat().format((double) totalIncome / 100.0),
+				+ Formatter.getInstance().getDecimalFormat().format((double) totalExpenses / 100.0),
 				pieData,             // data
 				true,               // include legend
 				true,
