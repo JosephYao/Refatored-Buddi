@@ -26,6 +26,7 @@ import javax.swing.tree.TreeModel;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
+import org.homeunix.drummer.controller.layout.TransactionsFrame;
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
@@ -36,7 +37,6 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.logic.TransactionsFrame;
 import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
 
 public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
