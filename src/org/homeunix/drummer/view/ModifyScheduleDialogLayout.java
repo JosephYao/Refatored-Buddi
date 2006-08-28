@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -26,7 +26,6 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.components.EditableTransaction;
 
 import com.toedter.calendar.JDateChooser;

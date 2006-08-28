@@ -42,9 +42,9 @@ import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
+import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.layout.AboutDialog;
-import org.homeunix.drummer.view.layout.reports.ReportFrameLayout;
+import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;

@@ -14,8 +14,6 @@ import org.homeunix.drummer.controller.layout.TransactionsFrame;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.BuddiMenu;
-import org.homeunix.drummer.view.layout.reports.GraphFrameLayout;
-import org.homeunix.drummer.view.layout.reports.ReportFrameLayout;
 
 public abstract class AbstractBudgetFrame extends JFrame{	
 	protected AbstractBudgetFrame(){

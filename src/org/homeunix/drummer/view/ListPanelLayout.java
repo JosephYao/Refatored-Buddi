@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,7 +36,6 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetPanel;
 
 public abstract class ListPanelLayout extends AbstractBudgetPanel {
 	public static final long serialVersionUID = 0;

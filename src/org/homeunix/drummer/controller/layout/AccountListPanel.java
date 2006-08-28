@@ -26,7 +26,7 @@ import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
-import org.homeunix.drummer.view.layout.ListPanelLayout;
+import org.homeunix.drummer.view.ListPanelLayout;
 
 public class AccountListPanel extends ListPanelLayout {
 	public static final long serialVersionUID = 0;

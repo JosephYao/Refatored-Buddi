@@ -1,7 +1,7 @@
 /*
  * Created on May 16, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 
@@ -15,8 +15,6 @@ import org.homeunix.drummer.controller.layout.AccountListPanel;
 import org.homeunix.drummer.controller.layout.CategoryListPanel;
 import org.homeunix.drummer.controller.layout.ReportPanel;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.AbstractBudgetPanel;
 
 
 public abstract class MainBuddiFrameLayout extends AbstractBudgetFrame {

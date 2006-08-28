@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +28,6 @@ import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.text.JHintTextField;
 

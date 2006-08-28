@@ -33,8 +33,8 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.layout.ListPanelLayout;
-import org.homeunix.drummer.view.layout.MainBuddiFrameLayout;
+import org.homeunix.drummer.view.ListPanelLayout;
+import org.homeunix.drummer.view.MainBuddiFrameLayout;
 
 
 public class MainBuddiFrame extends MainBuddiFrameLayout {

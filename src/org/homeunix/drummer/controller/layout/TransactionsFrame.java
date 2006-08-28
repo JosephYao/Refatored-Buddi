@@ -28,7 +28,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.layout.TransactionsFrameLayout;
+import org.homeunix.drummer.view.TransactionsFrameLayout;
 
 import de.schlichtherle.swing.filter.FilteredStaticListModel;
 import de.schlichtherle.swing.filter.ListElementFilter;

@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
 
 public abstract class EditScheduledTransactionsFrameLayout extends AbstractBudgetDialog {
 	public static final long serialVersionUID = 0;

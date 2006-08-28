@@ -17,7 +17,7 @@ import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.layout.PreferencesFrameLayout;
+import org.homeunix.drummer.view.PreferencesFrameLayout;
 
 public class PreferencesFrame extends PreferencesFrameLayout {
 	public static final long serialVersionUID = 0;

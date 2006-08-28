@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.layout.EditScheduledTransactionsFrameLayout;
+import org.homeunix.drummer.view.EditScheduledTransactionsFrameLayout;
 
 public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFrameLayout {
 	public static final long serialVersionUID = 0;

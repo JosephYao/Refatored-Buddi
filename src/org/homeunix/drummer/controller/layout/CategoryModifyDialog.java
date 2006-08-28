@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.layout.ModifyDialogLayout;
+import org.homeunix.drummer.view.ModifyDialogLayout;
 
 public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	public static final long serialVersionUID = 0;

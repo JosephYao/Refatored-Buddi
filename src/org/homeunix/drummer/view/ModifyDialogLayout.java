@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.components.text.JDecimalField;
 
 public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialog {

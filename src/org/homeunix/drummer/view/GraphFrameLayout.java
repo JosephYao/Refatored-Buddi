@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.view.layout.reports;
+package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,7 +28,6 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
 
 public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	public static final long serialVersionUID = 0;

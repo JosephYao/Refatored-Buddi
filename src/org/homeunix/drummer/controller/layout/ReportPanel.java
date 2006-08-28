@@ -26,7 +26,7 @@ import org.homeunix.drummer.controller.layout.reports.NetWorthOverTimeGraphFrame
 import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
-import org.homeunix.drummer.view.layout.ReportPanelLayout;
+import org.homeunix.drummer.view.ReportPanelLayout;
 
 public class ReportPanel extends ReportPanelLayout {
 	public static final long serialVersionUID = 0;

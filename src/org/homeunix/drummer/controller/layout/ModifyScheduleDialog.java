@@ -21,7 +21,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.layout.ModifyScheduleDialogLayout;
+import org.homeunix.drummer.view.ModifyScheduleDialogLayout;
 
 public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 	public static final long serialVersionUID = 0;
