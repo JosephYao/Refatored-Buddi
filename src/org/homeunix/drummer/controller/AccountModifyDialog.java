@@ -11,8 +11,8 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.ModifyDialogLayout;

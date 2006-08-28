@@ -12,13 +12,13 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.homeunix.drummer.controller.model.DataInstance;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 

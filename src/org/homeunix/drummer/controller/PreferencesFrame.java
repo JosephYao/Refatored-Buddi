@@ -10,8 +10,8 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;

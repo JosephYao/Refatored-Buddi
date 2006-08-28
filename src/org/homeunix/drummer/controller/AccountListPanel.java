@@ -16,11 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import org.homeunix.drummer.controller.model.DataInstance;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetPanel;

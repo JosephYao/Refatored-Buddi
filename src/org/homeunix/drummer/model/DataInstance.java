@@ -1,7 +1,7 @@
 /*
  * Created on May 12, 2006 by wyatt
  */
-package org.homeunix.drummer.controller.model;
+package org.homeunix.drummer.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,20 +21,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.Accounts;
-import org.homeunix.drummer.model.Categories;
-import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataModel;
-import org.homeunix.drummer.model.ModelFactory;
-import org.homeunix.drummer.model.ModelPackage;
-import org.homeunix.drummer.model.Schedule;
-import org.homeunix.drummer.model.Source;
-import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.model.Transactions;
-import org.homeunix.drummer.model.Type;
-import org.homeunix.drummer.model.Types;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;

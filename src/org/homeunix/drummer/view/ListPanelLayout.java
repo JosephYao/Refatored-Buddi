@@ -30,10 +30,10 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 

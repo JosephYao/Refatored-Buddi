@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;

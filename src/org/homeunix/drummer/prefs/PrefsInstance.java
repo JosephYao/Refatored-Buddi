@@ -1,7 +1,7 @@
 /*
  * Created on May 12, 2006 by wyatt
  */
-package org.homeunix.drummer.controller.model;
+package org.homeunix.drummer.prefs;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,18 +22,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.prefs.DictData;
-import org.homeunix.drummer.prefs.DictEntry;
-import org.homeunix.drummer.prefs.Interval;
-import org.homeunix.drummer.prefs.Intervals;
-import org.homeunix.drummer.prefs.ListAttributes;
-import org.homeunix.drummer.prefs.ListEntry;
-import org.homeunix.drummer.prefs.Prefs;
-import org.homeunix.drummer.prefs.PrefsFactory;
-import org.homeunix.drummer.prefs.PrefsPackage;
-import org.homeunix.drummer.prefs.UserPrefs;
-import org.homeunix.drummer.prefs.Version;
-import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;

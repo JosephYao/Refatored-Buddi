@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.ModifyDialogLayout;

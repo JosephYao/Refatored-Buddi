@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-import org.homeunix.drummer.controller.model.PrefsInstance;
+import org.homeunix.drummer.prefs.PrefsInstance;
 
 
 public class Formatter {

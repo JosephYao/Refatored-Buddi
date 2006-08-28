@@ -19,10 +19,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.homeunix.drummer.controller.model.DataInstance;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;

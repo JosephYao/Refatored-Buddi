@@ -22,11 +22,11 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.model.DataInstance;
-import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 
 public abstract class GraphFrameLayout extends AbstractBudgetFrame {

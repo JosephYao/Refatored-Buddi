@@ -11,7 +11,6 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 
-import org.homeunix.drummer.controller.model.DataInstance;
 import org.homeunix.drummer.controller.reports.CustomDateIntervalDialog;
 import org.homeunix.drummer.controller.reports.CustomEndDateDialog;
 import org.homeunix.drummer.controller.reports.CustomStartDateDialog;
@@ -22,6 +21,7 @@ import org.homeunix.drummer.controller.reports.IncomeExpenseByDescriptionReportF
 import org.homeunix.drummer.controller.reports.IncomeGraphFrame;
 import org.homeunix.drummer.controller.reports.NetWorthGraphFrame;
 import org.homeunix.drummer.controller.reports.NetWorthOverTimeGraphFrame;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.view.AbstractBudgetPanel;
 import org.homeunix.drummer.view.ReportPanelLayout;
