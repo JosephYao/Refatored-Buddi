@@ -12,7 +12,7 @@ import javax.swing.UIManager;
 
 import net.roydesign.mac.MRJAdapter;
 
-import org.homeunix.drummer.controller.layout.MainBuddiFrame;
+import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.ParseCommands;

@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.controller.layout;
+package org.homeunix.drummer.controller;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

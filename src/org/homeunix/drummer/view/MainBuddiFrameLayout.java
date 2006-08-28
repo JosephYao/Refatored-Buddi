@@ -11,9 +11,9 @@ import javax.swing.JTabbedPane;
 
 import org.homeunix.drummer.TranslateKeys;
 import org.homeunix.drummer.Translate;
-import org.homeunix.drummer.controller.layout.AccountListPanel;
-import org.homeunix.drummer.controller.layout.CategoryListPanel;
-import org.homeunix.drummer.controller.layout.ReportPanel;
+import org.homeunix.drummer.controller.AccountListPanel;
+import org.homeunix.drummer.controller.CategoryListPanel;
+import org.homeunix.drummer.controller.ReportPanel;
 import org.homeunix.drummer.util.Log;
 
 

@@ -9,8 +9,8 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 
-import org.homeunix.drummer.controller.layout.MainBuddiFrame;
-import org.homeunix.drummer.controller.layout.TransactionsFrame;
+import org.homeunix.drummer.controller.MainBuddiFrame;
+import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.model.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.BuddiMenu;

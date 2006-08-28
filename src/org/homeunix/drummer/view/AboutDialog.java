@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.TranslateKeys;
-import org.homeunix.drummer.controller.layout.MainBuddiFrame;
+import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.Log;
 
