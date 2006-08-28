@@ -44,7 +44,7 @@ import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
 import org.homeunix.drummer.view.layout.AboutDialog;
-import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
+import org.homeunix.drummer.view.layout.reports.ReportFrameLayout;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;

@@ -13,7 +13,7 @@ import org.homeunix.drummer.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.reports.layout.GraphFrameLayout;
+import org.homeunix.drummer.view.layout.reports.GraphFrameLayout;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;

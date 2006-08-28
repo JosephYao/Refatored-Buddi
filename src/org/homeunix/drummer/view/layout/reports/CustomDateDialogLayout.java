@@ -1,7 +1,7 @@
 /*
  * Created on May 20, 2006 by wyatt
  */
-package org.homeunix.drummer.view.reports.layout;
+package org.homeunix.drummer.view.layout.reports;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

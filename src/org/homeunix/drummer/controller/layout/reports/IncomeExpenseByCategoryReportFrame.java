@@ -37,7 +37,7 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.reports.layout.ReportFrameLayout;
+import org.homeunix.drummer.view.layout.reports.ReportFrameLayout;
 
 public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 	public static final long serialVersionUID = 0;

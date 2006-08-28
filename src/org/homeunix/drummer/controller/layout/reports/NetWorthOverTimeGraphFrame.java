@@ -16,7 +16,7 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetFrame;
-import org.homeunix.drummer.view.reports.layout.GraphFrameLayout;
+import org.homeunix.drummer.view.layout.reports.GraphFrameLayout;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;

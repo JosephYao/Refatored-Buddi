@@ -16,7 +16,7 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.layout.ReportPanelLayout.ReportType;
-import org.homeunix.drummer.view.reports.layout.CustomDateDialogLayout;
+import org.homeunix.drummer.view.layout.reports.CustomDateDialogLayout;
 
 public class CustomEndDateDialog extends CustomDateDialogLayout {
 	public static final long serialVersionUID = 0;
