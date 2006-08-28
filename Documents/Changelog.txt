@@ -1,3 +1,6 @@
+-Updated the EMF libraries to 2.2.1 build 20060824
+-Reorganized package structure to better reflect the MVC architecture.  This should help third party developers to better interface with Buddi, as it is much clearer now what is the model, etc.
+
 1.6.0rc1 (August 27 2006)
 -Updated Norwegian translation
 -First release cantidate for stable version 1.6
