@@ -8,8 +8,8 @@
 	<classpathentry kind="lib" path="lib/quaqua-3.6.11.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter-1.0.9.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.0.v200606271057.jar"/>
-	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.0.v200606271057.jar"/>
-	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.0.v200606271057.jar"/>
+	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.1.v200608241248.jar"/>
+	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.1.v200608241248.jar"/>
+	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200608241248.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
