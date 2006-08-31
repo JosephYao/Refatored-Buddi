@@ -216,7 +216,7 @@ YEAR=Year
 YESTERDAY=Yesterday
 ZOOM=Zoom
 
-UPGRADE_NOTICE=NOTICE: The 1.5.x series introduced a change in the data file\nformat from version 1.4.x.\nIf you open any data files from version 1.4.x in the new version,\nyou will no longer be able to open them in older versions of Buddi.\nPlease backup your data files now!\n\nIf this is your first time running Buddi, then don't worry about anything;\nif you need to backup your existing data files, hit Cancel and do it now.\n\nThis message will only show the first time you run Buddi.
+UPGRADE_NOTICE=NOTICE: The 1.6.x series introduced a change in the data file\nformat from version 1.4.x.\nIf you open any data files from version 1.4.x in the new version,\nyou will no longer be able to open them in older versions of Buddi.\nPlease backup your data files now!\n\nIf this is your first time running Buddi, then don't worry about anything;\nif you need to backup your existing data files, hit Cancel and do it now.\n\nThis message will only show the first time you run Buddi.
 UPGRADE_NOTICE_TITLE=Data Format Change
 AUTO_COMPLETE_TRANSACTION_INFORMATION=Auto Complete Transaction Information
 CURRENCY=Currency Format
