@@ -5,7 +5,7 @@ package org.homeunix.drummer;
 
 
 public class Const {
-	public static final String VERSION = "1.6.0rc2";
+	public static final String VERSION = "1.6.0rc3";
 	public static final String BRANCH = "UNSTABLE";
 	
 	public final static String LANGUAGE_EXTENSION = ".lang";
@@ -43,7 +43,7 @@ public class Const {
 		"\u20b1",  //Peso
 		"\u20a3",  //French Franc
 		"S\u20a3", //Swiss Franc (?)
-		"\u20a8", //Indian Rupees
+		"Rs", //Indian Rupees
 		"Kr"  //Norwegian
 		
 	};
