@@ -5,8 +5,8 @@ package org.homeunix.drummer;
 
 
 public class Const {
-	public static final String VERSION = "1.6.0rc3";
-	public static final String BRANCH = "UNSTABLE";
+	public static final String VERSION = "1.6.0";
+	public static final String BRANCH = "STABLE";
 	
 	public final static String LANGUAGE_EXTENSION = ".lang";
 	public final static String LANGUAGE_FOLDER = "Languages";

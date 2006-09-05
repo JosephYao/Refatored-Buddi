@@ -1,3 +1,6 @@
+1.6.0 (Sept 5 2006)
+-Stable release incorporating the 1.5.x development.  The biggest changes since 1.4 are in the preferences window, especially the localization options.  The currency symbol is now separate from the language file, which helps reduce the number of localizations I need to include.  Also, I changed the display format for the Transactions window, which should make for fewer bugs when long strings are entered.  For complete details of differences between 1.4 and 1.6, please see the 1.5 changelog.
+
 1.6.0rc2 (August 31 2006)
 -Updated the EMF libraries to 2.2.1 build 20060824
 -Reorganized package structure to better reflect the MVC architecture.  This should help third party developers to better interface with Buddi, as it is much clearer now what is the model, etc.
