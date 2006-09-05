@@ -2,6 +2,12 @@
 
 <h1>News</h1>
 
+<h2>1.6.0 (September 5 2006)</h2>
+<ul>
+<li>
+Stable release incorporating the 1.5.x development.  The biggest changes since 1.4 are in the preferences window, especially the localization options.  The currency symbol is now separate from the language file, which helps reduce the number of localizations I need to include.  Also, I changed the display format for the Transactions window, which should make for fewer bugs when long strings are entered.  For complete details of differences between 1.4 and 1.6, please see the 1.5 changelog.
+</li>
+</ul>
 
 <h2>1.4.1 (August 19 2006)</h2>
 <ul>
