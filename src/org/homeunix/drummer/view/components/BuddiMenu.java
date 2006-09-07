@@ -448,7 +448,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					if (localHelp.exists())
 						location = "file://" + localHelp.getAbsolutePath();
 					else
-						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "");
+						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 					
 					Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher.openURL(location);
