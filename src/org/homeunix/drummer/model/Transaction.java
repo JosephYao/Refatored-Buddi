@@ -240,6 +240,58 @@ public interface Transaction extends EObject, Comparable<Transaction> {
 	void setScheduled(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Cleared</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Cleared</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Cleared</em>' attribute.
+	 * @see #setCleared(boolean)
+	 * @see org.homeunix.drummer.model.ModelPackage#getTransaction_Cleared()
+	 * @model
+	 * @generated
+	 */
+	boolean isCleared();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Transaction#isCleared <em>Cleared</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cleared</em>' attribute.
+	 * @see #isCleared()
+	 * @generated
+	 */
+	void setCleared(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Reconciled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Reconciled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Reconciled</em>' attribute.
+	 * @see #setReconciled(boolean)
+	 * @see org.homeunix.drummer.model.ModelPackage#getTransaction_Reconciled()
+	 * @model
+	 * @generated
+	 */
+	boolean isReconciled();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Transaction#isReconciled <em>Reconciled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Reconciled</em>' attribute.
+	 * @see #isReconciled()
+	 * @generated
+	 */
+	void setReconciled(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>

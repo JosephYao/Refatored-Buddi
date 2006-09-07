@@ -199,9 +199,7 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 			
 			sb.append("<html><table width='" + (width - 20) + "'><tr><td width='20%'>");
 			if (transaction != null)
-				sb.append(//Formatter.getInstance().getLengthFormat(width / 40).format(
-						Formatter.getInstance().getDateFormat().format(transaction.getDate()));
-//				);
+				sb.append(Formatter.getInstance().getDateFormat().format(transaction.getDate()));
 			sb.append("</td><td width='40%'>");
 			if (transaction != null)
 				sb.append(Formatter.getInstance().getLengthFormat(width / 20).format(transaction.getDescription()));
@@ -240,9 +238,11 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 				}
 			}
 			sb.append("</td></tr><tr><td width='20%'>");
-			if (transaction != null)
+			if (transaction != null){
+				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
+				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
 				sb.append(Formatter.getInstance().getLengthFormat(width / 40).format(transaction.getNumber()));
-			
+			}
 			sb.append("</td><td width='40%'>");
 			if (transaction != null){
 				sb.append(Formatter.getInstance().getLengthFormat(width / 20).format(

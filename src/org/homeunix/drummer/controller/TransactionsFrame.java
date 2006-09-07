@@ -292,6 +292,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		t.setFrom(editableTransaction.getFrom());
 		t.setMemo(editableTransaction.getMemo());
 		t.setNumber(editableTransaction.getNumber());
+		t.setCleared(editableTransaction.isCleared());
+		t.setReconciled(editableTransaction.isReconciled());
 		
 		if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
 			DataInstance.getInstance().addTransaction(t);

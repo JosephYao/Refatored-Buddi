@@ -17,6 +17,7 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -57,6 +58,8 @@ public class EditableTransaction extends JPanel {
 	private final JHintTextField number;
 	private final JHintAutoCompleteTextField description;
 	private final JHintTextArea memo;
+	private final JCheckBox cleared;
+	private final JCheckBox reconciled;
 	
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
@@ -75,6 +78,8 @@ public class EditableTransaction extends JPanel {
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));
 		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.DEFAULT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.DEFAULT_MEMO));
+		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.CLEARED_SHORT));
+		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT));
 		
 		components = new Vector<JComponent>();
 		
@@ -110,12 +115,15 @@ public class EditableTransaction extends JPanel {
 		topPanel.add(date);
 		topPanel.add(description);
 		topPanel.add(number);
+		topPanel.add(cleared);
+		topPanel.add(reconciled);
 
 		bottomPanel.add(amount);
-		
+
 		bottomPanel.add(from);
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
-		bottomPanel.add(to);		
+		bottomPanel.add(to);
+		
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -169,10 +177,13 @@ public class EditableTransaction extends JPanel {
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
-			Log.debug("Set to: " + transaction.getTo());
-			Log.debug("Set from: " + transaction.getFrom());
-			Log.debug("Selected to: " + to.getSelectedItem());
-			Log.debug("Selected from: " + from.getSelectedItem());
+			cleared.setSelected(transaction.isCleared());
+			reconciled.setSelected(transaction.isReconciled());
+//			TODO Remove commented section
+//			Log.debug("Set to: " + transaction.getTo());
+//			Log.debug("Set from: " + transaction.getFrom());
+//			Log.debug("Selected to: " + to.getSelectedItem());
+//			Log.debug("Selected from: " + from.getSelectedItem());
 		}
 		else{
 			if (date.getDate() == null)
@@ -183,6 +194,8 @@ public class EditableTransaction extends JPanel {
 			to.setSelectedIndex(0);
 			from.setSelectedIndex(0);
 			memo.setValue("");
+			cleared.setSelected(false);
+			reconciled.setSelected(false);
 			
 			resetSelection();
 		}
@@ -253,6 +266,14 @@ public class EditableTransaction extends JPanel {
 	
 	public String getMemo(){
 		return memo.getValue();
+	}
+	
+	public boolean isCleared(){
+		return cleared.isSelected();
+	}
+	
+	public boolean isReconciled(){
+		return reconciled.isSelected();
 	}
 	
 	public void updateContent(){

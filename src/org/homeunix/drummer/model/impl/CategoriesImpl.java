@@ -30,8 +30,8 @@ import org.homeunix.drummer.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.CategoriesImpl#getAllCategories <em>All Categories</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,10 +129,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return basicSetAllCategories(null, msgs);
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				return ((InternalEList)getCategories()).basicRemove(otherEnd, msgs);
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return basicSetAllCategories(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -157,10 +157,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories();
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				return getCategories();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -173,12 +173,12 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)newValue);
-				return;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				getCategories().clear();
 				getCategories().addAll((Collection)newValue);
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -191,11 +191,11 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				setAllCategories((DataModel)null);
-				return;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				getCategories().clear();
+				return;
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				setAllCategories((DataModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -208,10 +208,10 @@ public class CategoriesImpl extends EObjectImpl implements Categories {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
-				return getAllCategories() != null;
 			case ModelPackage.CATEGORIES__CATEGORIES:
 				return categories != null && !categories.isEmpty();
+			case ModelPackage.CATEGORIES__ALL_CATEGORIES:
+				return getAllCategories() != null;
 		}
 		return super.eIsSet(featureID);
 	}

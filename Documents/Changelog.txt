@@ -1,3 +1,6 @@
+1.7.1
+-Added Spanish translation
+
 1.7.0 (Sept 5 2006)
 -New development branch.  1.7.0 Development is the same as 1.6.0 Stable.
 

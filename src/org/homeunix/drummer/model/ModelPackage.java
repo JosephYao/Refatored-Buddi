@@ -245,22 +245,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORIES = 2;
 
 	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIES__ALL_CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIES__CATEGORIES = 1;
+	int CATEGORIES__CATEGORIES = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIES__ALL_CATEGORIES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Categories</em>' class.
@@ -364,13 +364,13 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL = 4;
 
 	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_CATEGORIES = 0;
+	int DATA_MODEL__ALL_TYPES = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
@@ -382,22 +382,22 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL__ALL_TRANSACTIONS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_TYPES = 2;
-
-	/**
 	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 3;
+	int DATA_MODEL__ALL_ACCOUNTS = 2;
+
+	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_CATEGORIES = 3;
 
 	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
@@ -501,13 +501,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTION__SCHEDULED = 7;
 
 	/**
-	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * The feature id for the '<em><b>Cleared</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__TO = 8;
+	int TRANSACTION__CLEARED = 8;
+
+	/**
+	 * The feature id for the '<em><b>Reconciled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__RECONCILED = 9;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
@@ -516,7 +525,16 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__FROM = 9;
+	int TRANSACTION__FROM = 10;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__TO = 11;
 
 	/**
 	 * The number of structural features of the '<em>Transaction</em>' class.
@@ -525,7 +543,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION_FEATURE_COUNT = 10;
+	int TRANSACTION_FEATURE_COUNT = 12;
 
 	/**
 	 * The feature id for the '<em><b>Amount</b></em>' attribute.
@@ -600,13 +618,22 @@ public interface ModelPackage extends EPackage {
 	int SCHEDULE__SCHEDULED = TRANSACTION__SCHEDULED;
 
 	/**
-	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * The feature id for the '<em><b>Cleared</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE__TO = TRANSACTION__TO;
+	int SCHEDULE__CLEARED = TRANSACTION__CLEARED;
+
+	/**
+	 * The feature id for the '<em><b>Reconciled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__RECONCILED = TRANSACTION__RECONCILED;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
@@ -616,6 +643,15 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCHEDULE__FROM = TRANSACTION__FROM;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__TO = TRANSACTION__TO;
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
@@ -700,22 +736,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 0;
 
 	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 1;
-
-	/**
 	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__TRANSACTIONS = 2;
+	int TRANSACTIONS__TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__ALL_TRANSACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Transactions</em>' class.
@@ -774,22 +810,22 @@ public interface ModelPackage extends EPackage {
 	int TYPES = 10;
 
 	/**
-	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__TYPES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Types</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__ALL_TYPES = 1;
+	int TYPES__ALL_TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__TYPES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Types</em>' class.
@@ -1264,6 +1300,28 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTransaction_Scheduled();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Transaction#isCleared <em>Cleared</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cleared</em>'.
+	 * @see org.homeunix.drummer.model.Transaction#isCleared()
+	 * @see #getTransaction()
+	 * @generated
+	 */
+	EAttribute getTransaction_Cleared();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Transaction#isReconciled <em>Reconciled</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Reconciled</em>'.
+	 * @see org.homeunix.drummer.model.Transaction#isReconciled()
+	 * @see #getTransaction()
+	 * @generated
+	 */
+	EAttribute getTransaction_Reconciled();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.Transaction#getFrom <em>From</em>}'.
@@ -1778,6 +1836,22 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRANSACTION__SCHEDULED = eINSTANCE.getTransaction_Scheduled();
+
+		/**
+		 * The meta object literal for the '<em><b>Cleared</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__CLEARED = eINSTANCE.getTransaction_Cleared();
+
+		/**
+		 * The meta object literal for the '<em><b>Reconciled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__RECONCILED = eINSTANCE.getTransaction_Reconciled();
 
 		/**
 		 * The meta object literal for the '<em><b>To</b></em>' reference feature.

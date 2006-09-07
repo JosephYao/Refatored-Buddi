@@ -196,14 +196,44 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	protected boolean scheduled = SCHEDULED_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
+	 * The default value of the '{@link #isCleared() <em>Cleared</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTo()
+	 * @see #isCleared()
 	 * @generated
 	 * @ordered
 	 */
-	protected Source to = null;
+	protected static final boolean CLEARED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isCleared() <em>Cleared</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCleared()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean cleared = CLEARED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isReconciled() <em>Reconciled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReconciled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RECONCILED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isReconciled() <em>Reconciled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReconciled()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean reconciled = RECONCILED_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
@@ -214,6 +244,16 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * @ordered
 	 */
 	protected Source from = null;
+
+	/**
+	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTo()
+	 * @generated
+	 * @ordered
+	 */
+	protected Source to = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -406,6 +446,48 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isCleared() {
+		return cleared;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCleared(boolean newCleared) {
+		boolean oldCleared = cleared;
+		cleared = newCleared;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__CLEARED, oldCleared, cleared));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isReconciled() {
+		return reconciled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReconciled(boolean newReconciled) {
+		boolean oldReconciled = reconciled;
+		reconciled = newReconciled;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__RECONCILED, oldReconciled, reconciled));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Source getFrom() {
 		if (from != null && from.eIsProxy()) {
 			InternalEObject oldFrom = (InternalEObject)from;
@@ -462,12 +544,16 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return new Long(getBalanceTo());
 			case ModelPackage.TRANSACTION__SCHEDULED:
 				return isScheduled() ? Boolean.TRUE : Boolean.FALSE;
-			case ModelPackage.TRANSACTION__TO:
-				if (resolve) return getTo();
-				return basicGetTo();
+			case ModelPackage.TRANSACTION__CLEARED:
+				return isCleared() ? Boolean.TRUE : Boolean.FALSE;
+			case ModelPackage.TRANSACTION__RECONCILED:
+				return isReconciled() ? Boolean.TRUE : Boolean.FALSE;
 			case ModelPackage.TRANSACTION__FROM:
 				if (resolve) return getFrom();
 				return basicGetFrom();
+			case ModelPackage.TRANSACTION__TO:
+				if (resolve) return getTo();
+				return basicGetTo();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -503,11 +589,17 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 			case ModelPackage.TRANSACTION__SCHEDULED:
 				setScheduled(((Boolean)newValue).booleanValue());
 				return;
-			case ModelPackage.TRANSACTION__TO:
-				setTo((Source)newValue);
+			case ModelPackage.TRANSACTION__CLEARED:
+				setCleared(((Boolean)newValue).booleanValue());
+				return;
+			case ModelPackage.TRANSACTION__RECONCILED:
+				setReconciled(((Boolean)newValue).booleanValue());
 				return;
 			case ModelPackage.TRANSACTION__FROM:
 				setFrom((Source)newValue);
+				return;
+			case ModelPackage.TRANSACTION__TO:
+				setTo((Source)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -544,11 +636,17 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 			case ModelPackage.TRANSACTION__SCHEDULED:
 				setScheduled(SCHEDULED_EDEFAULT);
 				return;
-			case ModelPackage.TRANSACTION__TO:
-				setTo((Source)null);
+			case ModelPackage.TRANSACTION__CLEARED:
+				setCleared(CLEARED_EDEFAULT);
+				return;
+			case ModelPackage.TRANSACTION__RECONCILED:
+				setReconciled(RECONCILED_EDEFAULT);
 				return;
 			case ModelPackage.TRANSACTION__FROM:
 				setFrom((Source)null);
+				return;
+			case ModelPackage.TRANSACTION__TO:
+				setTo((Source)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -577,10 +675,14 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return balanceTo != BALANCE_TO_EDEFAULT;
 			case ModelPackage.TRANSACTION__SCHEDULED:
 				return scheduled != SCHEDULED_EDEFAULT;
-			case ModelPackage.TRANSACTION__TO:
-				return to != null;
+			case ModelPackage.TRANSACTION__CLEARED:
+				return cleared != CLEARED_EDEFAULT;
+			case ModelPackage.TRANSACTION__RECONCILED:
+				return reconciled != RECONCILED_EDEFAULT;
 			case ModelPackage.TRANSACTION__FROM:
 				return from != null;
+			case ModelPackage.TRANSACTION__TO:
+				return to != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -648,6 +750,10 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 		result.append(balanceTo);
 		result.append(", scheduled: ");
 		result.append(scheduled);
+		result.append(", cleared: ");
+		result.append(cleared);
+		result.append(", reconciled: ");
+		result.append(reconciled);
 		result.append(')');
 		return result.toString();
 	}
