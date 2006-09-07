@@ -224,3 +224,7 @@ AVAILABLE_CREDIT=Available Credit
 OPTIONAL_TAG=(optional)
 SHOW_CREDIT_LIMIT=Show Credit Limit Information
 SHOW_INTEREST_RATE=Show Interest Rate
+CLEARED_SHORT=C
+RECONCILED_SHORT=R
+SHOW_ADVANCED_FEATURES=Show Advanced (Clear / Reconcile Transactions)
+TOOLTIP_SHOW_ADVANCED_FEATURES=Show the 'Cleared' and the 'Reconciled' checkboxes for transactions, as well as the Cleared and Reconciled reports.

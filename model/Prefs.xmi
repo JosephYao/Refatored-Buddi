@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Aug 20 23:53:43 MDT 2006'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Sep 06 21:45:45 MDT 2006'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
@@ -203,6 +203,21 @@
                                 <UML:Multiplicity xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000009E7'>
                                   <UML:Multiplicity.range>
                                     <UML:MultiplicityRange xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000009E8'
+                                      lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000009CD'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51--1ad5569e:10d865fb74a:-8000:00000000000008A5'
+                              name = 'showAdvanced' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51--1ad5569e:10d865fb74a:-8000:00000000000008A6'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51--1ad5569e:10d865fb74a:-8000:00000000000008A7'
                                       lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>

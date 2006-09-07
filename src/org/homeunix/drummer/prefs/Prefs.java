@@ -31,14 +31,15 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getCurrencySymbol <em>Currency Symbol</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowCreditLimit <em>Show Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowInterestRate <em>Show Interest Rate</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -572,5 +573,31 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setShowInterestRate(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Show Advanced</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Show Advanced</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Show Advanced</em>' attribute.
+	 * @see #setShowAdvanced(boolean)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_ShowAdvanced()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isShowAdvanced();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Show Advanced</em>' attribute.
+	 * @see #isShowAdvanced()
+	 * @generated
+	 */
+	void setShowAdvanced(boolean value);
 
 } // Prefs

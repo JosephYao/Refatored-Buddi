@@ -43,6 +43,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	protected final JCheckBox showAutoComplete;
 	protected final JCheckBox showCreditLimit;
 	protected final JCheckBox showInterestRate;
+	protected final JCheckBox showAdvanced;
 
 	protected final JCheckBox enableUpdateNotifications;
 	
@@ -94,6 +95,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		showAutoComplete = new JCheckBox(Translate.getInstance().get(TranslateKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
 		showCreditLimit = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CREDIT_LIMIT));
 		showInterestRate = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_INTEREST_RATE));
+		showAdvanced = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ADVANCED_FEATURES));
+		showAdvanced.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_ADVANCED_FEATURES));
 		
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -106,6 +109,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel interestRatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel advancedPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
@@ -133,6 +137,8 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		
 		interestRatePanel.add(showInterestRate);
 		
+		advancedPanel.add(showAdvanced);
+		
 		JPanel localePanel = new JPanel(new GridLayout(0, 1));
 		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
 //		JPanel otherPanel = new JPanel(new GridLayout(0, 1));
@@ -153,6 +159,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
+		localePanel.add(new JLabel());
 		localePanel.add(updatePanel);		
 				
 		viewPanel.add(deletePanel1);
@@ -160,6 +167,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		viewPanel.add(accountPanel);
 		viewPanel.add(interestRatePanel);
 		viewPanel.add(creditLimitPanel);
+		viewPanel.add(advancedPanel);
 		viewPanel.add(autoCompletePanel);
 		viewPanel.add(budgetIntervalPanel);
 		viewPanel.add(new JLabel());  // Line up view and locale panels

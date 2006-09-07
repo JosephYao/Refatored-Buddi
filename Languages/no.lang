@@ -1,5 +1,3 @@
-#
-# 
 # Unicode for norwegian characters;
 # Å = \u00C5
 # å = \u00E5
@@ -234,3 +232,8 @@ WINDOW=Vindu
 YEAR=\u00C5r
 YESTERDAY=I g\u00E5r
 ZOOM=Zoom
+
+CLEARED_SHORT=C
+RECONCILED_SHORT=R
+SHOW_ADVANCED_FEATURES=Show Advanced (Clear / Reconcile Transactions)
+TOOLTIP_SHOW_ADVANCED_FEATURES=Show the 'Cleared' and the 'Reconciled' checkboxes for transactions, as well as the Cleared and Reconciled reports.

@@ -115,8 +115,10 @@ public class EditableTransaction extends JPanel {
 		topPanel.add(date);
 		topPanel.add(description);
 		topPanel.add(number);
-		topPanel.add(cleared);
-		topPanel.add(reconciled);
+		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+			topPanel.add(cleared);
+			topPanel.add(reconciled);
+		}
 
 		bottomPanel.add(amount);
 

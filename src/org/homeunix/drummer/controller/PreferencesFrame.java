@@ -52,6 +52,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				PrefsInstance.getInstance().getPrefs().setShowCreditLimit(showCreditLimit.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowInterestRate(showInterestRate.isSelected());
 				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
+				PrefsInstance.getInstance().getPrefs().setShowAdvanced(showAdvanced.isSelected());				
 				PrefsInstance.getInstance().savePrefs();
 												
 				Formatter.getInstance().reloadDateFormat();
@@ -89,6 +90,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
 		showCreditLimit.setSelected(PrefsInstance.getInstance().getPrefs().isShowCreditLimit());
 		showInterestRate.setSelected(PrefsInstance.getInstance().getPrefs().isShowInterestRate());
+		showAdvanced.setSelected(PrefsInstance.getInstance().getPrefs().isShowAdvanced());
 		
 		return this;
 	}

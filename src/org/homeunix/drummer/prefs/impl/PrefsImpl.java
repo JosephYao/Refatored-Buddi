@@ -45,14 +45,15 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getCurrencySymbol <em>Currency Symbol</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowCreditLimit <em>Show Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowInterestRate <em>Show Interest Rate</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -320,54 +321,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected boolean showInterestRate = SHOW_INTEREST_RATE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * The default value of the '{@link #isShowAdvanced() <em>Show Advanced</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReportsWindow()
+	 * @see #isShowAdvanced()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes reportsWindow = null;
+	protected static final boolean SHOW_ADVANCED_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * The cached value of the '{@link #isShowAdvanced() <em>Show Advanced</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
+	 * @see #isShowAdvanced()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList descDict = null;
-
-	/**
-	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIntervals()
-	 * @generated
-	 * @ordered
-	 */
-	protected Intervals intervals = null;
-
-	/**
-	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListEntries()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList listEntries = null;
-
-	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes transactionsWindow = null;
+	protected boolean showAdvanced = SHOW_ADVANCED_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
@@ -380,6 +351,26 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes graphsWindow = null;
 
 	/**
+	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLastVersionRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected Version lastVersionRun = null;
+
+	/**
+	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTransactionsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes transactionsWindow = null;
+
+	/**
 	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -390,14 +381,44 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected WindowAttributes mainWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLastVersionRun()
+	 * @see #getListEntries()
 	 * @generated
 	 * @ordered
 	 */
-	protected Version lastVersionRun = null;
+	protected EList listEntries = null;
+
+	/**
+	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntervals()
+	 * @generated
+	 * @ordered
+	 */
+	protected Intervals intervals = null;
+
+	/**
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescDict()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList descDict = null;
+
+	/**
+	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReportsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes reportsWindow = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -874,22 +895,22 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return basicSetReportsWindow(null, msgs);
-			case PrefsPackage.PREFS__DESC_DICT:
-				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.PREFS__INTERVALS:
-				return basicSetIntervals(null, msgs);
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return basicSetTransactionsWindow(null, msgs);
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return basicSetGraphsWindow(null, msgs);
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return basicSetMainWindow(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return basicSetTransactionsWindow(null, msgs);
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return basicSetMainWindow(null, msgs);
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__INTERVALS:
+				return basicSetIntervals(null, msgs);
+			case PrefsPackage.PREFS__DESC_DICT:
+				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return basicSetReportsWindow(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -927,22 +948,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isShowCreditLimit() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
 				return isShowInterestRate() ? Boolean.TRUE : Boolean.FALSE;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return getReportsWindow();
-			case PrefsPackage.PREFS__DESC_DICT:
-				return getDescDict();
-			case PrefsPackage.PREFS__INTERVALS:
-				return getIntervals();
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return getListEntries();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
+			case PrefsPackage.PREFS__SHOW_ADVANCED:
+				return isShowAdvanced() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return getMainWindow();
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return getListEntries();
+			case PrefsPackage.PREFS__INTERVALS:
+				return getIntervals();
+			case PrefsPackage.PREFS__DESC_DICT:
+				return getDescDict();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return getReportsWindow();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -994,31 +1017,34 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
 				setShowInterestRate(((Boolean)newValue).booleanValue());
 				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__SHOW_ADVANCED:
+				setShowAdvanced(((Boolean)newValue).booleanValue());
 				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				getDescDict().addAll((Collection)newValue);
+			case PrefsPackage.PREFS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)newValue);
 				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)newValue);
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)newValue);
+				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				setMainWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				getListEntries().clear();
 				getListEntries().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)newValue);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
+				getDescDict().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)newValue);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1070,29 +1096,32 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
 				setShowInterestRate(SHOW_INTEREST_RATE_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)null);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__SHOW_ADVANCED:
+				setShowAdvanced(SHOW_ADVANCED_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)null);
 				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)null);
+				return;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)null);
+				return;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)null);
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				getListEntries().clear();
+				return;
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)null);
+				return;
+			case PrefsPackage.PREFS__DESC_DICT:
+				getDescDict().clear();
+				return;
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1131,22 +1160,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return showCreditLimit != SHOW_CREDIT_LIMIT_EDEFAULT;
 			case PrefsPackage.PREFS__SHOW_INTEREST_RATE:
 				return showInterestRate != SHOW_INTEREST_RATE_EDEFAULT;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return reportsWindow != null;
-			case PrefsPackage.PREFS__DESC_DICT:
-				return descDict != null && !descDict.isEmpty();
-			case PrefsPackage.PREFS__INTERVALS:
-				return intervals != null;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return listEntries != null && !listEntries.isEmpty();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
+			case PrefsPackage.PREFS__SHOW_ADVANCED:
+				return showAdvanced != SHOW_ADVANCED_EDEFAULT;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
+			case PrefsPackage.PREFS__MAIN_WINDOW:
+				return mainWindow != null;
+			case PrefsPackage.PREFS__LIST_ENTRIES:
+				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.PREFS__INTERVALS:
+				return intervals != null;
+			case PrefsPackage.PREFS__DESC_DICT:
+				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				return reportsWindow != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1261,6 +1292,27 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isShowAdvanced() {
+		return showAdvanced;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setShowAdvanced(boolean newShowAdvanced) {
+		boolean oldShowAdvanced = showAdvanced;
+		showAdvanced = newShowAdvanced;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SHOW_ADVANCED, oldShowAdvanced, showAdvanced));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1291,6 +1343,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(showCreditLimit);
 		result.append(", showInterestRate: ");
 		result.append(showInterestRate);
+		result.append(", showAdvanced: ");
+		result.append(showAdvanced);
 		result.append(')');
 		return result.toString();
 	}

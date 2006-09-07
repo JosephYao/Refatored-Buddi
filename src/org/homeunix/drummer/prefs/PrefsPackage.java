@@ -428,49 +428,13 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__SHOW_INTEREST_RATE = 12;
 
 	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Show Advanced</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__REPORTS_WINDOW = 13;
-
-	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__DESC_DICT = 14;
-
-	/**
-	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__INTERVALS = 15;
-
-	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 16;
-
-	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__TRANSACTIONS_WINDOW = 17;
+	int PREFS__SHOW_ADVANCED = 13;
 
 	/**
 	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
@@ -479,16 +443,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 18;
-
-	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__MAIN_WINDOW = 19;
+	int PREFS__GRAPHS_WINDOW = 14;
 
 	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
@@ -497,7 +452,61 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 20;
+	int PREFS__LAST_VERSION_RUN = 15;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__TRANSACTIONS_WINDOW = 16;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__MAIN_WINDOW = 17;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LIST_ENTRIES = 18;
+
+	/**
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__INTERVALS = 19;
+
+	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__DESC_DICT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__REPORTS_WINDOW = 21;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -506,7 +515,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 21;
+	int PREFS_FEATURE_COUNT = 22;
 
 
 	/**
@@ -1077,6 +1086,17 @@ public interface PrefsPackage extends EPackage {
 	EAttribute getPrefs_ShowInterestRate();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Show Advanced</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#isShowAdvanced()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_ShowAdvanced();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1479,6 +1499,14 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREFS__SHOW_INTEREST_RATE = eINSTANCE.getPrefs_ShowInterestRate();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Advanced</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SHOW_ADVANCED = eINSTANCE.getPrefs_ShowAdvanced();
 
 		/**
 		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.

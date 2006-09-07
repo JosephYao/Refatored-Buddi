@@ -239,8 +239,10 @@ public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
 			}
 			sb.append("</td></tr><tr><td width='20%'>");
 			if (transaction != null){
-				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
-				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
+				if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+					sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
+					sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
+				}
 				sb.append(Formatter.getInstance().getLengthFormat(width / 40).format(transaction.getNumber()));
 			}
 			sb.append("</td><td width='40%'>");

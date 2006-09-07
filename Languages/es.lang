@@ -170,7 +170,7 @@ REPORT_BETWEEN=Usar los datos entre las fechas
 REPORT_BY_CATEGORY_HEADER=Informe de Transacciones por Categoria de Presupuesto
 REPORT_BY_DESCRIPTION_HEADER=Informe de Transacciones por DescripcionTransaction Report by Description
 REPORT_DATE_ERROR=Error de Fecha en el Informe
-REPORT_INCOME_EXPENSES_BY_CATEGORY=Mostrar mis ingresos y gastos por categoria de
+REPORT_INCOME_EXPENSES_BY_CATEGORY=Mostrar mis ingresos y gastos por Categoria de
 REPORT_INCOME_EXPENSES_BY_DESCRIPTION=Mostrar mis ingresos y gastos por Descripcion de
 RESTART=Los cambios tendran lugar la proxima vez que arranques el programa
 RESTART_NEEDED=Se Necesita reiniciar
@@ -233,3 +233,8 @@ WINDOW=Window
 YEAR=A\u00f1o
 YESTERDAY=Ayer
 ZOOM=Zoom
+
+CLEARED_SHORT=C
+RECONCILED_SHORT=R
+SHOW_ADVANCED_FEATURES=Show Advanced (Clear / Reconcile Transactions)
+TOOLTIP_SHOW_ADVANCED_FEATURES=Show the 'Cleared' and the 'Reconciled' checkboxes for transactions, as well as the Cleared and Reconciled reports.
