@@ -11,4 +11,4 @@ manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
 excludes=<po|Buddi>~.svn/
-includes=
+includes=<inc|Buddi/images>

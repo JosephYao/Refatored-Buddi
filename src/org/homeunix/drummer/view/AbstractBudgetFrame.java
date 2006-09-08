@@ -6,6 +6,8 @@ package org.homeunix.drummer.view;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.net.URL;
 
 import javax.swing.JFrame;
 
@@ -102,6 +104,16 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		this.setLocation(p);
 		if (d != null)
 			this.setPreferredSize(d);
+		
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (null == cl) {
+			cl = AbstractBudgetFrame.class.getClassLoader();
+		}
+		
+		URL imageResource = cl.getResource("Buddi.gif");
+		if (null != imageResource) {
+			setIconImage(Toolkit.getDefaultToolkit().getImage(imageResource));
+		}
 		
 		load();
 		this.pack();

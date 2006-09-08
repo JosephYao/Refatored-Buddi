@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import net.roydesign.mac.MRJAdapter;
 
@@ -15,19 +14,20 @@ import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
+import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.util.ParseCommands;
 import org.homeunix.drummer.util.ParseCommands.ParseException;
 import org.homeunix.drummer.view.components.BuddiMenu;
 
 /**
  * @author wyatt
- *
+ * @author jdidion
  */
 public class Buddi {
 	
 	private static Boolean isMac;
 	private static final boolean UI_DEBUG = false; 
-	
+		
 	public static boolean isMac(){
 		if (isMac == null){
 			isMac = !UI_DEBUG && System.getProperty("os.name").equals("Mac OS X");
@@ -35,7 +35,7 @@ public class Buddi {
 		
 		return isMac;
 	}
-	
+
 	private static void launchGUI(){
 		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
@@ -57,15 +57,20 @@ public class Buddi {
 	public static void main(String[] args) {
 		String prefsLocation = "";
 		Integer verbosity = 0;
+		Integer wait = 0;
+		String lnf = "";
 		
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
-			+ "-v\t0-7\tVerbosity Level (7 = Debug)";
-		
-		
+			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
+			+ "--lnf\tclassName\tJava Look and Feel to use\n"
+			+ "-w\tMillis\tPause so that debugger can be attached";
+				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
+		map.put("--lnf", lnf);
+		map.put("-w", wait);
 		try{
 			map = ParseCommands.parse(args, map, help);
 		}
@@ -75,6 +80,19 @@ public class Buddi {
 		}
 		prefsLocation = (String) map.get("-p");
 		verbosity = (Integer) map.get("-v");
+		wait = (Integer) map.get("-w");
+		lnf = (String) map.get("--lnf");
+		
+		if (null != wait) {
+			Log.info("Waiting for debugger for " + wait + " seconds");
+			for (int i = 0; i < wait; i++) {
+				System.out.print(".");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException ex) {					
+				}
+			}
+		}
 		
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
@@ -84,27 +102,16 @@ public class Buddi {
 			Log.setLogLevel(verbosity);
 		}
 		
-		if (isMac()){
-			// set system properties here that affect Quaqua
-			// for example the default layout policy for tabbed
-			// panes:
-			System.setProperty("Quaqua.tabLayoutPolicy","scroll");
-			System.setProperty("Quaqua.selectionStyle","bright");
-			
-			// set the Quaqua Look and Feel in the UIManager
-			try {
-				UIManager.setLookAndFeel("ch.randelshofer.quaqua.QuaquaLookAndFeel");
-				
-				// set UI manager properties here that affect Quaqua
-			} catch (Exception e) {
-				Log.error(e);
-			}
+		if (lnf != null){
+			LookAndFeelManager.getInstance().setLookAndFeel(lnf);
+		}
+		else if (Buddi.isMac()){
+			LookAndFeelManager.getInstance().setLookAndFeel(LookAndFeelManager.QUAQUA_LOOK_AND_FEEL);
 		}
 		
 		Translate.getInstance().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage()
-		);
-		
+		);		
 		
 		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
 		

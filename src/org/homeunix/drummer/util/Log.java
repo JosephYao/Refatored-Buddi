@@ -45,6 +45,11 @@ public class Log {
 			log(message, "ERROR");		
 	}
 	
+	public static void error(Object message, Throwable exception) {
+		if (logLevel >= ERROR)
+			log(message, "ERROR", exception);
+	}
+	
 	public static void warning(Object message){
 		if (logLevel >= WARNING)
 			log(message, "WARNING");		
@@ -67,6 +72,11 @@ public class Log {
 
 	private static void log(Object message, String level){
 		System.err.println(level + ": " + message);
+	}
+	
+	private static void log(Object message, String level, Throwable exception){
+		System.err.println(level + ": " + message);
+		exception.printStackTrace(System.err);
 	}
 	
 	/**
