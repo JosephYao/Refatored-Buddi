@@ -36,6 +36,15 @@ For those operating systems which do not support encryption, you can use the fre
 <p>
 If anyone has successfully done this on another operating system and wants to share their procedure, please send it to me and I will include it here.
 </p>
+<h3>Update</h3>
+<p>
+After discussing this at length with John Didion, he convinced me that application based encryption (when done properly) is a Good Thing.  This will likely be implemented in 1.8 Stable.  At that point, you can choose to either use the method listed above, or allow Buddi to perform encryption of the data files.
+</p>
+
+<h2>How to I make a 'virtual account', which can accumulate money over multiple months</h2>
+<p>
+This can be accomplished via Prepaid Accounts, implemented via a Credit account.  Please see <a href='./prepaid.php'>Prepaid Accounts</a> for details.
+</p>
 
 <h2>Whenever I restart Buddi, it says the data file is corrupt.  What is happening?</h2>
 <p>

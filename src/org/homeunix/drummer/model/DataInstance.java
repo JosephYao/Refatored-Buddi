@@ -215,7 +215,8 @@ public class DataInstance {
 				//Default starting types - credit
 				TranslateKeys[] creditNames = {
 						TranslateKeys.LIABILITY,
-						TranslateKeys.CREDIT_CARD, 
+						TranslateKeys.CREDIT_CARD,
+						TranslateKeys.PREPAID_ACCOUNT,
 						TranslateKeys.LINE_OF_CREDIT,
 						TranslateKeys.LOAN
 				};

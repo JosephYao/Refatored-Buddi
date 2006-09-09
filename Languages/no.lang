@@ -237,3 +237,4 @@ CLEARED_SHORT=C
 RECONCILED_SHORT=R
 SHOW_ADVANCED_FEATURES=Show Advanced (Clear / Reconcile Transactions)
 TOOLTIP_SHOW_ADVANCED_FEATURES=Show the 'Cleared' and the 'Reconciled' checkboxes for transactions, as well as the Cleared and Reconciled reports.
+PREPAID_ACCOUNT=Prepaid Account
