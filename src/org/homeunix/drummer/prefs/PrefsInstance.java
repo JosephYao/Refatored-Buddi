@@ -141,7 +141,6 @@ public class PrefsInstance {
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
 			prefs.setShowAutoComplete(true);
-			prefs.setShowAccountTypes(true);
 			prefs.setEnableUpdateNotifications(true);
 			prefs.setDateFormat("yyyy/MMM/d");
 			prefs.setCurrencySymbol(Const.CURRENCY_FORMATS[0]);

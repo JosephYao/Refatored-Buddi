@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBudgetDialog;
 import org.homeunix.drummer.view.ModifyDialogLayout;
 
@@ -113,18 +114,23 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 		
 		pulldown.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
-				boolean creditVisible;
+				if (!PrefsInstance.getInstance().getPrefs().isShowCreditLimit())
+					creditLimit.setValue(0);
+
+				boolean isCreditAccount;
 				if (pulldown.getSelectedItem() instanceof Type){
 					Type t = (Type) pulldown.getSelectedItem();
-					creditVisible = t.isCredit();
+					isCreditAccount = t.isCredit();
 				}
 				else
-					creditVisible = false;
-				
-				creditLimit.setEnabled(creditVisible);
-				creditLimitLabel.setEnabled(creditVisible);
-				if (!creditVisible)
-					creditLimit.setValue(0);
+					isCreditAccount = false;
+
+				if (isCreditAccount){
+					creditLimitLabel.setText(Translate.getInstance().get(TranslateKeys.CREDIT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
+				}
+				else{
+					creditLimitLabel.setText(Translate.getInstance().get(TranslateKeys.OVERDRAFT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
+				}
 			}
 		});
 		

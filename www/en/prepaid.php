@@ -11,7 +11,7 @@ To set this up, you can do the following:
 </p>
 
 <ul>
-<li>Create a new liability account.  For this example, we will call it Prepaid Auto Maintenance.
+<li>Create a new Liability account.  (If you have created your data file with version 1.7.2 or higher, you can also use the type 'Prepaid' - it works exactly the same way, but the name looks better).  For this example, we will call it Prepaid Auto Maintenance.
 <br>
 <img src='../img/prepaid/create_new_account.png' alt="Create a new Prepaid Liability account">
 </li>

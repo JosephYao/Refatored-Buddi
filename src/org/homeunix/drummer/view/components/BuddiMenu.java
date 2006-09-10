@@ -49,9 +49,9 @@ import org.homeunix.drummer.view.ReportFrameLayout;
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
 	
-	private final JFrame frame;
+	private final AbstractBudgetFrame frame;
 	
-	public BuddiMenu(JFrame frame){
+	public BuddiMenu(AbstractBudgetFrame frame){
 		super();
 		
 		this.frame = frame;

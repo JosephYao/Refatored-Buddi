@@ -40,12 +40,14 @@ public class AccountListPanel extends ListPanelLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				tree.clearSelection();
 				new AccountModifyDialog().clearContent().openWindow();
+				AccountListPanel.this.updateButtons();
 			}
 		});
 		
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				new AccountModifyDialog().loadSource(getSelectedAccount()).openWindow();
+				AccountListPanel.this.updateButtons();
 			}
 		});
 
@@ -88,6 +90,7 @@ public class AccountListPanel extends ListPanelLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				if (getSelectedAccount() != null){
 					new TransactionsFrame(getSelectedAccount());
+					AccountListPanel.this.updateButtons();
 				}
 			}
 		});

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.components.text.JDecimalField;
 
@@ -65,7 +66,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		pulldownModel = new DefaultComboBoxModel();
 		pulldown = new JComboBox(pulldownModel);
 		
-		creditLimitLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CREDIT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
+		creditLimitLabel = new JLabel(Translate.getInstance().get(TranslateKeys.OVERDRAFT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
 		interestRateLabel = new JLabel(Translate.getInstance().get(TranslateKeys.INTEREST_RATE) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
 		
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
@@ -82,10 +83,14 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		textPanel.add(amount);
 		textPanel.add(pulldownLabel);
 		textPanel.add(pulldown);
-		textPanel.add(creditLimitLabel);
-		textPanel.add(creditLimit);
-		textPanel.add(interestRateLabel);
-		textPanel.add(interestRate);		
+		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit()){
+			textPanel.add(creditLimitLabel);
+			textPanel.add(creditLimit);
+		}
+		if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()){
+			textPanel.add(interestRateLabel);
+			textPanel.add(interestRate);
+		}
 		textPanel.add(gap);
 		textPanel.add(check);
 		
