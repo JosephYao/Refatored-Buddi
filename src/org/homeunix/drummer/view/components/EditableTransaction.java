@@ -18,7 +18,6 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -53,8 +52,8 @@ public class EditableTransaction extends JPanel {
 	
 	private final JDateChooser date;
 	private final JDecimalField amount;
-	private final JComboBox from;
-	private final JComboBox to;
+	private final JScrollingComboBox from;
+	private final JScrollingComboBox to;
 	private final JHintTextField number;
 	private final JHintAutoCompleteTextField description;
 	private final JHintTextArea memo;
@@ -73,8 +72,8 @@ public class EditableTransaction extends JPanel {
 				
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
 		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
-		from = new JComboBox();
-		to = new JComboBox();
+		from = new JScrollingComboBox();
+		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));
 		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.DEFAULT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.DEFAULT_MEMO));
