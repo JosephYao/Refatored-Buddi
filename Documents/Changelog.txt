@@ -1,3 +1,9 @@
+1.7.2 (September 10 2006)
+-Fixed bug which would not let To / From fields display all items when too many categories were included.  Now scrollbars are added.
+-Some speed improvements when rendering large numbers of transactions; still room for improvement, though.
+-Added icon to window frame (Thanks to John Didion for this patch)
+-Added option to select a custom look and feel from the command line.  (Thanks to John Didion for this patch)  Please run java -jar Buddi.jar --help for more syntax.
+
 1.7.1 (September 7 2006)
 -Added Spanish translation
 -Added Cleared and Reconciled checkboxes to transactions.  Please let me know all feedback about these features.  Note: Before using them you need to first enable them in the Preferences screen, under 'Show Advanced'.

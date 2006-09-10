@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Tue Aug 22 10:32:23 MDT 2006
+#Sun Sep 10 09:09:52 MDT 2006
 onejar.license.required=false
 manifest.classpath=
 manifest.removesigners=true
@@ -11,4 +11,4 @@ manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
 excludes=<po|Buddi>~.svn/
-includes=<inc|Buddi/images>
+includes=<inc|Buddi/images>~Buddi.gif
