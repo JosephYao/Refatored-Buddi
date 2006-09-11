@@ -59,8 +59,8 @@ public abstract class AbstractFrame extends JFrame{
 					PrefsInstance.getInstance().getPrefs().getMainWindow().getY()
 			);
 			d = new Dimension(
-					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(), 400),
-					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight(), 300)					
+					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(), 500),
+					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight(), 450)					
 			);
 		}
 		else if (this instanceof TransactionsFrame){

@@ -151,8 +151,8 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 //		viewPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //		otherPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
-		localePanel.setBorder(BorderFactory.createTitledBorder(""));
-		viewPanel.setBorder(BorderFactory.createTitledBorder(""));
+		localePanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.LOCALE)));
+		viewPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.VIEW)));
 //		otherPanel.setBorder(BorderFactory.createTitledBorder(""));
 		
 //		JPanel textPanel = new JPanel(new GridLayout(0, 1));

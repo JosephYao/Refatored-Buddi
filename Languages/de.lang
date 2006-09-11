@@ -235,3 +235,5 @@ TOOLTIP_SHOW_CREDIT_LIMIT=Show Credit Limit (for credit accounts) and Overdraft 
 TOOLTIP_SHOW_INTEREST_RATE=Show the interest rate in the Accounts window, and allow you to enter it for each account in the Account Edit window.  Does not automatically calculate interest.
 TOOLTIP_SHOW_ACCOUNT_TYPES=List each account under a parent showing the type.  This gives you the option of rolling up account types for those which are not used often (such as investment accounts).
 RESTART_NEEDED=Buddi must be restarted before the language change can complete.\nDo you want to restart now?  All open windows will be closed.
+LOCALE=Locale
+VIEW=View
