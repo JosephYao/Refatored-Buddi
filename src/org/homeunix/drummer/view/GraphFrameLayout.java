@@ -29,7 +29,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 
-public abstract class GraphFrameLayout extends AbstractBudgetFrame {
+public abstract class GraphFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 
 	protected final JPanel reportPanel;
@@ -89,7 +89,7 @@ public abstract class GraphFrameLayout extends AbstractBudgetFrame {
 	
 	
 	@Override
-	protected AbstractBudgetFrame initActions() {
+	protected AbstractFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
 //			@Override
 //			public void componentResized(ComponentEvent arg0) {

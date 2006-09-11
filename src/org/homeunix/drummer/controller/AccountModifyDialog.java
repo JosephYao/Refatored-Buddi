@@ -15,7 +15,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
+import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.ModifyDialogLayout;
 
 public class AccountModifyDialog extends ModifyDialogLayout<Account> {
@@ -34,7 +34,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	}
 		
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
@@ -138,7 +138,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		updateContent();
 		
 		if (source == null){
@@ -162,7 +162,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 		return this;
 	}
 
-	public AbstractBudgetDialog updateContent(){
+	public AbstractDialog updateContent(){
 		pulldownModel.removeAllElements();
 		pulldownModel.addElement(null);
 

@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
+import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.CustomDateDialogLayout;
 import org.homeunix.drummer.view.ReportPanelLayout.ReportType;
 
@@ -30,12 +30,12 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 	}
 	
 	@Override
-	protected AbstractBudgetDialog clearContent() {
+	protected AbstractDialog clearContent() {
 		return this;
 	}
 
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -72,17 +72,17 @@ public class CustomEndDateDialog extends CustomDateDialogLayout {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetDialog updateButtons() {
+	public AbstractDialog updateButtons() {
 		return this;
 	}
 
 	@Override
-	protected AbstractBudgetDialog updateContent() {
+	protected AbstractDialog updateContent() {
 		return this;
 	}
 	

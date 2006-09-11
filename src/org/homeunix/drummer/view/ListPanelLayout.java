@@ -30,7 +30,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.SourceCellRenderer;
 
-public abstract class ListPanelLayout extends AbstractBudgetPanel {
+public abstract class ListPanelLayout extends AbstractPanel {
 	public static final long serialVersionUID = 0;
 
 	protected final JTree tree;
@@ -126,7 +126,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 	}
 
 	@Override
-	protected AbstractBudgetPanel initActions() {
+	protected AbstractPanel initActions() {
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -180,7 +180,7 @@ public abstract class ListPanelLayout extends AbstractBudgetPanel {
 		return this;
 	}
 
-	public AbstractBudgetPanel updateButtons(){
+	public AbstractPanel updateButtons(){
 		if (selectedSource == null){
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);

@@ -13,7 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
+import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.EditScheduledTransactionsFrameLayout;
 
 public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFrameLayout {
@@ -24,7 +24,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 	}
 		
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		doneButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				EditScheduledTransactionsFrame.this.setVisible(false);
@@ -78,13 +78,13 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		updateContent();
 		
 		return this;
 	}
 
-	public AbstractBudgetDialog updateContent(){
+	public AbstractDialog updateContent(){
 		
 		Vector<Schedule> scheduledTransactions = DataInstance.getInstance().getScheduledTransactions();
 		list.setListData(scheduledTransactions);

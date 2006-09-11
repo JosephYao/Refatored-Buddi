@@ -24,7 +24,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.view.components.text.JDecimalField;
 
-public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialog {
+public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -124,7 +124,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 	
 	protected abstract String getType();
 	
-	public AbstractBudgetDialog clearContent(){
+	public AbstractDialog clearContent(){
 		name.setText("");
 		amount.setValue(0);
 		pulldown.setSelectedItem(null);
@@ -134,13 +134,13 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBudgetDialo
 		return this;
 	}
 	
-	public AbstractBudgetDialog loadSource(SourceType source){
+	public AbstractDialog loadSource(SourceType source){
 		this.source = source;
 		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
 		return this;
 	}
 	
-	public AbstractBudgetDialog updateButtons(){
+	public AbstractDialog updateButtons(){
 		
 		return this;
 	}

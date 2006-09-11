@@ -43,15 +43,15 @@ import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AboutDialog;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
 	
-	private final AbstractBudgetFrame frame;
+	private final AbstractFrame frame;
 	
-	public BuddiMenu(AbstractBudgetFrame frame){
+	public BuddiMenu(AbstractFrame frame){
 		super();
 		
 		this.frame = frame;
@@ -343,8 +343,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		print.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (BuddiMenu.this.frame instanceof AbstractBudgetFrame){
-					Component toPrint = ((AbstractBudgetFrame) BuddiMenu.this.frame).getPrintedComponent();
+				if (BuddiMenu.this.frame instanceof AbstractFrame){
+					Component toPrint = ((AbstractFrame) BuddiMenu.this.frame).getPrintedComponent();
 					
 					if (toPrint != null){
 						PrintUtilities pu = new PrintUtilities(toPrint);

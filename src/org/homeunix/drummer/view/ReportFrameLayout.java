@@ -32,7 +32,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 
-public abstract class ReportFrameLayout extends AbstractBudgetFrame {
+public abstract class ReportFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 
 	protected final JTree reportTree;
@@ -111,7 +111,7 @@ public abstract class ReportFrameLayout extends AbstractBudgetFrame {
 	public abstract String getHtmlReport();
 	
 	@Override
-	protected AbstractBudgetFrame initActions() {
+	protected AbstractFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
 //			@Override
 //			public void componentResized(ComponentEvent arg0) {

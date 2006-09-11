@@ -119,6 +119,6 @@ public class Buddi {
 			public void run() {
 				launchGUI();
 			}
-		});		
+		});
 	}
 }

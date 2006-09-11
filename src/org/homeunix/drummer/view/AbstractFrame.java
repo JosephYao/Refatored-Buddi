@@ -17,37 +17,37 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.BuddiMenu;
 
-public abstract class AbstractBudgetFrame extends JFrame{	
-	protected AbstractBudgetFrame(){
+public abstract class AbstractFrame extends JFrame{	
+	protected AbstractFrame(){
 		
 		this.setJMenuBar(new BuddiMenu(this));
 	}
 	
-	protected abstract AbstractBudgetFrame initActions();
+	protected abstract AbstractFrame initActions();
 	
-	protected abstract AbstractBudgetFrame initContent();
+	protected abstract AbstractFrame initContent();
 	
-	public abstract AbstractBudgetFrame updateContent();
+	public abstract AbstractFrame updateContent();
 	
-	public abstract AbstractBudgetFrame updateButtons();
+	public abstract AbstractFrame updateButtons();
 
 	
 	/**
 	 * Override this to give your window the ability to reset
 	 * @return
 	 */
-	public AbstractBudgetFrame clearContent(){
+	public AbstractFrame clearContent(){
 		
 		return this;
 	}
 
 	
-	public AbstractBudgetFrame load(){
+	public AbstractFrame load(){
 		updateContent();
 		return this;
 	}
 	
-	public AbstractBudgetFrame openWindow(){
+	public AbstractFrame openWindow(){
 		Point p;
 		Dimension d;
 		
@@ -107,7 +107,7 @@ public abstract class AbstractBudgetFrame extends JFrame{
 		
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		if (null == cl) {
-			cl = AbstractBudgetFrame.class.getClassLoader();
+			cl = AbstractFrame.class.getClassLoader();
 		}
 		
 		URL imageResource = cl.getResource("Buddi.gif");

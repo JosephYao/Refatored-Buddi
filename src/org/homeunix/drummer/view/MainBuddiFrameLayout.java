@@ -17,7 +17,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.Log;
 
 
-public abstract class MainBuddiFrameLayout extends AbstractBudgetFrame {
+public abstract class MainBuddiFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 	private final AccountListPanel accountListPanel;
 	private final CategoryListPanel categoryListPanel;
@@ -51,7 +51,7 @@ public abstract class MainBuddiFrameLayout extends AbstractBudgetFrame {
 		return categoryListPanel;
 	}
 	
-	protected AbstractBudgetPanel getSelectedPanel(){
+	protected AbstractPanel getSelectedPanel(){
 		if (tabs.getSelectedComponent().equals(accountListPanel))
 			return accountListPanel;
 		else if (tabs.getSelectedComponent().equals(categoryListPanel))

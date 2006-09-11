@@ -134,10 +134,39 @@ public class PrefsInstance {
 				Log.critical("Cannot use a null file");
 				System.exit(1);
 			}
+
+			File languageLocation = new File(Const.LANGUAGE_FOLDER);
+			if (languageLocation.exists() && languageLocation.isDirectory()){
+				Vector<String> languages = new Vector<String>();
+				for (File f: languageLocation.listFiles())
+					if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
+						languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+
+				Object[] options = languages.toArray();
+				Object defaultOption = options[languages.indexOf("en")];
+				Object retValue = JOptionPane.showInputDialog(
+						null, 
+						"Please choose your language:", 
+						"Language", 
+						JOptionPane.PLAIN_MESSAGE, 
+						null, 
+						options, 
+						defaultOption
+				);
+				
+				if (retValue != null)
+					prefs.setLanguage((String) retValue);
+				else{
+					JOptionPane.showMessageDialog(null, "Invalid selection.  Defaulting to English - you can change this in Preferences.", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
+					prefs.setLanguage("en");	
+				}
+			}
+			else{
+				prefs.setLanguage("en");	
+			}
 			
 			//Set meaningful defaults
 			prefs.setDataFile(dataFileName);
-			prefs.setLanguage("en");
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
 			prefs.setShowAutoComplete(true);

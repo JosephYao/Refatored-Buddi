@@ -4,6 +4,7 @@
 package org.homeunix.drummer.controller;
 
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -30,7 +31,7 @@ import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.SwingWorker;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.drummer.view.MainBuddiFrameLayout;
 
@@ -38,14 +39,40 @@ import org.homeunix.drummer.view.MainBuddiFrameLayout;
 public class MainBuddiFrame extends MainBuddiFrameLayout {
 	public static final long serialVersionUID = 0;
 	
+	/**
+	 * Get an instance of the main Buddi window.
+	 * @return MainBuddiFrame - Main Buddi window instance
+	 */
 	public static MainBuddiFrame getInstance() {
 		return SingletonHolder.instance;
 	}
 	
 	private static class SingletonHolder {
 		private static MainBuddiFrame instance = new MainBuddiFrame();
+		
+		public static void restartProgram(){
+			instance = new MainBuddiFrame();
+		}
 	}
 	
+	/**
+	 * Forces a restart of the program.
+	 */
+	public static void restartProgram(){
+		for(Frame frame : TransactionsFrame.getFrames()){
+			frame.dispose();
+		}
+		
+		getInstance().dispose();
+		
+		SingletonHolder.instance = null;
+		SingletonHolder.restartProgram();
+		getInstance().openWindow();
+	}
+	
+	/**
+	 * Constructor for the main Buddi window.
+	 */
 	private MainBuddiFrame(){
 		super();
 		
@@ -53,20 +80,26 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		updateScheduledTransactions();
 		
 		DataInstance.getInstance().calculateAllBalances();
+	}
+	
+	@Override
+	public AbstractFrame openWindow() {
 		initActions();
 		
 		startUpdateCheck();
 		startVersionCheck();
+
+		return super.openWindow();
 	}
 
 	@Override
-	protected AbstractBudgetFrame initActions() {
-		this.addComponentListener(new ComponentAdapter(){
+	protected AbstractFrame initActions() {
+		getInstance().addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentResized(ComponentEvent arg0) {
 				Log.debug("Main window resized");
 				
-				MainBuddiFrame.this.savePosition();
+				MainBuddiFrame.getInstance().savePosition();
 								
 				super.componentResized(arg0);
 			}
@@ -75,44 +108,44 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 			public void componentHidden(ComponentEvent arg0) {
 				Log.debug("Main Window hidden");
 				
-				MainBuddiFrame.this.savePosition();
+				MainBuddiFrame.getInstance().savePosition();
 				
 				super.componentHidden(arg0);
 			}
 		});
 		
 		if (Buddi.isMac()){
-			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			getInstance().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			Application.getInstance().addReopenApplicationListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					if (!MainBuddiFrame.this.isVisible())
-						MainBuddiFrame.this.setVisible(true);
+					if (!MainBuddiFrame.getInstance().isVisible())
+						MainBuddiFrame.getInstance().setVisible(true);
 				}
 			});
 		}
 		else{
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+			getInstance().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		}
 		
-		return this;
+		return getInstance();
 	}
 
 	@Override
-	protected AbstractBudgetFrame initContent() {
-		return this;
+	protected AbstractFrame initContent() {
+		return getInstance();
 	}
 
 	@Override
-	public AbstractBudgetFrame updateButtons() {
-		return this;
+	public AbstractFrame updateButtons() {
+		return getInstance();
 	}
 
 	@Override
-	public AbstractBudgetFrame updateContent() {
+	public AbstractFrame updateContent() {
 		getAccountListPanel().updateContent();
 		getCategoryListPanel().updateContent();
 		
-		return this;
+		return getInstance();
 	}
 
 	@Override
@@ -128,15 +161,18 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 	public void savePosition(){
 		PrefsInstance.getInstance().checkWindowSanity();
 		
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(this.getHeight());
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(this.getWidth());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(getInstance().getHeight());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(getInstance().getWidth());
 		
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setX(this.getX());
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setY(this.getY());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setX(getInstance().getX());
+		PrefsInstance.getInstance().getPrefs().getMainWindow().setY(getInstance().getY());
 		
 		PrefsInstance.getInstance().savePrefs();
 	}
 
+	/**
+	 * Starts a thread which checks the Internet for any new versions.
+	 */
 	public void startUpdateCheck(){
 		if (PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
 			SwingWorker updateWorker = new SwingWorker(){
@@ -171,7 +207,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 						buttons[1] = Translate.getInstance().get(TranslateKeys.CANCEL);
 						
 						int reply = JOptionPane.showOptionDialog(
-								MainBuddiFrame.this, 
+								MainBuddiFrame.getInstance(), 
 								Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE)
 								+ " " + get() + "\n"
 								+ Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE_2),
@@ -208,6 +244,9 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		}
 	}
 	
+	/**
+	 * Checks if getInstance() version has been run before, and if not, displays any messages that show on first run. 
+	 */
 	private void startVersionCheck(){
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			PrefsInstance.getInstance().updateVersion();
@@ -226,7 +265,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 					buttons[1] = Translate.getInstance().get(TranslateKeys.NOT_NOW);
 					
 					int reply = JOptionPane.showOptionDialog(
-							MainBuddiFrame.this, 
+							MainBuddiFrame.getInstance(), 
 							Translate.getInstance().get(TranslateKeys.DONATE_MESSAGE),
 							Translate.getInstance().get(TranslateKeys.DONATE_HEADER),
 							JOptionPane.YES_NO_OPTION,
@@ -252,6 +291,10 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		}
 	}
 	
+	/**
+	 * Runs through the list of scheduled transactions, and adds any which
+	 * show be executed to the apropriate transacactions list.
+	 */
 	public void updateScheduledTransactions(){
 		//Update any scheduled transactions
 		final Date today = DateUtil.getEndOfDay(new Date());

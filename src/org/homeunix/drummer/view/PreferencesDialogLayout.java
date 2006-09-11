@@ -27,7 +27,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 
-public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
+public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -49,7 +49,7 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 	
 	protected final DefaultComboBoxModel languageModel;
 	
-	protected PreferencesFrameLayout(Frame owner){
+	protected PreferencesDialogLayout(Frame owner){
 		super(owner);
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
@@ -208,11 +208,11 @@ public abstract class PreferencesFrameLayout extends AbstractBudgetDialog {
 		initActions();		
 	}
 	
-	public AbstractBudgetDialog clearContent(){
+	public AbstractDialog clearContent(){
 		return this;
 	}
 		
-	public AbstractBudgetDialog updateButtons(){
+	public AbstractDialog updateButtons(){
 		
 		return this;
 	}

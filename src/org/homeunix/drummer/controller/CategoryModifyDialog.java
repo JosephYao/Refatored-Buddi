@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
+import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.ModifyDialogLayout;
 
 public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
@@ -33,7 +33,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	}
 		
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,7 +141,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		
 		if (source == null){
 			updateContent();
@@ -173,7 +173,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 		return this;
 	}
 
-	public AbstractBudgetDialog updateContent(){
+	public AbstractDialog updateContent(){
 		pulldownModel.removeAllElements();
 		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 

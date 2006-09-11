@@ -24,7 +24,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.Log;
 
-public class AboutDialog extends AbstractBudgetDialog {
+public class AboutDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	private final JButton okButton;
@@ -104,12 +104,12 @@ public class AboutDialog extends AbstractBudgetDialog {
 	}
 	
 	@Override
-	protected AbstractBudgetDialog clearContent() {
+	protected AbstractDialog clearContent() {
 		return this;
 	}
 
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				AboutDialog.this.setVisible(false);
@@ -144,17 +144,17 @@ public class AboutDialog extends AbstractBudgetDialog {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetDialog updateButtons() {
+	public AbstractDialog updateButtons() {
 		return this;
 	}
 
 	@Override
-	protected AbstractBudgetDialog updateContent() {
+	protected AbstractDialog updateContent() {
 		return this;
 	}
 }

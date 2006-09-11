@@ -16,7 +16,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -74,17 +74,17 @@ public class ExpensesGraphFrame extends GraphFrameLayout {
 	}
 
 	@Override
-	protected AbstractBudgetFrame initContent() {
+	protected AbstractFrame initContent() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateButtons() {
+	public AbstractFrame updateButtons() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateContent() {
+	public AbstractFrame updateContent() {
 		return this;
 	}
 }

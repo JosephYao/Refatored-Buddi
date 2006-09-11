@@ -1,6 +1,7 @@
 -Added Overdraft limit for debit accounts (comparable to credit limit)
 -Fixed a bug which did not disable Edit, Delete, and Open buttons after editing / adding / opening an account.
 -Did some more work on Preferences to make the options more clear
+-You can now change languages without having to manually restart the program
 
 1.7.2 (September 10 2006)
 -Fixed bug which would not let To / From fields display all items when too many categories were included.  Now scrollbars are added.

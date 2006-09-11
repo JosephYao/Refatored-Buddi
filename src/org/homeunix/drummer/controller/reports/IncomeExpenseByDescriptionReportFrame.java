@@ -34,7 +34,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
@@ -111,7 +111,7 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 	}
 	
 	@Override
-	protected AbstractBudgetFrame initActions() {
+	protected AbstractFrame initActions() {
 		reportTree.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -153,17 +153,17 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 	}
 
 	@Override
-	protected AbstractBudgetFrame initContent() {
+	protected AbstractFrame initContent() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateButtons() {
+	public AbstractFrame updateButtons() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateContent() {
+	public AbstractFrame updateContent() {
 		return this;
 	}
 	

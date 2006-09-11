@@ -30,7 +30,7 @@ import org.homeunix.drummer.view.components.EditableTransaction;
 
 import com.toedter.calendar.JDateChooser;
 
-public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
+public abstract class ModifyScheduleDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -156,12 +156,12 @@ public abstract class ModifyScheduleDialogLayout extends AbstractBudgetDialog {
 	
 	protected abstract String getType();
 	
-	public AbstractBudgetDialog clearContent(){
+	public AbstractDialog clearContent(){
 
 		return this;
 	}
 	
-	public AbstractBudgetDialog updateButtons(){
+	public AbstractDialog updateButtons(){
 		
 		return this;
 	}

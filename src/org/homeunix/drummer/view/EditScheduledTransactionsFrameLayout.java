@@ -19,7 +19,7 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
-public abstract class EditScheduledTransactionsFrameLayout extends AbstractBudgetDialog {
+public abstract class EditScheduledTransactionsFrameLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton doneButton;
@@ -88,11 +88,11 @@ public abstract class EditScheduledTransactionsFrameLayout extends AbstractBudge
 		initActions();		
 	}
 	
-	public AbstractBudgetDialog clearContent(){
+	public AbstractDialog clearContent(){
 		return this;
 	}
 		
-	public AbstractBudgetDialog updateButtons(){
+	public AbstractDialog updateButtons(){
 		
 		editButton.setEnabled(list.getSelectedIndices().length > 0);
 		deleteButton.setEnabled(list.getSelectedIndices().length > 0);

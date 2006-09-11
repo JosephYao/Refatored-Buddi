@@ -25,7 +25,7 @@ import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.drummer.view.components.text.JHintTextField;
 
-public abstract class TransactionsFrameLayout extends AbstractBudgetFrame {
+public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 
 	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();

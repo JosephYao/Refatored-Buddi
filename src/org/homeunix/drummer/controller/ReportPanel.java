@@ -23,7 +23,7 @@ import org.homeunix.drummer.controller.reports.NetWorthGraphFrame;
 import org.homeunix.drummer.controller.reports.NetWorthOverTimeGraphFrame;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.DateUtil;
-import org.homeunix.drummer.view.AbstractBudgetPanel;
+import org.homeunix.drummer.view.AbstractPanel;
 import org.homeunix.drummer.view.ReportPanelLayout;
 
 public class ReportPanel extends ReportPanelLayout {
@@ -33,7 +33,7 @@ public class ReportPanel extends ReportPanelLayout {
 		super();
 	}
 	
-	protected AbstractBudgetPanel initActions(){
+	protected AbstractPanel initActions(){
 		for (JComboBox box : jComboBoxes.keySet()) {
 			box.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
@@ -95,13 +95,13 @@ public class ReportPanel extends ReportPanelLayout {
 		return this;
 	}
 	
-	protected AbstractBudgetPanel initContent(){
+	protected AbstractPanel initContent(){
 		DataInstance.getInstance().calculateAllBalances();
 		
 		return this;
 	}
 	
-	public AbstractBudgetPanel updateContent(){
+	public AbstractPanel updateContent(){
 
 		return this;
 	}

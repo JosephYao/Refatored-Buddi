@@ -18,7 +18,7 @@ import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
+import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.ModifyScheduleDialogLayout;
 
 public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
@@ -45,7 +45,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 	}
 		
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if (ModifyScheduleDialog.this.ensureInfoCorrect()){
@@ -90,14 +90,14 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		updateContent();
 		
 		
 		return this;
 	}
 
-	public AbstractBudgetDialog updateContent(){
+	public AbstractDialog updateContent(){
 		
 		return this;
 	}

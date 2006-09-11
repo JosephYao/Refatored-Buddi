@@ -21,7 +21,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 
 import com.toedter.calendar.JDateChooser;
 
-public abstract class CustomDateDialogLayout extends AbstractBudgetDialog {
+public abstract class CustomDateDialogLayout extends AbstractDialog {
 	
 	protected final JButton okButton;
 	protected final JButton cancelButton;

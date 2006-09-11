@@ -15,7 +15,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -96,17 +96,17 @@ public class NetWorthOverTimeGraphFrame extends GraphFrameLayout {
 	}
 
 	@Override
-	protected AbstractBudgetFrame initContent() {
+	protected AbstractFrame initContent() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateButtons() {
+	public AbstractFrame updateButtons() {
 		return this;
 	}
 
 	@Override
-	public AbstractBudgetFrame updateContent() {
+	public AbstractFrame updateContent() {
 		return this;
 	}
 }

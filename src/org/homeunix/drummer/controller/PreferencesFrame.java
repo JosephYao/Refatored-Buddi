@@ -14,10 +14,10 @@ import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetDialog;
-import org.homeunix.drummer.view.PreferencesFrameLayout;
+import org.homeunix.drummer.view.AbstractDialog;
+import org.homeunix.drummer.view.PreferencesDialogLayout;
 
-public class PreferencesFrame extends PreferencesFrameLayout {
+public class PreferencesFrame extends PreferencesDialogLayout {
 	public static final long serialVersionUID = 0;
 
 	public PreferencesFrame(){
@@ -25,17 +25,14 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 	}
 		
 	@Override
-	protected AbstractBudgetDialog initActions() {
+	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				boolean needRestart = false;
 				if (!PrefsInstance.getInstance().getPrefs().getLanguage().equals(language.getSelectedItem().toString())){
-					JOptionPane.showMessageDialog(
-							PreferencesFrame.this,
-							Translate.getInstance().get(TranslateKeys.RESTART),
-							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
-							JOptionPane.INFORMATION_MESSAGE);
 				
 					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
+					needRestart = true;
 				}
 				
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
@@ -55,11 +52,32 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 				PrefsInstance.getInstance().getPrefs().setShowAdvanced(showClearReconcile.isSelected());				
 				PrefsInstance.getInstance().savePrefs();
 												
-				Formatter.getInstance().reloadDateFormat();
-				PreferencesFrame.this.setVisible(false);
-				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
-				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
+				Formatter.getInstance().reloadDateFormat();				
+				
+				if (needRestart){
+					int retValue = JOptionPane.showConfirmDialog(
+							PreferencesFrame.this,
+							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
+							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED_TITLE),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE
+					);
+					
+					if (retValue == JOptionPane.YES_OPTION){
+						if (MainBuddiFrame.getInstance() != null)
+							MainBuddiFrame.getInstance().savePosition();
+
+						MainBuddiFrame.restartProgram();
+					}
+				}
+				else {
+					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+					MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
+				}
 				TransactionsFrame.updateAllTransactionWindows();
+				
+				PreferencesFrame.this.setVisible(false);
+				PreferencesFrame.this.dispose();
 			}
 		});
 		
@@ -76,7 +94,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 	}
 
 	@Override
-	protected AbstractBudgetDialog initContent() {
+	protected AbstractDialog initContent() {
 		updateContent();
 
 		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
@@ -95,7 +113,7 @@ public class PreferencesFrame extends PreferencesFrameLayout {
 		return this;
 	}
 
-	public AbstractBudgetDialog updateContent(){
+	public AbstractDialog updateContent(){
 		languageModel.removeAllElements();
 
 		File languageLocation = new File(Const.LANGUAGE_FOLDER);

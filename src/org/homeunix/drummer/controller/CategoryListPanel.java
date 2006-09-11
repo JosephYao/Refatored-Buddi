@@ -22,7 +22,7 @@ import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetPanel;
+import org.homeunix.drummer.view.AbstractPanel;
 import org.homeunix.drummer.view.ListPanelLayout;
 
 public class CategoryListPanel extends ListPanelLayout {
@@ -34,7 +34,7 @@ public class CategoryListPanel extends ListPanelLayout {
 		openButtonPanel.setVisible(false);
 	}
 	
-	protected AbstractBudgetPanel initActions(){
+	protected AbstractPanel initActions(){
 		super.initActions();
 		
 		newButton.addActionListener(new ActionListener(){
@@ -99,13 +99,13 @@ public class CategoryListPanel extends ListPanelLayout {
 		return this;
 	}
 	
-	protected AbstractBudgetPanel initContent(){
+	protected AbstractPanel initContent(){
 		DataInstance.getInstance().calculateAllBalances();
 		
 		return this;
 	}
 	
-	public AbstractBudgetPanel updateContent(){
+	public AbstractPanel updateContent(){
 		long expenses = 0;
 		long income = 0;
 

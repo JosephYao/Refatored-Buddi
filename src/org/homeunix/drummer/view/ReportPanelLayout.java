@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
-public abstract class ReportPanelLayout extends AbstractBudgetPanel {
+public abstract class ReportPanelLayout extends AbstractPanel {
 	public static final long serialVersionUID = 0;
 	
 	protected final Map<JComboBox, ReportType> jComboBoxes; 
@@ -168,7 +168,7 @@ public abstract class ReportPanelLayout extends AbstractBudgetPanel {
 		updateButtons();
 	}
 	
-	public AbstractBudgetPanel updateButtons(){
+	public AbstractPanel updateButtons(){
 
 		return this;
 	}

@@ -25,7 +25,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.AbstractBudgetFrame;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
 
 import de.schlichtherle.swing.filter.FilteredStaticListModel;
@@ -61,7 +61,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		list.setSelectedValue(transaction, true);
 	}
 	
-	protected AbstractBudgetFrame initActions(){
+	protected AbstractFrame initActions(){
 		searchField.getDocument().addDocumentListener(new DocumentListener(){
 			private void update(){
 				if (!searchField.getText().equals(searchField.getHint()))
@@ -315,7 +315,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		}
 	}
 	
-	protected AbstractBudgetFrame initContent(){
+	protected AbstractFrame initContent(){
 		this.setTitle(account.getName() + " - " + Translate.getInstance().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
 		editableTransaction.setTransaction(null, true);
@@ -323,7 +323,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		return this;
 	}
 	
-	public AbstractBudgetFrame updateContent(){
+	public AbstractFrame updateContent(){
 		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
 		data.add(null);
 		list.setListData(data);
@@ -369,7 +369,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		return this;
 	}
 	
-	public AbstractBudgetFrame updateButtons(){
+	public AbstractFrame updateButtons(){
 		if (editableTransaction == null 
 				|| editableTransaction.getTransaction() == null){
 			recordButton.setText(Translate.getInstance().get(TranslateKeys.RECORD));
@@ -405,7 +405,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 
 	@Override
-	public AbstractBudgetFrame openWindow() {
+	public AbstractFrame openWindow() {
 		list.setSelectedIndex(list.getModel().getSize() - 1);
 		editableTransaction.resetSelection();
 		return super.openWindow();
