@@ -14,7 +14,7 @@ You need to have Java 1.5 installed for Buddi to work. If you are running OS X, 
 
 <h2>How can I password protect / encrypt my data?</h2>
 <p>
-Originally, I felt that this was the duty of the OS, and that Buddi would not implement this feature.  However, after discussing this at length with John Didion, he convinced me that application based encryption (when done properly) is a Good Thing.  He has graciously sent me a patch which performs this function (very elegantly, I may add).  This is included in the Development branch as of 1.7.3, and barring any problems, will appear in the 1.8 Stable branch.
+Originally, I felt that this was the duty of the OS, and that Buddi would not implement this feature.  However, after discussing this at length with John Didion, he convinced me that application based encryption (when done properly) is a Good Thing.  He has graciously sent me a patch which performs this function (very elegantly, I may add) using an AES cipher.  This is included in the Development branch as of 1.7.3, and barring any problems, will appear in the 1.8 Stable branch.
 </p>
 
 <h2>How to I make a 'virtual account', which can accumulate money over multiple months</h2>

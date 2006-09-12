@@ -2,6 +2,12 @@
 
 <h1>News</h1>
 
+<h2>1.6.1 (September 10 2006)</h2>
+<ul>
+<li>Added Spanish translation (thanks to Diego Garcia for submitting this)</li>
+<li>Fixed a bug which did not allow all categories to be shown in the transactions window, if there are too many defined</li>
+</ul>
+
 <h2>1.6.0 (September 5 2006)</h2>
 <ul>
 <li>
