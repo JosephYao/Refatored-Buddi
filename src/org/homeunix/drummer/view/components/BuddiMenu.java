@@ -74,6 +74,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE));
 		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_DATA_FILE));
 		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
+		final JScreenMenuItem encrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE));
+		final JScreenMenuItem decrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
 		final JScreenMenuItem export = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML));
 		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
@@ -82,6 +84,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		open.addUserFrame(MainBuddiFrame.class);
 		backup.addUserFrame(MainBuddiFrame.class);
 		restore.addUserFrame(MainBuddiFrame.class);
+		encrypt.addUserFrame(MainBuddiFrame.class);
+		decrypt.addUserFrame(MainBuddiFrame.class);
 		export.addUserFrame(IncomeExpenseByCategoryReportFrame.class);
 		export.addUserFrame(IncomeExpenseByDescriptionReportFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
@@ -107,6 +111,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.addSeparator();
 		file.add(backup);
 		file.add(restore);
+		file.addSeparator();
+		file.add(encrypt);
+		file.add(decrypt);
 		file.addSeparator();
 		file.add(print);
 		file.add(export);
@@ -337,6 +344,36 @@ public class BuddiMenu extends JScreenMenuBar {
 									JOptionPane.INFORMATION_MESSAGE
 							);
 					}
+				}
+			}
+		});
+		
+		encrypt.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if (JOptionPane.showConfirmDialog(
+						MainBuddiFrame.getInstance(), 
+						Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_WARNING),
+						Translate.getInstance().get(TranslateKeys.CHANGE_ENCRYPTION),
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE
+				) == JOptionPane.YES_OPTION){
+					DataInstance.getInstance().createNewCipher(true);
+					DataInstance.getInstance().saveDataModel();
+				}
+			}
+		});
+		
+		decrypt.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if (JOptionPane.showConfirmDialog(
+						MainBuddiFrame.getInstance(), 
+						Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE_WARNING),
+						Translate.getInstance().get(TranslateKeys.CHANGE_ENCRYPTION),
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE
+				) == JOptionPane.YES_OPTION){
+					DataInstance.getInstance().createNewCipher(false);
+					DataInstance.getInstance().saveDataModel();
 				}
 			}
 		});

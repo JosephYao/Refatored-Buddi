@@ -4,17 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -22,26 +23,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
 public class PasswordInputPane extends JPanel {
 	private static final long serialVersionUID = 0;
 
-	public static String askForPassword() {
+	public static String askForPassword(boolean showConfirm) {
 		return askForPassword(
-				null, 
-				Translate.getInstance().get(TranslateKeys.PASSWORD_MESSAGE), 
-				Translate.getInstance().get(TranslateKeys.PASSWORD_TITLE));
+				MainBuddiFrame.getInstance(), 
+				Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD), 
+				Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
+				showConfirm
+		);
 	}
 	
-	public static String askForPassword(Component parentComponent, String message, String title) {
+	public static String askForPassword(Component parentComponent, String message, String title, boolean showConfirm) {
 		PasswordInputPane pane = new PasswordInputPane(message);
 		Component parent = (null == parentComponent) ?
 				JOptionPane.getRootFrame() : parentComponent;
 		pane.setComponentOrientation(parent.getComponentOrientation());
 		
-		JDialog dialog = pane.createDialog(parentComponent, title);
+		JDialog dialog = pane.createDialog(parentComponent, title, showConfirm);
 		dialog.setVisible(true);
         dialog.dispose();
         
@@ -65,57 +70,57 @@ public class PasswordInputPane extends JPanel {
 		this.message = message;
 	}	
 	
-	public JDialog createDialog(Component parentComponent, String title) throws HeadlessException {
+	public JDialog createDialog(Component parentComponent, String title, final boolean showConfirm) throws HeadlessException {
 		Window window = getWindowForComponent(parentComponent);
 	    
 		final JDialog dialog = (window instanceof Frame) ?
 				new JDialog((Frame) window, title, true) :
 			    new JDialog((Dialog) window, title, true);
 		
-		setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.gridwidth = 4;
-		gbc.anchor = GridBagConstraints.WEST;
-		
+		this.setLayout(new GridLayout(0, 1));
+				
 		JLabel messageLabel = new JLabel(this.message, JLabel.LEFT);
-		add(messageLabel, gbc);
+		this.add(messageLabel);
 		
-		gbc.gridy = 1;		
-		gbc.gridwidth = 1;
-		JLabel pw1Label = new JLabel("Password");
-		add(pw1Label, gbc);
+		JPanel passwordPanel1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JLabel pw1Label = new JLabel(Translate.getInstance().get(TranslateKeys.PASSWORD));
+		passwordPanel1.add(pw1Label);
 		
-		gbc.gridx = 1;
-		gbc.gridwidth = 3;
-		final JPasswordField pw1 = new JPasswordField(32);
-		add(pw1, gbc);
+		final JPasswordField pw1 = new JPasswordField();
+		Dimension passwordBoxSize = new Dimension(200, pw1.getPreferredSize().height);
+		pw1.setPreferredSize(passwordBoxSize);
+		passwordPanel1.add(pw1);
 		
-		gbc.gridy = 2;
-		gbc.gridx = 0;
-		gbc.gridwidth = 1;
-		JLabel pw2Label = new JLabel("Confirm Password");
-		add(pw2Label, gbc);
+		this.add(passwordPanel1);
 		
-		gbc.gridx = 1;
-		gbc.gridwidth = 3;
-		final JPasswordField pw2 = new JPasswordField(32);
-		add(pw2, gbc);
+		JPanel passwordPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JLabel pw2Label = new JLabel(Translate.getInstance().get(TranslateKeys.CONFIRM_PASSWORD));
+		passwordPanel2.add(pw2Label);
 		
-		gbc.gridy = 3;
-		gbc.gridwidth = 1;
-		gbc.gridx = 1;
+		final JPasswordField pw2 = new JPasswordField();
+		pw2.setPreferredSize(passwordBoxSize);
+		passwordPanel2.add(pw2);
 		
-		// TODO: these should be translated
-		JButton ok = new JButton("Ok");
-		ok.addActionListener(new ActionListener() {
+		if (showConfirm)
+			this.add(passwordPanel2);
+				
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		okButton.setPreferredSize(new Dimension(Math.max(100, okButton.getPreferredSize().width), okButton.getPreferredSize().height));
+		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String pw1Value = new String(pw1.getPassword());
 				String pw2Value = new String(pw2.getPassword());
-				if ((null == pw1Value) ? (null == pw2Value) : (pw1Value.equals(pw2Value))) {
-					PasswordInputPane.this.value = pw1Value;
-					dialog.setVisible(false);					
+				if ((pw1Value == null && pw2Value == null)
+						|| pw1Value.equals(pw2Value)
+						|| !showConfirm) {
+					if (pw1Value != null && pw1Value.length() == 0){
+						noPasswordEntered(dialog);
+					}
+					else{
+						PasswordInputPane.this.value = pw1Value;
+						dialog.setVisible(false);
+					}
 				} 
 				else {
 					JOptionPane.showMessageDialog(
@@ -124,19 +129,32 @@ public class PasswordInputPane extends JPanel {
 				}
 			}			
 		});
-		add(ok, gbc);
 		
-		gbc.gridx = 2;
-		
-		JButton cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
+		JButton cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		cancelButton.setPreferredSize(new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height));
+		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PasswordInputPane.this.value = null;
+				noPasswordEntered(dialog);
 			}			
 		});
-		add(cancel, gbc);
+
+		this.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
-		dialog.setComponentOrientation(this.getComponentOrientation());
+		//Mac OK buttons should be on the right 
+		if (Buddi.isMac()){
+			buttonPanel.add(cancelButton);
+			buttonPanel.add(okButton);
+		}
+		else{
+			buttonPanel.add(okButton);
+			buttonPanel.add(cancelButton);
+		}
+		
+		this.add(buttonPanel);
+		
+		dialog.getRootPane().setDefaultButton(okButton);
+		
+//		dialog.setComponentOrientation(this.getComponentOrientation());
 		
 		Container contentPane = dialog.getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -149,13 +167,24 @@ public class PasswordInputPane extends JPanel {
         
         WindowAdapter adapter = new WindowAdapter() {            
             public void windowClosing(WindowEvent we) {
-                PasswordInputPane.this.value = null;
+            	noPasswordEntered(dialog);
             }
         };
         dialog.addWindowListener(adapter);
         dialog.addWindowFocusListener(adapter);        
         
 		return dialog;
+	}
+	
+	private void noPasswordEntered(JDialog dialog){
+		JOptionPane.showMessageDialog(
+				MainBuddiFrame.getInstance(), 
+				Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED), 
+				Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED_TITLE), 
+				JOptionPane.INFORMATION_MESSAGE
+		);
+		PasswordInputPane.this.value = null;
+		dialog.setVisible(false);
 	}
 
 	public String getValue() {

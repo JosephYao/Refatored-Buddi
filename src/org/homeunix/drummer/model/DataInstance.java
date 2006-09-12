@@ -48,6 +48,15 @@ public class DataInstance {
 	private ResourceSet resourceSet;
 	private URIConverter.Cipher cipher;
 	
+	/**
+	 * Creates a new cipher, with the encryption set as defined
+	 * @param encrypted
+	 */
+	public void createNewCipher(boolean encrypted){
+		this.cipher = new AESCryptoCipher();
+		((AESCryptoCipher) cipher).setEncrypted(encrypted);
+	}
+	
 	private DataInstance(){
 		File dataFile = null;
 		
