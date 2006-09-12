@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -16,12 +18,14 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
+import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.FileFunctions;
@@ -42,35 +46,38 @@ public class DataInstance {
 	private ModelFactory dataModelFactory = ModelFactoryImpl.eINSTANCE;
 	
 	private ResourceSet resourceSet;
+	private URIConverter.Cipher cipher;
 	
 	private DataInstance(){
-		File dataFile;
+		File dataFile = null;
 		
 		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
 			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-			try{
-				String backupFileLocation = 
-					PrefsInstance.getInstance().getPrefs().getDataFile()
-					.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
-					+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
-					+ Const.DATA_FILE_EXTENSION;
-				File backupFile = new File(backupFileLocation);
-				if (!backupFile.exists()){
-					FileFunctions.copyFile(dataFile, backupFile);
-					Log.debug("Backing up file to " + backupFile);
+			if (dataFile.exists()) {
+				try{
+					String backupFileLocation = 
+						PrefsInstance.getInstance().getPrefs().getDataFile()
+						.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
+						+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
+						+ Const.DATA_FILE_EXTENSION;
+					File backupFile = new File(backupFileLocation);
+					if (!backupFile.exists()){
+						FileFunctions.copyFile(dataFile, backupFile);
+						Log.debug("Backing up file to " + backupFile);
+					}
+				}
+				catch(IOException ioe){
+					Log.emergency("Failure when attempting to backup when starting program: " + ioe);
 				}
 			}
-			catch(IOException ioe){
-				Log.emergency("Failure when attempting to backup when starting program: " + ioe);
-			}
 		}
-		else
-			dataFile = null;
 		
 		loadDataModel(dataFile, false);
 	}
 	
 	public void loadDataModel(File locationFile, boolean forceNewFile){
+		// throw away the old cipher (if any) when we load a new data file
+		this.cipher = new AESCryptoCipher();
 		
 		if (!forceNewFile){
 			if (locationFile == null || !locationFile.getParentFile().exists()){
@@ -109,7 +116,8 @@ public class DataInstance {
 			// Register the default resource factory -- only needed for stand-alone!
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 					Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
-			
+			resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
+						
 			// Register the package
 			@SuppressWarnings("unused") 
 			ModelPackage modelPackage = ModelPackage.eINSTANCE;
@@ -117,7 +125,6 @@ public class DataInstance {
 			// Get the URI of the model file.
 			URI fileURI = URI.createFileURI(locationFile.getAbsolutePath());
 			
-			// Demand load the resource for this file.
 			Resource resource = resourceSet.getResource(fileURI, true);
 			
 			// Print the contents of the resource to System.out.
@@ -234,8 +241,11 @@ public class DataInstance {
 				Resource resource = resourceSet.createResource(fileURI);			
 				resource.getContents().add(dataModel);
 				
+				Map options = new HashMap(1);
+				options.put(Resource.OPTION_CIPHER, this.cipher);
+				
 				try{
-					resource.save(Collections.EMPTY_MAP);
+					resource.save(options);
 				}
 				catch (IOException ioe){}
 			}
@@ -270,10 +280,13 @@ public class DataInstance {
 					Log.debug("Data saved to " + location);
 					
 					Resource resource = resourceSet.createResource(fileURI);
-					
+										
 					resource.getContents().add(getDataModel());
 					
-					resource.save(Collections.EMPTY_MAP);
+					Map options = new HashMap(1);
+					options.put(Resource.OPTION_CIPHER, this.cipher);
+					
+					resource.save(options);
 				}
 				catch (IOException ioe){
 					Log.critical("Error when saving file: " + ioe);
@@ -282,6 +295,7 @@ public class DataInstance {
 //			}			
 //		}.start();
 	}
+	
 	
 	public DataModel getDataModel(){
 		return dataModel;

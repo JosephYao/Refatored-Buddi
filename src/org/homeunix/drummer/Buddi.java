@@ -57,20 +57,17 @@ public class Buddi {
 	public static void main(String[] args) {
 		String prefsLocation = "";
 		Integer verbosity = 0;
-		Integer wait = 0;
 		String lnf = "";
 		
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
-			+ "--lnf\tclassName\tJava Look and Feel to use\n"
-			+ "-w\tMillis\tPause so that debugger can be attached";
+			+ "--lnf\tclassName\tJava Look and Feel to use\n";
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
 		map.put("--lnf", lnf);
-		map.put("-w", wait);
 		try{
 			map = ParseCommands.parse(args, map, help);
 		}
@@ -80,20 +77,8 @@ public class Buddi {
 		}
 		prefsLocation = (String) map.get("-p");
 		verbosity = (Integer) map.get("-v");
-		wait = (Integer) map.get("-w");
 		lnf = (String) map.get("--lnf");
-		
-		if (null != wait) {
-			Log.info("Waiting for debugger for " + wait + " seconds");
-			for (int i = 0; i < wait; i++) {
-				System.out.print(".");
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException ex) {					
-				}
-			}
-		}
-		
+				
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
 		}
@@ -102,13 +87,8 @@ public class Buddi {
 			Log.setLogLevel(verbosity);
 		}
 		
-		if (lnf != null){
-			LookAndFeelManager.getInstance().setLookAndFeel(lnf);
-		}
-		else if (Buddi.isMac()){
-			LookAndFeelManager.getInstance().setLookAndFeel(LookAndFeelManager.QUAQUA_LOOK_AND_FEEL);
-		}
-		
+		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
+				
 		Translate.getInstance().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage()
 		);		
