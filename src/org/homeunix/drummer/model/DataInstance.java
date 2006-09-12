@@ -162,7 +162,10 @@ public class DataInstance {
 					Translate.getInstance().get(TranslateKeys.CREATE_NEW_DATA_FILE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
-				
+
+				//If we are making a new file, we want to ask for encryption options again.
+				this.cipher = new AESCryptoCipher();
+
 				if (!locationFile.exists() && !forceNewFile){
 					JOptionPane.showMessageDialog(
 							null,
