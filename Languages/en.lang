@@ -252,3 +252,6 @@ WINDOW=Window
 YEAR=Year
 YESTERDAY=Yesterday
 ZOOM=Zoom
+
+EMPTY_PASSWORD=You didn't specify a password to decrypt\nthe data file.Exiting.
+EMPTY_PASSWORD_TITLE=No Password Entered

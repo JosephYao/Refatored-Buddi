@@ -260,3 +260,5 @@ TOOLTIP_SHOW_CLEAR_RECONCILE=Show the 'Cleared' and the 'Reconciled' checkboxes 
 TOOLTIP_SHOW_CREDIT_LIMIT=Show Credit Limit (for credit accounts) and Overdraft Limit (for debit accounts).
 TOOLTIP_SHOW_INTEREST_RATE=Show the interest rate in the Accounts window, and allow you to enter it for each account in the Account Edit window.  Does not automatically calculate interest.
 VIEW=View
+EMPTY_PASSWORD=You didn't specify a password to decrypt\nthe data file.Exiting.
+EMPTY_PASSWORD_TITLE=No Password Entered

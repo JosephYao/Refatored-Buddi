@@ -32,6 +32,11 @@ import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
+/**
+ * TODO: allow the user to specify if they'd like to use the maximum
+ * strength encryption supported by their system. Make sure to warn
+ * the user that this may make their encrypted data file non-portable. 
+ */
 @SuppressWarnings("unchecked")
 public class DataInstance {
 	public static DataInstance getInstance() {
@@ -53,7 +58,7 @@ public class DataInstance {
 	 * @param encrypted
 	 */
 	public void createNewCipher(boolean encrypted){
-		this.cipher = new AESCryptoCipher();
+		this.cipher = new AESCryptoCipher(128);
 		((AESCryptoCipher) cipher).setEncrypted(encrypted);
 	}
 	
@@ -86,7 +91,7 @@ public class DataInstance {
 	
 	public void loadDataModel(File locationFile, boolean forceNewFile){
 		// throw away the old cipher (if any) when we load a new data file
-		this.cipher = new AESCryptoCipher();
+		this.cipher = new AESCryptoCipher(128);
 		
 		if (!forceNewFile){
 			if (locationFile == null || !locationFile.getParentFile().exists()){
@@ -164,7 +169,7 @@ public class DataInstance {
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
 
 				//If we are making a new file, we want to ask for encryption options again.
-				this.cipher = new AESCryptoCipher();
+				this.cipher = new AESCryptoCipher(128);
 
 				if (!locationFile.exists() && !forceNewFile){
 					JOptionPane.showMessageDialog(
