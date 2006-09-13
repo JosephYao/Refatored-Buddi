@@ -1,3 +1,5 @@
+1.7.3 (September 13 2006)
+-Added encryption of data files (thanks to John Didion for creating the actual cipher and associated logic).  This lets you encrypt the data file with strong encryption without relying on the OS to do this for you.
 -Added Overdraft limit for debit accounts (comparable to credit limit)
 -Fixed a bug which did not disable Edit, Delete, and Open buttons after editing / adding / opening an account.
 -Did some more work on Preferences to make the options more clear
