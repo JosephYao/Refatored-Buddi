@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 
 public final class LookAndFeelManager {
@@ -98,7 +99,7 @@ public final class LookAndFeelManager {
 	}
 	
 	private boolean setLookAndFeel0(String className) {
-		Log.debug("Setting LNF: " + className);
+		if (Const.DEVEL) Log.debug("Setting LNF: " + className);
 		if (QUAQUA_LOOK_AND_FEEL.equals(className)) {
 			// TODO: generalize this so user can set properties for any LAF
 			// set system properties here that affect Quaqua

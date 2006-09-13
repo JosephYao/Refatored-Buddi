@@ -22,7 +22,7 @@ import org.homeunix.drummer.util.Formatter;
 
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;
-	private static StringBuffer sb = new StringBuffer();
+	private static StringBuilder sb = new StringBuilder();
 	
 	private Account account;
 		

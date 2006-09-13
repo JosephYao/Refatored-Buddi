@@ -298,7 +298,7 @@ public class PrefsInstance {
 			
 			URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
 			
-			Log.debug("Data saved to " + location);
+			if (Const.DEVEL) Log.debug("Data saved to " + location);
 			
 			Resource resource = resourceSet.createResource(fileURI);
 			
@@ -389,7 +389,7 @@ public class PrefsInstance {
 			if (o instanceof Interval){
 				Interval interval = (Interval) o;
 				intervals.add(interval);
-				Log.debug("Added interval: " + interval);
+				if (Const.DEVEL) Log.debug("Added interval: " + interval);
 			}
 		}
 		
@@ -405,7 +405,7 @@ public class PrefsInstance {
 			}
 		}
 		
-		Log.debug("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
+		if (Const.DEVEL) Log.debug("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
 		return null;
 	}
 	
@@ -451,7 +451,7 @@ public class PrefsInstance {
 			return null;
 		}
 		
-		Log.debug("Chosen data file: " + dataFileName);
+		if (Const.DEVEL) Log.debug("Chosen data file: " + dataFileName);
 		
 		return dataFileName;
 	}

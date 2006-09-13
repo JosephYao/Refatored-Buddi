@@ -181,10 +181,10 @@ public class EditableTransaction extends JPanel {
 			cleared.setSelected(transaction.isCleared());
 			reconciled.setSelected(transaction.isReconciled());
 //			TODO Remove commented section
-//			Log.debug("Set to: " + transaction.getTo());
-//			Log.debug("Set from: " + transaction.getFrom());
-//			Log.debug("Selected to: " + to.getSelectedItem());
-//			Log.debug("Selected from: " + from.getSelectedItem());
+//			if (Const.DEVEL) Log.debug("Set to: " + transaction.getTo());
+//			if (Const.DEVEL) Log.debug("Set from: " + transaction.getFrom());
+//			if (Const.DEVEL) Log.debug("Selected to: " + to.getSelectedItem());
+//			if (Const.DEVEL) Log.debug("Selected from: " + from.getSelectedItem());
 		}
 		else{
 			if (date.getDate() == null)

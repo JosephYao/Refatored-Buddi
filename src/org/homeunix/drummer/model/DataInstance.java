@@ -77,7 +77,7 @@ public class DataInstance {
 					File backupFile = new File(backupFileLocation);
 					if (!backupFile.exists()){
 						FileFunctions.copyFile(dataFile, backupFile);
-						Log.debug("Backing up file to " + backupFile);
+						if (Const.DEVEL) Log.debug("Backing up file to " + backupFile);
 					}
 				}
 				catch(IOException ioe){
@@ -255,7 +255,7 @@ public class DataInstance {
 						Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 				
 				URI fileURI = URI.createFileURI(locationFile.toString());
-				Log.debug("Saving new file to " + locationFile.toString());
+				if (Const.DEVEL) Log.debug("Saving new file to " + locationFile.toString());
 				Resource resource = resourceSet.createResource(fileURI);			
 				resource.getContents().add(dataModel);
 				
@@ -295,7 +295,7 @@ public class DataInstance {
 					
 					URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
 					
-					Log.debug("Data saved to " + location);
+					if (Const.DEVEL) Log.debug("Data saved to " + location);
 					
 					Resource resource = resourceSet.createResource(fileURI);
 										

@@ -19,9 +19,9 @@ import org.homeunix.drummer.util.Formatter;
 
 public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;
-	private static final StringBuffer sb = new StringBuffer();
-	private static final StringBuffer sbOpen = new StringBuffer();
-	private static final StringBuffer sbClose = new StringBuffer();
+	private static final StringBuilder sb = new StringBuilder();
+	private static final StringBuilder sbOpen = new StringBuilder();
+	private static final StringBuilder sbClose = new StringBuilder();
 	
 	public SourceCellRenderer(){
 		super();

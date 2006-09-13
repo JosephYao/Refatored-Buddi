@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
@@ -35,7 +36,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				new ModifyScheduleDialog(null).openWindow();
-				Log.debug("Done creating");
+				if (Const.DEVEL) Log.debug("Done creating");
 				updateContent();
 			}
 		});
@@ -46,7 +47,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 				if (o instanceof Schedule){
 					Schedule s = (Schedule) o;
 					new ModifyScheduleDialog(s).openWindow();
-					Log.debug("Done editing.");
+					if (Const.DEVEL) Log.debug("Done editing.");
 					updateContent();
 				}
 			}
@@ -59,7 +60,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 					Schedule s = (Schedule) o;
 					DataInstance.getInstance().removeSchedule(s);
 					DataInstance.getInstance().saveDataModel();
-					Log.debug("Deleted schedule.");
+					if (Const.DEVEL) Log.debug("Deleted schedule.");
 				}
 				else {
 					Log.error("Schedule not selected.");

@@ -19,6 +19,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
@@ -70,7 +71,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					transactionFilter.setFilterText("");
 				
 				filteredListModel.update();
-				Log.debug(transactionFilter.getFilterText());
+				if (Const.DEVEL) if (Const.DEVEL) Log.debug(transactionFilter.getFilterText());
 			}
 			
 			public void changedUpdate(DocumentEvent arg0) {
@@ -100,11 +101,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 								Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
 								JOptionPane.YES_NO_CANCEL_OPTION);
 							if (ret == JOptionPane.YES_OPTION){
-								try{
-									recordTransaction();
-									editableTransaction.setChanged(false);
-								}
-								catch (InvalidTransactionException ite){}
+								recordButton.doClick();
 							}
 							else if (ret == JOptionPane.NO_OPTION){
 								editableTransaction.setChanged(false);
@@ -154,18 +151,75 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				}
 			}
 		});
-		
+
 		recordButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				try{
-					recordTransaction();
-					editableTransaction.setTransaction(null, true);
-					updateAllTransactionWindows();
-					editableTransaction.setChanged(false);
+				if (!isValidRecord()){
+					JOptionPane.showMessageDialog(
+							TransactionsFrame.this,
+							Translate.getInstance().get(TranslateKeys.RECORD_BUTTON_ERROR),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.ERROR_MESSAGE
+					);
+					return;
 				}
-				catch(InvalidTransactionException ite){}
+
+
+				Transaction t;
+				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
+					t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+				else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE)))
+//					t = (Transaction) list.getSelectedValue();
+					t = editableTransaction.getTransaction();
+				else {
+					Log.error("Unknown record button state: " + recordButton.getText());
+					return;
+				}
+
+				if (editableTransaction.getFrom().getCreationDate() != null
+						&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
+					editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
+				if (editableTransaction.getTo().getCreationDate() != null
+						&& editableTransaction.getTo().getCreationDate().after(editableTransaction.getDate()))
+					editableTransaction.getTo().setCreationDate(editableTransaction.getDate());
+
+				t.setDate(editableTransaction.getDate());
+				t.setDescription(editableTransaction.getDescription());
+				t.setAmount(editableTransaction.getAmount());
+				t.setTo(editableTransaction.getTo());
+				t.setFrom(editableTransaction.getFrom());
+				t.setMemo(editableTransaction.getMemo());
+				t.setNumber(editableTransaction.getNumber());
+				t.setCleared(editableTransaction.isCleared());
+				t.setReconciled(editableTransaction.isReconciled());
+
+				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
+					DataInstance.getInstance().addTransaction(t);
+				else {
+					DataInstance.getInstance().calculateAllBalances();
+					DataInstance.getInstance().saveDataModel();
+				}
+
+				//Update the autocomplete entries
+				if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
+					PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
+					PrefsInstance.getInstance().setAutoCompleteEntry(
+							editableTransaction.getDescription(),
+							editableTransaction.getNumber(),
+							editableTransaction.getAmount(),
+							editableTransaction.getFrom().toString(),
+							editableTransaction.getTo().toString(),
+							editableTransaction.getMemo());
+				}
+
+				editableTransaction.setTransaction(null, true);
+				editableTransaction.setChanged(false);
+
+				updateAllTransactionWindows();
 			}
+
 		});
+		
 		
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,7 +270,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		this.addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosed(WindowEvent e) {
-				Log.debug("Closed window; removing from list");
+				if (Const.DEVEL) Log.debug("Closed window; removing from list");
 				transactionInstances.put(TransactionsFrame.this.account, null);
 				super.windowClosed(e);
 			}
@@ -225,7 +279,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		this.addComponentListener(new ComponentAdapter(){
 //			@Override
 //			public void componentResized(ComponentEvent arg0) {
-//				Log.debug("Transactions window resized");
+//				if (Const.DEVEL) Log.debug("Transactions window resized");
 //				
 //				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
 //				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
@@ -254,67 +308,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		
 		return this;
 	}
-	
-	private void recordTransaction() throws InvalidTransactionException {
-		if (!isValidRecord()){
-			JOptionPane.showMessageDialog(
-					TransactionsFrame.this,
-					Translate.getInstance().get(TranslateKeys.RECORD_BUTTON_ERROR),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE
-			);
-			throw new InvalidTransactionException();
-		}
-
 		
-		Transaction t;
-		if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
-			t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-		else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE)))
-//			t = (Transaction) list.getSelectedValue();
-			t = editableTransaction.getTransaction();
-		else {
-			Log.error("Unknown record button state: " + recordButton.getText());
-			throw new InvalidTransactionException();
-		}
-		
-		if (editableTransaction.getFrom().getCreationDate() != null
-				&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
-			editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
-		if (editableTransaction.getTo().getCreationDate() != null
-				&& editableTransaction.getTo().getCreationDate().after(editableTransaction.getDate()))
-			editableTransaction.getTo().setCreationDate(editableTransaction.getDate());
-		
-		t.setDate(editableTransaction.getDate());
-		t.setDescription(editableTransaction.getDescription());
-		t.setAmount(editableTransaction.getAmount());
-		t.setTo(editableTransaction.getTo());
-		t.setFrom(editableTransaction.getFrom());
-		t.setMemo(editableTransaction.getMemo());
-		t.setNumber(editableTransaction.getNumber());
-		t.setCleared(editableTransaction.isCleared());
-		t.setReconciled(editableTransaction.isReconciled());
-		
-		if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
-			DataInstance.getInstance().addTransaction(t);
-		else {
-			DataInstance.getInstance().calculateAllBalances();
-			DataInstance.getInstance().saveDataModel();
-		}
-		
-		//Update the autocomplete entries
-		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-			PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
-			PrefsInstance.getInstance().setAutoCompleteEntry(
-					editableTransaction.getDescription(),
-					editableTransaction.getNumber(),
-					editableTransaction.getAmount(),
-					editableTransaction.getFrom().toString(),
-					editableTransaction.getTo().toString(),
-					editableTransaction.getMemo());
-		}
-	}
-	
 	protected AbstractFrame initContent(){
 		this.setTitle(account.getName() + " - " + Translate.getInstance().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
@@ -421,10 +415,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				|| (editableTransaction.getFrom() != account
 						&& editableTransaction.getTo() != account)
 		));
-	}
-	
-	private class InvalidTransactionException extends Exception {
-		public final static long serialVersionUID = 0;
 	}
 	
 	public class TransactionListElementFilter implements ListElementFilter {

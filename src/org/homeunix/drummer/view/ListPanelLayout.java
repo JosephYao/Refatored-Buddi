@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Source;
@@ -136,10 +137,10 @@ public abstract class ListPanelLayout extends AbstractPanel {
 
 				if (node.getUserObject() instanceof Source){ 
 					selectedSource = (Source) node.getUserObject();
-					Log.debug(selectedSource);
+					if (Const.DEVEL) Log.debug(selectedSource);
 				}
 				else{
-					Log.debug("Object not of type Source");
+					if (Const.DEVEL) Log.debug("Object not of type Source");
 					selectedSource = null;
 				}
 
@@ -151,7 +152,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 			public void treeCollapsed(TreeExpansionEvent arg0) {				
 				Object o = arg0.getPath().getLastPathComponent();
 
-				Log.debug("Rolled node: " + o.toString());
+				if (Const.DEVEL) Log.debug("Rolled node: " + o.toString());
 
 				if (o instanceof DefaultMutableTreeNode){
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
@@ -165,7 +166,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 			public void treeExpanded(TreeExpansionEvent arg0) {
 				Object o = arg0.getPath().getLastPathComponent();
 
-				Log.debug("Unrolled node: " + o.toString());
+				if (Const.DEVEL) Log.debug("Unrolled node: " + o.toString());
 
 				if (o instanceof DefaultMutableTreeNode){
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;

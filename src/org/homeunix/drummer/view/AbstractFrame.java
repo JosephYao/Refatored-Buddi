@@ -11,6 +11,7 @@ import java.net.URL;
 
 import javax.swing.JFrame;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -96,7 +97,7 @@ public abstract class AbstractFrame extends JFrame{
 			);
 		}
 		else{
-			Log.debug("Not of a known type");
+			if (Const.DEVEL) Log.debug("Not of a known type");
 			p = new Point(0, 0);
 			d = null;
 		}

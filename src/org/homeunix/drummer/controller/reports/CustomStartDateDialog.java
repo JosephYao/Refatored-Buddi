@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.DateUtil;
@@ -55,7 +56,7 @@ public class CustomStartDateDialog extends CustomDateDialogLayout {
 				if (reportType.equals(ReportType.NETWORTH_OVER_TIME))
 					new NetWorthOverTimeGraphFrame(startDate);
 				else
-					Log.debug("Don't know what to do with type " + reportType);
+					if (Const.DEVEL) Log.debug("Don't know what to do with type " + reportType);
 				//TODO Add more types as needed...
 				//else if (reportType.equals(ReportType.meetBudget))
 		

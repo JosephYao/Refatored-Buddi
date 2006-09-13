@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -48,14 +49,14 @@ public class NetWorthOverTimeGraphFrame extends GraphFrameLayout {
 			date = DateUtil.getNextNDay(startDate, i * daysBetweenReport);
 			if (date.before(new Date()))
 				dates.add(date);
-			Log.debug("Added date: " + date);			
+			if (Const.DEVEL) Log.debug("Added date: " + date);			
 		}
 		
 //		for (int i = 0; date.before(new Date()); i++){
 //			date = DateUtil.getEndOfMonth(startDate, i);
 //			if (date.before(new Date()))
 //				dates.add(date);
-//			Log.debug("Added date: " + date);
+//			if (Const.DEVEL) Log.debug("Added date: " + date);
 //		}
 
 		dates.add(new Date());

@@ -24,6 +24,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -74,10 +75,10 @@ public class IncomeExpenseByDescriptionReportFrame extends ReportFrameLayout {
 					l -= transaction.getAmount();
 				}
 				descriptions.put(description, l);
-				Log.debug("Added a source / destination");
+				if (Const.DEVEL) Log.debug("Added a source / destination");
 			}
 			else
-				Log.debug("Didn't add anything...");
+				if (Const.DEVEL) Log.debug("Didn't add anything...");
 		}
 		
 		//Print the results

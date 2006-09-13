@@ -24,6 +24,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -63,17 +64,17 @@ public class IncomeExpenseByCategoryReportFrame extends ReportFrameLayout {
 				Long l = categories.get(c);
 				l += transaction.getAmount();
 				categories.put(c, l);
-				Log.debug("Added a source");
+				if (Const.DEVEL) Log.debug("Added a source");
 			}
 			else if (transaction.getTo() instanceof Category){
 				Category c = (Category) transaction.getTo();
 				Long l = categories.get(c);
 				l += transaction.getAmount();
 				categories.put(c, l);
-				Log.debug("Added a destination");
+				if (Const.DEVEL) Log.debug("Added a destination");
 			}
 			else
-				Log.debug("Didn't add anything...");
+				if (Const.DEVEL) Log.debug("Didn't add anything...");
 		}
 		
 		//Print the results

@@ -97,7 +97,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		getInstance().addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentResized(ComponentEvent arg0) {
-				Log.debug("Main window resized");
+				if (Const.DEVEL) Log.debug("Main window resized");
 				
 				MainBuddiFrame.getInstance().savePosition();
 								
@@ -106,7 +106,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				Log.debug("Main Window hidden");
+				if (Const.DEVEL) Log.debug("Main Window hidden");
 				
 				MainBuddiFrame.getInstance().savePosition();
 				
@@ -239,7 +239,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				}
 			};
 			
-			Log.debug("Starting update checking...");
+			if (Const.DEVEL) Log.debug("Starting update checking...");
 			updateWorker.start();
 		}
 	}
@@ -306,7 +306,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 			tempDate = DateUtil.getStartOfDay(tempDate);
 			
 			while(tempDate.before(today)){
-				Log.debug("Trying date " + tempDate);				
+				if (Const.DEVEL) Log.debug("Trying date " + tempDate);				
 				tempCal.setTime(tempDate);
 				
 				//Log, extremely ugly expression to check if tempDay is a day on which we need to make a transaction.
@@ -332,7 +332,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 //					}
 
 					DataInstance.getInstance().addTransaction(t);
-					Log.debug("Added scheduled transaction " + t);
+					if (Const.DEVEL) Log.debug("Added scheduled transaction " + t);
 				}
 
 				tempDate = DateUtil.getNextDay(tempDate);

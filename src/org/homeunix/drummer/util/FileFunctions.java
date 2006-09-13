@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import org.homeunix.drummer.Const;
+
 public class FileFunctions {
 	
 	private FileFunctions(){}
@@ -24,7 +26,7 @@ public class FileFunctions {
 			
 		}
 		catch (FileNotFoundException fnfe){
-			Log.debug(fnfe);
+			if (Const.DEVEL) Log.debug(fnfe);
 		}
 		finally{
 			if (in != null)

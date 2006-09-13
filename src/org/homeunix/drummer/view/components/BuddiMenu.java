@@ -231,7 +231,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
 				if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
 					else{
 						if (JOptionPane.showConfirmDialog(
@@ -270,7 +270,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
 				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
+						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
 					
 					else{
 						final String location;
@@ -307,7 +307,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
 				if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
-						Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
 					
 					else{
 						if (JOptionPane.showConfirmDialog(
@@ -401,7 +401,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		
 		export.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				Log.debug("Exporting HTML");
+				if (Const.DEVEL) Log.debug("Exporting HTML");
 				if (BuddiMenu.this.frame instanceof ReportFrameLayout){
 					String htmlReport = ((ReportFrameLayout) BuddiMenu.this.frame).getHtmlReport();
 
@@ -421,7 +421,7 @@ public class BuddiMenu extends JScreenMenuBar {
 							+ (int) (Math.random() * 1000) 
 							+ ".html"
 					);
-					Log.debug("Tempfile: " + tempFile.getAbsolutePath());
+					if (Const.DEVEL) Log.debug("Tempfile: " + tempFile.getAbsolutePath());
 					
 					try{
 						PrintStream out = new PrintStream(new FileOutputStream(tempFile));
@@ -430,9 +430,9 @@ public class BuddiMenu extends JScreenMenuBar {
 						
 						tempFile.deleteOnExit();
 						
-						Log.debug("Opening file...");
+						if (Const.DEVEL) Log.debug("Opening file...");
 						BrowserLauncher.openURL("file://" + tempFile.getAbsolutePath());
-						Log.debug("Finished opening file...");
+						if (Const.DEVEL) Log.debug("Finished opening file...");
 					}
 					catch (IOException ioe){
 						Log.error(ioe);
@@ -487,7 +487,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					else
 						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 					
-					Log.debug("Trying to open Help at " + location + "...");
+					if (Const.DEVEL) Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher.openURL(location);
 				}
 				catch (IOException ioe){
@@ -533,7 +533,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				{
 					if (MainBuddiFrame.getInstance() != null)
 						MainBuddiFrame.getInstance().savePosition();
-					Log.debug("Exiting");
+					if (Const.DEVEL) Log.debug("Exiting");
 					System.exit(0);
 				}
 			});

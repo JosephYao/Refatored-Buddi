@@ -13,6 +13,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -182,7 +183,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 				System.exit(1);
 			}
 
-			Log.debug("Read password");
+			if (Const.DEVEL) Log.debug("Read password");
 			
 			this.key = PBKDF2.getInstance().passwordToKey(
 					password, this.keySize, KEY_ALGORITHM, this.salt);
@@ -191,7 +192,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			cipher = Cipher.getInstance(ALGORITHM);
 			cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
 			
-			Log.debug("Created CIS");
+			if (Const.DEVEL) Log.debug("Created CIS");
 			CipherInputStream cis = new CipherInputStream(buffered, cipher);
 
 			cis.mark(prologueLength);
@@ -199,7 +200,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			test = new byte[prologueLength];
 			read = cis.read(test);
 			String testStr = new String(test);
-			Log.debug("testStr == " + testStr);
+			if (Const.DEVEL) Log.debug("testStr == " + testStr);
 			
 			//Check if the file is really decoded.
 			correctPassword = new Boolean(XML_PROLOGUE.equals(testStr));

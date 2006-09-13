@@ -62,7 +62,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 						ModifyScheduleDialog.this.dispose();
 					}
 					else
-						Log.debug("Cancelled from either start date in the past, or info not correct");
+						if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
 				}
 				else {
 					JOptionPane.showMessageDialog(ModifyScheduleDialog.this, 
@@ -179,7 +179,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 			t.setMemo(s.getMemo());
 			t.setTo(s.getTo());
 			t.setFrom(s.getFrom());
-			Log.debug("Transaction to load: " + t);
+			if (Const.DEVEL) Log.debug("Transaction to load: " + t);
 			transaction.setTransaction(t, true);
 		}
 	}
@@ -202,7 +202,7 @@ public class ModifyScheduleDialog extends ModifyScheduleDialogLayout {
 					return i;
 			}
 			
-			Log.debug("Unknown object when getting schedule day: " + o);
+			if (Const.DEVEL) Log.debug("Unknown object when getting schedule day: " + o);
 			return -1;
 		}		
 	}

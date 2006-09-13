@@ -41,7 +41,7 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 				if (budgetInterval.getSelectedItem() instanceof Interval)
 					PrefsInstance.getInstance().getPrefs().setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
 				else
-					Log.debug("Unknown type (should be Interval): " + budgetInterval.getSelectedItem());
+					if (Const.DEVEL) Log.debug("Unknown type (should be Interval): " + budgetInterval.getSelectedItem());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedAccounts(showDeletedAccounts.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
 				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());

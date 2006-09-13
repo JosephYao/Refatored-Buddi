@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.AccountListPanel;
 import org.homeunix.drummer.controller.CategoryListPanel;
 import org.homeunix.drummer.controller.ReportPanel;
@@ -59,7 +60,7 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		else if (tabs.getSelectedComponent().equals(reportPanel))
 			return reportPanel;
 		else{
-			Log.debug("Unknown Tab");
+			if (Const.DEVEL) Log.debug("Unknown Tab");
 			return null;
 		}
 	}

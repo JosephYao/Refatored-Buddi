@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.Log;
@@ -56,7 +57,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 						Category temp = (Category) pulldown.getSelectedItem();
 						if (temp.equals(c)){
 							if (c.getParent() != null){
-								Log.debug("A Category cannot be it's own parent.  Where is your knowledge of Bio?!?");
+								if (Const.DEVEL) Log.debug("A Category cannot be it's own parent.  Where is your knowledge of Bio?!?");
 								pulldown.setSelectedItem(c.getParent());
 							}
 							else
@@ -82,14 +83,14 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 
 					//We need to clear out any old, obsolete references to parents
 					// and children.
-					Log.debug("No parent selected.");
+					if (Const.DEVEL) Log.debug("No parent selected.");
 					if (c.getParent() != null){
 						c.getParent().getChildren().remove(c);
-						Log.debug("Removing " + c + " from " + c.getParent());
+						if (Const.DEVEL) Log.debug("Removing " + c + " from " + c.getParent());
 					}
 
 					if (pulldown.getSelectedItem() instanceof Category){
-						Log.debug("Setting parent of " + c + " to " + pulldown.getSelectedItem());
+						if (Const.DEVEL) Log.debug("Setting parent of " + c + " to " + pulldown.getSelectedItem());
 						((Category) pulldown.getSelectedItem()).getChildren().add(c);
 						c.setParent((Category) pulldown.getSelectedItem());
 					}
@@ -161,7 +162,7 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 			updateContent();
 			
 			if (source.getParent() != null){
-				Log.debug(source.getParent());
+				if (Const.DEVEL) Log.debug(source.getParent());
 				pulldown.setSelectedItem(source.getParent());
 			}
 			else

@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -93,7 +94,7 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 		this.addComponentListener(new ComponentAdapter(){
 //			@Override
 //			public void componentResized(ComponentEvent arg0) {
-//				Log.debug("Graphs window resized");
+//				if (Const.DEVEL) Log.debug("Graphs window resized");
 //				
 //				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
 //				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
@@ -145,7 +146,7 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a source");
+					if (Const.DEVEL) Log.debug("Added a source");
 				}
 			}
 			else if (transaction.getTo() instanceof Category){
@@ -154,11 +155,11 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a destination");
+					if (Const.DEVEL) Log.debug("Added a destination");
 				}
 			}
 			else
-				Log.debug("Didn't add anything...");
+				if (Const.DEVEL) Log.debug("Didn't add anything...");
 		}
 				
 		return categories;
@@ -182,7 +183,7 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a source");
+					if (Const.DEVEL) Log.debug("Added a source");
 				}
 			}
 			else if (transaction.getTo() instanceof Category){
@@ -191,11 +192,11 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a destination");
+					if (Const.DEVEL) Log.debug("Added a destination");
 				}
 			}
 			else
-				Log.debug("Didn't add anything...");
+				if (Const.DEVEL) Log.debug("Didn't add anything...");
 		}
 				
 		return categories;
@@ -228,7 +229,7 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 				}
 			}
 			else{
-				Log.debug("Not including transaction.");
+				if (Const.DEVEL) Log.debug("Not including transaction.");
 			}
 		}
 		

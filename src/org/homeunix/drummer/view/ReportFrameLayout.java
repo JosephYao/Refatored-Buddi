@@ -115,7 +115,7 @@ public abstract class ReportFrameLayout extends AbstractFrame {
 		this.addComponentListener(new ComponentAdapter(){
 //			@Override
 //			public void componentResized(ComponentEvent arg0) {
-//				Log.debug("Reports window resized");
+//				if (Const.DEVEL) Log.debug("Reports window resized");
 //				
 //				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
 //				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());

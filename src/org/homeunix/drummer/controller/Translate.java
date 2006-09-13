@@ -59,7 +59,7 @@ public class Translate {
 
 	public String get(String key){
 		if (key == null){
-			Log.debug("Null translation key");
+			if (Const.DEVEL) Log.debug("Null translation key");
 			return key;
 		}
 		String ret = translations.getProperty(key);

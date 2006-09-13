@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.ListAttributes;
@@ -166,12 +167,12 @@ public class CategoryListPanel extends ListPanelLayout {
 	}
 	
 	private DefaultMutableTreeNode recursiveAdd(DefaultMutableTreeNode n, Category c, Map<Category, Category> alreadyEntered){
-		Log.debug("Trying to add " + c);
+		if (Const.DEVEL) Log.debug("Trying to add " + c);
 		if (alreadyEntered.get(c) == null){
-			Log.debug("Not already added.");
+			if (Const.DEVEL) Log.debug("Not already added.");
 			alreadyEntered.put(c, c);
 			for (Object o : c.getChildren()) {
-				Log.debug("Child " + o + " of " + c);
+				if (Const.DEVEL) Log.debug("Child " + o + " of " + c);
 				if (o instanceof Category){
 					Category cat = (Category) o;
 					DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(cat);
@@ -180,10 +181,10 @@ public class CategoryListPanel extends ListPanelLayout {
 						n.add(child);
 				}
 			}
-			Log.debug("Done processing all children.");
+			if (Const.DEVEL) Log.debug("Done processing all children.");
 			return n;			
 		}
-		Log.debug("Already entered.");
+		if (Const.DEVEL) Log.debug("Already entered.");
 		return null;
 	}
 

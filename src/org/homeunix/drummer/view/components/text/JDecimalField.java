@@ -15,6 +15,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
@@ -94,15 +95,15 @@ public class JDecimalField extends JTextField {
 //			Log.error("getValue: could not parse: " + getText());
 //		}
 //		
-//		Log.debug("Double value: " + retVal);
-//		Log.debug(retVal * 100000.0);
+//		if (Const.DEVEL) Log.debug("Double value: " + retVal);
+//		if (Const.DEVEL) Log.debug(retVal * 100000.0);
 //		
 //		
 //		// The weird 100000 / 1000 instead of simple *100 is to try
 //		// to bypass rounding errors when converting from double
 //		// to int.  This seems to work fine now.
 //		long amount = (long) (retVal * 100000.0) / 1000;
-		Log.debug("Long value: " + amount);
+		if (Const.DEVEL) Log.debug("Long value: " + amount);
 		return amount;
 	}
 	

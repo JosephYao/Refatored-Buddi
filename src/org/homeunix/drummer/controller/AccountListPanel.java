@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
@@ -89,7 +90,10 @@ public class AccountListPanel extends ListPanelLayout {
 		openButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (getSelectedAccount() != null){
+					long start = System.currentTimeMillis();
 					new TransactionsFrame(getSelectedAccount());
+					long end = System.currentTimeMillis();
+					System.out.println((end - start));
 					AccountListPanel.this.updateButtons();
 				}
 			}
@@ -154,7 +158,7 @@ public class AccountListPanel extends ListPanelLayout {
 				}
 			}
 			
-			Log.debug(a);
+			if (Const.DEVEL) Log.debug(a);
 			
 			balance += a.getBalance();
 		}
@@ -179,7 +183,7 @@ public class AccountListPanel extends ListPanelLayout {
 	
 	public Account getSelectedAccount(){
 		
-		Log.debug(selectedSource);
+		if (Const.DEVEL) Log.debug(selectedSource);
 		if (selectedSource instanceof Account)
 			return (Account) selectedSource;
 		else
