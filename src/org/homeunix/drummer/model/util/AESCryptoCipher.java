@@ -93,7 +93,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		}
 
 		if (this.key == null) {
-			String password = PasswordInputPane.askForPassword(true);
+			String password = PasswordInputPane.askForPassword(true, true);
 			
 			if (password == null){
 				this.encrypted = false;
@@ -169,19 +169,18 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		boolean correctPassword = false;
 		do {
 			// ask for the password, which we use to generate the AES key
-			String password = PasswordInputPane.askForPassword(false);
+			String password = PasswordInputPane.askForPassword(false, false);
 			
 			if (password == null){
-				//Show message saying we are exiting because they did not enter a password.
 				JOptionPane.showMessageDialog(
 						MainBuddiFrame.getInstance(), 
 						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD), 
 						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD_TITLE), 
-						JOptionPane.ERROR_MESSAGE);
-				Log.debug("Password == null; cannot decrypt.");
-				throw new CipherException("Null password"); 
-			}
+						JOptionPane.INFORMATION_MESSAGE
+				);
 
+				System.exit(1);
+			}
 
 			Log.debug("Read password");
 			

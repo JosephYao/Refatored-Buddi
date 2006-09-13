@@ -31,22 +31,23 @@ import org.homeunix.drummer.controller.TranslateKeys;
 public class PasswordInputPane extends JPanel {
 	private static final long serialVersionUID = 0;
 
-	public static String askForPassword(boolean showConfirm) {
+	public static String askForPassword(boolean showConfirm, boolean isNullPasswordAllowed) {
 		return askForPassword(
 				MainBuddiFrame.getInstance(), 
 				Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD), 
 				Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
-				showConfirm
+				showConfirm,
+				isNullPasswordAllowed
 		);
 	}
 	
-	public static String askForPassword(Component parentComponent, String message, String title, boolean showConfirm) {
+	public static String askForPassword(Component parentComponent, String message, String title, boolean showConfirm, boolean isNullPasswordAllowed) {
 		PasswordInputPane pane = new PasswordInputPane(message);
 		Component parent = (null == parentComponent) ?
 				JOptionPane.getRootFrame() : parentComponent;
 		pane.setComponentOrientation(parent.getComponentOrientation());
 		
-		JDialog dialog = pane.createDialog(parentComponent, title, showConfirm);
+		JDialog dialog = pane.createDialog(parentComponent, title, showConfirm, isNullPasswordAllowed);
 		dialog.setVisible(true);
         dialog.dispose();
         
@@ -70,7 +71,7 @@ public class PasswordInputPane extends JPanel {
 		this.message = message;
 	}	
 	
-	public JDialog createDialog(Component parentComponent, String title, final boolean showConfirm) throws HeadlessException {
+	public JDialog createDialog(Component parentComponent, String title, final boolean showConfirm, final boolean isNullPasswordAllowed) throws HeadlessException {
 		Window window = getWindowForComponent(parentComponent);
 	    
 		final JDialog dialog = (window instanceof Frame) ?
@@ -115,7 +116,7 @@ public class PasswordInputPane extends JPanel {
 						|| pw1Value.equals(pw2Value)
 						|| !showConfirm) {
 					if (pw1Value != null && pw1Value.length() == 0){
-						noPasswordEntered(dialog);
+						noPasswordEntered(dialog, isNullPasswordAllowed);
 					}
 					else{
 						PasswordInputPane.this.value = pw1Value;
@@ -134,7 +135,7 @@ public class PasswordInputPane extends JPanel {
 		cancelButton.setPreferredSize(new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				noPasswordEntered(dialog);
+				noPasswordEntered(dialog, isNullPasswordAllowed);
 			}			
 		});
 
@@ -167,7 +168,7 @@ public class PasswordInputPane extends JPanel {
         
         WindowAdapter adapter = new WindowAdapter() {            
             public void windowClosing(WindowEvent we) {
-            	noPasswordEntered(dialog);
+            	noPasswordEntered(dialog, isNullPasswordAllowed);
             }
         };
         dialog.addWindowListener(adapter);
@@ -176,13 +177,14 @@ public class PasswordInputPane extends JPanel {
 		return dialog;
 	}
 	
-	private void noPasswordEntered(JDialog dialog){
-		JOptionPane.showMessageDialog(
-				MainBuddiFrame.getInstance(), 
-				Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED), 
-				Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED_TITLE), 
-				JOptionPane.INFORMATION_MESSAGE
-		);
+	private void noPasswordEntered(JDialog dialog, boolean isNullPasswordAllowed){
+		if (isNullPasswordAllowed)
+			JOptionPane.showMessageDialog(
+					MainBuddiFrame.getInstance(), 
+					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED), 
+					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED_TITLE), 
+					JOptionPane.INFORMATION_MESSAGE
+			);
 		PasswordInputPane.this.value = null;
 		dialog.setVisible(false);
 	}
