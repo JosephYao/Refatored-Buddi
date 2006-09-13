@@ -111,6 +111,7 @@ public class DataInstance {
 			}
 			
 			if (locationFile == null){
+				Log.error("Failed to load a null file; exiting (DataInstance.loadDataFile())");
 				System.exit(0);
 			}
 			

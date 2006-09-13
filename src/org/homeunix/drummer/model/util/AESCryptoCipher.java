@@ -13,8 +13,10 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.PasswordInputPane;
 
 public class AESCryptoCipher implements URIConverter.Cipher {
@@ -132,7 +134,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 		// Test if the input stream is encrypted. This is rudimentary -
 		// it just checks if the stream starts with <?xml
-		int prologueLength = XML_PROLOGUE.length();
+		final int prologueLength = XML_PROLOGUE.length();
 
 		buffered.mark(prologueLength);
 
@@ -163,19 +165,76 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 		this.salt = readBytes(SALT_LENGTH, buffered);
 
-		// ask for the password, which we use to generate the AES key
-		String password = PasswordInputPane.askForPassword(false);
+		Cipher cipher;
+		boolean correctPassword = false;
+		do {
+			// ask for the password, which we use to generate the AES key
+			String password = PasswordInputPane.askForPassword(false);
+			
+			if (password == null){
+				//Show message saying we are exiting because they did not enter a password.
+				JOptionPane.showMessageDialog(
+						MainBuddiFrame.getInstance(), 
+						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD), 
+						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD_TITLE), 
+						JOptionPane.ERROR_MESSAGE);
+				Log.debug("Password == null; cannot decrypt.");
+				throw new CipherException("Null password"); 
+			}
 
-		this.key = PBKDF2.getInstance().passwordToKey(
-				password, this.keySize, KEY_ALGORITHM, this.salt);
 
-		// now create the decryption cipher
-		Cipher cipher = Cipher.getInstance(ALGORITHM);
+			Log.debug("Read password");
+			
+			this.key = PBKDF2.getInstance().passwordToKey(
+					password, this.keySize, KEY_ALGORITHM, this.salt);
+
+			// now create the decryption cipher
+			cipher = Cipher.getInstance(ALGORITHM);
+			cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
+			
+			Log.debug("Created CIS");
+			CipherInputStream cis = new CipherInputStream(buffered, cipher);
+
+			cis.mark(prologueLength);
+
+			test = new byte[prologueLength];
+			read = cis.read(test);
+			String testStr = new String(test);
+			Log.debug("testStr == " + testStr);
+			
+			//Check if the file is really decoded.
+			correctPassword = new Boolean(XML_PROLOGUE.equals(testStr));
+
+			cis.reset();
+			buffered.reset();
+			
+			if (!correctPassword){
+				JOptionPane.showMessageDialog(
+						MainBuddiFrame.getInstance(),
+						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD),
+						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD_TITLE),
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} while (!correctPassword);
+		
+		cipher = Cipher.getInstance(ALGORITHM);
 		cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
 		return new CipherInputStream(buffered, cipher);		
 	}
 
 	public void finish(InputStream in) throws Exception {
 		// TODO Auto-generated method stub		
+	}
+	
+	public class CipherException extends Exception {
+		public final static long serialVersionUID = 0;
+		
+		public CipherException(){
+			super();
+		}
+
+		public CipherException(String message){
+			super(message);
+		}
 	}
 }
