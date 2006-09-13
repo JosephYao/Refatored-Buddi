@@ -2,6 +2,11 @@
 
 <h1>News</h1>
 
+<h2>Encryption Added</h2>
+<p>
+Data file encryption has been added in Development release 1.7.3.  If you are interested and able, I would greatly appreciate it if you could do some testing on the new program.  Just make sure to back up your data files first!
+</p>
+
 <h2>1.6.1 (September 10 2006)</h2>
 <ul>
 <li>Added Spanish translation (thanks to Diego Garcia for submitting this)</li>

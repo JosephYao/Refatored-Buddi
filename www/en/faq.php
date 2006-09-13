@@ -16,6 +16,19 @@ You need to have Java 1.5 installed for Buddi to work. If you are running OS X, 
 <p>
 Originally, I felt that this was the duty of the OS, and that Buddi would not implement this feature.  However, after discussing this at length with John Didion, he convinced me that application based encryption (when done properly) is a Good Thing.  He has graciously sent me a patch which performs this function (very elegantly, I may add) using an AES cipher.  This is included in the Development branch as of 1.7.3, and barring any problems, will appear in the 1.8 Stable branch.
 </p>
+<p>
+When using encryption, MAKE SURE you don't forget your password.  You CANNOT read your data file without it.
+</p>
+
+<h2>I forgot my password!  What can I do now?</h2>
+<p>
+Try very hard to remember it.  Other than that, there is nothing you can do.  There are no back doors on the encryption system.
+</p>
+
+<h2>But I had 2 years worth of data in there!  Are you sure I can't get in?!?</h2>
+<p>
+Yes, I am sure.
+</p>
 
 <h2>How to I make a 'virtual account', which can accumulate money over multiple months</h2>
 <p>
