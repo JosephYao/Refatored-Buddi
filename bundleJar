@@ -37,6 +37,7 @@ cp -R $DEST/$SOURCE/Licenses $GENERIC
 mkdir -p $OSXROOT
 cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
 cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
+cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
 cp -R $DEST/$SOURCE/Languages $OSX/Buddi.app/Contents/Resources/Java/
 #cp -R Help $OSX/Buddi.app/Contents/Resources/Java/
 cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/

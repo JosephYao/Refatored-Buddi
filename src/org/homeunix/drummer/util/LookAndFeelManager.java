@@ -38,8 +38,9 @@ public final class LookAndFeelManager {
 		}
 		installLookAndFeelsFromResources("META-INF/services/javax.swing.LookAndFeel", cl);
 		installLookAndFeelsFromResources("meta-inf/services/javax.swing.LookAndFeel", cl);
-		if (Buddi.isMac())
+		if (Buddi.isMac()){
 			installLookAndFeelsFromResources(QUAQUA_LOOK_AND_FEEL, cl);
+		}
 	}
 
 	private static void installLookAndFeelsFromResources(String name, ClassLoader cl) {

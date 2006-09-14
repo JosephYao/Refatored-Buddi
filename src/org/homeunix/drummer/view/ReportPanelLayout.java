@@ -16,7 +16,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
@@ -102,10 +104,10 @@ public abstract class ReportPanelLayout extends AbstractPanel {
 		
 		JPanel reportsPanel = new JPanel();
 		reportsPanel.setLayout(new BoxLayout(reportsPanel, BoxLayout.Y_AXIS));
-		reportsPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.REPORTS)));
-		JPanel graphsPanel = new JPanel();
-		graphsPanel.setLayout(new BoxLayout(graphsPanel, BoxLayout.Y_AXIS));
-		graphsPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.GRAPHS)));
+//		reportsPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.REPORTS)));
+//		JPanel graphsPanel = new JPanel();
+//		graphsPanel.setLayout(new BoxLayout(graphsPanel, BoxLayout.Y_AXIS));
+//		graphsPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.GRAPHS)));
 		
 		JPanel r1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel r2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -140,27 +142,39 @@ public abstract class ReportPanelLayout extends AbstractPanel {
 		
 		reportsPanel.add(r1);
 		reportsPanel.add(r2);
+		reportsPanel.add(g1);
+		reportsPanel.add(g2);
+		reportsPanel.add(g3);
+		reportsPanel.add(g4);
+		reportsPanel.add(g5);
 		
-		graphsPanel.add(g1);
-		graphsPanel.add(g2);
-		graphsPanel.add(g3);
-		graphsPanel.add(g4);
-		graphsPanel.add(g5);
+//		graphsPanel.add(g1);
+//		graphsPanel.add(g2);
+//		graphsPanel.add(g3);
+//		graphsPanel.add(g4);
+//		graphsPanel.add(g5);
 		
 		JPanel mainPanel = new JPanel(); 
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 7, 17));
 		
-		mainPanel.add(reportsPanel);
-		mainPanel.add(graphsPanel);
+		mainPanel.add(reportsPanel, BorderLayout.NORTH);
+		mainPanel.add(new JLabel(), BorderLayout.CENTER);
+//		mainPanel.add(graphsPanel);
 		
 		Dimension comboBoxSize = incomeExpenseByCategoryReportIntervalChooser.getPreferredSize();
 		for (JComboBox box : jComboBoxes.keySet()) {
 			box.setPreferredSize(comboBoxSize);
 		}
 		
+		JScrollPane scroller = new JScrollPane(mainPanel);
+//		scroller.setBorder(BorderFactory.createEmptyBorder());
+		if (Buddi.isMac()){
+			scroller.putClientProperty("Quaqua.ScrollPane.style", "bar");
+		}
+		
 		this.setLayout(new BorderLayout());
-		this.add(mainPanel, BorderLayout.CENTER);
+		this.add(scroller, BorderLayout.CENTER);
 				
 		//Call the method to add actions to the buttons
 		initActions();

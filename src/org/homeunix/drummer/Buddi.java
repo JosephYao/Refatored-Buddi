@@ -3,6 +3,8 @@
  */
 package org.homeunix.drummer;
 
+import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.util.ParseCommands;
+import org.homeunix.drummer.util.WaitCursorEventQueue;
 import org.homeunix.drummer.util.ParseCommands.ParseException;
 import org.homeunix.drummer.view.components.BuddiMenu;
 
@@ -38,6 +41,10 @@ public class Buddi {
 	}
 
 	private static void launchGUI(){
+		
+		EventQueue waitQueue = new WaitCursorEventQueue(500);
+	    Toolkit.getDefaultToolkit().getSystemEventQueue().push(waitQueue);
+	    
 		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
 /*	

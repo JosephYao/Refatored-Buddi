@@ -116,7 +116,6 @@ public abstract class AbstractFrame extends JFrame{
 			setIconImage(Toolkit.getDefaultToolkit().getImage(imageResource));
 		}
 		
-		load();
 		this.pack();
 		
 		this.setVisible(true);

@@ -255,7 +255,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 					
-					updateContent();
+					updateAllTransactionWindows();
 				}
 			}
 		});
@@ -318,6 +318,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 	
 	public AbstractFrame updateContent(){
+		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
 		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
 		data.add(null);
 		list.setListData(data);
@@ -353,13 +354,16 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		}
 		
 		editableTransaction.updateContent();
-		
+		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
 		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+		
+		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
 		updateButtons();
 		
+		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
 		MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 		MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
-		
+		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
 		return this;
 	}
 	
@@ -400,7 +404,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 	@Override
 	public AbstractFrame openWindow() {
-		list.setSelectedIndex(list.getModel().getSize() - 1);
+//		list.setSelectedIndex(list.getModel().getSize() - 1);
 		editableTransaction.resetSelection();
 		return super.openWindow();
 	}

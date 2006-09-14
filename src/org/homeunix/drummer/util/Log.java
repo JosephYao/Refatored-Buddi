@@ -71,11 +71,11 @@ public class Log {
 	}
 
 	private static void log(Object message, String level){
-		System.err.println(level + ": " + message);
+		System.err.println(level + " (" + System.currentTimeMillis() + "): " + message);
 	}
 	
 	private static void log(Object message, String level, Throwable exception){
-		System.err.println(level + ": " + message);
+		System.err.println(level + " (" + System.currentTimeMillis() + "): " + message);
 		exception.printStackTrace(System.err);
 	}
 	

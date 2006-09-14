@@ -1,14 +1,20 @@
 #Fat Jar Configuration File
-#Sun Sep 10 09:09:52 MDT 2006
-onejar.license.required=false
-manifest.classpath=
-manifest.removesigners=true
-onejar.checkbox=false
-jarname=Buddi.jar
-manifest.mergeall=true
-manifest.mainclass=org.homeunix.drummer.Buddi
-manifest.file=<createnew>
-jarname.isextern=false
+#Wed Sep 13 19:48:43 MDT 2006
 onejar.expand=
-excludes=<po|Buddi>~.svn/
+autojar.enable=true
+excludes=<po|Buddi>~.svn/;<jar|quaqua-3.6.11.jar>
+manifest.removesigners=true
+manifest.mergeall=true
+manifest.file=<createnew>
+manifest.vmarguments=
+jarname=Buddi.jar
+onejar.checkbox=false
+autojar.visitclasses=org.homeunix.drummer.Buddi
+jarname.isextern=false
+manifest.mainclass=org.homeunix.drummer.Buddi
+onejar.license.required=false
+launchconfigname=<default>
 includes=<inc|Buddi/images>~Buddi.gif
+autojar.classforname=false
+manifest.classpath=
+manifest.arguments=

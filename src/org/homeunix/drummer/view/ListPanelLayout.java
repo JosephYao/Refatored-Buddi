@@ -39,7 +39,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 	protected final JButton editButton;
 	protected final JButton deleteButton;
 	protected final JButton openButton;
-	protected final JPanel openButtonPanel;
+//	protected final JPanel openButtonPanel;
 	protected final JLabel balanceLabel;
 
 	protected final DefaultMutableTreeNode root;
@@ -78,34 +78,36 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		openButton.setPreferredSize(buttonSize);
 
 		JPanel buttonPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanelRight.add(editButton);
-		buttonPanelRight.add(newButton);
+		buttonPanelRight.add(openButton);
 
 		JPanel buttonPanelLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanelLeft.add(newButton);
+		buttonPanelLeft.add(editButton);
 		buttonPanelLeft.add(deleteButton);
 
-		openButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		openButtonPanel.add(openButton);
+//		openButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//		openButtonPanel.add(openButton);
 
 		JPanel buttonPanel = new JPanel(new BorderLayout());
-		//buttonPanel.setBorder(BorderFactory.createTitledBorder(""));
 		buttonPanel.add(buttonPanelRight, BorderLayout.EAST);
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
-		//buttonPanel.add(openButtonPanel, BorderLayout.NORTH);
 
-		JPanel mainBorderPanel = new JPanel();
-		mainBorderPanel.setLayout(new BorderLayout());
-		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		JPanel mainBorderPanel = new JPanel();
+//		mainBorderPanel.setLayout(new BorderLayout());
+//		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 7, 17));
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-		mainBorderPanel.add(listScrollerPanel, BorderLayout.CENTER);
-		mainBorderPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
-		mainPanel.add(openButtonPanel, BorderLayout.SOUTH);
+//		mainBorderPanel.add(listScrollerPanel, BorderLayout.CENTER);
+//		mainBorderPanel.add(buttonPanel, BorderLayout.SOUTH);
+//
+//		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
+//		mainPanel.add(openButtonPanel, BorderLayout.SOUTH);
+//		mainPanel.add(balanceLabelPanel, BorderLayout.NORTH);
+		mainPanel.add(listScrollerPanel, BorderLayout.CENTER);
+		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		if (Buddi.isMac()){
 			tree.putClientProperty("Quaqua.Tree.style", "striped");

@@ -30,9 +30,11 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
 		tabs = new JTabbedPane();
+		
 		accountListPanel = new AccountListPanel();
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
+		
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_BUDGET), categoryListPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.REPORTS), reportPanel);
@@ -41,7 +43,7 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		
 		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI));
 		this.setLayout(new BorderLayout());
-		this.add(mainPanel, BorderLayout.CENTER);
+		this.add(mainPanel, BorderLayout.CENTER);		
 	}
 	
 	public AccountListPanel getAccountListPanel(){

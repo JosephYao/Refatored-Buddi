@@ -32,7 +32,7 @@ public class CategoryListPanel extends ListPanelLayout {
 	public CategoryListPanel(){
 		super();
 		
-		openButtonPanel.setVisible(false);
+		openButton.setVisible(false);
 	}
 	
 	protected AbstractPanel initActions(){

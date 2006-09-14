@@ -31,6 +31,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();
 	
 	protected final JList list;
+	protected final JScrollPane listScroller;
 //	protected final DefaultListModel model;
 	
 	protected final EditableTransaction editableTransaction;
@@ -57,15 +58,14 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		renderer.setAccount(account);
 		list.setCellRenderer(renderer);
 		
-		JScrollPane listScroller = new JScrollPane(list);
-				
-		JPanel scrollBorderPanel = new JPanel(new BorderLayout());
-		scrollBorderPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
-		
+		listScroller = new JScrollPane(list);
+		listScroller.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createEmptyBorder(5, 10, 5, 10),
+				listScroller.getBorder()));
+						
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(""));
-		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
+		scrollPanel.setBorder(BorderFactory.createTitledBorder(""));		
+		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
@@ -110,16 +110,18 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
 
 		
-		JPanel editPanel = new JPanel(new BorderLayout());
-		editPanel.setBorder(BorderFactory.createTitledBorder(""));
-		editPanel.add(editableTransaction, BorderLayout.CENTER);
+//		JPanel editPanel = new JPanel(new BorderLayout());
+//		editPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		editPanel.add(editableTransaction, BorderLayout.CENTER);
 		
-		JPanel editPanelHolder = new JPanel(new BorderLayout());
-		editPanelHolder.setBorder(BorderFactory.createEmptyBorder(2, 7, 7, 7));
-		editPanelHolder.add(editPanel, BorderLayout.CENTER);
+//		JPanel editPanelHolder = new JPanel(new BorderLayout());
+//		editPanelHolder.setBorder(BorderFactory.createEmptyBorder(2, 7, 7, 7));
+//		editPanelHolder.add(editableTransaction, BorderLayout.CENTER);
 
-		scrollPanel.add(editPanelHolder, BorderLayout.SOUTH);
+		editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
+		
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
+		scrollPanel.add(editableTransaction, BorderLayout.SOUTH);
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
