@@ -91,7 +91,6 @@ public enum TranslateKeys {
 	FREQUENCY,
 	FRIDAY,
 	GO,
-	GRAPHS,
 	GROCERIES,
 	HELP,
 	HOUSEHOLD,

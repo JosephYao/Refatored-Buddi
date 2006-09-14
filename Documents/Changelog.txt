@@ -1,3 +1,6 @@
+1.7.4 (September 14 2006)
+-Cleaned up the UI quite a bit.  This was done for two main reasons: make the UI less cluttered looking, and speed up GUI operations.  The second objective has been met (at least a little; profiling shows a speed increase of about 10%).  Whether or not the GUI looks better is up for debate - if you feel strongly one way or another, please let me know.
+
 1.7.3 (September 13 2006)
 -Added encryption of data files (thanks to John Didion for creating the actual cipher and associated logic).  This lets you encrypt the data file with strong encryption without relying on the OS to do this for you.
 -Added Overdraft limit for debit accounts (comparable to credit limit)

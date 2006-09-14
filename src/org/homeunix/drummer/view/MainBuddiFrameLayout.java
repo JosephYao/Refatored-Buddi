@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import org.homeunix.drummer.Const;
@@ -41,9 +42,12 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		
 		mainPanel.add(tabs, BorderLayout.CENTER);
 		
+		JScrollPane scroller = new JScrollPane(mainPanel);
+		scroller.setBorder(BorderFactory.createEmptyBorder());
+		
 		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI));
 		this.setLayout(new BorderLayout());
-		this.add(mainPanel, BorderLayout.CENTER);		
+		this.add(scroller, BorderLayout.CENTER);		
 	}
 	
 	public AccountListPanel getAccountListPanel(){
