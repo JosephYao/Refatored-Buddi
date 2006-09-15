@@ -59,19 +59,15 @@ public class Const {
 		"SATURDAY"
 	};
 	
-	public final static String[] REPORTS = {
+	public final static String[] INCLUDED_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
-		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription"
-	};
-
-	public final static String[] GRAPHS = {
+		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpenseBudgetedVsActual",
 		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
 		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime"
 	};
-
 	
 	private Const(){}
 }

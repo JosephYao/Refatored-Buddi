@@ -12,18 +12,18 @@ import javax.swing.JPanel;
 
 public abstract class ReportPanelLayout extends JPanel {
 	public static final long serialVersionUID = 0;
-	protected final JPanel reportsPanel;
+	protected final JPanel pluginsPanel;
 	
 	
 	protected ReportPanelLayout(){		
-		reportsPanel = new JPanel();
-		reportsPanel.setLayout(new BoxLayout(reportsPanel, BoxLayout.Y_AXIS));
+		pluginsPanel = new JPanel();
+		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
 				
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 7, 17));
 		
-		mainPanel.add(reportsPanel, BorderLayout.NORTH);
+		mainPanel.add(pluginsPanel, BorderLayout.NORTH);
 		mainPanel.add(new JLabel(), BorderLayout.CENTER);
 						
 		this.setLayout(new BorderLayout());
