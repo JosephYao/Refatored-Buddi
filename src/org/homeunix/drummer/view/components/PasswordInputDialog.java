@@ -28,7 +28,7 @@ import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
-public class PasswordInputPane extends JPanel {
+public class PasswordInputDialog extends JPanel {
 	private static final long serialVersionUID = 0;
 
 	public static String askForPassword(boolean showConfirm, boolean isNullPasswordAllowed) {
@@ -42,7 +42,7 @@ public class PasswordInputPane extends JPanel {
 	}
 	
 	public static String askForPassword(Component parentComponent, String message, String title, boolean showConfirm, boolean isNullPasswordAllowed) {
-		PasswordInputPane pane = new PasswordInputPane(message);
+		PasswordInputDialog pane = new PasswordInputDialog(message);
 		Component parent = (null == parentComponent) ?
 				JOptionPane.getRootFrame() : parentComponent;
 		pane.setComponentOrientation(parent.getComponentOrientation());
@@ -67,7 +67,7 @@ public class PasswordInputPane extends JPanel {
 	private String message;
 	private String value;
 	
-	private PasswordInputPane(String message) {
+	private PasswordInputDialog(String message) {
 		this.message = message;
 	}	
 	
@@ -119,7 +119,7 @@ public class PasswordInputPane extends JPanel {
 						noPasswordEntered(dialog, isNullPasswordAllowed);
 					}
 					else{
-						PasswordInputPane.this.value = pw1Value;
+						PasswordInputDialog.this.value = pw1Value;
 						dialog.setVisible(false);
 					}
 				} 
@@ -185,7 +185,7 @@ public class PasswordInputPane extends JPanel {
 					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED_TITLE), 
 					JOptionPane.INFORMATION_MESSAGE
 			);
-		PasswordInputPane.this.value = null;
+		PasswordInputDialog.this.value = null;
 		dialog.setVisible(false);
 	}
 

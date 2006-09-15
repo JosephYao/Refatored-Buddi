@@ -31,7 +31,7 @@ import org.homeunix.drummer.view.AbstractDialog;
 
 import com.toedter.calendar.JDateChooser;
 
-public class CustomDateDialogLayout extends AbstractDialog {
+public class CustomDateDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 
 	protected final JButton okButton;
@@ -46,7 +46,7 @@ public class CustomDateDialogLayout extends AbstractDialog {
 	protected final BuddiPlugin plugin;
 
 
-	public CustomDateDialogLayout(Frame owner, BuddiPlugin plugin){
+	public CustomDateDialog(Frame owner, BuddiPlugin plugin){
 		super(owner);
 
 		this.plugin = plugin;
@@ -172,13 +172,13 @@ public class CustomDateDialogLayout extends AbstractDialog {
 
 				BuddiPluginFactory.openNewPluginWindow(plugin, startDate, endDate);
 
-				CustomDateDialogLayout.this.setVisible(false);
+				CustomDateDialog.this.setVisible(false);
 			}
 		});
 
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				CustomDateDialogLayout.this.setVisible(false);
+				CustomDateDialog.this.setVisible(false);
 			}
 		});
 

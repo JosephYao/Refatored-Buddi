@@ -18,7 +18,7 @@ import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.components.PasswordInputPane;
+import org.homeunix.drummer.view.components.PasswordInputDialog;
 
 public class AESCryptoCipher implements URIConverter.Cipher {
 	private static final String ALGORITHM = "AES/CFB8/PKCS5Padding";
@@ -94,7 +94,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		}
 
 		if (this.key == null) {
-			String password = PasswordInputPane.askForPassword(true, true);
+			String password = PasswordInputDialog.askForPassword(true, true);
 			
 			if (password == null){
 				this.encrypted = false;
@@ -170,7 +170,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		boolean correctPassword = false;
 		do {
 			// ask for the password, which we use to generate the AES key
-			String password = PasswordInputPane.askForPassword(false, false);
+			String password = PasswordInputDialog.askForPassword(false, false);
 			
 			if (password == null){
 				JOptionPane.showMessageDialog(

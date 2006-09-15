@@ -3,6 +3,8 @@
  */
 package org.homeunix.drummer.controller;
 
+import javax.swing.JPanel;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
 import org.homeunix.drummer.view.ReportPanelLayout;
@@ -14,7 +16,9 @@ public class ReportPanel extends ReportPanelLayout {
 		super();
 		
 		for (String pluginClassName : Const.REPORTS) {
-			reportsPanel.add(BuddiPluginFactory.getPluginLaunchPane(pluginClassName));
+			JPanel pluginPanel = BuddiPluginFactory.getPluginLaunchPane(pluginClassName);
+			if (pluginPanel != null)
+				reportsPanel.add(pluginPanel);
 		}
 	}
 }
