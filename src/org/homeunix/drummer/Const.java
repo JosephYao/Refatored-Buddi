@@ -59,5 +59,10 @@ public class Const {
 		"SATURDAY"
 	};
 	
+	public final static String[] REPORTS = {
+		"org.homeunix.drummer.plugins.reports.IncomeExpenseByCategory",
+		"org.homeunix.drummer.plugins.reports.IncomeExpenseByDescription"
+	};
+	
 	private Const(){}
 }

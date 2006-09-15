@@ -34,9 +34,8 @@ import org.homeunix.drummer.controller.PreferencesFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.reports.IncomeExpenseByCategoryReportFrame;
-import org.homeunix.drummer.controller.reports.IncomeExpenseByDescriptionReportFrame;
 import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.plugins.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.FileFunctions;
@@ -86,8 +85,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		restore.addUserFrame(MainBuddiFrame.class);
 		encrypt.addUserFrame(MainBuddiFrame.class);
 		decrypt.addUserFrame(MainBuddiFrame.class);
-		export.addUserFrame(IncomeExpenseByCategoryReportFrame.class);
-		export.addUserFrame(IncomeExpenseByDescriptionReportFrame.class);
+		export.addUserFrame(BuddiReportPlugin.class);
 		//close.addUserFrame(TransactionsFrame.class);
 		
 		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,

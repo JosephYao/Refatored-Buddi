@@ -58,7 +58,7 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		return categoryListPanel;
 	}
 	
-	protected AbstractPanel getSelectedPanel(){
+	protected JPanel getSelectedPanel(){
 		if (tabs.getSelectedComponent().equals(accountListPanel))
 			return accountListPanel;
 		else if (tabs.getSelectedComponent().equals(categoryListPanel))
