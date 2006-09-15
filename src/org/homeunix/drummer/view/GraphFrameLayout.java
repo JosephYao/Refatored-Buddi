@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -51,25 +52,25 @@ public class GraphFrameLayout extends AbstractFrame {
 		reportPanel = graphPlugin.getGraphPanel(startDate, endDate);
 				
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
-		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+//		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		reportPanelSpacer.add(reportPanel, BorderLayout.CENTER);
 		
-		JPanel reportPanel = new JPanel(new BorderLayout());
-		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
-		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
+//		JPanel reportPanel = new JPanel(new BorderLayout());
+//		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-		mainPanel.add(reportPanel, BorderLayout.CENTER);
+		mainPanel.add(reportPanelSpacer, BorderLayout.CENTER);
 		
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-//		if (Buddi.isMac()){
+		if (Buddi.isMac()){
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//		}
+		}
 		
 		//reportPanel.setText(buildReport(startDate, endDate));
 				

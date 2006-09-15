@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.AccountListPanel;
 import org.homeunix.drummer.controller.CategoryListPanel;
@@ -28,7 +29,6 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		
 	protected MainBuddiFrameLayout(){
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
 		tabs = new JTabbedPane();
 		
@@ -44,6 +44,10 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		
 		JScrollPane scroller = new JScrollPane(mainPanel);
 		scroller.setBorder(BorderFactory.createEmptyBorder());
+		
+		if (Buddi.isMac()){
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+		}
 		
 		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI));
 		this.setLayout(new BorderLayout());

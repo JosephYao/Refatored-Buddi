@@ -1,3 +1,7 @@
+1.7.5 (September 15 2006)
+-Re-did the report / graph architecture.  Now Buddi includes the ability for third parties to create custom reports and graphs.  To do this, implement org.homeunix.drummer.plugins.Buddi{Graph|Report}Plugin, include your compiled classes on the class path, and reference them all in a comma separated list after the --plugins command line option.  For instance, '--plugins com.example.Report1,com.example.Graph2' (without the quotes, of course).  If I have enough interest in this, I will change this to be included in the Preferences file, so that end users don't need to mess with command line options.
+-Tweaked some layout parameters for non Mac OSX systems to look better on Linux / Windows.
+
 1.7.4 (September 14 2006)
 -Cleaned up the UI quite a bit.  This was done for two main reasons: make the UI less cluttered looking, and speed up GUI operations.  The second objective has been met (at least a little; profiling shows a speed increase of about 10%).  Whether or not the GUI looks better is up for debate - if you feel strongly one way or another, please let me know.
 -I am now using a newer version of FatJar, which removes unused classes.  This makese the downloads even smaller - about 3 MB for Mac, and 2 MB for Linux / Windows.

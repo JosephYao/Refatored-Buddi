@@ -32,7 +32,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	
 	protected final JList list;
 	protected final JScrollPane listScroller;
-//	protected final DefaultListModel model;
 	
 	protected final EditableTransaction editableTransaction;
 	protected final JButton recordButton;
@@ -81,7 +80,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 		searchField.setPreferredSize(new Dimension(200, searchField.getPreferredSize().height));
-//		clearSearchField.setPreferredSize(new Dimension(clearSearchField.getPreferredSize().width, searchField.getPreferredSize().height));
 
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -109,15 +107,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		buttonPanel.add(buttonPanelRight, BorderLayout.EAST);
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
 
-		
-//		JPanel editPanel = new JPanel(new BorderLayout());
-//		editPanel.setBorder(BorderFactory.createTitledBorder(""));
-//		editPanel.add(editableTransaction, BorderLayout.CENTER);
-		
-//		JPanel editPanelHolder = new JPanel(new BorderLayout());
-//		editPanelHolder.setBorder(BorderFactory.createEmptyBorder(2, 7, 7, 7));
-//		editPanelHolder.add(editableTransaction, BorderLayout.CENTER);
-
 		editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
 		
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
@@ -125,10 +114,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 
-		
-//		mainPanel.add(searchPanel, BorderLayout.NORTH);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
@@ -138,8 +124,8 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		if (Buddi.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,12,12));
 			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		}
 		
 		//Call the method to add actions to the buttons

@@ -7,6 +7,10 @@ If you are interested in adding to my project in any way, please do so!  The sou
 </p>
 
 <p>
+As of version 1.7.5, you can write report and / or graph plugins for Buddi and have them included in the Reports window.  To do this, implement ones of the classes org.homeunix.drummer.plugins.BuddiReportPlugin (for reports) or BuddiGraphPlugin (for graphs).  You can look at the source code in org.homeunix.drummer.plugins.{reports|graphs} for examples of this.  After you have compiled your code, include it on the classpath and start Buddi with the --plugins option.  This flag takes a comma separated (no whitespace) list of classes to attempt to add at startup.
+</p>
+
+<p>
 If you are interested in translating Buddi into another language, there is just one file which you need to duplicate and modify: en.lang, located in the Language directory.  (If you are running on Macintosh OS X, you will need to ctrl-click on the application package, select Show Package Contents, and go into the Contents -> Resources -> Java -> Languages folder.)  Once you duplicate it, rename the file to the correct language code, for instance en (for Engligh), or ja (for Japanese).
 </p>
 

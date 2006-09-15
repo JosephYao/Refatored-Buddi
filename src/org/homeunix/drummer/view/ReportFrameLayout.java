@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -25,8 +27,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 
@@ -69,23 +74,23 @@ public class ReportFrameLayout extends AbstractFrame {
 		JScrollPane reportLabelScroller = new JScrollPane(reportTree);
 
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
-		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+//		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		reportPanelSpacer.add(reportLabelScroller, BorderLayout.CENTER);
 
-		JPanel reportPanel = new JPanel(new BorderLayout());
-		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
-		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
+//		JPanel reportPanel = new JPanel(new BorderLayout());
+//		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-		mainPanel.add(reportPanel, BorderLayout.CENTER);
+		mainPanel.add(reportPanelSpacer, BorderLayout.CENTER);
 
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
 		if (Buddi.isMac()){
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			reportTree.putClientProperty("Quaqua.Tree.style", "striped");
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -135,11 +140,40 @@ public class ReportFrameLayout extends AbstractFrame {
 		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getLastSelectedPathComponent();
-				
-				if (node == null)
-					return;
-				
+								
 				selectedNode = node;
+			}
+		});
+		
+		reportTree.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				editButton.setEnabled(selectedNode != null && selectedNode.getUserObject() instanceof Transaction);
+				
+				if (arg0.getClickCount() >= 2){
+					editButton.doClick();
+				}
+				super.mouseClicked(arg0);
+			}
+		});
+		
+		editButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				Object o = selectedNode.getUserObject();
+				if (o instanceof Transaction){
+					Transaction transaction = (Transaction) o;
+					Account a;
+					if (transaction.getTo() instanceof Account)
+						a = (Account) transaction.getTo();
+					else if (transaction.getFrom() instanceof Account)
+						a = (Account) transaction.getFrom();	
+					else
+						a = null;
+					
+					if (a != null) {
+						new TransactionsFrame(a, transaction);
+					}
+				}
 			}
 		});
 		
