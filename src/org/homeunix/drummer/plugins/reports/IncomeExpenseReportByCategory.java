@@ -214,7 +214,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 	}
 
 	public DateRangeType getDateRangeType() {
-		return BuddiPluginFactory.DateRangeType.INTERVAL;
+		return DateRangeType.INTERVAL;
 	}
 
 	public String getTitle() {

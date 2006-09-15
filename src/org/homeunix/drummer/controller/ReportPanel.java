@@ -20,5 +20,12 @@ public class ReportPanel extends ReportPanelLayout {
 			if (pluginPanel != null)
 				reportsPanel.add(pluginPanel);
 		}
+		
+		for (String pluginClassName : Const.GRAPHS) {
+			JPanel pluginPanel = BuddiPluginFactory.getPluginLaunchPane(pluginClassName);
+			if (pluginPanel != null)
+				reportsPanel.add(pluginPanel);
+		}
+
 	}
 }

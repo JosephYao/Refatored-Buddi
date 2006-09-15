@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.plugins;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
+import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.components.CustomDateDialog;
 
@@ -34,32 +36,33 @@ public class BuddiPluginFactory {
 
 	public static JPanel getPluginLaunchPane(String className){
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		final BuddiReportPlugin reportPlugin;
+		final BuddiPlugin plugin;
 		
 		// Make an instance of this plug-in
 		try {
 			Object o = Class.forName(className).newInstance();
 
 			// Check for correct interface 
-			if (!(o instanceof BuddiReportPlugin)){
-				throw new Exception("Not of type BuddiReportPlugin: " + o.getClass().getName());
+			if (!(o instanceof BuddiPlugin)){
+				throw new Exception("Not of type BuddiPlugin: " + o.getClass().getName());
 			}
 			
-			reportPlugin = (BuddiReportPlugin) o;
+			plugin = (BuddiPlugin) o;
 			
 			//Select the correct options for the dropdown, based on the plugin
 			Vector<DateChoice> dateChoices;
-			if (reportPlugin.getDateRangeType().equals(DateRangeType.INTERVAL))
+			if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL))
 				dateChoices = getInterval();
-			else if (reportPlugin.getDateRangeType().equals(DateRangeType.START_ONLY))
+			else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
 				dateChoices = getStartOnly();
-			else if (reportPlugin.getDateRangeType().equals(DateRangeType.END_ONLY))
+			else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
 				dateChoices = getEndOnly();
 			else
 				dateChoices = new Vector<DateChoice>();
  
 			//Get the combobox 
 			final JComboBox dateSelect = new JComboBox(dateChoices);
+			dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
 			dateSelect.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					//Find out which item was clicked on
@@ -73,7 +76,7 @@ public class BuddiPluginFactory {
 						if (!choice.isCustom()){
 							//Launch a new reports window with given parameters
 							BuddiPluginFactory.openNewPluginWindow(
-									reportPlugin, 
+									plugin, 
 									choice.getStartDate(), 
 									choice.getEndDate()
 							);
@@ -82,7 +85,7 @@ public class BuddiPluginFactory {
 						else{
 							new CustomDateDialog(
 									MainBuddiFrame.getInstance(),
-									reportPlugin
+									plugin
 							).openWindow();
 						}
 					}
@@ -91,7 +94,7 @@ public class BuddiPluginFactory {
 				}
 			});
 			
-			panel.add(new JLabel(Translate.getInstance().get(reportPlugin.getDescription())));
+			panel.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
 			panel.add(dateSelect);
 			return panel;
 		}
@@ -106,6 +109,10 @@ public class BuddiPluginFactory {
 	public static void openNewPluginWindow(BuddiPlugin plugin, final Date startDate, final Date endDate){
 		if (plugin instanceof BuddiReportPlugin)
 			new ReportFrameLayout((BuddiReportPlugin) plugin, startDate, endDate).openWindow();
+		else if (plugin instanceof BuddiGraphPlugin)
+			new GraphFrameLayout((BuddiGraphPlugin) plugin, startDate, endDate).openWindow();
+		else
+			Log.error("Unknown plugin type: " + plugin.getClass().getName());
 		
 	}
 	

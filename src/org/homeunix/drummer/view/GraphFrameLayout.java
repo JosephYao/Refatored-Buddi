@@ -27,20 +27,19 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.plugins.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Log;
 
-public abstract class GraphFrameLayout extends AbstractFrame {
+public class GraphFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 
 	protected final JPanel reportPanel;
 	protected final JButton okButton;
-	
-	public GraphFrameLayout(){
-		this(null, null);
-	}
-	
-	public GraphFrameLayout(Date startDate, Date endDate){
+		
+	public GraphFrameLayout(BuddiGraphPlugin graphPlugin, final Date startDate, final Date endDate){
+		this.setTitle(graphPlugin.getTitle());
+
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
@@ -49,7 +48,7 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(okButton);
 		
-		reportPanel = buildReport(startDate, endDate);
+		reportPanel = graphPlugin.getGraphPanel(startDate, endDate);
 				
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
 		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -92,27 +91,15 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 	@Override
 	protected AbstractFrame initActions() {
 		this.addComponentListener(new ComponentAdapter(){
-//			@Override
-//			public void componentResized(ComponentEvent arg0) {
-//				if (Const.DEVEL) Log.debug("Graphs window resized");
-//				
-//				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
-//				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
-//				
-//				PrefsInstance.getInstance().savePrefs();
-//				
-//				super.componentResized(arg0);
-//			}
-			
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkWindowSanity();
 				
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setWidth(arg0.getComponent().getWidth());
-				PrefsInstance.getInstance().getPrefs().getGraphsWindow().setHeight(arg0.getComponent().getHeight());
-				
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+								
 				PrefsInstance.getInstance().savePrefs();
 				
 				super.componentHidden(arg0);
@@ -121,6 +108,15 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 		
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				PrefsInstance.getInstance().checkWindowSanity();
+				
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(GraphFrameLayout.this.getX());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(GraphFrameLayout.this.getY());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(GraphFrameLayout.this.getWidth());
+				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(GraphFrameLayout.this.getHeight());
+								
+				PrefsInstance.getInstance().savePrefs();
+				
 				GraphFrameLayout.this.setVisible(false);
 			}
 		});
@@ -236,10 +232,23 @@ public abstract class GraphFrameLayout extends AbstractFrame {
 		return map;
 	}
 	
-	protected abstract JPanel buildReport(Date startDate, Date endDate);
-	
 	@Override
 	public Component getPrintedComponent() {
 		return reportPanel;
+	}
+	
+	@Override
+	protected AbstractFrame initContent() {
+		return this;
+	}
+	
+	@Override
+	public AbstractFrame updateButtons() {
+		return this;
+	}
+	
+	@Override
+	public AbstractFrame updateContent() {
+		return this;
 	}
 }
