@@ -58,12 +58,8 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		list.setCellRenderer(renderer);
 		
 		listScroller = new JScrollPane(list);
-		listScroller.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createEmptyBorder(5, 10, 5, 10),
-				listScroller.getBorder()));
 						
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(""));		
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		
 		//Set up the editing portion
@@ -126,6 +122,10 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+			listScroller.setBorder(BorderFactory.createCompoundBorder(
+					BorderFactory.createEmptyBorder(5, 10, 5, 10),
+					listScroller.getBorder()));
+			scrollPanel.setBorder(BorderFactory.createTitledBorder(""));		
 		}
 		
 		//Call the method to add actions to the buttons
