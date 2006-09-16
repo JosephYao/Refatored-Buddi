@@ -128,6 +128,20 @@ public class DateUtil {
 		calendar.set(GregorianCalendar.MILLISECOND, calendar.getActualMaximum(GregorianCalendar.MILLISECOND));		
 		return (Date) calendar.getTime().clone();
 	}
+	
+	public static Date getStartOfYear(Date date){
+		calendar.setTime(date);
+		calendar.set(GregorianCalendar.MONTH, calendar
+				.getActualMinimum(GregorianCalendar.MONTH));
+		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar
+				.getActualMinimum(GregorianCalendar.DAY_OF_MONTH));
+		calendar.set(GregorianCalendar.HOUR_OF_DAY, calendar.getActualMinimum(GregorianCalendar.HOUR_OF_DAY));
+		calendar.set(GregorianCalendar.MINUTE, calendar.getActualMinimum(GregorianCalendar.MINUTE));
+		calendar.set(GregorianCalendar.SECOND, calendar.getActualMinimum(GregorianCalendar.SECOND));
+		calendar.set(GregorianCalendar.MILLISECOND, calendar.getActualMinimum(GregorianCalendar.MILLISECOND));		
+		return (Date) calendar.getTime().clone();
+	}
+	
 	public static int getYearOfDate(Date date){
 		return calendar.get(Calendar.YEAR);
 	}

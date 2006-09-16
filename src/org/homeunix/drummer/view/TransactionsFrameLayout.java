@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -38,6 +39,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
 	protected final JHintTextField searchField;
+	protected final JComboBox dateRangeComboBox;
 	protected final JButton clearSearchField;
 	protected final JLabel creditRemaining;
 	
@@ -51,6 +53,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		dateRangeComboBox = new JComboBox();
 		creditRemaining = new JLabel();
 		
 		TransactionCellRenderer renderer = new TransactionCellRenderer();
@@ -76,9 +79,12 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 		searchField.setPreferredSize(new Dimension(200, searchField.getPreferredSize().height));
+		dateRangeComboBox.setPreferredSize(new Dimension(100, dateRangeComboBox.getPreferredSize().height));
 
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FILTER)));
+		searchPanel.add(dateRangeComboBox);
 		searchPanel.add(searchField);
 		searchPanel.add(clearSearchField);
 		
