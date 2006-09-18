@@ -93,7 +93,7 @@ public class AccountListPanel extends ListPanelLayout {
 					long start = System.currentTimeMillis();
 					new TransactionsFrame(getSelectedAccount());
 					long end = System.currentTimeMillis();
-					System.out.println((end - start));
+					if (Const.DEVEL) Log.info("Open button time: " + (end - start));
 					AccountListPanel.this.updateButtons();
 				}
 			}

@@ -11,6 +11,8 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.RepaintManager;
 
+import org.homeunix.drummer.Const;
+
 /*
  * Copied from http://www.developerdotstar.com/community/node/124/print
  *   By Rob MacGrogan
@@ -39,12 +41,12 @@ public class PrintUtilities implements Printable {
 		printJob.setPrintable(this);
 		if (printJob.printDialog())
 			try {
-				System.out.println("Calling PrintJob.print()");
+				if (Const.DEVEL) Log.debug("Calling PrintJob.print()");
 				printJob.print();
-				System.out.println("End PrintJob.print()");
+				if (Const.DEVEL) Log.debug("End PrintJob.print()");
 			}
 		catch (PrinterException pe) {
-			System.out.println("Error printing: " + pe);
+			Log.error("Error printing: " + pe);
 		}
 	}
 	public int print(Graphics g, PageFormat pf, int pageIndex) {

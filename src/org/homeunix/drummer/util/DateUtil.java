@@ -67,7 +67,7 @@ public class DateUtil {
 		int quarterNumber = calendar.get(GregorianCalendar.MONTH) / 3;
 		
 		if (quarterNumber < 0 || quarterNumber > 3)
-			System.out.println("Error when calculating quarter: date = " + date + " results in quarter = " + quarterNumber);
+			Log.error("Error when calculating quarter: date = " + date + " results in quarter = " + quarterNumber);
 		
 		calendar.set(GregorianCalendar.MONTH, quarterNumber * 3);
 		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMinimum(GregorianCalendar.DAY_OF_MONTH));
