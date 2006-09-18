@@ -9,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -34,12 +36,16 @@ import org.homeunix.drummer.controller.PreferencesFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.FileFunctions;
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.PrintUtilities;
+import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
@@ -87,6 +93,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		decrypt.addUserFrame(MainBuddiFrame.class);
 		exportHTML.addUserFrame(ReportFrameLayout.class);
 		exportCSV.addUserFrame(MainBuddiFrame.class);
+		exportCSV.addUserFrame(TransactionsFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
 
 		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -99,8 +106,6 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		exportHTML.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
-				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
@@ -445,19 +450,77 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_EXPORT_FILE));
 				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
 						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), JOptionPane.ERROR_MESSAGE);
 					else{
-						final String location;
-						if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
-							location = jfc.getSelectedFile().getAbsolutePath();
-						else
-							location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
+						final String location = jfc.getSelectedFile().getAbsolutePath();
+						final Account account;
+						
+						if (BuddiMenu.this.frame instanceof TransactionsFrame){
+							account = ((TransactionsFrame) BuddiMenu.this.frame).getAccount();
+						}
+						else{
+							account = null;
+						}
+						
+						
+						SwingWorker worker = new SwingWorker(){
+							@Override
+							public Object construct() {
+								Vector<Transaction> allTransactions;
+								if (account == null){
+									allTransactions = DataInstance.getInstance().getTransactions();
+								}
+								else {
+									allTransactions = DataInstance.getInstance().getTransactions(account);
+								}
+								StringBuilder sb = new StringBuilder();
+								sb.append("\"").append("Date").append("\",");
+								sb.append("\"").append("Description").append("\",");
+								sb.append("\"").append("Number").append("\",");
+								sb.append("\"").append("Memo").append("\",");
+								sb.append("\"").append("Amount").append("\",");					
+								sb.append("\"").append("From").append("\",");
+								sb.append("\"").append("To").append("\"");							
+								sb.append("\n");
 
-						//[TODO] Export stuff here.
-						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+								for (Transaction transaction : allTransactions) {
+									sb.append("\"").append(transaction.getDate()).append("\",");
+									sb.append("\"").append(transaction.getDescription()).append("\",");
+									sb.append("\"").append(transaction.getNumber()).append("\",");
+									sb.append("\"").append(transaction.getMemo().replaceAll("\n", " ")).append("\",");
+									sb.append("\"").append(Formatter.getInstance().getDecimalFormat().format(transaction.getAmount() / 100.0)).append("\",");					
+									sb.append("\"").append((transaction.getFrom() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getFrom().getName())).append("\",");
+									sb.append("\"").append((transaction.getTo() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getTo().getName())).append("\"");							
+									sb.append("\n");
+								}
+								
+								try{
+									PrintStream out = new PrintStream(new FileOutputStream(location));
+									out.println(sb.toString());
+									out.close();
+								}
+								catch (FileNotFoundException fnfe){
+									return fnfe;
+								}
+
+								return null;
+							}
+							
+							@Override
+							public void finished() {
+								if (get() == null){
+									JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_EXPORT) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+								}
+								else if (get() instanceof Exception){
+									JOptionPane.showMessageDialog(null, ((Exception) get()).getMessage(), Translate.getInstance().get(TranslateKeys.ERROR), JOptionPane.ERROR_MESSAGE);
+								}
+							}
+						};
+						
+						worker.start();
 					}
 				}
 			}

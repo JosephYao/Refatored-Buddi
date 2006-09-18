@@ -258,3 +258,6 @@ INCORRECT_PASSWORD_TITLE=Incorrect Password
 DATE_FILTER=Date Filter
 ALL=All
 THIS_WEEK=This Week
+SUCCESSFUL_EXPORT=Successfully exported file:\n
+EXPORT_TO_CSV=Export to CSV
+CHOOSE_EXPORT_FILE=Choose Export File

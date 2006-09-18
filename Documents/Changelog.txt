@@ -1,3 +1,7 @@
+1.7.6 (September 18 2006)
+-Added Export to CSV for all transactions / transactions within a frame (depending on where you export from)
+-Added Date Filter to transactions window, to limit visible transactions to specific date range (thanks to John Didion for the original patch for this feature)
+
 1.7.5 (September 15 2006)
 -Re-did the report / graph architecture.  Now Buddi includes the ability for third parties to create custom reports and graphs.  To do this, implement org.homeunix.drummer.plugins.Buddi{Graph|Report}Plugin, include your compiled classes on the class path, and reference them all in a comma separated list after the --plugins command line option.  For instance, '--plugins com.example.Report1,com.example.Graph2' (without the quotes, of course).  If I have enough interest in this, I will change this to be included in the Preferences file, so that end users don't need to mess with command line options.
 -Tweaked some layout parameters for non Mac OSX systems to look better on Linux / Windows.
