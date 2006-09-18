@@ -75,7 +75,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem encrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE));
 		final JScreenMenuItem decrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
-		final JScreenMenuItem export = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML));
+		final JScreenMenuItem exportHTML = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML));
+		final JScreenMenuItem exportCSV = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EXPORT_TO_CSV));
 		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
 
 		newFile.addUserFrame(MainBuddiFrame.class);
@@ -84,7 +85,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		restore.addUserFrame(MainBuddiFrame.class);
 		encrypt.addUserFrame(MainBuddiFrame.class);
 		decrypt.addUserFrame(MainBuddiFrame.class);
-		export.addUserFrame(ReportFrameLayout.class);
+		exportHTML.addUserFrame(ReportFrameLayout.class);
+		exportCSV.addUserFrame(MainBuddiFrame.class);
 		//close.addUserFrame(TransactionsFrame.class);
 
 		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -97,7 +99,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		export.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+		exportHTML.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -113,7 +115,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.add(decrypt);
 		file.addSeparator();
 		file.add(print);
-		file.add(export);
+		file.add(exportHTML);
+		file.add(exportCSV);
 		file.addSeparator();
 		file.add(close);
 
@@ -399,7 +402,7 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
-		export.addActionListener(new ActionListener(){
+		exportHTML.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if (Const.DEVEL) Log.debug("Exporting HTML");
 				if (BuddiMenu.this.frame instanceof ReportFrameLayout){
@@ -434,6 +437,28 @@ public class BuddiMenu extends JScreenMenuBar {
 				}
 				else {
 					Log.error ("This is not an instance of ReportFrameLayout");
+				}
+			}
+		});
+
+		exportCSV.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				final JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
+				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+					if (jfc.getSelectedFile().isDirectory())
+						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), JOptionPane.ERROR_MESSAGE);
+					else{
+						final String location;
+						if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
+							location = jfc.getSelectedFile().getAbsolutePath();
+						else
+							location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
+
+						//[TODO] Export stuff here.
+						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});

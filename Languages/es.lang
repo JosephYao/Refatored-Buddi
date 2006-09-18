@@ -263,3 +263,6 @@ EMPTY_PASSWORD=You didn't specify a password to decrypt\nthe data file.  Exiting
 EMPTY_PASSWORD_TITLE=No Password Entered
 INCORRECT_PASSWORD=Incorrect password.  Please try again.
 INCORRECT_PASSWORD_TITLE=Incorrect Password
+DATE_FILTER=Date Filter
+ALL=All
+THIS_WEEK=This Week

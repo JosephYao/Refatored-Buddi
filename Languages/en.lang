@@ -255,3 +255,6 @@ YESTERDAY=Yesterday
 ZOOM=Zoom
 INCORRECT_PASSWORD=Incorrect password.  Please try again.
 INCORRECT_PASSWORD_TITLE=Incorrect Password
+DATE_FILTER=Date Filter
+ALL=All
+THIS_WEEK=This Week
