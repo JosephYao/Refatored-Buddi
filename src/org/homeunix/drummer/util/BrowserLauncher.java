@@ -461,7 +461,7 @@ public class BrowserLauncher {
 				break;
 			case OTHER:
 			default:
-				browser = "netscape";
+				browser = "firefox"; //Firefox seems to be more common these days than netscape...
 				break;
 		}
 		return browser;

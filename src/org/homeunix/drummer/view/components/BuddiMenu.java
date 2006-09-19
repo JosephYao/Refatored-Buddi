@@ -29,6 +29,7 @@ import net.roydesign.ui.JScreenMenu;
 import net.roydesign.ui.JScreenMenuBar;
 import net.roydesign.ui.JScreenMenuItem;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.EditScheduledTransactionsFrame;
 import org.homeunix.drummer.controller.MainBuddiFrame;
@@ -123,7 +124,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.add(exportHTML);
 		file.add(exportCSV);
 		file.addSeparator();
-		file.add(close);
+		if (Buddi.isMac()){
+			file.add(close);
+		}
 
 
 		//Edit menu items
