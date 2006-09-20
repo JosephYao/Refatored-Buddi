@@ -60,11 +60,24 @@ public class PrefsInstance {
 			if (Buddi.isMac()){
 				location = 
 					System.getProperty("user.home") 
-					+ File.separator + "Library" + File.separator 
-					+ "Application Support" + File.separator 
-					+ "Buddi" + File.separator + "prefs.xml";
+					+ File.separator 
+					+ "Library" + File.separator 
+					+ "Application Support" 
+					+ File.separator 
+					+ "Buddi" + File.separator 
+					+ "prefs.xml";
 			}
-			else{
+			else if (Buddi.isWindows()){
+
+				location = 
+					System.getProperty("user.home")
+                                        + File.separator
+                                        + "Application Data"
+                                        + File.separator
+                                        + "Buddi" + File.separator
+                                        + "prefs.xml";
+			}
+			else{ //Probably Linux / Unix...
 				location = 
 					System.getProperty("user.home") 
 					+ File.separator + ".buddi" + File.separator  

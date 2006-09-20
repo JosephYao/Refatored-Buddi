@@ -1,3 +1,5 @@
+-Added a native .exe file for Windows users.  This makes things much easier - you can copy the entire Buddi folder to Program Files, and then link a shortcut to it, without worrying about boring things like 'Start In' directories.  I still do not have an installer for Windows, and will probably not ever have one (unless someone adamently thinks this is aGood Thing (tm), and wants to create an automated process to make that).  Coming from a Mac / Unix perspective, installers are useless, especially since I don't use the registry at all.
+
 1.7.6 (September 18 2006)
 -Added Export to CSV for all transactions / transactions within a frame (depending on where you export from)
 -Added Date Filter to transactions window, to limit visible transactions to specific date range (thanks to John Didion for the original patch for this feature)

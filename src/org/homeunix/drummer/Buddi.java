@@ -30,15 +30,24 @@ import org.homeunix.drummer.view.components.BuddiMenu;
 public class Buddi {
 	
 	private static Boolean isMac;
+	private static Boolean isWindows;
 	private static final boolean UI_DEBUG = false;
 	private static String[] pluginArray = new String[0];
 		
 	public static boolean isMac(){
 		if (isMac == null){
-			isMac = !UI_DEBUG && System.getProperty("os.name").equals("Mac OS X");
+			isMac = !UI_DEBUG && System.getProperty("os.name").startsWith("Mac OS");
 		}
 		
 		return isMac;
+	}
+
+	public static Boolean isWindows(){
+		if (isWindows == null){
+			isWindows = !UI_DEBUG && System.getProperty("os.name").startsWith("Windows");
+		}
+
+		return isWindows;
 	}
 	
 	public static String[] getPluginArray(){
