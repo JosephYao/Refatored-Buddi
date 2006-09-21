@@ -35,4 +35,23 @@ public class FileFunctions {
 				out.close();
 		}
 	}
+
+	/*
+	 * Taken from http://www.javazoid.com/foj_file.html, with 
+	 * major modification to support generic InputStream reading
+	 */
+	public static String readTextStream(InputStream stream) throws IOException {
+		StringBuilder sb = new StringBuilder(1024);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			
+		char[] chars = new char[1024];
+		int numRead = 0;
+		while( (numRead = reader.read(chars)) > -1){
+			sb.append(String.valueOf(chars));
+		}
+
+		reader.close();
+
+		return sb.toString();
+	}
 }
