@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.1.v200608241248.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.1.v200608241248.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200608241248.jar"/>
+	<classpathentry kind="lib" path="lib/BrowserLauncher2-10rc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

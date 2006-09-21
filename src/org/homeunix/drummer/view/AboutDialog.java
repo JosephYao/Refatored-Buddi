@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,8 +20,9 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.Log;
+
+import edu.stanford.ejalbert.BrowserLauncher;
 
 public class AboutDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -120,10 +120,11 @@ public class AboutDialog extends AbstractDialog {
 		donateButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				try{
-					BrowserLauncher.openURL(Const.DONATE_URL);
+					BrowserLauncher bl = new BrowserLauncher(null);
+					bl.openURLinBrowser(Const.DONATE_URL);
 				}
-				catch (IOException ioe){
-					Log.error(ioe);
+				catch (Exception ex){
+					Log.error(ex);
 				}
 			}
 		});
@@ -132,10 +133,11 @@ public class AboutDialog extends AbstractDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try{
-					BrowserLauncher.openURL(Const.PROJECT_URL);
+					BrowserLauncher bl = new BrowserLauncher(null);
+					bl.openURLinBrowser(Const.PROJECT_URL);
 				}
-				catch (IOException ioe){
-					Log.error(ioe);
+				catch (Exception ex){
+					Log.error(ex);
 				}
 				super.mouseClicked(e);
 			}

@@ -27,13 +27,14 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.drummer.view.MainBuddiFrameLayout;
+
+import edu.stanford.ejalbert.BrowserLauncher;
 
 
 public class MainBuddiFrame extends MainBuddiFrameLayout {
@@ -223,14 +224,17 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 							
 							if (Buddi.isMac())
 								fileLocation += Const.DOWNLOAD_URL_DMG;
-							else
+							else if (Buddi.isWindows())
 								fileLocation += Const.DOWNLOAD_URL_ZIP;
+							else
+								fileLocation += Const.DOWNLOAD_URL_TGZ;
 							
 							try{
-								BrowserLauncher.openURL(fileLocation);
+								BrowserLauncher bl = new BrowserLauncher(null);
+								bl.openURLinBrowser(fileLocation);
 							}
-							catch (IOException ioe){
-								Log.error(ioe);
+							catch (Exception e){
+								Log.error(e);
 							}
 						}
 					}
@@ -276,10 +280,11 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 					
 					if (reply == JOptionPane.YES_OPTION){
 						try{
-							BrowserLauncher.openURL(Const.DONATE_URL);
+							BrowserLauncher bl = new BrowserLauncher(null);
+							bl.openURLinBrowser(Const.DONATE_URL);
 						}
-						catch (IOException ioe){
-							Log.error(ioe);
+						catch (Exception e){
+							Log.error(e);
 						}
 					}
 					

@@ -42,7 +42,7 @@ public class Translate {
 			);
 
 			try{
-				languageFile = Const.LANGUAGE_FOLDER + File.separator + "en" + Const.LANGUAGE_EXTENSION;
+				languageFile = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
 				translations.load(new BufferedInputStream(new FileInputStream(languageFile)));
 			}
 			catch (IOException ioe2){

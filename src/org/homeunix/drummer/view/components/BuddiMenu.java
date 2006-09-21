@@ -41,7 +41,6 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.BrowserLauncher;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
@@ -50,6 +49,8 @@ import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
+
+import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
@@ -436,11 +437,12 @@ public class BuddiMenu extends JScreenMenuBar {
 						tempFile.deleteOnExit();
 
 						if (Const.DEVEL) Log.debug("Opening file...");
-						BrowserLauncher.openURL("file://" + tempFile.getAbsolutePath());
+						BrowserLauncher bl = new BrowserLauncher(null);
+						bl.openURLinBrowser("file://" + tempFile.getAbsolutePath());
 						if (Const.DEVEL) Log.debug("Finished opening file...");
 					}
-					catch (IOException ioe){
-						Log.error(ioe);
+					catch (Exception ex){
+						Log.error(ex);
 					}
 				}
 				else {
@@ -573,11 +575,12 @@ public class BuddiMenu extends JScreenMenuBar {
 						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 
 					if (Const.DEVEL) Log.debug("Trying to open Help at " + location + "...");
-					BrowserLauncher.openURL(location);
+					BrowserLauncher bl = new BrowserLauncher(null);
+					bl.openURLinBrowser(location);
 				}
-				catch (IOException ioe){
-					Log.error(ioe);
-				}
+				catch (Exception e){
+					Log.error(e);
+				}			
 			}
 		});
 

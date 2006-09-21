@@ -1,4 +1,13 @@
-# Copies the jar file to the .app package.
+# Bundles Buddi for distribution.  Yes, I know I should make an ant script
+#  to do this, but I am a) too lazy and b) using some stuff that I don't
+#  know how to do from the ant script (such as FTP uploads).
+#
+# This script is meant to run on OS X, although it should be able to be
+#  modified quite easily to run on Linux.  Windows is right out, unless
+#  you use Cygwin.
+#
+# You need to actually create the Buddi.jar file first.  I use the FatJar
+#  plugin for Eclipse to do this, and it works quite well.
 #
 ############################
 
@@ -6,6 +15,8 @@ DEST=/Users/wyatt/Desktop/Buddi
 OSXROOT=$DEST/Buddi_OSX
 OSX=$OSXROOT/Buddi
 GENERIC=$DEST/Buddi
+WINDOWSROOT=$DEST/Windows
+WINDOWS=$WINDOWSROOT/Buddi
 SOURCE=source
 VERSION=`grep 'String VERSION = ' src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
 
@@ -44,7 +55,22 @@ cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
 cp -R $DEST/$SOURCE/Documents $OSX
 cp -R $DEST/$SOURCE/Licenses $OSX
 
-#Tar the source and give to each distro
+#Create the Windows bundle
+TEMP_LAUNCH=temp.xml
+cp Buddi-launch4j.xml $TEMP_LAUNCH
+if [ "$VERSION" != "" ]; then
+	sed -i .bak  -e "s/VERSION/${VERSION}.0/" $TEMP_LAUNCH
+	sed -i .bak  -e "s/VERSION_LONG/${VERSION}.0/" $TEMP_LAUNCH
+fi
+./launch4j/launch4j ../$TEMP_LAUNCH
+mkdir -p $WINDOWS
+cp Buddi.exe $WINDOWS
+cp -R $DEST/$SOURCE/Languages $WINDOWS
+#cp -R Help $WINDOWS
+cp -R $DEST/$SOURCE/Documents $WINDOWS
+cp -R $DEST/$SOURCE/Licenses $WINDOWS
+
+#Tar the source
 tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
 #cp -R $DEST/$SOURCE.tgz $GENERIC
 #cp -R $DEST/$SOURCE.tgz $OSX
@@ -71,8 +97,17 @@ if [ "$VERSION" != "" ]; then
 	sed -i .bak  -e "s/BUDDI_VERSION/$VERSION/" $OSX/Buddi.app/Contents/Info.plist
 	rm $OSX/Buddi.app/Contents/Info.plist.bak
 	cd $DEST
-	zip -r Buddi-$VERSION.zip Buddi
+	#zip -r Buddi-$VERSION.zip Buddi
+	tar -czvf Buddi-$VERSION.tgz Buddi
+	# Cleanup Generic
 	rm -rf $GENERIC
+
+	cd $WINDOWSROOT
+	zip -r Buddi-$VERSION.zip Buddi
+	mv Buddi-$VERSION.zip $DEST
+	cd $DEST
+	rm -rf $WINDOWSROOT
+
 	mkdir $GENERIC
 	mv $OSX $GENERIC/Buddi
 	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-$VERSION.dmg
@@ -92,6 +127,7 @@ cd /incoming
 lcd $DEST
 bin
 put Buddi-$VERSION.zip
+put Buddi-$VERSION.tgz
 put Buddi-$VERSION.dmg
 put Buddi-$VERSION.src.tgz
 bye

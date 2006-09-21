@@ -156,7 +156,7 @@ public class PrefsInstance {
 						languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
 
 				Object[] options = languages.toArray();
-				Object defaultOption = options[languages.indexOf("en")];
+				Object defaultOption = options[languages.indexOf("English")];
 				Object retValue = JOptionPane.showInputDialog(
 						null, 
 						"Please choose your language:", 
@@ -171,11 +171,11 @@ public class PrefsInstance {
 					prefs.setLanguage((String) retValue);
 				else{
 					JOptionPane.showMessageDialog(null, "Invalid selection.  Defaulting to English - you can change this in Preferences.", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
-					prefs.setLanguage("en");	
+					prefs.setLanguage("English");	
 				}
 			}
 			else{
-				prefs.setLanguage("en");	
+				prefs.setLanguage("English");	
 			}
 			
 			//Set meaningful defaults

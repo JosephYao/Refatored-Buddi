@@ -5,7 +5,7 @@ package org.homeunix.drummer;
 
 
 public class Const {
-	public static final String VERSION = "1.7.6";
+	public static final String VERSION = "1.7.7";
 	public static final String BRANCH = "UNSTABLE";
 	public static final boolean DEVEL = false;
 	
@@ -23,6 +23,7 @@ public class Const {
 	public final static String DOWNLOAD_URL = "http://prdownloads.sourceforge.net/buddi/Buddi-";
 	public final static String DOWNLOAD_URL_DMG = ".dmg?download";
 	public final static String DOWNLOAD_URL_ZIP = ".zip?download";
+	public final static String DOWNLOAD_URL_TGZ = ".tgz?download";
 	public final static String VERSION_FILE = "version.txt";
 	
 	public final static String[] DATE_FORMATS = {
