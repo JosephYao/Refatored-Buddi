@@ -63,6 +63,7 @@ if [ "$VERSION" != "" ]; then
 	sed -i .bak  -e "s/VERSION_LONG/${VERSION}.0/" $TEMP_LAUNCH
 fi
 ./launch4j/launch4j ../$TEMP_LAUNCH
+rm $TEMP_LAUNCH*
 mkdir -p $WINDOWS
 cp Buddi.exe $WINDOWS
 cp -R $DEST/$SOURCE/Languages $WINDOWS
@@ -110,11 +111,11 @@ if [ "$VERSION" != "" ]; then
 
 	mkdir $GENERIC
 	mv $OSX $GENERIC/Buddi
-	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-$VERSION.dmg
+	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-${VERSION}.dmg
 	rm -rf $OSXROOT
 	rm -rf $GENERIC
 
-	mv $DEST/$SOURCE.tgz $DEST/Buddi-$VERSION.src.tgz
+	mv $DEST/$SOURCE.tgz $DEST/Buddi-${VERSION}.src.tgz
 fi
 
 if [ "$1" == "--release" ]; then

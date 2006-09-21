@@ -43,7 +43,7 @@ public class AboutDialog extends AbstractDialog {
 		okButton.setPreferredSize(buttonSize);
 		donateButton.setPreferredSize(buttonSize);
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(donateButton);
 		buttonPanel.add(okButton);
 				
@@ -51,20 +51,20 @@ public class AboutDialog extends AbstractDialog {
 		sbTitle.append(
 				"<html><center><h1>")
 				.append(	Translate.getInstance().get(TranslateKeys.BUDDI))
-				.append("</h1>");
+				.append("</h1></center></html>");
 
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
-				"<html><h5>")
+				"<html><center><h5>")
 				.append(Translate.getInstance().get(TranslateKeys.VERSION))
 				.append(" ")
 				.append(Const.VERSION)
-				.append("</h5></html");
+				.append("</h5></center></html");
 		JLabel version = new JLabel(sbVersion.toString());
 		
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		bottomPanel.add(buttonPanel, BorderLayout.EAST);
-		bottomPanel.add(version, BorderLayout.WEST);
+		bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+		bottomPanel.add(version, BorderLayout.NORTH);
 		
 		JLabel title = new JLabel(sbTitle.toString());
 		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
