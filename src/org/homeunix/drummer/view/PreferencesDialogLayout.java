@@ -62,6 +62,17 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JLabel languageLabel = new JLabel(Translate.getInstance().get(TranslateKeys.LANGUAGE));
 		languageModel = new DefaultComboBoxModel();
 		language = new JComboBox(languageModel);
+		language.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof String){
+					String str = (String) value;
+					this.setText(str.replaceAll("_", " "));
+				}
+				return this;
+			}
+		});
 		
 		JLabel dateFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FORMAT));
 		JLabel currencyFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CURRENCY));
@@ -71,9 +82,11 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		dateFormat.setRenderer(new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
-			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
-				if (obj instanceof String){
-					String str = (String) obj;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				
+				if (value instanceof String){
+					String str = (String) value;
 					this.setText(new SimpleDateFormat(str).format(new Date()));
 				}
 				

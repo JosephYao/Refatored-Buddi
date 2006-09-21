@@ -116,10 +116,9 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 	public AbstractDialog updateContent(){
 		languageModel.removeAllElements();
 
+		// Load all available languages into Prefs
 		File languageLocation = new File(Const.LANGUAGE_FOLDER);
 		if (languageLocation.exists() && languageLocation.isDirectory()){
-			
-			
 			for (File f: languageLocation.listFiles())
 				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
 					languageModel.addElement(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
