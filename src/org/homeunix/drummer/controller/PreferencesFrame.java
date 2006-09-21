@@ -6,6 +6,10 @@ package org.homeunix.drummer.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -116,15 +120,28 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 	public AbstractDialog updateContent(){
 		languageModel.removeAllElements();
 
-		// Load all available languages into Prefs
+		Set<String> languages = new HashSet<String>();
+		
+		// Load all available languages into Prefs.  Start with 
+		// the bundled languages, and if there are more, load them too.
+		for (String language : Const.BUNDLED_LANGUAGES) {
+			languages.add(language);			
+		}
+		
 		File languageLocation = new File(Const.LANGUAGE_FOLDER);
 		if (languageLocation.exists() && languageLocation.isDirectory()){
 			for (File f: languageLocation.listFiles())
 				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
-					languageModel.addElement(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+					languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
 		}
 		else{
 			Log.critical("Cannot find language directory");
+		}
+
+		Vector<String> languagesVector = new Vector<String>(languages);
+		Collections.sort(languagesVector);
+		for (String string : languagesVector) {
+			languageModel.addElement(string);
 		}
 		
 		return this;

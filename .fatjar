@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Thu Sep 14 23:40:51 MDT 2006
+#Wed Sep 20 21:17:54 MDT 2006
 onejar.expand=
 autojar.enable=false
 excludes=<po|Buddi>~.svn/;<jar|quaqua-3.6.11.jar>
@@ -14,7 +14,7 @@ jarname.isextern=false
 manifest.mainclass=org.homeunix.drummer.Buddi
 onejar.license.required=false
 launchconfigname=<default>
-includes=<inc|Buddi/images>~Buddi.gif
+includes=<inc|Buddi/images>~Buddi.gif;<inc|Buddi/Languages>~Deutsch.lang;<inc|Buddi/Languages>~English.lang;<inc|Buddi/Languages>~English_(US).lang;<inc|Buddi/Languages>~Espanol.lang;<inc|Buddi/Languages>~Norsk.lang
 autojar.classforname=false
 manifest.classpath=
 manifest.arguments=

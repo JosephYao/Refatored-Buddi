@@ -11,7 +11,7 @@ As of version 1.7.5, you can write report and / or graph plugins for Buddi and h
 </p>
 
 <p>
-If you are interested in translating Buddi into another language, there is just one file which you need to duplicate and modify: en.lang, located in the Language directory.  (If you are running on Macintosh OS X, you will need to ctrl-click on the application package, select Show Package Contents, and go into the Contents -> Resources -> Java -> Languages folder.)  Once you duplicate it, rename the file to the correct language code, for instance en (for Engligh), or ja (for Japanese).
+If you are interested in translating Buddi into another language, there is just one file which you need to duplicate and modify: English.lang.  This file is embedded within the .jar file: you can either unzip the .jar, or download a copy from the Subversion repository.  Once you duplicate it, rename the file to the correct language, as written in that language, for instance Engligh, or Espanol.  If this is a specific localization, use the format Language_(Localization), for instance English_(US).  Do not use spaces, as this can cause problems sometimes.
 </p>
 
 <p>
@@ -20,6 +20,10 @@ The .lang file contains pairs of keywords and values, in the format 'KEYWORD=Val
 
 <p>
 If there are special characters (represented by Unicode) in your translation, you will have to use the Java unicode escape sequences, in the form /uXXXX.  The program native2ascii, included with the Java SDK, should be able to automate this.  If you have questions, please ask me.
+</p>
+
+<p>
+As of Buddi version 1.7.8, I embed the langauge files within the .jar; however, you can still use the Languages directory to use your custom language files immediately.  (Create a new folder Languages in the same directory as Buddi.jar (Buddi.exe on Windows).  If you send me a copy, I will include your language in the next release, so that everyone can enjoy it.
 </p>
 
 <p>
