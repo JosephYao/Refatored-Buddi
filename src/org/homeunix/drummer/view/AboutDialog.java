@@ -93,11 +93,11 @@ public class AboutDialog extends AbstractDialog {
 		inlayPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		if (Buddi.isMac()){
-			this.getRootPane().setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			inlayPanel.setBorder(BorderFactory.createTitledBorder(""));
 		}
 		
-		this.setLayout(new BorderLayout());		
+		this.setLayout(new BorderLayout());
+		this.getRootPane().setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		this.getRootPane().setDefaultButton(okButton);
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(inlayPanel, BorderLayout.CENTER);
