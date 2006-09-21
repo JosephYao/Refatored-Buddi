@@ -150,10 +150,10 @@ public class BuddiMenu extends JScreenMenuBar {
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 
-		edit.add(cut);
-		edit.add(copy);
-		edit.add(paste);
-		edit.addSeparator();
+//		edit.add(cut);
+//		edit.add(copy);
+//		edit.add(paste);
+//		edit.addSeparator();
 		edit.add(editAutomaticTransactions);
 
 

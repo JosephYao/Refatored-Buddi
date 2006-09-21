@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
@@ -88,12 +89,15 @@ public class AboutDialog extends AbstractDialog {
 		text = new JLabel(sbText.toString());
 		
 		JPanel inlayPanel = new JPanel(new BorderLayout());
-		inlayPanel.setBorder(BorderFactory.createTitledBorder(""));
 		inlayPanel.add(text, BorderLayout.CENTER);
 		inlayPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
-		this.setLayout(new BorderLayout());
-		this.getRootPane().setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+		if (Buddi.isMac()){
+			this.getRootPane().setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+			inlayPanel.setBorder(BorderFactory.createTitledBorder(""));
+		}
+		
+		this.setLayout(new BorderLayout());		
 		this.getRootPane().setDefaultButton(okButton);
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(inlayPanel, BorderLayout.CENTER);
