@@ -1,5 +1,5 @@
-# Bundles Buddi for distribution.  Yes, I know I should make an ant script
-#  to do this, but I am a) too lazy and b) using some stuff that I don't
+# Bundles Buddi for distribution.  Yes, I know I should include this
+#  in the ant script, but I am a) too lazy and b) using some stuff that I don't
 #  know how to do from the ant script (such as FTP uploads).
 #
 # This script is meant to run on OS X, although it should be able to be
@@ -9,123 +9,148 @@
 # You need to actually create the Buddi.jar file first.  I use the FatJar
 #  plugin for Eclipse to do this, and it works quite well.
 #
+# You will need to install ant (for the compilation and FatJar'ing); and
+#  launch4j (referenced from ant) to create the .exe.  If you don't care
+#  about this, you can just use the FatJar Eclipse plugin for making
+#  the jar, and this to package it.
+#
+# See the bottom of this script for the actual program; everything else
+#  are just functions, which are called from the bottom.
+#
 ############################
 
-DEST=/Users/wyatt/Desktop/Buddi
-OSXROOT=$DEST/Buddi_OSX
-OSX=$OSXROOT/Buddi
-GENERIC=$DEST/Buddi
-WINDOWSROOT=$DEST/Windows
-WINDOWS=$WINDOWSROOT/Buddi
-SOURCE=source
-VERSION=`grep 'String VERSION = ' src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+function init {
+	DEST=/Users/wyatt/Desktop/Buddi
+	OSXROOT=$DEST/Buddi_OSX
+	OSX=$OSXROOT/Buddi
+	GENERICROOT=$DEST/Generic
+	GENERIC=$GENERICROOT/Buddi
+	WINDOWSROOT=$DEST/Windows
+	WINDOWS=$WINDOWSROOT/Buddi
+	SOURCE=source
+	VERSION=`grep 'String VERSION = ' src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
 
-if [ "$1" == "--release" ]; then
-	grep -q "^$VERSION (" Documents/Changelog.txt
-	if [ "$?" != 0 ]; then
-		echo "Changelog not updated.  Exiting."
-		exit 1
+	# Ensure that the changelog is updated, if this is a public release.
+	if [ "$1" == "--release" ]; then
+		grep -q "^$VERSION (" Documents/Changelog.txt
+		if [ "$?" != 0 ]; then
+			echo "Changelog not updated.  Exiting."
+			exit 1
+		fi
 	fi
-fi
+	
+	rm -rf $DEST
+	mkdir -p $DEST
+	svn export . $DEST/$SOURCE
+}
 
-ant
 
-#./bundleWeb --local
 
-#Export the SVN source
-rm -rf $DEST
-mkdir -p $DEST
-svn export . $DEST/$SOURCE
+# Do the compilation and jar'ing.  You can avoid running this function
+# if you do it yourself.
+function make_jar {
+	ant
+}
+
+
+
+
 
 #Create the platform independent directory
-mkdir -p $GENERIC
-cp Buddi.jar $GENERIC
-cp buddi32.ico $GENERIC
-#cp -R $DEST/$SOURCE/Languages $GENERIC
-#cp -R Help $GENERIC
-cp -R $DEST/$SOURCE/Documents $GENERIC
-cp -R $DEST/$SOURCE/Licenses $GENERIC
+function bundle_generic {
+	mkdir -p $GENERIC
+	cp Buddi.jar $GENERIC
+	cp -R $DEST/$SOURCE/Documents $GENERIC
+	cp -R $DEST/$SOURCE/Licenses $GENERIC
+
+	tar -C $GENERICROOT -czf $DEST/Buddi-$VERSION.tgz Buddi
+}
+
+
+
 
 #Create the OSX directory
-mkdir -p $OSXROOT
-cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
-cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
-cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
-#cp -R $DEST/$SOURCE/Languages $OSX/Buddi.app/Contents/Resources/Java/
-#cp -R Help $OSX/Buddi.app/Contents/Resources/Java/
-cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
-cp -R $DEST/$SOURCE/Documents $OSX
-cp -R $DEST/$SOURCE/Licenses $OSX
+function bundle_osx {
+	mkdir -p $OSXROOT
+	cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
+	cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
+	cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
+	cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
+	cp -R $DEST/$SOURCE/Documents $OSX
+	cp -R $DEST/$SOURCE/Licenses $OSX
 
-#Create the Windows bundle
-TEMP_LAUNCH=temp.xml
-cp launch4j.xml $TEMP_LAUNCH
-if [ "$VERSION" != "" ]; then
-	sed -i .bak  -e "s/VERSION/${VERSION}.0/" $TEMP_LAUNCH
-	sed -i .bak  -e "s/VERSION_LONG/${VERSION}.0/" $TEMP_LAUNCH
-fi
-#Make the .exe, with correct version as set in previous lines
-./launch4j/launch4j ../$TEMP_LAUNCH
-rm $TEMP_LAUNCH*
-mkdir -p $WINDOWS
-cp Buddi.exe $WINDOWS
-#cp -R $DEST/$SOURCE/Languages $WINDOWS
-#cp -R Help $WINDOWS
-cp -R $DEST/$SOURCE/Documents $WINDOWS
-cp -R $DEST/$SOURCE/Licenses $WINDOWS
+	if [ "$VERSION" != "" ]; then
+		# Archive the bundles
+		sed -i .bak  -e "s/BUDDI_VERSION/$VERSION/" $OSX/Buddi.app/Contents/Info.plist
+		rm $OSX/Buddi.app/Contents/Info.plist.bak
+	fi
 
-#Tar the source
-tar -C $DEST -czvf $DEST/$SOURCE.tgz $SOURCE
-#cp -R $DEST/$SOURCE.tgz $GENERIC
-#cp -R $DEST/$SOURCE.tgz $OSX
+	hdiutil create -format UDZO -srcfolder $OSXROOT -o $DEST/Buddi-${VERSION}.dmg
+}
 
-#Remove the src directories
-rm -rf $DEST/$SOURCE
-#rm $DEST/$SOURCE.tgz
 
-if [ "$1" == "--release" ]; then
-	# Update the version.txt
-#	VERSION_UNSTABLE=`grep 'String VERSION = ' ../Buddi/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
-#	VERSION_STABLE=`grep 'String VERSION = ' ../Buddi\ Stable/src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
-#	
-#	echo "STABLE=$VERSION_STABLE" > version.txt
-#	echo "UNSTABLE=$VERSION_UNSTABLE" >> version.txt
-#	
-#	scp version.txt olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs/version.txt	
-	
-	svn copy https://svn.sourceforge.net/svnroot/buddi/trunk https://svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
-fi
 
-if [ "$VERSION" != "" ]; then
-	#Zip and DMG the bundles
-	sed -i .bak  -e "s/BUDDI_VERSION/$VERSION/" $OSX/Buddi.app/Contents/Info.plist
-	rm $OSX/Buddi.app/Contents/Info.plist.bak
-	cd $DEST
-	#zip -r Buddi-$VERSION.zip Buddi
-	tar -czvf Buddi-$VERSION.tgz Buddi
-	# Cleanup Generic
-	rm -rf $GENERIC
 
+
+
+# Change the launch4j config file to use correct version
+function bundle_windows {
+	TEMP_LAUNCH=temp.xml
+	cp launch4j.xml $TEMP_LAUNCH
+	if [ "$VERSION" != "" ]; then
+		sed -i .bak  -e "s/VERSION/${VERSION}.0/" $TEMP_LAUNCH
+		sed -i .bak  -e "s/VERSION_LONG/${VERSION}.0/" $TEMP_LAUNCH
+	fi
+
+	# Make the .exe, with correct version as set in previous lines
+	./launch4j/launch4j ../$TEMP_LAUNCH
+	rm $TEMP_LAUNCH*
+
+	# Create the Windows bundle
+	mkdir -p $WINDOWS
+	cp Buddi.exe $WINDOWS
+	cp -R $DEST/$SOURCE/Documents $WINDOWS
+	cp -R $DEST/$SOURCE/Licenses $WINDOWS
+
+	CURRDIR=`pwd`
 	cd $WINDOWSROOT
-	zip -r Buddi-$VERSION.zip Buddi
-	mv Buddi-$VERSION.zip $DEST
-	cd $DEST
-	rm -rf $WINDOWSROOT
+	zip -r $DEST/Buddi-$VERSION.zip Buddi
+	cd $CURRDIR
+}
 
-	mkdir $GENERIC
-	mv $OSX $GENERIC/Buddi
-	hdiutil create -format UDZO -srcfolder $GENERIC -o Buddi-${VERSION}.dmg
-	rm -rf $OSXROOT
-	rm -rf $GENERIC
 
-	mv $DEST/$SOURCE.tgz $DEST/Buddi-${VERSION}.src.tgz
-fi
 
-if [ "$1" == "--release" ]; then
-	# Upload release files
-	USER=anonymous
-	PASS=pass
-	ftp -n upload.sf.net << END_OF_FTP
+
+
+
+# Create the source bundle
+function bundle_source {
+	tar -C $DEST -czf $DEST/$SOURCE.tgz $SOURCE
+}
+
+
+
+
+
+
+#Remove the bundle directories
+function clean {
+	rm -rf $DEST/$SOURCE
+#	rm -rf $WINDOWS
+#	rm -rf $OSX
+#	rm -rf $GENERIC
+}
+
+
+# Upload the bundles
+function upload {
+	if [ "$1" == "--release" ]; then
+		svn copy https://svn.sourceforge.net/svnroot/buddi/trunk https://svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
+
+		# Upload release files
+		USER=anonymous
+		PASS=pass
+		ftp -n upload.sf.net << END_OF_FTP
 user $USER $PASS
 cd /incoming
 lcd $DEST
@@ -136,5 +161,20 @@ put Buddi-$VERSION.dmg
 put Buddi-$VERSION.src.tgz
 bye
 END_OF_FTP
-	echo Upload Complete
-fi
+		echo Upload Complete
+	fi
+}
+
+
+
+
+
+init
+make_jar
+bundle_windows
+bundle_osx
+bundle_generic
+bundle_source
+clean
+upload
+
