@@ -133,12 +133,16 @@ function bundle_source {
 
 
 
-#Remove the bundle directories
+# Remove the bundle directories and build junk in project directory
 function clean {
 	rm -rf $DEST/$SOURCE
-#	rm -rf $WINDOWS
-#	rm -rf $OSX
-#	rm -rf $GENERIC
+	rm -rf $WINDOWS
+	rm -rf $OSX
+	rm -rf $GENERIC
+	
+	rm Buddi.jar
+	rm Buddi.exe
+	rm version.txt
 }
 
 
