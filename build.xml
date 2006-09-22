@@ -20,9 +20,9 @@
         <pathelement location="lib/quaqua-3.6.11.jar"/>
         <pathelement location="lib/MRJAdapter-1.0.9.jar"/>
         <pathelement location="lib/jcalendar-1.3.2.jar"/>
-        <pathelement location="lib/emf/emf.ecore.xmi_2.2.1.v200608241248.jar"/>
-        <pathelement location="lib/emf/emf.ecore_2.2.1.v200608241248.jar"/>
-        <pathelement location="lib/emf/emf.common_2.2.1.v200608241248.jar"/>
+        <pathelement location="lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar"/>
+        <pathelement location="lib/emf/emf.ecore_2.2.1.v200609210005.jar"/>
+        <pathelement location="lib/emf/emf.common_2.2.1.v200609210005.jar"/>
         <pathelement location="lib/BrowserLauncher2-10rc4.jar"/>
     </path>
             
@@ -45,9 +45,9 @@
             <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/truefilter-1.2.jar" relpath=""/>
             <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/MRJAdapter-1.0.9.jar" relpath=""/>
             <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/jcalendar-1.3.2.jar" relpath=""/>
-            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.ecore.xmi_2.2.1.v200608241248.jar" relpath=""/>
-            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.ecore_2.2.1.v200608241248.jar" relpath=""/>
-            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.common_2.2.1.v200608241248.jar" relpath=""/>
+            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar" relpath=""/>
+            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.ecore_2.2.1.v200609210005.jar" relpath=""/>
+            <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/emf/emf.common_2.2.1.v200609210005.jar" relpath=""/>
             <fatjar.jarsource file="/Users/wyatt/Documents/Programming/Workplace/Buddi/lib/BrowserLauncher2-10rc4.jar" relpath=""/>
             <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/images/Buddi.gif" relpath="Buddi.gif"/>
             <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/images/Buddi.png" relpath="Buddi.png"/>

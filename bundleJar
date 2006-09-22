@@ -85,7 +85,7 @@ function bundle_osx {
 		rm $OSX/Buddi.app/Contents/Info.plist.bak
 	fi
 
-	hdiutil create -format UDZO -srcfolder $OSXROOT -o $DEST/Buddi-${VERSION}.dmg
+	hdiutil create -format UDZO -srcfolder $OSX -o $DEST/Buddi-${VERSION}.dmg
 }
 
 
@@ -125,7 +125,7 @@ function bundle_windows {
 
 # Create the source bundle
 function bundle_source {
-	tar -C $DEST -czf $DEST/$SOURCE.tgz $SOURCE
+	tar -C $DEST -czf $DEST/Buddi-$VERSION.src.tgz $SOURCE
 }
 
 
@@ -136,9 +136,9 @@ function bundle_source {
 # Remove the bundle directories and build junk in project directory
 function clean {
 	rm -rf $DEST/$SOURCE
-	rm -rf $WINDOWS
-	rm -rf $OSX
-	rm -rf $GENERIC
+	rm -rf $WINDOWSROOT
+	rm -rf $OSXROOT
+	rm -rf $GENERICROOT
 	
 	rm Buddi.jar
 	rm Buddi.exe

@@ -18,6 +18,7 @@ Special thanks go out to the people who helped in the creation of Buddi.  These 
 <li><a href='http://homepage.mac.com/sroy/mrjadapter/'>MRJAdapter</a>: Library which helps in the creation of native-feeling cross platform Java applications</li>
 <li><a href='http://www.toedter.com/en/jcalendar/'>JCalendar</a>: Swing date chooser widgets</li>
 <li><a href='https://truefilter.dev.java.net/'>True Filter</a>: JList filter based on keywords</li>
+<li><a href='https://http://fjep.sourceforge.net/'>Fat Jar Eclipse Plugin</a>: Bundle all libraries and resources into a single .jar file</li>
 <li><a href='http://browserlaunch2.sourceforge.net/'>Browser Launcher 2</a>: Library to perform cross platform browser launching</li>
 <li><a href='http://launch4j.sourceforge.net/'>launch4J</a>: Program to convert .jar to .exe, and add cool features (such as helping download Java)</li>
 <li><a href='http://www.eclipse.org/'>Eclipse</a> and <a href='http://www.eclipse.org/emf/'>Eclipse EMF</a></li>
