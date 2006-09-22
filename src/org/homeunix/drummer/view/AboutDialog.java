@@ -6,12 +6,15 @@ package org.homeunix.drummer.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -50,7 +53,7 @@ public class AboutDialog extends AbstractDialog {
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
 				"<html><center><h1>")
-				.append(	Translate.getInstance().get(TranslateKeys.BUDDI))
+				.append(Translate.getInstance().get(TranslateKeys.BUDDI))
 				.append("</h1></center></html>");
 
 		StringBuffer sbVersion = new StringBuffer();
@@ -60,6 +63,7 @@ public class AboutDialog extends AbstractDialog {
 				.append(" ")
 				.append(Const.VERSION)
 				.append("</h5></center></html");
+		
 		JLabel version = new JLabel(sbVersion.toString());
 		
 		JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -69,6 +73,17 @@ public class AboutDialog extends AbstractDialog {
 		JLabel title = new JLabel(sbTitle.toString());
 		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		titlePanel.add(title);
+		
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (null == cl) {
+			cl = AbstractFrame.class.getClassLoader();
+		}
+
+		URL imageResource = cl.getResource("Buddi.png");
+		if (null != imageResource) {
+			title.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageResource)));
+			title.setVerticalTextPosition(JLabel.BOTTOM);
+		}
 		
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(

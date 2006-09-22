@@ -28,6 +28,8 @@ if [ "$1" == "--release" ]; then
 	fi
 fi
 
+ant
+
 #./bundleWeb --local
 
 #Export the SVN source
@@ -57,11 +59,12 @@ cp -R $DEST/$SOURCE/Licenses $OSX
 
 #Create the Windows bundle
 TEMP_LAUNCH=temp.xml
-cp Buddi-launch4j.xml $TEMP_LAUNCH
+cp launch4j.xml $TEMP_LAUNCH
 if [ "$VERSION" != "" ]; then
 	sed -i .bak  -e "s/VERSION/${VERSION}.0/" $TEMP_LAUNCH
 	sed -i .bak  -e "s/VERSION_LONG/${VERSION}.0/" $TEMP_LAUNCH
 fi
+#Make the .exe, with correct version as set in previous lines
 ./launch4j/launch4j ../$TEMP_LAUNCH
 rm $TEMP_LAUNCH*
 mkdir -p $WINDOWS
