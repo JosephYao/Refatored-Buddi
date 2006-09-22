@@ -30,19 +30,25 @@ public class Translate {
 	private Translate(){}
 	
 	public Translate loadLanguage(String language){
-		String languageFile = Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
+		String languageFileName = Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
 		String languageResource = "/" + language + Const.LANGUAGE_EXTENSION;
 		
 		try{
-			System.out.println("Loading language: " + languageFile);
+			System.out.println("Loading language: " + languageFileName);
 			
-			InputStream input = this.getClass().getResourceAsStream(languageResource);
-			if (input == null){
-				input = new BufferedInputStream(new FileInputStream(languageFile));
+			InputStream input;
+			File languageFile = new File(languageFileName);
+			if (languageFile.exists()){
 				if (Const.DEVEL) Log.info("Using external language file.");
+				input = new BufferedInputStream(new FileInputStream(languageFileName));				
 			}
-			else {
+			else{
 				if (Const.DEVEL) Log.info("Using internal language file.");
+				input = this.getClass().getResourceAsStream(languageResource);				
+			}
+			
+			if (input == null){
+				throw new IOException("Cannot find " + language + ", either in the Jar or in Languages folder.");
 			}
 			
 			translations.load(input);
@@ -50,14 +56,14 @@ public class Translate {
 		catch(IOException ioe){
 			JOptionPane.showMessageDialog(
 					null, 
-					"Error loading language file " + languageFile + ":\n" + ioe + "\nTrying to load English.lang...\n\nAfter Buddi starts, you need to set the language in Preferences.",
+					"Error loading language file " + languageFileName + ":\n" + ioe + "\nTrying to load English.lang...\n\nAfter Buddi starts, you need to set the language in Preferences.",
 					"Error Loading Language File",
 					JOptionPane.ERROR_MESSAGE
 			);
 
 			try{
-				languageFile = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
-				translations.load(new BufferedInputStream(new FileInputStream(languageFile)));
+				languageFileName = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
+				translations.load(new BufferedInputStream(new FileInputStream(languageFileName)));
 			}
 			catch (IOException ioe2){
 				JOptionPane.showMessageDialog(
