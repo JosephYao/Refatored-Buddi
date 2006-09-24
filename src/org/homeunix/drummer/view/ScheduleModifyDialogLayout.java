@@ -30,7 +30,7 @@ import org.homeunix.drummer.view.components.EditableTransaction;
 
 import com.toedter.calendar.JDateChooser;
 
-public abstract class ModifyScheduleDialogLayout extends AbstractDialog {
+public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -45,7 +45,7 @@ public abstract class ModifyScheduleDialogLayout extends AbstractDialog {
 	
 	protected final DefaultComboBoxModel scheduleModel;
 	
-	protected ModifyScheduleDialogLayout(Frame owner){
+	protected ScheduleModifyDialogLayout(Frame owner){
 		super(owner);
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));

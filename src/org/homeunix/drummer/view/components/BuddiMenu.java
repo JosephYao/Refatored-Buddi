@@ -31,7 +31,7 @@ import net.roydesign.ui.JScreenMenuItem;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.EditScheduledTransactionsFrame;
+import org.homeunix.drummer.controller.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.PreferencesFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
@@ -533,7 +533,7 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		editAutomaticTransactions.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				new EditScheduledTransactionsFrame().openWindow();
+				new ScheduledTransactionsListFrame().openWindow();
 			}
 		});
 

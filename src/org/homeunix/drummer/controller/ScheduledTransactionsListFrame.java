@@ -15,12 +15,12 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
-import org.homeunix.drummer.view.EditScheduledTransactionsFrameLayout;
+import org.homeunix.drummer.view.ScheduledTransactionsListFrameLayout;
 
-public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFrameLayout {
+public class ScheduledTransactionsListFrame extends ScheduledTransactionsListFrameLayout {
 	public static final long serialVersionUID = 0;
 
-	public EditScheduledTransactionsFrame(){
+	public ScheduledTransactionsListFrame(){
 		super(MainBuddiFrame.getInstance());
 	}
 		
@@ -28,14 +28,14 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 	protected AbstractDialog initActions() {
 		doneButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				EditScheduledTransactionsFrame.this.setVisible(false);
-				EditScheduledTransactionsFrame.this.dispose();
+				ScheduledTransactionsListFrame.this.setVisible(false);
+				ScheduledTransactionsListFrame.this.dispose();
 			}
 		});
 		
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				new ModifyScheduleDialog(null).openWindow();
+				new ScheduleModifyDialog(null).openWindow();
 				if (Const.DEVEL) Log.debug("Done creating");
 				updateContent();
 			}
@@ -46,7 +46,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 				Object o = list.getSelectedValue();
 				if (o instanceof Schedule){
 					Schedule s = (Schedule) o;
-					new ModifyScheduleDialog(s).openWindow();
+					new ScheduleModifyDialog(s).openWindow();
 					if (Const.DEVEL) Log.debug("Done editing.");
 					updateContent();
 				}
@@ -71,7 +71,7 @@ public class EditScheduledTransactionsFrame extends EditScheduledTransactionsFra
 		
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
-				EditScheduledTransactionsFrame.this.updateButtons();
+				ScheduledTransactionsListFrame.this.updateButtons();
 			}
 		});
 		

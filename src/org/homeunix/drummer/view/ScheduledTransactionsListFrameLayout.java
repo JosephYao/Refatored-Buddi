@@ -19,7 +19,7 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
-public abstract class EditScheduledTransactionsFrameLayout extends AbstractDialog {
+public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton doneButton;
@@ -29,7 +29,7 @@ public abstract class EditScheduledTransactionsFrameLayout extends AbstractDialo
 	
 	protected final JList list;
 	
-	protected EditScheduledTransactionsFrameLayout(Frame owner){
+	protected ScheduledTransactionsListFrameLayout(Frame owner){
 		super(owner);
 		
 		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
