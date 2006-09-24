@@ -34,7 +34,7 @@ public class Translate {
 		String languageResource = "/" + language + Const.LANGUAGE_EXTENSION;
 		
 		try{
-			System.out.println("Loading language: " + languageFileName);
+			if (Const.DEVEL) Log.info("Loading language: " + languageFileName);
 			
 			InputStream input;
 			File languageFile = new File(languageFileName);

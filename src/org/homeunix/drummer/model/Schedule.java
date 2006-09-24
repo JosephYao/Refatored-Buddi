@@ -185,5 +185,6 @@ public interface Schedule extends Transaction {
 	 * @generated
 	 */
 	void setScheduleName(String value);
+	
 
 } // Schedule

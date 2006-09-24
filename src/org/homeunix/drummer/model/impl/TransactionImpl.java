@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.ModelPackage;
+import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 
@@ -759,6 +760,8 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	}
 
 	public int compareTo(Transaction arg0) {
+		if (this instanceof Schedule && arg0 instanceof Schedule)
+			return ((Schedule) this).getScheduleName().compareTo(((Schedule) arg0).getScheduleName());
 		return this.getDate().compareTo(arg0.getDate());
 	}
 	

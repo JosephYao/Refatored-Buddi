@@ -539,7 +539,8 @@ public class DataInstance {
 	
 	public Vector<Schedule> getScheduledTransactions(){
 		Vector<Schedule> v = new Vector<Schedule>(dataModel.getAllTransactions().getScheduledTransactions());
-
+		Collections.sort(v);
+		
 		return v;
 	}
 	
