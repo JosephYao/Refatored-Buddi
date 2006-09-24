@@ -118,6 +118,21 @@ public class PrefsInstance {
 					|| userPrefs.getPrefs().getIntervals().getAllIntervals() == null)
 				throw new Exception();
 			
+			//Make a smooth crossover from 1.6 to 1.8
+			if (userPrefs.getPrefs().getLanguage() != null){
+				if (userPrefs.getPrefs().getLanguage().equals("en"))
+					userPrefs.getPrefs().setLanguage("English");
+				else if (userPrefs.getPrefs().getLanguage().equals("en-US"))
+					userPrefs.getPrefs().setLanguage("English_(US)");
+				else if (userPrefs.getPrefs().getLanguage().equals("es"))
+					userPrefs.getPrefs().setLanguage("Espanol");
+				else if (userPrefs.getPrefs().getLanguage().equals("de"))
+					userPrefs.getPrefs().setLanguage("Deutsch");
+				else if (userPrefs.getPrefs().getLanguage().equals("no"))
+					userPrefs.getPrefs().setLanguage("Norsk");
+				savePrefs();
+			}
+			
 			if (userPrefs.getPrefs().getCurrencySymbol() == null){
 				userPrefs.getPrefs().setCurrencySymbol("$");
 				savePrefs();

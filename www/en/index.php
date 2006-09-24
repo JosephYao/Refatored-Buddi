@@ -7,10 +7,10 @@ Buddi
 Buddi is a personal finance and budgeting program, aimed at those who have little or no financial background.  In making this software, I have attempted to make things as simple as possible, while still retaining enough functions to satisfy most home users.
 </p>
 <p>
-<img src="../img/screenshot.png" alt="Screenshot of one of Buddi's reporting features">
+Buddi is available for free: you can download it for free, with no disabled features and no time limit.  If you like it, and feel that it is useful, I would greatly appreciate a small donation via the link at the bottom of the page.
 </p>
 <p>
-Buddi is available for free: you can download it for free, with no disabled features and no time limit.  If you like it, and feel that it is useful, I would greatly appreciate a small donation via the link at the bottom of the page.
+<img src="../img/screenshot.png" alt="Screenshot of one of Buddi's reporting features">
 </p>
 <p>
 Buddi will run on almost any computer which has a Java virtual machine installed.  This can include Windows, Macintosh OS X, Linux, and many other operating systems.  One thing to note is that you must have Java 1.5 or later installed.  If you are running on Macintosh OS X 10.4 (Tiger), and you do not already have it installed, you can <a href="http://www.apple.com/support/downloads/java2se50release3.html">get Java 1.5 here</a>.  If you are running on a different operating system, like Windows, please consult the help files.  If you need to download a copy of the Java VM, you can do so from <a href='http://java.sun.com/j2se/1.5.0/download.jsp'>here</a>.

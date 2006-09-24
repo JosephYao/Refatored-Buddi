@@ -172,12 +172,12 @@ END_OF_FTP
 
 
 
-init
-make_jar
-bundle_windows
-bundle_osx
-bundle_generic
-bundle_source
-clean
-upload
+init $*
+make_jar $*
+bundle_windows $*
+bundle_osx $*
+bundle_generic $*
+bundle_source $*
+clean $*
+upload $*
 
