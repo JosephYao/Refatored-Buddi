@@ -7,6 +7,9 @@ Buddi
 Buddi is a personal finance and budgeting program, aimed at those who have little or no financial background.  In making this software, I have attempted to make things as simple as possible, while still retaining enough functions to satisfy most home users.
 </p>
 <p>
+<img src="../img/screenshot.png" alt="Screenshot of one of Buddi's reporting features">
+</p>
+<p>
 Buddi is available for free: you can download it for free, with no disabled features and no time limit.  If you like it, and feel that it is useful, I would greatly appreciate a small donation via the link at the bottom of the page.
 </p>
 <p>

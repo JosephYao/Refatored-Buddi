@@ -1,4 +1,4 @@
-1.7.8
+1.7.8 (Sept 23 2006)
 -Moved languages to inside the .jar / .exe file.  This makes is possible to move the .jar anywhere you want, without any additional supporting files.  If you want to use a custom language file, just include it in the Languages directory, and it will override the built in one.
 -Updated Norwegian language
 -Updated the EMF libraries
