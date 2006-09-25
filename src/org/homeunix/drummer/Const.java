@@ -20,7 +20,7 @@ public class Const {
 	
 	public final static String DONATE_URL = "http://sourceforge.net/donate/index.php?group_id=167026";
 	public final static String PROJECT_URL = "http://buddi.sourceforge.net/";
-	public final static String DOWNLOAD_URL = "http://prdownloads.sourceforge.net/buddi/Buddi-";
+	public final static String DOWNLOAD_URL = "http://buddi.sourceforge.net/Buddi-";
 	public final static String DOWNLOAD_URL_DMG = ".dmg?download";
 	public final static String DOWNLOAD_URL_ZIP = ".zip?download";
 	public final static String DOWNLOAD_URL_TGZ = ".tgz?download";
