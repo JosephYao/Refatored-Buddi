@@ -133,6 +133,12 @@ public class PrefsInstance {
 				savePrefs();
 			}
 			
+			//Allow upgrading to rotating backups - default to 10
+			if (userPrefs.getPrefs().getNumberOfBackups() == 0){
+				userPrefs.getPrefs().setNumberOfBackups(10);
+				savePrefs();
+			}
+			
 			if (userPrefs.getPrefs().getCurrencySymbol() == null){
 				userPrefs.getPrefs().setCurrencySymbol("$");
 				savePrefs();

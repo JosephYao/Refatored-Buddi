@@ -29,7 +29,6 @@ import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.FileFunctions;
-import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 
 /**
@@ -42,17 +41,17 @@ public class DataInstance {
 	public static DataInstance getInstance() {
 		return SingletonHolder.instance;
 	}
-	
+
 	private static class SingletonHolder {
 		private static DataInstance instance = new DataInstance();		
 	}
-		
+
 	private DataModel dataModel;
 	private ModelFactory dataModelFactory = ModelFactoryImpl.eINSTANCE;
-	
+
 	private ResourceSet resourceSet;
 	private URIConverter.Cipher cipher;
-	
+
 	/**
 	 * Creates a new cipher, with the encryption set as defined
 	 * @param encrypted
@@ -61,38 +60,48 @@ public class DataInstance {
 		this.cipher = new AESCryptoCipher(128);
 		((AESCryptoCipher) cipher).setEncrypted(encrypted);
 	}
-	
+
 	private DataInstance(){
 		File dataFile = null;
-		
+
 		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
 			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			if (dataFile.exists()) {
 				try{
-					String backupFileLocation = 
-						PrefsInstance.getInstance().getPrefs().getDataFile()
-						.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
-						+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
-						+ Const.DATA_FILE_EXTENSION;
-					File backupFile = new File(backupFileLocation);
-					if (!backupFile.exists()){
-						FileFunctions.copyFile(dataFile, backupFile);
-						if (Const.DEVEL) Log.debug("Backing up file to " + backupFile);
+//					String backupFileLocation = 
+//					PrefsInstance.getInstance().getPrefs().getDataFile()
+//					.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
+//					+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
+//					+ Const.DATA_FILE_EXTENSION;
+
+					//Use a rotating backup file, of form 'Data.X.buddi'  
+					// The one with the smallest number X is the most recent.
+					String fileBase = dataFile.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+					for (int i = PrefsInstance.getInstance().getPrefs().getNumberOfBackups() - 2; i >= 0; i--){
+						File tempBackupDest = new File(fileBase + "." + (i + 1) + Const.DATA_FILE_EXTENSION);
+						File tempBackupSource = new File(fileBase + "." + i + Const.DATA_FILE_EXTENSION);
+						if (tempBackupSource.exists()){
+							FileFunctions.copyFile(tempBackupSource, tempBackupDest);
+							if (Const.DEVEL) Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+						}
 					}
+					File tempBackupDest = new File(fileBase + ".0" + Const.DATA_FILE_EXTENSION);
+					FileFunctions.copyFile(dataFile, tempBackupDest);
+					if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
 				}
 				catch(IOException ioe){
 					Log.emergency("Failure when attempting to backup when starting program: " + ioe);
 				}
 			}
 		}
-		
+
 		loadDataModel(dataFile, false);
 	}
-	
+
 	public void loadDataModel(File locationFile, boolean forceNewFile){
 		// throw away the old cipher (if any) when we load a new data file
 		this.cipher = new AESCryptoCipher(128);
-		
+
 		if (!forceNewFile){
 			if (locationFile == null || !locationFile.getParentFile().exists()){
 				JOptionPane.showMessageDialog(
@@ -102,52 +111,52 @@ public class DataInstance {
 						+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
 						Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
 						JOptionPane.ERROR_MESSAGE);
-				
+
 				String file = PrefsInstance.chooseDataFile();
 				if (file != null)
 					locationFile = new File(file);
 				else
 					locationFile = null;
 			}
-			
+
 			if (locationFile == null){
 				Log.error("Failed to load a null file; exiting (DataInstance.loadDataFile())");
 				System.exit(0);
 			}
-			
+
 			if (!locationFile.exists() && locationFile.getParentFile().exists()){
 				locationFile = new File(locationFile.getParent() + File.separator + Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
 			}
 		}
-		
+
 		try{
 			if (forceNewFile){
 				throw new Exception();
 			}
-			
+
 			// Create a resource set.
 			resourceSet = new ResourceSetImpl();
-			
+
 			// Register the default resource factory -- only needed for stand-alone!
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 					Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 			resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
-						
+
 			// Register the package
 			@SuppressWarnings("unused") 
 			ModelPackage modelPackage = ModelPackage.eINSTANCE;
-			
+
 			// Get the URI of the model file.
 			URI fileURI = URI.createFileURI(locationFile.getAbsolutePath());
-			
+
 			Resource resource = resourceSet.getResource(fileURI, true);
-			
+
 			// Print the contents of the resource to System.out.
 			EList contents = resource.getContents();
 			if (contents.size() > 0){
 				dataModel = (DataModel) contents.get(0);
 			}
-			
+
 			//Save the location to the prefs file, in case we changed it.
 			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
 			PrefsInstance.getInstance().savePrefs();
@@ -156,10 +165,10 @@ public class DataInstance {
 		catch (Exception e){
 			if (locationFile == null)
 				locationFile = new File(Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
-			
+
 			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
 			PrefsInstance.getInstance().savePrefs();
-			
+
 			if (forceNewFile || !locationFile.exists() || JOptionPane.showConfirmDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
@@ -181,19 +190,19 @@ public class DataInstance {
 							JOptionPane.INFORMATION_MESSAGE
 					);
 				}
-				
+
 				Accounts accounts = getDataModelFactory().createAccounts();
 				Transactions transactions = getDataModelFactory().createTransactions();
 				Categories categories = getDataModelFactory().createCategories();
 				Types types = getDataModelFactory().createTypes();
-				
+
 				dataModel = getDataModelFactory().createDataModel();
-				
+
 				dataModel.setAllAccounts(accounts);
 				dataModel.setAllTransactions(transactions);
 				dataModel.setAllCategories(categories);
 				dataModel.setAllTypes(types);
-				
+
 				//Default starting categories
 				TranslateKeys[] expenseNames = {
 						TranslateKeys.AUTO, 
@@ -209,7 +218,7 @@ public class DataInstance {
 						TranslateKeys.SALARY, 
 						TranslateKeys.INVESTMENT_INCOME
 				};
-				
+
 				for (TranslateKeys s : expenseNames){
 					Category c = getDataModelFactory().createCategory();
 					c.setName(s.toString());
@@ -224,7 +233,7 @@ public class DataInstance {
 					c.setIncome(true);
 					categories.getCategories().add(c);
 				}
-				
+
 				//Default starting types - debit
 				TranslateKeys[] debitNames = {
 						TranslateKeys.CASH, 
@@ -232,7 +241,7 @@ public class DataInstance {
 						TranslateKeys.CHEQUING,
 						TranslateKeys.INVESTMENT				
 				};
-				
+
 				for (TranslateKeys s : debitNames){
 					addType(s.toString(), false);
 				}				
@@ -245,23 +254,23 @@ public class DataInstance {
 						TranslateKeys.LINE_OF_CREDIT,
 						TranslateKeys.LOAN
 				};
-				
+
 				for (TranslateKeys s : creditNames){
 					addType(s.toString(), true);
 				}				
-				
+
 				ResourceSet resourceSet = new ResourceSetImpl();			
 				resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 						Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
-				
+
 				URI fileURI = URI.createFileURI(locationFile.toString());
 				if (Const.DEVEL) Log.debug("Saving new file to " + locationFile.toString());
 				Resource resource = resourceSet.createResource(fileURI);			
 				resource.getContents().add(dataModel);
-				
+
 				Map options = new HashMap(1);
 				options.put(Resource.OPTION_CIPHER, this.cipher);
-				
+
 				try{
 					resource.save(options);
 				}
@@ -277,58 +286,58 @@ public class DataInstance {
 			}
 		}
 	}
-	
+
 	public void saveDataModel(){
 		saveDataModel(PrefsInstance.getInstance().getPrefs().getDataFile());
 	}
-	
+
 	synchronized public void saveDataModel(final String location){
 //		new SwingWorker(){
-//			@Override
-//			public Object construct() {
-				File saveLocation = new File(location);
-				File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
+//		@Override
+//		public Object construct() {
+		File saveLocation = new File(location);
+		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 
-				try{
-					if (saveLocation.exists())
-						FileFunctions.copyFile(saveLocation, backupLocation);
-					
-					URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
-					
-					if (Const.DEVEL) Log.debug("Data saved to " + location);
-					
-					Resource resource = resourceSet.createResource(fileURI);
-										
-					resource.getContents().add(getDataModel());
-					
-					Map options = new HashMap(1);
-					options.put(Resource.OPTION_CIPHER, this.cipher);
-					
-					resource.save(options);
-				}
-				catch (IOException ioe){
-					Log.critical("Error when saving file: " + ioe);
-				}
-//				return null;
-//			}			
+		try{
+			if (saveLocation.exists())
+				FileFunctions.copyFile(saveLocation, backupLocation);
+
+			URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
+
+			if (Const.DEVEL) Log.debug("Data saved to " + location);
+
+			Resource resource = resourceSet.createResource(fileURI);
+
+			resource.getContents().add(getDataModel());
+
+			Map options = new HashMap(1);
+			options.put(Resource.OPTION_CIPHER, this.cipher);
+
+			resource.save(options);
+		}
+		catch (IOException ioe){
+			Log.critical("Error when saving file: " + ioe);
+		}
+//		return null;
+//		}			
 //		}.start();
 	}
-	
-	
+
+
 	public DataModel getDataModel(){
 		return dataModel;
 	}
-	
+
 	public ModelFactory getDataModelFactory(){
 		return dataModelFactory;
 	}
-	
+
 	public void calculateAllBalances(){
 		for (Account a : getAccounts()){
 			a.calculateBalance();
 		}
 	}
-	
+
 	public void addAccount(Account a){
 		getDataModel().getAllAccounts().getAccounts().add(a);
 		saveDataModel();
@@ -338,7 +347,7 @@ public class DataInstance {
 		getDataModel().getAllCategories().getCategories().add(c);
 		saveDataModel();
 	}
-	
+
 	public void addType(String name, boolean credit){
 		Type t = getDataModelFactory().createType();
 		t.setName(name);
@@ -352,8 +361,8 @@ public class DataInstance {
 		t.calculateBalance();		
 		saveDataModel();
 	}
-	
-	
+
+
 	public void deleteSource(Source s){
 		s.setDeleted(true);
 		if (s instanceof Category) {
@@ -379,7 +388,7 @@ public class DataInstance {
 		}
 		saveDataModel();
 	}
-	
+
 	public void deleteTransaction(Transaction t){
 		if (getDataModel().getAllTransactions().getTransactions().remove(t)){
 			t.calculateBalance();
@@ -403,7 +412,7 @@ public class DataInstance {
 		}
 		saveDataModel();
 	}
-		
+
 	public Vector<Account> getAccounts(){
 		Vector<Account> v = new Vector<Account>(getDataModel().getAllAccounts().getAccounts());
 		Collections.sort(v);
@@ -415,7 +424,7 @@ public class DataInstance {
 		Collections.sort(v);
 		return v;
 	}
-	
+
 	public Vector<Type> getTypes(){
 		Vector<Type> v = new Vector<Type>(getDataModel().getAllTypes().getTypes());
 		Collections.sort(v);
@@ -427,7 +436,7 @@ public class DataInstance {
 		Collections.sort(transactions);
 		return transactions;
 	}
-	
+
 	/**
 	 * Returns all transactions which go to or from a given source.
 	 * @param source
@@ -435,17 +444,17 @@ public class DataInstance {
 	 */
 	public Vector<Transaction> getTransactions(Source source){
 		Vector<Transaction> v = new Vector<Transaction>();
-		
+
 		for (Transaction transaction : getTransactions()) {
 			if (transaction.getFrom() != null && transaction.getTo() != null && 
 					(transaction.getFrom().equals(source) || transaction.getTo().equals(source)))
 				v.add(transaction);
 		}
-		
+
 		Collections.sort(v);		
 		return v;
 	}
-	
+
 	/**
 	 * Returns all transactions within a given time frame.  Must match all
 	 * time arguments (excluding null arguments)
@@ -458,7 +467,7 @@ public class DataInstance {
 	public Vector<Transaction> getTransactions(Source source, Integer year, Integer month, Integer dayOfMonth){
 		Vector<Transaction> transactions = getTransactions(source);
 		Vector<Transaction> v = new Vector<Transaction>();
-		
+
 		for (Transaction t : transactions) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(t.getDate());
@@ -468,39 +477,39 @@ public class DataInstance {
 				v.add(t);
 			}
 		}
-		
+
 		Collections.sort(v);
 		return v;
 	}
-	
+
 	public Vector<Transaction> getTransactions(String description, Date startDate, Date endDate){
 		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
 		Vector<Transaction> transactions = new Vector<Transaction>();
-		
+
 		for (Transaction transaction : allTransactions) {
 			if (transaction.getDescription().equals(description))
 				transactions.add(transaction);
 		}
-		
+
 		return transactions;
 	}
-	
+
 	public Vector<Transaction> getTransactions(Boolean isIncome, Date startDate, Date endDate){
 		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
 		Vector<Transaction> transactions = new Vector<Transaction>();
-		
+
 		for (Transaction transaction : allTransactions) {
 			Category c = null;
 			if (transaction.getFrom() instanceof Category)
 				c = (Category) transaction.getFrom();
 			else if (transaction.getTo() instanceof Category)
 				c = (Category) transaction.getTo();
-			
+
 			if (c != null && c.isIncome() == isIncome){
 				transactions.add(transaction);
 			}
 		}
-		
+
 		return transactions;
 	}
 
@@ -508,42 +517,42 @@ public class DataInstance {
 	public Vector<Transaction> getTransactions(Source source, Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions(source);
 		Vector<Transaction> v = new Vector<Transaction>();
-		
+
 		for (Transaction t : transactions) {
 			if ((t.getDate().after(startDate) || t.getDate().equals(startDate)) 
 					&& (t.getDate().before(endDate) || t.getDate().equals(endDate))){
 				v.add(t);
 			}
 		}
-		
+
 		Collections.sort(v);
 		return v;
 	}
-	
+
 	//TODO Test boundary conditions: does this overlap dates or not?
 	// Update - I think that is should be working....
 	public Vector<Transaction> getTransactions(Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions();
 		Vector<Transaction> v = new Vector<Transaction>();
-		
+
 		for (Transaction t : transactions) {
 			if ((t.getDate().after(startDate) || t.getDate().equals(startDate)) 
 					&& (t.getDate().before(endDate) || t.getDate().equals(endDate))){
 				v.add(t);
 			}
 		}
-		
+
 		Collections.sort(v);
 		return v;
 	}
-	
+
 	public Vector<Schedule> getScheduledTransactions(){
 		Vector<Schedule> v = new Vector<Schedule>(dataModel.getAllTransactions().getScheduledTransactions());
 		Collections.sort(v);
-		
+
 		return v;
 	}
-	
+
 	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Transaction transaction){
 		Schedule s = dataModelFactory.createSchedule();
 		s.setScheduleName(name);
@@ -557,26 +566,26 @@ public class DataInstance {
 		s.setMemo(transaction.getMemo());
 		s.setTo(transaction.getTo());
 		s.setFrom(transaction.getFrom());
-		
+
 		dataModel.getAllTransactions().getScheduledTransactions().add(s);
 		saveDataModel();
 	}
-	
+
 	public void removeSchedule(Schedule s){
 		dataModel.getAllTransactions().getScheduledTransactions().remove(s);
 	}
-	
+
 	public Vector<Schedule> getScheduledTransactionsBeforeToday(){
 		Vector<Schedule> v = getScheduledTransactions();
 		Vector<Schedule> newV = new Vector<Schedule>();
-		
+
 		for (Schedule schedule : v) {
 			if (schedule.getStartDate().before(DateUtil.getStartOfDay(new Date()))
 					&& (schedule.getLastDateCreated() == null 
 							|| schedule.getLastDateCreated().before(DateUtil.getStartOfDay(new Date()))))
 				newV.add(schedule);
 		}
-		
+
 		return newV;
 	}
 }

@@ -267,3 +267,6 @@ WINDOW=Vindu
 YEAR=\u00C5r
 YESTERDAY=I g\u00E5r
 ZOOM=Zoom
+
+NUMBER_OF_BACKUPS=Number of Backups
+ADVANCED=Advanced

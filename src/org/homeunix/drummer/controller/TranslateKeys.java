@@ -268,5 +268,7 @@ public enum TranslateKeys {
     WINDOW,
     YEAR,
     YESTERDAY,
-    ZOOM
+    ZOOM,
+    ADVANCED,
+    NUMBER_OF_BACKUPS
 }

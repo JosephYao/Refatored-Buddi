@@ -38,7 +38,11 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
 					needRestart = true;
 				}
-				
+
+				if (numberOfBackups.getSelectedItem() instanceof Integer)
+					PrefsInstance.getInstance().getPrefs().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
+				else //If there is some problem, at least make sure user has some backups
+					PrefsInstance.getInstance().getPrefs().setNumberOfBackups(10);
 				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setDateFormat(dateFormat.getSelectedItem().toString());
 				PrefsInstance.getInstance().getPrefs().setCurrencySymbol(currencyFormat.getSelectedItem().toString());
@@ -104,15 +108,19 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
 		dateFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getDateFormat());
 		currencyFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
-		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
+
+		
 		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
 		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());
 		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());
 		showAutoComplete.setSelected(PrefsInstance.getInstance().getPrefs().isShowAutoComplete());
-		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
 		showCreditLimit.setSelected(PrefsInstance.getInstance().getPrefs().isShowCreditLimit());
 		showInterestRate.setSelected(PrefsInstance.getInstance().getPrefs().isShowInterestRate());
 		showClearReconcile.setSelected(PrefsInstance.getInstance().getPrefs().isShowAdvanced());
+
+		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
+		numberOfBackups.setSelectedItem(PrefsInstance.getInstance().getPrefs().getNumberOfBackups());
+		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
 		
 		return this;
 	}

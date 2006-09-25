@@ -437,49 +437,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__SHOW_ADVANCED = 13;
 
 	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Number Of Backups</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 14;
+	int PREFS__NUMBER_OF_BACKUPS = 14;
 
 	/**
-	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
+	 * The feature id for the '<em><b>Look And Feel Class</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 15;
-
-	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__TRANSACTIONS_WINDOW = 16;
-
-	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__MAIN_WINDOW = 17;
-
-	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 18;
+	int PREFS__LOOK_AND_FEEL_CLASS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
@@ -488,16 +461,43 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__INTERVALS = 19;
+	int PREFS__INTERVALS = 16;
 
 	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__DESC_DICT = 20;
+	int PREFS__GRAPHS_WINDOW = 17;
+
+	/**
+	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LAST_VERSION_RUN = 18;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__MAIN_WINDOW = 19;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LIST_ENTRIES = 20;
 
 	/**
 	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
@@ -509,13 +509,31 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__REPORTS_WINDOW = 21;
 
 	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__DESC_DICT = 22;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__TRANSACTIONS_WINDOW = 23;
+
+	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 22;
+	int PREFS_FEATURE_COUNT = 24;
 
 
 	/**
@@ -1097,6 +1115,28 @@ public interface PrefsPackage extends EPackage {
 	EAttribute getPrefs_ShowAdvanced();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Number Of Backups</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getNumberOfBackups()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_NumberOfBackups();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Look And Feel Class</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_LookAndFeelClass();
+
+	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1507,6 +1547,22 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREFS__SHOW_ADVANCED = eINSTANCE.getPrefs_ShowAdvanced();
+
+		/**
+		 * The meta object literal for the '<em><b>Number Of Backups</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__NUMBER_OF_BACKUPS = eINSTANCE.getPrefs_NumberOfBackups();
+
+		/**
+		 * The meta object literal for the '<em><b>Look And Feel Class</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__LOOK_AND_FEEL_CLASS = eINSTANCE.getPrefs_LookAndFeelClass();
 
 		/**
 		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.

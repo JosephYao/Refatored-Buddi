@@ -46,14 +46,16 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowCreditLimit <em>Show Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowInterestRate <em>Show Interest Rate</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAdvanced <em>Show Advanced</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getNumberOfBackups <em>Number Of Backups</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -341,6 +343,56 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected boolean showAdvanced = SHOW_ADVANCED_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getNumberOfBackups() <em>Number Of Backups</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNumberOfBackups()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int NUMBER_OF_BACKUPS_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getNumberOfBackups() <em>Number Of Backups</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNumberOfBackups()
+	 * @generated
+	 * @ordered
+	 */
+	protected int numberOfBackups = NUMBER_OF_BACKUPS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLookAndFeelClass() <em>Look And Feel Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLookAndFeelClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LOOK_AND_FEEL_CLASS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLookAndFeelClass() <em>Look And Feel Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLookAndFeelClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected String lookAndFeelClass = LOOK_AND_FEEL_CLASS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntervals()
+	 * @generated
+	 * @ordered
+	 */
+	protected Intervals intervals = null;
+
+	/**
 	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -359,16 +411,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected Version lastVersionRun = null;
-
-	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes transactionsWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
@@ -391,14 +433,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected EList listEntries = null;
 
 	/**
-	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
+	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIntervals()
+	 * @see #getReportsWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected Intervals intervals = null;
+	protected WindowAttributes reportsWindow = null;
 
 	/**
 	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
@@ -411,14 +453,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected EList descDict = null;
 
 	/**
-	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReportsWindow()
+	 * @see #getTransactionsWindow()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes reportsWindow = null;
+	protected WindowAttributes transactionsWindow = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -895,22 +937,22 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case PrefsPackage.PREFS__INTERVALS:
+				return basicSetIntervals(null, msgs);
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return basicSetGraphsWindow(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return basicSetTransactionsWindow(null, msgs);
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return basicSetMainWindow(null, msgs);
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.PREFS__INTERVALS:
-				return basicSetIntervals(null, msgs);
-			case PrefsPackage.PREFS__DESC_DICT:
-				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return basicSetReportsWindow(null, msgs);
+			case PrefsPackage.PREFS__DESC_DICT:
+				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return basicSetTransactionsWindow(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -950,22 +992,26 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isShowInterestRate() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__SHOW_ADVANCED:
 				return isShowAdvanced() ? Boolean.TRUE : Boolean.FALSE;
+			case PrefsPackage.PREFS__NUMBER_OF_BACKUPS:
+				return new Integer(getNumberOfBackups());
+			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
+				return getLookAndFeelClass();
+			case PrefsPackage.PREFS__INTERVALS:
+				return getIntervals();
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return getGraphsWindow();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return getMainWindow();
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return getListEntries();
-			case PrefsPackage.PREFS__INTERVALS:
-				return getIntervals();
-			case PrefsPackage.PREFS__DESC_DICT:
-				return getDescDict();
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return getReportsWindow();
+			case PrefsPackage.PREFS__DESC_DICT:
+				return getDescDict();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return getTransactionsWindow();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1020,14 +1066,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_ADVANCED:
 				setShowAdvanced(((Boolean)newValue).booleanValue());
 				return;
+			case PrefsPackage.PREFS__NUMBER_OF_BACKUPS:
+				setNumberOfBackups(((Integer)newValue).intValue());
+				return;
+			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
+				setLookAndFeelClass((String)newValue);
+				return;
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)newValue);
+				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)newValue);
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)newValue);
@@ -1036,15 +1088,15 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				getListEntries().clear();
 				getListEntries().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)newValue);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)newValue);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1099,14 +1151,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__SHOW_ADVANCED:
 				setShowAdvanced(SHOW_ADVANCED_EDEFAULT);
 				return;
+			case PrefsPackage.PREFS__NUMBER_OF_BACKUPS:
+				setNumberOfBackups(NUMBER_OF_BACKUPS_EDEFAULT);
+				return;
+			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
+				setLookAndFeelClass(LOOK_AND_FEEL_CLASS_EDEFAULT);
+				return;
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)null);
+				return;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				setGraphsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)null);
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)null);
@@ -1114,14 +1172,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				getListEntries().clear();
 				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)null);
+			case PrefsPackage.PREFS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)null);
 				return;
 			case PrefsPackage.PREFS__DESC_DICT:
 				getDescDict().clear();
 				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				setTransactionsWindow((WindowAttributes)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1162,22 +1220,26 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return showInterestRate != SHOW_INTEREST_RATE_EDEFAULT;
 			case PrefsPackage.PREFS__SHOW_ADVANCED:
 				return showAdvanced != SHOW_ADVANCED_EDEFAULT;
+			case PrefsPackage.PREFS__NUMBER_OF_BACKUPS:
+				return numberOfBackups != NUMBER_OF_BACKUPS_EDEFAULT;
+			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
+				return LOOK_AND_FEEL_CLASS_EDEFAULT == null ? lookAndFeelClass != null : !LOOK_AND_FEEL_CLASS_EDEFAULT.equals(lookAndFeelClass);
+			case PrefsPackage.PREFS__INTERVALS:
+				return intervals != null;
 			case PrefsPackage.PREFS__GRAPHS_WINDOW:
 				return graphsWindow != null;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
 			case PrefsPackage.PREFS__MAIN_WINDOW:
 				return mainWindow != null;
 			case PrefsPackage.PREFS__LIST_ENTRIES:
 				return listEntries != null && !listEntries.isEmpty();
-			case PrefsPackage.PREFS__INTERVALS:
-				return intervals != null;
-			case PrefsPackage.PREFS__DESC_DICT:
-				return descDict != null && !descDict.isEmpty();
 			case PrefsPackage.PREFS__REPORTS_WINDOW:
 				return reportsWindow != null;
+			case PrefsPackage.PREFS__DESC_DICT:
+				return descDict != null && !descDict.isEmpty();
+			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
+				return transactionsWindow != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1313,6 +1375,48 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getNumberOfBackups() {
+		return numberOfBackups;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNumberOfBackups(int newNumberOfBackups) {
+		int oldNumberOfBackups = numberOfBackups;
+		numberOfBackups = newNumberOfBackups;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__NUMBER_OF_BACKUPS, oldNumberOfBackups, numberOfBackups));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getLookAndFeelClass() {
+		return lookAndFeelClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLookAndFeelClass(String newLookAndFeelClass) {
+		String oldLookAndFeelClass = lookAndFeelClass;
+		lookAndFeelClass = newLookAndFeelClass;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS, oldLookAndFeelClass, lookAndFeelClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1345,6 +1449,10 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(showInterestRate);
 		result.append(", showAdvanced: ");
 		result.append(showAdvanced);
+		result.append(", numberOfBackups: ");
+		result.append(numberOfBackups);
+		result.append(", lookAndFeelClass: ");
+		result.append(lookAndFeelClass);
 		result.append(')');
 		return result.toString();
 	}

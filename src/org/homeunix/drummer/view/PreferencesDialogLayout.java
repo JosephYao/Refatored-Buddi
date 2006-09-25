@@ -21,7 +21,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -44,6 +46,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected final JCheckBox showCreditLimit;
 	protected final JCheckBox showInterestRate;
 	protected final JCheckBox showClearReconcile;
+	protected final JComboBox numberOfBackups;
 
 	protected final JCheckBox enableUpdateNotifications;
 	
@@ -58,7 +61,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
-				
+						
 		JLabel languageLabel = new JLabel(Translate.getInstance().get(TranslateKeys.LANGUAGE));
 		languageModel = new DefaultComboBoxModel();
 		language = new JComboBox(languageModel);
@@ -115,6 +118,10 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		showInterestRate.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_INTEREST_RATE));
 		showClearReconcile.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_CLEAR_RECONCILE));
 		
+		JLabel numberOfBackupsLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NUMBER_OF_BACKUPS));
+		Integer[] backups = {5, 10, 15, 20};
+		numberOfBackups = new JComboBox(backups);
+
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -127,6 +134,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel interestRatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel clearReconcilePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
@@ -156,16 +164,20 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		
 		clearReconcilePanel.add(showClearReconcile);
 		
+		numberOfBackupsPanel.add(numberOfBackupsLabel);
+		numberOfBackupsPanel.add(numberOfBackups);
+		
 		JPanel localePanel = new JPanel(new GridLayout(0, 1));
 		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
+		JPanel advancedPanel = new JPanel(new GridLayout(0, 1));
 //		JPanel otherPanel = new JPanel(new GridLayout(0, 1));
 		
 //		localePanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //		viewPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //		otherPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		
-		localePanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.LOCALE)));
-		viewPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.VIEW)));
+//		localePanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.LOCALE)));
+//		viewPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.VIEW)));
 //		otherPanel.setBorder(BorderFactory.createTitledBorder(""));
 		
 //		JPanel textPanel = new JPanel(new GridLayout(0, 1));
@@ -176,8 +188,14 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
-		localePanel.add(new JLabel());
-		localePanel.add(updatePanel);		
+		
+		advancedPanel.add(budgetIntervalPanel);
+		advancedPanel.add(numberOfBackupsPanel);
+		advancedPanel.add(updatePanel);
+		advancedPanel.add(new JLabel());
+		advancedPanel.add(new JLabel());
+		advancedPanel.add(new JLabel());
+		advancedPanel.add(new JLabel());
 				
 		viewPanel.add(deletePanel1);
 		viewPanel.add(deletePanel2);
@@ -186,20 +204,23 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		viewPanel.add(creditLimitPanel);
 		viewPanel.add(clearReconcilePanel);
 		viewPanel.add(autoCompletePanel);
-		viewPanel.add(budgetIntervalPanel);
-		viewPanel.add(new JLabel());  // Line up view and locale panels
 
 		
 //		JPanel textPanelSpacer = new JPanel();
 //		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //		textPanelSpacer.add(textPanel);
 		
-		JPanel mainBorderPanel = new JPanel(new GridLayout(1, 0));
+//		JPanel mainBorderPanel = new JPanel(new GridLayout(1, 0));
 //		mainBorderPanel.setLayout(new BorderLayout());
 //		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
-		mainBorderPanel.add(localePanel);
-		mainBorderPanel.add(viewPanel);
+//		mainBorderPanel.add(localePanel);
+//		mainBorderPanel.add(viewPanel);
 //		mainBorderPanel.add(otherPanel);
+		
+		JTabbedPane tabs = new JTabbedPane();
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), advancedPanel);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);
@@ -207,15 +228,19 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 		
-		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
+//		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
+		mainPanel.add(tabs, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		this.setTitle(Translate.getInstance().get(TranslateKeys.PREFERENCES));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
+		
+		if (Buddi.isMac()) {
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
+		}
 		
 		//Call the method to add actions to the buttons
 		initActions();		

@@ -32,14 +32,16 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowCreditLimit <em>Show Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowInterestRate <em>Show Interest Rate</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
  * </ul>
  * </p>
  *
@@ -599,5 +601,57 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setShowAdvanced(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Number Of Backups</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Number Of Backups</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Number Of Backups</em>' attribute.
+	 * @see #setNumberOfBackups(int)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_NumberOfBackups()
+	 * @model
+	 * @generated
+	 */
+	int getNumberOfBackups();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Number Of Backups</em>' attribute.
+	 * @see #getNumberOfBackups()
+	 * @generated
+	 */
+	void setNumberOfBackups(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Look And Feel Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Look And Feel Class</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Look And Feel Class</em>' attribute.
+	 * @see #setLookAndFeelClass(String)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_LookAndFeelClass()
+	 * @model
+	 * @generated
+	 */
+	String getLookAndFeelClass();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Look And Feel Class</em>' attribute.
+	 * @see #getLookAndFeelClass()
+	 * @generated
+	 */
+	void setLookAndFeelClass(String value);
 
 } // Prefs

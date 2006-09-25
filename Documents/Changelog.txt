@@ -1,5 +1,7 @@
 1.8.0rc1
 -Fixed bug when switching from old language to new
+-Added rotating backup - instead of making a new backup file every time, and relying on the user to delete old ones, there are now X number of backup files, denoted by Data.X.buddi (where X is a number between 0 and NUMBER_OF_BACKUPS).  Each time you start, the backup files are shuffled up (Data.0.buddi becomes Data.1.buddi), and the current data file is copied to Data.0.buddi.  You can set the number of backup files in Preferences.
+-Simplified Preferences screen by separating each panel into its own tab.
 -ScheduledTransactions now sorted according to name
 -Code Cleanup (renamed ScheduledTransaction objects to comply with naming convention)
 
