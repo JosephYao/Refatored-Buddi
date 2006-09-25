@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +35,21 @@ import org.homeunix.drummer.util.Log;
 
 public class GraphFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
+	
+	protected static final Vector<GraphFrameLayout> graphFrameInstances = new Vector<GraphFrameLayout>();
 
-	protected final JPanel reportPanel;
+	protected JPanel reportPanel;
 	protected final JButton okButton;
+	protected final BuddiGraphPlugin graphPlugin;
+	protected final Date startDate, endDate;
+
+	private final JPanel reportPanelSpacer;
 		
 	public GraphFrameLayout(BuddiGraphPlugin graphPlugin, final Date startDate, final Date endDate){
-		this.setTitle(graphPlugin.getTitle());
-
+		this.graphPlugin = graphPlugin;
+		this.startDate = startDate;
+		this.endDate = endDate;		
+		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
@@ -48,17 +57,9 @@ public class GraphFrameLayout extends AbstractFrame {
 						
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(okButton);
-		
-		reportPanel = graphPlugin.getGraphPanel(startDate, endDate);
 				
-		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
-//		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		reportPanelSpacer.add(reportPanel, BorderLayout.CENTER);
-		
-//		JPanel reportPanel = new JPanel(new BorderLayout());
-//		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
-//		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
-		
+		reportPanelSpacer = new JPanel(new BorderLayout());
+				
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -69,12 +70,13 @@ public class GraphFrameLayout extends AbstractFrame {
 		
 		if (Buddi.isMac()){
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-//			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
 		
-		//reportPanel.setText(buildReport(startDate, endDate));
-				
-//		reportPanel.setPreferredSize(new Dimension(reportPanel.getPreferredSize().width, Math.min(400, reportPanel.getPreferredSize().height)));
+		graphFrameInstances.add(this);
+
+		//We call updateContent() to connect to the plugin to update all
+		// the content.  This allows you to refresh the content whenever you want to.
+		updateContent();
 		
 		//Call the method to add actions to the buttons
 		initActions();
@@ -102,6 +104,8 @@ public class GraphFrameLayout extends AbstractFrame {
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
 								
 				PrefsInstance.getInstance().savePrefs();
+				
+				graphFrameInstances.remove(this);
 				
 				super.componentHidden(arg0);
 			}
@@ -250,6 +254,22 @@ public class GraphFrameLayout extends AbstractFrame {
 	
 	@Override
 	public AbstractFrame updateContent() {
+		this.setTitle(graphPlugin.getTitle());
+		reportPanel = graphPlugin.getGraphPanel(startDate, endDate);
+		
+		reportPanelSpacer.removeAll();
+		reportPanelSpacer.add(reportPanel, BorderLayout.CENTER);
+		
+		this.pack();
+		
 		return this;
 	}
+	
+	public static void updateAllGraphWindows(){
+		for (GraphFrameLayout gfl : Collections.unmodifiableCollection(graphFrameInstances)) {
+			if (gfl != null)
+				gfl.updateContent();
+		}
+	}
+
 }

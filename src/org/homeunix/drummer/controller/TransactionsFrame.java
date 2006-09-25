@@ -34,6 +34,8 @@ import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.drummer.view.GraphFrameLayout;
+import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
 
 import de.schlichtherle.swing.filter.FilteredStaticListModel;
@@ -256,6 +258,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				editableTransaction.setChanged(false);
 
 				updateAllTransactionWindows();
+				ReportFrameLayout.updateAllReportWindows();
+				GraphFrameLayout.updateAllGraphWindows();
 			}
 
 		});

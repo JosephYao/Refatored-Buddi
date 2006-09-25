@@ -16,7 +16,9 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractDialog;
+import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ModifyDialogLayout;
+import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	public static final long serialVersionUID = 0;
@@ -102,6 +104,10 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 					AccountModifyDialog.this.setVisible(false);
 					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				}
+				
+				TransactionsFrame.updateAllTransactionWindows();
+				ReportFrameLayout.updateAllReportWindows();
+				GraphFrameLayout.updateAllGraphWindows();
 			}
 		});
 		

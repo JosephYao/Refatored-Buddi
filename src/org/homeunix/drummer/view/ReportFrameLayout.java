@@ -14,7 +14,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -40,22 +42,27 @@ public class ReportFrameLayout extends AbstractFrame {
 	protected final JTree reportTree;
 	protected final JButton okButton;
 	protected final JButton editButton;
-	protected final String HTMLPage;
+	protected String HTMLPage = "";
+	protected final BuddiReportPlugin reportPlugin;
+	protected final Date startDate, endDate;
+	
+	protected static final Vector<ReportFrameLayout> reportFrameInstances = new Vector<ReportFrameLayout>();
 	
 	protected DefaultMutableTreeNode selectedNode;
 
 	
 	public ReportFrameLayout(BuddiReportPlugin reportPlugin, final Date startDate, final Date endDate){
-		this.setTitle(reportPlugin.getTitle());
+		this.reportPlugin = reportPlugin;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		
-		HTMLPage = reportPlugin.getReportHTML(startDate, endDate);
-		
-		reportTree = new JTree(reportPlugin.getReportTreeModel(startDate, endDate));
+		reportTree = new JTree();
 		reportTree.setRootVisible(false);
 		reportTree.setShowsRootHandles(true);
 		reportTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		reportTree.setCellRenderer(reportPlugin.getTreeCellRenderer());
 
+		updateContent();
+		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
 
@@ -96,6 +103,8 @@ public class ReportFrameLayout extends AbstractFrame {
 			reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
 		
+		reportFrameInstances.add(this);
+		
 		initActions();
 	}
 	
@@ -117,6 +126,8 @@ public class ReportFrameLayout extends AbstractFrame {
 				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
 								
 				PrefsInstance.getInstance().savePrefs();
+				
+				reportFrameInstances.remove(this);
 				
 				super.componentHidden(arg0);
 			}
@@ -196,6 +207,18 @@ public class ReportFrameLayout extends AbstractFrame {
 	
 	@Override
 	public AbstractFrame updateContent() {
+		HTMLPage = reportPlugin.getReportHTML(startDate, endDate);
+		reportTree.setModel(reportPlugin.getReportTreeModel(startDate, endDate));
+		reportTree.setCellRenderer(reportPlugin.getTreeCellRenderer());
+		this.setTitle(reportPlugin.getTitle());
+		
 		return this;
+	}
+	
+	public static void updateAllReportWindows(){
+		for (ReportFrameLayout rfl : Collections.unmodifiableCollection(reportFrameInstances)) {
+			if (rfl != null)
+				rfl.updateContent();
+		}
 	}
 }

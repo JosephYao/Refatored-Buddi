@@ -13,7 +13,9 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
+import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ModifyDialogLayout;
+import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	public static final long serialVersionUID = 0;
@@ -110,6 +112,10 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 					CategoryModifyDialog.this.setVisible(false);
 					MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 				}
+				
+				TransactionsFrame.updateAllTransactionWindows();
+				ReportFrameLayout.updateAllReportWindows();
+				GraphFrameLayout.updateAllGraphWindows();
 			}
 		});
 		
