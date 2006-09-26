@@ -61,7 +61,7 @@ public class Buddi {
 	    
 		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
-/*	
+	
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			if (JOptionPane.showConfirmDialog(null, 
 					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
@@ -71,7 +71,7 @@ public class Buddi {
 			) == JOptionPane.CANCEL_OPTION)
 				System.exit(0);
 		}
-*/
+/*
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			JOptionPane.showMessageDialog(null, 
 					"Warning: This version of Buddi contains code for encrypting and\ndecrypting of data files.  While a few individuals have tested\nas much as possible, it is still likely that there are bugs which\ncould result in loss of data.\n\nMake sure you have backups of any critical files before proceeding!",
@@ -79,7 +79,7 @@ public class Buddi {
 					JOptionPane.WARNING_MESSAGE
 			);
 		}
-
+*/
 		
 		MainBuddiFrame.getInstance().openWindow();
 	}

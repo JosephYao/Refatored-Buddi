@@ -2,6 +2,45 @@
 
 <h1>News</h1>
 
+<h2>1.8.0 ()</h2>
+<p>
+Today the newest Stable version has been released: 1.8.0.  This version 
+is a recommended upgrade for all users, and adds a number of 
+improvements over the 1.6 branch, including:
+</p>
+<ul>
+<li>The addition of a built in, transparent encryption scheme for Buddi 
+data files</li>
+<li>A pluggable reporting system, which allows third party developers 
+to add custom report types</li>
+<li>A Windows-specific distribution package, which includes a single 
+.exe file.  This has the advantage over the previous .jar of showing the 
+proper icon in the toolbar, running under the process name 'buddi' 
+instead of 'javaw', etc.</li>
+<li>The bundling of Language files into the executable, helping
+prevent problems related to an incorrect working directory</li>
+<li>Rotating backup files, instead of relying on users to delete 
+old backups</li>
+<li>Numerous UI improvements, such as:
+<ul>
+<li>Reports and graphs being automatically updated whenever the data 
+changes</li>
+<li>The removal of the Mac-specific LNF and logic from the Windows / 
+Generic bundles.  This allows for a more native design, as well 
+as a smaller file size</li>
+<li>The ability to specify a specific java LNF at startup, via the 
+--lnf command line option</li>
+<li>General UI cleanup, with a special focus on ease of use</li>
+</ul>
+</li>
+</ul>
+<p>
+Please note that 1.8 data files are not be backwards compatible 
+with previous Buddi versions.  Please backup your data files before 
+running the new version.
+</p>
+
+
 <h2>Encryption Added</h2>
 <p>
 Data file encryption has been added in Development release 1.7.3.  If you are interested and able, I would greatly appreciate it if you could do some testing on the new program.  Just make sure to back up your data files first!
