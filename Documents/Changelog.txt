@@ -1,3 +1,6 @@
+-Fixed bug where, if you updated (as opposed to recoreded) in transactions window, the selected transaction would change to the new item.  It now keeps the edited transaction selected.
+-Updated Norwegian language
+
 1.8.0rc1 (Sept 24 2006)
 -Fixed bug when switching from old language to new
 -Added rotating backup - instead of making a new backup file every time, and relying on the user to delete old ones, there are now X number of backup files, denoted by Data.X.buddi (where X is a number between 0 and NUMBER_OF_BACKUPS).  Each time you start, the backup files are shuffled up (Data.0.buddi becomes Data.1.buddi), and the current data file is copied to Data.0.buddi.  You can set the number of backup files in Preferences.
