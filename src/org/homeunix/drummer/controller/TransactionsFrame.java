@@ -208,16 +208,19 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 
 				Transaction t;
-				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
+				boolean isUpdate = false;
+				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD))){
 					t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-				else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE)))
-//					t = (Transaction) list.getSelectedValue();
+				}
+				else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE))){
 					t = editableTransaction.getTransaction();
+					isUpdate = true;
+				}
 				else {
 					Log.error("Unknown record button state: " + recordButton.getText());
 					return;
 				}
-
+				
 				if (editableTransaction.getFrom().getCreationDate() != null
 						&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
 					editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
@@ -260,6 +263,11 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				updateAllTransactionWindows();
 				ReportFrameLayout.updateAllReportWindows();
 				GraphFrameLayout.updateAllGraphWindows();
+				
+				if (isUpdate){
+					editableTransaction.setTransaction(t, true);
+					list.setSelectedValue(editableTransaction.getTransaction(), true);
+				}
 			}
 
 		});
@@ -400,7 +408,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		editableTransaction.updateContent();
 		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
 		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-
+		
 		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
 		updateButtons();
 
