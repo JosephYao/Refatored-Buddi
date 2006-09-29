@@ -257,17 +257,23 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 							editableTransaction.getMemo());
 				}
 
-				editableTransaction.setTransaction(null, true);
-				editableTransaction.setChanged(false);
-
 				updateAllTransactionWindows();
 				ReportFrameLayout.updateAllReportWindows();
 				GraphFrameLayout.updateAllGraphWindows();
+				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 				
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
-					list.setSelectedValue(editableTransaction.getTransaction(), true);
 				}
+				else {
+					editableTransaction.setTransaction(null, true);
+				}
+				
+				list.setSelectedValue(editableTransaction.getTransaction(), true);
+				editableTransaction.setChanged(false);
+
+//				list.ensureIndexIsVisible(list.getSelectedIndex());
 			}
 
 		});
@@ -303,11 +309,19 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 
 					Transaction t = (Transaction) list.getSelectedValue();
+					int position = list.getSelectedIndex();
 					DataInstance.getInstance().deleteTransaction(t);
 					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 
-					updateAllTransactionWindows();
+					TransactionsFrame.updateAllTransactionWindows();
+					
+					list.setSelectedIndex(position);
+					if (list.getSelectedValue() instanceof Transaction){
+						t = (Transaction) list.getSelectedValue();
+						editableTransaction.setTransaction(t, true);
+						list.ensureIndexIsVisible(position);
+					}
 				}
 			}
 		});
@@ -412,10 +426,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
 		updateButtons();
 
-		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
-		MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
-		MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
-		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
 		return this;
 	}
 
