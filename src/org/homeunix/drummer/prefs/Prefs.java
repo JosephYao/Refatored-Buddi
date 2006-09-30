@@ -6,8 +6,6 @@
  */
 package org.homeunix.drummer.prefs;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -34,14 +32,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
  * </ul>
  * </p>
  *
@@ -259,84 +253,6 @@ public interface Prefs extends EObject {
 	void setEnableUpdateNotifications(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Transactions Window</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Transactions Window</em>' containment reference.
-	 * @see #setTransactionsWindow(WindowAttributes)
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_TransactionsWindow()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	WindowAttributes getTransactionsWindow();
-
-	/**
-	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Transactions Window</em>' containment reference.
-	 * @see #getTransactionsWindow()
-	 * @generated
-	 */
-	void setTransactionsWindow(WindowAttributes value);
-
-	/**
-	 * Returns the value of the '<em><b>Graphs Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Graphs Window</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Graphs Window</em>' containment reference.
-	 * @see #setGraphsWindow(WindowAttributes)
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_GraphsWindow()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	WindowAttributes getGraphsWindow();
-
-	/**
-	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Graphs Window</em>' containment reference.
-	 * @see #getGraphsWindow()
-	 * @generated
-	 */
-	void setGraphsWindow(WindowAttributes value);
-
-	/**
-	 * Returns the value of the '<em><b>Main Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Main Window</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Main Window</em>' containment reference.
-	 * @see #setMainWindow(WindowAttributes)
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_MainWindow()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	WindowAttributes getMainWindow();
-
-	/**
-	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Main Window</em>' containment reference.
-	 * @see #getMainWindow()
-	 * @generated
-	 */
-	void setMainWindow(WindowAttributes value);
-
-	/**
 	 * Returns the value of the '<em><b>Last Version Run</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -363,22 +279,6 @@ public interface Prefs extends EObject {
 	void setLastVersionRun(Version value);
 
 	/**
-	 * Returns the value of the '<em><b>List Entries</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.ListEntry}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>List Entries</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>List Entries</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_ListEntries()
-	 * @model type="org.homeunix.drummer.prefs.ListEntry" containment="true"
-	 * @generated
-	 */
-	EList getListEntries();
-
-	/**
 	 * Returns the value of the '<em><b>Intervals</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -403,48 +303,6 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setIntervals(Intervals value);
-
-	/**
-	 * Returns the value of the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Reports Window</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Reports Window</em>' containment reference.
-	 * @see #setReportsWindow(WindowAttributes)
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_ReportsWindow()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	WindowAttributes getReportsWindow();
-
-	/**
-	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Reports Window</em>' containment reference.
-	 * @see #getReportsWindow()
-	 * @generated
-	 */
-	void setReportsWindow(WindowAttributes value);
-
-	/**
-	 * Returns the value of the '<em><b>Desc Dict</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.DictEntry}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Desc Dict</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Desc Dict</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_DescDict()
-	 * @model type="org.homeunix.drummer.prefs.DictEntry" containment="true"
-	 * @generated
-	 */
-	EList getDescDict();
 
 	/**
 	 * Returns the value of the '<em><b>Selected Interval</b></em>' attribute.
@@ -653,5 +511,57 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setLookAndFeelClass(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Lists</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Lists</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Lists</em>' containment reference.
+	 * @see #setLists(Lists)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_Lists()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	Lists getLists();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Lists</em>' containment reference.
+	 * @see #getLists()
+	 * @generated
+	 */
+	void setLists(Lists value);
+
+	/**
+	 * Returns the value of the '<em><b>Windows</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Windows</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Windows</em>' containment reference.
+	 * @see #setWindows(Windows)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_Windows()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	Windows getWindows();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Windows</em>' containment reference.
+	 * @see #getWindows()
+	 * @generated
+	 */
+	void setWindows(Windows value);
 
 } // Prefs

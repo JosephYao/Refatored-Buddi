@@ -111,11 +111,31 @@ public class PrefsInstance {
 				userPrefs = (UserPrefs) contents.get(0);
 			}
 			
+			//Load the auto complete entries into the dictionary
+			// and create the autocomplete map, between 
+			// description and other fields.
+			for (Object o : userPrefs.getPrefs().getLists().getDescDict()) {
+				if (o instanceof DictEntry) {
+					DictEntry entry = (DictEntry) o;
+					descDict.add(entry.getEntry());
+					defaultsMap.put(entry.getEntry(), entry.getData());
+				}
+			}
+			
+			//Load the state for the list entries
+			for (Object o : userPrefs.getPrefs().getLists().getListEntries()) {
+				if (o instanceof ListEntry){
+					ListEntry l = (ListEntry) o;
+					System.out.println(l.getEntry() + ", " + l.getAttributes());
+					listAttributesMap.put(l.getEntry(), l.getAttributes());
+				}
+			}
+			
 			//Do some final sanity checks.  Probably not needed for everyday use, but
 			// needed for some upgrades (i.e., from 1.1.5 to 1.1.6).
 			if (userPrefs.getPrefs().getSelectedInterval() == null 
 					|| userPrefs.getPrefs().getIntervals() == null
-					|| userPrefs.getPrefs().getIntervals().getAllIntervals() == null)
+					|| userPrefs.getPrefs().getIntervals().getIntervals() == null)
 				throw new Exception();
 			
 			//Make a smooth crossover from 1.6 to 1.8
@@ -207,6 +227,10 @@ public class PrefsInstance {
 			prefs.setEnableUpdateNotifications(true);
 			prefs.setDateFormat("yyyy/MMM/d");
 			prefs.setCurrencySymbol(Const.CURRENCY_FORMATS[0]);
+
+			prefs.setLists(prefsFactory.createLists());
+			prefs.setWindows(prefsFactory.createWindows());
+			prefs.setIntervals(prefsFactory.createIntervals());
 			
 			WindowAttributes main = prefsFactory.createWindowAttributes();
 			WindowAttributes transactions = prefsFactory.createWindowAttributes();
@@ -218,44 +242,41 @@ public class PrefsInstance {
 			
 			transactions.setHeight(500);
 			transactions.setWidth(700);
-			
-			prefs.setMainWindow(main);
-			prefs.setTransactionsWindow(transactions);
-			prefs.setGraphsWindow(graphs);
-			prefs.setReportsWindow(reports);
-			
-			Intervals intervals = prefsFactory.createIntervals();
-			prefs.setIntervals(intervals);
+						
+			prefs.getWindows().setMainWindow(main);
+			prefs.getWindows().setTransactionsWindow(transactions);
+			prefs.getWindows().setGraphsWindow(graphs);
+			prefs.getWindows().setReportsWindow(reports);
 			
 			Interval month = prefsFactory.createInterval();
 			month.setName(TranslateKeys.MONTH.toString());
 			month.setLength(1);
 			month.setDays(false);  //If days is false, then we assume the length is in months.
-			prefs.getIntervals().getAllIntervals().add(month);
+			prefs.getIntervals().getIntervals().add(month);
 
 			Interval week = prefsFactory.createInterval();
 			week.setName(TranslateKeys.WEEK.toString());
 			week.setLength(7);
 			week.setDays(true);
-			prefs.getIntervals().getAllIntervals().add(week);
+			prefs.getIntervals().getIntervals().add(week);
 			
 			Interval fortnight = prefsFactory.createInterval();
 			fortnight.setName(TranslateKeys.FORTNIGHT.toString());
 			fortnight.setLength(14);
 			fortnight.setDays(true);
-			prefs.getIntervals().getAllIntervals().add(fortnight);
+			prefs.getIntervals().getIntervals().add(fortnight);
 
 			Interval quarter = prefsFactory.createInterval();
 			quarter.setName(TranslateKeys.QUARTER.toString());
 			quarter.setLength(3);
 			quarter.setDays(false);
-			prefs.getIntervals().getAllIntervals().add(quarter);
+			prefs.getIntervals().getIntervals().add(quarter);
 
 			Interval year = prefsFactory.createInterval();
 			year.setName(TranslateKeys.YEAR.toString());
 			year.setLength(12);
 			year.setDays(false);
-			prefs.getIntervals().getAllIntervals().add(year);
+			prefs.getIntervals().getIntervals().add(year);
 
 			
 			
@@ -281,25 +302,6 @@ public class PrefsInstance {
 			}
 			catch (IOException ioe){}
 		}
-		
-		//Load the auto complete entries into the dictionary
-		// and create the autocomplete map, between 
-		// description and other fields.
-		for (Object o : userPrefs.getPrefs().getDescDict()) {
-			if (o instanceof DictEntry) {
-				DictEntry entry = (DictEntry) o;
-				descDict.add(entry.getEntry());
-				defaultsMap.put(entry.getEntry(), entry.getData());
-			}
-		}
-		
-		//Load the state for the list entries
-		for (Object o : userPrefs.getPrefs().getListEntries()) {
-			if (o instanceof ListEntry){
-				ListEntry l = (ListEntry) o;
-				listAttributesMap.put(l.getEntry(), l.getAttributes());
-			}
-		}
 	}
 	
 	public void savePrefs(){		
@@ -308,23 +310,23 @@ public class PrefsInstance {
 		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 		
 		//Translate between Set<String> (the dictionary) and the persistence model
-		userPrefs.getPrefs().getDescDict().retainAll(new Vector());
+		userPrefs.getPrefs().getLists().getDescDict().retainAll(new Vector());
 		for (String s : descDict) {
 			DictEntry d = prefsFactory.createDictEntry();
 			d.setEntry(s);
 			d.setData(defaultsMap.get(s));
-			userPrefs.getPrefs().getDescDict().add(d);
+			userPrefs.getPrefs().getLists().getDescDict().add(d);
 		}
 		
 		//Translate between Map<String, ListAttribute> (the list attributes) and the persistance model
-		userPrefs.getPrefs().getListEntries().retainAll(new Vector());
+		userPrefs.getPrefs().getLists().getListEntries().retainAll(new Vector());
 		for (String s : listAttributesMap.keySet()){
 			//Create an entry in the listEntry structure
 			ListEntry l = prefsFactory.createListEntry();
 			l.setEntry(s);
 			l.setAttributes(listAttributesMap.get(s));
 			
-			userPrefs.getPrefs().getListEntries().add(l);
+			userPrefs.getPrefs().getLists().getListEntries().add(l);
 		}
 		
 		try{
@@ -413,13 +415,14 @@ public class PrefsInstance {
 	}
 	
 	public ListAttributes getListAttributes(String entryName){
+		System.out.println(listAttributesMap);
 		return listAttributesMap.get(entryName);
 	}
 	
 	public Vector<Interval> getIntervals(){
 		Vector<Interval> intervals = new Vector<Interval>();
 		
-		for (Object o : userPrefs.getPrefs().getIntervals().getAllIntervals()) {
+		for (Object o : userPrefs.getPrefs().getIntervals().getIntervals()) {
 			if (o instanceof Interval){
 				Interval interval = (Interval) o;
 				intervals.add(interval);
@@ -431,7 +434,7 @@ public class PrefsInstance {
 	}
 	
 	public Interval getSelectedInterval(){
-		for (Object o : userPrefs.getPrefs().getIntervals().getAllIntervals()) {
+		for (Object o : userPrefs.getPrefs().getIntervals().getIntervals()) {
 			if (o instanceof Interval){
 				Interval interval = (Interval) o;
 				if (interval.getName().equals(userPrefs.getPrefs().getSelectedInterval()))
@@ -492,22 +495,22 @@ public class PrefsInstance {
 
 	public void checkWindowSanity(){
 		Prefs prefs = getPrefs();
-		if (prefs.getMainWindow() == null)
-			prefs.setMainWindow(prefsFactory.createWindowAttributes());
-		if (prefs.getTransactionsWindow() == null)
-			prefs.setTransactionsWindow(prefsFactory.createWindowAttributes());
-		if (prefs.getGraphsWindow() == null)
-			prefs.setGraphsWindow(prefsFactory.createWindowAttributes());
-		if (prefs.getReportsWindow() == null)
-			prefs.setReportsWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getWindows().getMainWindow() == null)
+			prefs.getWindows().setMainWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getWindows().getTransactionsWindow() == null)
+			prefs.getWindows().setTransactionsWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getWindows().getGraphsWindow() == null)
+			prefs.getWindows().setGraphsWindow(prefsFactory.createWindowAttributes());
+		if (prefs.getWindows().getReportsWindow() == null)
+			prefs.getWindows().setReportsWindow(prefsFactory.createWindowAttributes());
 
-		if (prefs.getMainWindow().getHeight() < 300)
-			prefs.getMainWindow().setHeight(300);
-		if (prefs.getTransactionsWindow().getHeight() < 300)
-			prefs.getTransactionsWindow().setHeight(300);
-		if (prefs.getMainWindow().getWidth() < 400)
-			prefs.getMainWindow().setWidth(400);
-		if (prefs.getTransactionsWindow().getWidth() < 500)
-			prefs.getTransactionsWindow().setWidth(500);
+		if (prefs.getWindows().getMainWindow().getHeight() < 300)
+			prefs.getWindows().getMainWindow().setHeight(300);
+		if (prefs.getWindows().getTransactionsWindow().getHeight() < 300)
+			prefs.getWindows().getTransactionsWindow().setHeight(300);
+		if (prefs.getWindows().getMainWindow().getWidth() < 400)
+			prefs.getWindows().getMainWindow().setWidth(400);
+		if (prefs.getWindows().getTransactionsWindow().getWidth() < 500)
+			prefs.getWindows().getTransactionsWindow().setWidth(500);
 	}
 }

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.Intervals#getAllIntervals <em>All Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Intervals#getIntervals <em>Intervals</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,19 +28,19 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Intervals extends EObject {
 	/**
-	 * Returns the value of the '<em><b>All Intervals</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Intervals</b></em>' containment reference list.
 	 * The list contents are of type {@link org.homeunix.drummer.prefs.Interval}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>All Intervals</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Intervals</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>All Intervals</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getIntervals_AllIntervals()
+	 * @return the value of the '<em>Intervals</em>' containment reference list.
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getIntervals_Intervals()
 	 * @model type="org.homeunix.drummer.prefs.Interval" containment="true"
 	 * @generated
 	 */
-	EList getAllIntervals();
+	EList getIntervals();
 
 } // Intervals

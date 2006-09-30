@@ -359,10 +359,10 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkWindowSanity();
 
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
-				PrefsInstance.getInstance().getPrefs().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
+				PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().setX(arg0.getComponent().getX());
+				PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().setWidth(arg0.getComponent().getWidth());
 
 				PrefsInstance.getInstance().savePrefs();
 

@@ -6,24 +6,18 @@
  */
 package org.homeunix.drummer.prefs.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.Intervals;
-import org.homeunix.drummer.prefs.ListEntry;
+import org.homeunix.drummer.prefs.Lists;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsPackage;
 import org.homeunix.drummer.prefs.Version;
-import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.prefs.Windows;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,14 +42,10 @@ import org.homeunix.drummer.prefs.WindowAttributes;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLists <em>Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getListEntries <em>List Entries</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getReportsWindow <em>Reports Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  * </ul>
  * </p>
  *
@@ -383,24 +373,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String lookAndFeelClass = LOOK_AND_FEEL_CLASS_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
+	 * The cached value of the '{@link #getLists() <em>Lists</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIntervals()
+	 * @see #getLists()
 	 * @generated
 	 * @ordered
 	 */
-	protected Intervals intervals = null;
+	protected Lists lists = null;
 
 	/**
-	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * The cached value of the '{@link #getWindows() <em>Windows</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGraphsWindow()
+	 * @see #getWindows()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes graphsWindow = null;
+	protected Windows windows = null;
 
 	/**
 	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
@@ -413,54 +403,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected Version lastVersionRun = null;
 
 	/**
-	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
+	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMainWindow()
+	 * @see #getIntervals()
 	 * @generated
 	 * @ordered
 	 */
-	protected WindowAttributes mainWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListEntries()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList listEntries = null;
-
-	/**
-	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReportsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes reportsWindow = null;
-
-	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList descDict = null;
-
-	/**
-	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTransactionsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes transactionsWindow = null;
+	protected Intervals intervals = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -653,135 +603,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WindowAttributes getTransactionsWindow() {
-		return transactionsWindow;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetTransactionsWindow(WindowAttributes newTransactionsWindow, NotificationChain msgs) {
-		WindowAttributes oldTransactionsWindow = transactionsWindow;
-		transactionsWindow = newTransactionsWindow;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__TRANSACTIONS_WINDOW, oldTransactionsWindow, newTransactionsWindow);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTransactionsWindow(WindowAttributes newTransactionsWindow) {
-		if (newTransactionsWindow != transactionsWindow) {
-			NotificationChain msgs = null;
-			if (transactionsWindow != null)
-				msgs = ((InternalEObject)transactionsWindow).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__TRANSACTIONS_WINDOW, null, msgs);
-			if (newTransactionsWindow != null)
-				msgs = ((InternalEObject)newTransactionsWindow).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__TRANSACTIONS_WINDOW, null, msgs);
-			msgs = basicSetTransactionsWindow(newTransactionsWindow, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__TRANSACTIONS_WINDOW, newTransactionsWindow, newTransactionsWindow));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public WindowAttributes getGraphsWindow() {
-		return graphsWindow;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetGraphsWindow(WindowAttributes newGraphsWindow, NotificationChain msgs) {
-		WindowAttributes oldGraphsWindow = graphsWindow;
-		graphsWindow = newGraphsWindow;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__GRAPHS_WINDOW, oldGraphsWindow, newGraphsWindow);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGraphsWindow(WindowAttributes newGraphsWindow) {
-		if (newGraphsWindow != graphsWindow) {
-			NotificationChain msgs = null;
-			if (graphsWindow != null)
-				msgs = ((InternalEObject)graphsWindow).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__GRAPHS_WINDOW, null, msgs);
-			if (newGraphsWindow != null)
-				msgs = ((InternalEObject)newGraphsWindow).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__GRAPHS_WINDOW, null, msgs);
-			msgs = basicSetGraphsWindow(newGraphsWindow, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__GRAPHS_WINDOW, newGraphsWindow, newGraphsWindow));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public WindowAttributes getMainWindow() {
-		return mainWindow;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetMainWindow(WindowAttributes newMainWindow, NotificationChain msgs) {
-		WindowAttributes oldMainWindow = mainWindow;
-		mainWindow = newMainWindow;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__MAIN_WINDOW, oldMainWindow, newMainWindow);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMainWindow(WindowAttributes newMainWindow) {
-		if (newMainWindow != mainWindow) {
-			NotificationChain msgs = null;
-			if (mainWindow != null)
-				msgs = ((InternalEObject)mainWindow).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__MAIN_WINDOW, null, msgs);
-			if (newMainWindow != null)
-				msgs = ((InternalEObject)newMainWindow).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__MAIN_WINDOW, null, msgs);
-			msgs = basicSetMainWindow(newMainWindow, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__MAIN_WINDOW, newMainWindow, newMainWindow));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Version getLastVersionRun() {
 		return lastVersionRun;
 	}
@@ -818,18 +639,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LAST_VERSION_RUN, newLastVersionRun, newLastVersionRun));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList getListEntries() {
-		if (listEntries == null) {
-			listEntries = new EObjectContainmentEList(ListEntry.class, this, PrefsPackage.PREFS__LIST_ENTRIES);
-		}
-		return listEntries;
 	}
 
 	/**
@@ -880,79 +689,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WindowAttributes getReportsWindow() {
-		return reportsWindow;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetReportsWindow(WindowAttributes newReportsWindow, NotificationChain msgs) {
-		WindowAttributes oldReportsWindow = reportsWindow;
-		reportsWindow = newReportsWindow;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__REPORTS_WINDOW, oldReportsWindow, newReportsWindow);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReportsWindow(WindowAttributes newReportsWindow) {
-		if (newReportsWindow != reportsWindow) {
-			NotificationChain msgs = null;
-			if (reportsWindow != null)
-				msgs = ((InternalEObject)reportsWindow).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__REPORTS_WINDOW, null, msgs);
-			if (newReportsWindow != null)
-				msgs = ((InternalEObject)newReportsWindow).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__REPORTS_WINDOW, null, msgs);
-			msgs = basicSetReportsWindow(newReportsWindow, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__REPORTS_WINDOW, newReportsWindow, newReportsWindow));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList getDescDict() {
-		if (descDict == null) {
-			descDict = new EObjectContainmentEList(DictEntry.class, this, PrefsPackage.PREFS__DESC_DICT);
-		}
-		return descDict;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__INTERVALS:
-				return basicSetIntervals(null, msgs);
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return basicSetGraphsWindow(null, msgs);
+			case PrefsPackage.PREFS__LISTS:
+				return basicSetLists(null, msgs);
+			case PrefsPackage.PREFS__WINDOWS:
+				return basicSetWindows(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return basicSetMainWindow(null, msgs);
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return basicSetReportsWindow(null, msgs);
-			case PrefsPackage.PREFS__DESC_DICT:
-				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return basicSetTransactionsWindow(null, msgs);
+			case PrefsPackage.PREFS__INTERVALS:
+				return basicSetIntervals(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -996,22 +742,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return new Integer(getNumberOfBackups());
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				return getLookAndFeelClass();
-			case PrefsPackage.PREFS__INTERVALS:
-				return getIntervals();
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return getGraphsWindow();
+			case PrefsPackage.PREFS__LISTS:
+				return getLists();
+			case PrefsPackage.PREFS__WINDOWS:
+				return getWindows();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return getMainWindow();
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return getListEntries();
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return getReportsWindow();
-			case PrefsPackage.PREFS__DESC_DICT:
-				return getDescDict();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return getTransactionsWindow();
+			case PrefsPackage.PREFS__INTERVALS:
+				return getIntervals();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1072,31 +810,17 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				setLookAndFeelClass((String)newValue);
 				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)newValue);
+			case PrefsPackage.PREFS__LISTS:
+				setLists((Lists)newValue);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)newValue);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)newValue);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				getListEntries().addAll((Collection)newValue);
-				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
-				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				getDescDict().addAll((Collection)newValue);
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)newValue);
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1157,29 +881,17 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				setLookAndFeelClass(LOOK_AND_FEEL_CLASS_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__INTERVALS:
-				setIntervals((Intervals)null);
+			case PrefsPackage.PREFS__LISTS:
+				setLists((Lists)null);
 				return;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)null);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)null);
 				return;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				setMainWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				getListEntries().clear();
-				return;
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)null);
-				return;
-			case PrefsPackage.PREFS__DESC_DICT:
-				getDescDict().clear();
-				return;
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				setTransactionsWindow((WindowAttributes)null);
+			case PrefsPackage.PREFS__INTERVALS:
+				setIntervals((Intervals)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1224,22 +936,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return numberOfBackups != NUMBER_OF_BACKUPS_EDEFAULT;
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				return LOOK_AND_FEEL_CLASS_EDEFAULT == null ? lookAndFeelClass != null : !LOOK_AND_FEEL_CLASS_EDEFAULT.equals(lookAndFeelClass);
-			case PrefsPackage.PREFS__INTERVALS:
-				return intervals != null;
-			case PrefsPackage.PREFS__GRAPHS_WINDOW:
-				return graphsWindow != null;
+			case PrefsPackage.PREFS__LISTS:
+				return lists != null;
+			case PrefsPackage.PREFS__WINDOWS:
+				return windows != null;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
-			case PrefsPackage.PREFS__MAIN_WINDOW:
-				return mainWindow != null;
-			case PrefsPackage.PREFS__LIST_ENTRIES:
-				return listEntries != null && !listEntries.isEmpty();
-			case PrefsPackage.PREFS__REPORTS_WINDOW:
-				return reportsWindow != null;
-			case PrefsPackage.PREFS__DESC_DICT:
-				return descDict != null && !descDict.isEmpty();
-			case PrefsPackage.PREFS__TRANSACTIONS_WINDOW:
-				return transactionsWindow != null;
+			case PrefsPackage.PREFS__INTERVALS:
+				return intervals != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1410,6 +1114,92 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		lookAndFeelClass = newLookAndFeelClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS, oldLookAndFeelClass, lookAndFeelClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Lists getLists() {
+		return lists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetLists(Lists newLists, NotificationChain msgs) {
+		Lists oldLists = lists;
+		lists = newLists;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LISTS, oldLists, newLists);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLists(Lists newLists) {
+		if (newLists != lists) {
+			NotificationChain msgs = null;
+			if (lists != null)
+				msgs = ((InternalEObject)lists).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__LISTS, null, msgs);
+			if (newLists != null)
+				msgs = ((InternalEObject)newLists).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__LISTS, null, msgs);
+			msgs = basicSetLists(newLists, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LISTS, newLists, newLists));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Windows getWindows() {
+		return windows;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetWindows(Windows newWindows, NotificationChain msgs) {
+		Windows oldWindows = windows;
+		windows = newWindows;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__WINDOWS, oldWindows, newWindows);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWindows(Windows newWindows) {
+		if (newWindows != windows) {
+			NotificationChain msgs = null;
+			if (windows != null)
+				msgs = ((InternalEObject)windows).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__WINDOWS, null, msgs);
+			if (newWindows != null)
+				msgs = ((InternalEObject)newWindows).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__WINDOWS, null, msgs);
+			msgs = basicSetWindows(newWindows, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__WINDOWS, newWindows, newWindows));
 	}
 
 	/**

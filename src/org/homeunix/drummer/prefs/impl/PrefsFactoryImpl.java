@@ -66,10 +66,12 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			case PrefsPackage.INTERVALS: return createIntervals();
 			case PrefsPackage.LIST_ATTRIBUTES: return createListAttributes();
 			case PrefsPackage.LIST_ENTRY: return createListEntry();
+			case PrefsPackage.LISTS: return createLists();
 			case PrefsPackage.PREFS: return createPrefs();
 			case PrefsPackage.USER_PREFS: return createUserPrefs();
 			case PrefsPackage.VERSION: return createVersion();
 			case PrefsPackage.WINDOW_ATTRIBUTES: return createWindowAttributes();
+			case PrefsPackage.WINDOWS: return createWindows();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -140,6 +142,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Lists createLists() {
+		ListsImpl lists = new ListsImpl();
+		return lists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Prefs createPrefs() {
 		PrefsImpl prefs = new PrefsImpl();
 		return prefs;
@@ -173,6 +185,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public WindowAttributes createWindowAttributes() {
 		WindowAttributesImpl windowAttributes = new WindowAttributesImpl();
 		return windowAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Windows createWindows() {
+		WindowsImpl windows = new WindowsImpl();
+		return windows;
 	}
 
 	/**

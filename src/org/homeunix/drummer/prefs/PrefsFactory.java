@@ -80,6 +80,15 @@ public interface PrefsFactory extends EFactory {
 	ListEntry createListEntry();
 
 	/**
+	 * Returns a new object of class '<em>Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Lists</em>'.
+	 * @generated
+	 */
+	Lists createLists();
+
+	/**
 	 * Returns a new object of class '<em>Prefs</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -114,6 +123,15 @@ public interface PrefsFactory extends EFactory {
 	 * @generated
 	 */
 	WindowAttributes createWindowAttributes();
+
+	/**
+	 * Returns a new object of class '<em>Windows</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Windows</em>'.
+	 * @generated
+	 */
+	Windows createWindows();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -173,9 +173,13 @@ public class AccountListPanel extends ListPanelLayout {
 		treeModel.reload(root);
 
 		for (DefaultMutableTreeNode node : nodes) {
-			ListAttributes l = PrefsInstance.getInstance().getListAttributes(node.getUserObject().toString());
-			if (l != null && l.isUnrolled())
+			if (Const.DEVEL) Log.debug("Checking node: " + node);
+			ListAttributes l = PrefsInstance.getInstance().getListAttributes(Translate.getInstance().get(node.getUserObject().toString()));
+			System.out.println(l);
+			if (l != null && l.isUnrolled()){
 				tree.expandPath(new TreePath(node.getPath()));
+				if (Const.DEVEL) Log.debug("Unrolling node: " + l);
+			}
 		}
 		
 		return this;

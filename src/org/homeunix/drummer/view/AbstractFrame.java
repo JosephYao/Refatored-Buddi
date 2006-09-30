@@ -56,28 +56,28 @@ public abstract class AbstractFrame extends JFrame{
 		
 		if (this instanceof MainBuddiFrame){
 			p = new Point(
-					PrefsInstance.getInstance().getPrefs().getMainWindow().getX(),
-					PrefsInstance.getInstance().getPrefs().getMainWindow().getY()
+					PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().getX(),
+					PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().getY()
 			);
 			d = new Dimension(
-					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getWidth(), 500),
-					Math.max(PrefsInstance.getInstance().getPrefs().getMainWindow().getHeight(), 450)					
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().getWidth(), 500),
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().getHeight(), 450)					
 			);
 		}
 		else if (this instanceof TransactionsFrame){
 			p = new Point(
-					PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getX(),
-					PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getY()
+					PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().getX(),
+					PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().getY()
 			); 
 			d = new Dimension(
-					Math.max(PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getWidth(), 400),
-					Math.max(PrefsInstance.getInstance().getPrefs().getTransactionsWindow().getHeight(), 300)	
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().getWidth(), 400),
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow().getHeight(), 300)	
 			);	
 		}
 		else if (this instanceof GraphFrameLayout){
 			p = new Point(
-					PrefsInstance.getInstance().getPrefs().getGraphsWindow().getX(),
-					PrefsInstance.getInstance().getPrefs().getGraphsWindow().getY()
+					PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().getX(),
+					PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().getY()
 			);
 			d = null;
 //			d = new Dimension(
@@ -87,13 +87,13 @@ public abstract class AbstractFrame extends JFrame{
 		}
 		else if (this instanceof ReportFrameLayout){
 			p = new Point(
-					PrefsInstance.getInstance().getPrefs().getReportsWindow().getX(),
-					PrefsInstance.getInstance().getPrefs().getReportsWindow().getY()
+					PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().getX(),
+					PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().getY()
 			);
 //			d = null;
 			d = new Dimension(
-					Math.max(PrefsInstance.getInstance().getPrefs().getReportsWindow().getWidth(), 300),
-					Math.max(PrefsInstance.getInstance().getPrefs().getReportsWindow().getHeight(), 400)					
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().getWidth(), 300),
+					Math.max(PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().getHeight(), 400)					
 			);
 		}
 		else{

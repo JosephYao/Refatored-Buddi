@@ -123,6 +123,12 @@ public class PrefsSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PrefsPackage.LISTS: {
+				Lists lists = (Lists)theEObject;
+				Object result = caseLists(lists);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.PREFS: {
 				Prefs prefs = (Prefs)theEObject;
 				Object result = casePrefs(prefs);
@@ -144,6 +150,12 @@ public class PrefsSwitch {
 			case PrefsPackage.WINDOW_ATTRIBUTES: {
 				WindowAttributes windowAttributes = (WindowAttributes)theEObject;
 				Object result = caseWindowAttributes(windowAttributes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PrefsPackage.WINDOWS: {
+				Windows windows = (Windows)theEObject;
+				Object result = caseWindows(windows);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -242,6 +254,21 @@ public class PrefsSwitch {
 	}
 
 	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Lists</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseLists(Lists object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpretting the object as an instance of '<em>Prefs</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -298,6 +325,21 @@ public class PrefsSwitch {
 	 * @generated
 	 */
 	public Object caseWindowAttributes(WindowAttributes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Windows</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Windows</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseWindows(Windows object) {
 		return null;
 	}
 

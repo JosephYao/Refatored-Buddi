@@ -218,13 +218,13 @@ public interface PrefsPackage extends EPackage {
 	int INTERVALS = 3;
 
 	/**
-	 * The feature id for the '<em><b>All Intervals</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERVALS__ALL_INTERVALS = 0;
+	int INTERVALS__INTERVALS = 0;
 
 	/**
 	 * The number of structural features of the '<em>Intervals</em>' class.
@@ -301,6 +301,43 @@ public interface PrefsPackage extends EPackage {
 	int LIST_ENTRY_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.ListsImpl <em>Lists</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.ListsImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getLists()
+	 * @generated
+	 */
+	int LISTS = 6;
+
+	/**
+	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS__DESC_DICT = 0;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS__LIST_ENTRIES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Lists</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.PrefsImpl <em>Prefs</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -308,7 +345,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPrefs()
 	 * @generated
 	 */
-	int PREFS = 6;
+	int PREFS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Data File</b></em>' attribute.
@@ -455,22 +492,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__LOOK_AND_FEEL_CLASS = 15;
 
 	/**
-	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
+	 * The feature id for the '<em><b>Lists</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__INTERVALS = 16;
+	int PREFS__LISTS = 16;
 
 	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__GRAPHS_WINDOW = 17;
+	int PREFS__WINDOWS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
@@ -482,49 +519,13 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__LAST_VERSION_RUN = 18;
 
 	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__MAIN_WINDOW = 19;
-
-	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LIST_ENTRIES = 20;
-
-	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__REPORTS_WINDOW = 21;
-
-	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__DESC_DICT = 22;
-
-	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__TRANSACTIONS_WINDOW = 23;
+	int PREFS__INTERVALS = 19;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -533,7 +534,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 24;
+	int PREFS_FEATURE_COUNT = 20;
 
 
 	/**
@@ -544,7 +545,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
 	 * @generated
 	 */
-	int USER_PREFS = 7;
+	int USER_PREFS = 8;
 
 	/**
 	 * The feature id for the '<em><b>Prefs</b></em>' containment reference.
@@ -572,7 +573,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getVersion()
 	 * @generated
 	 */
-	int VERSION = 8;
+	int VERSION = 9;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -600,7 +601,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 9;
+	int WINDOW_ATTRIBUTES = 10;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -646,6 +647,62 @@ public interface PrefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int WINDOW_ATTRIBUTES_FEATURE_COUNT = 4;
+
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.WindowsImpl <em>Windows</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.WindowsImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindows()
+	 * @generated
+	 */
+	int WINDOWS = 11;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__TRANSACTIONS_WINDOW = 0;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__REPORTS_WINDOW = 1;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__GRAPHS_WINDOW = 2;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__MAIN_WINDOW = 3;
+
+	/**
+	 * The number of structural features of the '<em>Windows</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS_FEATURE_COUNT = 4;
 
 
 	/**
@@ -799,15 +856,15 @@ public interface PrefsPackage extends EPackage {
 	EClass getIntervals();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Intervals#getAllIntervals <em>All Intervals</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Intervals#getIntervals <em>Intervals</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>All Intervals</em>'.
-	 * @see org.homeunix.drummer.prefs.Intervals#getAllIntervals()
+	 * @return the meta object for the containment reference list '<em>Intervals</em>'.
+	 * @see org.homeunix.drummer.prefs.Intervals#getIntervals()
 	 * @see #getIntervals()
 	 * @generated
 	 */
-	EReference getIntervals_AllIntervals();
+	EReference getIntervals_Intervals();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.ListAttributes <em>List Attributes</em>}'.
@@ -861,6 +918,38 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getListEntry_Attributes();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Lists <em>Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lists</em>'.
+	 * @see org.homeunix.drummer.prefs.Lists
+	 * @generated
+	 */
+	EClass getLists();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Lists#getDescDict <em>Desc Dict</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Desc Dict</em>'.
+	 * @see org.homeunix.drummer.prefs.Lists#getDescDict()
+	 * @see #getLists()
+	 * @generated
+	 */
+	EReference getLists_DescDict();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Lists#getListEntries <em>List Entries</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>List Entries</em>'.
+	 * @see org.homeunix.drummer.prefs.Lists#getListEntries()
+	 * @see #getLists()
+	 * @generated
+	 */
+	EReference getLists_ListEntries();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Prefs <em>Prefs</em>}'.
@@ -961,39 +1050,6 @@ public interface PrefsPackage extends EPackage {
 	EAttribute getPrefs_EnableUpdateNotifications();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getTransactionsWindow <em>Transactions Window</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Transactions Window</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getTransactionsWindow()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_TransactionsWindow();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getGraphsWindow <em>Graphs Window</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Graphs Window</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getGraphsWindow()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_GraphsWindow();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getMainWindow <em>Main Window</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Main Window</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getMainWindow()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_MainWindow();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1005,17 +1061,6 @@ public interface PrefsPackage extends EPackage {
 	EReference getPrefs_LastVersionRun();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getListEntries <em>List Entries</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>List Entries</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getListEntries()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_ListEntries();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1025,28 +1070,6 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPrefs_Intervals();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getReportsWindow <em>Reports Window</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Reports Window</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getReportsWindow()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_ReportsWindow();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Prefs#getDescDict <em>Desc Dict</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Desc Dict</em>'.
-	 * @see org.homeunix.drummer.prefs.Prefs#getDescDict()
-	 * @see #getPrefs()
-	 * @generated
-	 */
-	EReference getPrefs_DescDict();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getSelectedInterval <em>Selected Interval</em>}'.
@@ -1135,6 +1158,28 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPrefs_LookAndFeelClass();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Lists</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getLists()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_Lists();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Windows</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getWindows()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EReference getPrefs_Windows();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.UserPrefs <em>User Prefs</em>}'.
@@ -1231,6 +1276,60 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getWindowAttributes_Height();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Windows <em>Windows</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Windows</em>'.
+	 * @see org.homeunix.drummer.prefs.Windows
+	 * @generated
+	 */
+	EClass getWindows();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Windows#getTransactionsWindow <em>Transactions Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Transactions Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Windows#getTransactionsWindow()
+	 * @see #getWindows()
+	 * @generated
+	 */
+	EReference getWindows_TransactionsWindow();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Windows#getReportsWindow <em>Reports Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Reports Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Windows#getReportsWindow()
+	 * @see #getWindows()
+	 * @generated
+	 */
+	EReference getWindows_ReportsWindow();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Windows#getGraphsWindow <em>Graphs Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Graphs Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Windows#getGraphsWindow()
+	 * @see #getWindows()
+	 * @generated
+	 */
+	EReference getWindows_GraphsWindow();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Windows#getMainWindow <em>Main Window</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Main Window</em>'.
+	 * @see org.homeunix.drummer.prefs.Windows#getMainWindow()
+	 * @see #getWindows()
+	 * @generated
+	 */
+	EReference getWindows_MainWindow();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1375,12 +1474,12 @@ public interface PrefsPackage extends EPackage {
 		EClass INTERVALS = eINSTANCE.getIntervals();
 
 		/**
-		 * The meta object literal for the '<em><b>All Intervals</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference INTERVALS__ALL_INTERVALS = eINSTANCE.getIntervals_AllIntervals();
+		EReference INTERVALS__INTERVALS = eINSTANCE.getIntervals_Intervals();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.ListAttributesImpl <em>List Attributes</em>}' class.
@@ -1425,6 +1524,32 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LIST_ENTRY__ATTRIBUTES = eINSTANCE.getListEntry_Attributes();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.ListsImpl <em>Lists</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.ListsImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getLists()
+		 * @generated
+		 */
+		EClass LISTS = eINSTANCE.getLists();
+
+		/**
+		 * The meta object literal for the '<em><b>Desc Dict</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LISTS__DESC_DICT = eINSTANCE.getLists_DescDict();
+
+		/**
+		 * The meta object literal for the '<em><b>List Entries</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LISTS__LIST_ENTRIES = eINSTANCE.getLists_ListEntries();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.PrefsImpl <em>Prefs</em>}' class.
@@ -1565,6 +1690,22 @@ public interface PrefsPackage extends EPackage {
 		EAttribute PREFS__LOOK_AND_FEEL_CLASS = eINSTANCE.getPrefs_LookAndFeelClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Lists</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__LISTS = eINSTANCE.getPrefs_Lists();
+
+		/**
+		 * The meta object literal for the '<em><b>Windows</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREFS__WINDOWS = eINSTANCE.getPrefs_Windows();
+
+		/**
 		 * The meta object literal for the '<em><b>Intervals</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1573,60 +1714,12 @@ public interface PrefsPackage extends EPackage {
 		EReference PREFS__INTERVALS = eINSTANCE.getPrefs_Intervals();
 
 		/**
-		 * The meta object literal for the '<em><b>Graphs Window</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__GRAPHS_WINDOW = eINSTANCE.getPrefs_GraphsWindow();
-
-		/**
-		 * The meta object literal for the '<em><b>Reports Window</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__REPORTS_WINDOW = eINSTANCE.getPrefs_ReportsWindow();
-
-		/**
-		 * The meta object literal for the '<em><b>Transactions Window</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__TRANSACTIONS_WINDOW = eINSTANCE.getPrefs_TransactionsWindow();
-
-		/**
-		 * The meta object literal for the '<em><b>List Entries</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__LIST_ENTRIES = eINSTANCE.getPrefs_ListEntries();
-
-		/**
-		 * The meta object literal for the '<em><b>Main Window</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__MAIN_WINDOW = eINSTANCE.getPrefs_MainWindow();
-
-		/**
 		 * The meta object literal for the '<em><b>Last Version Run</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference PREFS__LAST_VERSION_RUN = eINSTANCE.getPrefs_LastVersionRun();
-
-		/**
-		 * The meta object literal for the '<em><b>Desc Dict</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PREFS__DESC_DICT = eINSTANCE.getPrefs_DescDict();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.UserPrefsImpl <em>User Prefs</em>}' class.
@@ -1705,6 +1798,48 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute WINDOW_ATTRIBUTES__HEIGHT = eINSTANCE.getWindowAttributes_Height();
+
+			/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.WindowsImpl <em>Windows</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.WindowsImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindows()
+		 * @generated
+		 */
+		EClass WINDOWS = eINSTANCE.getWindows();
+
+		/**
+		 * The meta object literal for the '<em><b>Transactions Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WINDOWS__TRANSACTIONS_WINDOW = eINSTANCE.getWindows_TransactionsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Reports Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WINDOWS__REPORTS_WINDOW = eINSTANCE.getWindows_ReportsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Graphs Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WINDOWS__GRAPHS_WINDOW = eINSTANCE.getWindows_GraphsWindow();
+
+		/**
+		 * The meta object literal for the '<em><b>Main Window</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WINDOWS__MAIN_WINDOW = eINSTANCE.getWindows_MainWindow();
 
 	}
 

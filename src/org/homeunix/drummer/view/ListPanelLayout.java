@@ -173,6 +173,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 				if (o instanceof DefaultMutableTreeNode){
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
 					PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), true);
+					PrefsInstance.getInstance().savePrefs();
 				}
 				else {
 					Log.error("Unknown object in treeExpansionListener: " + o);

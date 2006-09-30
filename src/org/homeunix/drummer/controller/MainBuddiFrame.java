@@ -162,11 +162,11 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 	public void savePosition(){
 		PrefsInstance.getInstance().checkWindowSanity();
 		
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setHeight(getInstance().getHeight());
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setWidth(getInstance().getWidth());
+		PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().setHeight(getInstance().getHeight());
+		PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().setWidth(getInstance().getWidth());
 		
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setX(getInstance().getX());
-		PrefsInstance.getInstance().getPrefs().getMainWindow().setY(getInstance().getY());
+		PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().setX(getInstance().getX());
+		PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow().setY(getInstance().getY());
 		
 		PrefsInstance.getInstance().savePrefs();
 	}

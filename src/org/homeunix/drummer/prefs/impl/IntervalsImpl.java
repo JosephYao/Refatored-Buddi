@@ -26,7 +26,7 @@ import org.homeunix.drummer.prefs.PrefsPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.impl.IntervalsImpl#getAllIntervals <em>All Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.IntervalsImpl#getIntervals <em>Intervals</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,14 +34,14 @@ import org.homeunix.drummer.prefs.PrefsPackage;
  */
 public class IntervalsImpl extends EObjectImpl implements Intervals {
 	/**
-	 * The cached value of the '{@link #getAllIntervals() <em>All Intervals</em>}' containment reference list.
+	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAllIntervals()
+	 * @see #getIntervals()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList allIntervals = null;
+	protected EList intervals = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -66,11 +66,11 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getAllIntervals() {
-		if (allIntervals == null) {
-			allIntervals = new EObjectContainmentEList(Interval.class, this, PrefsPackage.INTERVALS__ALL_INTERVALS);
+	public EList getIntervals() {
+		if (intervals == null) {
+			intervals = new EObjectContainmentEList(Interval.class, this, PrefsPackage.INTERVALS__INTERVALS);
 		}
-		return allIntervals;
+		return intervals;
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.INTERVALS__ALL_INTERVALS:
-				return ((InternalEList)getAllIntervals()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.INTERVALS__INTERVALS:
+				return ((InternalEList)getIntervals()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -93,8 +93,8 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PrefsPackage.INTERVALS__ALL_INTERVALS:
-				return getAllIntervals();
+			case PrefsPackage.INTERVALS__INTERVALS:
+				return getIntervals();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -107,9 +107,9 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PrefsPackage.INTERVALS__ALL_INTERVALS:
-				getAllIntervals().clear();
-				getAllIntervals().addAll((Collection)newValue);
+			case PrefsPackage.INTERVALS__INTERVALS:
+				getIntervals().clear();
+				getIntervals().addAll((Collection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -122,8 +122,8 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.INTERVALS__ALL_INTERVALS:
-				getAllIntervals().clear();
+			case PrefsPackage.INTERVALS__INTERVALS:
+				getIntervals().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -136,8 +136,8 @@ public class IntervalsImpl extends EObjectImpl implements Intervals {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.INTERVALS__ALL_INTERVALS:
-				return allIntervals != null && !allIntervals.isEmpty();
+			case PrefsPackage.INTERVALS__INTERVALS:
+				return intervals != null && !intervals.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

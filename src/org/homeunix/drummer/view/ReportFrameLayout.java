@@ -120,10 +120,10 @@ public class ReportFrameLayout extends AbstractFrame {
 			public void componentHidden(ComponentEvent arg0) {
 				PrefsInstance.getInstance().checkWindowSanity();
 				
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(arg0.getComponent().getWidth());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(arg0.getComponent().getHeight());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(arg0.getComponent().getX());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(arg0.getComponent().getY());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(arg0.getComponent().getWidth());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(arg0.getComponent().getHeight());
 								
 				PrefsInstance.getInstance().savePrefs();
 				
@@ -137,10 +137,10 @@ public class ReportFrameLayout extends AbstractFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				PrefsInstance.getInstance().checkWindowSanity();
 				
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setX(ReportFrameLayout.this.getX());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setY(ReportFrameLayout.this.getY());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setWidth(ReportFrameLayout.this.getWidth());
-				PrefsInstance.getInstance().getPrefs().getReportsWindow().setHeight(ReportFrameLayout.this.getHeight());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(ReportFrameLayout.this.getX());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(ReportFrameLayout.this.getY());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(ReportFrameLayout.this.getWidth());
+				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(ReportFrameLayout.this.getHeight());
 								
 				PrefsInstance.getInstance().savePrefs();
 				

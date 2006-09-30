@@ -88,6 +88,9 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object caseListEntry(ListEntry object) {
 				return createListEntryAdapter();
 			}
+			public Object caseLists(Lists object) {
+				return createListsAdapter();
+			}
 			public Object casePrefs(Prefs object) {
 				return createPrefsAdapter();
 			}
@@ -99,6 +102,9 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			}
 			public Object caseWindowAttributes(WindowAttributes object) {
 				return createWindowAttributesAdapter();
+			}
+			public Object caseWindows(Windows object) {
+				return createWindowsAdapter();
 			}
 			public Object defaultCase(EObject object) {
 				return createEObjectAdapter();
@@ -203,6 +209,20 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Lists <em>Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.Lists
+	 * @generated
+	 */
+	public Adapter createListsAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Prefs <em>Prefs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -255,6 +275,20 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWindowAttributesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Windows <em>Windows</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.Windows
+	 * @generated
+	 */
+	public Adapter createWindowsAdapter() {
 		return null;
 	}
 
