@@ -1,3 +1,6 @@
+1.9.0 (Sept 30 2006)
+-New development branch.  1.9.0 Development is the same as 1.8.0 Stable.
+
 1.8.0 (Sept 30 2006)
 -The addition of a built in, transparent encryption scheme for Buddi data files
 -A pluggable reporting system, which allows third party developers to add custom report types
