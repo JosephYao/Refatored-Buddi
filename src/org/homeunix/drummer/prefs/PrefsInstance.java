@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -190,12 +192,20 @@ public class PrefsInstance {
 
 			File languageLocation = new File(Const.LANGUAGE_FOLDER);
 			if (languageLocation.exists() && languageLocation.isDirectory()){
-				Vector<String> languages = new Vector<String>();
-				for (File f: languageLocation.listFiles())
-					if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
-						languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+				Set<String> languageSet = new HashSet<String>();
+				for (File f: languageLocation.listFiles()){
+					if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
+						languageSet.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+					}
+				}
+				
+				for (String s : Const.BUNDLED_LANGUAGES){
+					languageSet.add(s);
+				}
 
-				Object[] options = languages.toArray();
+				Vector<String> languages = new Vector<String>(languageSet);
+				
+				Object[] options = languageSet.toArray();
 				Object defaultOption = options[languages.indexOf("English")];
 				Object retValue = JOptionPane.showInputDialog(
 						null, 
