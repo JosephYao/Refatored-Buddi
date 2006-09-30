@@ -1,3 +1,15 @@
+1.8.0 (Sept 29 2006)
+-The addition of a built in, transparent encryption scheme for Buddi data files
+-A pluggable reporting system, which allows third party developers to add custom report types
+-A Windows-specific distribution package, which includes a single .exe file.  This has the advantage over the previous .jar of showing the proper icon in the toolbar, running under the process name 'buddi' instead of 'javaw', etc.
+-The bundling of Language files into the executable, helping prevent problems related to an incorrect working directory
+-Rotating backup files, instead of relying on users to delete old backups
+-Numerous UI improvements, such as:
+--Reports and graphs being automatically updated whenever the data changes
+--The removal of the Mac-specific LNF and logic from the Windows / Generic bundles.  This allows for a more native design, as well as a smaller file size
+--The ability to specify a specific java LNF at startup, via the --lnf command line option
+--General UI cleanup, with a special focus on ease of use
+
 1.8.0rc2 (Sept 26 2006)
 -Fixed bug where, if you updated (as opposed to recoreded) in transactions window, the selected transaction would change to the new item.  It now keeps the edited transaction selected.
 -Updated Norwegian language

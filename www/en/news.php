@@ -2,7 +2,7 @@
 
 <h1>News</h1>
 
-<h2>1.8.0 ()</h2>
+<h2>1.8.0 (September 29 2006)</h2>
 <p>
 Today the newest Stable version has been released: 1.8.0.  This version 
 is a recommended upgrade for all users, and adds a number of 
