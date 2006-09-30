@@ -126,7 +126,6 @@ public class PrefsInstance {
 			for (Object o : userPrefs.getPrefs().getLists().getListEntries()) {
 				if (o instanceof ListEntry){
 					ListEntry l = (ListEntry) o;
-					System.out.println(l.getEntry() + ", " + l.getAttributes());
 					listAttributesMap.put(l.getEntry(), l.getAttributes());
 				}
 			}
@@ -415,7 +414,6 @@ public class PrefsInstance {
 	}
 	
 	public ListAttributes getListAttributes(String entryName){
-		System.out.println(listAttributesMap);
 		return listAttributesMap.get(entryName);
 	}
 	
