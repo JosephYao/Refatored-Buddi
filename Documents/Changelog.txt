@@ -1,4 +1,4 @@
-1.8.0 (Sept 29 2006)
+1.8.0 (Sept 30 2006)
 -The addition of a built in, transparent encryption scheme for Buddi data files
 -A pluggable reporting system, which allows third party developers to add custom report types
 -A Windows-specific distribution package, which includes a single .exe file.  This has the advantage over the previous .jar of showing the proper icon in the toolbar, running under the process name 'buddi' instead of 'javaw', etc.
