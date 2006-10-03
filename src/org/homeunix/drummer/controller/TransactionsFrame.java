@@ -59,20 +59,14 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 	public TransactionsFrame(Account account){
 		super(account);
-
-		list.setModel(model.getFilteredListModel(account));
-		
-//		transactionFilter = new TransactionListElementFilter();
-//		filteredListModel = new FilteredStaticListModel();
-//
-//		filteredListModel.setFilter(transactionFilter);
-
 		this.account = account;
-
-		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
+		
+		list.setModel(model.getFilteredListModel(account));		
 
 		editableTransaction.setTransaction(null, true);
 		updateContent();
+		
+		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 	}
 
 	public TransactionsFrame(Account account, Transaction transaction) {
@@ -258,7 +252,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 							editableTransaction.getMemo());
 				}
 
-				updateAllTransactionWindows();
+//				updateAllTransactionWindows();
+				updateButtons();
 				ReportFrameLayout.updateAllReportWindows();
 				GraphFrameLayout.updateAllGraphWindows();
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
@@ -266,11 +261,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
-					list.setSelectedValue(t, true);
+//					list.setSelectedValue(t, true);
 				}
 				else {
 					editableTransaction.setTransaction(null, true);
-					list.setSelectedValue(null, true);
+//					list.setSelectedValue(null, true);
+					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 				}
 				
 				editableTransaction.setChanged(false);
@@ -293,8 +289,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 					editableTransaction.setTransaction(null, true);
 					editableTransaction.updateContent();
-					list.setSelectedIndex(list.getModel().getSize() - 1);
 					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+					list.clearSelection();
 
 					updateButtons();
 				}
@@ -316,7 +312,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 
-					TransactionsFrame.updateAllTransactionWindows();
+//					TransactionsFrame.updateAllTransactionWindows();
+					updateButtons();
 					
 					list.setSelectedIndex(position);
 					if (list.getSelectedValue() instanceof Transaction){

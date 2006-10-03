@@ -63,11 +63,11 @@ public class TransactionListModel extends AbstractListModel {
 			public static final long serialVersionUID = 0;
 			
 			public boolean accept(Object arg0) {
-				if (arg0 instanceof Transaction){
-					Transaction t = (Transaction) arg0;
-					if (t.getTo().equals(a) || t.getFrom().equals(a))
-						return true;
-				}
+//				if (arg0 instanceof Transaction){
+				Transaction t = (Transaction) arg0;
+				if (t.getTo().equals(a) || t.getFrom().equals(a))
+					return true;
+//				}
 				return false;
 			}
 		});

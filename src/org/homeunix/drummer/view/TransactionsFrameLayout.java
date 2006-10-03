@@ -121,6 +121,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		this.setLayout(new BorderLayout());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.getName());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
 		if (Buddi.isMac()){
