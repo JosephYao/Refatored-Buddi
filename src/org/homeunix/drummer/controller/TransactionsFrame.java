@@ -8,20 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,21 +26,23 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
-import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
+import org.homeunix.drummer.view.model.TransactionListModel;
 
-import de.schlichtherle.swing.filter.FilteredStaticListModel;
 import de.schlichtherle.swing.filter.ListElementFilter;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
 	public static final long serialVersionUID = 0;	
 
-	protected final FilteredStaticListModel filteredListModel;
-	protected final TransactionListElementFilter transactionFilter;
+//	protected final FilteredStaticListModel filteredListModel;
+//	protected final TransactionListElementFilter transactionFilter;
+	
+	@SuppressWarnings("unchecked")
+	private final static TransactionListModel model = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
 
 	private Account account;
 
@@ -63,10 +60,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public TransactionsFrame(Account account){
 		super(account);
 
-		transactionFilter = new TransactionListElementFilter();
-		filteredListModel = new FilteredStaticListModel();
-
-		filteredListModel.setFilter(transactionFilter);
+		list.setModel(model.getFilteredListModel(account));
+		
+//		transactionFilter = new TransactionListElementFilter();
+//		filteredListModel = new FilteredStaticListModel();
+//
+//		filteredListModel.setFilter(transactionFilter);
 
 		this.account = account;
 
@@ -96,38 +95,38 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				return this;
 			}			
 		});
-		dateRangeComboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (ItemEvent.SELECTED == e.getStateChange()) {
-					transactionFilter.setFilterDateRange((TranslateKeys) e.getItem());
-					filteredListModel.update();
-				}
-			}			
-		});
+//		dateRangeComboBox.addItemListener(new ItemListener() {
+//			public void itemStateChanged(ItemEvent e) {
+//				if (ItemEvent.SELECTED == e.getStateChange()) {
+//					transactionFilter.setFilterDateRange((TranslateKeys) e.getItem());
+//					filteredListModel.update();
+//				}
+//			}			
+//		});
 
-		searchField.getDocument().addDocumentListener(new DocumentListener(){
-			private void update(){
-				if (!searchField.getText().equals(searchField.getHint()))
-					transactionFilter.setFilterText(searchField.getText());
-				else
-					transactionFilter.setFilterText("");
-
-				filteredListModel.update();
-				if (Const.DEVEL) if (Const.DEVEL) Log.debug(transactionFilter.getFilterText());
-			}
-
-			public void changedUpdate(DocumentEvent arg0) {
-				update();
-			}
-
-			public void insertUpdate(DocumentEvent arg0) {
-				update();				
-			}
-
-			public void removeUpdate(DocumentEvent arg0) {
-				update();				
-			};
-		});
+//		searchField.getDocument().addDocumentListener(new DocumentListener(){
+//			private void update(){
+//				if (!searchField.getText().equals(searchField.getHint()))
+//					transactionFilter.setFilterText(searchField.getText());
+//				else
+//					transactionFilter.setFilterText("");
+//
+//				filteredListModel.update();
+//				if (Const.DEVEL) if (Const.DEVEL) Log.debug(transactionFilter.getFilterText());
+//			}
+//
+//			public void changedUpdate(DocumentEvent arg0) {
+//				update();
+//			}
+//
+//			public void insertUpdate(DocumentEvent arg0) {
+//				update();				
+//			}
+//
+//			public void removeUpdate(DocumentEvent arg0) {
+//				update();				
+//			};
+//		});
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -239,10 +238,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				t.setReconciled(editableTransaction.isReconciled());
 
 				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
-					DataInstance.getInstance().addTransaction(t);
+//					DataInstance.getInstance().addTransaction(t);
+					model.add(t);
 				else {
 					DataInstance.getInstance().calculateAllBalances();
 					DataInstance.getInstance().saveDataModel();
+					model.update(t);
 				}
 
 				//Update the autocomplete entries
@@ -265,15 +266,16 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
+					list.setSelectedValue(t, true);
 				}
 				else {
 					editableTransaction.setTransaction(null, true);
+					list.setSelectedValue(null, true);
 				}
 				
-				list.setSelectedValue(editableTransaction.getTransaction(), true);
 				editableTransaction.setChanged(false);
 
-//				list.ensureIndexIsVisible(list.getSelectedIndex());
+				list.ensureIndexIsVisible(list.getSelectedIndex());
 			}
 
 		});
@@ -384,46 +386,46 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 
 	public AbstractFrame updateContent(){
-		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
-		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
-		data.add(null);
-		list.setListData(data);
-
-		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
-				&& account != null  
-				&& account.getCreditLimit() != 0){
-			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
-			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
-
-			StringBuffer sb = new StringBuffer();
-			if (amountLeft < 0)
-				sb.append("<html><font color='red'>");
-			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
-			.append(": ")
-			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
-			.append(" (")
-			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
-			.append("%)");
-			if (amountLeft < 0)
-				sb.append("</font></html>");
-
-			creditRemaining.setText(sb.toString());
-		}
-		else
-			creditRemaining.setText("");
-
-		//Update the search
-		if (filteredListModel != null && list != null){
-			filteredListModel.setSource(list.getModel());
-			list.setModel(filteredListModel);
-		}
-
-		editableTransaction.updateContent();
-		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
-		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-		
-		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
+//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
+//		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
+//		data.add(null);
+//		list.setListData(data);
+//
+//		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
+//				&& account != null  
+//				&& account.getCreditLimit() != 0){
+//			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
+//			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
+//
+//			StringBuffer sb = new StringBuffer();
+//			if (amountLeft < 0)
+//				sb.append("<html><font color='red'>");
+//			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
+//			.append(": ")
+//			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+//			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
+//			.append(" (")
+//			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
+//			.append("%)");
+//			if (amountLeft < 0)
+//				sb.append("</font></html>");
+//
+//			creditRemaining.setText(sb.toString());
+//		}
+//		else
+//			creditRemaining.setText("");
+//
+//		//Update the search
+//		if (filteredListModel != null && list != null){
+//			filteredListModel.setSource(list.getModel());
+//			list.setModel(filteredListModel);
+//		}
+//
+//		editableTransaction.updateContent();
+//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
+//		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+//		
+//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
 		updateButtons();
 
 		return this;
