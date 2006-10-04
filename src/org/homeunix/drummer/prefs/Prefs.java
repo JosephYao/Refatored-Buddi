@@ -33,9 +33,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getCustomPlugins <em>Custom Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  * </ul>
  * </p>
  *
@@ -511,6 +512,32 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setLookAndFeelClass(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Custom Plugins</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Custom Plugins</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Custom Plugins</em>' containment reference.
+	 * @see #setCustomPlugins(CustomPlugins)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_CustomPlugins()
+	 * @model containment="true"
+	 * @generated
+	 */
+	CustomPlugins getCustomPlugins();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getCustomPlugins <em>Custom Plugins</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Custom Plugins</em>' containment reference.
+	 * @see #getCustomPlugins()
+	 * @generated
+	 */
+	void setCustomPlugins(CustomPlugins value);
 
 	/**
 	 * Returns the value of the '<em><b>Lists</b></em>' containment reference.

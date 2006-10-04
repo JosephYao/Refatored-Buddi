@@ -68,7 +68,7 @@ public class Const {
 		"SATURDAY"
 	};
 	
-	public final static String[] BUILT_IN_REPORT_AND_GRAPH_PLUGINS = {
+	public final static String[] BUILT_IN_PANEL_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",

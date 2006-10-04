@@ -26,6 +26,15 @@ public interface PrefsFactory extends EFactory {
 	PrefsFactory eINSTANCE = org.homeunix.drummer.prefs.impl.PrefsFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Custom Plugins</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Custom Plugins</em>'.
+	 * @generated
+	 */
+	CustomPlugins createCustomPlugins();
+
+	/**
 	 * Returns a new object of class '<em>Dict Data</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,6 +96,15 @@ public interface PrefsFactory extends EFactory {
 	 * @generated
 	 */
 	Lists createLists();
+
+	/**
+	 * Returns a new object of class '<em>Plugin Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Plugin Entry</em>'.
+	 * @generated
+	 */
+	PluginEntry createPluginEntry();
 
 	/**
 	 * Returns a new object of class '<em>Prefs</em>'.

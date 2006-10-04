@@ -87,6 +87,12 @@ public class PrefsSwitch {
 	 */
 	protected Object doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case PrefsPackage.CUSTOM_PLUGINS: {
+				CustomPlugins customPlugins = (CustomPlugins)theEObject;
+				Object result = caseCustomPlugins(customPlugins);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.DICT_DATA: {
 				DictData dictData = (DictData)theEObject;
 				Object result = caseDictData(dictData);
@@ -129,6 +135,12 @@ public class PrefsSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PrefsPackage.PLUGIN_ENTRY: {
+				PluginEntry pluginEntry = (PluginEntry)theEObject;
+				Object result = casePluginEntry(pluginEntry);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.PREFS: {
 				Prefs prefs = (Prefs)theEObject;
 				Object result = casePrefs(prefs);
@@ -161,6 +173,21 @@ public class PrefsSwitch {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Custom Plugins</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Custom Plugins</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseCustomPlugins(CustomPlugins object) {
+		return null;
 	}
 
 	/**
@@ -265,6 +292,21 @@ public class PrefsSwitch {
 	 * @generated
 	 */
 	public Object caseLists(Lists object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Plugin Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Plugin Entry</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object casePluginEntry(PluginEntry object) {
 		return null;
 	}
 

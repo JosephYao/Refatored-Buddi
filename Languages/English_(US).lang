@@ -266,3 +266,6 @@ ZOOM=Zoom
 
 EXPORT=Export
 IMPORT=Import
+EXPORT_PLUGINS=Export Plugins
+IMPORT_PLUGINS=Import Plugins
+PANEL_PLUGINS=Report / Graph Plugins

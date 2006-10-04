@@ -14,7 +14,9 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.prefs.CustomPlugins;
 import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
@@ -31,33 +33,49 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 	@Override
 	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
+				final Prefs prefs = PrefsInstance.getInstance().getPrefs();
 				boolean needRestart = false;
-				if (!PrefsInstance.getInstance().getPrefs().getLanguage().equals(language.getSelectedItem().toString())){
+				if (!prefs.getLanguage().equals(language.getSelectedItem().toString())){
 				
 					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
 					needRestart = true;
 				}
 
 				if (numberOfBackups.getSelectedItem() instanceof Integer)
-					PrefsInstance.getInstance().getPrefs().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
+					prefs.setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
 				else //If there is some problem, at least make sure user has some backups
 					PrefsInstance.getInstance().getPrefs().setNumberOfBackups(10);
-				PrefsInstance.getInstance().getPrefs().setLanguage(language.getSelectedItem().toString());
-				PrefsInstance.getInstance().getPrefs().setDateFormat(dateFormat.getSelectedItem().toString());
-				PrefsInstance.getInstance().getPrefs().setCurrencySymbol(currencyFormat.getSelectedItem().toString());
+				prefs.setLanguage(language.getSelectedItem().toString());
+				prefs.setDateFormat(dateFormat.getSelectedItem().toString());
+				prefs.setCurrencySymbol(currencyFormat.getSelectedItem().toString());
 				if (budgetInterval.getSelectedItem() instanceof Interval)
-					PrefsInstance.getInstance().getPrefs().setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
+					prefs.setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
 				else
 					if (Const.DEVEL) Log.debug("Unknown type (should be Interval): " + budgetInterval.getSelectedItem());
-				PrefsInstance.getInstance().getPrefs().setShowDeletedAccounts(showDeletedAccounts.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowDeletedCategories(showDeletedCategories.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowAccountTypes(showAccountTypes.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowAutoComplete(showAutoComplete.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowCreditLimit(showCreditLimit.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowInterestRate(showInterestRate.isSelected());
-				PrefsInstance.getInstance().getPrefs().setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
-				PrefsInstance.getInstance().getPrefs().setShowAdvanced(showClearReconcile.isSelected());				
+				prefs.setShowDeletedAccounts(showDeletedAccounts.isSelected());
+				prefs.setShowDeletedCategories(showDeletedCategories.isSelected());
+				prefs.setShowAccountTypes(showAccountTypes.isSelected());
+				prefs.setShowAutoComplete(showAutoComplete.isSelected());
+				prefs.setShowCreditLimit(showCreditLimit.isSelected());
+				prefs.setShowInterestRate(showInterestRate.isSelected());
+				prefs.setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
+				prefs.setShowAdvanced(showClearReconcile.isSelected());
+				
+				CustomPlugins cp = prefs.getCustomPlugins();
+				if (cp == null){
+					cp = PrefsInstance.getInstance().getPrefsFactory().createCustomPlugins();
+					prefs.setCustomPlugins(cp);
+				}
+				
+				cp.getExportPlugins().clear();
+				cp.getImportPlugins().clear();
+				cp.getPanelPlugins().clear();
+				cp.getExportPlugins().addAll(exportPlugins.getPluginEntries());
+				cp.getImportPlugins().addAll(importPlugins.getPluginEntries());
+				cp.getPanelPlugins().addAll(panelPlugins.getPluginEntries());
+				
 				PrefsInstance.getInstance().savePrefs();
 												
 				Formatter.getInstance().reloadDateFormat();				
@@ -101,26 +119,37 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected AbstractDialog initContent() {
 		updateContent();
 
-		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
-		dateFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getDateFormat());
-		currencyFormat.setSelectedItem(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
+		final Prefs prefs = PrefsInstance.getInstance().getPrefs();
+		
+		language.setSelectedItem(prefs.getLanguage());
+		dateFormat.setSelectedItem(prefs.getDateFormat());
+		currencyFormat.setSelectedItem(prefs.getCurrencySymbol());
 
 		
-		showDeletedAccounts.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedAccounts());
-		showDeletedCategories.setSelected(PrefsInstance.getInstance().getPrefs().isShowDeletedCategories());
-		showAccountTypes.setSelected(PrefsInstance.getInstance().getPrefs().isShowAccountTypes());
-		showAutoComplete.setSelected(PrefsInstance.getInstance().getPrefs().isShowAutoComplete());
-		showCreditLimit.setSelected(PrefsInstance.getInstance().getPrefs().isShowCreditLimit());
-		showInterestRate.setSelected(PrefsInstance.getInstance().getPrefs().isShowInterestRate());
-		showClearReconcile.setSelected(PrefsInstance.getInstance().getPrefs().isShowAdvanced());
+		showDeletedAccounts.setSelected(prefs.isShowDeletedAccounts());
+		showDeletedCategories.setSelected(prefs.isShowDeletedCategories());
+		showAccountTypes.setSelected(prefs.isShowAccountTypes());
+		showAutoComplete.setSelected(prefs.isShowAutoComplete());
+		showCreditLimit.setSelected(prefs.isShowCreditLimit());
+		showInterestRate.setSelected(prefs.isShowInterestRate());
+		showClearReconcile.setSelected(prefs.isShowAdvanced());
 
 		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
-		numberOfBackups.setSelectedItem(PrefsInstance.getInstance().getPrefs().getNumberOfBackups());
-		enableUpdateNotifications.setSelected(PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications());
+		numberOfBackups.setSelectedItem(prefs.getNumberOfBackups());
+		enableUpdateNotifications.setSelected(prefs.isEnableUpdateNotifications());
+		
+		if (prefs.getCustomPlugins() == null){
+			prefs.setCustomPlugins(PrefsInstance.getInstance().getPrefsFactory().createCustomPlugins());
+		}
+		
+		exportPlugins.setStrings(prefs.getCustomPlugins().getExportPlugins());
+		importPlugins.setStrings(prefs.getCustomPlugins().getImportPlugins());
+		panelPlugins.setStrings(prefs.getCustomPlugins().getPanelPlugins());
 		
 		return this;
 	}

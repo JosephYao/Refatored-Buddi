@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.homeunix.drummer.prefs.CustomPlugins;
 import org.homeunix.drummer.prefs.Intervals;
 import org.homeunix.drummer.prefs.Lists;
 import org.homeunix.drummer.prefs.Prefs;
@@ -43,9 +44,10 @@ import org.homeunix.drummer.prefs.Windows;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLists <em>Lists</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getCustomPlugins <em>Custom Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
  * </ul>
  * </p>
  *
@@ -383,16 +385,6 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected Lists lists = null;
 
 	/**
-	 * The cached value of the '{@link #getWindows() <em>Windows</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWindows()
-	 * @generated
-	 * @ordered
-	 */
-	protected Windows windows = null;
-
-	/**
 	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -403,6 +395,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected Version lastVersionRun = null;
 
 	/**
+	 * The cached value of the '{@link #getCustomPlugins() <em>Custom Plugins</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCustomPlugins()
+	 * @generated
+	 * @ordered
+	 */
+	protected CustomPlugins customPlugins = null;
+
+	/**
 	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -411,6 +413,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected Intervals intervals = null;
+
+	/**
+	 * The cached value of the '{@link #getWindows() <em>Windows</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWindows()
+	 * @generated
+	 * @ordered
+	 */
+	protected Windows windows = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -693,12 +705,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		switch (featureID) {
 			case PrefsPackage.PREFS__LISTS:
 				return basicSetLists(null, msgs);
-			case PrefsPackage.PREFS__WINDOWS:
-				return basicSetWindows(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
+			case PrefsPackage.PREFS__CUSTOM_PLUGINS:
+				return basicSetCustomPlugins(null, msgs);
 			case PrefsPackage.PREFS__INTERVALS:
 				return basicSetIntervals(null, msgs);
+			case PrefsPackage.PREFS__WINDOWS:
+				return basicSetWindows(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -744,12 +758,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return getLookAndFeelClass();
 			case PrefsPackage.PREFS__LISTS:
 				return getLists();
-			case PrefsPackage.PREFS__WINDOWS:
-				return getWindows();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
+			case PrefsPackage.PREFS__CUSTOM_PLUGINS:
+				return getCustomPlugins();
 			case PrefsPackage.PREFS__INTERVALS:
 				return getIntervals();
+			case PrefsPackage.PREFS__WINDOWS:
+				return getWindows();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -813,14 +829,17 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LISTS:
 				setLists((Lists)newValue);
 				return;
-			case PrefsPackage.PREFS__WINDOWS:
-				setWindows((Windows)newValue);
-				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)newValue);
 				return;
+			case PrefsPackage.PREFS__CUSTOM_PLUGINS:
+				setCustomPlugins((CustomPlugins)newValue);
+				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)newValue);
+				return;
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -884,14 +903,17 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LISTS:
 				setLists((Lists)null);
 				return;
-			case PrefsPackage.PREFS__WINDOWS:
-				setWindows((Windows)null);
-				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)null);
 				return;
+			case PrefsPackage.PREFS__CUSTOM_PLUGINS:
+				setCustomPlugins((CustomPlugins)null);
+				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)null);
+				return;
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -938,12 +960,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return LOOK_AND_FEEL_CLASS_EDEFAULT == null ? lookAndFeelClass != null : !LOOK_AND_FEEL_CLASS_EDEFAULT.equals(lookAndFeelClass);
 			case PrefsPackage.PREFS__LISTS:
 				return lists != null;
-			case PrefsPackage.PREFS__WINDOWS:
-				return windows != null;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
+			case PrefsPackage.PREFS__CUSTOM_PLUGINS:
+				return customPlugins != null;
 			case PrefsPackage.PREFS__INTERVALS:
 				return intervals != null;
+			case PrefsPackage.PREFS__WINDOWS:
+				return windows != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1114,6 +1138,49 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		lookAndFeelClass = newLookAndFeelClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS, oldLookAndFeelClass, lookAndFeelClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CustomPlugins getCustomPlugins() {
+		return customPlugins;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCustomPlugins(CustomPlugins newCustomPlugins, NotificationChain msgs) {
+		CustomPlugins oldCustomPlugins = customPlugins;
+		customPlugins = newCustomPlugins;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__CUSTOM_PLUGINS, oldCustomPlugins, newCustomPlugins);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCustomPlugins(CustomPlugins newCustomPlugins) {
+		if (newCustomPlugins != customPlugins) {
+			NotificationChain msgs = null;
+			if (customPlugins != null)
+				msgs = ((InternalEObject)customPlugins).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__CUSTOM_PLUGINS, null, msgs);
+			if (newCustomPlugins != null)
+				msgs = ((InternalEObject)newCustomPlugins).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - PrefsPackage.PREFS__CUSTOM_PLUGINS, null, msgs);
+			msgs = basicSetCustomPlugins(newCustomPlugins, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__CUSTOM_PLUGINS, newCustomPlugins, newCustomPlugins));
 	}
 
 	/**

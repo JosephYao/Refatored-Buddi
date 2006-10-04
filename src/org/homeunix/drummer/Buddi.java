@@ -30,7 +30,6 @@ public class Buddi {
 	private static Boolean isMac;
 	private static Boolean isWindows;
 	private static final boolean UI_DEBUG = false;
-	private static String[] pluginArray = new String[0];
 		
 	public static boolean isMac(){
 		if (isMac == null){
@@ -48,10 +47,6 @@ public class Buddi {
 		return isWindows;
 	}
 	
-	public static String[] getPluginArray(){
-		return pluginArray;
-	}
-
 	private static void launchGUI(){
 		
 		// TODO Remove this from stable versions after 1.x.0
@@ -83,19 +78,16 @@ public class Buddi {
 		String prefsLocation = "";
 		Integer verbosity = 0;
 		String lnf = "";
-		String plugins = "";
 		
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
-			+ "--plugins\tClass1,Class2,Class3,...\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n";
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
 		map.put("--lnf", lnf);
-		map.put("--plugins", plugins);
 		try{
 			map = ParseCommands.parse(args, map, help);
 		}
@@ -106,7 +98,6 @@ public class Buddi {
 		prefsLocation = (String) map.get("-p");
 		verbosity = (Integer) map.get("-v");
 		lnf = (String) map.get("--lnf");
-		plugins = (String) map.get("--plugins");
 				
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
@@ -115,11 +106,7 @@ public class Buddi {
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
 		}
-		
-		if (plugins != null){
-			Buddi.pluginArray = plugins.split(",");
-		}
-		
+				
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 				
 		Translate.getInstance().loadLanguage(

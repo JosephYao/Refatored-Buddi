@@ -441,6 +441,10 @@ public class PrefsInstance {
 		return intervals;
 	}
 	
+	public PrefsFactory getPrefsFactory(){
+		return prefsFactory;
+	}
+	
 	public Interval getSelectedInterval(){
 		for (Object o : userPrefs.getPrefs().getIntervals().getIntervals()) {
 			if (o instanceof Interval){

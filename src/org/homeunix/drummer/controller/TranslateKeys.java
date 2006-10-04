@@ -273,5 +273,8 @@ public enum TranslateKeys {
     ZOOM,
     
     EXPORT,
-    IMPORT
+    IMPORT,
+    EXPORT_PLUGINS,
+    IMPORT_PLUGINS,
+    PANEL_PLUGINS
 }

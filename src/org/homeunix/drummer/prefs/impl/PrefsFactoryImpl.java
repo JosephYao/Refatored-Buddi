@@ -60,6 +60,7 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	 */
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case PrefsPackage.CUSTOM_PLUGINS: return createCustomPlugins();
 			case PrefsPackage.DICT_DATA: return createDictData();
 			case PrefsPackage.DICT_ENTRY: return createDictEntry();
 			case PrefsPackage.INTERVAL: return createInterval();
@@ -67,6 +68,7 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			case PrefsPackage.LIST_ATTRIBUTES: return createListAttributes();
 			case PrefsPackage.LIST_ENTRY: return createListEntry();
 			case PrefsPackage.LISTS: return createLists();
+			case PrefsPackage.PLUGIN_ENTRY: return createPluginEntry();
 			case PrefsPackage.PREFS: return createPrefs();
 			case PrefsPackage.USER_PREFS: return createUserPrefs();
 			case PrefsPackage.VERSION: return createVersion();
@@ -75,6 +77,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CustomPlugins createCustomPlugins() {
+		CustomPluginsImpl customPlugins = new CustomPluginsImpl();
+		return customPlugins;
 	}
 
 	/**
@@ -145,6 +157,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public Lists createLists() {
 		ListsImpl lists = new ListsImpl();
 		return lists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PluginEntry createPluginEntry() {
+		PluginEntryImpl pluginEntry = new PluginEntryImpl();
+		return pluginEntry;
 	}
 
 	/**

@@ -35,6 +35,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
+import org.homeunix.drummer.prefs.PluginEntry;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.FileFunctions;
 import org.homeunix.drummer.util.Log;
@@ -112,12 +113,28 @@ public class BuddiMenu extends JScreenMenuBar {
 			if (menuItem != null)
 				exports.add(menuItem);
 		}
+		for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getExportPlugins()){
+			if (entry instanceof PluginEntry){
+				String pluginClassName = ((PluginEntry) entry).getClassName();
+				JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+				if (menuItem != null)
+					exports.add(menuItem);
+			}
+		}
 
 		
 		for (String pluginClassName : Const.BUILT_IN_IMPORT_PLUGINS) {
 			JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
 			if (menuItem != null)
 				imports.add(menuItem);
+		}
+		for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getImportPlugins()){
+			if (entry instanceof PluginEntry){
+				String pluginClassName = ((PluginEntry) entry).getClassName();
+				JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+				if (menuItem != null)
+					imports.add(menuItem);
+			}
 		}
 
 		

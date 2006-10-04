@@ -28,6 +28,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.components.PluginEntryArrayEditor;
 
 public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -47,6 +48,9 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected final JCheckBox showInterestRate;
 	protected final JCheckBox showClearReconcile;
 	protected final JComboBox numberOfBackups;
+	protected final PluginEntryArrayEditor exportPlugins;
+	protected final PluginEntryArrayEditor importPlugins;
+	protected final PluginEntryArrayEditor panelPlugins;
 
 	protected final JCheckBox enableUpdateNotifications;
 	
@@ -167,10 +171,16 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
 		
+		exportPlugins = new PluginEntryArrayEditor();
+		importPlugins = new PluginEntryArrayEditor();
+		panelPlugins = new PluginEntryArrayEditor();
+		
 		JPanel localePanel = new JPanel(new GridLayout(0, 1));
 		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
+		JPanel exportPluginPanel = new JPanel(new GridLayout(0, 1));
+		JPanel importPluginPanel = new JPanel(new GridLayout(0, 1));
+		JPanel panelPluginPanel = new JPanel(new GridLayout(0, 1));
 		JPanel advancedPanel = new JPanel(new GridLayout(0, 1));
-//		JPanel otherPanel = new JPanel(new GridLayout(0, 1));
 		
 //		localePanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 //		viewPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -188,6 +198,10 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
 		localePanel.add(new JLabel());
+		
+		exportPluginPanel.add(exportPlugins);
+		importPluginPanel.add(importPlugins);
+		panelPluginPanel.add(panelPlugins);
 		
 		advancedPanel.add(budgetIntervalPanel);
 		advancedPanel.add(numberOfBackupsPanel);
@@ -220,6 +234,9 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS), exportPluginPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS), importPluginPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.PANEL_PLUGINS), panelPluginPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), advancedPanel);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
