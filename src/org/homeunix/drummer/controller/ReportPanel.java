@@ -23,11 +23,13 @@ public class ReportPanel extends ReportPanelLayout {
 				pluginsPanel.add(pluginPanel);
 		}
 
-		for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getPanelPlugins()) {
-			if (entry instanceof PluginEntry){
-				JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher(((PluginEntry) entry).getClassName());
-				if (pluginPanel != null)
-					pluginsPanel.add(pluginPanel);
+		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
+			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getPanelPlugins()) {
+				if (entry instanceof PluginEntry){
+					JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher(((PluginEntry) entry).getClassName());
+					if (pluginPanel != null)
+						pluginsPanel.add(pluginPanel);
+				}
 			}
 		}
 	}

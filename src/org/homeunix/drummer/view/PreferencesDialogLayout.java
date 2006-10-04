@@ -232,8 +232,8 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 //		mainBorderPanel.add(otherPanel);
 		
 		JTabbedPane tabs = new JTabbedPane();
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS), exportPluginPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS), importPluginPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.PANEL_PLUGINS), panelPluginPanel);
