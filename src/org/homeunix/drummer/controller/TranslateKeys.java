@@ -12,6 +12,7 @@ public enum TranslateKeys {
     ABOUT_TEXT,
     ACCOUNT,
     ACCOUNT_TYPE,
+    ADVANCED,
     ACTUAL,
     ALL,
     AMOUNT,
@@ -160,6 +161,7 @@ public enum TranslateKeys {
     NO_PASSWORD_ENTERED_TITLE,
     NO_TRANSACTIONS_USING_ACCOUNT,
     NO_TRANSACTIONS_USING_CATEGORY,
+    NUMBER_OF_BACKUPS,
     OK,
     ONE_MONTH,
     OPEN,
@@ -269,6 +271,7 @@ public enum TranslateKeys {
     YEAR,
     YESTERDAY,
     ZOOM,
-    ADVANCED,
-    NUMBER_OF_BACKUPS
+    
+    EXPORT,
+    IMPORT
 }

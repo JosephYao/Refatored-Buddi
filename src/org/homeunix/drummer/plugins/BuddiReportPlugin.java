@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
-public interface BuddiReportPlugin extends BuddiPlugin {
+public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	
 	/**
 	 * Returns a treemodel used to display the report.

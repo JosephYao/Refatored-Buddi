@@ -9,7 +9,7 @@ import java.util.Date;
 
 import javax.swing.JPanel;
 
-public interface BuddiGraphPlugin extends BuddiPlugin {
+public interface BuddiGraphPlugin extends BuddiPanelPlugin {
 	
 	/**
 	 * Returns a JPanel with the graph in it.

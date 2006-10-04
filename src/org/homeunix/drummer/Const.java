@@ -68,7 +68,7 @@ public class Const {
 		"SATURDAY"
 	};
 	
-	public final static String[] INCLUDED_PLUGINS = {
+	public final static String[] BUILT_IN_REPORT_AND_GRAPH_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
@@ -77,6 +77,16 @@ public class Const {
 		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
 		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime"
 	};
+	
+	public final static String[] BUILT_IN_EXPORT_PLUGINS = {
+		"org.homeunix.drummer.plugins.exports.ExportHTML",
+		"org.homeunix.drummer.plugins.exports.ExportCSV"
+	};
+
+	public final static String[] BUILT_IN_IMPORT_PLUGINS = {
+		
+	};
+
 	
 	private Const(){}
 }

@@ -263,3 +263,6 @@ WINDOW=Window
 YEAR=Year
 YESTERDAY=Yesterday
 ZOOM=Zoom
+
+EXPORT=Export
+IMPORT=Import

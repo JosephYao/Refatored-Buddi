@@ -269,3 +269,6 @@ WINDOW=Vindu
 YEAR=\u00C5r
 YESTERDAY=I g\u00E5r
 ZOOM=Zoom
+
+EXPORT=Export
+IMPORT=Import

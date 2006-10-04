@@ -271,3 +271,5 @@ TOOLTIP_SHOW_INTEREST_RATE=Show the interest rate in the Accounts window, and al
 VIEW=View
 NUMBER_OF_BACKUPS=Number of Backups
 ADVANCED=Advanced
+EXPORT=Export
+IMPORT=Import

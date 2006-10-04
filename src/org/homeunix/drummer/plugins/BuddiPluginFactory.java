@@ -15,12 +15,15 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.roydesign.ui.JScreenMenuItem;
+
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.util.DateUtil;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
+import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.components.CustomDateDialog;
@@ -33,21 +36,66 @@ public class BuddiPluginFactory {
 		START_ONLY,
 		END_ONLY
 	};
-
-	public static JPanel getPluginLaunchPane(String className){
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		final BuddiPlugin plugin;
+	
+	public static JScreenMenuItem getPluginMenuItem(String className, final AbstractFrame frame){
+		JScreenMenuItem menuItem = null;
+		final BuddiMenuPlugin plugin;
 		
 		// Make an instance of this plug-in
 		try {
 			Object o = Class.forName(className).newInstance();
 
 			// Check for correct interface 
-			if (!(o instanceof BuddiPlugin)){
-				throw new Exception("Not of type BuddiPlugin: " + o.getClass().getName());
+			if (!(o instanceof BuddiMenuPlugin)){
+				throw new Exception("Not of type BuddiMenuPlugin: " + o.getClass().getName());
 			}
 			
-			plugin = (BuddiPlugin) o;
+			plugin = (BuddiMenuPlugin) o;
+			
+			menuItem = new JScreenMenuItem(plugin.getDescription());
+			
+//			for (Class c : plugin.getCorrectWindows()) {
+//				if (c != null){
+//					Log.warning("Added class " + c);
+////					menuItem.addUserFrame(c);
+//				}
+//				else{
+//					Log.warning("null deteccted in UserFrame");
+//				}
+//			}
+			
+			//This is where the user's custom code is actually run
+			menuItem.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					if (plugin instanceof BuddiExportPlugin)
+						((BuddiExportPlugin) plugin).exportData(frame);
+					else if (plugin instanceof BuddiImportPlugin)
+						((BuddiImportPlugin) plugin).importData(frame);
+				}
+			});
+		}
+		catch (Exception ie){
+			Log.error("Error loading plugin.  Ensure that it is referenced from your classpath.  Complete error: " + ie);
+		}
+
+		return menuItem;
+
+	}
+	
+	public static JPanel getPanelPluginLauncher(String className){
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		final BuddiPanelPlugin plugin;
+		
+		// Make an instance of this plug-in
+		try {
+			Object o = Class.forName(className).newInstance();
+
+			// Check for correct interface 
+			if (!(o instanceof BuddiPanelPlugin)){
+				throw new Exception("Not of type BuddiPanelPlugin: " + o.getClass().getName());
+			}
+			
+			plugin = (BuddiPanelPlugin) o;
 			
 			//Select the correct options for the dropdown, based on the plugin
 			Vector<DateChoice> dateChoices;
@@ -75,7 +123,7 @@ public class BuddiPluginFactory {
 						//As long as the choice is not custom, our job is easy
 						if (!choice.isCustom()){
 							//Launch a new reports window with given parameters
-							BuddiPluginFactory.openNewPluginWindow(
+							BuddiPluginFactory.openNewPanelPluginWindow(
 									plugin, 
 									choice.getStartDate(), 
 									choice.getEndDate()
@@ -106,13 +154,13 @@ public class BuddiPluginFactory {
 	}
 
 
-	public static void openNewPluginWindow(BuddiPlugin plugin, final Date startDate, final Date endDate){
+	public static void openNewPanelPluginWindow(BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
 		if (plugin instanceof BuddiReportPlugin)
 			new ReportFrameLayout((BuddiReportPlugin) plugin, startDate, endDate).openWindow();
 		else if (plugin instanceof BuddiGraphPlugin)
 			new GraphFrameLayout((BuddiGraphPlugin) plugin, startDate, endDate).openWindow();
 		else
-			Log.error("Unknown plugin type: " + plugin.getClass().getName());
+			Log.error("Incorrect plugin type: " + plugin.getClass().getName());
 		
 	}
 	

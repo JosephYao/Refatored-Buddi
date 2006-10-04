@@ -16,14 +16,14 @@ public class ReportPanel extends ReportPanelLayout {
 	public ReportPanel(){
 		super();
 		
-		for (String pluginClassName : Const.INCLUDED_PLUGINS) {
-			JPanel pluginPanel = BuddiPluginFactory.getPluginLaunchPane(pluginClassName);
+		for (String pluginClassName : Const.BUILT_IN_REPORT_AND_GRAPH_PLUGINS) {
+			JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher(pluginClassName);
 			if (pluginPanel != null)
 				pluginsPanel.add(pluginPanel);
 		}
 
 		for (String pluginClassName : Buddi.getPluginArray()) {
-			JPanel pluginPanel = BuddiPluginFactory.getPluginLaunchPane(pluginClassName);
+			JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher(pluginClassName);
 			if (pluginPanel != null)
 				pluginsPanel.add(pluginPanel);
 		}
