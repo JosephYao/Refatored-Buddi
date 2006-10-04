@@ -246,6 +246,8 @@ public class PrefsInstance {
 			WindowAttributes graphs = prefsFactory.createWindowAttributes();
 			WindowAttributes reports = prefsFactory.createWindowAttributes();
 			
+			prefs.setCustomPlugins(prefsFactory.createCustomPlugins());
+			
 			main.setHeight(400);
 			main.setWidth(600);
 			
