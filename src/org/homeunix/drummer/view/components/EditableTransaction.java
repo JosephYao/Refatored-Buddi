@@ -365,8 +365,8 @@ public class EditableTransaction extends JPanel {
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (parent != null){
-					if (parent.getAccount() != null) {
+				if (parent != null && parent.getAccount() != null){
+					if (from.getSelectedItem() instanceof Source) {
 						if (!parent.getAccount().equals(from.getSelectedItem())){
 							to.setSelectedItem(parent.getAccount());
 						}
@@ -383,7 +383,7 @@ public class EditableTransaction extends JPanel {
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (parent != null){
+				if (parent != null && parent.getAccount() != null){
 					if (to.getSelectedItem() instanceof Source) {
 						if (!parent.getAccount().equals(to.getSelectedItem())){
 							from.setSelectedItem(parent.getAccount());

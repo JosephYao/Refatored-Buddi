@@ -261,11 +261,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
-//					list.setSelectedValue(t, true);
 				}
 				else {
 					editableTransaction.setTransaction(null, true);
-//					list.setSelectedValue(null, true);
 					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 				}
 				
