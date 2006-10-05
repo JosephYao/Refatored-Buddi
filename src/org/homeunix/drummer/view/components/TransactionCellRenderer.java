@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -23,17 +22,23 @@ import org.homeunix.drummer.util.Formatter;
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static StringBuilder sb = new StringBuilder();
-	
+//	private boolean isMac = Buddi.isMac();
+	private static Color LIGHT_BLUE = new Color(0.95f, 0.98f, 1.0f);
+	private static Color SELECTED = new Color(0.82f, 0.85f, 0.98f);
+	private static Color WHITE = Color.WHITE;
 	private Account account;
 		
 	public TransactionCellRenderer(){
 		if (Buddi.isMac()){
 			this.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 		}
+		
+		this.setOpaque(true);
 	}
 
 	public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
-		if (obj instanceof Transaction) {
+		if (obj != null){
+//		if (obj instanceof Transaction) {
 			Transaction transaction = (Transaction) obj;
 			setTransaction(transaction, list.getWidth());
 		}
@@ -41,12 +46,23 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			setTransaction(null, list.getWidth());
 		}
 			
-		if(isSelected)
-			this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		else
-			this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-		
-		
+//		if(isSelected)
+//		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+//		else
+//		this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+		if (isSelected){
+			this.setBackground(SELECTED);
+		}
+		else{
+//			if (!isMac){
+			if (index % 2 == 0)
+				this.setBackground(LIGHT_BLUE);
+			else
+				this.setBackground(WHITE);
+//			}
+		}
+			
 		return this;
 	}
 		

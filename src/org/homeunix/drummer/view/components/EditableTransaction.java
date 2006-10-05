@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -24,7 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
@@ -101,7 +104,11 @@ public class EditableTransaction extends JPanel {
 		JPanel bottomPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-						
+		
+		JScrollPane memoScroller = new JScrollPane(memo);
+		memoScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		memoScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
 		components.add(date);
 		components.add(amount);
 		components.add(from);
@@ -110,6 +117,17 @@ public class EditableTransaction extends JPanel {
 		components.add(number);
 		components.add(description);
 		components.add(memo);
+		components.add(memoScroller);
+		
+		if (!Buddi.isMac()){
+			EmptyBorder b = (EmptyBorder) BorderFactory.createEmptyBorder(4, 4, 4, 4);
+			for (JComponent c : components) {
+				c.setBorder(BorderFactory.createCompoundBorder(
+						b,
+						c.getBorder()));
+			}
+		}
+
 		
 		topPanel.add(date);
 		topPanel.add(description);
@@ -124,16 +142,15 @@ public class EditableTransaction extends JPanel {
 		bottomPanel.add(from);
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
 		bottomPanel.add(to);
-		
-		
+				
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(topPanel);
 		mainPanel.add(bottomPanel);
 		
-		JScrollPane memoScroller = new JScrollPane(memo);
-		memoScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		memoScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//		topPanel.setOpaque(false);
+//		bottomPanel.setOpaque(false);
+//		mainPanel.setOpaque(false);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
@@ -149,7 +166,7 @@ public class EditableTransaction extends JPanel {
 		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
 		to.setPreferredSize(from.getPreferredSize());
 		
-		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));
+		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
 		
 		if (parent == null)
 			date.setVisible(false);

@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.EList;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.util.Log;
 
 import de.schlichtherle.swing.filter.BitSetFilteredDynamicListModel;
 import de.schlichtherle.swing.filter.FilteredDynamicListModel;
@@ -39,22 +40,33 @@ public class TransactionListModel extends AbstractListModel {
 		DataInstance.getInstance().addTransaction(t);
 		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
-		this.fireContentsChanged(this, i, i);
+		this.fireIntervalAdded(this, i, i);
+//		this.fireContentsChanged(this, i, transactions.size() - 1);
+//		this.fireIntervalAdded(this, 0, getSize() - 1);
+		Log.info(transactions);
 	}
 	
 	public boolean remove(Transaction t){
 		int i = transactions.indexOf(t);
 		boolean r = transactions.remove(t);
-		if (r)
-			this.fireContentsChanged(this, i, i);
+		if (r){
+			this.fireIntervalRemoved(this, i, i);
+//			this.fireIntervalRemoved(this, 0, getSize() - 1);
+		}
+		Log.info(transactions);
 		return r;
 	}
 	
 	public boolean update(Transaction t){
-		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
-		if (i != -1)
+		ECollections.sort(this.transactions);
+//		int j = transactions.indexOf(t);
+//		if (i != -1 && j != -1){
 			this.fireContentsChanged(this, 0, getSize() - 1);
+//			this.fireContentsChanged(this, i, i);
+//			this.fireContentsChanged(this, j, j);
+//		}
+		Log.info(transactions);
 		return (i != -1);
 	}
 	

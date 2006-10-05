@@ -9,6 +9,5 @@ Bundle-Localization: plugin
 Export-Package: org.homeunix.drummer.model,
  org.homeunix.drummer.model.impl,
  org.homeunix.drummer.model.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+Require-Bundle: org.eclipse.core.runtime
 Eclipse-LazyStart: true

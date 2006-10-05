@@ -9,13 +9,5 @@
 -->
 
 <plugin>
-
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "urn:org.homeunix.drummer.model.ecore" 
-       class = "org.homeunix.drummer.model.ModelPackage"
-       genModel = "model/buddi.genmodel" /> 
-  </extension>
-
 </plugin>
 

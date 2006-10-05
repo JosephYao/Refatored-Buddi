@@ -734,29 +734,31 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (amount: ");
-		result.append(amount);
-		result.append(", description: ");
-		result.append(description);
-		result.append(", date: ");
-		result.append(date);
-		result.append(", number: ");
-		result.append(number);
-		result.append(", memo: ");
-		result.append(memo);
-		result.append(", balanceFrom: ");
-		result.append(balanceFrom);
-		result.append(", balanceTo: ");
-		result.append(balanceTo);
-		result.append(", scheduled: ");
-		result.append(scheduled);
-		result.append(", cleared: ");
-		result.append(cleared);
-		result.append(", reconciled: ");
-		result.append(reconciled);
-		result.append(')');
-		return result.toString();
+		return description;
+			
+//		StringBuffer result = new StringBuffer(super.toString());
+//		result.append(" (amount: ");
+//		result.append(amount);
+//		result.append(", description: ");
+//		result.append(description);
+//		result.append(", date: ");
+//		result.append(date);
+//		result.append(", number: ");
+//		result.append(number);
+//		result.append(", memo: ");
+//		result.append(memo);
+//		result.append(", balanceFrom: ");
+//		result.append(balanceFrom);
+//		result.append(", balanceTo: ");
+//		result.append(balanceTo);
+//		result.append(", scheduled: ");
+//		result.append(scheduled);
+//		result.append(", cleared: ");
+//		result.append(cleared);
+//		result.append(", reconciled: ");
+//		result.append(reconciled);
+//		result.append(')');
+//		return result.toString();
 	}
 
 	public int compareTo(Transaction arg0) {

@@ -61,7 +61,17 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		super(account);
 		this.account = account;
 		
-		list.setModel(model.getFilteredListModel(account));		
+		Transaction prototype = DataInstance.getInstance().getDataModelFactory().createTransaction();
+		prototype.setDate(new Date());
+		prototype.setDescription("Description");
+		prototype.setNumber("Number");
+		prototype.setAmount(123456789);
+		prototype.setTo(null);
+		prototype.setFrom(null);
+		prototype.setMemo("Testing 1, 2, 3, 4, 5");
+		list.setPrototypeCellValue(prototype);
+		
+		list.setModel(model.getFilteredListModel(account));
 
 		editableTransaction.setTransaction(null, true);
 		updateContent();
@@ -243,13 +253,14 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				//Update the autocomplete entries
 				if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
 					PrefsInstance.getInstance().addDescEntry(editableTransaction.getDescription());
-					PrefsInstance.getInstance().setAutoCompleteEntry(
-							editableTransaction.getDescription(),
-							editableTransaction.getNumber(),
-							editableTransaction.getAmount(),
-							editableTransaction.getFrom().toString(),
-							editableTransaction.getTo().toString(),
-							editableTransaction.getMemo());
+					if (editableTransaction != null && editableTransaction.getFrom() != null && editableTransaction.getTo() != null)
+						PrefsInstance.getInstance().setAutoCompleteEntry(
+								editableTransaction.getDescription(),
+								editableTransaction.getNumber(),
+								editableTransaction.getAmount(),
+								editableTransaction.getFrom().toString(),
+								editableTransaction.getTo().toString(),
+								editableTransaction.getMemo());
 				}
 
 //				updateAllTransactionWindows();
@@ -306,7 +317,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 					Transaction t = (Transaction) list.getSelectedValue();
 					int position = list.getSelectedIndex();
-					DataInstance.getInstance().deleteTransaction(t);
+//					DataInstance.getInstance().deleteTransaction(t);
+					model.remove(t);
 					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 
