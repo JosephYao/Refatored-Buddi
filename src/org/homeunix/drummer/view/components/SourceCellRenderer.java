@@ -10,10 +10,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.impl.AccountImpl;
+import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.Formatter;
 
@@ -23,14 +24,32 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	private static final StringBuilder sbOpen = new StringBuilder();
 	private static final StringBuilder sbClose = new StringBuilder();
 	
+//	private static Color LIGHT_BLUE = new Color(0.95f, 0.98f, 1.0f);
+	private static Color SELECTED = new Color(0.82f, 0.85f, 0.98f);
+	private static Color WHITE = Color.WHITE;
+	
 	public SourceCellRenderer(){
 		super();
+		
+		this.setOpaque(true);
 	}
 
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		Object obj;
 		DefaultMutableTreeNode n;
-		if (node instanceof DefaultMutableTreeNode) {
+		
+		if (isSelected){
+			this.setBackground(SELECTED);
+		}
+		else{
+			this.setBackground(WHITE);
+//			if (row % 2 == 0)
+//				this.setBackground(LIGHT_BLUE);
+//			else
+//				this.setBackground(WHITE);
+		}
+		
+		if (node .getClass().equals(DefaultMutableTreeNode.class)) {
 			n = (DefaultMutableTreeNode) node;
 			obj = n.getUserObject();
 		}
@@ -50,10 +69,8 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 		if (obj == null){
 			this.setText("");
 		}
-		else if (obj instanceof Category) {
+		else if (obj.getClass().equals(CategoryImpl.class)) {
 			Category c = (Category) obj;
-			sbOpen.append("<html>");
-			sbClose.append("</html>");
 
 			if (c.isDeleted()){
 				sbOpen.append("<s>");
@@ -85,7 +102,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 
 			this.setText(sb.toString());
 		}
-		else if (obj instanceof Account) {			
+		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
 			if (a.isDeleted()){
@@ -118,7 +135,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			this.setText(sb.toString());
 		}
 		//This is a wrapper class for Type which includes the total for all accounts of this type
-		else if (obj instanceof TypeTotal) {			
+		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
 			if (t.getType().isCredit()){
@@ -140,14 +157,14 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 			this.setText(sb.toString());
 		}
 
-		if (!Buddi.isMac()){
-			if (isSelected){
-				this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-			}
-			else{
-				this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-			}
-		}
+//		if (!Buddi.isMac()){
+//			if (isSelected){
+//				this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+//			}
+//			else{
+//				this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+//			}
+//		}
 
 
 		return this;

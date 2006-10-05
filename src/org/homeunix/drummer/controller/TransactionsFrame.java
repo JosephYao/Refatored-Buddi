@@ -335,12 +335,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			}
 		});
 
-		clearSearchField.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				TransactionsFrame.this.searchField.setValue("");
-
-			}
-		});
+//		clearSearchField.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent arg0) {
+//				TransactionsFrame.this.searchField.setValue("");
+//
+//			}
+//		});
 
 		this.addWindowListener(new WindowAdapter(){
 			@Override

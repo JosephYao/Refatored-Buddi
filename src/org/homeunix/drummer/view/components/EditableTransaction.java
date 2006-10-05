@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -25,9 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
@@ -119,33 +117,40 @@ public class EditableTransaction extends JPanel {
 		components.add(memo);
 		components.add(memoScroller);
 		
-		if (!Buddi.isMac()){
-			EmptyBorder b = (EmptyBorder) BorderFactory.createEmptyBorder(4, 4, 4, 4);
-			for (JComponent c : components) {
-				c.setBorder(BorderFactory.createCompoundBorder(
-						b,
-						c.getBorder()));
-			}
-		}
-
+//		if (!Buddi.isMac()){
+//			EmptyBorder b = (EmptyBorder) BorderFactory.createEmptyBorder(4, 4, 4, 4);
+//			for (JComponent c : components) {
+////				c.setBorder(BorderFactory.createCompoundBorder(
+////						b,
+////						c.getBorder()));
+//				
+//			}
+//		}
 		
 		topPanel.add(date);
+		topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
+		topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(number);
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+			topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(cleared);
+			topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(reconciled);
 		}
 
 		bottomPanel.add(amount);
-
+		bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(from);
+		bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
+		bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(to);
-				
+		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(topPanel);
+		mainPanel.add(Box.createVerticalStrut(3));
 		mainPanel.add(bottomPanel);
 		
 //		topPanel.setOpaque(false);
@@ -154,6 +159,7 @@ public class EditableTransaction extends JPanel {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
+		this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
 		
 		int textHeight = date.getPreferredSize().height;

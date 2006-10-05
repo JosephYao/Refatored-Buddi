@@ -23,8 +23,8 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.components.EditableTransaction;
+import org.homeunix.drummer.view.components.SearchField;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
-import org.homeunix.drummer.view.components.text.JHintTextField;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
@@ -38,9 +38,10 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JButton recordButton;
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
-	protected final JHintTextField searchField;
+//	protected final JHintTextField searchField;
+	protected final SearchField searchField;
 	protected final JComboBox dateRangeComboBox;
-	protected final JButton clearSearchField;
+//	protected final JButton clearSearchField;
 	protected final JLabel creditRemaining;
 	
 	public TransactionsFrameLayout(Account account){
@@ -72,8 +73,9 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
-		searchField = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
-		clearSearchField = new JButton("x");
+//		searchField = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
+		searchField = new SearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
+//		clearSearchField = new JButton("x");
 		
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
@@ -86,7 +88,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FILTER)));
 		searchPanel.add(dateRangeComboBox);
 		searchPanel.add(searchField);
-		searchPanel.add(clearSearchField);
+//		searchPanel.add(clearSearchField);
 		
 		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -109,8 +111,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		buttonPanel.add(buttonPanelRight, BorderLayout.EAST);
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
 
-		editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
-		
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
 		scrollPanel.add(editableTransaction, BorderLayout.SOUTH);
 		
@@ -127,12 +127,16 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		if (Buddi.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
+//			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			listScroller.setBorder(BorderFactory.createCompoundBorder(
 					BorderFactory.createEmptyBorder(5, 10, 5, 10),
 					listScroller.getBorder()));
-			scrollPanel.setBorder(BorderFactory.createTitledBorder(""));		
+			scrollPanel.setBorder(BorderFactory.createTitledBorder(""));
+			editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
+		}
+		else {
+			editableTransaction.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		}
 		
 		//Call the method to add actions to the buttons
