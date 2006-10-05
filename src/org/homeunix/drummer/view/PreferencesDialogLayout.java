@@ -171,15 +171,15 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
 		
-		exportPlugins = new PluginEntryArrayEditor();
-		importPlugins = new PluginEntryArrayEditor();
-		panelPlugins = new PluginEntryArrayEditor();
+		exportPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS));
+		importPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS));
+		panelPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.PANEL_PLUGINS));
 		
 		JPanel localePanel = new JPanel(new GridLayout(0, 1));
 		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
-		JPanel exportPluginPanel = new JPanel(new GridLayout(0, 1));
-		JPanel importPluginPanel = new JPanel(new GridLayout(0, 1));
-		JPanel panelPluginPanel = new JPanel(new GridLayout(0, 1));
+		JPanel pluginPanel = new JPanel(new GridLayout(0, 1));
+//		JPanel importPluginPanel = new JPanel(new GridLayout(0, 1));
+//		JPanel panelPluginPanel = new JPanel(new GridLayout(0, 1));
 		JPanel advancedPanel = new JPanel(new GridLayout(0, 1));
 		
 //		localePanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -194,22 +194,21 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		localePanel.add(languagePanel);		
 		localePanel.add(currencyFormatPanel);
 		localePanel.add(dateFormatPanel);
-		localePanel.add(new JLabel());
-		localePanel.add(new JLabel());
-		localePanel.add(new JLabel());
-		localePanel.add(new JLabel());
-		
-		exportPluginPanel.add(exportPlugins);
-		importPluginPanel.add(importPlugins);
-		panelPluginPanel.add(panelPlugins);
+
+		pluginPanel.add(exportPlugins);
+		pluginPanel.add(importPlugins);
+		pluginPanel.add(panelPlugins);
+//		exportPluginPanel.add(exportPlugins);
+//		importPluginPanel.add(importPlugins);
+//		panelPluginPanel.add(panelPlugins);
+//		advancedPanel.add(exportPlugins);
+//		advancedPanel.add(importPlugins);
+//		advancedPanel.add(panelPlugins);
+
 		
 		advancedPanel.add(budgetIntervalPanel);
 		advancedPanel.add(numberOfBackupsPanel);
 		advancedPanel.add(updatePanel);
-		advancedPanel.add(new JLabel());
-		advancedPanel.add(new JLabel());
-		advancedPanel.add(new JLabel());
-		advancedPanel.add(new JLabel());
 				
 		viewPanel.add(deletePanel1);
 		viewPanel.add(deletePanel2);
@@ -219,6 +218,22 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		viewPanel.add(clearReconcilePanel);
 		viewPanel.add(autoCompletePanel);
 
+		JPanel viewPanelHolder = new JPanel(new BorderLayout());
+		JPanel localePanelHolder = new JPanel(new BorderLayout());
+		JPanel pluginPanelHolder = new JPanel(new BorderLayout());
+		JPanel advancedPanelHolder = new JPanel(new BorderLayout());
+		
+		viewPanelHolder.add(viewPanel, BorderLayout.NORTH);
+		localePanelHolder.add(localePanel, BorderLayout.NORTH);
+		pluginPanelHolder.add(pluginPanel, BorderLayout.NORTH);
+		advancedPanelHolder.add(advancedPanel, BorderLayout.NORTH);
+
+//		viewPanelHolder.add(new JPanel(), BorderLayout.NORTH);
+//		localePanelHolder.add(new JPanel(), BorderLayout.NORTH);
+//		pluginPanelHolder.add(new JPanel(), BorderLayout.NORTH);
+//		advancedPanelHolder.add(new JPanel(), BorderLayout.NORTH);
+
+		
 		
 //		JPanel textPanelSpacer = new JPanel();
 //		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -232,12 +247,12 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 //		mainBorderPanel.add(otherPanel);
 		
 		JTabbedPane tabs = new JTabbedPane();
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS), exportPluginPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS), importPluginPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.PANEL_PLUGINS), panelPluginPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), advancedPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanelHolder);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanelHolder);
+//		tabs.addTab(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS), pluginPanel);
+//		tabs.addTab(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS), importPluginPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.PLUGINS), pluginPanelHolder);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), advancedPanelHolder);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);

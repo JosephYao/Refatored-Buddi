@@ -4,12 +4,14 @@
 package org.homeunix.drummer.view.components;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -19,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PluginEntry;
@@ -32,7 +35,7 @@ public class PluginEntryArrayEditor extends JPanel {
 	private final JButton newButton;
 	private final JButton deleteButton;
 		
-	public PluginEntryArrayEditor() {
+	public PluginEntryArrayEditor(String title) {
 		list = new JList();
 		
 		model = new DefaultListModel();
@@ -48,11 +51,17 @@ public class PluginEntryArrayEditor extends JPanel {
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(newButton);
-		buttonPanel.add(deleteButton);		
+		buttonPanel.add(deleteButton);
+		
+		scroller.setPreferredSize(new Dimension(300, 70));
 		
 		this.setLayout(new BorderLayout());
 		this.add(scroller, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
+		
+		if (Buddi.isMac()){
+			this.setBorder(BorderFactory.createTitledBorder(title));
+		}
 		
 		//Add the actions
 		list.addListSelectionListener(new ListSelectionListener(){
@@ -63,12 +72,14 @@ public class PluginEntryArrayEditor extends JPanel {
 		
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				model.addElement(JOptionPane.showInputDialog(
+				String s = JOptionPane.showInputDialog(
 						null, 
-						"Enter Plugin Class Name:",
-						"Plugin Class",
+						Translate.getInstance().get(TranslateKeys.PLUGIN_ENTRY),
+						Translate.getInstance().get(TranslateKeys.PLUGIN_ENTRY_TITLE),
 						JOptionPane.PLAIN_MESSAGE
-				));
+				);
+				if (s != null && s.length() > 0)
+					model.addElement(s);
 			}
 		});
 		
@@ -80,8 +91,8 @@ public class PluginEntryArrayEditor extends JPanel {
 		
 	}
 	
-	public PluginEntryArrayEditor(Collection<PluginEntry> entries){
-		this();
+	public PluginEntryArrayEditor(Collection<PluginEntry> entries, String title){
+		this(title);
 		
 		setStrings(entries);
 	}

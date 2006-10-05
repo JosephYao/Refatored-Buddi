@@ -276,5 +276,8 @@ public enum TranslateKeys {
     IMPORT,
     EXPORT_PLUGINS,
     IMPORT_PLUGINS,
-    PANEL_PLUGINS
+    PANEL_PLUGINS,
+    PLUGINS,
+    PLUGIN_ENTRY,
+    PLUGIN_ENTRY_TITLE
 }

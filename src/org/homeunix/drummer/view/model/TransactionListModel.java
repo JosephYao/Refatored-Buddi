@@ -3,10 +3,10 @@
  */
 package org.homeunix.drummer.view.model;
 
-import java.util.List;
-
 import javax.swing.AbstractListModel;
 
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
@@ -18,10 +18,11 @@ import de.schlichtherle.swing.filter.ListElementFilter;
 public class TransactionListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;
 	
-	private final List<Transaction> transactions;
+	private final EList transactions;
 	
-	public TransactionListModel(List<Transaction> transactions){
+	public TransactionListModel(EList transactions){
 		this.transactions = transactions;
+		ECollections.sort(this.transactions);
 	}
 	
 	//*** Abstract List Model methods
@@ -36,6 +37,7 @@ public class TransactionListModel extends AbstractListModel {
 	//*** Data Access methods
 	public void add(Transaction t){
 		DataInstance.getInstance().addTransaction(t);
+		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
 		this.fireContentsChanged(this, i, i);
 	}
@@ -49,9 +51,10 @@ public class TransactionListModel extends AbstractListModel {
 	}
 	
 	public boolean update(Transaction t){
+		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
 		if (i != -1)
-			this.fireContentsChanged(this, i, i);
+			this.fireContentsChanged(this, 0, getSize() - 1);
 		return (i != -1);
 	}
 	

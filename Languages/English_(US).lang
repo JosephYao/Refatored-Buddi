@@ -269,3 +269,6 @@ IMPORT=Import
 EXPORT_PLUGINS=Export Plugins
 IMPORT_PLUGINS=Import Plugins
 PANEL_PLUGINS=Report / Graph Plugins
+PLUGINS=Plugins
+PLUGIN_ENTRY=Enter the fully qualified plugin Class Name:\n(e.g., 'org.homeunix.thecave.MyPlugin')
+PLUGIN_ENTRY_TITLE=Enter Plugin Class
