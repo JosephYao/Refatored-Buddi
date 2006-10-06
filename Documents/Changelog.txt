@@ -1,7 +1,7 @@
-1.9.1
+1.9.1 (October 6 2006)
 -Considerable speed-up on transactions (after the first load, it is almost instantaneous, compared with a number of seconds before on my machine)
 -Fixed add / remove / update behaviour, and improved upon it from the Stable version (items stay selected when they should, lists scroll properly, etc).
--Fixed the filters (date and search string).  Added a cool new search widget instead of the clunky button to clear the search from before (based on Elliot's NSSearchField style widget at http://elliotth.blogspot.com/2004/09/cocoa-like-search-field-for-java.html
+-Fixed the filters (date and search string).  Added a cool new search widget instead of the clunky button to clear the search from before (based on Elliot's NSSearchField style widget at http://elliotth.blogspot.com/2004/09/cocoa-like-search-field-for-java.html)
 -Added nicer looking highlighting and striping to transactions window
 
 1.9.0 (Sept 30 2006)
