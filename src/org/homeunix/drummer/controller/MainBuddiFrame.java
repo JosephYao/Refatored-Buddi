@@ -113,6 +113,16 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				
 				super.componentHidden(arg0);
 			}
+			
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				if (Const.DEVEL) Log.debug("Main Window moved");
+				
+				MainBuddiFrame.getInstance().savePosition();
+				
+				super.componentMoved(e);
+			}
+			
 		});
 		
 		if (Buddi.isMac()){
