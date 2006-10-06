@@ -10,6 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
@@ -24,29 +25,35 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	private static final StringBuilder sbOpen = new StringBuilder();
 	private static final StringBuilder sbClose = new StringBuilder();
 	
-//	private static Color LIGHT_BLUE = new Color(0.95f, 0.98f, 1.0f);
-	private static Color SELECTED = new Color(0.82f, 0.85f, 0.98f);
+	private static final boolean isMac = Buddi.isMac();
+	
+//	private static Color LIGHT_BLUE = new Color(237, 243, 254);
+	private static Color SELECTED = new Color(181, 213, 255);
 	private static Color WHITE = Color.WHITE;
 	
 	public SourceCellRenderer(){
 		super();
 		
-		this.setOpaque(true);
+		if (!isMac){
+			this.setOpaque(true);
+		}
 	}
 
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		Object obj;
 		DefaultMutableTreeNode n;
 		
-		if (isSelected){
-			this.setBackground(SELECTED);
-		}
-		else{
-			this.setBackground(WHITE);
-//			if (row % 2 == 0)
+		if (!isMac){
+			if (isSelected){
+				this.setBackground(SELECTED);
+			}
+			else{
+				this.setBackground(WHITE);
+//				if (row % 2 == 0)
 //				this.setBackground(LIGHT_BLUE);
-//			else
+//				else
 //				this.setBackground(WHITE);
+			}
 		}
 		
 		if (node .getClass().equals(DefaultMutableTreeNode.class)) {

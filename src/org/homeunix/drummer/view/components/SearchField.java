@@ -43,16 +43,24 @@ public class SearchField extends JTextField {
     private boolean sendsNotificationForEachKeystroke = false;
     private boolean showingPlaceholderText = false;
     private boolean armed = false;
+    private final String placeholderText;
     
     public SearchField(String placeholderText) {
-        super(15);
+        super();
+        
+        this.placeholderText = placeholderText;
         addFocusListener(new PlaceholderText(placeholderText));
         initBorder();
         initKeyListener();
+//        this.setOpaque(true);
     }
     
     public SearchField() {
         this("Search");
+    }
+    
+    public String getPlaceholderText(){
+    	return placeholderText;
     }
     
     private void initBorder() {
@@ -91,6 +99,13 @@ public class SearchField extends JTextField {
         this.sendsNotificationForEachKeystroke = eachKeystroke;
     }
     
+    public String getText(){
+    	if (showingPlaceholderText)
+    		return "";
+    	else
+    		return super.getText();
+    }
+    
     /**
      * Draws the cancel button as a gray circle with a white cross inside.
      */
@@ -104,14 +119,15 @@ public class SearchField extends JTextField {
         
         public void paintBorder(Component c, Graphics oldGraphics, int x, int y, int width, int height) {
             SearchField field = (SearchField) c;
-            if (field.showingPlaceholderText || field.getText().length() == 0) {
-                return;
-            }
+            // Uncomment to only show X button when text is entered.
+//            if (field.showingPlaceholderText || field.getText().length() == 0) {
+//                return;
+//            }
             
             Graphics2D g = (Graphics2D) oldGraphics;
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             
-            final int circleL = 14;
+            final int circleL = 15;
             final int circleX = x + width - circleL;
             final int circleY = y + (height - 1 - circleL)/2;
             g.setColor(field.armed ? Color.GRAY : GRAY);

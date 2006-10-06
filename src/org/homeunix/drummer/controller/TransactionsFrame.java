@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collections;
@@ -17,6 +19,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -33,6 +37,7 @@ import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
 import org.homeunix.drummer.view.model.TransactionListModel;
 
+import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 import de.schlichtherle.swing.filter.ListElementFilter;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
@@ -42,10 +47,24 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 //	protected final TransactionListElementFilter transactionFilter;
 	
 	@SuppressWarnings("unchecked")
-	private final static TransactionListModel model = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+	// The baseModel is a custom list model which contains the same
+	// EList object that the DataModel contains.  This holds all of
+	// the transactions.  All data access to the transactions list
+	// that you want to show up immediately (i.e., everything that
+	// is done through the GUI at a minimum) needs to go through 
+	// this model, instead of calling DataInstance directly.  When you
+	// go through the model, it automatically fires the correct
+	// updates to the list.
+	private final static TransactionListModel baseModel = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+	
+	// This model is a filtered list model that is obtained from the
+	// baseModel.  It is a view which contains all transactions in 
+	// the given account which match the String and Date criteria.
+	private final FilteredDynamicListModel model;
 
 	private Account account;
 
+	//The values for the date chooser combo box.
 	private static final TranslateKeys[] dateRangeFilters = new TranslateKeys[] {
 		TranslateKeys.ALL,
 		TranslateKeys.TODAY,
@@ -71,7 +90,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 		list.setPrototypeCellValue(prototype);
 		
-		list.setModel(model.getFilteredListModel(account));
+		model = baseModel.getFilteredListModel(account, this);
+		list.setModel(model);
 
 		editableTransaction.setTransaction(null, true);
 		updateContent();
@@ -99,38 +119,28 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				return this;
 			}			
 		});
-//		dateRangeComboBox.addItemListener(new ItemListener() {
-//			public void itemStateChanged(ItemEvent e) {
-//				if (ItemEvent.SELECTED == e.getStateChange()) {
-//					transactionFilter.setFilterDateRange((TranslateKeys) e.getItem());
-//					filteredListModel.update();
-//				}
-//			}			
-//		});
+		
+		dateRangeComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (ItemEvent.SELECTED == e.getStateChange()) {
+					model.update();
+				}
+			}			
+		});
 
-//		searchField.getDocument().addDocumentListener(new DocumentListener(){
-//			private void update(){
-//				if (!searchField.getText().equals(searchField.getHint()))
-//					transactionFilter.setFilterText(searchField.getText());
-//				else
-//					transactionFilter.setFilterText("");
-//
-//				filteredListModel.update();
-//				if (Const.DEVEL) if (Const.DEVEL) Log.debug(transactionFilter.getFilterText());
-//			}
-//
-//			public void changedUpdate(DocumentEvent arg0) {
-//				update();
-//			}
-//
-//			public void insertUpdate(DocumentEvent arg0) {
-//				update();				
-//			}
-//
-//			public void removeUpdate(DocumentEvent arg0) {
-//				update();				
-//			};
-//		});
+		searchField.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent arg0) {
+				model.update();
+			}
+
+			public void insertUpdate(DocumentEvent arg0) {
+				model.update();		
+			}
+
+			public void removeUpdate(DocumentEvent arg0) {
+				model.update();		
+			};
+		});
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -243,11 +253,11 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
 //					DataInstance.getInstance().addTransaction(t);
-					model.add(t);
+					baseModel.add(t);
 				else {
 					DataInstance.getInstance().calculateAllBalances();
 					DataInstance.getInstance().saveDataModel();
-					model.update(t);
+					baseModel.update(t);
 				}
 
 				//Update the autocomplete entries
@@ -318,7 +328,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					Transaction t = (Transaction) list.getSelectedValue();
 					int position = list.getSelectedIndex();
 //					DataInstance.getInstance().deleteTransaction(t);
-					model.remove(t);
+					baseModel.remove(t);
 					editableTransaction.setTransaction(null, true);
 					list.clearSelection();
 
@@ -579,5 +589,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			if (tfl != null)
 				tfl.updateContent();
 		}
+	}
+	
+	public String getFilterText(){
+		return searchField.getText();
+	}
+	
+	public TranslateKeys getDateRangeFilter(){
+		return (TranslateKeys) dateRangeComboBox.getSelectedItem();
 	}
 }

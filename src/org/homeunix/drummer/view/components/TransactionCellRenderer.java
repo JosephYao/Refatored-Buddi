@@ -22,9 +22,9 @@ import org.homeunix.drummer.util.Formatter;
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static StringBuilder sb = new StringBuilder();
-//	private boolean isMac = Buddi.isMac();
-	private static Color LIGHT_BLUE = new Color(0.95f, 0.98f, 1.0f);
-	private static Color SELECTED = new Color(0.82f, 0.85f, 0.98f);
+	private static boolean isMac = Buddi.isMac();
+	private static Color LIGHT_BLUE = new Color(237, 243, 254);
+	private static Color SELECTED = new Color(181, 213, 255);
 	private static Color WHITE = Color.WHITE;
 	private Account account;
 		
@@ -32,8 +32,9 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		if (Buddi.isMac()){
 			this.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 		}
-		
-		this.setOpaque(true);
+		else {
+			this.setOpaque(true);
+		}
 	}
 
 	public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
@@ -51,17 +52,40 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 //		else
 //		this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-		if (isSelected){
-			this.setBackground(SELECTED);
+		if (isMac){
+			if (isSelected){
+				this.setOpaque(true);
+				this.setBackground(SELECTED);				
+			}
+			else {
+				this.setOpaque(false);
+			}
 		}
-		else{
-//			if (!isMac){
-			if (index % 2 == 0)
-				this.setBackground(LIGHT_BLUE);
-			else
-				this.setBackground(WHITE);
-//			}
+		else {
+			if (isSelected){
+				this.setBackground(SELECTED);
+			}
+			else {
+				if (index % 2 == 0)
+					this.setBackground(LIGHT_BLUE);
+				else
+					this.setBackground(WHITE);
+			}
 		}
+//		if (!Buddi.isMac()){
+			if (isSelected){
+				this.setOpaque(true);
+				this.setBackground(SELECTED);
+			}
+			else{
+				if (!isMac){
+					if (index % 2 == 0)
+						this.setBackground(LIGHT_BLUE);
+					else
+						this.setBackground(WHITE);
+				}
+			}
+//		}
 			
 		return this;
 	}
