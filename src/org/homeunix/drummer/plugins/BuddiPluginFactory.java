@@ -37,7 +37,7 @@ public class BuddiPluginFactory {
 		END_ONLY
 	};
 	
-	public static MenuItemWrapper getPluginMenuItem(String className, final AbstractFrame frame){
+	public static JScreenMenuItem getPluginMenuItem(String className, final AbstractFrame frame){
 		JScreenMenuItem menuItem = null;
 		final BuddiMenuPlugin plugin;
 		
@@ -64,7 +64,7 @@ public class BuddiPluginFactory {
 				}
 			});
 			
-			return new MenuItemWrapper(menuItem, plugin);
+			return menuItem;
 		}
 		catch (Exception ie){
 			Log.error("Error loading plugin.  Ensure that it is referenced from your classpath.  Complete error: " + ie);
@@ -73,6 +73,11 @@ public class BuddiPluginFactory {
 		return null;
 	}
 	
+	/**
+	 * Returns a JPanel, for use in the Reports tab of the main window
+	 * @param className The classname of the plugin to load
+	 * @return A JPanel with description and ComboBox to launch a report / graph window.
+	 */
 	public static JPanel getPanelPluginLauncher(String className){
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		final BuddiPanelPlugin plugin;

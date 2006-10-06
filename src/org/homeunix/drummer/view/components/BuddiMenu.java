@@ -35,7 +35,6 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
-import org.homeunix.drummer.plugins.MenuItemWrapper;
 import org.homeunix.drummer.prefs.PluginEntry;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.FileFunctions;
@@ -104,26 +103,18 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		//Get all the export and import plugins
 		for (String pluginClassName : Const.BUILT_IN_EXPORT_PLUGINS) {
-			MenuItemWrapper menuItemWrapper = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-			if (menuItemWrapper != null){
-				exports.add(menuItemWrapper.getMenuItem());
-//				for (Class c : menuItemWrapper.getBuddiMenuPlugin().getCorrectWindows()) {
-//					if (c != null)
-//						menuItemWrapper.getMenuItem().addUserFrame(c);	
-//				}
+			JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+			if (menuItem != null){
+				exports.add(menuItem);
 			}
 		}
 		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
 			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getExportPlugins()){
 				if (entry instanceof PluginEntry){
 					String pluginClassName = ((PluginEntry) entry).getClassName();
-					MenuItemWrapper menuItemWrapper = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-					if (menuItemWrapper != null){
-						exports.add(menuItemWrapper.getMenuItem());
-//						for (Class c : menuItemWrapper.getBuddiMenuPlugin().getCorrectWindows()) {
-//							if (c != null)
-//								menuItemWrapper.getMenuItem().addUserFrame(c);	
-//						}
+					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+					if (menuItem != null){
+						exports.add(menuItem);
 					}
 				}
 			}
@@ -131,26 +122,18 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		
 		for (String pluginClassName : Const.BUILT_IN_IMPORT_PLUGINS) {
-			MenuItemWrapper menuItemWrapper = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-			if (menuItemWrapper != null){
-				imports.add(menuItemWrapper.getMenuItem());
-//				for (Class c : menuItemWrapper.getBuddiMenuPlugin().getCorrectWindows()) {
-//					if (c != null)
-//						menuItemWrapper.getMenuItem().addUserFrame(c);	
-//				}
+			JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+			if (menuItem != null){
+				imports.add(menuItem);
 			}
 		}
 		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
 			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getImportPlugins()){
 				if (entry instanceof PluginEntry){
 					String pluginClassName = ((PluginEntry) entry).getClassName();
-					MenuItemWrapper menuItemWrapper = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-					if (menuItemWrapper != null){
-						imports.add(menuItemWrapper.getMenuItem());
-//						for (Class c : menuItemWrapper.getBuddiMenuPlugin().getCorrectWindows()) {
-//							if (c != null)
-//								menuItemWrapper.getMenuItem().addUserFrame(c);	
-//						}
+					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+					if (menuItem != null){
+						imports.add(menuItem);
 					}
 				}
 			}
