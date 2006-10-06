@@ -1,228 +1,154 @@
+/*
+ * Created on Oct 5, 2006 by wyatt
+ */
 package org.homeunix.drummer.view.components;
 
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.EventListener;
+import java.util.EventObject;
 
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.event.EventListenerList;
 
-/**
- * A text field for search/filter interfaces. The extra functionality includes
- * a placeholder string (when the user hasn't yet typed anything), and a button
- * to clear the currently-entered text.
- * 
- * From http://elliotth.blogspot.com/2004/09/cocoa-like-search-field-for-java.html
- * 
- * @author Elliott Hughes
- */
+import org.homeunix.drummer.view.components.text.JHintTextField;
 
-//
-// TODO: add a menu of recent searches.
-// TODO: make recent searches persistent.
-// TODO: use rounded corners, at least on Mac OS X.
-//
-
-public class SearchField extends JTextField {
+public class SearchField extends JPanel {
 	public static final long serialVersionUID = 0;
-    private static final Border CANCEL_BORDER = new CancelBorder();
-    
-    private boolean sendsNotificationForEachKeystroke = false;
-    private boolean showingPlaceholderText = false;
-    private boolean armed = false;
-    private final String placeholderText;
-    
-    public SearchField(String placeholderText) {
-        super();
-        
-        this.placeholderText = placeholderText;
-        addFocusListener(new PlaceholderText(placeholderText));
-        initBorder();
-        initKeyListener();
-//        this.setOpaque(true);
-    }
-    
-    public SearchField() {
-        this("Search");
-    }
-    
-    public String getPlaceholderText(){
-    	return placeholderText;
-    }
-    
-    private void initBorder() {
-        setBorder(new CompoundBorder(getBorder(), CANCEL_BORDER));
-        
-        MouseInputListener mouseInputListener = new CancelListener();
-        addMouseListener(mouseInputListener);
-        addMouseMotionListener(mouseInputListener);
-    }
-    
-    private void initKeyListener() {
-        addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    cancel();
-                } else if (sendsNotificationForEachKeystroke) {
-                    maybeNotify();
-                }
-            }
-        });
-    }
-    
-    private void cancel() {
-        setText("");
-        postActionEvent();
-    }
-    
-    private void maybeNotify() {
-        if (showingPlaceholderText) {
-            return;
-        }
-        postActionEvent();
-    }
-    
-    public void setSendsNotificationForEachKeystroke(boolean eachKeystroke) {
-        this.sendsNotificationForEachKeystroke = eachKeystroke;
-    }
-    
-    public String getText(){
-    	if (showingPlaceholderText)
-    		return "";
-    	else
-    		return super.getText();
-    }
-    
-    /**
-     * Draws the cancel button as a gray circle with a white cross inside.
-     */
-    static class CancelBorder extends EmptyBorder {
-    	public final static long serialVersionUID = 0;
-        private static final Color GRAY = new Color(0.7f, 0.7f, 0.7f);
-        
-        CancelBorder() {
-            super(0, 0, 0, 15);
-        }
-        
-        public void paintBorder(Component c, Graphics oldGraphics, int x, int y, int width, int height) {
-            SearchField field = (SearchField) c;
-            // Uncomment to only show X button when text is entered.
-//            if (field.showingPlaceholderText || field.getText().length() == 0) {
-//                return;
-//            }
-            
-            Graphics2D g = (Graphics2D) oldGraphics;
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
-            final int circleL = 15;
-            final int circleX = x + width - circleL;
-            final int circleY = y + (height - 1 - circleL)/2;
-            g.setColor(field.armed ? Color.GRAY : GRAY);
-            g.fillOval(circleX, circleY, circleL, circleL);
-            
-            final int lineL = circleL - 8;
-            final int lineX = circleX + 4;
-            final int lineY = circleY + 4;
-            g.setColor(Color.WHITE);
-            g.drawLine(lineX, lineY, lineX + lineL, lineY + lineL);
-            g.drawLine(lineX, lineY + lineL, lineX + lineL, lineY);
-        }
-    }
-    
-    /**
-     * Handles a click on the cancel button by clearing the text and notifying
-     * any ActionListeners.
-     */
-    class CancelListener extends MouseInputAdapter {
-        private boolean isOverButton(MouseEvent e) {
-            // If the button is down, we might be outside the component
-            // without having had mouseExited invoked.
-            if (contains(e.getPoint()) == false) {
-                return false;
-            }
-            
-            // In lieu of proper hit-testing for the circle, check that
-            // the mouse is somewhere in the border.
-            Rectangle innerArea = SwingUtilities.calculateInnerArea(SearchField.this, null);
-            return (innerArea.contains(e.getPoint()) == false);
-        }
-        
-        public void mouseDragged(MouseEvent e) {
-            arm(e);
-        }
-        
-        public void mouseEntered(MouseEvent e) {
-            arm(e);
-        }
-        
-        public void mouseExited(MouseEvent e) {
-            disarm();
-        }
-        
-        public void mousePressed(MouseEvent e) {
-            arm(e);
-        }
-        
-        public void mouseReleased(MouseEvent e) {
-            if (armed) {
-                cancel();
-            }
-            disarm();
-        }
-        
-        private void arm(MouseEvent e) {
-            armed = (isOverButton(e) && SwingUtilities.isLeftMouseButton(e));
-            repaint();
-        }
-        
-        private void disarm() {
-            armed = false;
-            repaint();
-        }
-    }
-    
-    /**
-     * Replaces the entered text with a gray placeholder string when the
-     * search field doesn't have the focus. The entered text returns when
-     * we get the focus back.
-     */
-    class PlaceholderText implements FocusListener {
-        private String placeholderText;
-        private String previousText = "";
-        private Color previousColor;
 
-        PlaceholderText(String placeholderText) {
-            this.placeholderText = placeholderText;
-            focusLost(null);
-        }
+	private final JHintTextField text;
+	private final JLabel button;
 
-        public void focusGained(FocusEvent e) {
-            setForeground(previousColor);
-            setText(previousText);
-            showingPlaceholderText = false;
-        }
+	public SearchField(String hint){
+		super(new BorderLayout());
+		text = new JHintTextField(hint);
+		this.add(text, BorderLayout.CENTER);
 
-        public void focusLost(FocusEvent e) {
-            previousText = getText();
-            previousColor = getForeground();
-            if (previousText.length() == 0) {
-                showingPlaceholderText = true;
-                setForeground(Color.GRAY);
-                setText(placeholderText);
-            }
-        }
-    }
+		button = new CancelButton();
+		this.add(button, BorderLayout.EAST);
+
+		text.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					cancelButton();
+				}
+				else {
+					changed();
+				}
+			}
+		});
+	}
+
+	public String getText(){
+		if (text.isTextFieldEmpty())
+			return "";
+		else
+			return text.getText();
+	}
+
+	class CancelButton extends JLabel {
+		public static final long serialVersionUID = 0;
+
+		private final int size;
+
+		CancelButton(){
+			this(15);
+		}
+
+		CancelButton(int size){
+			super();
+			this.setPreferredSize(new Dimension(size + 3, size));
+			this.size = size;
+
+			this.addMouseListener(new MouseAdapter(){
+				public void mouseClicked(MouseEvent e) {
+					SearchField.this.cancelButton();
+				}
+			});
+		}
+
+		@Override
+		public void paint(Graphics oldGraphics) {
+			super.paint(oldGraphics);
+
+			Graphics2D g = (Graphics2D) oldGraphics;
+
+			//Draw the circle
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			final int circleL = size;
+			final int circleX = this.getWidth() - circleL - 3;
+			final int circleY = (this.getHeight() - 1 - circleL)/2;
+			g.setColor(Color.GRAY);
+			g.fillOval(circleX, circleY, circleL, circleL);
+
+			//Draw the X
+			final int lineL = circleL - 8;
+			final int lineX = circleX + 4;
+			final int lineY = circleY + 4;
+			g.setColor(Color.WHITE);
+			g.setStroke(new BasicStroke(2));
+			g.drawLine(lineX, lineY, lineX + lineL, lineY + lineL);
+			g.drawLine(lineX, lineY + lineL, lineX + lineL, lineY);
+		}
+	}
+
+
+
+	private void cancelButton(){
+		button.requestFocus();
+		text.setValue("");
+		fireSearchTextChangedEvent(new SearchTextChangedEvent(SearchField.this));
+	}
+
+	private void changed(){
+		fireSearchTextChangedEvent(new SearchTextChangedEvent(SearchField.this));
+	}
+
+	public class SearchTextChangedEvent extends EventObject {
+		public static final long serialVersionUID = 0;
+
+		public SearchTextChangedEvent(Object source) {
+			super(source);
+		}
+	}
+
+	public interface SearchTextChangedEventListener extends EventListener {
+		public void searchTextChangedEventOccurred(SearchTextChangedEvent evt);
+	}
+
+	// Create the listener list
+	protected EventListenerList listenerList =
+		new EventListenerList();
+
+	// This methods allows classes to register for MyEvents
+	public void addSearchTextChangedEventListener(SearchTextChangedEventListener listener) {
+		listenerList.add(SearchTextChangedEventListener.class, listener);
+	}
+
+	// This methods allows classes to unregister for MyEvents
+	public void removeSearchTextChangedEventListener(SearchTextChangedEventListener listener) {
+		listenerList.remove(SearchTextChangedEventListener.class, listener);
+	}
+
+	// This private class is used to fire MyEvents
+	void fireSearchTextChangedEvent(SearchTextChangedEvent evt) {
+		Object[] listeners = listenerList.getListenerList();
+		// Each listener occupies two elements - the first is the listener class
+		// and the second is the listener instance
+		for (int i=0; i<listeners.length; i+=2) {
+			if (listeners[i]==SearchTextChangedEventListener.class) {
+				((SearchTextChangedEventListener)listeners[i+1]).searchTextChangedEventOccurred(evt);
+			}
+		}
+	}
 }

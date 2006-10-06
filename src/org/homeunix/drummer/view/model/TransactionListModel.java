@@ -77,17 +77,18 @@ public class TransactionListModel extends AbstractListModel {
 	
 	//*** Filtered List Model
 	public FilteredDynamicListModel getFilteredListModel(final Account a, final TransactionsFrame frame){
-		FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();
+		final FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();  
 		fdlm.setSource(this);
 		fdlm.setFilter(new ListElementFilter(){
 			public static final long serialVersionUID = 0;
 			
 			public boolean accept(Object arg0) {
-//				if (arg0 instanceof Transaction){
 				Transaction t = (Transaction) arg0;
+				
 				if (t.getTo().equals(a) || t.getFrom().equals(a)){
-					return acceptText(t, frame.getFilterText()) && acceptDate(t, frame.getDateRangeFilter());
+					return acceptDate(t, frame.getDateRangeFilter()) && acceptText(t, frame.getFilterText());
 				}
+				
 				return false;
 			}
 			
@@ -136,5 +137,4 @@ public class TransactionListModel extends AbstractListModel {
 		});
 		return fdlm;
 	}
-
 }

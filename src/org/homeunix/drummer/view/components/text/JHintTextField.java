@@ -53,6 +53,17 @@ public class JHintTextField extends JTextField implements JTextComponentHint {
 		}
 	}
 	
+	/**
+	 * Is the text box empty (i.e., showing the default text)
+	 * @return
+	 */
+	public boolean isTextFieldEmpty(){
+		if (this.getForeground().equals(Color.BLACK))
+			return false;
+		else
+			return true;
+	}
+	
 	public String getHint() {
 		return hint;
 	}

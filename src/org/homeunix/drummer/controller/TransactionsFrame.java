@@ -19,8 +19,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -30,11 +28,14 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DateUtil;
+import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
+import org.homeunix.drummer.view.components.SearchField.SearchTextChangedEvent;
+import org.homeunix.drummer.view.components.SearchField.SearchTextChangedEventListener;
 import org.homeunix.drummer.view.model.TransactionListModel;
 
 import de.schlichtherle.swing.filter.FilteredDynamicListModel;
@@ -128,19 +129,28 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			}			
 		});
 
-		searchField.getDocument().addDocumentListener(new DocumentListener(){
-			public void changedUpdate(DocumentEvent arg0) {
+		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
+			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
 				model.update();
 			}
-
-			public void insertUpdate(DocumentEvent arg0) {
-				model.update();		
-			}
-
-			public void removeUpdate(DocumentEvent arg0) {
-				model.update();		
-			};
 		});
+		
+//		searchField.getDocument().addDocumentListener(new DocumentListener(){
+//			public void changedUpdate(DocumentEvent arg0) {
+//				model.update();
+//				System.out.println("Change");
+//			}
+//
+//			public void insertUpdate(DocumentEvent arg0) {
+//				model.update();
+//				System.out.println("Add");
+//			}
+//
+//			public void removeUpdate(DocumentEvent arg0) {
+//				model.update();		
+//				System.out.println("Remove");
+//			};
+//		});
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -273,8 +283,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 								editableTransaction.getMemo());
 				}
 
-//				updateAllTransactionWindows();
-				updateButtons();
+				updateAllTransactionWindows();
+//				updateButtons();
 				ReportFrameLayout.updateAllReportWindows();
 				GraphFrameLayout.updateAllGraphWindows();
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
@@ -408,29 +418,29 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 //		data.add(null);
 //		list.setListData(data);
 //
-//		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
-//				&& account != null  
-//				&& account.getCreditLimit() != 0){
-//			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
-//			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
-//
-//			StringBuffer sb = new StringBuffer();
-//			if (amountLeft < 0)
-//				sb.append("<html><font color='red'>");
-//			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
-//			.append(": ")
-//			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-//			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
-//			.append(" (")
-//			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
-//			.append("%)");
-//			if (amountLeft < 0)
-//				sb.append("</font></html>");
-//
-//			creditRemaining.setText(sb.toString());
-//		}
-//		else
-//			creditRemaining.setText("");
+		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
+				&& account != null  
+				&& account.getCreditLimit() != 0){
+			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
+			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
+
+			StringBuffer sb = new StringBuffer();
+			if (amountLeft < 0)
+				sb.append("<html><font color='red'>");
+			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
+			.append(": ")
+			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
+			.append(" (")
+			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
+			.append("%)");
+			if (amountLeft < 0)
+				sb.append("</font></html>");
+
+			creditRemaining.setText(sb.toString());
+		}
+		else
+			creditRemaining.setText("");
 //
 //		//Update the search
 //		if (filteredListModel != null && list != null){

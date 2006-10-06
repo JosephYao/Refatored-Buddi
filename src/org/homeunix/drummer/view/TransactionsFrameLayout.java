@@ -6,6 +6,7 @@ package org.homeunix.drummer.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,10 +39,8 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JButton recordButton;
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
-//	protected final JHintTextField searchField;
 	protected final SearchField searchField;
 	protected final JComboBox dateRangeComboBox;
-//	protected final JButton clearSearchField;
 	protected final JLabel creditRemaining;
 	
 	public TransactionsFrameLayout(Account account){
@@ -64,7 +63,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		listScroller = new JScrollPane(list);
 						
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
@@ -73,14 +71,12 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
-//		searchField = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
 		searchField = new SearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
-//		clearSearchField = new JButton("x");
 		
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
-		searchField.setPreferredSize(new Dimension(200, searchField.getPreferredSize().height));
+		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
 		dateRangeComboBox.setPreferredSize(new Dimension(100, dateRangeComboBox.getPreferredSize().height));
 
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -88,7 +84,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FILTER)));
 		searchPanel.add(dateRangeComboBox);
 		searchPanel.add(searchField);
-//		searchPanel.add(clearSearchField);
 		
 		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -112,6 +107,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
 
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
+		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(editableTransaction, BorderLayout.SOUTH);
 		
 		JPanel mainPanel = new JPanel(); 
@@ -134,6 +130,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 					listScroller.getBorder()));
 			scrollPanel.setBorder(BorderFactory.createTitledBorder(""));
 			editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
+			searchField.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 		}
 		else {
 			editableTransaction.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
