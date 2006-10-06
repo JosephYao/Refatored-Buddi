@@ -37,7 +37,7 @@ public class BuddiPluginFactory {
 		END_ONLY
 	};
 	
-	public static JScreenMenuItem getPluginMenuItem(String className, final AbstractFrame frame){
+	public static MenuItemWrapper getPluginMenuItem(String className, final AbstractFrame frame){
 		JScreenMenuItem menuItem = null;
 		final BuddiMenuPlugin plugin;
 		
@@ -54,16 +54,6 @@ public class BuddiPluginFactory {
 			
 			menuItem = new JScreenMenuItem(plugin.getDescription());
 			
-//			for (Class c : plugin.getCorrectWindows()) {
-//				if (c != null){
-//					Log.warning("Added class " + c);
-////					menuItem.addUserFrame(c);
-//				}
-//				else{
-//					Log.warning("null deteccted in UserFrame");
-//				}
-//			}
-			
 			//This is where the user's custom code is actually run
 			menuItem.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
@@ -73,13 +63,14 @@ public class BuddiPluginFactory {
 						((BuddiImportPlugin) plugin).importData(frame);
 				}
 			});
+			
+			return new MenuItemWrapper(menuItem, plugin);
 		}
 		catch (Exception ie){
 			Log.error("Error loading plugin.  Ensure that it is referenced from your classpath.  Complete error: " + ie);
 		}
 
-		return menuItem;
-
+		return null;
 	}
 	
 	public static JPanel getPanelPluginLauncher(String className){
@@ -355,5 +346,5 @@ public class BuddiPluginFactory {
 		public boolean isCustom(){
 			return custom;
 		}
-	}
+	}	
 }

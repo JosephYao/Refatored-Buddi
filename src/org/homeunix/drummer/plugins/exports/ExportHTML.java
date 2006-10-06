@@ -8,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
-import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiExportPlugin;
@@ -57,14 +55,12 @@ public class ExportHTML implements BuddiExportPlugin {
 			}
 		}
 		else {
-			Log.error ("This is not an instance of ReportFrameLayout");
+			Log.error("This is not an instance of ReportFrameLayout");
 		}
 	}
 	
 	public Class[] getCorrectWindows() {
-		Class[] windows = new Class[2];
-		windows[0] = MainBuddiFrame.class;
-		windows[1] = TransactionsFrame.class;
+		Class[] windows = new Class[0];
 		return windows;
 	}
 

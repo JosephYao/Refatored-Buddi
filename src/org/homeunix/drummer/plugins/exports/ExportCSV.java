@@ -23,7 +23,6 @@ import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
 import org.homeunix.drummer.util.Formatter;
 import org.homeunix.drummer.util.SwingWorker;
 import org.homeunix.drummer.view.AbstractFrame;
-import org.homeunix.drummer.view.ReportFrameLayout;
 
 public class ExportCSV implements BuddiExportPlugin {
 
@@ -106,8 +105,7 @@ public class ExportCSV implements BuddiExportPlugin {
 	}
 	
 	public Class[] getCorrectWindows() {
-		Class[] windows = new Class[1];
-		windows[0] = ReportFrameLayout.class;
+		Class[] windows = new Class[0];
 		return windows;
 	}
 
