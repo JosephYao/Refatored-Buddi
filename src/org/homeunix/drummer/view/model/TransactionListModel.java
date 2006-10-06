@@ -46,33 +46,20 @@ public class TransactionListModel extends AbstractListModel {
 		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
 		this.fireIntervalAdded(this, i, i);
-//		this.fireContentsChanged(this, i, transactions.size() - 1);
-//		this.fireIntervalAdded(this, 0, getSize() - 1);
-		Log.info(transactions);
+		DataInstance.getInstance().saveDataModel();
 	}
 	
-	public boolean remove(Transaction t){
-		int i = transactions.indexOf(t);
-		boolean r = transactions.remove(t);
-		if (r){
-			this.fireIntervalRemoved(this, i, i);
-//			this.fireIntervalRemoved(this, 0, getSize() - 1);
-		}
-		Log.info(transactions);
-		return r;
+	public void remove(Transaction t, FilteredDynamicListModel fdlm){
+		DataInstance.getInstance().deleteTransaction(t);
+		fdlm.update();
+		DataInstance.getInstance().saveDataModel();
 	}
 	
-	public boolean update(Transaction t){
-		int i = transactions.indexOf(t);
+	public void update(Transaction t, FilteredDynamicListModel fdlm){
 		ECollections.sort(this.transactions);
-//		int j = transactions.indexOf(t);
-//		if (i != -1 && j != -1){
-			this.fireContentsChanged(this, 0, getSize() - 1);
-//			this.fireContentsChanged(this, i, i);
-//			this.fireContentsChanged(this, j, j);
-//		}
-		Log.info(transactions);
-		return (i != -1);
+		t.calculateBalance();
+		fdlm.update();
+		DataInstance.getInstance().saveDataModel();
 	}
 	
 	//*** Filtered List Model

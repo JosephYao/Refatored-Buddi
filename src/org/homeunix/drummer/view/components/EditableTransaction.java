@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
@@ -128,29 +129,29 @@ public class EditableTransaction extends JPanel {
 //		}
 		
 		topPanel.add(date);
-		topPanel.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
-		topPanel.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(number);
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-			topPanel.add(Box.createHorizontalStrut(3));
+			if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(cleared);
-			topPanel.add(Box.createHorizontalStrut(3));
+			if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(reconciled);
 		}
 
 		bottomPanel.add(amount);
-		bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(from);
-		bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
-		bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(to);
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(topPanel);
-		mainPanel.add(Box.createVerticalStrut(3));
+		if (!Buddi.isMac()) mainPanel.add(Box.createVerticalStrut(3));
 		mainPanel.add(bottomPanel);
 		
 //		topPanel.setOpaque(false);
@@ -159,7 +160,7 @@ public class EditableTransaction extends JPanel {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
-		this.add(Box.createHorizontalStrut(3));
+		if (!Buddi.isMac()) this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
 		
 		int textHeight = date.getPreferredSize().height;
@@ -344,6 +345,7 @@ public class EditableTransaction extends JPanel {
 			});
 		}
 		
+		// Load the other information (amount, number, etc) from memory
 		description.addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -385,6 +387,7 @@ public class EditableTransaction extends JPanel {
 			}
 		});
 		
+		// When you select one source, automatically select the other if possible
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
@@ -403,6 +406,7 @@ public class EditableTransaction extends JPanel {
 			}
 		});
 		
+		// When you select one source, automatically select the other if possible
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
@@ -418,6 +422,18 @@ public class EditableTransaction extends JPanel {
 						}
 					}
 				}
+			}
+		});
+		
+		reconciled.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				EditableTransaction.this.setChanged(true);
+			}
+		});
+
+		cleared.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				EditableTransaction.this.setChanged(true);
 			}
 		});
 	}

@@ -43,27 +43,28 @@ import de.schlichtherle.swing.filter.ListElementFilter;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
 	public static final long serialVersionUID = 0;	
-
-//	protected final FilteredStaticListModel filteredListModel;
-//	protected final TransactionListElementFilter transactionFilter;
 	
 	@SuppressWarnings("unchecked")
-	// The baseModel is a custom list model which contains the same
-	// EList object that the DataModel contains.  This holds all of
-	// the transactions.  All data access to the transactions list
-	// that you want to show up immediately (i.e., everything that
-	// is done through the GUI at a minimum) needs to go through 
-	// this model, instead of calling DataInstance directly.  When you
-	// go through the model, it automatically fires the correct
-	// updates to the list.
+	/* The baseModel is a custom list model which contains the 
+	 * same EList object that the DataModel contains.  This holds 
+	 * all of the transactions.  All data access to the transactions 
+	 * list that you want to show up immediately (i.e., everything that
+	 * is done through the GUI at a minimum) needs to go through 
+	 * this model, instead of calling DataInstance directly.  When 
+	 * you go through the model, it automatically fires the correct 
+	 * updates to the list.
+	 */
 	private final static TransactionListModel baseModel = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
 	
-	// This model is a filtered list model that is obtained from the
-	// baseModel.  It is a view which contains all transactions in 
-	// the given account which match the String and Date criteria.
+	/* This model is a filtered list model that is obtained from the
+	 * baseModel.  It is a view which contains all transactions in
+	 * the given account which match the String and Date criteria.
+	 */
 	private final FilteredDynamicListModel model;
 
 	private Account account;
+	
+	private boolean disableListEvents = false;
 
 	//The values for the date chooser combo box.
 	private static final TranslateKeys[] dateRangeFilters = new TranslateKeys[] {
@@ -154,7 +155,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
-				if (!arg0.getValueIsAdjusting()){
+				if (!arg0.getValueIsAdjusting() && !TransactionsFrame.this.disableListEvents){
 					if (editableTransaction.isChanged() 
 							&& editableTransaction.getTransaction() != (Transaction) list.getSelectedValue()){
 						int ret;
@@ -190,9 +191,10 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 								editableTransaction.setChanged(false);
 
 								if (editableTransaction.getTransaction() == null)
-									list.setSelectedIndex(list.getModel().getSize() - 1);
+									list.clearSelection();
 								else
 									list.setSelectedValue(editableTransaction.getTransaction(), true);
+								
 								editableTransaction.setChanged(true);
 								return;
 							}
@@ -229,6 +231,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					return;
 				}
 
+				disableListEvents = true;
 
 				Transaction t;
 				boolean isUpdate = false;
@@ -267,7 +270,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				else {
 					DataInstance.getInstance().calculateAllBalances();
 					DataInstance.getInstance().saveDataModel();
-					baseModel.update(t);
+					baseModel.update(t, model);
 				}
 
 				//Update the autocomplete entries
@@ -290,17 +293,21 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 				
+				list.setSelectedValue(t, true);
+				
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
 				}
 				else {
 					editableTransaction.setTransaction(null, true);
-					list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+					list.ensureIndexIsVisible(list.getSelectedIndex());
+					list.clearSelection();
 				}
 				
 				editableTransaction.setChanged(false);
-
 				list.ensureIndexIsVisible(list.getSelectedIndex());
+				
+				disableListEvents = false;
 			}
 
 		});
@@ -338,9 +345,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					Transaction t = (Transaction) list.getSelectedValue();
 					int position = list.getSelectedIndex();
 //					DataInstance.getInstance().deleteTransaction(t);
-					baseModel.remove(t);
-					editableTransaction.setTransaction(null, true);
-					list.clearSelection();
+					baseModel.remove(t, model);
 
 //					TransactionsFrame.updateAllTransactionWindows();
 					updateButtons();
@@ -351,6 +356,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						editableTransaction.setTransaction(t, true);
 						list.ensureIndexIsVisible(position);
 					}
+					else{
+						editableTransaction.setTransaction(null, true);
+						list.clearSelection();
+					}
+					
+					editableTransaction.setChanged(false);
 				}
 			}
 		});
