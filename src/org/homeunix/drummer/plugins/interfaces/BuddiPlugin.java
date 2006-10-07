@@ -1,7 +1,7 @@
 /*
  * Created on Sep 14, 2006 by wyatt
  */
-package org.homeunix.drummer.plugins;
+package org.homeunix.drummer.plugins.interfaces;
 
 public interface BuddiPlugin {
 	/**

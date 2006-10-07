@@ -68,25 +68,19 @@ public class Const {
 		"SATURDAY"
 	};
 	
-	public final static String[] BUILT_IN_PANEL_PLUGINS = {
+	public final static String[] BUILT_IN_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpenseBudgetedVsActual",
 		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
-		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime"
-	};
-	
-	public final static String[] BUILT_IN_EXPORT_PLUGINS = {
+		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime",
+		
 		"org.homeunix.drummer.plugins.exports.ExportHTML",
 		"org.homeunix.drummer.plugins.exports.ExportCSV"
-	};
-
-	public final static String[] BUILT_IN_IMPORT_PLUGINS = {
 		
 	};
-
-	
+		
 	private Const(){}
 }

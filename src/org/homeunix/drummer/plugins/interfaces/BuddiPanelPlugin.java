@@ -1,7 +1,9 @@
 /*
  * Created on Oct 3, 2006 by wyatt
  */
-package org.homeunix.drummer.plugins;
+package org.homeunix.drummer.plugins.interfaces;
+
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 
 public interface BuddiPanelPlugin extends BuddiPlugin {
 	/**
@@ -10,7 +12,7 @@ public interface BuddiPanelPlugin extends BuddiPlugin {
 	 * or Export.
 	 * @return
 	 */
-	public BuddiPluginFactory.DateRangeType getDateRangeType();
+	public DateRangeType getDateRangeType();
 	
 	/**
 	 * Returns the title to appear in the JFrame title bar.  Not

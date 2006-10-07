@@ -15,6 +15,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.ParseCommands;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
@@ -106,11 +107,17 @@ public class Buddi {
 			Log.setLogLevel(verbosity);
 		}
 				
+		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 				
+		//Load the language
 		Translate.getInstance().loadLanguage(
 				PrefsInstance.getInstance().getPrefs().getLanguage());
 		
+		//Load the correct formatter preferences
+		Formatter.getInstance(PrefsInstance.getInstance().getPrefs().getDateFormat());
+		
+		//Create the frameless menu bar (for Mac)
 		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
 		
 		SwingUtilities.invokeLater(new Runnable() {

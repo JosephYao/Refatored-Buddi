@@ -16,8 +16,8 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -31,12 +31,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
-	}
-	public String getDescription() {
-		return TranslateKeys.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH.toString();
-	}
+
 	public JPanel getGraphPanel(Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
@@ -128,4 +123,13 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 				
 		return categories;
 	}
+	
+	public DateRangeType getDateRangeType() {
+		return DateRangeType.INTERVAL;
+	}
+
+	public String getDescription() {
+		return TranslateKeys.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH.toString();
+	}
+
 }

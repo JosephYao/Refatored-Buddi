@@ -15,8 +15,8 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.jfree.chart.ChartFactory;
@@ -27,12 +27,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class NetWorthBreakdown implements BuddiGraphPlugin {
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.END_ONLY;
-	}
-	public String getDescription() {
-		return TranslateKeys.NETWORTH_PIE_GRAPH.toString();
-	}
+
 	public JPanel getGraphPanel(Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
@@ -98,5 +93,13 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 		}
 		
 		return map;
+	}
+	
+	public DateRangeType getDateRangeType() {
+		return DateRangeType.END_ONLY;
+	}
+	
+	public String getDescription() {
+		return TranslateKeys.NETWORTH_PIE_GRAPH.toString();
 	}
 }

@@ -25,16 +25,16 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiPluginFactory;
-import org.homeunix.drummer.plugins.BuddiReportPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiHTMLPluginHelper;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	public String getReportHTML(Date startDate, Date endDate) {
-		StringBuffer sb = BuddiPluginFactory.getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER, startDate, endDate);
+		StringBuffer sb = BuddiHTMLPluginHelper.getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER, startDate, endDate);
 
 		sb.append("<table class='main'>\n");
 
@@ -187,7 +187,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	}
 
 	public DateRangeType getDateRangeType() {
-		return BuddiPluginFactory.DateRangeType.INTERVAL;
+		return DateRangeType.INTERVAL;
 	}
 
 	public String getTitle() {

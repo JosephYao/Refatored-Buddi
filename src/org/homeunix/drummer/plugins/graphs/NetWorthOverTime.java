@@ -15,8 +15,8 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -28,12 +28,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class NetWorthOverTime implements BuddiGraphPlugin {
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.START_ONLY;
-	}
-	public String getDescription() {
-		return TranslateKeys.NETWORTH_LINE_GRAPH.toString();
-	}
+
 	public JPanel getGraphPanel(Date startDate, Date endDate) {
 		final int NUM_SAMPLES = 12;
 		
@@ -125,5 +120,13 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 		}
 		
 		return map;
+	}
+
+	public DateRangeType getDateRangeType() {
+		return DateRangeType.START_ONLY;
+	}
+
+	public String getDescription() {
+		return TranslateKeys.NETWORTH_LINE_GRAPH.toString();
 	}
 }

@@ -17,8 +17,8 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -29,12 +29,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class ExpensesPieGraph implements BuddiGraphPlugin {
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
-	}
-	public String getDescription() {
-		return TranslateKeys.EXPENSE_PIE_GRAPH.toString();
-	}
+	
 	public JPanel getGraphPanel(Date startDate, Date endDate) {
 		DefaultPieDataset pieData = new DefaultPieDataset();
 		
@@ -115,5 +110,13 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		}
 				
 		return categories;
+	}
+	
+	public DateRangeType getDateRangeType() {
+		return DateRangeType.INTERVAL;
+	}
+	
+	public String getDescription() {
+		return TranslateKeys.EXPENSE_PIE_GRAPH.toString();
 	}
 }

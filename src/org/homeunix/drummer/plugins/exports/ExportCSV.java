@@ -18,8 +18,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiExportPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.SwingWorker;
@@ -109,16 +108,7 @@ public class ExportCSV implements BuddiExportPlugin {
 		return windows;
 	}
 
-	public DateRangeType getDateRangeType() {
-		return null;  //Not used by ExportPlugin
-	}
-
 	public String getDescription() {
 		return Translate.getInstance().get(TranslateKeys.EXPORT_TO_CSV);
 	}
-
-	public String getTitle() {
-		return null; //Not used by ExportPlugin
-	}
-
 }

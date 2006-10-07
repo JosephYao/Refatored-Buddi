@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.plugins.BuddiPanelPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.BuddiPluginHelper;
+import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -170,7 +170,7 @@ public class CustomDateDialog extends AbstractDialog {
 
 				if (Const.DEVEL) Log.debug("Getting transactions between " + startDate + " and " + endDate);
 
-				BuddiPluginFactory.openNewPanelPluginWindow(plugin, startDate, endDate);
+				BuddiPluginHelper.openNewPanelPluginWindow(plugin, startDate, endDate);
 
 				CustomDateDialog.this.setVisible(false);
 			}

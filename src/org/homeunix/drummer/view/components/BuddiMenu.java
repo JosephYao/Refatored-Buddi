@@ -34,7 +34,7 @@ import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
-import org.homeunix.drummer.plugins.BuddiPluginFactory;
+import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
@@ -101,44 +101,13 @@ public class BuddiMenu extends JScreenMenuBar {
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 		//Get all the export and import plugins
-		for (String pluginClassName : Const.BUILT_IN_EXPORT_PLUGINS) {
-			JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-			if (menuItem != null){
-				exports.add(menuItem);
-			}
+		for (JScreenMenuItem menuItem : PluginFactory.getExportMenuItems(frame)) {
+			exports.add(menuItem);
 		}
-//		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
-//			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getExportPlugins()){
-//				if (entry instanceof PluginEntry){
-//					String pluginClassName = ((PluginEntry) entry).getClassName();
-//					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-//					if (menuItem != null){
-//						exports.add(menuItem);
-//					}
-//				}
-//			}
-//		}
 
-		
-		for (String pluginClassName : Const.BUILT_IN_IMPORT_PLUGINS) {
-			JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-			if (menuItem != null){
-				imports.add(menuItem);
-			}
+		for (JScreenMenuItem menuItem : PluginFactory.getImportMenuItems(frame)) {
+			imports.add(menuItem);
 		}
-//		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
-//			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getImportPlugins()){
-//				if (entry instanceof PluginEntry){
-//					String pluginClassName = ((PluginEntry) entry).getClassName();
-//					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-//					if (menuItem != null){
-//						imports.add(menuItem);
-//					}
-//				}
-//			}
-//		}
-
-		
 
 		// Add the menus to the main menu.
 		file.add(newFile);

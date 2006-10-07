@@ -34,7 +34,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiReportPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 
 public class ReportFrameLayout extends AbstractFrame {

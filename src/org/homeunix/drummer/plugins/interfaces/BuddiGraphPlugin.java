@@ -3,7 +3,7 @@
  * 
  * The interface which can be extended to create custom reports.
  */
-package org.homeunix.drummer.plugins;
+package org.homeunix.drummer.plugins.interfaces;
 
 import java.util.Date;
 

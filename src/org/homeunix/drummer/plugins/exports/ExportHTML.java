@@ -10,8 +10,7 @@ import java.io.PrintStream;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.plugins.BuddiExportPlugin;
-import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
+import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
@@ -64,16 +63,7 @@ public class ExportHTML implements BuddiExportPlugin {
 		return windows;
 	}
 
-	public DateRangeType getDateRangeType() {
-		return null;  //Not used by ExportPlugin
-	}
-
 	public String getDescription() {
 		return Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML);
 	}
-
-	public String getTitle() {
-		return null; //Not used by ExportPlugin
-	}
-
 }
