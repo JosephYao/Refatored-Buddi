@@ -18,9 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.CustomPlugins#getPanelPlugins <em>Panel Plugins</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.CustomPlugins#getImportPlugins <em>Import Plugins</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.CustomPlugins#getExportPlugins <em>Export Plugins</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.CustomPlugins#getJars <em>Jars</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,51 +28,19 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CustomPlugins extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Export Plugins</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.PluginEntry}.
+	 * Returns the value of the '<em><b>Jars</b></em>' containment reference list.
+	 * The list contents are of type {@link org.homeunix.drummer.prefs.PluginJar}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Export Plugins</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Jars</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Export Plugins</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getCustomPlugins_ExportPlugins()
-	 * @model type="org.homeunix.drummer.prefs.PluginEntry" containment="true"
+	 * @return the value of the '<em>Jars</em>' containment reference list.
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getCustomPlugins_Jars()
+	 * @model type="org.homeunix.drummer.prefs.PluginJar" containment="true"
 	 * @generated
 	 */
-	EList getExportPlugins();
-
-	/**
-	 * Returns the value of the '<em><b>Panel Plugins</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.PluginEntry}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Panel Plugins</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Panel Plugins</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getCustomPlugins_PanelPlugins()
-	 * @model type="org.homeunix.drummer.prefs.PluginEntry" containment="true"
-	 * @generated
-	 */
-	EList getPanelPlugins();
-
-	/**
-	 * Returns the value of the '<em><b>Import Plugins</b></em>' containment reference list.
-	 * The list contents are of type {@link org.homeunix.drummer.prefs.PluginEntry}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Import Plugins</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Import Plugins</em>' containment reference list.
-	 * @see org.homeunix.drummer.prefs.PrefsPackage#getCustomPlugins_ImportPlugins()
-	 * @model type="org.homeunix.drummer.prefs.PluginEntry" containment="true"
-	 * @generated
-	 */
-	EList getImportPlugins();
+	EList getJars();
 
 } // CustomPlugins

@@ -69,12 +69,13 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 					prefs.setCustomPlugins(cp);
 				}
 				
-				cp.getExportPlugins().clear();
-				cp.getImportPlugins().clear();
-				cp.getPanelPlugins().clear();
-				cp.getExportPlugins().addAll(exportPlugins.getPluginEntries());
-				cp.getImportPlugins().addAll(importPlugins.getPluginEntries());
-				cp.getPanelPlugins().addAll(panelPlugins.getPluginEntries());
+				cp.getJars().clear();
+//				cp.getExportPlugins().clear();
+//				cp.getImportPlugins().clear();
+//				cp.getPanelPlugins().clear();
+//				cp.getExportPlugins().addAll(exportPlugins.getPluginEntries());
+//				cp.getImportPlugins().addAll(importPlugins.getPluginEntries());
+//				cp.getPanelPlugins().addAll(panelPlugins.getPluginEntries());
 				
 				PrefsInstance.getInstance().savePrefs();
 												
@@ -147,9 +148,9 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 			prefs.setCustomPlugins(PrefsInstance.getInstance().getPrefsFactory().createCustomPlugins());
 		}
 		
-		exportPlugins.setStrings(prefs.getCustomPlugins().getExportPlugins());
-		importPlugins.setStrings(prefs.getCustomPlugins().getImportPlugins());
-		panelPlugins.setStrings(prefs.getCustomPlugins().getPanelPlugins());
+//		exportPlugins.setStrings(prefs.getCustomPlugins().getExportPlugins());
+//		importPlugins.setStrings(prefs.getCustomPlugins().getImportPlugins());
+//		panelPlugins.setStrings(prefs.getCustomPlugins().getPanelPlugins());
 		
 		return this;
 	}

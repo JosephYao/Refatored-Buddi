@@ -71,31 +71,13 @@ public interface PrefsPackage extends EPackage {
 	int CUSTOM_PLUGINS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Panel Plugins</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Jars</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_PLUGINS__PANEL_PLUGINS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Import Plugins</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_PLUGINS__IMPORT_PLUGINS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Export Plugins</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_PLUGINS__EXPORT_PLUGINS = 2;
+	int CUSTOM_PLUGINS__JARS = 0;
 
 	/**
 	 * The number of structural features of the '<em>Custom Plugins</em>' class.
@@ -104,7 +86,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_PLUGINS_FEATURE_COUNT = 3;
+	int CUSTOM_PLUGINS_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.DictDataImpl <em>Dict Data</em>}' class.
@@ -412,6 +394,61 @@ public interface PrefsPackage extends EPackage {
 	int PLUGIN_ENTRY_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.PluginJarImpl <em>Plugin Jar</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.prefs.impl.PluginJarImpl
+	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPluginJar()
+	 * @generated
+	 */
+	int PLUGIN_JAR = 9;
+
+	/**
+	 * The feature id for the '<em><b>Jar File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLUGIN_JAR__JAR_FILE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Export Plugins</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLUGIN_JAR__EXPORT_PLUGINS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Panel Plugins</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLUGIN_JAR__PANEL_PLUGINS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Import Plugins</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLUGIN_JAR__IMPORT_PLUGINS = 3;
+
+	/**
+	 * The number of structural features of the '<em>Plugin Jar</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLUGIN_JAR_FEATURE_COUNT = 4;
+
+	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.PrefsImpl <em>Prefs</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -419,7 +456,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPrefs()
 	 * @generated
 	 */
-	int PREFS = 9;
+	int PREFS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Data File</b></em>' attribute.
@@ -566,22 +603,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__LOOK_AND_FEEL_CLASS = 15;
 
 	/**
-	 * The feature id for the '<em><b>Lists</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__LISTS = 16;
-
-	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 17;
+	int PREFS__LAST_VERSION_RUN = 16;
+
+	/**
+	 * The feature id for the '<em><b>Lists</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__LISTS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Custom Plugins</b></em>' containment reference.
@@ -593,22 +630,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__CUSTOM_PLUGINS = 18;
 
 	/**
-	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__INTERVALS = 19;
-
-	/**
 	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__WINDOWS = 20;
+	int PREFS__WINDOWS = 19;
+
+	/**
+	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__INTERVALS = 20;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -628,7 +665,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
 	 * @generated
 	 */
-	int USER_PREFS = 10;
+	int USER_PREFS = 11;
 
 	/**
 	 * The feature id for the '<em><b>Prefs</b></em>' containment reference.
@@ -656,7 +693,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getVersion()
 	 * @generated
 	 */
-	int VERSION = 11;
+	int VERSION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -684,7 +721,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 12;
+	int WINDOW_ATTRIBUTES = 13;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -740,34 +777,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindows()
 	 * @generated
 	 */
-	int WINDOWS = 13;
-
-	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WINDOWS__REPORTS_WINDOW = 0;
-
-	/**
-	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WINDOWS__GRAPHS_WINDOW = 1;
-
-	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WINDOWS__MAIN_WINDOW = 2;
+	int WINDOWS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
@@ -776,7 +786,34 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__TRANSACTIONS_WINDOW = 3;
+	int WINDOWS__TRANSACTIONS_WINDOW = 0;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__MAIN_WINDOW = 1;
+
+	/**
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__REPORTS_WINDOW = 2;
+
+	/**
+	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__GRAPHS_WINDOW = 3;
 
 	/**
 	 * The number of structural features of the '<em>Windows</em>' class.
@@ -799,37 +836,15 @@ public interface PrefsPackage extends EPackage {
 	EClass getCustomPlugins();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.CustomPlugins#getExportPlugins <em>Export Plugins</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.CustomPlugins#getJars <em>Jars</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Export Plugins</em>'.
-	 * @see org.homeunix.drummer.prefs.CustomPlugins#getExportPlugins()
+	 * @return the meta object for the containment reference list '<em>Jars</em>'.
+	 * @see org.homeunix.drummer.prefs.CustomPlugins#getJars()
 	 * @see #getCustomPlugins()
 	 * @generated
 	 */
-	EReference getCustomPlugins_ExportPlugins();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.CustomPlugins#getPanelPlugins <em>Panel Plugins</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Panel Plugins</em>'.
-	 * @see org.homeunix.drummer.prefs.CustomPlugins#getPanelPlugins()
-	 * @see #getCustomPlugins()
-	 * @generated
-	 */
-	EReference getCustomPlugins_PanelPlugins();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.CustomPlugins#getImportPlugins <em>Import Plugins</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Import Plugins</em>'.
-	 * @see org.homeunix.drummer.prefs.CustomPlugins#getImportPlugins()
-	 * @see #getCustomPlugins()
-	 * @generated
-	 */
-	EReference getCustomPlugins_ImportPlugins();
+	EReference getCustomPlugins_Jars();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.DictData <em>Dict Data</em>}'.
@@ -1097,6 +1112,60 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPluginEntry_ClassName();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.PluginJar <em>Plugin Jar</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Plugin Jar</em>'.
+	 * @see org.homeunix.drummer.prefs.PluginJar
+	 * @generated
+	 */
+	EClass getPluginJar();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.PluginJar#getJarFile <em>Jar File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Jar File</em>'.
+	 * @see org.homeunix.drummer.prefs.PluginJar#getJarFile()
+	 * @see #getPluginJar()
+	 * @generated
+	 */
+	EAttribute getPluginJar_JarFile();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.PluginJar#getExportPlugins <em>Export Plugins</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Export Plugins</em>'.
+	 * @see org.homeunix.drummer.prefs.PluginJar#getExportPlugins()
+	 * @see #getPluginJar()
+	 * @generated
+	 */
+	EReference getPluginJar_ExportPlugins();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.PluginJar#getPanelPlugins <em>Panel Plugins</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Panel Plugins</em>'.
+	 * @see org.homeunix.drummer.prefs.PluginJar#getPanelPlugins()
+	 * @see #getPluginJar()
+	 * @generated
+	 */
+	EReference getPluginJar_PanelPlugins();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.PluginJar#getImportPlugins <em>Import Plugins</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Import Plugins</em>'.
+	 * @see org.homeunix.drummer.prefs.PluginJar#getImportPlugins()
+	 * @see #getPluginJar()
+	 * @generated
+	 */
+	EReference getPluginJar_ImportPlugins();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Prefs <em>Prefs</em>}'.
@@ -1522,28 +1591,12 @@ public interface PrefsPackage extends EPackage {
 		EClass CUSTOM_PLUGINS = eINSTANCE.getCustomPlugins();
 
 		/**
-		 * The meta object literal for the '<em><b>Export Plugins</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Jars</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CUSTOM_PLUGINS__EXPORT_PLUGINS = eINSTANCE.getCustomPlugins_ExportPlugins();
-
-		/**
-		 * The meta object literal for the '<em><b>Panel Plugins</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CUSTOM_PLUGINS__PANEL_PLUGINS = eINSTANCE.getCustomPlugins_PanelPlugins();
-
-		/**
-		 * The meta object literal for the '<em><b>Import Plugins</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CUSTOM_PLUGINS__IMPORT_PLUGINS = eINSTANCE.getCustomPlugins_ImportPlugins();
+		EReference CUSTOM_PLUGINS__JARS = eINSTANCE.getCustomPlugins_Jars();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.DictDataImpl <em>Dict Data</em>}' class.
@@ -1760,6 +1813,48 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PLUGIN_ENTRY__CLASS_NAME = eINSTANCE.getPluginEntry_ClassName();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.PluginJarImpl <em>Plugin Jar</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.prefs.impl.PluginJarImpl
+		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPluginJar()
+		 * @generated
+		 */
+		EClass PLUGIN_JAR = eINSTANCE.getPluginJar();
+
+		/**
+		 * The meta object literal for the '<em><b>Jar File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PLUGIN_JAR__JAR_FILE = eINSTANCE.getPluginJar_JarFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Export Plugins</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PLUGIN_JAR__EXPORT_PLUGINS = eINSTANCE.getPluginJar_ExportPlugins();
+
+		/**
+		 * The meta object literal for the '<em><b>Panel Plugins</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PLUGIN_JAR__PANEL_PLUGINS = eINSTANCE.getPluginJar_PanelPlugins();
+
+		/**
+		 * The meta object literal for the '<em><b>Import Plugins</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PLUGIN_JAR__IMPORT_PLUGINS = eINSTANCE.getPluginJar_ImportPlugins();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.PrefsImpl <em>Prefs</em>}' class.

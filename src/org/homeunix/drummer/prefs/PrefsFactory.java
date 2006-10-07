@@ -107,6 +107,15 @@ public interface PrefsFactory extends EFactory {
 	PluginEntry createPluginEntry();
 
 	/**
+	 * Returns a new object of class '<em>Plugin Jar</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Plugin Jar</em>'.
+	 * @generated
+	 */
+	PluginJar createPluginJar();
+
+	/**
 	 * Returns a new object of class '<em>Prefs</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

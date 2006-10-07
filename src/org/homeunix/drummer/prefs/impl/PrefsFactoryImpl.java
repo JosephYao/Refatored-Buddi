@@ -69,6 +69,7 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			case PrefsPackage.LIST_ENTRY: return createListEntry();
 			case PrefsPackage.LISTS: return createLists();
 			case PrefsPackage.PLUGIN_ENTRY: return createPluginEntry();
+			case PrefsPackage.PLUGIN_JAR: return createPluginJar();
 			case PrefsPackage.PREFS: return createPrefs();
 			case PrefsPackage.USER_PREFS: return createUserPrefs();
 			case PrefsPackage.VERSION: return createVersion();
@@ -167,6 +168,16 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	public PluginEntry createPluginEntry() {
 		PluginEntryImpl pluginEntry = new PluginEntryImpl();
 		return pluginEntry;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PluginJar createPluginJar() {
+		PluginJarImpl pluginJar = new PluginJarImpl();
+		return pluginJar;
 	}
 
 	/**

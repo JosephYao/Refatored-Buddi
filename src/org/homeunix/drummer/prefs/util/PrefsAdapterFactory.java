@@ -97,6 +97,9 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object casePluginEntry(PluginEntry object) {
 				return createPluginEntryAdapter();
 			}
+			public Object casePluginJar(PluginJar object) {
+				return createPluginJarAdapter();
+			}
 			public Object casePrefs(Prefs object) {
 				return createPrefsAdapter();
 			}
@@ -253,6 +256,20 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPluginEntryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.PluginJar <em>Plugin Jar</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.prefs.PluginJar
+	 * @generated
+	 */
+	public Adapter createPluginJarAdapter() {
 		return null;
 	}
 

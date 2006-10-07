@@ -3,11 +3,14 @@
  */
 package org.homeunix.drummer.controller;
 
+import java.io.File;
+
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
 import org.homeunix.drummer.prefs.PluginEntry;
+import org.homeunix.drummer.prefs.PluginJar;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.ReportPanelLayout;
 
@@ -24,11 +27,18 @@ public class ReportPanel extends ReportPanelLayout {
 		}
 
 		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
-			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getPanelPlugins()) {
-				if (entry instanceof PluginEntry){
-					JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher(((PluginEntry) entry).getClassName());
-					if (pluginPanel != null)
-						pluginsPanel.add(pluginPanel);
+			for (Object o1 : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getJars()){
+				if (o1 instanceof PluginJar){
+					PluginJar pluginJar = (PluginJar) o1;
+					File jarFile = new File((pluginJar).getJarFile());
+					for (Object o2 : pluginJar.getPanelPlugins()) {
+						if (o2 instanceof PluginEntry){
+							PluginEntry pluginEntry = (PluginEntry) o2;
+							JPanel pluginPanel = BuddiPluginFactory.getPanelPluginLauncher((pluginEntry).getClassName());
+							if (pluginPanel != null)
+								pluginsPanel.add(pluginPanel);
+						}
+					}
 				}
 			}
 		}

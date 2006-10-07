@@ -141,6 +141,12 @@ public class PrefsSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PrefsPackage.PLUGIN_JAR: {
+				PluginJar pluginJar = (PluginJar)theEObject;
+				Object result = casePluginJar(pluginJar);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PrefsPackage.PREFS: {
 				Prefs prefs = (Prefs)theEObject;
 				Object result = casePrefs(prefs);
@@ -307,6 +313,21 @@ public class PrefsSwitch {
 	 * @generated
 	 */
 	public Object casePluginEntry(PluginEntry object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Plugin Jar</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Plugin Jar</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object casePluginJar(PluginJar object) {
 		return null;
 	}
 

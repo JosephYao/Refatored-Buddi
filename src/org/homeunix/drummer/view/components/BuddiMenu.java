@@ -108,17 +108,17 @@ public class BuddiMenu extends JScreenMenuBar {
 				exports.add(menuItem);
 			}
 		}
-		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
-			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getExportPlugins()){
-				if (entry instanceof PluginEntry){
-					String pluginClassName = ((PluginEntry) entry).getClassName();
-					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-					if (menuItem != null){
-						exports.add(menuItem);
-					}
-				}
-			}
-		}
+//		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
+//			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getExportPlugins()){
+//				if (entry instanceof PluginEntry){
+//					String pluginClassName = ((PluginEntry) entry).getClassName();
+//					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+//					if (menuItem != null){
+//						exports.add(menuItem);
+//					}
+//				}
+//			}
+//		}
 
 		
 		for (String pluginClassName : Const.BUILT_IN_IMPORT_PLUGINS) {
@@ -127,17 +127,17 @@ public class BuddiMenu extends JScreenMenuBar {
 				imports.add(menuItem);
 			}
 		}
-		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
-			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getImportPlugins()){
-				if (entry instanceof PluginEntry){
-					String pluginClassName = ((PluginEntry) entry).getClassName();
-					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
-					if (menuItem != null){
-						imports.add(menuItem);
-					}
-				}
-			}
-		}
+//		if (PrefsInstance.getInstance().getPrefs().getCustomPlugins() != null) {
+//			for (Object entry : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getImportPlugins()){
+//				if (entry instanceof PluginEntry){
+//					String pluginClassName = ((PluginEntry) entry).getClassName();
+//					JScreenMenuItem menuItem = BuddiPluginFactory.getPluginMenuItem(pluginClassName, frame);
+//					if (menuItem != null){
+//						imports.add(menuItem);
+//					}
+//				}
+//			}
+//		}
 
 		
 
