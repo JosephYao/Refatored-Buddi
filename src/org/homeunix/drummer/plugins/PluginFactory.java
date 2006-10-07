@@ -42,8 +42,6 @@ import org.homeunix.thecave.moss.util.Log;
 
 public class PluginFactory<T extends BuddiPlugin> {
 
-	private static BuddiPlugin factoryPlugin;
-
 	public static List<JScreenMenuItem> getExportMenuItems(final AbstractFrame frame){
 		List<JScreenMenuItem> exportMenuItems = new LinkedList<JScreenMenuItem>();
 
@@ -54,16 +52,9 @@ public class PluginFactory<T extends BuddiPlugin> {
 		for (BuddiExportPlugin plugin : exportPlugins) {
 			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
-			factoryPlugin = plugin;
-
 			//This is where the user's custom code is actually run
-			menuItem.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					if (factoryPlugin instanceof BuddiExportPlugin)
-						((BuddiExportPlugin) factoryPlugin).exportData(frame);
-				}
-			});
-			
+			addExportActionListener(plugin, menuItem, frame);
+
 			exportMenuItems.add(menuItem);
 		}
 
@@ -80,16 +71,9 @@ public class PluginFactory<T extends BuddiPlugin> {
 		for (BuddiImportPlugin plugin : importPlugins) {
 			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
-			factoryPlugin = plugin;
-
 			//This is where the user's custom code is actually run
-			menuItem.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					if (factoryPlugin instanceof BuddiImportPlugin)
-						((BuddiImportPlugin) factoryPlugin).importData(frame);
-				}
-			});
-			
+			addImportActionListener(plugin, menuItem, frame);
+
 			importMenuItems.add(menuItem);
 		}
 
@@ -117,45 +101,16 @@ public class PluginFactory<T extends BuddiPlugin> {
 			else
 				dateChoices = new Vector<DateChoice>();
 
-			factoryPlugin = plugin;
-
 			//Get the combobox 
 			final JComboBox dateSelect = new JComboBox(dateChoices);
 			dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
-			dateSelect.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
-					//Find out which item was clicked on
-					Object o = dateSelect.getSelectedItem();
 
-					//If the object was a date choice, access the encoded dates
-					if (o instanceof DateChoice && factoryPlugin instanceof BuddiPanelPlugin){
-						DateChoice choice = (DateChoice) o;
-
-						//As long as the choice is not custom, our job is easy
-						if (!choice.isCustom()){
-							//Launch a new reports window with given parameters
-							BuddiPluginHelper.openNewPanelPluginWindow(
-									(BuddiPanelPlugin) factoryPlugin, 
-									choice.getStartDate(), 
-									choice.getEndDate()
-							);
-						}
-						//If they want a custom window, it's a little harder...
-						else{
-							new CustomDateDialog(
-									MainBuddiFrame.getInstance(),
-									(BuddiPanelPlugin) factoryPlugin
-							).openWindow();
-						}
-					}
-
-					dateSelect.setSelectedItem(null);
-				}
-			});
+			//Add the launchers
+			addPanelActionListener(plugin, dateSelect);
 
 			panel.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
 			panel.add(dateSelect);
-			
+
 			panelItems.add(panel);
 		}
 
@@ -185,7 +140,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 		try{
 			for (String pluginClass : Const.BUILT_IN_PLUGINS) {
 				Object pluginObject = Class.forName(pluginClass).newInstance();
-				
+
 				if (pluginType instanceof BuddiExportPlugin
 						&& pluginObject instanceof BuddiExportPlugin){
 					if (Const.DEVEL) Log.info("Adding Export Plugin " + pluginObject);
@@ -257,7 +212,57 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 	}
 
+	private static void addExportActionListener(final BuddiExportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
+		menuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if (plugin instanceof BuddiExportPlugin)
+					((BuddiExportPlugin) plugin).exportData(frame);
+			}
+		});
+	}
 
+	private static void addImportActionListener(final BuddiImportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
+		menuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if (plugin instanceof BuddiImportPlugin)
+					((BuddiImportPlugin) plugin).importData(frame);
+			}
+		});
+	}
 
+	private static void addPanelActionListener(final BuddiPanelPlugin plugin, final JComboBox dateSelect){
+		dateSelect.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				//Find out which item was clicked on
+				Object o = dateSelect.getSelectedItem();
 
+				//If the object was a date choice, access the encoded dates
+				if (o instanceof DateChoice 
+						&& plugin instanceof BuddiPanelPlugin){
+					DateChoice choice = (DateChoice) o;
+
+					//As long as the choice is not custom, our job is easy
+					if (!choice.isCustom()){
+						//Launch a new reports window with given parameters
+						BuddiPluginHelper.openNewPanelPluginWindow(
+								(BuddiPanelPlugin) plugin, 
+								choice.getStartDate(), 
+								choice.getEndDate()
+						);
+					}
+					//If they want a custom window, it's a little 
+					// harder... we need to open the custom date
+					// window, which then launches the plugin.
+					else{
+						new CustomDateDialog(
+								MainBuddiFrame.getInstance(),
+								(BuddiPanelPlugin) plugin
+						).openWindow();
+					}
+				}
+
+				dateSelect.setSelectedItem(null);
+			}
+		});
+	}
 }
