@@ -17,7 +17,7 @@ import org.homeunix.drummer.controller.CategoryListPanel;
 import org.homeunix.drummer.controller.ReportPanel;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.util.Log;
+import org.homeunix.thecave.moss.util.Log;
 
 
 public abstract class MainBuddiFrameLayout extends AbstractFrame {

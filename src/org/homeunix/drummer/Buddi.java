@@ -13,11 +13,11 @@ import net.roydesign.mac.MRJAdapter;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.util.LookAndFeelManager;
-import org.homeunix.drummer.util.ParseCommands;
-import org.homeunix.drummer.util.ParseCommands.ParseException;
 import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.ParseCommands;
+import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
 
 /**
  * @author wyatt

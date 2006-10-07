@@ -13,9 +13,9 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.ScheduledTransactionsListFrameLayout;
+import org.homeunix.thecave.moss.util.Log;
 
 public class ScheduledTransactionsListFrame extends ScheduledTransactionsListFrameLayout {
 	public static final long serialVersionUID = 0;

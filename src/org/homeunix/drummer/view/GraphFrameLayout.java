@@ -31,7 +31,7 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Log;
+import org.homeunix.thecave.moss.util.Log;
 
 public class GraphFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;

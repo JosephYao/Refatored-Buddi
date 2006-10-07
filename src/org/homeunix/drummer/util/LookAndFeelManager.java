@@ -14,6 +14,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
+import org.homeunix.thecave.moss.util.Log;
 
 public final class LookAndFeelManager {
 	public static final long serialVersionUID = 0;

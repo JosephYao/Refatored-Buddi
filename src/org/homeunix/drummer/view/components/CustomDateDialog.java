@@ -25,9 +25,9 @@ import org.homeunix.drummer.plugins.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
 import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.DateUtil;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
+import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.Log;
 
 import com.toedter.calendar.JDateChooser;
 

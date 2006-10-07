@@ -18,10 +18,10 @@ import org.homeunix.drummer.prefs.CustomPlugins;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.PreferencesDialogLayout;
+import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.thecave.moss.util.Log;
 
 public class PreferencesFrame extends PreferencesDialogLayout {
 	public static final long serialVersionUID = 0;
@@ -79,7 +79,7 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 				
 				PrefsInstance.getInstance().savePrefs();
 												
-				Formatter.getInstance().reloadDateFormat();				
+				Formatter.getInstance().reloadDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());				
 				
 				if (needRestart){
 					int retValue = JOptionPane.showConfirmDialog(

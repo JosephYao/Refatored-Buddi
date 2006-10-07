@@ -25,9 +25,9 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
-import org.homeunix.drummer.util.FileFunctions;
-import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.view.components.autocomplete.DefaultDictionary;
+import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
+import org.homeunix.thecave.moss.util.FileFunctions;
+import org.homeunix.thecave.moss.util.Log;
 
 @SuppressWarnings("unchecked")
 public class PrefsInstance {

@@ -21,8 +21,8 @@ import javax.swing.JTextField;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.view.components.text.JDecimalField;
+import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
+import org.homeunix.thecave.moss.util.Formatter;
 
 public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 	public static final long serialVersionUID = 0;

@@ -24,8 +24,8 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.components.EditableTransaction;
-import org.homeunix.drummer.view.components.SearchField;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
+import org.homeunix.thecave.moss.gui.SearchField;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;

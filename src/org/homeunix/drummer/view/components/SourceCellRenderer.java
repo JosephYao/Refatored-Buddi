@@ -17,7 +17,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Formatter;
+import org.homeunix.thecave.moss.util.Formatter;
 
 public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;

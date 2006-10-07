@@ -35,13 +35,12 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginFactory;
-import org.homeunix.drummer.prefs.PluginEntry;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.FileFunctions;
-import org.homeunix.drummer.util.Log;
-import org.homeunix.drummer.util.PrintUtilities;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.thecave.moss.util.FileFunctions;
+import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.PrintUtilities;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 

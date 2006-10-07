@@ -13,7 +13,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.util.Log;
+import org.homeunix.thecave.moss.util.Log;
 
 
 public class Translate {

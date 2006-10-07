@@ -209,6 +209,7 @@ public class PluginJarImpl extends EObjectImpl implements PluginJar {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case PrefsPackage.PLUGIN_JAR__JAR_FILE:

@@ -31,9 +31,9 @@ import org.homeunix.drummer.plugins.BuddiReportPlugin;
 import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.DateUtil;
-import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.util.Log;
+import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.thecave.moss.util.Log;
 
 public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 	public String getReportHTML(Date startDate, Date endDate) {

@@ -28,8 +28,8 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.SourceCellRenderer;
+import org.homeunix.thecave.moss.util.Log;
 
 public abstract class ListPanelLayout extends AbstractPanel {
 	public static final long serialVersionUID = 0;

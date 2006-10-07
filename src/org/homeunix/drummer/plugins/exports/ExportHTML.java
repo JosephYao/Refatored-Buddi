@@ -13,9 +13,9 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.BuddiPluginFactory.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ReportFrameLayout;
+import org.homeunix.thecave.moss.util.Log;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 

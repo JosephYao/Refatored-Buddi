@@ -17,8 +17,8 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.PasswordInputDialog;
+import org.homeunix.thecave.moss.util.Log;
 
 public class AESCryptoCipher implements URIConverter.Cipher {
 	private static final String ALGORITHM = "AES/CFB8/PKCS5Padding";

@@ -17,7 +17,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Formatter;
+import org.homeunix.thecave.moss.util.Formatter;
 
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;

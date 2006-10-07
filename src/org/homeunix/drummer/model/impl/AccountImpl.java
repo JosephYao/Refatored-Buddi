@@ -19,8 +19,8 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Formatter;
-import org.homeunix.drummer.util.Log;
+import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.thecave.moss.util.Log;
 
 /**
  * <!-- begin-user-doc -->

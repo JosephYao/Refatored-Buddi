@@ -11,11 +11,11 @@ import javax.swing.JOptionPane;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ModifyDialogLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
+import org.homeunix.thecave.moss.util.Log;
 
 public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 	public static final long serialVersionUID = 0;

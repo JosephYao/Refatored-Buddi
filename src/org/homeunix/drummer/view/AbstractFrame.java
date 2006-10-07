@@ -15,8 +15,8 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.Log;
 import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.thecave.moss.util.Log;
 
 public abstract class AbstractFrame extends JFrame{	
 	protected AbstractFrame(){
