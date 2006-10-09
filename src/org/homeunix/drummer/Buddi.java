@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class Buddi {
 	
 	private static Boolean isMac;
 	private static Boolean isWindows;
+	private static String workingDir;
 	private static final boolean UI_DEBUG = false;
 		
 	public static boolean isMac(){
@@ -44,6 +46,14 @@ public class Buddi {
 		}
 
 		return isWindows;
+	}
+	
+	public static String getWorkingDir(){
+		if (workingDir == null){
+			workingDir = "";
+		}
+			
+		return workingDir;
 	}
 	
 	private static void launchGUI(){
@@ -106,7 +116,15 @@ public class Buddi {
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
 		}
-				
+
+		//Set the working path.  If we save files (plugins, data files) 
+		// within this path, we remove this parent path.  This allows
+		// us to use relative paths for such things as running from
+		// USB drives, from remote shares (which would not always have
+		// the same path), etc.
+		workingDir = new File("").getAbsolutePath() + File.separator;
+		if (Const.DEVEL) Log.info("Set working directory to " + workingDir);
+		
 		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 				

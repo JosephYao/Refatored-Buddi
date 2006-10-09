@@ -32,8 +32,6 @@ import org.homeunix.thecave.moss.util.Log;
 @SuppressWarnings("unchecked")
 public class PrefsInstance {
 	
-	//public static final String DATA_FILE_EXTENSION = ".xml";
-	
 	public static PrefsInstance getInstance() {
 		return SingletonHolder.instance;
 	}
@@ -160,6 +158,7 @@ public class PrefsInstance {
 				savePrefs();
 			}
 			
+			//Set a sane currency symbol if none is already set.
 			if (userPrefs.getPrefs().getCurrencySymbol() == null){
 				userPrefs.getPrefs().setCurrencySymbol("$");
 				savePrefs();
@@ -168,6 +167,10 @@ public class PrefsInstance {
 		//If there is a problem opening the file, we will prompt to make a new one
 		catch (Exception e){
 			//If the file does not exist, we make a new one w/o prompting.
+			// This may be annoying, as it loses all your preferences,
+			// but there is not much you can do.  This only happens 
+			// when the preference file changes format (i.e., version 
+			// upgrade).
 			userPrefs = prefsFactory.createUserPrefs();
 			Prefs prefs = prefsFactory.createPrefs();
 			userPrefs.setPrefs(prefs);
@@ -195,17 +198,18 @@ public class PrefsInstance {
 				Set<String> languageSet = new HashSet<String>();
 				for (File f: languageLocation.listFiles()){
 					if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
-						languageSet.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+						languageSet.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, "").replaceAll("_", " "));
 					}
 				}
 				
 				for (String s : Const.BUNDLED_LANGUAGES){
-					languageSet.add(s);
+					languageSet.add(s.replaceAll("_", " "));
 				}
 
 				Vector<String> languages = new Vector<String>(languageSet);
+				Collections.sort(languages);
 				
-				Object[] options = languageSet.toArray();
+				Object[] options = languages.toArray();
 				Object defaultOption = options[languages.indexOf("English")];
 				Object retValue = JOptionPane.showInputDialog(
 						null, 
@@ -218,7 +222,7 @@ public class PrefsInstance {
 				);
 				
 				if (retValue != null)
-					prefs.setLanguage((String) retValue);
+					prefs.setLanguage(((String) retValue).replaceAll(" ", "_"));
 				else{
 					JOptionPane.showMessageDialog(null, "Invalid selection.  Defaulting to English - you can change this in Preferences.", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
 					prefs.setLanguage("English");	
@@ -245,8 +249,6 @@ public class PrefsInstance {
 			WindowAttributes transactions = prefsFactory.createWindowAttributes();
 			WindowAttributes graphs = prefsFactory.createWindowAttributes();
 			WindowAttributes reports = prefsFactory.createWindowAttributes();
-			
-			prefs.setCustomPlugins(prefsFactory.createCustomPlugins());
 			
 			main.setHeight(400);
 			main.setWidth(600);
@@ -340,17 +342,24 @@ public class PrefsInstance {
 			userPrefs.getPrefs().getLists().getListEntries().add(l);
 		}
 		
+		//If we are using relative directories, replace with the relative dirs.
+		userPrefs.getPrefs().setDataFile(userPrefs.getPrefs().getDataFile().replaceAll("^" + Buddi.getWorkingDir(), ""));
+		
+		for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
+			if (o instanceof Plugin){
+				Plugin plugin = (Plugin) o;
+				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + Buddi.getWorkingDir(), ""));
+			}
+		}
+		
 		try{
 			FileFunctions.copyFile(saveLocation, backupLocation);
 			
 			URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
-			
 			if (Const.DEVEL) Log.debug("Data saved to " + location);
 			
 			Resource resource = resourceSet.createResource(fileURI);
-			
 			resource.getContents().add(userPrefs);
-			
 			resource.save(Collections.EMPTY_MAP);
 		}
 		catch (IOException ioe){

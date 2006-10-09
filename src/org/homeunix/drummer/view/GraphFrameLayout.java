@@ -96,37 +96,32 @@ public class GraphFrameLayout extends AbstractFrame {
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkWindowSanity();
-				
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(arg0.getComponent().getWidth());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(arg0.getComponent().getHeight());
-								
-				PrefsInstance.getInstance().savePrefs();
-				
-				graphFrameInstances.remove(this);
-				
+				saveWindowPosition();				
 				super.componentHidden(arg0);
 			}
 		});
 		
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				PrefsInstance.getInstance().checkWindowSanity();
-				
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(GraphFrameLayout.this.getX());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(GraphFrameLayout.this.getY());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(GraphFrameLayout.this.getWidth());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(GraphFrameLayout.this.getHeight());
-								
-				PrefsInstance.getInstance().savePrefs();
-				
+				saveWindowPosition();
 				GraphFrameLayout.this.setVisible(false);
 			}
 		});
 		
 		return this;
+	}
+	
+	private void saveWindowPosition(){
+		PrefsInstance.getInstance().checkWindowSanity();
+		
+		PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().setX(this.getX());
+		PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().setY(this.getY());
+		PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().setWidth(this.getWidth());
+		PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow().setHeight(this.getHeight());
+						
+		PrefsInstance.getInstance().savePrefs();
+		
+		graphFrameInstances.remove(this);
 	}
 
 	protected Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){

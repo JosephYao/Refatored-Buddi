@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.homeunix.drummer.prefs.DictEntry;
 import org.homeunix.drummer.prefs.ListEntry;
 import org.homeunix.drummer.prefs.Lists;
+import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsPackage;
 
 /**
@@ -32,6 +33,7 @@ import org.homeunix.drummer.prefs.PrefsPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getPlugins <em>Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getListEntries <em>List Entries</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getDescDict <em>Desc Dict</em>}</li>
  * </ul>
@@ -41,14 +43,14 @@ import org.homeunix.drummer.prefs.PrefsPackage;
  */
 public class ListsImpl extends EObjectImpl implements Lists {
 	/**
-	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * The cached value of the '{@link #getPlugins() <em>Plugins</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDescDict()
+	 * @see #getPlugins()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList descDict = null;
+	protected EList plugins = null;
 
 	/**
 	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
@@ -59,6 +61,16 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 * @ordered
 	 */
 	protected EList listEntries = null;
+
+	/**
+	 * The cached value of the '{@link #getDescDict() <em>Desc Dict</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescDict()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList descDict = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -107,8 +119,22 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList getPlugins() {
+		if (plugins == null) {
+			plugins = new EObjectContainmentEList(Plugin.class, this, PrefsPackage.LISTS__PLUGINS);
+		}
+		return plugins;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case PrefsPackage.LISTS__PLUGINS:
+				return ((InternalEList)getPlugins()).basicRemove(otherEnd, msgs);
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
 			case PrefsPackage.LISTS__DESC_DICT:
@@ -124,6 +150,8 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case PrefsPackage.LISTS__PLUGINS:
+				return getPlugins();
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return getListEntries();
 			case PrefsPackage.LISTS__DESC_DICT:
@@ -140,6 +168,10 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case PrefsPackage.LISTS__PLUGINS:
+				getPlugins().clear();
+				getPlugins().addAll((Collection)newValue);
+				return;
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				getListEntries().clear();
 				getListEntries().addAll((Collection)newValue);
@@ -159,6 +191,9 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case PrefsPackage.LISTS__PLUGINS:
+				getPlugins().clear();
+				return;
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				getListEntries().clear();
 				return;
@@ -176,6 +211,8 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case PrefsPackage.LISTS__PLUGINS:
+				return plugins != null && !plugins.isEmpty();
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return listEntries != null && !listEntries.isEmpty();
 			case PrefsPackage.LISTS__DESC_DICT:

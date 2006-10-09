@@ -8,19 +8,22 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import org.homeunix.drummer.Buddi;
@@ -28,7 +31,6 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.components.PluginEntryArrayEditor;
 
 public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -48,10 +50,11 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected final JCheckBox showInterestRate;
 	protected final JCheckBox showClearReconcile;
 	protected final JComboBox numberOfBackups;
-	protected final PluginEntryArrayEditor exportPlugins;
-	protected final PluginEntryArrayEditor importPlugins;
-	protected final PluginEntryArrayEditor panelPlugins;
-
+	protected final JButton addButton;
+	protected final JButton removeButton;
+	protected final JList pluginList;
+	protected final DefaultListModel pluginListModel;
+	
 	protected final JCheckBox enableUpdateNotifications;
 	
 	protected final DefaultComboBoxModel languageModel;
@@ -59,55 +62,11 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected PreferencesDialogLayout(Frame owner){
 		super(owner);
 		
+		//Instantiate buttons
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
 		
-		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
-		okButton.setPreferredSize(buttonSize);
-		cancelButton.setPreferredSize(buttonSize);
-						
-		JLabel languageLabel = new JLabel(Translate.getInstance().get(TranslateKeys.LANGUAGE));
-		languageModel = new DefaultComboBoxModel();
-		language = new JComboBox(languageModel);
-		language.setRenderer(new DefaultListCellRenderer(){
-			public static final long serialVersionUID = 0;
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				if (value instanceof String){
-					String str = (String) value;
-					this.setText(str.replaceAll("_", " "));
-				}
-				return this;
-			}
-		});
-		
-		JLabel dateFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FORMAT));
-		JLabel currencyFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CURRENCY));
-		
-		//Add the date formats defined in Const.
-		currencyFormat = new JComboBox(Const.CURRENCY_FORMATS);
-		dateFormat = new JComboBox(Const.DATE_FORMATS);
-		dateFormat.setRenderer(new DefaultListCellRenderer(){
-			public static final long serialVersionUID = 0;
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				
-				if (value instanceof String){
-					String str = (String) value;
-					this.setText(new SimpleDateFormat(str).format(new Date()));
-				}
-				
-				return this;
-			}
-		});
-		
-//		Dimension dropdownSize = dateFormat.getPreferredSize();
-//		language.setPreferredSize(dropdownSize);
-//		currencyFormat.setPreferredSize(dropdownSize);
-		
-		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
-		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());
-		
+		//Instantiate final preferences widgets
 		showDeletedAccounts = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
 		showDeletedCategories = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_CATEGORIES));
 		showAccountTypes = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_ACCOUNT_TYPES));
@@ -116,143 +75,33 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		showCreditLimit = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CREDIT_LIMIT));
 		showInterestRate = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_INTEREST_RATE));
 		showClearReconcile = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CLEAR_RECONCILE));
+		languageModel = new DefaultComboBoxModel();
+		language = new JComboBox(languageModel);
+		currencyFormat = new JComboBox(Const.CURRENCY_FORMATS);
+		dateFormat = new JComboBox(Const.DATE_FORMATS);
+		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
+		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20});
+		pluginListModel = new DefaultListModel();
+		pluginList = new JList(pluginListModel);
+		addButton = new JButton(Translate.getInstance().get(TranslateKeys.ADD));
+		removeButton = new JButton(Translate.getInstance().get(TranslateKeys.REMOVE));
 		
+		//Set up buttons
+		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), okButton.getPreferredSize().height);
+		okButton.setPreferredSize(buttonSize);
+		cancelButton.setPreferredSize(buttonSize);
+		
+		//Set up tooltips
 		showAccountTypes.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_ACCOUNT_TYPES));
 		showCreditLimit.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_CREDIT_LIMIT));
 		showInterestRate.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_INTEREST_RATE));
 		showClearReconcile.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_CLEAR_RECONCILE));
 		
-		JLabel numberOfBackupsLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NUMBER_OF_BACKUPS));
-		Integer[] backups = {5, 10, 15, 20};
-		numberOfBackups = new JComboBox(backups);
-
-		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel deletePanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel interestRatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel clearReconcilePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		
-		languagePanel.add(languageLabel);
-		languagePanel.add(language);
-		
-		currencyFormatPanel.add(currencyFormatLabel);
-		currencyFormatPanel.add(currencyFormat);
-		
-		dateFormatPanel.add(dateFormatLabel);
-		dateFormatPanel.add(dateFormat);
-		
-		budgetIntervalPanel.add(budgetIntervalLabel);
-		budgetIntervalPanel.add(budgetInterval);
-		
-		deletePanel1.add(showDeletedAccounts);
-		
-		deletePanel2.add(showDeletedCategories);
-		
-		accountPanel.add(showAccountTypes);
-		
-		autoCompletePanel.add(showAutoComplete);
-		
-		updatePanel.add(enableUpdateNotifications);
-		
-		creditLimitPanel.add(showCreditLimit);
-		
-		interestRatePanel.add(showInterestRate);
-		
-		clearReconcilePanel.add(showClearReconcile);
-		
-		numberOfBackupsPanel.add(numberOfBackupsLabel);
-		numberOfBackupsPanel.add(numberOfBackups);
-		
-		exportPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS));
-		importPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS));
-		panelPlugins = new PluginEntryArrayEditor(Translate.getInstance().get(TranslateKeys.PANEL_PLUGINS));
-		
-		JPanel localePanel = new JPanel(new GridLayout(0, 1));
-		JPanel viewPanel = new JPanel(new GridLayout(0, 1));
-		JPanel pluginPanel = new JPanel(new GridLayout(0, 1));
-//		JPanel importPluginPanel = new JPanel(new GridLayout(0, 1));
-//		JPanel panelPluginPanel = new JPanel(new GridLayout(0, 1));
-		JPanel advancedPanel = new JPanel(new GridLayout(0, 1));
-		
-//		localePanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-//		viewPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-//		otherPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		
-//		localePanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.LOCALE)));
-//		viewPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.VIEW)));
-//		otherPanel.setBorder(BorderFactory.createTitledBorder(""));
-		
-//		JPanel textPanel = new JPanel(new GridLayout(0, 1));
-		localePanel.add(languagePanel);		
-		localePanel.add(currencyFormatPanel);
-		localePanel.add(dateFormatPanel);
-
-		pluginPanel.add(exportPlugins);
-		pluginPanel.add(importPlugins);
-		pluginPanel.add(panelPlugins);
-//		exportPluginPanel.add(exportPlugins);
-//		importPluginPanel.add(importPlugins);
-//		panelPluginPanel.add(panelPlugins);
-//		advancedPanel.add(exportPlugins);
-//		advancedPanel.add(importPlugins);
-//		advancedPanel.add(panelPlugins);
-
-		
-		advancedPanel.add(budgetIntervalPanel);
-		advancedPanel.add(numberOfBackupsPanel);
-		advancedPanel.add(updatePanel);
-				
-		viewPanel.add(deletePanel1);
-		viewPanel.add(deletePanel2);
-		viewPanel.add(accountPanel);
-		viewPanel.add(interestRatePanel);
-		viewPanel.add(creditLimitPanel);
-		viewPanel.add(clearReconcilePanel);
-		viewPanel.add(autoCompletePanel);
-
-		JPanel viewPanelHolder = new JPanel(new BorderLayout());
-		JPanel localePanelHolder = new JPanel(new BorderLayout());
-		JPanel pluginPanelHolder = new JPanel(new BorderLayout());
-		JPanel advancedPanelHolder = new JPanel(new BorderLayout());
-		
-		viewPanelHolder.add(viewPanel, BorderLayout.NORTH);
-		localePanelHolder.add(localePanel, BorderLayout.NORTH);
-		pluginPanelHolder.add(pluginPanel, BorderLayout.NORTH);
-		advancedPanelHolder.add(advancedPanel, BorderLayout.NORTH);
-
-//		viewPanelHolder.add(new JPanel(), BorderLayout.NORTH);
-//		localePanelHolder.add(new JPanel(), BorderLayout.NORTH);
-//		pluginPanelHolder.add(new JPanel(), BorderLayout.NORTH);
-//		advancedPanelHolder.add(new JPanel(), BorderLayout.NORTH);
-
-		
-		
-//		JPanel textPanelSpacer = new JPanel();
-//		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-//		textPanelSpacer.add(textPanel);
-		
-//		JPanel mainBorderPanel = new JPanel(new GridLayout(1, 0));
-//		mainBorderPanel.setLayout(new BorderLayout());
-//		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
-//		mainBorderPanel.add(localePanel);
-//		mainBorderPanel.add(viewPanel);
-//		mainBorderPanel.add(otherPanel);
-		
 		JTabbedPane tabs = new JTabbedPane();
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), viewPanelHolder);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), localePanelHolder);
-//		tabs.addTab(Translate.getInstance().get(TranslateKeys.EXPORT_PLUGINS), pluginPanel);
-//		tabs.addTab(Translate.getInstance().get(TranslateKeys.IMPORT_PLUGINS), importPluginPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.PLUGINS), pluginPanelHolder);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), advancedPanelHolder);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.VIEW), getViewPanel());
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.LOCALE), getLocalePanel());
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.PLUGINS), getPluginPanel());
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.ADVANCED), getAdvancedPanel());
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);
@@ -260,8 +109,6 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		
-//		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
 		mainPanel.add(tabs, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
@@ -269,6 +116,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
+		this.setPreferredSize(new Dimension(450, 350));
 		
 		if (Buddi.isMac()) {
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
@@ -287,4 +135,147 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		return this;
 	}
 
+	private JPanel getLocalePanel(){
+		JPanel localePanel = new JPanel();
+		localePanel.setLayout(new BoxLayout(localePanel, BoxLayout.Y_AXIS));
+
+		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		JLabel dateFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FORMAT));
+		JLabel currencyFormatLabel = new JLabel(Translate.getInstance().get(TranslateKeys.CURRENCY));
+		JLabel languageLabel = new JLabel(Translate.getInstance().get(TranslateKeys.LANGUAGE));
+
+		//Set up the language pulldown
+		language.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof String){
+					String str = (String) value;
+					this.setText(str.replaceAll("_", " "));
+				}
+				return this;
+			}
+		});
+
+		//Set up the date format pulldown
+		dateFormat.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				
+				if (value instanceof String){
+					String str = (String) value;
+					this.setText(new SimpleDateFormat(str).format(new Date()));
+				}
+				
+				return this;
+			}
+		});
+		
+		languagePanel.add(languageLabel);
+		languagePanel.add(language);
+		currencyFormatPanel.add(currencyFormatLabel);
+		currencyFormatPanel.add(currencyFormat);		
+		dateFormatPanel.add(dateFormatLabel);
+		dateFormatPanel.add(dateFormat);
+
+		localePanel.add(languagePanel);		
+		localePanel.add(currencyFormatPanel);
+		localePanel.add(dateFormatPanel);
+		localePanel.add(Box.createVerticalGlue());
+		
+		return getPanelHolder(localePanel);
+	}
+	
+	private JPanel getViewPanel(){
+		JPanel viewPanel = new JPanel();
+		viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.Y_AXIS));
+		
+		JPanel deletePanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel deletePanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel interestRatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel clearReconcilePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		deletePanel1.add(showDeletedAccounts);
+		deletePanel2.add(showDeletedCategories);
+		accountPanel.add(showAccountTypes);
+		autoCompletePanel.add(showAutoComplete);
+		creditLimitPanel.add(showCreditLimit);
+		interestRatePanel.add(showInterestRate);
+		clearReconcilePanel.add(showClearReconcile);
+		
+		viewPanel.add(deletePanel1);
+		viewPanel.add(deletePanel2);
+		viewPanel.add(accountPanel);
+		viewPanel.add(interestRatePanel);
+		viewPanel.add(creditLimitPanel);
+		viewPanel.add(clearReconcilePanel);
+		viewPanel.add(autoCompletePanel);
+		viewPanel.add(Box.createVerticalGlue());
+				
+		return getPanelHolder(viewPanel);
+
+	}
+	
+	private JPanel getAdvancedPanel(){
+		JPanel advancedPanel = new JPanel();
+		advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
+		
+		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		JLabel numberOfBackupsLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NUMBER_OF_BACKUPS));
+		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
+		
+		budgetIntervalPanel.add(budgetIntervalLabel);
+		budgetIntervalPanel.add(budgetInterval);
+		numberOfBackupsPanel.add(numberOfBackupsLabel);
+		numberOfBackupsPanel.add(numberOfBackups);
+		updatePanel.add(enableUpdateNotifications);
+		
+		advancedPanel.add(budgetIntervalPanel);
+		advancedPanel.add(numberOfBackupsPanel);
+		advancedPanel.add(updatePanel);
+		
+		
+		return getPanelHolder(advancedPanel);
+	}
+	
+	private JPanel getPluginPanel(){
+		JPanel pluginPanel = new JPanel(new BorderLayout());
+
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		Dimension buttonSize = new Dimension(Math.max(100, removeButton.getPreferredSize().width), removeButton.getPreferredSize().height);
+		addButton.setPreferredSize(buttonSize);
+		removeButton.setPreferredSize(buttonSize);
+		buttonPanel.add(addButton);
+		buttonPanel.add(removeButton);
+		
+		JScrollPane pluginListScroller = new JScrollPane(pluginList);
+		
+		pluginPanel.add(pluginListScroller, BorderLayout.CENTER);
+		pluginPanel.add(buttonPanel, BorderLayout.SOUTH);
+		pluginPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		
+		return pluginPanel;
+	}
+	
+	private JPanel getPanelHolder(JPanel panel){
+		JPanel panelHolder = new JPanel(new BorderLayout());
+		panelHolder.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		
+		panelHolder.add(panel, BorderLayout.NORTH);
+		panelHolder.add(new JPanel(), BorderLayout.CENTER);
+
+		return panelHolder;
+	}
 }

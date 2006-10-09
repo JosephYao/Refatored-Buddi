@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.jar.JarEntry;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,7 +19,6 @@ import javax.swing.JPanel;
 
 import net.roydesign.ui.JScreenMenuItem;
 
-import org.eclipse.emf.common.util.EList;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
@@ -31,8 +31,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
-import org.homeunix.drummer.prefs.PluginEntry;
-import org.homeunix.drummer.prefs.PluginJar;
+import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
@@ -116,6 +115,33 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		return panelItems;
 	}
+	
+	/**
+	 * Returns a list of all the class names (in filesystem format, 
+	 * i.e. org/homeunix/drummer/Test.class) of classes which
+	 * implement the BuddiPlugin interface.  This is a relatively
+	 * expensive operation - we have to instantiate each class
+	 * within the jar file to be sure it is the correct type -
+	 * so use this method with care. 
+	 * @param jarFile
+	 * @return
+	 */
+	public static Vector<String> getAllPluginsFromJar(File jarFile){
+		Vector<String> classNames = new Vector<String>();
+		
+		
+		for (JarEntry entry : JarLoader.getAllClasses(jarFile)) {
+			try {
+				if (Const.DEVEL) Log.debug("Loading " + entry.getName());
+				Object o = JarLoader.getObject(jarFile, filesystemToClass(entry.getName()));
+				if (o instanceof BuddiPlugin)
+					classNames.add(entry.getName());
+			}
+			catch (Exception e){}
+		}
+		
+		return classNames;
+	}
 
 
 	/**
@@ -162,44 +188,28 @@ public class PluginFactory<T extends BuddiPlugin> {
 			Log.warning("Loading built in plugins: " + e);
 		}
 
-		for (Object o1 : PrefsInstance.getInstance().getPrefs().getCustomPlugins().getJars()) {
-			if (o1 instanceof PluginJar){
-				PluginJar pluginJar = (PluginJar) o1;
-				EList jarPluginEntries = null;
-				File jarFile = new File(pluginJar.getJarFile());
-
+		// TODO Currently we load every jar separately.  This can be slow - perhaps we should test first.
+		for (Object o1 : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
+			if (o1 instanceof Plugin){
+				Plugin plugin = (Plugin) o1;
+				
+				File jarFile = new File(plugin.getJarFile());
+				String className = plugin.getClassName();
+				className = filesystemToClass(className);
 				try{
-					if (pluginType instanceof BuddiExportPlugin){
-						jarPluginEntries = pluginJar.getExportPlugins();
-					}
-					else if (pluginType instanceof BuddiImportPlugin){
-						jarPluginEntries = pluginJar.getImportPlugins();
-					}
-					else if (pluginType instanceof BuddiPanelPlugin){
-						jarPluginEntries = pluginJar.getPanelPlugins();
-					}
+					Object pluginObject = JarLoader.getObject(jarFile, className);
 
-					if (jarPluginEntries != null){
-						for (Object o2 : jarPluginEntries) {
-							if (o2 instanceof PluginEntry){
-								PluginEntry pluginEntry = (PluginEntry) o2;
-								Object pluginObject = JarLoader.getObject(jarFile, pluginEntry.getClassName());
-
-								if (pluginType instanceof BuddiExportPlugin
-										&& pluginObject instanceof BuddiExportPlugin){
-									pluginEntries.add((T) pluginObject);
-								}
-								else if (pluginType instanceof BuddiImportPlugin
-										&& pluginObject instanceof BuddiImportPlugin){
-									pluginEntries.add((T) pluginObject);
-								}
-								else if (pluginType instanceof BuddiPanelPlugin
-										&& pluginObject instanceof BuddiPanelPlugin){
-									pluginEntries.add((T) pluginObject);
-								}
-
-							}
-						}
+					if (pluginType instanceof BuddiExportPlugin
+							&& pluginObject instanceof BuddiExportPlugin){
+						pluginEntries.add((T) pluginObject);
+					}
+					else if (pluginType instanceof BuddiImportPlugin
+							&& pluginObject instanceof BuddiImportPlugin){
+						pluginEntries.add((T) pluginObject);
+					}
+					else if (pluginType instanceof BuddiPanelPlugin
+							&& pluginObject instanceof BuddiPanelPlugin){
+						pluginEntries.add((T) pluginObject);
 					}
 				}
 				catch(Exception e){
@@ -264,5 +274,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 				dateSelect.setSelectedItem(null);
 			}
 		});
+	}
+	
+	/**
+	 * Converts classes from filesystem type (i.e., org/homeunix/thecave/Test.class)
+	 * to Class type (i.e., org.homeunix.thecave.Test).
+	 * @param filesystemClassName class in Filesystem type
+	 * @return
+	 */
+	private static String filesystemToClass(String filesystemClassName){
+		return filesystemClassName.replaceAll(".class$", "").replaceAll("/", ".");
 	}
 }

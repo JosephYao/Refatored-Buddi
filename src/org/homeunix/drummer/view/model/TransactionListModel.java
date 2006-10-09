@@ -62,6 +62,13 @@ public class TransactionListModel extends AbstractListModel {
 		DataInstance.getInstance().saveDataModel();
 	}
 	
+	public void updateNoOrderChange(Transaction t){
+		t.calculateBalance();
+		int i = transactions.indexOf(t);
+		this.fireContentsChanged(this, i, i);
+		DataInstance.getInstance().saveDataModel();
+	}
+	
 	//*** Filtered List Model
 	public FilteredDynamicListModel getFilteredListModel(final Account a, final TransactionsFrame frame){
 		final FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();  

@@ -32,8 +32,8 @@ import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
 import org.homeunix.drummer.view.model.TransactionListModel;
-import org.homeunix.thecave.moss.gui.SearchField.SearchTextChangedEvent;
-import org.homeunix.thecave.moss.gui.SearchField.SearchTextChangedEventListener;
+import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEvent;
+import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEventListener;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -618,5 +618,22 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	
 	public TranslateKeys getDateRangeFilter(){
 		return (TranslateKeys) dateRangeComboBox.getSelectedItem();
+	}
+	
+	public void toggleCleared(){
+		Transaction t = (Transaction) list.getSelectedValue();
+		t.setCleared(!t.isCleared());
+//		DataInstance.getInstance().saveDataModel();
+		baseModel.updateNoOrderChange(t);
+		editableTransaction.updateClearedAndReconciled();
+	}
+	
+	public void toggleReconciled(){
+		Transaction t = (Transaction) list.getSelectedValue();
+		t.setReconciled(!t.isReconciled());
+//		DataInstance.getInstance().saveDataModel();
+		baseModel.updateNoOrderChange(t);
+		editableTransaction.updateClearedAndReconciled();
+		
 	}
 }

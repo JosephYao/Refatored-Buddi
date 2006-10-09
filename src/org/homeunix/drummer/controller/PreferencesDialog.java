@@ -7,15 +7,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.prefs.CustomPlugins;
+import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.Interval;
+import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractDialog;
@@ -23,13 +28,13 @@ import org.homeunix.drummer.view.PreferencesDialogLayout;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
-public class PreferencesFrame extends PreferencesDialogLayout {
+public class PreferencesDialog extends PreferencesDialogLayout {
 	public static final long serialVersionUID = 0;
 
-	public PreferencesFrame(){
+	public PreferencesDialog(){
 		super(MainBuddiFrame.getInstance());
 	}
-		
+
 	@Override
 	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
@@ -37,8 +42,10 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				final Prefs prefs = PrefsInstance.getInstance().getPrefs();
 				boolean needRestart = false;
-				if (!prefs.getLanguage().equals(language.getSelectedItem().toString())){
-				
+				if (!prefs.getLanguage().equals(language.getSelectedItem().toString())
+						|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
+						|| pluginsChanged()){
+
 					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
 					needRestart = true;
 				}
@@ -62,34 +69,30 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 				prefs.setShowInterestRate(showInterestRate.isSelected());
 				prefs.setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				prefs.setShowAdvanced(showClearReconcile.isSelected());
-				
-				CustomPlugins cp = prefs.getCustomPlugins();
-				if (cp == null){
-					cp = PrefsInstance.getInstance().getPrefsFactory().createCustomPlugins();
-					prefs.setCustomPlugins(cp);
+
+				prefs.getLists().getPlugins().clear();
+				for (int i = 0; i < pluginList.getModel().getSize(); i++) {
+					Object o = pluginList.getModel().getElementAt(i);
+					if (o instanceof Plugin){
+						Plugin plugin = (Plugin) o;
+						if (plugin.getClassName().endsWith(".class"))
+							PrefsInstance.getInstance().getPrefs().getLists().getPlugins().add(plugin);
+					}
 				}
-				
-				cp.getJars().clear();
-//				cp.getExportPlugins().clear();
-//				cp.getImportPlugins().clear();
-//				cp.getPanelPlugins().clear();
-//				cp.getExportPlugins().addAll(exportPlugins.getPluginEntries());
-//				cp.getImportPlugins().addAll(importPlugins.getPluginEntries());
-//				cp.getPanelPlugins().addAll(panelPlugins.getPluginEntries());
-				
+
 				PrefsInstance.getInstance().savePrefs();
-												
-				Formatter.getInstance().reloadDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());				
-				
+
+				Formatter.getInstance().setDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());				
+
 				if (needRestart){
 					int retValue = JOptionPane.showConfirmDialog(
-							PreferencesFrame.this,
+							PreferencesDialog.this,
 							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
 							Translate.getInstance().get(TranslateKeys.RESTART_NEEDED_TITLE),
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE
 					);
-					
+
 					if (retValue == JOptionPane.YES_OPTION){
 						if (MainBuddiFrame.getInstance() != null)
 							MainBuddiFrame.getInstance().savePosition();
@@ -102,21 +105,72 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 					MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 				}
 				TransactionsFrame.updateAllTransactionWindows();
-				
-				PreferencesFrame.this.setVisible(false);
-				PreferencesFrame.this.dispose();
+
+				PreferencesDialog.this.setVisible(false);
+				PreferencesDialog.this.dispose();
 			}
 		});
-		
+
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				PreferencesFrame.this.setVisible(false);
-				
+				PreferencesDialog.this.setVisible(false);
+
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 		});
-		
+
+		addButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setFileFilter(new FileFilter(){
+					public boolean accept(File arg0) {
+						if (arg0.getAbsolutePath().endsWith(".jar") ||
+								arg0.isDirectory())
+							return true;
+						else
+							return false;
+					}
+
+					@Override
+					public String getDescription() {
+						return Translate.getInstance().get(TranslateKeys.JAR_FILES);
+					}
+				});
+				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_PLUGIN_JAR));
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+					Vector<String> classNames = PluginFactory.getAllPluginsFromJar(jfc.getSelectedFile());
+					if (classNames.size() == 0){
+						JOptionPane.showMessageDialog(PreferencesDialog.this, 
+								Translate.getInstance().get(TranslateKeys.NO_PLUGINS_IN_JAR), 
+								Translate.getInstance().get(TranslateKeys.NO_PLUGINS_IN_JAR_TITLE), 
+								JOptionPane.WARNING_MESSAGE
+						);
+					}
+					for (String className : classNames) {
+						Plugin plugin = PrefsInstance.getInstance().getPrefsFactory().createPlugin();
+						plugin.setJarFile(jfc.getSelectedFile().getAbsolutePath());
+						plugin.setClassName(className);
+						if (plugin.getClassName().endsWith(".class"))
+							pluginListModel.addElement(plugin);
+					}
+				}
+
+			}
+		});
+
+		removeButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if (pluginList.getSelectedValues().length > 0) {
+					for (Object o : pluginList.getSelectedValues()) {
+						pluginListModel.removeElement(o);	
+					}
+				}
+			}
+		});
+
 		return this;
 	}
 
@@ -126,12 +180,12 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		updateContent();
 
 		final Prefs prefs = PrefsInstance.getInstance().getPrefs();
-		
+
 		language.setSelectedItem(prefs.getLanguage());
 		dateFormat.setSelectedItem(prefs.getDateFormat());
 		currencyFormat.setSelectedItem(prefs.getCurrencySymbol());
 
-		
+
 		showDeletedAccounts.setSelected(prefs.isShowDeletedAccounts());
 		showDeletedCategories.setSelected(prefs.isShowDeletedCategories());
 		showAccountTypes.setSelected(prefs.isShowAccountTypes());
@@ -143,15 +197,16 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
 		numberOfBackups.setSelectedItem(prefs.getNumberOfBackups());
 		enableUpdateNotifications.setSelected(prefs.isEnableUpdateNotifications());
-		
-		if (prefs.getCustomPlugins() == null){
-			prefs.setCustomPlugins(PrefsInstance.getInstance().getPrefsFactory().createCustomPlugins());
+
+		pluginListModel.clear();
+		for (Object o : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
+			Plugin plugin = (Plugin) o;
+			if (plugin.getClassName().endsWith(".class")){
+				pluginListModel.addElement(plugin);
+				pluginList.setSelectedValue(plugin, false);
+			}
 		}
-		
-//		exportPlugins.setStrings(prefs.getCustomPlugins().getExportPlugins());
-//		importPlugins.setStrings(prefs.getCustomPlugins().getImportPlugins());
-//		panelPlugins.setStrings(prefs.getCustomPlugins().getPanelPlugins());
-		
+
 		return this;
 	}
 
@@ -159,13 +214,13 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		languageModel.removeAllElements();
 
 		Set<String> languages = new HashSet<String>();
-		
+
 		// Load all available languages into Prefs.  Start with 
 		// the bundled languages, and if there are more, load them too.
 		for (String language : Const.BUNDLED_LANGUAGES) {
 			languages.add(language);			
 		}
-		
+
 		File languageLocation = new File(Const.LANGUAGE_FOLDER);
 		if (languageLocation.exists() && languageLocation.isDirectory()){
 			for (File f: languageLocation.listFiles())
@@ -181,9 +236,24 @@ public class PreferencesFrame extends PreferencesDialogLayout {
 		for (String string : languagesVector) {
 			languageModel.addElement(string);
 		}
-		
+
 		return this;
 	}
 
+	private boolean pluginsChanged(){
+		if (pluginListModel.size() != PrefsInstance.getInstance().getPrefs().getLists().getPlugins().size())
+			return true;
+		Map<Object, Boolean> currentPlugins = new HashMap<Object, Boolean>();
 
+		for(int i = 0; i < pluginListModel.size(); i++){
+			currentPlugins.put(pluginListModel.get(i), true);
+		}
+
+		for (Object o : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
+			if (currentPlugins.get(o) == null)
+				return true;
+		}
+
+		return false;
+	}
 }

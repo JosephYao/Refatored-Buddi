@@ -25,7 +25,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
-import org.homeunix.thecave.moss.gui.SearchField;
+import org.homeunix.thecave.moss.gui.JSearchField;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
@@ -39,7 +39,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JButton recordButton;
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
-	protected final SearchField searchField;
+	protected final JSearchField searchField;
 	protected final JComboBox dateRangeComboBox;
 	protected final JLabel creditRemaining;
 	
@@ -71,7 +71,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
-		searchField = new SearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
+		searchField = new JSearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
 		
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));

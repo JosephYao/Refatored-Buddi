@@ -6,6 +6,8 @@
  */
 package org.homeunix.drummer.prefs.impl;
 
+import java.io.File;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -13,23 +15,44 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.homeunix.drummer.prefs.PluginEntry;
+import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Plugin Entry</b></em>'.
+ * An implementation of the model object '<em><b>Plugin</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PluginEntryImpl#getClassName <em>Class Name</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PluginImpl#getJarFile <em>Jar File</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PluginImpl#getClassName <em>Class Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
+public class PluginImpl extends EObjectImpl implements Plugin {
+	/**
+	 * The default value of the '{@link #getJarFile() <em>Jar File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getJarFile()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String JAR_FILE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getJarFile() <em>Jar File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getJarFile()
+	 * @generated
+	 * @ordered
+	 */
+	protected String jarFile = JAR_FILE_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -55,7 +78,7 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PluginEntryImpl() {
+	protected PluginImpl() {
 		super();
 	}
 
@@ -65,7 +88,28 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return PrefsPackage.Literals.PLUGIN_ENTRY;
+		return PrefsPackage.Literals.PLUGIN;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getJarFile() {
+		return jarFile;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setJarFile(String newJarFile) {
+		String oldJarFile = jarFile;
+		jarFile = newJarFile;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PLUGIN__JAR_FILE, oldJarFile, jarFile));
 	}
 
 	/**
@@ -86,7 +130,7 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 		String oldClassName = className;
 		className = newClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PLUGIN_ENTRY__CLASS_NAME, oldClassName, className));
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PLUGIN__CLASS_NAME, oldClassName, className));
 	}
 
 	/**
@@ -96,7 +140,9 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PrefsPackage.PLUGIN_ENTRY__CLASS_NAME:
+			case PrefsPackage.PLUGIN__JAR_FILE:
+				return getJarFile();
+			case PrefsPackage.PLUGIN__CLASS_NAME:
 				return getClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -109,7 +155,10 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 */
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PrefsPackage.PLUGIN_ENTRY__CLASS_NAME:
+			case PrefsPackage.PLUGIN__JAR_FILE:
+				setJarFile((String)newValue);
+				return;
+			case PrefsPackage.PLUGIN__CLASS_NAME:
 				setClassName((String)newValue);
 				return;
 		}
@@ -123,7 +172,10 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.PLUGIN_ENTRY__CLASS_NAME:
+			case PrefsPackage.PLUGIN__JAR_FILE:
+				setJarFile(JAR_FILE_EDEFAULT);
+				return;
+			case PrefsPackage.PLUGIN__CLASS_NAME:
 				setClassName(CLASS_NAME_EDEFAULT);
 				return;
 		}
@@ -137,7 +189,9 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.PLUGIN_ENTRY__CLASS_NAME:
+			case PrefsPackage.PLUGIN__JAR_FILE:
+				return JAR_FILE_EDEFAULT == null ? jarFile != null : !JAR_FILE_EDEFAULT.equals(jarFile);
+			case PrefsPackage.PLUGIN__CLASS_NAME:
 				return CLASS_NAME_EDEFAULT == null ? className != null : !CLASS_NAME_EDEFAULT.equals(className);
 		}
 		return super.eIsSet(featureID);
@@ -147,8 +201,13 @@ public class PluginEntryImpl extends EObjectImpl implements PluginEntry {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 */
-	public String toString() {		
-		return getClassName();
+	public String toString() {
+		StringBuffer result = new StringBuffer();
+		result.append(className.replaceAll(".class$", "").replaceAll("^.*" + File.separator, ""));
+		result.append(" (");
+		result.append(jarFile.replaceAll("^.*" + File.separator, ""));
+		result.append(')');
+		return result.toString();
 	}
 
-} //PluginEntryImpl
+} //PluginImpl

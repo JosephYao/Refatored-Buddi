@@ -70,9 +70,6 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected PrefsSwitch modelSwitch =
 		new PrefsSwitch() {
-			public Object caseCustomPlugins(CustomPlugins object) {
-				return createCustomPluginsAdapter();
-			}
 			public Object caseDictData(DictData object) {
 				return createDictDataAdapter();
 			}
@@ -94,11 +91,8 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 			public Object caseLists(Lists object) {
 				return createListsAdapter();
 			}
-			public Object casePluginEntry(PluginEntry object) {
-				return createPluginEntryAdapter();
-			}
-			public Object casePluginJar(PluginJar object) {
-				return createPluginJarAdapter();
+			public Object casePlugin(Plugin object) {
+				return createPluginAdapter();
 			}
 			public Object casePrefs(Prefs object) {
 				return createPrefsAdapter();
@@ -132,20 +126,6 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 		return (Adapter)modelSwitch.doSwitch((EObject)target);
 	}
 
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.CustomPlugins <em>Custom Plugins</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.homeunix.drummer.prefs.CustomPlugins
-	 * @generated
-	 */
-	public Adapter createCustomPluginsAdapter() {
-		return null;
-	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.DictData <em>Dict Data</em>}'.
@@ -246,30 +226,16 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.PluginEntry <em>Plugin Entry</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Plugin <em>Plugin</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.homeunix.drummer.prefs.PluginEntry
+	 * @see org.homeunix.drummer.prefs.Plugin
 	 * @generated
 	 */
-	public Adapter createPluginEntryAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.PluginJar <em>Plugin Jar</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.homeunix.drummer.prefs.PluginJar
-	 * @generated
-	 */
-	public Adapter createPluginJarAdapter() {
+	public Adapter createPluginAdapter() {
 		return null;
 	}
 

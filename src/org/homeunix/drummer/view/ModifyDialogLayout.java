@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
+import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.util.Formatter;
 
 public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
@@ -31,11 +31,11 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 	protected final JButton cancelButton;
 	
 	protected final JTextField name;
-	protected final JDecimalField amount;
+	protected final JCurrencyField amount;
 	protected final JComboBox pulldown;
 	protected final JCheckBox check;
-	protected final JDecimalField creditLimit;
-	protected final JDecimalField interestRate;
+	protected final JCurrencyField creditLimit;
+	protected final JCurrencyField interestRate;
 	
 	protected final JLabel nameLabel;
 	protected final JLabel amountLabel;
@@ -58,9 +58,9 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		nameLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
-		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
-		creditLimit = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
-		interestRate = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
+		amount = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
+		creditLimit = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
+		interestRate = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.homeunix.drummer.prefs.Lists#getPlugins <em>Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Lists#getListEntries <em>List Entries</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Lists#getDescDict <em>Desc Dict</em>}</li>
  * </ul>
@@ -59,5 +60,21 @@ public interface Lists extends EObject {
 	 * @generated
 	 */
 	EList getListEntries();
+
+	/**
+	 * Returns the value of the '<em><b>Plugins</b></em>' containment reference list.
+	 * The list contents are of type {@link org.homeunix.drummer.prefs.Plugin}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Plugins</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Plugins</em>' containment reference list.
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getLists_Plugins()
+	 * @model type="org.homeunix.drummer.prefs.Plugin" containment="true"
+	 * @generated
+	 */
+	EList getPlugins();
 
 } // Lists

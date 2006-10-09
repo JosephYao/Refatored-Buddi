@@ -28,7 +28,7 @@ import net.roydesign.ui.JScreenMenuItem;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
-import org.homeunix.drummer.controller.PreferencesFrame;
+import org.homeunix.drummer.controller.PreferencesDialog;
 import org.homeunix.drummer.controller.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
@@ -130,29 +130,40 @@ public class BuddiMenu extends JScreenMenuBar {
 
 
 		//Edit menu items
-		final JScreenMenuItem cut = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CUT));
-		final JScreenMenuItem copy = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.COPY));
-		final JScreenMenuItem paste = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PASTE));
+//		final JScreenMenuItem cut = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CUT));
+//		final JScreenMenuItem copy = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.COPY));
+//		final JScreenMenuItem paste = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PASTE));
+		final JScreenMenuItem toggleReconciled = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_RECONCILED));
+		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_CLEARED));
 		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_TRANSACTIONS));
 
-		cut.addUserFrame(TransactionsFrame.class);
-		copy.addUserFrame(TransactionsFrame.class);
-		paste.addUserFrame(TransactionsFrame.class);
+//		cut.addUserFrame(TransactionsFrame.class);
+//		copy.addUserFrame(TransactionsFrame.class);
+//		paste.addUserFrame(TransactionsFrame.class);
+		toggleReconciled.addUserFrame(TransactionsFrame.class);
+		toggleCleared.addUserFrame(TransactionsFrame.class);
 		editAutomaticTransactions.addUserFrame(MainBuddiFrame.class);
 		editAutomaticTransactions.addUserFrame(TransactionsFrame.class);
 
-		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-
+//		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		toggleReconciled.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		toggleCleared.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		
 
 //		edit.add(cut);
 //		edit.add(copy);
-//		edit.add(paste);
-//		edit.addSeparator();
+		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+			edit.add(toggleCleared);
+			edit.add(toggleReconciled);
+			edit.addSeparator();
+		}
 		edit.add(editAutomaticTransactions);
 
 
@@ -410,6 +421,18 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
+		toggleCleared.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				((TransactionsFrame) BuddiMenu.this.frame).toggleCleared();
+			}
+		});
+
+		toggleReconciled.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				((TransactionsFrame) BuddiMenu.this.frame).toggleReconciled();
+			}
+		});
+		
 		editAutomaticTransactions.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				new ScheduledTransactionsListFrame().openWindow();
@@ -487,7 +510,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				new PreferencesFrame().clearContent().openWindow();
+				new PreferencesDialog().clearContent().openWindow();
 			}
 		});
 		if (!PreferencesJMenuItem.isAutomaticallyPresent())

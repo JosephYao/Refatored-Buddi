@@ -118,32 +118,14 @@ public class ReportFrameLayout extends AbstractFrame {
 		this.addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
-				PrefsInstance.getInstance().checkWindowSanity();
-				
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(arg0.getComponent().getX());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(arg0.getComponent().getY());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(arg0.getComponent().getWidth());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(arg0.getComponent().getHeight());
-								
-				PrefsInstance.getInstance().savePrefs();
-				
-				reportFrameInstances.remove(this);
-				
+				saveWindowPosition();
 				super.componentHidden(arg0);
 			}
 		});
 		
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				PrefsInstance.getInstance().checkWindowSanity();
-				
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(ReportFrameLayout.this.getX());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(ReportFrameLayout.this.getY());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(ReportFrameLayout.this.getWidth());
-				PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(ReportFrameLayout.this.getHeight());
-								
-				PrefsInstance.getInstance().savePrefs();
-				
+				saveWindowPosition();				
 				ReportFrameLayout.this.setVisible(false);
 			}
 		});
@@ -151,7 +133,6 @@ public class ReportFrameLayout extends AbstractFrame {
 		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getLastSelectedPathComponent();
-								
 				selectedNode = node;
 			}
 		});
@@ -189,6 +170,19 @@ public class ReportFrameLayout extends AbstractFrame {
 		});
 		
 		return this;
+	}
+	
+	private void saveWindowPosition(){
+		PrefsInstance.getInstance().checkWindowSanity();
+		
+		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(this.getX());
+		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(this.getY());
+		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(this.getWidth());
+		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(this.getHeight());
+						
+		PrefsInstance.getInstance().savePrefs();
+		
+		reportFrameInstances.remove(this);
 	}
 	
 	public String getHTMLPage(){

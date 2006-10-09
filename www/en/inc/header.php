@@ -41,6 +41,7 @@ How to use Buddi:
 <li><a href='./preferences.php'>Preferences</a></li>
 <li><a href='./prepaid.php'>Prepaid Accounts</a></li>
 <li><a href='./scheduled.php'>Scheduled Transactions</a></li>
+<li><a href='./plugins.php'>Plugins</a></li>
 </ul>
 </li>
 <br>

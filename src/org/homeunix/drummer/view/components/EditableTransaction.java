@@ -37,7 +37,7 @@ import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrameLayout;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
-import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
+import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.gui.hint.JHintAutoCompleteTextField;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
@@ -54,7 +54,7 @@ public class EditableTransaction extends JPanel {
 	private Transaction transaction; //Set when editing existing one; null otherwise
 	
 	private final JDateChooser date;
-	private final JDecimalField amount;
+	private final JCurrencyField amount;
 	private final JScrollingComboBox from;
 	private final JScrollingComboBox to;
 	private final JHintTextField number;
@@ -74,7 +74,7 @@ public class EditableTransaction extends JPanel {
 		this.parent = parent;
 				
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
-		amount = new JDecimalField(0, 5, Formatter.getInstance().getDecimalFormat());
+		amount = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));
@@ -119,16 +119,6 @@ public class EditableTransaction extends JPanel {
 		components.add(memo);
 		components.add(memoScroller);
 		
-//		if (!Buddi.isMac()){
-//			EmptyBorder b = (EmptyBorder) BorderFactory.createEmptyBorder(4, 4, 4, 4);
-//			for (JComponent c : components) {
-////				c.setBorder(BorderFactory.createCompoundBorder(
-////						b,
-////						c.getBorder()));
-//				
-//			}
-//		}
-		
 		topPanel.add(date);
 		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
@@ -154,10 +144,6 @@ public class EditableTransaction extends JPanel {
 		mainPanel.add(topPanel);
 		if (!Buddi.isMac()) mainPanel.add(Box.createVerticalStrut(3));
 		mainPanel.add(bottomPanel);
-		
-//		topPanel.setOpaque(false);
-//		bottomPanel.setOpaque(false);
-//		mainPanel.setOpaque(false);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
@@ -448,5 +434,15 @@ public class EditableTransaction extends JPanel {
 	
 	public void resetSelection(){
 		date.requestFocusInWindow();
+	}
+	
+	/**
+	 * Forces the Cleared and reconciled boxes to update to the current
+	 * values as stored in the model.  Should only be used for the 
+	 * Clear / Reconcile shortcuts. 
+	 */
+	public void updateClearedAndReconciled(){
+		cleared.setSelected(transaction.isCleared());
+		reconciled.setSelected(transaction.isReconciled());
 	}
 }

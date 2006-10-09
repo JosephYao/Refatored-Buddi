@@ -17,7 +17,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.view.components.PasswordInputDialog;
+import org.homeunix.thecave.moss.gui.JPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
 
 public class AESCryptoCipher implements URIConverter.Cipher {
@@ -94,7 +94,19 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		}
 
 		if (this.key == null) {
-			String password = PasswordInputDialog.askForPassword(true, true);
+			JPasswordInputDialog jpid = new JPasswordInputDialog(
+					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
+					Translate.getInstance().get(TranslateKeys.PASSWORD),
+					Translate.getInstance().get(TranslateKeys.CONFIRM_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.PASSWORDS_DONT_MATCH),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					Translate.getInstance().get(TranslateKeys.OK),
+					Translate.getInstance().get(TranslateKeys.CANCEL)
+			);
+			String password = jpid.askForPassword(true, true);
 			
 			if (password == null){
 				this.encrypted = false;
@@ -170,7 +182,19 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		boolean correctPassword = false;
 		do {
 			// ask for the password, which we use to generate the AES key
-			String password = PasswordInputDialog.askForPassword(false, false);
+			JPasswordInputDialog jpid = new JPasswordInputDialog(
+					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
+					Translate.getInstance().get(TranslateKeys.PASSWORD),
+					Translate.getInstance().get(TranslateKeys.CONFIRM_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.PASSWORDS_DONT_MATCH),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					Translate.getInstance().get(TranslateKeys.OK),
+					Translate.getInstance().get(TranslateKeys.CANCEL)
+			);
+			String password = jpid.askForPassword(false, false);
 			
 			if (password == null){
 				JOptionPane.showMessageDialog(
