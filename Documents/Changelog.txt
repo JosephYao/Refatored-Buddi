@@ -1,8 +1,9 @@
-1.9.2
+1.9.2 (October 9 2006)
 -Added Plugins to the preferences screen.  Now they load at runtime without modifying Classpath.
 -Cleaned up plugin code extensively
 -Split out many common components into Moss library (http://moss.sourceforge.net)
 -Added better support for USB keychains.  If you save files (including Data files and Plugins) within the working directory, Buddi automatically removes the leading path element.  This allows the files to be easily portable to other paths (different letter mounts of USB drives on different machines, for instance) with little or no problems.
+-Added Dutch translations
 
 1.9.1 (October 6 2006)
 -Considerable speed-up on transactions (after the first load, it is almost instantaneous, compared with a number of seconds before on my machine)
