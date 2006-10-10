@@ -1,0 +1,268 @@
+ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson, Nederlandse vertalling :
+D.Kersemakers
+ABOUT_EMAIL=wyatt.olson@gmail.com
+ABOUT_GPL=beschikbaar gesteld onder de GNU General Public Licensie
+beschikbaar gesteld
+ABOUT_MENU_ITEM=Over Buddi
+ABOUT_TEXT=Eenvoudig kasboek / boekhoud programma voor persoonlijk gebruik.
+ABOUT_TEXT=Persoonlijk financieel en budgeterings programma ,<br>voor
+mensen met weinig financiele kennis.
+ACCOUNT=Rekening
+ACCOUNT_TYPE=Rekening type
+ACTUAL=Actueel
+AMOUNT=Bedrag
+AND=en
+ANNUAL=Jaarlijks
+AUTO=Auto
+BACKUP_DATA_FILE=Backup-bestand aanmaken...
+BONUS=Bonus
+BUDDI=Buddi
+BUDDI_FILE_DESC=Buddi-Data
+BUDDI_HELP=Buddi Help
+BUDGETED=Gebudgeteerd
+BUDGETED_AMOUNT=Gebudgeteerd bedrag
+BUDGET_NET_INCOME=Gebudgeteerd inkomen
+CANCEL=Afbreken
+CANCELLED_FILE_LOAD=Bestand laden afgebroken
+CANCELLED_FILE_LOAD_MESSAGE=Bestaand bestand blijft geopent
+CANCELLED_FILE_RESTORE=herstellen afgebroken
+CANCEL_FILE_RESTORE_MESSAGE=herstellen van de veiligheids kopie afgebroken.
+CANNOT_READ_DATA_FILE=Bestand kan niet gelezen worden, en mag ook niet
+overschreven worden.\nProgramma word beeindigd.
+CANNOT_READ_FILE=Gegevens kunnen niet gelezen worden, en mogen ook
+niet overschreven worden.\nProgramma word beeindigd.
+CANNOT_SAVE_OVER_DIR=Directory kan niet overschreven worden.
+CASH=Contant
+CATEGORY=Categorie
+CHEQUING=Rekening Saldo
+CHOOSE_BACKUP_FILE=Backup-bestand uitkiezen...
+CHOOSE_DATASTORE_LOCATION=Backup-diroctory/lokatie uitkiezen...
+CHOOSE_DATE_INTERVAL=Datum kiezen
+CLEAR=Wissen
+CLEAR_TRANSACTION=Transactie ongedaan maken
+CLEAR_TRANSACTION_LOSE_CHANGES=Wilt u de actuele transactie
+terugzetten ?\nAlle niet opgeslagen wijzigingen gaan verloren.
+CLOSE_DATA_FILE=Bestand sluiten...
+CLOSE_WINDOW=Venster sluiten
+CONFIRM_LOAD_BACKUP_FILE=Als u een nieuw bestand opent word het
+huidige gesloten.\nWilt u het actuele bestand werkelijk sluiten?
+CONFIRM_RESTORE_BACKUP_FILE=De actuele data wordt overschreven en
+raakt verloren als u een back-up terugzet.\nWeet u zeker dat u wilt
+doorgaan?
+COPY=Kopieren
+CREATED_NEW_DATA_FILE=Nieuw bestand aangemaakt
+CREATED_NEW_DATA_FILE_MESSAGE=Nieuw bestand aangemaakt:\n
+CREATE_NEW_DATA_FILE=Nieuw bestand aanmaken ?
+CREDIT_CARD=Creditcard
+CUT=Knippen
+DATE_AFTER_TODAY=De opgeven datum moet in het verleden liggen.
+DATE_FORMAT=Datumformaat
+DEFAULT_DESCRIPTION=<Beschrijving>
+DEFAULT_MEMO=<Notitie>
+DEFAULT_NUMBER=<Nummer>
+DEFAULT_SEARCH=<Zoek...>
+DELETE=Wissen
+DELETE_TRANSACTION=transactie wissen
+DELETE_TRANSACTION_LOSE_CHANGES=Wilt u deze transactie werkelijk
+wissen?\nDit kan niet meer ongedaan gemaakt worden!
+DESCRIPTION=Omschrijving
+DESTINATION=<Doel>
+DIFFERENCE=Verschil
+DONATE=Doneren
+DONATE_HEADER=Doneer aan Buddi
+DONATE_MESSAGE=Een donatie om verder ontwikkeling van dit programma
+mogelijk te maken word zeer gewaardeerd!\nIk schrijf en onderhoud
+Buddi in my spare time, and appreciate all help I get.\n\nDeze melding
+verschijnt alleen als u een nieuwe verie installeerd.\nAls u op een
+later tijdstip wil doneren, is er een button in het About-scherm.
+DONE=Klaar
+DOWNLOAD=download
+EDIT=Bewerken
+EDIT_SCHEDULED_TRANSACTIONS=geplande transacties bewerken
+ENABLE_UPDATE_NOTIFICATIONS=Bij de het opstarten controleren of er een
+nieuwere versie beschikbaar is.
+ENTERTAINMENT=entertainment
+ENTER_ACCOUNT_NAME_AND_TYPE=Geef een rekening naam in en kies type
+ENTER_CATEGORY_NAME=Geef een Categorie naam in
+ERROR=Error
+EVERY=Iedere
+EXITING_PROGRAM=programma afsluiten
+EXPENSES=UItgaven
+EXPENSE_ACTUAL_BUDGET=Uitgaven Werkelijk/Actueel versus gebudgeteerd
+EXPENSE_ACTUAL_BUDGET_BAR_GRAPH=Grafiek Uitgaven Werkelijk/Actueel
+versus gebudgeteerd
+EXPENSE_PIE_GRAPH=Uitgaven verdeling
+EXPORT_TO_HTML=Export to HTML
+FILE=Bestand
+FILE_SAVED=Bestand opgeslagen
+FREQUENCY=Frequentie
+FRIDAY=Vrijdag
+GO=Go
+GRAPHS=Grafieken
+GROCERIES=Levensmiddelen
+HELP=Help
+HOUSEHOLD=Huishouden
+INCOME=Inkommen
+INCOME_PIE_GRAPH=Inkomensverdeling
+INVESTMENT=Investering
+INVESTMENT_EXPENSES=onkosten over investering
+INVESTMENT_INCOME=inkomsten over investering
+LANGUAGE=Taal
+LAST_MONTH=Afgelopen Maand
+LAST_QUARTER=Afgelopen Kwartaal
+LAST_WEEK=Afgelopen Week
+LAST_YEAR=Afgelopen Jaar
+LIABILITY=Aansprakelijkheid
+LINE_OF_CREDIT= Krediet grens
+LOAD_BACKUP_FILE=Backup-bestand laden...
+MINIMIZE=Minimaliseren
+MISC_EXPENSES=Overige Uitgaven
+MISSING_DATA_FILE=Bestand niet beschikbaar
+MONDAY=Maandag
+MONTH=Maand
+MORE_INFO_NEEDED=Meer Informatie benodigd
+MUST_SELECT_BUDDI_FILE=Selecteren een .buddi-Bestand.
+MY_ACCOUNTS=Mijn Rekeningen
+MY_BUDGET=Mijn Budget
+NAME=Naam
+NETWORTH_LINE_GRAPH=NETWORTH Netto-Waarde staaf grafiek
+NETWORTH_PIE_GRAPH=NETWORTH Netto-Waarde taart grafiek
+NET_WORTH=Netto_waarde
+NEW_DATA_FILE=Nieuw bestand...
+NEW_DATA_FILE_SAVED=Nieuw bestand succesvol opgeslagen:\n
+NEW_TRANSACTION=&lt;Nieuwe transactie&gt;
+NEW_VERSION=Nieuwe Versie beschikbaar
+NEW_VERSION_MESSAGE=Er is geen nieuwe versie van Buddi beschikbaar.
+NEW_VERSION_MESSAGE_2=De nieuwe versie kan automatisch gedownload
+worden.\n(Deze melding kan in het menu instellingen uitgezet worden)
+NOTHING_TO_PRINT=Niehts om af te drukken.
+NOT_NOW=Niet NU
+NO_PARENT=<geen bovenliggende item>
+NO_TRANSACTIONS_USING_ACCOUNT=Geen transacties voor deze
+rekening.\nPermanent verwijderen ?
+NO_TRANSACTIONS_USING_CATEGORY=Geen transacties voor deze
+categorie.\nPermanent verwijderen ?
+OK=OK
+ONE_MONTH=Een Maand
+OPEN=openen
+OPENED_FILE=Bestand geopend
+OPEN_DATA_FILE=Bestand Openen
+OPEN_DATA_FILE_TITLE=Bestand Openen
+OTHER=Meer...
+OVERWRITE_EXISTING_FILE=Bestaand bestand overschrijven
+OVERWRITE_EXISTING_FILE_MESSAGE=Wilt de de gegevens werkelijk overschrijven?
+PARENT_CATEGORY=bovenliggende Categorie
+PASTE=Plakken
+PAST_FORTNIGHT=afgelopen 14 dagen
+PAST_WEEK=afgelopen week
+PERMANENT_DELETE_ACCOUNT=Rekening permanent verwijderen?
+PERMANENT_DELETE_CATEGORY=Categorie permanent verwijderen?
+PREFERENCES=Instellingen
+PREFERENCES_MENU_ITEM=Instellingen...
+PRINT=Printen
+PRINT_ERROR=Fout bij het printen
+PROBLEM_READING_DATA_FILE_CORRUPTED=\nBestand gevonden, data echter
+corrupt.\nOverschrijven ?\nAlle Informatie gaat hierbij verloren.
+PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST=\nBestand niet gevonden.\nWilt
+u een bestaand bestand opslaan of in een nieuw bestand ?
+PROBLEM_READING_DATA_FILE_INTRO=Bestand kan niet gelezen worden::\n
+QUARTER=Kwartaal
+QUIT_MENU_ITEM=Buddi afsluiten
+RECORD=Opslaan
+RECORD_BUTTON_ERROR=U moet minstens de Datum, het Bedrag (positief),\n
+van, naar en een Beschrijving invoeren,\nvoordat de transactie
+opgeslagen kan worden.
+REPORTS=Rapporten
+REPORT_AS_OF_DATE=Begindatum rapportage.
+REPORT_BETWEEN=Rapporteren over bereik
+REPORT_BY_CATEGORY_HEADER=Transactie Rapport per Budget categorie
+REPORT_BY_DESCRIPTION_HEADER=Transactie Report per Omschrijving
+REPORT_DATE_ERROR=Datumfout
+REPORT_INCOME_EXPENSES_BY_CATEGORY=Inkomen en uitgaven per categorie
+REPORT_INCOME_EXPENSES_BY_DESCRIPTION=Inkomen en uitgaven per omschrijving
+RESTART=De nieuwe instellungen zijn van kracht als het progamma
+opnieuw wordt opgestart
+RESTART_NEEDED=Herstart van programma noodzakelijk
+RESTORED_FILE=Bestand teruggezet
+RESTORE_DATA_FILE=BackUp-bestand teruggezet...
+SALARY=Salaris
+SATURDAY=Zaterdag
+SAVINGS=Spaarbedrag
+SCHEDULED_NOT_ENOUGH_INFO=De geplande transacties zijn niet compleet.
+U moet de \nNaam, Start Datum , Omschrijving, Bedrag , Van en Naar
+Velden invullen
+SCHEDULED_NOT_ENOUGH_INFO_TITLE=Geplande transactie niet compleet
+SCHEDULED_TRANSACTION=geplande transactie
+SCHEDULED_TRANSACTIONS=geplande transacties
+SHOW_ACCOUNT_TYPES=Rekening types weergeven
+SHOW_DELETED_ACCOUNTS=Verwijderde rekeningen weergeven.
+SHOW_DELETED_CATEGORIES=Verwijderde categorieen weergeven.
+SIX_MONTHS=Zes Maanden
+SOURCE=<Brin>
+STARTING_BALANCE=Begin bedrag
+START_DATE=Start Datum
+START_DATE_AFTER_END_DATE=De Einddatum moet voor de Startdatum liggen
+START_DATE_IN_THE_PAST=U heeft de Start Datum ingeteld op en datum in
+het verleden. Alle geplande transacties tussen die dag en vandaag
+zullen worden toegevoegd en kunnen niet automatisch worden verwijderd.
+Weet u zeker dat hiermee wilt doorgaan ?
+START_DATE_IN_THE_PAST_TITLE=Start Datum in het verleden
+SUCCESSFUL_BACKUP=Succesvol toegvoegd aan backup-bestand:\n
+SUCCESSFUL_OPEN_FILE=Data-Bestand succesvol geopend :\n
+SUCCESSFUL_RESTORE_FILE=Data succesvol van backup-bestandopgehaald:\n
+SUNDAY=Zondag
+THIS_MONTH=Deze Maand
+THIS_QUARTER=Dit Kwartaal
+THIS_YEAR=Dit Jaar
+THURSDAY=Donderdag
+TO=aan
+TODAY=Vandaag
+TOOLTIP_AMOUNT=Over te maken bedrag.
+TOOLTIP_DATE=Transactie datum
+TOOLTIP_DESC=Transactie omschrijving, bijvoorbeeld winkel of persoon
+waarmee deze transactie gedaan is.
+TOOLTIP_FROM=De rekening of catogrie waar dit bedrag van afgetrokken wordt.
+TOOLTIP_MEMO=Optionele omschrijving of notitie.
+TOOLTIP_NUMBER=Optioneel Transactienummer.
+TOOLTIP_TO=De rekening of catogrie waar dit bedrag aan toegekent wordt.
+TRANSACTIONS=Transacties
+TRANSACTION_CHANGED_INVALID_MESSAGE=De gemaakte wijzigingen zijn niet
+opgeslagen en er zijn nog niet ingevulden velden.Wilt u toch naar een
+andere transactie zonder op te slaan ?
+TRANSACTION_CHANGED_MESSAGE=U heeft de huidig geselecteerde transactie
+gewijzigd. Wilt u de wijzigignen opslaan?
+TRANSACTION_CHANGED_TITLE=Transactie gewijzigd
+TUESDAY=Dinsdag
+TWO_MONTHS=Twee Maanden
+UNDELETE=terug zetten
+UPDATE=Update
+UTILITIES=Stadtwerke
+VERSION=Versie
+WARNING=Waarschuwing
+WEDNESDAY=Woensdag
+WINDOW=scherm
+YEAR=Jaar
+YESTERDAY=Gisteren
+ZOOM=Zoom
+
+UPGRADE_NOTICE=NOTICE: In de versie(s) 1.6.x is het data formaat van
+de bestanden gewijzigd.\nBestanden die eenmaal geopend zijn met versie
+1.6.0 of hoger kunnen niet meer geopend worden met een oudere
+versie..\nMaak NU een backup van bestanden!\n\nAls dit de eerste keer
+is dat u Buddi gebruikt is dit niet voor u van toepassing;\nAls u
+bestaande data-bestanden eerst wilt backuppen druk dan nu <Cancel> en
+doe dit METEEN!\n\nDeze melding verschijnt alleen als u Buddi voor het
+eerst start.
+UPGRADE_NOTICE_TITLE=Data formaat wijziging
+AUTO_COMPLETE_TRANSACTION_INFORMATION=Transactie Informatie
+automatisch aanvullen
+CURRENCY=Valuta formaat
+LOAN=Lening
+CREDIT_LIMIT=krediet limiet
+INTEREST_RATE=Rente percentage
+AVAILABLE_CREDIT=Beschikbaar krediet
+OPTIONAL_TAG=(optioneel)
+SHOW_CREDIT_LIMIT=Laat krediet limiet zien
+SHOW_INTEREST_RATE=Laat rente percentage zien
+
+
