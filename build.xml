@@ -53,6 +53,8 @@
             <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/Languages/English_(US).lang" relpath="English_(US).lang"/>
             <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/Languages/Espanol.lang" relpath="Espanol.lang"/>
             <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/Languages/Norsk.lang" relpath="Norsk.lang"/>
+            <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/Languages/Nederlands.lang" relpath="Nederlands.lang"/>
+            <fatjar.filesource path="/Users/wyatt/Documents/Programming/Workplace/Buddi/Languages/Nederlands_(BE).lang" relpath="Nederlands_(BE).lang"/>        	
 
         </fatjar.build>
     </target>
