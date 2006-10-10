@@ -31,7 +31,9 @@ public class Const {
 		"English_(US)",
 		"Espanol",
 		"Deutsch",
-		"Norsk"
+		"Norsk",
+		"Nederlands",
+		"Nederlands_(BE)"
 	};
 	
 	public final static String[] DATE_FORMATS = {
