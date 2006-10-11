@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
+import javax.swing.filechooser.FileFilter;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -20,7 +22,7 @@ import edu.stanford.ejalbert.BrowserLauncher;
 
 public class ExportHTML implements BuddiExportPlugin {
 
-	public void exportData(AbstractFrame frame) {
+	public void exportData(AbstractFrame frame, File file) {
 		if (Const.DEVEL) Log.debug("Exporting HTML");
 		if (frame instanceof ReportFrameLayout){
 			String htmlReport = ((ReportFrameLayout) frame).getHTMLPage();
@@ -65,5 +67,17 @@ public class ExportHTML implements BuddiExportPlugin {
 
 	public String getDescription() {
 		return Translate.getInstance().get(TranslateKeys.EXPORT_TO_HTML);
+	}
+
+	public String getFileChooserTitle() {
+		return null;
+	}
+
+	public FileFilter getFileFilter() {
+		return null;
+	}
+
+	public boolean isPromptForFile() {
+		return false;
 	}
 }

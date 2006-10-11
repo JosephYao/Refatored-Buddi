@@ -1,9 +1,11 @@
 /*
  * Created on Sep 14, 2006 by wyatt
  * 
- * The interface which can be extended to create custom reports.
+ * The interface which can be extended to create import filters
  */
 package org.homeunix.drummer.plugins.interfaces;
+
+import java.io.File;
 
 import org.homeunix.drummer.view.AbstractFrame;
 
@@ -17,5 +19,5 @@ public interface BuddiImportPlugin extends BuddiMenuPlugin {
 	 * @param frame The frame from which the command was called.  Can be 
 	 * used to determine what type of export to do.
 	 */
-	public void importData(AbstractFrame frame);
+	public void importData(AbstractFrame frame, File file);
 }

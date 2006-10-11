@@ -7,7 +7,7 @@ package org.homeunix.drummer.plugins.interfaces;
 
 
 
-public interface BuddiMenuPlugin extends BuddiPlugin {
+public interface BuddiMenuPlugin extends BuddiFilePlugin {
 
 	/**
 	 * Returns the classes of the windows to appear in.  Should

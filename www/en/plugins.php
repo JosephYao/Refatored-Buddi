@@ -3,7 +3,7 @@
 <h1>How to use Plugins</h1>
 
 <p>
-Plugins are small modules by a third party which expand Buddi's functionality.  Currently, there are four types of plugins - Immport, Export, Report, and Graph.  Plugins are distributed in .jar files (functionally equivalent to a .zip file of Java programs).
+Plugins are small modules by a third party which expand Buddi's functionality.  Currently, there are four types of plugins - Import, Export, Report, and Graph.  Plugins are distributed in .jar files (functionally equivalent to a .zip file of Java programs).
 </p>
 
 <p>

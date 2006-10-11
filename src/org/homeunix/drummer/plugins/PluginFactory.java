@@ -14,7 +14,9 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import net.roydesign.ui.JScreenMenuItem;
@@ -22,6 +24,7 @@ import net.roydesign.ui.JScreenMenuItem;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
@@ -115,7 +118,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		return panelItems;
 	}
-	
+
 	/**
 	 * Returns a list of all the class names (in filesystem format, 
 	 * i.e. org/homeunix/drummer/Test.class) of classes which
@@ -128,8 +131,8 @@ public class PluginFactory<T extends BuddiPlugin> {
 	 */
 	public static Vector<String> getAllPluginsFromJar(File jarFile){
 		Vector<String> classNames = new Vector<String>();
-		
-		
+
+
 		for (JarEntry entry : JarLoader.getAllClasses(jarFile)) {
 			try {
 				if (Const.DEVEL) Log.debug("Loading " + entry.getName());
@@ -139,7 +142,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 			}
 			catch (Exception e){}
 		}
-		
+
 		return classNames;
 	}
 
@@ -192,7 +195,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 		for (Object o1 : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
 			if (o1 instanceof Plugin){
 				Plugin plugin = (Plugin) o1;
-				
+
 				File jarFile = new File(plugin.getJarFile());
 				String className = plugin.getClassName();
 				className = filesystemToClass(className);
@@ -225,8 +228,45 @@ public class PluginFactory<T extends BuddiPlugin> {
 	private static void addExportActionListener(final BuddiExportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (plugin instanceof BuddiExportPlugin)
-					((BuddiExportPlugin) plugin).exportData(frame);
+				if (plugin instanceof BuddiExportPlugin){
+					File file = null;
+					BuddiExportPlugin exportPlugin = (BuddiExportPlugin) plugin;
+
+					if (exportPlugin.isPromptForFile()){
+						//Create a file chooser to give plugin a file. 
+						final JFileChooser jfc = new JFileChooser();
+						jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+						//Sets the title
+						if (exportPlugin.getFileChooserTitle() != null)
+							jfc.setDialogTitle(exportPlugin.getFileChooserTitle());
+
+						//Sets the filter
+						if (exportPlugin.getFileFilter() != null)
+							jfc.setFileFilter(exportPlugin.getFileFilter());
+
+						if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+							if (jfc.getSelectedFile().isDirectory()){
+								//Cannot select a directory
+								JOptionPane.showMessageDialog(
+										null, 
+										Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), 
+										Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), 
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+							else{
+								file = jfc.getSelectedFile();
+							}
+						}
+
+					}
+
+					if (!exportPlugin.isPromptForFile() || file != null)
+						((BuddiExportPlugin) plugin).exportData(frame, file);
+					else
+						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+				}
 			}
 		});
 	}
@@ -234,8 +274,45 @@ public class PluginFactory<T extends BuddiPlugin> {
 	private static void addImportActionListener(final BuddiImportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (plugin instanceof BuddiImportPlugin)
-					((BuddiImportPlugin) plugin).importData(frame);
+				if (plugin instanceof BuddiImportPlugin){
+					File file = null;
+					BuddiImportPlugin importPlugin = (BuddiImportPlugin) plugin;
+
+					if (importPlugin.isPromptForFile()){
+						//Create a file chooser to give plugin a file. 
+						final JFileChooser jfc = new JFileChooser();
+						jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+						//Sets the title
+						if (importPlugin.getFileChooserTitle() != null)
+							jfc.setDialogTitle(importPlugin.getFileChooserTitle());
+
+						//Sets the filter
+						if (importPlugin.getFileFilter() != null)
+							jfc.setFileFilter(importPlugin.getFileFilter());
+
+						if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+							if (jfc.getSelectedFile().isDirectory()){
+								//Cannot select a directory
+								JOptionPane.showMessageDialog(
+										null, 
+										Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), 
+										Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), 
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+							else{
+								file = jfc.getSelectedFile();
+							}
+						}
+
+					}
+
+					if (!importPlugin.isPromptForFile() || file != null)
+						((BuddiImportPlugin) plugin).importData(frame, file);
+					else
+						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+				}
 			}
 		});
 	}
@@ -275,7 +352,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 			}
 		});
 	}
-	
+
 	/**
 	 * Converts classes from filesystem type (i.e., org/homeunix/thecave/Test.class)
 	 * to Class type (i.e., org.homeunix.thecave.Test).

@@ -27,6 +27,12 @@ import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
+/**
+ * The logic for the Accounts pane on the main window.
+ * 
+ * @author wolson
+ *
+ */
 public class AccountListPanel extends ListPanelLayout {
 	public static final long serialVersionUID = 0;
 		
@@ -34,6 +40,9 @@ public class AccountListPanel extends ListPanelLayout {
 		super();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.homeunix.drummer.view.ListPanelLayout#initActions()
+	 */
 	protected AbstractPanel initActions(){
 		super.initActions();
 		
@@ -110,12 +119,18 @@ public class AccountListPanel extends ListPanelLayout {
 		return this;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.homeunix.drummer.view.AbstractPanel#initContent()
+	 */
 	protected AbstractPanel initContent(){
 		DataInstance.getInstance().calculateAllBalances();
 		
 		return this;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.homeunix.drummer.view.AbstractPanel#updateContent()
+	 */
 	public AbstractPanel updateContent(){
 		long balance = 0;
 		
@@ -184,6 +199,11 @@ public class AccountListPanel extends ListPanelLayout {
 		return this;
 	}
 	
+	/**
+	 * Returns the account which is currently selected
+	 * in the JTree, or null if there is not an account selected.
+	 * @return
+	 */
 	public Account getSelectedAccount(){
 		
 		if (Const.DEVEL) Log.debug(selectedSource);
@@ -193,6 +213,11 @@ public class AccountListPanel extends ListPanelLayout {
 			return null;
 	}
 	
+	/**
+	 * Wrapper class used to display totals for each account type.
+	 * @author wolson
+	 *
+	 */
 	public class TypeTotal {
 		private final Type type;
 		private long amount;

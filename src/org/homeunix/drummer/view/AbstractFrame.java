@@ -24,12 +24,28 @@ public abstract class AbstractFrame extends JFrame{
 		this.setJMenuBar(new BuddiMenu(this));
 	}
 	
+	/**
+	 * The method to init the action listeners for components in this window
+	 * @return
+	 */
 	protected abstract AbstractFrame initActions();
 	
+	/**
+	 * The method to init the content for the frame
+	 * @return
+	 */
 	protected abstract AbstractFrame initContent();
 	
+	/**
+	 * The method to update components on screen when content changes.
+	 * @return
+	 */
 	public abstract AbstractFrame updateContent();
 	
+	/**
+	 * The method to update buttons enabled / disabled state based on window state
+	 * @return
+	 */
 	public abstract AbstractFrame updateButtons();
 
 	
@@ -48,6 +64,11 @@ public abstract class AbstractFrame extends JFrame{
 		return this;
 	}
 	
+	/**
+	 * Opens the window and positions onscreen, depending on
+	 * the preferences for that window type.
+	 * @return
+	 */
 	public AbstractFrame openWindow(){
 		Point p;
 		Dimension d;
@@ -122,5 +143,10 @@ public abstract class AbstractFrame extends JFrame{
 		return this;
 	}
 	
+	/**
+	 * Grabs the component to be printed on the window.  This 
+	 * is then passed to PrintUtilities.
+	 * @return
+	 */
 	public abstract Component getPrintedComponent();
 }

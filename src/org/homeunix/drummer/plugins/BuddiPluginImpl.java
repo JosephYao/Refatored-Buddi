@@ -3,6 +3,10 @@
  */
 package org.homeunix.drummer.plugins;
 
+import java.io.File;
+
+import javax.swing.filechooser.FileFilter;
+
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
@@ -28,6 +32,20 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
+
+		public void exportData(AbstractFrame frame, File file) {}
+
+		public String getFileChooserTitle() {
+			return null;
+		}
+
+		public FileFilter getFileFilter() {
+			return null;
+		}
+
+		public boolean isPromptForFile() {
+			return false;
+		}
 	}
 	
 	static class BuddiImportPluginImpl implements BuddiImportPlugin {
@@ -39,8 +57,20 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
+		
+		public String getFileChooserTitle() {
+			return null;
+		}
 
-		public void importData(AbstractFrame frame) {}
+		public FileFilter getFileFilter() {
+			return null;
+		}
+
+		public boolean isPromptForFile() {
+			return false;
+		}
+
+		public void importData(AbstractFrame frame, File file) {}
 	}
 	
 	static class BuddiPanelPluginImpl implements BuddiPanelPlugin {
