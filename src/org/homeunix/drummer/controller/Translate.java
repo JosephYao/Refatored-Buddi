@@ -36,21 +36,26 @@ public class Translate {
 		try{
 			if (Const.DEVEL) Log.info("Loading language: " + languageFileName);
 			
-			InputStream input;
+			InputStream input, englishInput;
+			
+			
 			File languageFile = new File(languageFileName);
 			if (languageFile.exists()){
 				if (Const.DEVEL) Log.info("Using external language file.");
-				input = new BufferedInputStream(new FileInputStream(languageFileName));				
+				input = new BufferedInputStream(new FileInputStream(languageFileName));
+				englishInput = new BufferedInputStream(new FileInputStream(Const.LANGUAGE_FOLDER + File.separator + "English.lang"));
 			}
 			else{
 				if (Const.DEVEL) Log.info("Using internal language file.");
-				input = this.getClass().getResourceAsStream(languageResource);				
+				input = this.getClass().getResourceAsStream(languageResource);
+				englishInput = this.getClass().getResourceAsStream("/English.lang");
 			}
 			
 			if (input == null){
 				throw new IOException("Cannot find " + language + ", either in the Jar or in Languages folder.");
 			}
-			
+
+			translations.load(englishInput);
 			translations.load(input);
 		}
 		catch(IOException ioe){
