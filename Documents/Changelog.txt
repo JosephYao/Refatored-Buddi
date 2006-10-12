@@ -1,3 +1,8 @@
+1.9.3 (October 12 2006)
+-Added a Language Editor to Buddi.  Can be invoked by running 'java -jar Buddi.jar --editor'.  (This may be moved separately later, but it is tiny (only one Java file, containing 2 main classes), and I think this is simpler for everyone)
+-Tweaked translation loading so that English is loaded as a 'base' language, and the other languages are applied afterwards, replacing any duplicate keys.  This has the advantages of a) making it easier to make English localizations (you only have to specify the keys which are different), b) makes my life easier, since I only have to add new strings to one file, and c) makes language editors lives easier, as they can use the Language Editor and have it point out differences between English and their language.
+-Working (unsuccessfully so far) on integrating RetroWeaver with the build process, to allow Java 1.4 binary compatibility.
+
 1.9.2 (October 9 2006)
 -Added Plugins to the preferences screen.  Now they load at runtime without modifying Classpath.
 -Cleaned up plugin code extensively
