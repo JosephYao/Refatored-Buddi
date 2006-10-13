@@ -236,6 +236,8 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 		for (String string : languagesVector) {
 			languageModel.addElement(string);
 		}
+		
+		language.setSelectedItem(PrefsInstance.getInstance().getPrefs().getLanguage());
 
 		return this;
 	}

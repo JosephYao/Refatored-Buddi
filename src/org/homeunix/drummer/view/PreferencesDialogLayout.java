@@ -182,12 +182,15 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		editLanguages.setPreferredSize(new Dimension(100, editLanguages.getPreferredSize().height));
 		editLanguages.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				new LanguageEditor2(language.getSelectedItem().toString());
+				LanguageEditor2 le = new LanguageEditor2(language.getSelectedItem().toString());
+				String lang = le.getNewLanguageName();
+				updateContent();
+				language.setSelectedItem(lang);
 			}
 		});
 		
-		languagePanel.add(languageLabel);
 		languagePanel.add(editLanguages);
+		languagePanel.add(languageLabel);
 		languagePanel.add(language);
 		
 		currencyFormatPanel.add(currencyFormatLabel);

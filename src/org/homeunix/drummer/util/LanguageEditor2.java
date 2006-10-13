@@ -83,14 +83,19 @@ public class LanguageEditor2 extends JDialog {
 		}
 
 		baseLanguage = language.replaceAll("_\\(.*\\)", "");
-		
+	}
+	
+	public String getNewLanguageName(){
 		try{
 			loadData(baseLanguage, localeName);
 			showWindow(baseLanguage, localeName);
+			return baseLanguage + (localeName.length() > 0 ? "_(" + localeName + ")" : ""); 
 		}
 		catch (Exception e){
 			JOptionPane.showMessageDialog(null, e);
 		}
+		
+		return null;
 	}
 
 	private void loadData(String baseLanguage, String localeName) throws Exception{
@@ -257,13 +262,13 @@ public class LanguageEditor2 extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(LanguageEditor2.this,
 						"<html><h2>Buddi Language Editor, version " + VERSION + "</h2>"
-						+ "<p><font color=#00D000>Green = In English, Base, and Localized, and all values are different</font></p>"
-						+ "<p><font color=#000090>Dark Blue = In Base and Localized, but Values are the Same</font></p>"
-						+ "<p><font color=#0000FF>Blue = In English and Localized, but Values are the Same</font></p>"
-						+ "<p><font color=#FF9090>Pink = Not in Localized, but in Base</font></p>"
-						+ "<p><font color=#FFCC00>Yellow = Not in Localized, but in English</font></p>"
-						+ "<p><font color=#A000A0>Purple = Not in Localization or Base, but in English</font></p>"
-						+ "<p><font color=#FF0000>Red = Not in English (Probably a spurious key)</font></p>"
+						+ "<p><font color=#00D000>Green = Localized Value - All Good</font></p>"
+						+ "<p><font color=#000090>Dark Blue = Localized == Base</font></p>"
+						+ "<p><font color=#0000FF>Blue = Localized == English</font></p>"
+						+ "<p><font color=#A000A0>Purple = Localized missing, value in Base</font></p>"
+//						+ "<p><font color=#FFCC00>Yellow = Not in Localized, but in English</font></p>"
+						+ "<p><font color=#FF0000>Red = Localized missing, value in English</font></p>"
+						+ "<p><font color=#FF9090>Pink = Not in English (Probably a spurious key)</font></p>"
 						+ "<p>* = Edited since Last Save</font></p></html>"
 				);
 			}
@@ -318,7 +323,7 @@ public class LanguageEditor2 extends JDialog {
 		private Color DARK_BLUE = new Color(0, 0, 170);
 		private Color GREEN = new Color(0, 196, 0);
 		private Color PINK = new Color(255, 170, 170);
-		private Color YELLOW = new Color(230, 230, 0);
+//		private Color YELLOW = new Color(230, 230, 0);
 		private Color PURPLE = new Color(196, 0, 196);
 		private Color RED = new Color(255, 0, 0);
 		private Color OTHER = Color.BLACK;
@@ -328,29 +333,32 @@ public class LanguageEditor2 extends JDialog {
 			super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 			TranslationKeyValuePair tkvp = (TranslationKeyValuePair) value;
-			//Not in localization or base, but in English - Mark PURPLE
-			if (tkvp.getLocalizedValue().length() == 0 && tkvp.getBaseValue().length() == 0){
-				color = PURPLE;
-			}
-			//Not in localization, but in base - Mark PINK
-			else if (tkvp.getLocalizedValue().length() == 0
-					&& tkvp.getBaseValue().length() > 0){
-				color = PINK;
-			}
-			//Not in localization, but in English - Mark YELLOW
-			else if (tkvp.getLocalizedValue().length() == 0
+			//Not in localization or base, but in English - Mark RED
+			if (tkvp.getLocalizedValue().length() == 0 
+					&& tkvp.getBaseValue().length() == 0
 					&& tkvp.getEnglishValue().length() > 0){
-				color = YELLOW;
-			}
-			//Not in English, but in Base or Localized - Mark RED
-			else if (tkvp.getEnglishValue().length() == 0){
 				color = RED;
 			}
-			//In Localized and English, but both are the same - Mark BLUE
+			//Not in localization, but in base && english - Mark PURPLE
+			else if (tkvp.getLocalizedValue().length() == 0
+					&& tkvp.getBaseValue().length() > 0
+					&& tkvp.getEnglishValue().length() > 0){
+				color = PURPLE;
+			}
+//			//Not in localization, but in English - Mark YELLOW
+//			else if (tkvp.getLocalizedValue().length() == 0
+//					&& tkvp.getEnglishValue().length() > 0){
+//				color = YELLOW;
+//			}
+			//Not in English, but in Base or Localized - Mark PINK
+			else if (tkvp.getEnglishValue().length() == 0){
+				color = PINK;
+			}
+			//In Localized == English - Mark BLUE
 			else if (tkvp.getLocalizedValue().equals(tkvp.getEnglishValue())){
 				color = BLUE;
 			}
-			//In Localized and Base, but both are the same - Mark Dark Blue
+			//In Localized == Base - Mark Dark Blue
 			else if (tkvp.getLocalizedValue().equals(tkvp.getBaseValue())){
 				color = DARK_BLUE;
 			}
