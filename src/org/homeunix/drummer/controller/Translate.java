@@ -51,8 +51,8 @@ public class Translate {
 		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
 		
 		//Base Language (e.g., Espanol)
-		String baseFileName = Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_(.+)$", "") + Const.LANGUAGE_EXTENSION;
-		String baseResource = "/" + language.replaceAll("_(.+)$", "") + Const.LANGUAGE_EXTENSION;
+		String baseFileName = Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
+		String baseResource = "/" + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
 
 		//Localized Language (e.g., Espanol_(MX))
 		String localizedFileName = Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
@@ -101,23 +101,10 @@ public class Translate {
 		catch(IOException ioe){
 			JOptionPane.showMessageDialog(
 					null, 
-					"Error loading language file " + localizedFileName + ":\n" + ioe + "\nTrying to load English.lang...\n\nAfter Buddi starts, you need to set the language in Preferences.",
+					"Error loading language file.  Please check that\nyour Languages directory exists, and contains at least one language file.",
 					"Error Loading Language File",
 					JOptionPane.ERROR_MESSAGE
 			);
-
-			try{
-				localizedFileName = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
-				translations.load(new BufferedInputStream(new FileInputStream(localizedFileName)));
-			}
-			catch (IOException ioe2){
-				JOptionPane.showMessageDialog(
-						null, 
-						"Error loading language file English.lang.  Please check that\nyour Languages directory exists, and contains at least English.lang",
-						"Error Loading Language File",
-						JOptionPane.ERROR_MESSAGE
-				);
-			}
 		}
 		return this;
 	}

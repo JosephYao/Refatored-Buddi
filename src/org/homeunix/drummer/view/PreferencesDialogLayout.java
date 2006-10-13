@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,6 +33,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.util.LanguageEditor2;
 
 public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -175,8 +178,18 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 			}
 		});
 		
+		JButton editLanguages = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
+		editLanguages.setPreferredSize(new Dimension(100, editLanguages.getPreferredSize().height));
+		editLanguages.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new LanguageEditor2(language.getSelectedItem().toString());
+			}
+		});
+		
 		languagePanel.add(languageLabel);
+		languagePanel.add(editLanguages);
 		languagePanel.add(language);
+		
 		currencyFormatPanel.add(currencyFormatLabel);
 		currencyFormatPanel.add(currencyFormat);		
 		dateFormatPanel.add(dateFormatLabel);

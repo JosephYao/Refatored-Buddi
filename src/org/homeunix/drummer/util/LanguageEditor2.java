@@ -1,10 +1,10 @@
-/*
+/* 
  * Created on Oct 11, 2006 by wyatt
- * 
  * Meant to aid in the creation and upkeep of Buddi language files.
  */
 
 package org.homeunix.drummer.util;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,12 +13,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.net.URL;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,7 +29,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -40,7 +39,13 @@ import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class LanguageEditor2 extends JFrame {
+import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
+
+
+public class LanguageEditor2 extends JDialog {
 	public static final long serialVersionUID = 0;
 
 	private static final String VERSION = "0.6.0";
@@ -49,57 +54,135 @@ public class LanguageEditor2 extends JFrame {
 	private final SortedPropertyListModel model = new SortedPropertyListModel();
 
 	private final Properties englishProps = new Properties();
-	private final Properties translatedProps = new Properties();
+	private final Properties baseProps = new Properties();
+	private final Properties localizedProps = new Properties();
 
 	private final Vector<TranslationKeyValuePair> translationKeyValuePairs = new Vector<TranslationKeyValuePair>();
-
+	
+	final String localeName;
+	final String baseLanguage;
+	
 	private TranslationKeyValuePair selectedTKVP = null;
 
-	public LanguageEditor2() throws Exception {
-		loadData();
-		showWindow();
-	}
-
-	private void loadData() throws Exception{
-		englishProps.clear();
+	public LanguageEditor2(String language) {
 		
-		JFileChooser jfc = new JFileChooser();
-		jfc.setDialogTitle("Open Base File, or press Cancel to use English.lang");
-		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			File loadFile = jfc.getSelectedFile();
-			englishProps.load(new FileInputStream(loadFile));
-			
+		if (language.endsWith(")")){
+			localeName = language.replaceAll("^.*_\\(", "").replaceAll("\\)$", "");
 		}
 		else {
-			URL english = new URL("https://svn.sourceforge.net/svnroot/buddi/trunk/Languages/English.lang");
-			englishProps.load(english.openStream());			
+			String tempLocaleName = JOptionPane.showInputDialog(null, 
+					"Please enter the locale name.  This\n"
+					+ "is the two letter extension\n"
+					+ "to the language which indicates\n"
+					+ "minor changes, e.g. US for English (US).\n"
+					+ "To edit the base language itself, hit Cancel.");
+			if (tempLocaleName == null)
+				localeName = "";
+			else
+				localeName = tempLocaleName;
 		}
 
-
-		translatedProps.clear();
-		jfc = new JFileChooser();
-		jfc.setDialogTitle("Open Translation File, or press Cancel for a new file");
-		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			File loadFile = jfc.getSelectedFile();
-			translatedProps.load(new FileInputStream(loadFile));
+		baseLanguage = language.replaceAll("_\\(.*\\)", "");
+		
+		try{
+			loadData(baseLanguage, localeName);
+			showWindow(baseLanguage, localeName);
 		}
+		catch (Exception e){
+			JOptionPane.showMessageDialog(null, e);
+		}
+	}
+
+	private void loadData(String baseLanguage, String localeName) throws Exception{
+		//Clear out old data
+		englishProps.clear();
+		baseProps.clear();
+		localizedProps.clear();
+
+		//English
+		String englishFileName = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
+		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
+
+		//Base Language (e.g., Espanol)
+		String baseFileName = Const.LANGUAGE_FOLDER + File.separator + baseLanguage + Const.LANGUAGE_EXTENSION;
+		String baseResource = "/" + baseLanguage + Const.LANGUAGE_EXTENSION;
+
+		String localizedFileName, localizedResource;
+		if (localeName.length() > 0){
+			//Localized Language (e.g., Espanol_(MX))
+			localizedFileName = Const.LANGUAGE_FOLDER + File.separator + baseLanguage + "_(" + localeName + ")" + Const.LANGUAGE_EXTENSION;
+			localizedResource = "/" + baseLanguage + "_(" + localeName + ")" + Const.LANGUAGE_EXTENSION;
+		}
+		else {
+			localizedFileName = baseFileName;
+			localizedResource = baseResource;
+		}
+
+		try{
+			//Set up the files
+			File englishFile, baseFile, localizedFile;
+			englishFile = new File(englishFileName);
+			baseFile = new File(baseFileName);
+			localizedFile = new File(localizedFileName);
+
+			//Load English
+			if (englishFile.exists()){
+				if (new BufferedInputStream(new FileInputStream(englishFile)) != null)
+					englishProps.load(new BufferedInputStream(new FileInputStream(englishFile)));
+			}
+			else {
+				if (this.getClass().getResourceAsStream(englishResource) != null)
+					englishProps.load(this.getClass().getResourceAsStream(englishResource));
+			}
+
+			//Load Base Language
+			if (baseFile.exists()){
+				if (new BufferedInputStream(new FileInputStream(baseFile)) != null)
+					baseProps.load(new BufferedInputStream(new FileInputStream(baseFile)));
+			}
+			else {
+				if (this.getClass().getResourceAsStream(baseResource) != null)
+					baseProps.load(this.getClass().getResourceAsStream(baseResource));
+			}
+
+			//Load Localized Language
+			if (localizedFile.exists()){
+				if (new BufferedInputStream(new FileInputStream(localizedFile)) != null)
+					localizedProps.load(new BufferedInputStream(new FileInputStream(localizedFile)));
+			}
+			else {
+				if (this.getClass().getResourceAsStream(localizedResource) != null)
+					localizedProps.load(this.getClass().getResourceAsStream(localizedResource));
+			}
+
+		}
+		catch(IOException ioe){}		
+
 
 		Set<Object> languageUnion = new HashSet<Object>();
 		languageUnion.addAll(englishProps.keySet());
-		languageUnion.addAll(translatedProps.keySet());
-		
+		languageUnion.addAll(baseProps.keySet());
+		languageUnion.addAll(localizedProps.keySet());
+
 		for (Object o : languageUnion) {
 			String s = (String) o;
 
 			String englishValue = (englishProps.getProperty(s) == null ? "" : englishProps.getProperty(s));
-			String translationValue = (translatedProps.getProperty(s) == null ? "" : translatedProps.getProperty(s));
+			String baseValue = (localeName.length() == 0 || baseProps.getProperty(s) == null ? "" : baseProps.getProperty(s));
+			String localizedValue = (localizedProps.getProperty(s) == null ? "" : localizedProps.getProperty(s));
 
-			TranslationKeyValuePair tkvp = new TranslationKeyValuePair(s, englishValue, translationValue);
+			TranslationKeyValuePair tkvp = new TranslationKeyValuePair(s, englishValue, baseValue, localizedValue);
 			translationKeyValuePairs.add(tkvp);
 		}		
 	}
 
-	private void showWindow() throws Exception {
+	private void showWindow(final String baseLanguage, final String localeName) throws Exception {
+
+		String title = "Editing " 
+			+ (localeName.length() > 0 ? "Locale " + localeName + " for " : "") 
+			+ baseLanguage;
+		this.setTitle(title);
+
 		list.setModel(model);
 		list.setCellRenderer(new TranslationKeyValuePairCellRenderer());
 
@@ -112,7 +195,7 @@ public class LanguageEditor2 extends JFrame {
 
 					selectedTKVP = (TranslationKeyValuePair) list.getSelectedValue();
 
-					value.setText(selectedTKVP.getTranslatedValue());
+					value.setText(selectedTKVP.getLocalizedValue());
 				}
 			}
 		});
@@ -122,52 +205,82 @@ public class LanguageEditor2 extends JFrame {
 		JScrollPane valueScroller = new JScrollPane(value);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		final JButton save = new JButton("Save");
-		save.addActionListener(new ActionListener(){
+		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		final JButton cancel = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		final JButton help = new JButton(Translate.getInstance().get(TranslateKeys.HELP));
+		
+		ok.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser jfc = new JFileChooser();
-				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
-					File saveFile = jfc.getSelectedFile();
+				selectedTKVP.save(value.getText());
+				
+				File languagesFolder = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
+				if (!languagesFolder.exists()){
+					languagesFolder.mkdirs();
+				}
 
-					Properties newProps = new Properties();
+				File saveFile = new File(
+						languagesFolder.getAbsolutePath() 
+						+ File.separator 
+						+ baseLanguage
+						+ (localeName.length() > 0 ? "_(" + localeName + ")" : "") 
+						+ Const.LANGUAGE_EXTENSION
+				);
 
-					for (TranslationKeyValuePair tkvp : translationKeyValuePairs) {
-						if (tkvp.getTranslatedValue().length() > 0){
-							newProps.put(tkvp.getKey(), tkvp.getTranslatedValue());
-							tkvp.resetOriginalTranslatedValue();
-						}
-					}
+				Properties newProps = new Properties();
 
-					try{
-						newProps.store(new FileOutputStream(saveFile), null);
-					}
-					catch (Exception e){
-						JOptionPane.showMessageDialog(LanguageEditor2.this, e);
+				for (TranslationKeyValuePair tkvp : translationKeyValuePairs) {
+					if (tkvp.getLocalizedValue().length() > 0){
+						newProps.put(tkvp.getKey(), tkvp.getLocalizedValue());
+						tkvp.resetOriginalLocalizedValue();
 					}
 				}
+
+				try{
+					newProps.store(new FileOutputStream(saveFile), null);
+				}
+				catch (Exception e){
+					JOptionPane.showMessageDialog(LanguageEditor2.this, e);
+				}
+				
+				//Close the window.
+				LanguageEditor2.this.dispose();
+			}
+		});
+		
+		cancel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				LanguageEditor2.this.dispose();
 			}
 		});
 
-		final JButton help = new JButton("Help");
 		help.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(LanguageEditor2.this,
 						"<html><h2>Buddi Language Editor, version " + VERSION + "</h2>"
-						+ "<p><font color='green'>Green = In both, and Values are Different</font></p>"
-						+ "<p><font color='blue'>Blue = In both, but Values are the Same</font></p>"
-						+ "<p><font color=#F0C000>Orange = Not in Translation, but in Base</font></p>"
-						+ "<p><font color='red'>Red = Not in Base, but in Translation</font></p>"
+						+ "<p><font color=#00D000>Green = In English, Base, and Localized, and all values are different</font></p>"
+						+ "<p><font color=#000090>Dark Blue = In Base and Localized, but Values are the Same</font></p>"
+						+ "<p><font color=#0000FF>Blue = In English and Localized, but Values are the Same</font></p>"
+						+ "<p><font color=#FF9090>Pink = Not in Localized, but in Base</font></p>"
+						+ "<p><font color=#FFCC00>Yellow = Not in Localized, but in English</font></p>"
+						+ "<p><font color=#A000A0>Purple = Not in Localization or Base, but in English</font></p>"
+						+ "<p><font color=#FF0000>Red = Not in English (Probably a spurious key)</font></p>"
 						+ "<p>* = Edited since Last Save</font></p></html>"
 				);
 			}
 		});
 
+		Dimension d = new Dimension(Math.max(100, cancel.getPreferredSize().width), cancel.getPreferredSize().height);
+		ok.setPreferredSize(d);
+		cancel.setPreferredSize(d);
+		help.setPreferredSize(d);
+		
 		buttons.setBorder(BorderFactory.createEmptyBorder(1, 12, 12, 12));
 		buttons.add(help);
-		buttons.add(save);
+		buttons.add(cancel);
+		buttons.add(ok);
 
 		JPanel editorPanel = new JPanel(new BorderLayout());
-		
+
 		JPanel listScrollerBorder = new JPanel(new BorderLayout());
 		listScrollerBorder.setBorder(BorderFactory.createEmptyBorder(7, 12, 6, 12));
 		listScrollerBorder.add(listScroller, BorderLayout.CENTER);
@@ -188,28 +301,7 @@ public class LanguageEditor2 extends JFrame {
 				Math.max(value.getPreferredSize().height, 100)
 		));
 
-		this.addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent e) {
-				int r = JOptionPane.showConfirmDialog(
-						null, 
-						"Do you want to save before exiting?"
-				);
-				
-				if (r == JOptionPane.YES_OPTION){
-					save.doClick();
-					LanguageEditor2.this.dispose();
-					System.exit(0);
-				}
-				else if (r == JOptionPane.NO_OPTION){
-					LanguageEditor2.this.dispose();
-					System.exit(0);
-				}
-				
-				super.windowClosing(e);
-			}
-		});
-		
+		this.setModal(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.add(editorPanel, BorderLayout.CENTER);
@@ -219,42 +311,58 @@ public class LanguageEditor2 extends JFrame {
 		this.setVisible(true);
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(final String[] args) throws Exception {
-		new LanguageEditor2();
-
-	}
-
 	class TranslationKeyValuePairCellRenderer extends DefaultListCellRenderer {
 		public final static long serialVersionUID = 0;
 		private Color color; 
-		private Color BLUE = new Color(0, 0, 196);
-		private Color GREEN = new Color(0, 128, 0);
-		private Color ORANGE = new Color(230, 180, 0);
-		private Color RED = new Color(196, 0, 0);
+		private Color BLUE = new Color(0, 0, 255);
+		private Color DARK_BLUE = new Color(0, 0, 170);
+		private Color GREEN = new Color(0, 196, 0);
+		private Color PINK = new Color(255, 170, 170);
+		private Color YELLOW = new Color(230, 230, 0);
+		private Color PURPLE = new Color(196, 0, 196);
+		private Color RED = new Color(255, 0, 0);
+		private Color OTHER = Color.BLACK;
 
 		@Override
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 			TranslationKeyValuePair tkvp = (TranslationKeyValuePair) value;
-			//Not in translation - Mark ORANGE
-			if (tkvp.getTranslatedValue().length() == 0){
-				color = ORANGE;
+			//Not in localization or base, but in English - Mark PURPLE
+			if (tkvp.getLocalizedValue().length() == 0 && tkvp.getBaseValue().length() == 0){
+				color = PURPLE;
 			}
-			//Not in English - Mark RED
+			//Not in localization, but in base - Mark PINK
+			else if (tkvp.getLocalizedValue().length() == 0
+					&& tkvp.getBaseValue().length() > 0){
+				color = PINK;
+			}
+			//Not in localization, but in English - Mark YELLOW
+			else if (tkvp.getLocalizedValue().length() == 0
+					&& tkvp.getEnglishValue().length() > 0){
+				color = YELLOW;
+			}
+			//Not in English, but in Base or Localized - Mark RED
 			else if (tkvp.getEnglishValue().length() == 0){
 				color = RED;
 			}
-			//In both, but they are the same - Mark BLUE
-			else if (tkvp.getTranslatedValue().equals(tkvp.getEnglishValue())){
+			//In Localized and English, but both are the same - Mark BLUE
+			else if (tkvp.getLocalizedValue().equals(tkvp.getEnglishValue())){
 				color = BLUE;
 			}
-			//In both, and not the same - Mark GREEN
-			else {
+			//In Localized and Base, but both are the same - Mark Dark Blue
+			else if (tkvp.getLocalizedValue().equals(tkvp.getBaseValue())){
+				color = DARK_BLUE;
+			}
+			//In both (Localized and Base) and (Localized and English), and 
+			// none are the same - Mark GREEN
+			else if (!tkvp.getLocalizedValue().equals(tkvp.getBaseValue())
+					&& !tkvp.getLocalizedValue().equals(tkvp.getEnglishValue())){
 				color = GREEN;
+			}
+			//Fallback - we should never get here.
+			else {
+				color = OTHER;
 			}
 
 			this.setForeground(color);
@@ -272,34 +380,40 @@ public class LanguageEditor2 extends JFrame {
 
 		private String key;
 		private String englishValue;
-		private String translatedValue;
-		private String originalTranslatedValue;
+		private String baseValue;
+		private String localizedValue;
+		private String originalLocalizedValue;
 
-		public TranslationKeyValuePair(String key, String englishValue, String translatedValue) {
+		public TranslationKeyValuePair(String key, String englishValue, String baseValue, String translatedValue) {
 			this.key = key;
 			this.englishValue = englishValue;
-			this.translatedValue = translatedValue;
-			this.originalTranslatedValue = translatedValue;
+			this.baseValue = baseValue;
+			this.localizedValue = translatedValue;
+			this.originalLocalizedValue = translatedValue;
 		}
 
 		public String getKey() {
 			return key;
 		}
 
-		public String getTranslatedValue() {
-			return translatedValue;
+		public String getLocalizedValue() {
+			return localizedValue;
 		}
 
 		public String getEnglishValue(){
 			return englishValue;
 		}
 
-		public void setTranslatedValue(String value) {
-			this.translatedValue = value;
+		public String getBaseValue(){
+			return baseValue;
 		}
 
-		public void resetOriginalTranslatedValue(){
-			this.originalTranslatedValue = this.translatedValue;
+		public void setLocalizedValue(String value) {
+			this.localizedValue = value;
+		}
+
+		public void resetOriginalLocalizedValue(){
+			this.originalLocalizedValue = this.localizedValue;
 		}
 
 		public int compareTo(TranslationKeyValuePair arg0) {
@@ -307,11 +421,11 @@ public class LanguageEditor2 extends JFrame {
 		}
 
 		public void save(String newValue){
-			this.translatedValue = newValue;
+			this.localizedValue = newValue;
 		}
 
 		public boolean isChanged(){
-			return !translatedValue.equals(originalTranslatedValue);
+			return !localizedValue.equals(originalLocalizedValue);
 		}
 	}
 
@@ -349,7 +463,7 @@ public class LanguageEditor2 extends JFrame {
 		public int getSize() {
 			return model.size();
 		}
-		
+
 		public void update(){
 			this.fireContentsChanged(this, 0, getSize() - 1);
 		}

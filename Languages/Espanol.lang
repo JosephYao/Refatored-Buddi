@@ -6,7 +6,6 @@
 # œ = \u00fa
 # À = \u00bf
 ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson
-ABOUT_EMAIL=wyatt.olson@gmail.com
 ABOUT_GPL=Distribuido bajo la licencia GNU (General Public License)
 ABOUT_MENU_ITEM=Sobre Buddi
 ABOUT_TEXT=Programa de presupuestos y finanzas personales,<br>para aquellos con poca experiencia financiera

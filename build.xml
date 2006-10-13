@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="fatjar" name="Buddi">
 	<property environment="env"/>
+	
 	<property name="BUDDI_HOME" value="/Users/wyatt/Documents/Programming/Workplace/Buddi"/>
 	<property name="ECLIPSE_HOME" value="/Applications/Eclipse"/>
-	<property name="debuglevel" value="source,lines,vars"/>
-	<property name="fjepPath" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
-	<property name="launch4j.dir" location="launch4j" />
-	<property name="retroweaver.home" location="../ant_tasks/retroweaver"/>
+	<property name="FATJAR_PATH" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
+	<property name="RETROWEAVER_HOME" location="../ant_tasks/retroweaver"/>
+	
 	<path id="Buddi.classpath">
 		<pathelement location="bin"/>
 		<pathelement location="lib/jfreechart-1.0.1.jar"/>
@@ -24,17 +24,17 @@
 
 	<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
 		<classpath>
-			<fileset dir="${retroweaver.home}/lib" includes="**/*"/>
-			<fileset dir="${retroweaver.home}/release" includes="**/*"/> 
+			<fileset dir="${RETROWEAVER_HOME}/lib" includes="**/*"/>
+			<fileset dir="${RETROWEAVER_HOME}/release" includes="**/*"/> 
 		</classpath>
 	</taskdef>
-	<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
-	<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${fjepPath}" loaderref="${fjepPath}"/>
+	<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
 	
 	<target depends="jar" name="fatjar">
 		<fatjar.build output="Buddi.jar">
