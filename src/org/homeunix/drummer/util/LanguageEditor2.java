@@ -8,136 +8,118 @@ package org.homeunix.drummer.util;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.AbstractListModel;
-import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class LanguageEditor2 extends JFrame {
 	public static final long serialVersionUID = 0;
-	
+
 	private static final String VERSION = "0.6.0";
 	private final JList list = new JList();
+	private final JTextArea value = new JTextArea();
 	private final SortedPropertyListModel model = new SortedPropertyListModel();
-	
+
 	private final Properties englishProps = new Properties();
 	private final Properties translatedProps = new Properties();
-	
-	private final Map<String, EditorCell> englishCells = new HashMap<String, EditorCell>();
-	private final Map<String, EditorCell> translatedCells = new HashMap<String, EditorCell>();
-	private final Map<String, EditorCell> allCells = new HashMap<String, EditorCell>();
 
+	private final Vector<TranslationKeyValuePair> translationKeyValuePairs = new Vector<TranslationKeyValuePair>();
+
+	private TranslationKeyValuePair selectedTKVP = null;
 
 	public LanguageEditor2() throws Exception {
-		loadEnglish();
-		loadTranslation();
-		display();
-		
+		loadData();
+		showWindow();
+	}
 
-	}
-	
-	private void loadEnglish() throws Exception{
-		URL english = new URL("https://svn.sourceforge.net/svnroot/buddi/trunk/Languages/English.lang");
+	private void loadData() throws Exception{
 		englishProps.clear();
-		englishCells.clear();
-		englishProps.load(english.openStream());
 		
-		//First, load all English terms.
-		for (Object o : englishProps.keySet()) {
-			if (o instanceof String){
-				String s = (String) o;
-				EditorCell ec = new EditorCell(s, englishProps.getProperty(o.toString()), translatedCells);
-				ec.setFlagColor(Color.RED);
-				englishCells.put(s, ec);
-				allCells.put(s, ec);
-			}
-		}
-	}
-	
-	private void loadTranslation() throws Exception{
-		translatedProps.clear();
-		translatedCells.clear();
 		JFileChooser jfc = new JFileChooser();
+		jfc.setDialogTitle("Open Base File, or press Cancel to use English.lang");
+		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+			File loadFile = jfc.getSelectedFile();
+			englishProps.load(new FileInputStream(loadFile));
+			
+		}
+		else {
+			URL english = new URL("https://svn.sourceforge.net/svnroot/buddi/trunk/Languages/English.lang");
+			englishProps.load(english.openStream());			
+		}
+
+
+		translatedProps.clear();
+		jfc = new JFileChooser();
+		jfc.setDialogTitle("Open Translation File, or press Cancel for a new file");
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 			File loadFile = jfc.getSelectedFile();
 			translatedProps.load(new FileInputStream(loadFile));
 		}
+
+		Set<Object> languageUnion = new HashSet<Object>();
+		languageUnion.addAll(englishProps.keySet());
+		languageUnion.addAll(translatedProps.keySet());
 		
-		for (Object o : translatedProps.keySet()) {
-			if (o instanceof String){
-				String s = (String) o;
-				EditorCell ec = englishCells.get(s);
-				//There is not an English version.  Mark it Green. (Why green?  I don't know...)
-				if (ec == null){
-					ec = new EditorCell(s, translatedProps.getProperty(s), translatedCells);
-					ec.setFlagColor(Color.GREEN);
-					translatedCells.put(s, ec);
-					allCells.put(s, ec);
-					ec.setRemoveButtonEnabled(true);
-				}
-				//There is a translated version, but it is the same as English.  
-				// This may be a mistake in the translation - 
-				// mark it purple, but still put it in Translated Cells map.
-				else if (ec.getValue().equals(translatedProps.getProperty(s))){
-					ec.setValue((String) translatedProps.get(s));
-					ec.setFlagColor(new Color(200, 0, 200));
-					translatedCells.put(s, ec);
-					ec.setRemoveButtonEnabled(true);
-				}
-				//There is a translated version, different from 
-				// the English version.  Mark it black.  
-				else if (translatedProps.getProperty(s) != null){
-					ec.setValue((String) translatedProps.get(s));
-					ec.setFlagColor(Color.BLACK);
-					translatedCells.put(s, ec);
-					ec.setRemoveButtonEnabled(true);
-				}
-				//There is an English version, but no translated version.
-				// Mark it red.
-				else {
-					ec.setFlagColor(Color.RED);
+		for (Object o : languageUnion) {
+			String s = (String) o;
+
+			String englishValue = (englishProps.getProperty(s) == null ? "" : englishProps.getProperty(s));
+			String translationValue = (translatedProps.getProperty(s) == null ? "" : translatedProps.getProperty(s));
+
+			TranslationKeyValuePair tkvp = new TranslationKeyValuePair(s, englishValue, translationValue);
+			translationKeyValuePairs.add(tkvp);
+		}		
+	}
+
+	private void showWindow() throws Exception {
+		list.setModel(model);
+		list.setCellRenderer(new TranslationKeyValuePairCellRenderer());
+
+		list.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()){
+					if (selectedTKVP != null){
+						selectedTKVP.save(value.getText());
+					}
+
+					selectedTKVP = (TranslationKeyValuePair) list.getSelectedValue();
+
+					value.setText(selectedTKVP.getTranslatedValue());
 				}
 			}
-		}
-	}
-	
-	private void display() throws Exception {
-		list.setModel(model);
-		
-		JPanel panel = new JPanel();
-//		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		});
 
-		//Get ready to display the cells
-		Vector<EditorCell> cellsToDisplay = new Vector<EditorCell>(allCells.values());		
-		Collections.sort(cellsToDisplay);
-
-		for (EditorCell ec : cellsToDisplay) {
-//			panel.add(ec);
-		}
-		JScrollPane scroller = new JScrollPane(panel);
+		model.addAll(translationKeyValuePairs);		
+		JScrollPane listScroller = new JScrollPane(list);
+		JScrollPane valueScroller = new JScrollPane(value);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		final JButton save = new JButton("Save");
@@ -149,9 +131,10 @@ public class LanguageEditor2 extends JFrame {
 
 					Properties newProps = new Properties();
 
-					for (String s : translatedCells.keySet()) {
-						if (translatedCells.get(s) != null){
-							newProps.put(s, translatedCells.get(s).getValue());
+					for (TranslationKeyValuePair tkvp : translationKeyValuePairs) {
+						if (tkvp.getTranslatedValue().length() > 0){
+							newProps.put(tkvp.getKey(), tkvp.getTranslatedValue());
+							tkvp.resetOriginalTranslatedValue();
 						}
 					}
 
@@ -164,165 +147,215 @@ public class LanguageEditor2 extends JFrame {
 				}
 			}
 		});
-		
+
 		final JButton help = new JButton("Help");
 		help.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(LanguageEditor2.this,
-						"Buddi Language Editor, version " + VERSION + "\n\n"
-						+ "Black = in both English and Translated (and Translated is different than English)\n"
-						+ "Red = not in Translated file (but in English)\n"
-						+ "Green = not in English file (but in Translated)\n"
-						+ "Purple = in both English and Translated (but Translated is same as English)\n"
-						+ "Blue = value changed this session\n"
-						+ "Crossed out = removed from translation (re-edit to put back in)"
+						"<html><h2>Buddi Language Editor, version " + VERSION + "</h2>"
+						+ "<p><font color='green'>Green = In both, and Values are Different</font></p>"
+						+ "<p><font color='blue'>Blue = In both, but Values are the Same</font></p>"
+						+ "<p><font color=#F0C000>Orange = Not in Translation, but in Base</font></p>"
+						+ "<p><font color='red'>Red = Not in Base, but in Translation</font></p>"
+						+ "<p>* = Edited since Last Save</font></p></html>"
 				);
 			}
 		});
+
+		buttons.setBorder(BorderFactory.createEmptyBorder(1, 12, 12, 12));
+		buttons.add(help);
+		buttons.add(save);
+
+		JPanel editorPanel = new JPanel(new BorderLayout());
 		
-		final JButton quit = new JButton("Save and Quit");
-		quit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				save.doClick();
-				System.exit(0);
+		JPanel listScrollerBorder = new JPanel(new BorderLayout());
+		listScrollerBorder.setBorder(BorderFactory.createEmptyBorder(7, 12, 6, 12));
+		listScrollerBorder.add(listScroller, BorderLayout.CENTER);
+
+		JPanel valueScrollerBorder = new JPanel(new BorderLayout());
+		valueScrollerBorder.setBorder(BorderFactory.createEmptyBorder(1, 12, 5, 12));
+		valueScrollerBorder.add(valueScroller, BorderLayout.CENTER);
+
+		editorPanel.add(listScrollerBorder, BorderLayout.CENTER);
+		editorPanel.add(valueScrollerBorder, BorderLayout.SOUTH);
+
+		list.setPreferredSize(new Dimension(
+				Math.max(list.getPreferredSize().width, 400),
+				Math.max(list.getPreferredSize().height, 300)
+		));
+		value.setPreferredSize(new Dimension(
+				Math.max(value.getPreferredSize().width, 200),
+				Math.max(value.getPreferredSize().height, 100)
+		));
+
+		this.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int r = JOptionPane.showConfirmDialog(
+						null, 
+						"Do you want to save before exiting?"
+				);
+				
+				if (r == JOptionPane.YES_OPTION){
+					save.doClick();
+					LanguageEditor2.this.dispose();
+					System.exit(0);
+				}
+				else if (r == JOptionPane.NO_OPTION){
+					LanguageEditor2.this.dispose();
+					System.exit(0);
+				}
+				
+				super.windowClosing(e);
 			}
 		});
 		
-		
-		buttons.add(help);
-		buttons.add(save);
-		buttons.add(quit);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		this.add(scroller, BorderLayout.CENTER);
+		this.add(editorPanel, BorderLayout.CENTER);
 		this.add(buttons, BorderLayout.SOUTH);
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 
-//	/**
-//	 * @param args
-//	 */
-//	public static void main(final String[] args) throws Exception {
-//		new LanguageEditor();
-//
-//	}
+	/**
+	 * @param args
+	 */
+	public static void main(final String[] args) throws Exception {
+		new LanguageEditor2();
 
-	public static class EditorCell implements Comparable<EditorCell>{
+	}
+
+	class TranslationKeyValuePairCellRenderer extends DefaultListCellRenderer {
+		public final static long serialVersionUID = 0;
+		private Color color; 
+		private Color BLUE = new Color(0, 0, 196);
+		private Color GREEN = new Color(0, 128, 0);
+		private Color ORANGE = new Color(230, 180, 0);
+		private Color RED = new Color(196, 0, 0);
+
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+			TranslationKeyValuePair tkvp = (TranslationKeyValuePair) value;
+			//Not in translation - Mark ORANGE
+			if (tkvp.getTranslatedValue().length() == 0){
+				color = ORANGE;
+			}
+			//Not in English - Mark RED
+			else if (tkvp.getEnglishValue().length() == 0){
+				color = RED;
+			}
+			//In both, but they are the same - Mark BLUE
+			else if (tkvp.getTranslatedValue().equals(tkvp.getEnglishValue())){
+				color = BLUE;
+			}
+			//In both, and not the same - Mark GREEN
+			else {
+				color = GREEN;
+			}
+
+			this.setForeground(color);
+
+			this.setText(tkvp.getKey() + (tkvp.isChanged() ? " *" : ""));
+
+			return this;
+		}
+
+
+	}
+
+	class TranslationKeyValuePair implements Comparable<TranslationKeyValuePair>{
 		public static final long serialVersionUID = 0;
 
 		private String key;
-		private String value;
+		private String englishValue;
+		private String translatedValue;
+		private String originalTranslatedValue;
 
-		private final JLabel keyLabel;
-		private final JTextArea valueField;
-		private final JButton removeKey;
-
-		public EditorCell(String key, String value, final Map<String, EditorCell> translatedCells) {
-//			super(new BorderLayout());
+		public TranslationKeyValuePair(String key, String englishValue, String translatedValue) {
 			this.key = key;
-			this.value = value;
-
-			keyLabel = new JLabel(key);
-			valueField = new JTextArea(value);
-			removeKey = new JButton("Remove");
-
-			JScrollPane valueScroller = new JScrollPane(valueField);
-			
-			keyLabel.setPreferredSize(new Dimension(300, keyLabel.getPreferredSize().height));
-			valueScroller.setPreferredSize(new Dimension(400, 50));
-
-			valueField.getDocument().addDocumentListener(new DocumentListener(){
-				public void changedUpdate(DocumentEvent arg0) {
-					changeCell();
-				}
-				public void insertUpdate(DocumentEvent arg0) {
-					changeCell();
-				}
-				public void removeUpdate(DocumentEvent arg0) {
-					changeCell();
-				}
-
-				private void changeCell(){
-					keyLabel.setForeground(Color.BLUE);
-					keyLabel.setText(EditorCell.this.key);
-					removeKey.setEnabled(true);
-					EditorCell.this.value = valueField.getText();
-					translatedCells.put(EditorCell.this.key, EditorCell.this);
-				}
-			});
-			
-			removeKey.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent arg0) {
-					keyLabel.setText("<html><s>" + keyLabel.getText() + "</s></html>");
-					translatedCells.remove(EditorCell.this.key);
-					removeKey.setEnabled(false);
-				}
-			});
-			
-			removeKey.setEnabled(false);
-			
-			JPanel keyPanel = new JPanel();
-			keyPanel.setLayout(new BoxLayout(keyPanel, BoxLayout.Y_AXIS));
-			keyPanel.add(keyLabel);
-			keyPanel.add(removeKey);
-//			this.add(keyPanel, BorderLayout.WEST);
-//			this.add(valueScroller, BorderLayout.EAST);
+			this.englishValue = englishValue;
+			this.translatedValue = translatedValue;
+			this.originalTranslatedValue = translatedValue;
 		}
 
 		public String getKey() {
 			return key;
 		}
 
-		public String getValue() {
-			return value;
+		public String getTranslatedValue() {
+			return translatedValue;
 		}
 
-		public void setValue(String value) {
-			this.value = value;
-			valueField.setText(value);
+		public String getEnglishValue(){
+			return englishValue;
 		}
 
-		public void setFlagColor(Color c){
-			keyLabel.setForeground(c);
+		public void setTranslatedValue(String value) {
+			this.translatedValue = value;
 		}
 
-		public int compareTo(EditorCell arg0) {
+		public void resetOriginalTranslatedValue(){
+			this.originalTranslatedValue = this.translatedValue;
+		}
+
+		public int compareTo(TranslationKeyValuePair arg0) {
 			return this.getKey().compareTo(arg0.getKey());
 		}
-		
-		public void setRemoveButtonEnabled(boolean enabled){
-			removeKey.setEnabled(enabled);
+
+		public void save(String newValue){
+			this.translatedValue = newValue;
+		}
+
+		public boolean isChanged(){
+			return !translatedValue.equals(originalTranslatedValue);
 		}
 	}
-	
+
 	class SortedPropertyListModel extends AbstractListModel {
 		public static final long serialVersionUID = 0; 
-		
-		private Vector<EditorCell> model = new Vector<EditorCell>();
-		
-		public SortedPropertyListModel() {
+
+		private Vector<TranslationKeyValuePair> model = new Vector<TranslationKeyValuePair>();
+
+		public SortedPropertyListModel() {}
+
+		public SortedPropertyListModel(Collection<TranslationKeyValuePair> c){
+			model.addAll(c);
+			sort();
 		}
-		
-		public void add(EditorCell cell){
+
+		public void add(TranslationKeyValuePair cell){
 			model.add(cell);
+			sort();
 		}
-		
-		public void remove(EditorCell cell){
+
+		public void addAll(Collection<TranslationKeyValuePair> c){
+			model.addAll(c);
+			sort();
+		}
+
+		public void remove(TranslationKeyValuePair cell){
 			model.remove(cell);
+			sort();
 		}
-		
+
 		public Object getElementAt(int index) {
 			return model.get(index);
 		}
-		
+
 		public int getSize() {
 			return model.size();
 		}
 		
-		public void sort(){
+		public void update(){
+			this.fireContentsChanged(this, 0, getSize() - 1);
+		}
 
+		public void sort(){
+			Collections.sort(model);
 		}
 	}
 }
