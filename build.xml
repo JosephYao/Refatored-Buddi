@@ -9,17 +9,19 @@
 	
 	<path id="Buddi.classpath">
 		<pathelement location="bin"/>
+
 		<pathelement location="lib/jfreechart-1.0.1.jar"/>
 		<pathelement location="lib/jcommon-1.0.5.jar"/>
-		<pathelement location="lib/truefilter-1.2.jar"/>
 		<pathelement location="lib/quaqua-3.6.11.jar"/>
-		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
 		<pathelement location="lib/jcalendar-1.3.2.jar"/>
-		<pathelement location="lib/Moss.jar"/>
 		<pathelement location="lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar"/>
 		<pathelement location="lib/emf/emf.ecore_2.2.1.v200609210005.jar"/>
 		<pathelement location="lib/emf/emf.common_2.2.1.v200609210005.jar"/>
 		<pathelement location="lib/BrowserLauncher2-10rc4.jar"/>
+		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
+		<pathelement location="lib/truefilter-1.2.jar"/>
+		<pathelement location="lib/Moss.jar"/>
+		<pathelement location="lib/retroweaver-rt-2.0Beta2.jar"/>
 	</path> 
 
 	<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
@@ -40,20 +42,44 @@
 		<fatjar.build output="Buddi.jar">
 			<fatjar.manifest mainclass="org.homeunix.drummer.Buddi"/>
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-base.jar" relpath=""/>
+
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-languages.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/truefilter-1.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcalendar-1.3.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/Moss.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.1.v200609210005.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200609210005.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/truefilter-1.2.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/Moss.jar" relpath=""/>
 		</fatjar.build>
 	</target>
+
+<!--
+	<target name="fatjar-1.4">
+		<fatjar.build output="Buddi-1.4.jar">
+			<fatjar.manifest mainclass="org.homeunix.drummer.Buddi"/>
+			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-base-1.4.jar" relpath=""/>
+
+			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-languages.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcalendar-1.3.2.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.1.v200609210005.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200609210005.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
+
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/MRJAdapter-1.0.9.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/truefilter-1.2.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/Moss.jar" relpath=""/>
+		</fatjar.build>
+	</target>
+-->
 
 	<target name="compile">
 		<javac srcdir="src" destdir="bin" classpath=""/>
@@ -63,7 +89,7 @@
 		<delete>
 			<fileset dir=".">
 				<include name="*.jar"/>
-			</fileset>			
+			</fileset>
 		</delete>
 	</target>
 	

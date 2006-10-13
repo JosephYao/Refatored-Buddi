@@ -67,7 +67,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 	
 	public AESCryptoCipher(int keyLength) {
 		try {
-			this.keySize = Math.min(keyLength / 8, Cipher.getMaxAllowedKeyLength(ALGORITHM));
+			this.keySize = Math.min(keyLength / 8, Cipher.getMaxAllowedKeyLength(ALGORITHM) / 8);
 		} catch (Exception ex) {
 			// all implementations of Java 1.5 should support AES
 			throw new RuntimeException(ex);

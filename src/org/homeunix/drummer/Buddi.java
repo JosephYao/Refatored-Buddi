@@ -14,7 +14,6 @@ import net.roydesign.mac.MRJAdapter;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.LanguageEditor;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -87,21 +86,18 @@ public class Buddi {
 
 	public static void main(String[] args) {
 		String prefsLocation = "";
-		Integer verbosity = 0;
+		Integer verbosity = new Integer(0);
 		String lnf = "";
-		Boolean editor = false;
 
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
-			+ "--lnf\tclassName\tJava Look and Feel to use\n"
-			+ "--editor\t\tRun Language Editor instead of Buddi\n";
+			+ "--lnf\tclassName\tJava Look and Feel to use\n";
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
 		map.put("--lnf", lnf);
-		map.put("--editor", editor);
 		try{
 			map = ParseCommands.parse(args, map, help);
 		}
@@ -112,55 +108,40 @@ public class Buddi {
 		prefsLocation = (String) map.get("-p");
 		verbosity = (Integer) map.get("-v");
 		lnf = (String) map.get("--lnf");
-		editor = (Boolean) map.get("--editor");
 
-		//If editor is set, we don't care about anything else - we only
-		// run the editor, not Buddi.
-		if (editor != null){
-			try {
-				new LanguageEditor();
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
+		if (prefsLocation != null){
+			PrefsInstance.setLocation(prefsLocation);
 		}
-		//Otherwise, let's take a look at other options.
-		else {
 
-			if (prefsLocation != null){
-				PrefsInstance.setLocation(prefsLocation);
-			}
-
-			if (verbosity != null){
-				Log.setLogLevel(verbosity);
-			}
-
-			//Set the working path.  If we save files (plugins, data files) 
-			// within this path, we remove this parent path.  This allows
-			// us to use relative paths for such things as running from
-			// USB drives, from remote shares (which would not always have
-			// the same path), etc.
-			workingDir = new File("").getAbsolutePath() + File.separator;
-			if (Const.DEVEL) Log.info("Set working directory to " + workingDir);
-
-			//Load the correct Look and Feel
-			LookAndFeelManager.getInstance().setLookAndFeel(lnf);
-
-			//Load the language
-			Translate.getInstance().loadLanguage(
-					PrefsInstance.getInstance().getPrefs().getLanguage());
-
-			//Load the correct formatter preferences
-			Formatter.getInstance(PrefsInstance.getInstance().getPrefs().getDateFormat());
-
-			//Create the frameless menu bar (for Mac)
-			MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
-
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					launchGUI();
-				}
-			});
+		if (verbosity != null){
+			Log.setLogLevel(verbosity);
 		}
+
+		//Set the working path.  If we save files (plugins, data files) 
+		// within this path, we remove this parent path.  This allows
+		// us to use relative paths for such things as running from
+		// USB drives, from remote shares (which would not always have
+		// the same path), etc.
+		workingDir = new File("").getAbsolutePath() + File.separator;
+		if (Const.DEVEL) Log.info("Set working directory to " + workingDir);
+
+		//Load the correct Look and Feel
+		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
+
+		//Load the language
+		Translate.getInstance().loadLanguage(
+				PrefsInstance.getInstance().getPrefs().getLanguage());
+
+		//Load the correct formatter preferences
+		Formatter.getInstance(PrefsInstance.getInstance().getPrefs().getDateFormat());
+
+		//Create the frameless menu bar (for Mac)
+		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				launchGUI();
+			}
+		});
 	}
 }
