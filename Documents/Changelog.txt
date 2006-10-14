@@ -1,5 +1,5 @@
 1.9.4
--Improved Language Editor, and integrated it into Preferences.
+-Improved Language Editor, and integrated it into Preferences.  You now edit language directly from preferences, and it saves it automatically to the apropriate Languages directory.
 
 1.9.3 (October 12 2006)
 -Added a Language Editor to Buddi.  Can be invoked by running 'java -jar Buddi.jar --editor'.  (This may be moved separately later, but it is tiny (only one Java file, containing 2 main classes), and I think this is simpler for everyone)

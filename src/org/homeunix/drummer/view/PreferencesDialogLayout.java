@@ -33,7 +33,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.LanguageEditor2;
+import org.homeunix.drummer.util.LanguageEditor;
 
 public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -178,18 +178,6 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 			}
 		});
 		
-		JButton editLanguages = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
-		editLanguages.setPreferredSize(new Dimension(100, editLanguages.getPreferredSize().height));
-		editLanguages.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				LanguageEditor2 le = new LanguageEditor2(language.getSelectedItem().toString());
-				String lang = le.getNewLanguageName();
-				updateContent();
-				language.setSelectedItem(lang);
-			}
-		});
-		
-		languagePanel.add(editLanguages);
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
 		
@@ -247,6 +235,20 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel editLanguagesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		JButton editLanguages = new JButton(Translate.getInstance().get(TranslateKeys.EDIT_LANGUAGES));
+		editLanguages.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					LanguageEditor le = new LanguageEditor(language.getSelectedItem().toString());
+					String lang = le.getNewLanguageName();
+					updateContent();
+					language.setSelectedItem(lang);
+				}
+				catch (Exception ex){}
+			}
+		});
 		
 		JLabel numberOfBackupsLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NUMBER_OF_BACKUPS));
 		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
@@ -255,10 +257,12 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		budgetIntervalPanel.add(budgetInterval);
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
+		editLanguagesPanel.add(editLanguages);
 		updatePanel.add(enableUpdateNotifications);
-		
+				
 		advancedPanel.add(budgetIntervalPanel);
 		advancedPanel.add(numberOfBackupsPanel);
+		advancedPanel.add(editLanguagesPanel);
 		advancedPanel.add(updatePanel);
 		
 		

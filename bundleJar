@@ -49,14 +49,15 @@ function init {
 # Do the compilation and jar'ing.  You can avoid running this function
 # if you do it yourself.
 function make_jar {
-	ant jar
-
-	# Run the retroweaver methods to make old jars...
-	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar Buddi-base.jar Buddi-base-1.4.jar
-	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar lib/Moss.jar lib/Moss-1.4.jar
-
-	# This runs both fatjar and fatjar-1.4
-	ant fatjar
+	ant
+#	ant jar
+#
+#	# Run the retroweaver methods to make old jars...
+#	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar Buddi-base.jar Buddi-base-1.4.jar
+#	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar lib/Moss.jar lib/Moss-1.4.jar
+#
+#	# This runs both fatjar and fatjar-1.4
+#	ant fatjar
 }
 
 

@@ -279,3 +279,9 @@ WINDOW=Window
 YEAR=Year
 YESTERDAY=Yesterday
 ZOOM=Zoom
+
+LANGUAGE_EDITOR_HELP=<html><h2>Buddi Language Editor</h2><p><font color=#00D000>Green: Localized Value Exists.  This is Good</font></p><p><font color=#000090>Dark Blue: Localized value = Language value</font></p><p><font color=#0000FF>Blue: Localized value = English value</font></p><p><font color=#A000A0>Purple: Localized value missing; Language value exists</font></p><p><font color=#FF0000>Red: Localized value missing; English value exists</font></p><p><font color=#FF9090>Pink: Value not in English (Probably a spurious key in translation)</font></p><p>*: Edited since Last Save</font></p></html>
+LANGUAGE_EDITOR_NAME=Please enter the name\nof language you wish to edit:
+LANGUAGE_EDITOR_LOCALE=Please enter the Locale code, e.g.:\n'US' for English (US)\n'MX' for Espanol (MX)\n\nYou can leave this field blank.
+LANGUAGE_EDITOR_BLANK_VALUE=You did not enter a language.  Exiting.
+EDIT_LANGUAGES=Edit Languages
