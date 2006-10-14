@@ -42,7 +42,8 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				final Prefs prefs = PrefsInstance.getInstance().getPrefs();
 				boolean needRestart = false;
-				if (!prefs.getLanguage().equals(language.getSelectedItem().toString())
+				if (forceRestart
+						|| !prefs.getLanguage().equals(language.getSelectedItem().toString())
 						|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
 						|| pluginsChanged()){
 

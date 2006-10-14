@@ -62,6 +62,8 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	
 	protected final DefaultComboBoxModel languageModel;
 	
+	protected boolean forceRestart = false;
+	
 	protected PreferencesDialogLayout(Frame owner){
 		super(owner);
 		
@@ -245,6 +247,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 					String lang = le.getNewLanguageName();
 					updateContent();
 					language.setSelectedItem(lang);
+					forceRestart = true; //We need to restart for language to take effect.
 				}
 				catch (Exception ex){}
 			}
