@@ -1,0 +1,21 @@
+ant
+
+# Run the retroweaver methods to make old jars...
+#for JAR in `ls lib/1.5/*.jar`; do
+#	JAR14=`echo $JAR | sed 's/1.5/1.4/g'`
+#	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver \
+#		-jar $JAR $JAR14
+#
+#done
+
+#java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar Buddi-base.jar Buddi-base-1.4.jar
+#java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar lib/Moss.jar lib/Moss-1.4.jar
+#java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar lib/MRJAdapter-1.0.9.jar lib/MRJAdapter-1.0.9-1.4.jar
+
+# This runs both fatjar and fatjar-1.4
+#ant fatjar-1.4
+
+#java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -verifyrefs /System/Library/Frameworks/JavaVM.framework/Versions/1.4/Classes/classes.jar:Buddi.jar -jar Buddi.jar Buddi-1.4.jar
+java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar Buddi.jar Buddi-1.4.jar
+
+cp Buddi-1.4.jar ~/Desktop
