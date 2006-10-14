@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -51,6 +52,8 @@ public class LanguageEditor2 extends JDialog {
 	private static final String VERSION = "0.6.0";
 	private final JList list = new JList();
 	private final JTextArea value = new JTextArea();
+	private final JTextArea baseValue = new JTextArea();
+	private final JTextArea englishValue = new JTextArea();
 	private final SortedPropertyListModel model = new SortedPropertyListModel();
 
 	private final Properties englishProps = new Properties();
@@ -75,11 +78,19 @@ public class LanguageEditor2 extends JDialog {
 					+ "is the two letter extension\n"
 					+ "to the language which indicates\n"
 					+ "minor changes, e.g. US for English (US).\n"
-					+ "To edit the base language itself, hit Cancel.");
+					+ "To edit the base language itself or to create\n"
+					+ "a new language file, hit Cancel.");
 			if (tempLocaleName == null)
 				localeName = "";
 			else
 				localeName = tempLocaleName;
+		}
+		
+		//If we hit cancel, we prompt for Base Language name,
+		if (localeName.length() == 0){
+			language = JOptionPane.showInputDialog(null, 
+					"Please enter the name of language you wish\n"
+					+ "to create, or hit cancel to edit " + language + ".");
 		}
 
 		baseLanguage = language.replaceAll("_\\(.*\\)", "");
@@ -182,7 +193,9 @@ public class LanguageEditor2 extends JDialog {
 	}
 
 	private void showWindow(final String baseLanguage, final String localeName) throws Exception {
-
+		englishValue.setEditable(false);
+		baseValue.setEditable(false);
+		
 		String title = "Editing " 
 			+ (localeName.length() > 0 ? "Locale " + localeName + " for " : "") 
 			+ baseLanguage;
@@ -201,6 +214,8 @@ public class LanguageEditor2 extends JDialog {
 					selectedTKVP = (TranslationKeyValuePair) list.getSelectedValue();
 
 					value.setText(selectedTKVP.getLocalizedValue());
+					baseValue.setText(selectedTKVP.getBaseValue());
+					englishValue.setText(selectedTKVP.getEnglishValue());
 				}
 			}
 		});
@@ -208,6 +223,8 @@ public class LanguageEditor2 extends JDialog {
 		model.addAll(translationKeyValuePairs);		
 		JScrollPane listScroller = new JScrollPane(list);
 		JScrollPane valueScroller = new JScrollPane(value);
+		JScrollPane baseValueScroller = new JScrollPane(baseValue);
+		JScrollPane englishValueScroller = new JScrollPane(englishValue);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.OK));
@@ -262,14 +279,14 @@ public class LanguageEditor2 extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(LanguageEditor2.this,
 						"<html><h2>Buddi Language Editor, version " + VERSION + "</h2>"
-						+ "<p><font color=#00D000>Green = Localized Value - All Good</font></p>"
-						+ "<p><font color=#000090>Dark Blue = Localized == Base</font></p>"
-						+ "<p><font color=#0000FF>Blue = Localized == English</font></p>"
-						+ "<p><font color=#A000A0>Purple = Localized missing, value in Base</font></p>"
+						+ "<p><font color=#00D000>Green: Localized Value - All Good</font></p>"
+						+ "<p><font color=#000090>Dark Blue: Localized == Base</font></p>"
+						+ "<p><font color=#0000FF>Blue: Localized == English</font></p>"
+						+ "<p><font color=#A000A0>Purple: Localized missing, value in Base</font></p>"
 //						+ "<p><font color=#FFCC00>Yellow = Not in Localized, but in English</font></p>"
-						+ "<p><font color=#FF0000>Red = Localized missing, value in English</font></p>"
-						+ "<p><font color=#FF9090>Pink = Not in English (Probably a spurious key)</font></p>"
-						+ "<p>* = Edited since Last Save</font></p></html>"
+						+ "<p><font color=#FF0000>Red: Localized missing, value in English</font></p>"
+						+ "<p><font color=#FF9090>Pink: Not in English (Probably a spurious key)</font></p>"
+						+ "<p>*: Edited since Last Save</font></p></html>"
 				);
 			}
 		});
@@ -290,9 +307,11 @@ public class LanguageEditor2 extends JDialog {
 		listScrollerBorder.setBorder(BorderFactory.createEmptyBorder(7, 12, 6, 12));
 		listScrollerBorder.add(listScroller, BorderLayout.CENTER);
 
-		JPanel valueScrollerBorder = new JPanel(new BorderLayout());
+		JPanel valueScrollerBorder = new JPanel(new GridLayout(0, 1));
 		valueScrollerBorder.setBorder(BorderFactory.createEmptyBorder(1, 12, 5, 12));
-		valueScrollerBorder.add(valueScroller, BorderLayout.CENTER);
+		valueScrollerBorder.add(valueScroller);
+		valueScrollerBorder.add(baseValueScroller);
+		valueScrollerBorder.add(englishValueScroller);
 
 		editorPanel.add(listScrollerBorder, BorderLayout.CENTER);
 		editorPanel.add(valueScrollerBorder, BorderLayout.SOUTH);

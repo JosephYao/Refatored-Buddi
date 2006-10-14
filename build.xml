@@ -20,7 +20,7 @@
 		<pathelement location="lib/BrowserLauncher2-10rc4.jar"/>
 		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
 		<pathelement location="lib/truefilter-1.2.jar"/>
-		<pathelement location="lib/Moss.jar"/>
+		<pathelement location="lib/moss-0.5.1.jar"/>
 		<pathelement location="lib/retroweaver-rt-2.0Beta2.jar"/>
 	</path> 
 
@@ -54,7 +54,7 @@
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/truefilter-1.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/Moss.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/moss-0.5.1.jar" relpath=""/>
 		</fatjar.build>
 	</target>
 
@@ -76,7 +76,7 @@
 
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/MRJAdapter-1.0.9.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/truefilter-1.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/Moss.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/moss-0.5.1.jar" relpath=""/>
 		</fatjar.build>
 	</target>
 -->
