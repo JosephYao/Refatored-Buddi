@@ -1,4 +1,4 @@
-1.9.4
+1.9.4 (October 14 2006)
 -Improved Language Editor, and integrated it into Preferences.  You now edit language directly from preferences, and it saves it automatically to the apropriate Languages directory.
 
 1.9.3 (October 12 2006)

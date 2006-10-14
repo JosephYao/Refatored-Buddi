@@ -22,12 +22,14 @@ Buddi - Personal budget software for the rest of us
 <li><a href='./screenshots.php'>Screenshots</a></li>
 <li><a href='./faq.php'>FAQ</a></li>
 <li><a href='./developers.php'>Developers</a></li>
+<li><a href='./translations.php'>Translations</a></li>
 <br>
 Downloads
 <li><ul>
 <li><a href='http://buddi.sourceforge.net/buddi.dmg' target='_top'>Macintosh</a></li>
 <li><a href='http://buddi.sourceforge.net/buddi.zip' target='_top'>Windows</a></li>
 <li><a href='http://buddi.sourceforge.net/buddi.tgz' target='_top'>Linux / Other</a></li>
+<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=890840' target='top'>Plugins</a></li>
 </ul></li>
 <br>
 How to use Buddi:
