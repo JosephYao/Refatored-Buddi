@@ -3,7 +3,7 @@
 <h1>How to use Plugins</h1>
 
 <p>
-Plugins are small modules by a third party which expand Buddi's functionality.  Currently, there are four types of plugins - Import, Export, Report, and Graph.  Plugins are distributed in .jar files (functionally equivalent to a .zip file of Java programs).
+Plugins are small modules by a third party which expand Buddi's functionality.  Currently, there are four types of plugins - Import, Export, Report, and Graph.  Plugins are distributed in .jar files (functionally equivalent to a .zip file of Java programs).  You can download third party plugins via the Plugins download link on the side bar.
 </p>
 
 <p>
@@ -22,6 +22,10 @@ Plugins are quite simple to make, assuming you have a programming background.  A
 
 <p>
 There are a few methods which you need to implement to create the plugin.  These are pretty self explanatory - for instance, getDescription() is the description of the plugin (as seen on the Reports window), export() is the method which contains the third party used to export the data to another format.  For hints on how to do this, you can check out the built-in plugins, located in the org.homeunix.drummer.plugins.* directories.
+</p>
+
+<p>
+Once you have made a plugin, and you wish to share it with others, you can use the Plugins tracker on the Buddi SourceForge.net site.  Once you have logged in using your SF.net user account (if you don't already have one, you can <a href='http://sourceforge.net/account/newuser_emailverify.php'>get one for free</a>), you can upload your plugin with any instructions, descriptions, etc that you think is useful.
 </p>
 
 <? include "./inc/footer.php" ?>

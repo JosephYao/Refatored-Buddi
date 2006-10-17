@@ -136,7 +136,7 @@ body {
 h1, h2, h3 {
 	font-family: Arial, Helvetica, Sans-Serif;
 	font-weight: bold;
-	padding: 0px;
+	padding: 0.5em;
 	margin: 0px;
 }
 .contentText h1 {
