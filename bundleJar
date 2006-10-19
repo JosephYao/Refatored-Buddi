@@ -80,7 +80,11 @@ function bundle_generic {
 #Create the OSX directory
 function bundle_osx {
 	mkdir -p $OSXROOT
-	cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
+#	cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
+	mkdir -p $OSX/Buddi.app/Contents/Resources/Java
+	mkdir -p $OSX/Buddi.app/Contents/MacOS
+	cp etc/Info.plist $OSX/Buddi.app/Contents/
+	cp img/Buddi.icns $OSX/Buddi.app/Contents/Resources/
 	cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
 	cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
 	cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
@@ -104,7 +108,7 @@ function bundle_osx {
 # Change the launch4j config file to use correct version
 function bundle_windows {
 	TEMP_LAUNCH=temp.xml
-	cp launch4j.xml $TEMP_LAUNCH
+	cp etc/launch4j.xml $TEMP_LAUNCH
 	if [ "$VERSION" != "" ]; then
 		VERSION_NO_LETTERS=`echo $VERSION | sed -e "s/[a-z]//g"`
 		sed -i .bak  -e "s/VERSION/${VERSION_NO_LETTERS}.0/" $TEMP_LAUNCH
@@ -149,8 +153,8 @@ function clean {
 	rm -rf $OSXROOT
 	rm -rf $GENERICROOT
 	
-	rm Buddi.jar
 	rm Buddi.exe
+	rm *.jar
 }
 
 
