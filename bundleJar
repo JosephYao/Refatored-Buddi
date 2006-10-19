@@ -120,8 +120,10 @@ function bundle_windows {
 		sed -i .bak  -e "s/VERSION_LONG/${VERSION_NO_LETTERS}.0/" $TEMP_LAUNCH
 	fi
 
+	CURRDIR=`pwd`
+
 	# Make the .exe, with correct version as set in previous lines
-	../build_tools/launch4j/launch4j $TEMP_LAUNCH
+	../build_tools/launch4j/launch4j $CURRDIR/$TEMP_LAUNCH
 	rm $TEMP_LAUNCH*
 
 	# Create the Windows bundle
@@ -130,7 +132,6 @@ function bundle_windows {
 	cp -R $DEST/$SOURCE/Documents $WINDOWS
 	cp -R $DEST/$SOURCE/Licenses $WINDOWS
 
-	CURRDIR=`pwd`
 	cd $WINDOWSROOT
 	zip -r $DEST/Buddi-$VERSION.zip Buddi
 	cd $CURRDIR
