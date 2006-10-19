@@ -7,12 +7,12 @@
 #  you use Cygwin.
 #
 # You need to actually create the Buddi.jar file first.  I use the FatJar
-#  plugin for Eclipse to do this, and it works quite well.
+#  plugin for Eclipse, via my ant job, to do this, and it works quite well.
 #
 # You will need to install ant (for the compilation and FatJar'ing); and
-#  launch4j (referenced from ant) to create the .exe.  If you don't care
+#  launch4j (referenced from this script) to create the .exe.  If you don't care
 #  about this, you can just use the FatJar Eclipse plugin for making
-#  the jar, and this to package it.
+#  the jar, and this script to package it.
 #
 # See the bottom of this script for the actual program; everything else
 #  are just functions, which are called from the bottom.
@@ -80,14 +80,22 @@ function bundle_generic {
 #Create the OSX directory
 function bundle_osx {
 	mkdir -p $OSXROOT
-#	cp -R $DEST/$SOURCE/Buddi_OSX_Folder $OSX
-	mkdir -p $OSX/Buddi.app/Contents/Resources/Java
+	mkdir -p $OSX/Buddi.app/Contents/Resources/Java/Languages
 	mkdir -p $OSX/Buddi.app/Contents/MacOS
+
+	# Needed to make this a real Mac .app bundle
+	cp etc/JavaApplicationStub $OSX/Buddi.app/Contents/MacOS
+
+	# Copy the .plist and .icns files
 	cp etc/Info.plist $OSX/Buddi.app/Contents/
-	cp img/Buddi.icns $OSX/Buddi.app/Contents/Resources/
+	cp images/Buddi.icns $OSX/Buddi.app/Contents/Resources/
+
+	# Copy Buddi and associated files
 	cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/
+	cp lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
 	cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
-	cp -R $DEST/$SOURCE/lib/libquaqua.jnilib $OSX/Buddi.app/Contents/Resources/Java/
+
+	# Copy text files
 	cp -R $DEST/$SOURCE/Documents $OSX
 	cp -R $DEST/$SOURCE/Licenses $OSX
 
@@ -102,9 +110,6 @@ function bundle_osx {
 
 
 
-
-
-
 # Change the launch4j config file to use correct version
 function bundle_windows {
 	TEMP_LAUNCH=temp.xml
@@ -116,7 +121,7 @@ function bundle_windows {
 	fi
 
 	# Make the .exe, with correct version as set in previous lines
-	./launch4j/launch4j ../$TEMP_LAUNCH
+	../build_tools/launch4j/launch4j $TEMP_LAUNCH
 	rm $TEMP_LAUNCH*
 
 	# Create the Windows bundle
@@ -134,15 +139,10 @@ function bundle_windows {
 
 
 
-
-
 # Create the source bundle
 function bundle_source {
 	tar -C $DEST -czf $DEST/Buddi-$VERSION.src.tgz $SOURCE
 }
-
-
-
 
 
 

@@ -5,7 +5,7 @@
 	<property name="BUDDI_HOME" value="/Users/wyatt/Documents/Programming/Workplace/Buddi"/>
 	<property name="ECLIPSE_HOME" value="/Applications/Eclipse"/>
 	<property name="FATJAR_PATH" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
-	<property name="RETROWEAVER_HOME" location="../ant_tasks/retroweaver"/>
+	<property name="RETROWEAVER_HOME" location="../build_tools/retroweaver"/>
 	
 	<path id="Buddi.classpath">
 		<pathelement location="bin"/>
