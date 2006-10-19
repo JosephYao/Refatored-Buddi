@@ -21,26 +21,54 @@ import de.schlichtherle.swing.filter.BitSetFilteredDynamicListModel;
 import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 import de.schlichtherle.swing.filter.ListElementFilter;
 
+/**
+ * Custom list model for use with TransactionFrames.  This is designed
+ * to be the 'base model' - all transactions frames share one instance of
+ * this object, and base their lists off of it.  This allows a change in 
+ * one to automatically show in all.  To get the different views for each
+ * window (showing only transactions which match a given account), we
+ * use a DynamicFilteredListModel, which is based off of this one (via the
+ * getFilteredListMode(Account, TransactionsFrame) method).
+ *  
+ * @author wyatt
+ *
+ */
 public class TransactionListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;
 	
 	private final EList transactions;
 	
+	/**
+	 * Create a new TransactionListModel object, using a given set of transactions for the data.
+	 * @param transactions The list of transactions which this model is based off of
+	 */
 	public TransactionListModel(EList transactions){
 		this.transactions = transactions;
 		ECollections.sort(this.transactions);
 	}
 	
 	//*** Abstract List Model methods
+	/* (non-Javadoc)
+	 * @see javax.swing.ListModel#getElementAt(int)
+	 */
 	public Object getElementAt(int index) {
 		return transactions.get(index);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.ListModel#getSize()
+	 */
 	public int getSize() {
 		return transactions.size();
 	}
 	
 	//*** Data Access methods
+	/**
+	 * Adds a new transaction to the model.  You should use this method
+	 * instead of DataInstance to ensure that all transactions frames 
+	 * get updated automatically.
+	 * @param t The transaction to add to the list.
+	 */
 	public void add(Transaction t){
 		DataInstance.getInstance().addTransaction(t);
 		ECollections.sort(this.transactions);
@@ -49,12 +77,26 @@ public class TransactionListModel extends AbstractListModel {
 		DataInstance.getInstance().saveDataModel();
 	}
 	
+	/**
+	 * Removes the given transaction from the list.  You should use this 
+	 * method instead of DataInstance to ensure that all transactions frames
+	 * get updated automatically. 
+	 * @param t The transaction to remove from the list.
+	 * @param fdlm The filtered dynamic list model from which the removal originated. 
+	 */
 	public void remove(Transaction t, FilteredDynamicListModel fdlm){
 		DataInstance.getInstance().deleteTransaction(t);
 		fdlm.update();
 		DataInstance.getInstance().saveDataModel();
 	}
 	
+	/**
+	 * Updates the given transaction in the list.  You should use this 
+	 * method instead of DataInstance to ensure that all transactions frames
+	 * get updated automatically. 
+	 * @param t The transaction to update in the list.
+	 * @param fdlm The filtered dynamic list model from which the update originated. 
+	 */
 	public void update(Transaction t, FilteredDynamicListModel fdlm){
 		ECollections.sort(this.transactions);
 		t.calculateBalance();
@@ -62,6 +104,14 @@ public class TransactionListModel extends AbstractListModel {
 		DataInstance.getInstance().saveDataModel();
 	}
 	
+	/**
+	 * Updates the given transaction in the list, with no change in order 
+	 * (i.e., the date for the updated transaction did not change).  You 
+	 * should use this method instead of DataInstance to ensure that all 
+	 * transactions frames get updated automatically. 
+	 * @param t The transaction to update in the list.
+	 * @param fdlm The filtered dynamic list model from which the update originated. 
+	 */
 	public void updateNoOrderChange(Transaction t){
 		t.calculateBalance();
 		int i = transactions.indexOf(t);
@@ -70,6 +120,14 @@ public class TransactionListModel extends AbstractListModel {
 	}
 	
 	//*** Filtered List Model
+	/**
+	 * Returns a filtered dynamic list model, associated with a given
+	 * account and frame.  The transactionFrame is needed to allow
+	 * filtering on Search text and date range.
+	 * @param a Account to filter on
+	 * @param frame The frame which will be asociated with this model.
+	 * @return
+	 */
 	public FilteredDynamicListModel getFilteredListModel(final Account a, final TransactionsFrame frame){
 		final FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();  
 		fdlm.setSource(this);

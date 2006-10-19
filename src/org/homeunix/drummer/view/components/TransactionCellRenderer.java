@@ -19,6 +19,13 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 
+/**
+ * The cell renderer for TransactionsFrame.  On a Mac, we use Quaqua to
+ * make this look pretty; on a non Mac, we have to do it ourselves.
+ * 
+ * @author wyatt
+ *
+ */
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static StringBuilder sb = new StringBuilder();
@@ -28,6 +35,9 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 	private static Color WHITE = Color.WHITE;
 	private Account account;
 		
+	/**
+	 * Creates a new TransactionCellRenderer object
+	 */
 	public TransactionCellRenderer(){
 		if (Buddi.isMac()){
 			this.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
@@ -37,6 +47,9 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+	 */
 	public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
 		if (obj != null){
 //		if (obj instanceof Transaction) {

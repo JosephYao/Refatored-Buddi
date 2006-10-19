@@ -46,6 +46,13 @@ import org.homeunix.thecave.moss.util.Log;
 
 import com.toedter.calendar.JDateChooser;
 
+/**
+ * The transaction editing pane, which includes text fields to enter
+ * date, descriptions, number, amount, etc.  Currently used in 
+ * TransactionFrame and ScheduledTransaction.
+ * @author wyatt
+ *
+ */
 public class EditableTransaction extends JPanel {
 	public static final long serialVersionUID = 0;
 	

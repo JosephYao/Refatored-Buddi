@@ -3,6 +3,13 @@
  */
 package org.homeunix.drummer.controller;
 
+/**
+ * I use this list of keys for the Translate class.  Using this instead 
+ * of string constants gives me more flexibility and less ugly code
+ * that I have to wade through. 
+ * @author wyatt
+ *
+ */
 public enum TranslateKeys {
 
     ABOUT_COPYRIGHT,
@@ -12,8 +19,9 @@ public enum TranslateKeys {
     ABOUT_TEXT,
     ACCOUNT,
     ACCOUNT_TYPE,
-    ADVANCED,
     ACTUAL,
+    ADD,
+    ADVANCED,
     ALL,
     AMOUNT,
     AND,
@@ -46,6 +54,7 @@ public enum TranslateKeys {
     CHOOSE_DATA_DIR,
     CHOOSE_DATE_INTERVAL,
     CHOOSE_EXPORT_FILE,
+    CHOOSE_PLUGIN_JAR,
     CLEAR,
     CLEARED_SHORT,
     CLEAR_TRANSACTION,
@@ -84,6 +93,7 @@ public enum TranslateKeys {
     DONE,
     DOWNLOAD,
     EDIT,
+    EDIT_LANGUAGES,
     EDIT_SCHEDULED_TRANSACTIONS,
     EMPTY_PASSWORD,
     EMPTY_PASSWORD_TITLE,
@@ -104,6 +114,8 @@ public enum TranslateKeys {
     EXPENSE_ACTUAL_BUDGET,
     EXPENSE_ACTUAL_BUDGET_BAR_GRAPH,
     EXPENSE_PIE_GRAPH,
+    EXPORT,
+    EXPORT_PLUGINS,
     EXPORT_TO_CSV,
     EXPORT_TO_HTML,
     FILE,
@@ -115,6 +127,8 @@ public enum TranslateKeys {
     GROCERIES,
     HELP,
     HOUSEHOLD,
+    IMPORT,
+    IMPORT_PLUGINS,
     INCOME,
     INCOME_PIE_GRAPH,
     INCORRECT_PASSWORD,
@@ -123,7 +137,12 @@ public enum TranslateKeys {
     INVESTMENT,
     INVESTMENT_EXPENSES, 
     INVESTMENT_INCOME,
+    JAR_FILES,
     LANGUAGE,
+    LANGUAGE_EDITOR_BLANK_VALUE,
+    LANGUAGE_EDITOR_HELP,
+    LANGUAGE_EDITOR_LOCALE,
+    LANGUAGE_EDITOR_NAME,
     LAST_MONTH,
     LAST_QUARTER,
     LAST_WEEK,
@@ -159,6 +178,8 @@ public enum TranslateKeys {
     NO_PARENT,
     NO_PASSWORD_ENTERED,
     NO_PASSWORD_ENTERED_TITLE,
+    NO_PLUGINS_IN_JAR,
+    NO_PLUGINS_IN_JAR_TITLE,
     NO_TRANSACTIONS_USING_ACCOUNT,
     NO_TRANSACTIONS_USING_CATEGORY,
     NUMBER_OF_BACKUPS,
@@ -173,6 +194,7 @@ public enum TranslateKeys {
     OVERDRAFT_LIMIT,
     OVERWRITE_EXISTING_FILE,
     OVERWRITE_EXISTING_FILE_MESSAGE,
+    PANEL_PLUGINS,
     PARENT_CATEGORY,
     PASSWORD,
     PASSWORDS_DONT_MATCH,
@@ -181,6 +203,9 @@ public enum TranslateKeys {
     PAST_WEEK,
     PERMANENT_DELETE_ACCOUNT,
     PERMANENT_DELETE_CATEGORY,
+    PLUGINS,
+    PLUGIN_ENTRY,
+    PLUGIN_ENTRY_TITLE,
     PREFERENCES,
     PREFERENCES_MENU_ITEM,
     PREPAID_ACCOUNT,
@@ -194,6 +219,7 @@ public enum TranslateKeys {
     RECONCILED_SHORT,
     RECORD,
     RECORD_BUTTON_ERROR,
+    REMOVE,
     REPORTS,
     REPORT_AS_OF_DATE,
     REPORT_BETWEEN,
@@ -239,6 +265,8 @@ public enum TranslateKeys {
     THURSDAY,
     TO,
     TODAY,
+    TOGGLE_CLEARED,
+    TOGGLE_RECONCILED,
     TOOLTIP_AMOUNT,
     TOOLTIP_DATE, 
     TOOLTIP_DESC,
@@ -270,27 +298,6 @@ public enum TranslateKeys {
     WINDOW,
     YEAR,
     YESTERDAY,
-    ZOOM,
+    ZOOM
     
-    EXPORT,
-    IMPORT,
-    EXPORT_PLUGINS,
-    IMPORT_PLUGINS,
-    PANEL_PLUGINS,
-    PLUGINS,
-    PLUGIN_ENTRY,
-    PLUGIN_ENTRY_TITLE,
-    JAR_FILES,
-    ADD,
-    REMOVE,
-    CHOOSE_PLUGIN_JAR,
-    TOGGLE_RECONCILED,
-    TOGGLE_CLEARED,
-    NO_PLUGINS_IN_JAR,
-    NO_PLUGINS_IN_JAR_TITLE,
-    LANGUAGE_EDITOR_HELP,
-    LANGUAGE_EDITOR_NAME,
-    LANGUAGE_EDITOR_LOCALE,
-    LANGUAGE_EDITOR_BLANK_VALUE,
-    EDIT_LANGUAGES
 }

@@ -48,6 +48,19 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 
 
+/**
+ * A simple editor for .lang files.  While I did not spend too much time
+ * or effort on this, it should make it somewhat easier to edit .lang 
+ * files.  Included in this release is the ability to view multiple
+ * languages at once (English, base, and locale); the ability to see
+ * based on color what the status of a translated word is; the ability to 
+ * convert Unicode / control characters to apropriate Java notation;
+ * the ability to automatically save to the correct location the newly 
+ * created .lang files.
+ * 
+ * @author wyatt
+ *
+ */
 public class LanguageEditor extends JDialog {
 	public static final long serialVersionUID = 0;
 
@@ -70,6 +83,12 @@ public class LanguageEditor extends JDialog {
 
 	private TranslationKeyValuePair selectedTKVP = null;
 
+	/**
+	 * Starts a new instance of LanguageEditor, and attempts to load 
+	 * language defaults for the given language.
+	 * @param language Language to load / create
+	 * @throws Exception Error in the Language Editor
+	 */
 	public LanguageEditor(String language) throws Exception {
 
 		String tempLanguage = JOptionPane.showInputDialog( 
@@ -106,6 +125,11 @@ public class LanguageEditor extends JDialog {
 			localeName = tempLocaleName;
 	}
 
+	/**
+	 * Opens the LanguageEditor window
+	 * @return The name of the language which was just edited.
+	 * @throws Exception
+	 */
 	public String getNewLanguageName() throws Exception {
 		loadData(baseLanguage, localeName);
 		showWindow(baseLanguage, localeName);

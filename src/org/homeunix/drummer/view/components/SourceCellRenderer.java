@@ -19,6 +19,11 @@ import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 
+/**
+ * The cell renderer for Accounts pane and Categories pane.
+ * @author wyatt
+ *
+ */
 public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static final StringBuilder sb = new StringBuilder();
@@ -31,6 +36,9 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	private static Color SELECTED = new Color(181, 213, 255);
 	private static Color WHITE = Color.WHITE;
 	
+	/**
+	 * Creates a new SourceCellRenderer object
+	 */
 	public SourceCellRenderer(){
 		super();
 		
@@ -39,6 +47,9 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+	 */
 	public Component getTreeCellRendererComponent(JTree tree, Object node, boolean isSelected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		Object obj;
 		DefaultMutableTreeNode n;
@@ -177,6 +188,11 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 		return this;
 	}
 
+	/**
+	 * Returns the total amount which is contained within the given node.
+	 * @param node Node to check grand total of
+	 * @return Grand total of all account / category objects contained within node and it's descendants.
+	 */
 	private long getTotalAmount(DefaultMutableTreeNode node){
 		long amount = 0;
 		if (node.getUserObject() instanceof Category){

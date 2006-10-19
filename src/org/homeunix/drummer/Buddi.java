@@ -22,8 +22,15 @@ import org.homeunix.thecave.moss.util.ParseCommands;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
 
 /**
+ * The main class, containing the launch methods for Buddi.  This class 
+ * is responsible for setting up the environment (including reading
+ * command line options), loading the preferences and languages, 
+ * warning the user (if using experimental code), etc.  It also initializes
+ * and contains access methods for several environment-type methods,
+ * such as what OS we are running on, and what the working directory is.
+ * 
  * @author wyatt
- * @author jdidion
+ * @author jdidion - Split the LNF dialog into its own class for better maintainability
  */
 public class Buddi {
 
@@ -32,6 +39,10 @@ public class Buddi {
 	private static String workingDir;
 	private static final boolean UI_DEBUG = false;
 
+	/**
+	 * Is the program being run on a Macintosh?
+	 * @return <code>true</code> if Buddi is being run on a Mac, <code>false</code> otherwise. 
+	 */
 	public static boolean isMac(){
 		if (isMac == null){
 			isMac = !UI_DEBUG && System.getProperty("os.name").startsWith("Mac OS");
@@ -39,7 +50,11 @@ public class Buddi {
 
 		return isMac;
 	}
-
+	
+	/**
+	 * Is the program being run on Windows?
+	 * @return <code>true</code> if Buddi is being run on Windows, <code>false</code> otherwise. 
+	 */
 	public static Boolean isWindows(){
 		if (isWindows == null){
 			isWindows = !UI_DEBUG && System.getProperty("os.name").startsWith("Windows");
@@ -48,6 +63,13 @@ public class Buddi {
 		return isWindows;
 	}
 
+	/**
+	 * Gets the current working directory.  This should be the same directory
+	 * that the Buddi.{exe|jar} is in or the Buddi.app/Contents/Resources/Java/ 
+	 * folder on a Mac.  This will determine what a relative path is, which
+	 * is useful for running on a thumb drive.
+	 * @return
+	 */
 	public static String getWorkingDir(){
 		if (workingDir == null){
 			workingDir = "";
@@ -56,6 +78,9 @@ public class Buddi {
 		return workingDir;
 	}
 
+	/**
+	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
+	 */
 	private static void launchGUI(){
 
 		// TODO Remove this from stable versions after 1.x.0
@@ -84,6 +109,11 @@ public class Buddi {
 		MainBuddiFrame.getInstance().openWindow();
 	}
 
+	/**
+	 * Main method for Buddi.  Can pass certain command line options
+	 * in.  Use --help flag to see complete list.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		String prefsLocation = "";
 		Integer verbosity = new Integer(0);

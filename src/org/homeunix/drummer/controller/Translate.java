@@ -18,6 +18,10 @@ import org.homeunix.thecave.moss.util.Log;
 public class Translate {
 	private final Properties translations = new Properties();
 	
+	/**
+	 * Returns a singleton instance of the Translate class.
+	 * @return
+	 */
 	public static Translate getInstance() {
 		return SingletonHolder.instance;
 	}
@@ -30,14 +34,15 @@ public class Translate {
 	
 	/**
 	 * We try to load up to three different language files, in the following order:
-	 * 1) English.lang - this is the base languauge, and if a term is not 
-	 * 		defined elsewhere, we default to the values here.
-	 * 2) Specified language, without locale.  For instance, if you try
+	 * <ol>
+	 * <li>English.lang - this is the base languauge, and if a term is not 
+	 * 		defined elsewhere, we default to the values here.</li>
+	 * <li>Specified language, without locale.  For instance, if you try
 	 * 		to load Espanol_(MX), we first try to load Espanol.  This
 	 * 		is to allow localizations to draw on a base translation in 
-	 * 		the same language.
-	 * 3) The specified language, with locale.
-	 * 
+	 * 		the same language.</li>
+	 * <li>The specified language, with locale.</li>
+	 * <p>
 	 * This gives us extreme flexibility and maintainability when 
 	 * creating locales - to change a single term, you only have to 
 	 * create a .lang file with that one term changed.
@@ -109,6 +114,11 @@ public class Translate {
 		return this;
 	}
 
+	/**
+	 * Returns the translation, based on the given string.
+	 * @param key The key to translate
+	 * @return The translation in currently loaded language
+	 */
 	public String get(String key){
 		if (key == null){
 			if (Const.DEVEL) Log.debug("Null translation key");
@@ -120,6 +130,11 @@ public class Translate {
 		return ret;
 	}
 	
+	/**
+	 * Returns the translation, based on the given TranslateKey.
+	 * @param key The key to translate
+	 * @return The translation in currently loaded language
+	 */
 	public String get(TranslateKeys key){
 		String ret = translations.getProperty(key.toString());
 		if (ret == null)

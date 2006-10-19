@@ -35,6 +35,14 @@ import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
+/**
+ * Built-in plugin.  Feel free to use this as an example on how to make
+ * report plugins (although this one is kind of ugly, so you may not 
+ * want to use it..)
+ * 
+ * @author wyatt
+ *
+ */
 public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 	public String getReportHTML(Date startDate, Date endDate) {
 		StringBuffer sb = BuddiHTMLPluginHelper.getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER, startDate, endDate);

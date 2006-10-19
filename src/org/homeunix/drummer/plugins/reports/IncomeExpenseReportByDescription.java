@@ -32,7 +32,19 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
+/**
+ * Built-in plugin.  Feel free to use this as an example on how to make
+ * report plugins (although this one is kind of ugly, so you may not 
+ * want to use it..)
+ * 
+ * @author wyatt
+ *
+ */
 public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
+	
+	/* (non-Javadoc)
+	 * @see org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin#getReportHTML(java.util.Date, java.util.Date)
+	 */
 	public String getReportHTML(Date startDate, Date endDate) {
 		StringBuffer sb = BuddiHTMLPluginHelper.getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER, startDate, endDate);
 
@@ -117,6 +129,9 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 		return sb.toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin#getReportTreeModel(java.util.Date, java.util.Date)
+	 */
 	public TreeModel getReportTreeModel(Date startDate, Date endDate) {
 		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
 		Map<String, Long> descriptions = new HashMap<String, Long>();

@@ -31,6 +31,14 @@ import org.homeunix.thecave.moss.util.Log;
 
 import com.toedter.calendar.JDateChooser;
 
+/**
+ * The dialog which allows users to choose a custom date range, or
+ * start / end date only.  Designed to launch a plugin when the user 
+ * has chosen the date.
+ * 
+ * @author wyatt
+ *
+ */
 public class CustomDateDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 

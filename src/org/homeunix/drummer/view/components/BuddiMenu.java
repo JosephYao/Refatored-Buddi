@@ -44,6 +44,21 @@ import org.homeunix.thecave.moss.util.PrintUtilities;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
+/**
+ * The main menu.  We extend JScreenMenuBar instead of JMenu since
+ * this class gives us some nicer features (such as auto disabling
+ * of parent menus if all children are disabled, frameless menus for
+ * better Macintosh menu behaviour, etc).  This is a pretty ugly class
+ * (it only contains one huge method), but at least it is layed out
+ * quite logically.  
+ * <p>
+ * We start with initializing the menus, including titles and shortcuts;
+ * we then add them to the correct menus, and finally create the action
+ * listeners for each item.
+ * 
+ * @author wyatt
+ *
+ */
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
 
@@ -464,17 +479,17 @@ public class BuddiMenu extends JScreenMenuBar {
 		showHelp.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					File localHelp = new File(
-							Const.HELP_FOLDER 
-							+ File.separator
-							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
-							+ File.separator
-							+ Const.HELP_FILE);
-					final String location;
-					if (localHelp.exists())
-						location = "file://" + localHelp.getAbsolutePath();
-					else
-						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
+//					File localHelp = new File(
+//							Const.HELP_FOLDER 
+//							+ File.separator
+//							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
+//							+ File.separator
+//							+ Const.HELP_FILE);
+//					final String location;
+//					if (localHelp.exists())
+//						location = "file://" + localHelp.getAbsolutePath();
+//					else
+					final String location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 
 					if (Const.DEVEL) Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher bl = new BrowserLauncher(null);
