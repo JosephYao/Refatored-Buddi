@@ -1,6 +1,7 @@
 2.0.0rc1 (October 19 2006)
 -Updated comments and documentation on most major classes
 -Changed the build script to remove need for keeping Buddi_OSX_Folder.  I now build the .app from scratch.
+-Moved the documentation and licenses into the .jar file.
 
 1.9.5 (October 18 2006)
 -Fixed bug which prevented Buddi from starting on Windows, due to error in the working directory regex.

@@ -36,6 +36,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.util.DocumentationFactory;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
@@ -197,8 +198,11 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BUDDI_HELP));
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-
+		
 		help.add(showHelp);
+		help.addSeparator();
+		help.add(DocumentationFactory.getDocumentsMenu());
+		help.add(DocumentationFactory.getLicensesMenu());
 
 		newFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {

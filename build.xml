@@ -44,6 +44,8 @@
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-base.jar" relpath=""/>
 
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-languages.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-documents.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-licenses.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
@@ -96,6 +98,8 @@
 	<target name="jar" depends="clean,compile">
 		<jar destfile="Buddi-base.jar" basedir="bin" includes="**/*.class" />
 		<jar destfile="Buddi-languages.jar" basedir="Languages" includes="**/*.lang" />
+		<jar destfile="Buddi-documents.jar" basedir="Documents" includes="**/*.txt" />
+		<jar destfile="Buddi-licenses.jar" basedir="Licenses" includes="**/*.txt" />
 		<jar destfile="Buddi-resources.jar" basedir="images" includes="**/*.gif" />
 	</target>
 

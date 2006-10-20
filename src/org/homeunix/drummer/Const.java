@@ -22,9 +22,7 @@ public class Const {
 	public final static String LANGUAGE_EXTENSION = ".lang";
 	public final static String LANGUAGE_FOLDER = "Languages";
 	
-//	public final static String HELP_FOLDER = "Help";
-//	public final static String HELP_FILE = "index.html";
-	
+	//Data file constants
 	public final static String DATA_FILE_EXTENSION = ".buddi";
 	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
@@ -48,6 +46,19 @@ public class Const {
 		"Norsk",
 		"Nederlands",
 		"Nederlands_(BE)"
+	};
+	
+	public final static String[] BUNDLED_DOCUMENTS = {
+		"Changelog.txt",
+		"License.txt",
+		"Readme.txt"
+	};
+	
+	public final static String[] BUNDLED_LICENSES = {
+		"Artistic License.txt",
+		"GNU General Public License.txt",
+		"GNU Lesser General Public License.txt",
+		"Modified BSD License.txt"
 	};
 	
 	//Date formats to appear in Preferences.
