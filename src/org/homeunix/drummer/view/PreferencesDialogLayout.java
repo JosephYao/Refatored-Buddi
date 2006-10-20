@@ -280,6 +280,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		Dimension buttonSize = new Dimension(Math.max(100, removeButton.getPreferredSize().width), removeButton.getPreferredSize().height);
 		addButton.setPreferredSize(buttonSize);
 		removeButton.setPreferredSize(buttonSize);
+		removeButton.setEnabled(false);
 		buttonPanel.add(addButton);
 		buttonPanel.add(removeButton);
 		

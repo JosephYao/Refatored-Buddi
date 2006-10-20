@@ -128,7 +128,8 @@ public class CustomDateDialog extends AbstractDialog {
 	private void setVisibility(){
 		if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL)){
 			mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_BETWEEN));
-			middleLabel.setText(Translate.getInstance().get(TranslateKeys.AND));					
+//			middleLabel.setText(Translate.getInstance().get(TranslateKeys.AND));					
+			middleLabel.setText(" - ");
 		}
 		else{
 			mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_AS_OF_DATE));

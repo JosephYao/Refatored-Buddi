@@ -3,6 +3,8 @@
  */
 package org.homeunix.drummer;
 
+import org.homeunix.drummer.controller.TranslateKeys;
+
 
 /**
  * A container for constants, used throughout the rest of the program.
@@ -12,7 +14,7 @@ package org.homeunix.drummer;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "1.9.5";
+	public static final String VERSION = "2.0.0rc1";
 	public static final String BRANCH = "UNSTABLE";
 	public static final boolean DEVEL = true;
 	
@@ -78,14 +80,14 @@ public class Const {
 	};
 	
 	//The days in the week.  Used in Scheduled Transactions.
-	public final static String[] DAYS_IN_WEEK = {
-		"SUNDAY",
-		"MONDAY",
-		"TUESDAY",
-		"WEDNESDAY",
-		"THURSDAY",
-		"FRIDAY",
-		"SATURDAY"
+	public final static TranslateKeys[] DAYS_IN_WEEK = {
+		TranslateKeys.SUNDAY,
+		TranslateKeys.MONDAY,
+		TranslateKeys.TUESDAY,
+		TranslateKeys.WEDNESDAY,
+		TranslateKeys.THURSDAY,
+		TranslateKeys.FRIDAY,
+		TranslateKeys.SATURDAY
 	};
 	
 	//The plugins which are included in the main Buddi jar.

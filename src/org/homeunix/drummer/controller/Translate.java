@@ -17,6 +17,8 @@ import org.homeunix.thecave.moss.util.Log;
 
 public class Translate {
 	private final Properties translations = new Properties();
+//	private final Set<String> existingKeys = new HashSet<String>();
+//	private final Set<String> usedKeys = new HashSet<String>();
 	
 	/**
 	 * Returns a singleton instance of the Translate class.
@@ -111,6 +113,11 @@ public class Translate {
 					JOptionPane.ERROR_MESSAGE
 			);
 		}
+		
+//		for (Object o : translations.keySet()) {
+//			existingKeys.add(o.toString());
+//		}
+		
 		return this;
 	}
 
@@ -121,12 +128,13 @@ public class Translate {
 	 */
 	public String get(String key){
 		if (key == null){
-			if (Const.DEVEL) Log.debug("Null translation key");
+			Log.warning("Null translation key: " + key);
 			return key;
 		}
 		String ret = translations.getProperty(key);
 		if (ret == null)
 			return key;
+		
 		return ret;
 	}
 	
@@ -141,4 +149,10 @@ public class Translate {
 			return key.toString();
 		return ret;
 	}
+//	
+//	public Set<String> getUnusedKeys() {
+//		existingKeys.removeAll(usedKeys);
+//		
+//		return existingKeys;
+//	}
 }

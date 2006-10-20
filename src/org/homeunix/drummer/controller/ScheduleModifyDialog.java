@@ -105,7 +105,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 	private void updateSchedulePulldown(){
 		if (getFrequencyType().equals(TranslateKeys.WEEK.toString())){
 			scheduleModel.removeAllElements();
-			for (String day : Const.DAYS_IN_WEEK) {
+			for (TranslateKeys day : Const.DAYS_IN_WEEK) {
 				scheduleModel.addElement(day);	
 			}
 		}

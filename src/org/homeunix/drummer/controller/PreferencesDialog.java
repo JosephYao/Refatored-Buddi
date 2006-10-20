@@ -15,6 +15,8 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.Const;
@@ -168,6 +170,14 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 					for (Object o : pluginList.getSelectedValues()) {
 						pluginListModel.removeElement(o);	
 					}
+				}
+			}
+		});
+		
+		pluginList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()){
+					removeButton.setEnabled(pluginList.getSelectedIndex() != -1);
 				}
 			}
 		});

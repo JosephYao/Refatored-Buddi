@@ -274,7 +274,8 @@ public class LanguageEditor extends JDialog {
 
 		ok.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				selectedTKVP.save(value.getText());
+				if (selectedTKVP != null && value.getText() != null)
+					selectedTKVP.save(value.getText());
 
 				File languagesFolder = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
 				if (!languagesFolder.exists()){
@@ -290,7 +291,6 @@ public class LanguageEditor extends JDialog {
 				);
 
 				Properties newProps = new Properties();
-
 				for (TranslationKeyValuePair tkvp : translationKeyValuePairs) {
 					if (tkvp.getLocalizedValue().length() > 0){
 						newProps.put(tkvp.getKey(), tkvp.getLocalizedValue());

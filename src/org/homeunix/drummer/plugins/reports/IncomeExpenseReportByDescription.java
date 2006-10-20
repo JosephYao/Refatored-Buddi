@@ -46,7 +46,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	 * @see org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin#getReportHTML(java.util.Date, java.util.Date)
 	 */
 	public String getReportHTML(Date startDate, Date endDate) {
-		StringBuffer sb = BuddiHTMLPluginHelper.getHtmlHeader(TranslateKeys.REPORT_BY_CATEGORY_HEADER, startDate, endDate);
+		StringBuffer sb = BuddiHTMLPluginHelper.getHtmlHeader(TranslateKeys.REPORT_BY_DESCRIPTION_HEADER, startDate, endDate);
 
 		sb.append("<table class='main'>\n");
 
