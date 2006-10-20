@@ -1,4 +1,4 @@
-2.0.0rc1 (October 19 2006)
+2.0.0rc1 (October 20 2006)
 -Updated comments and documentation on most major classes
 -Changed the build script to remove need for keeping Buddi_OSX_Folder.  I now build the .app from scratch.
 -Moved the documentation and licenses into the .jar file.
