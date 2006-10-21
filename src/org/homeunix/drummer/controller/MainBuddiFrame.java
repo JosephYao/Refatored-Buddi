@@ -230,7 +230,11 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 								buttons[0]);
 						
 						if (reply == JOptionPane.YES_OPTION){
-							String fileLocation = Const.DOWNLOAD_URL + get();
+							String fileLocation;
+							if (Const.DEVEL)
+								fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+							else
+								fileLocation = Const.DOWNLOAD_URL_STABLE;
 							
 							if (Buddi.isMac())
 								fileLocation += Const.DOWNLOAD_URL_DMG;

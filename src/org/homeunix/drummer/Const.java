@@ -29,10 +29,11 @@ public class Const {
 	//Web addresses
 	public final static String DONATE_URL = "http://sourceforge.net/donate/index.php?group_id=167026";
 	public final static String PROJECT_URL = "http://buddi.sourceforge.net/";
-	public final static String DOWNLOAD_URL = "http://buddi.sourceforge.net/Buddi-";
-	public final static String DOWNLOAD_URL_DMG = ".dmg?download";
-	public final static String DOWNLOAD_URL_ZIP = ".zip?download";
-	public final static String DOWNLOAD_URL_TGZ = ".tgz?download";
+	public final static String DOWNLOAD_URL_STABLE = "http://buddi.sourceforge.net/Buddi";
+	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.sourceforge.net/Buddi-development";
+	public final static String DOWNLOAD_URL_DMG = ".dmg";
+	public final static String DOWNLOAD_URL_ZIP = ".zip";
+	public final static String DOWNLOAD_URL_TGZ = ".tgz";
 	public final static String VERSION_FILE = "version.txt";
 	
 	//Languages which are included in the .jar file.  Needed since there

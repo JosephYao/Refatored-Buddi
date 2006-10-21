@@ -68,8 +68,8 @@ function make_jar {
 function bundle_generic {
 	mkdir -p $GENERIC
 	cp Buddi.jar $GENERIC
-	cp -R $DEST/$SOURCE/Documents $GENERIC
-	cp -R $DEST/$SOURCE/Licenses $GENERIC
+#	cp -R $DEST/$SOURCE/Documents $GENERIC
+#	cp -R $DEST/$SOURCE/Licenses $GENERIC
 
 	tar -C $GENERICROOT -czf $DEST/Buddi-$VERSION.tgz Buddi
 }
@@ -96,8 +96,8 @@ function bundle_osx {
 	cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
 
 	# Copy text files
-	cp -R $DEST/$SOURCE/Documents $OSX
-	cp -R $DEST/$SOURCE/Licenses $OSX
+#	cp -R $DEST/$SOURCE/Documents $OSX
+#	cp -R $DEST/$SOURCE/Licenses $OSX
 
 	if [ "$VERSION" != "" ]; then
 		# Archive the bundles
@@ -129,8 +129,8 @@ function bundle_windows {
 	# Create the Windows bundle
 	mkdir -p $WINDOWS
 	cp Buddi.exe $WINDOWS
-	cp -R $DEST/$SOURCE/Documents $WINDOWS
-	cp -R $DEST/$SOURCE/Licenses $WINDOWS
+#	cp -R $DEST/$SOURCE/Documents $WINDOWS
+#	cp -R $DEST/$SOURCE/Licenses $WINDOWS
 
 	cd $WINDOWSROOT
 	zip -r $DEST/Buddi-$VERSION.zip Buddi
