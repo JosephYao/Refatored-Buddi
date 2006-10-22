@@ -24,6 +24,7 @@ public class JDocumentDialog extends JDialog {
 	
 	public JDocumentDialog(String document) {
 		JTextArea docArea = new JTextArea(document);
+		docArea.setWrapStyleWord(true);
 		docArea.setEditable(false);
 		
 		JScrollPane docScroller = new JScrollPane(docArea);

@@ -1,3 +1,6 @@
+2.0.0rc2
+-Fixed Null Pointer Exception bug when running from source (the Documents / Licenses could not load from jar, for obvous reasons).  When running from the binary version, there is no problems.
+
 2.0.0rc1 (October 20 2006)
 -Updated comments and documentation on most major classes
 -Changed the build script to remove need for keeping Buddi_OSX_Folder.  I now build the .app from scratch.

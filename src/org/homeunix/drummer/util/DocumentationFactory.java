@@ -6,6 +6,7 @@ package org.homeunix.drummer.util;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 
 import net.roydesign.ui.JScreenMenu;
 import net.roydesign.ui.JScreenMenuItem;
@@ -63,10 +64,13 @@ public class DocumentationFactory {
 	
 	private static String getDocumentText(String documentName){
 		try{
-			return FileFunctions.readTextStream(JarLoader.getSystemResourceAsStream(documentName));
+			InputStream is = JarLoader.getSystemResourceAsStream(documentName);
+			if (is == null)
+				throw new IOException("Null filestream");
+			return FileFunctions.readTextStream(is);
 		}
 		catch (IOException ioe){
-			return "";
+			return "Cannot open file" + documentName + ".\n\nIf you are running from source, this is normal.\nIf you are running from a compiled version, this is not - please contact Wyatt Olson <wyatt.olson@gmail.com>.";
 		}
 	}
 }
