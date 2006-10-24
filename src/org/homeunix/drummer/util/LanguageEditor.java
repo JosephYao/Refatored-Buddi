@@ -33,6 +33,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -227,6 +228,10 @@ public class LanguageEditor extends JDialog {
 		englishValue.setEditable(false);
 		baseValue.setEditable(false);
 
+		final JLabel englishLabel = new JLabel("English");
+		final JLabel baseLabel = new JLabel(baseLanguage);
+		final JLabel localeLabel = new JLabel(baseLanguage + (localeName.length() > 0 ? " (" + localeName + ")" : ""));
+		
 		final JScrollPane listScroller = new JScrollPane(list);
 		final JScrollPane valueScroller = new JScrollPane(value);
 		final JScrollPane baseValueScroller = new JScrollPane(baseValue);
@@ -262,13 +267,15 @@ public class LanguageEditor extends JDialog {
 					r.x = 0; r.y = 0;
 					englishValueScroller.scrollRectToVisible(r);
 				}
+				
+				value.setEnabled(list.getSelectedIndices().length >= 0);
 			}
 		});
 
 		model.addAll(translationKeyValuePairs);		
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.OK));
+		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		final JButton cancel = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
 		final JButton help = new JButton(Translate.getInstance().get(TranslateKeys.HELP));
 
@@ -341,9 +348,24 @@ public class LanguageEditor extends JDialog {
 
 		JPanel valueScrollerBorder = new JPanel(new GridLayout(0, 1));
 		valueScrollerBorder.setBorder(BorderFactory.createEmptyBorder(1, 12, 5, 12));
-		valueScrollerBorder.add(valueScroller);
-		valueScrollerBorder.add(baseValueScroller);
-		valueScrollerBorder.add(englishValueScroller);
+		
+		JPanel valueScrollerPanel = new JPanel(new BorderLayout());
+		JPanel baseScrollerPanel = new JPanel(new BorderLayout());
+		JPanel englishScrollerPanel = new JPanel(new BorderLayout());
+		
+		valueScrollerPanel.add(localeLabel, BorderLayout.WEST);
+		valueScrollerPanel.add(valueScroller, BorderLayout.CENTER);
+
+		baseScrollerPanel.add(baseLabel, BorderLayout.WEST);
+		baseScrollerPanel.add(baseValueScroller,BorderLayout.CENTER);
+
+		englishScrollerPanel.add(englishLabel, BorderLayout.WEST);
+		englishScrollerPanel.add(englishValueScroller, BorderLayout.CENTER);
+
+		
+		valueScrollerBorder.add(valueScrollerPanel);
+		valueScrollerBorder.add(baseScrollerPanel);
+		valueScrollerBorder.add(englishScrollerPanel);
 
 		JSplitPane editorPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listScrollerBorder, valueScrollerBorder);		
 		editorPane.setDividerLocation(0.5);

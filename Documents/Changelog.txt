@@ -1,5 +1,6 @@
-2.0.0rc2
+2.0.0rc2 (October 24 2006)
 -Fixed Null Pointer Exception bug when running from source (the Documents / Licenses could not load from jar, for obvous reasons).  When running from the binary version, there is no problems.
+-Added labels to the different Language editor text areas, to better define which panel is linked to which data.
 
 2.0.0rc1 (October 20 2006)
 -Updated comments and documentation on most major classes

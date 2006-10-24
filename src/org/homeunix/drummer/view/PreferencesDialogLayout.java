@@ -119,6 +119,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		
 		this.setTitle(Translate.getInstance().get(TranslateKeys.PREFERENCES));
 		this.setLayout(new BorderLayout());
+		this.setResizable(true);
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
 		this.setPreferredSize(new Dimension(450, 350));

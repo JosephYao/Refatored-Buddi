@@ -5,7 +5,6 @@
 	<property name="BUDDI_HOME" value="/Users/wyatt/Documents/Programming/Workplace/Buddi"/>
 	<property name="ECLIPSE_HOME" value="/Applications/Eclipse"/>
 	<property name="FATJAR_PATH" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
-	<property name="RETROWEAVER_HOME" location="../build_tools/retroweaver"/>
 	
 	<path id="Buddi.classpath">
 		<pathelement location="bin"/>
@@ -24,12 +23,6 @@
 		<pathelement location="lib/retroweaver-rt-2.0Beta2.jar"/>
 	</path> 
 
-	<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
-		<classpath>
-			<fileset dir="${RETROWEAVER_HOME}/lib" includes="**/*"/>
-			<fileset dir="${RETROWEAVER_HOME}/release" includes="**/*"/> 
-		</classpath>
-	</taskdef>
 	<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
 	<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
 	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
@@ -60,29 +53,6 @@
 		</fatjar.build>
 	</target>
 
-<!--
-	<target name="fatjar-1.4">
-		<fatjar.build output="Buddi-1.4.jar">
-			<fatjar.manifest mainclass="org.homeunix.drummer.Buddi"/>
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-base-1.4.jar" relpath=""/>
-
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-languages.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcalendar-1.3.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.1.v200609210005.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200609210005.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
-
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/MRJAdapter-1.0.9.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/truefilter-1.2.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/1.4/moss-0.5.1.jar" relpath=""/>
-		</fatjar.build>
-	</target>
--->
-
 	<target name="compile">
 		<javac srcdir="src" destdir="bin" classpath=""/>
 	</target>
@@ -101,17 +71,5 @@
 		<jar destfile="Buddi-documents.jar" basedir="Documents" includes="**/*.txt" />
 		<jar destfile="Buddi-licenses.jar" basedir="Licenses" includes="**/*.txt" />
 		<jar destfile="Buddi-resources.jar" basedir="images" includes="**/*.gif" />
-	</target>
-
-	<target name="weave" depends="jar">
-		<copy todir="src-1.3">
-			<fileset dir="src"/>
-		</copy>
-		<retroweaver target="1.3" verbose="true" >
-			<fileset dir="src-1.3" />
-		</retroweaver>
-
-		<jar destfile="Buddi-1.3-skinny.jar" basedir="src-1.3" includes="**/*.class" />
-		<delete file="src-1.3"/>
 	</target>
 </project>
