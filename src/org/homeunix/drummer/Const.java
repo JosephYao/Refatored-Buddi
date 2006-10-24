@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "2.0.0rc2";
+	public static final String VERSION = "2.0.0rc3";
 	public static final String BRANCH = "UNSTABLE";
 	public static final boolean DEVEL = true;
 	
@@ -44,6 +44,7 @@ public class Const {
 		"English_(US)",
 		"Espanol",
 		"Deutsch",
+		"Francais",
 		"Norsk",
 		"Nederlands",
 		"Nederlands_(BE)"
@@ -114,7 +115,6 @@ public class Const {
 		
 		"org.homeunix.drummer.plugins.exports.ExportHTML",
 		"org.homeunix.drummer.plugins.exports.ExportCSV"
-		
 	};
 		
 	private Const(){}

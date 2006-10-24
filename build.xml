@@ -70,6 +70,6 @@
 		<jar destfile="Buddi-languages.jar" basedir="Languages" includes="**/*.lang" />
 		<jar destfile="Buddi-documents.jar" basedir="Documents" includes="**/*.txt" />
 		<jar destfile="Buddi-licenses.jar" basedir="Licenses" includes="**/*.txt" />
-		<jar destfile="Buddi-resources.jar" basedir="images" includes="**/*.gif" />
+		<jar destfile="Buddi-resources.jar" basedir="img" includes="**/*.gif" />
 	</target>
 </project>
