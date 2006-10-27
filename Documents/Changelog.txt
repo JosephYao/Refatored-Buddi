@@ -1,5 +1,7 @@
 2.0.0rc3
 -Fixed bug in install scripts which did not include Buddi.png
+-Added French language
+-Updated German language
 
 2.0.0rc2 (October 24 2006)
 -Fixed Null Pointer Exception bug when running from source (the Documents / Licenses could not load from jar, for obvous reasons).  When running from the binary version, there is no problems.
