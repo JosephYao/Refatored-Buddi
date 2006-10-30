@@ -328,7 +328,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				if (Const.DEVEL) Log.debug("Trying date " + tempDate);				
 				tempCal.setTime(tempDate);
 				
-				//Log, extremely ugly expression to check if tempDay is a day on which we need to make a transaction.
+				//Long, extremely ugly expression to check if tempDay is a day on which we need to make a transaction.
 				if ((s.getFrequencyType().equals(TranslateKeys.WEEK.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK))
 						|| (s.getFrequencyType().equals(TranslateKeys.MONTH.toString())
