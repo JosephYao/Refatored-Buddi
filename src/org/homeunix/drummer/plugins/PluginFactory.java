@@ -25,6 +25,7 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
@@ -135,12 +136,19 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		for (JarEntry entry : JarLoader.getAllClasses(jarFile)) {
 			try {
-				if (Const.DEVEL) Log.debug("Loading " + entry.getName());
+				if (Const.DEVEL) Log.debug("Loading " + entry.getName() + " (" + filesystemToClass(entry.getName()) + ")");
 				Object o = JarLoader.getObject(jarFile, filesystemToClass(entry.getName()));
-				if (o instanceof BuddiPlugin)
+				if (o instanceof BuddiPlugin) {
+					if (Const.DEVEL) Log.info("Found BuddiPlugin: " + entry.getName());
 					classNames.add(entry.getName());
+				}
+				else {
+					if (Const.DEVEL) Log.info("Not of type BuddiPlugin: " + o);
+				}
 			}
-			catch (Exception e){}
+			catch (Exception e){
+				Log.error(e);
+			}
 		}
 
 		return classNames;
@@ -262,10 +270,26 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 					}
 
-					if (!exportPlugin.isPromptForFile() || file != null)
-						((BuddiExportPlugin) plugin).exportData(frame, file);
-					else
+					if (!exportPlugin.isPromptForFile() || file != null){
+						try{
+							((BuddiExportPlugin) plugin).exportData(frame, file);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+						catch (Error e){
+							Log.error(e);
+						}
+					}
+					else{
 						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+					}
+					
+					//Update all the accounts with the new totals, etc.  Probably not needed for Import plugins, but 
+					// it's a pretty cheap operation anyway, and it is better safe than sorry...
+					DataInstance.getInstance().calculateAllBalances();
+					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+
 				}
 			}
 		});
@@ -291,7 +315,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 						if (importPlugin.getFileFilter() != null)
 							jfc.setFileFilter(importPlugin.getFileFilter());
 
-						if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+						if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 							if (jfc.getSelectedFile().isDirectory()){
 								//Cannot select a directory
 								JOptionPane.showMessageDialog(
@@ -308,10 +332,24 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 					}
 
-					if (!importPlugin.isPromptForFile() || file != null)
-						((BuddiImportPlugin) plugin).importData(frame, file);
-					else
+					if (!importPlugin.isPromptForFile() || file != null){
+						try {
+							((BuddiImportPlugin) plugin).importData(frame, file);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+						catch (Error e){
+							Log.error(e);
+						}
+					}
+					else {
 						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+					}
+					
+					//Update all the accounts with the new totals, etc.
+					DataInstance.getInstance().calculateAllBalances();
+					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				}
 			}
 		});

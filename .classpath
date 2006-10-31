@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.1.v200609210005.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200609210005.jar"/>
-	<classpathentry kind="lib" path="lib/moss-0.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/moss-0.5.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

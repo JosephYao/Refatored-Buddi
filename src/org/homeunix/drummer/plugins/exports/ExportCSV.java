@@ -95,7 +95,8 @@ public class ExportCSV implements BuddiExportPlugin {
 
 			@Override
 			public boolean accept(File f) {
-				if (f.getAbsolutePath().endsWith(".csv"))
+				if (f.getAbsolutePath().endsWith(".csv") 
+						|| f.isDirectory())
 					return true;
 				else
 					return false;

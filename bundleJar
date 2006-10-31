@@ -88,7 +88,7 @@ function bundle_osx {
 
 	# Copy the .plist and .icns files
 	cp etc/Info.plist $OSX/Buddi.app/Contents/
-	cp images/Buddi.icns $OSX/Buddi.app/Contents/Resources/
+	cp img/Buddi.icns $OSX/Buddi.app/Contents/Resources/
 
 	# Copy Buddi and associated files
 	cp Buddi.jar $OSX/Buddi.app/Contents/Resources/Java/

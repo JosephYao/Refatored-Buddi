@@ -203,9 +203,16 @@ public class PluginImpl extends EObjectImpl implements Plugin {
 	 */
 	public String toString() {
 		StringBuffer result = new StringBuffer();
-		result.append(className.replaceAll(".class$", "").replaceAll("^.*" + File.separator, ""));
+		String fileSeparator;
+		if (File.separator.equals("\\")){
+			fileSeparator = "\\\\";
+		}
+		else {
+			fileSeparator = File.separator;
+		}
+		result.append(className.replaceAll(".class$", "").replaceAll("^.*" + fileSeparator, ""));
 		result.append(" (");
-		result.append(jarFile.replaceAll("^.*" + File.separator, ""));
+		result.append(jarFile.replaceAll("^.*" + fileSeparator, ""));
 		result.append(')');
 		return result.toString();
 	}
