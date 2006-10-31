@@ -1,4 +1,4 @@
-2.0.0rc3
+2.0.0rc3 (October 30 2006)
 -Fixed bug which prevented plugins from being loaded from .jar on Windows
 -Fixed bug in install scripts which did not include Buddi.png
 -Added French language
