@@ -49,7 +49,7 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		}
 		
-		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI));
+//		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI) + PrefsInstance.getInstance().getPrefs().getDataFile());
 		this.setLayout(new BorderLayout());
 		this.add(scroller, BorderLayout.CENTER);		
 	}
@@ -73,5 +73,5 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 			if (Const.DEVEL) Log.debug("Unknown Tab");
 			return null;
 		}
-	}
+	}	
 }

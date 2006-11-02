@@ -1,3 +1,8 @@
+2.0.0rc4 (November 1 2006)
+-Updated English and Norsk languages
+-Added data file path to title bar
+-Added ability for plugin authors to include their own translations.  These are loaded in the same manner as regular translations, from the root of the Plugin.jar file.
+
 2.0.0rc3 (October 30 2006)
 -Fixed bug which prevented plugins from being loaded from .jar on Windows
 -Fixed bug in install scripts which did not include Buddi.png

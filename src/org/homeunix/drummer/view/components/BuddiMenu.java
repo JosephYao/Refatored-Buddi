@@ -299,6 +299,8 @@ public class BuddiMenu extends JScreenMenuBar {
 						}
 					}
 				}
+				
+				MainBuddiFrame.getInstance().updateContent();
 			}
 		});
 

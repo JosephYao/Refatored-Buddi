@@ -79,6 +79,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		
 		//Check that there are no scheduled transactions which should be happening...
 		updateScheduledTransactions();
+		updateContent();
 		
 		DataInstance.getInstance().calculateAllBalances();
 	}
@@ -153,6 +154,9 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 	@Override
 	public AbstractFrame updateContent() {
+		//Update the title to reflect current data file...
+		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI) + " - " + PrefsInstance.getInstance().getPrefs().getDataFile());
+		
 		getAccountListPanel().updateContent();
 		getCategoryListPanel().updateContent();
 		

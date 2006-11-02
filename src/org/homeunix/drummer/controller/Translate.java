@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
 
 
@@ -117,6 +118,50 @@ public class Translate {
 //		for (Object o : translations.keySet()) {
 //			existingKeys.add(o.toString());
 //		}
+		
+		return this;
+	}
+	
+	public Translate loadPluginLanguages(File jarFile, String language){
+		//English
+		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
+		
+		//Base Language (e.g., Espanol)
+		String baseResource = "/" + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
+
+		//Localized Language (e.g., Espanol_(MX))
+		String localizedResource = "/" + language + Const.LANGUAGE_EXTENSION;
+		
+		try{
+			if (Const.DEVEL) Log.info("Trying to load language: " + localizedResource);
+
+			//Load English
+			if (JarLoader.getResourceAsStream(jarFile, englishResource) != null)
+				translations.load(JarLoader.getResourceAsStream(jarFile, englishResource));
+			
+			//Load Base Language
+			if (JarLoader.getResourceAsStream(jarFile, baseResource) != null)
+				translations.load(JarLoader.getResourceAsStream(jarFile, baseResource));
+
+			//Load Localized Language
+			if (JarLoader.getResourceAsStream(jarFile, localizedResource) != null)
+				translations.load(JarLoader.getResourceAsStream(jarFile, localizedResource));
+		}
+		catch(IOException ioe){
+			JOptionPane.showMessageDialog(
+					null, 
+					"Error loading language from Jar.",
+					"Error Loading Language File",
+					JOptionPane.ERROR_MESSAGE
+			);
+		}
+		
+		//Yes, I know that this is slow, but we want the user-defined languages to 
+		// override the plugin languages, to give users the ability to change 
+		// the strings for the plugins as well.  If we always load the 
+		// base languages (which includes the user-modified languages from
+		// Languages folder as well), then we are guaranteed to always have this happen.
+		loadLanguage(language);
 		
 		return this;
 	}

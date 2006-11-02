@@ -205,6 +205,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 				Plugin plugin = (Plugin) o1;
 
 				File jarFile = new File(plugin.getJarFile());
+				Translate.getInstance().loadPluginLanguages(jarFile, PrefsInstance.getInstance().getPrefs().getLanguage());
 				String className = plugin.getClassName();
 				className = filesystemToClass(className);
 				try{
