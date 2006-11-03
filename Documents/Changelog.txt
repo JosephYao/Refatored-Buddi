@@ -1,3 +1,7 @@
+2.0.0rc5
+-Set default directory for opening files and creating new files to be the same directory that the current one is in.
+-At startup / plugin reload, if there is a bad plugin (plugin which throws an exception while loading, usually due to .jar file being moved / deleted), we remove the plugin entry from the Preferences file.
+
 2.0.0rc4 (November 1 2006)
 -Updated English and Norsk languages
 -Added data file path to title bar

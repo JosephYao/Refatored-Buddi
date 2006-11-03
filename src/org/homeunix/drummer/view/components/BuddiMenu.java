@@ -208,6 +208,7 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION));
 				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 					if (jfc.getSelectedFile().isDirectory())
@@ -252,6 +253,7 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				final JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 				jfc.setFileHidingEnabled(true);
 				jfc.setFileFilter(new FileFilter(){
 					public boolean accept(File arg0) {

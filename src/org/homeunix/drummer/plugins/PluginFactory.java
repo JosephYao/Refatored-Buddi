@@ -199,7 +199,8 @@ public class PluginFactory<T extends BuddiPlugin> {
 			Log.warning("Loading built in plugins: " + e);
 		}
 
-		// TODO Currently we load every jar separately.  This can be slow - perhaps we should test first.
+		// TODO Currently we load every jar separately.  This can potentially be slow - perhaps we should test first.
+		Vector<Plugin> badPlugins = new Vector<Plugin>();
 		for (Object o1 : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
 			if (o1 instanceof Plugin){
 				Plugin plugin = (Plugin) o1;
@@ -226,8 +227,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 				}
 				catch(Exception e){
 					Log.warning("Loading custom plugins: " + e);
+					badPlugins.add(plugin);
 				}
 			}
+		}
+
+		//If there were any bad plugins, we remove them.
+		if (badPlugins.size() > 0){
+			Log.warning("Removing bad plugins: " + badPlugins);
+			PrefsInstance.getInstance().getPrefs().getLists().getPlugins().removeAll(badPlugins);
 		}
 
 		return pluginEntries;
