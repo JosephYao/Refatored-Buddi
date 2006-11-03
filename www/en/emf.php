@@ -59,7 +59,17 @@ You can now go to Eclipse, and look in the model folder.  If you have already cr
 </p>
 
 <p>
-FYI, I have made the Account, Category, and Transaction objects implement the comparable interface to allow sorting.  EMF doesn't seem to support this by default, so whenever I re-generate the model, I have to go to these three interfaces (located in org.homeunix.drummer.model.{Account|Category|Transaction} and add the Comparable option to the class definition.  For Account and Category, I use Comparable<Source>; for Transaction, I use Comparable<Transaction>.  Look at the unmodified source for correct syntax if you need to do so.  If you don't do this properly, you will get compile-time errors in DataInstance and others.  (If anyone knows how to automate this, I would appreciate a note telling me how.  Since I don't edit the Data model much at all, I haven't bothered to look into it in any great depth.)
+FYI, I have made the Account, Category, Type, and Transaction objects implement the comparable interface to allow sorting.  EMF doesn't seem to support this by default, so whenever I re-generate the model, I have to go to these three interfaces (located in org.homeunix.drummer.model.{Account|Category|Transaction|Type} and add the Comparable option to the class definition.  For Account and Category, I use Comparable&lt;Source&gt;; for Transaction, I use Comparable&lt;Transaction&gt;; for Type I use Comparable&lt;Type&gt;.  Look at the next paragraph for how to do this; if you don't do it properly, you will get compile-time errors in DataInstance and others.  (If anyone knows how to automate this, I would appreciate a note telling me how.  Since I don't edit the Data model much at all, I haven't bothered to look into it in any great depth.)
+</p>
+
+<p>
+For Account and Category, you should use the following class definitions:<br>
+public interface Category extends Source, Comparable&lt;Source&gt;<br>
+public interface Account extends Source, Comparable&lt;Source&gt;<br><br>
+For Transaction, you should use this one:<br>
+public interface Transaction extends EObject, Comparable&lt;Transaction&gt;<br><br>
+For Type, you should use this one:<br>
+public interface Type extends EObject, Comparable&lt;Type&gt;
 </p>
 
 <p>
