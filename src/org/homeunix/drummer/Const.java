@@ -14,9 +14,9 @@ import org.homeunix.drummer.controller.TranslateKeys;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "2.0.0rc5";
-	public static final String BRANCH = "UNSTABLE";
-	public static final boolean DEVEL = true;
+	public static final String VERSION = "2.0.0";
+	public static final String BRANCH = "STABLE";
+	public static final boolean DEVEL = false;
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
@@ -40,14 +40,14 @@ public class Const {
 	// is no good method of reading the main jar file by itself (since
 	// it may be wrapped in a .exe, etc).
 	public final static String[] BUNDLED_LANGUAGES = {
-		"English",
-		"English_(US)",
-		"Espanol",
 		"Deutsch",
+		"English_(US)",
+		"English",
+		"Espanol",
 		"Francais",
-		"Norsk",
 		"Nederlands",
-		"Nederlands_(BE)"
+		"Nederlands_(BE)",
+		"Norsk"
 	};
 	
 	public final static String[] BUNDLED_DOCUMENTS = {

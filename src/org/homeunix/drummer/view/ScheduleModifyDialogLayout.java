@@ -87,12 +87,7 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		schedulePulldown.setRenderer(new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
-				if (obj instanceof String){
-					String str = (String) obj;
-					this.setText(Translate.getInstance().get(str));
-				}
-				else
-					this.setText(obj.toString());
+				this.setText(Translate.getInstance().get(obj.toString()));
 				
 				return this;
 			}

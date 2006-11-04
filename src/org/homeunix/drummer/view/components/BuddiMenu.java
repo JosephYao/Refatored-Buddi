@@ -200,6 +200,23 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		
 		help.add(showHelp);
+		
+		// Get an About item instance. Here it's for Swing but there
+		// are also AWT variants like getAboutMenuItem().
+		AboutJMenuItem about = app.getAboutJMenuItem();
+		about.setText(Translate.getInstance().get(TranslateKeys.ABOUT_MENU_ITEM));
+		about.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				new AboutDialog();
+			}
+		});
+
+		// If the menu is not already present because it's provided by
+		// the OS (like on Mac OS X), then append it to our menu
+		if (!AboutJMenuItem.isAutomaticallyPresent())
+			help.add(about);
 		help.addSeparator();
 		help.add(DocumentationFactory.getDocumentsMenu());
 		help.add(DocumentationFactory.getLicensesMenu());
@@ -508,23 +525,6 @@ public class BuddiMenu extends JScreenMenuBar {
 				}			
 			}
 		});
-
-		// Get an About item instance. Here it's for Swing but there
-		// are also AWT variants like getAboutMenuItem().
-		AboutJMenuItem about = app.getAboutJMenuItem();
-		about.setText(Translate.getInstance().get(TranslateKeys.ABOUT_MENU_ITEM));
-		about.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				new AboutDialog();
-			}
-		});
-
-		// If the menu is not already present because it's provided by
-		// the OS (like on Mac OS X), then append it to our menu
-		if (!AboutJMenuItem.isAutomaticallyPresent())
-			help.add(about);
 
 		// Do the same thing for the Preferences and Quit items
 		PreferencesJMenuItem preferences = app.getPreferencesJMenuItem();

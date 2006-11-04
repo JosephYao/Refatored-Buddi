@@ -181,15 +181,15 @@ public class DataInstance {
 				//If we are making a new file, we want to ask for encryption options again.
 				this.cipher = new AESCryptoCipher(128);
 
-				if (!locationFile.exists() && !forceNewFile){
-					JOptionPane.showMessageDialog(
-							null,
-							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
-							+ locationFile.getAbsolutePath(),
-							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
-							JOptionPane.INFORMATION_MESSAGE
-					);
-				}
+//				if (!locationFile.exists() && !forceNewFile){
+//					JOptionPane.showMessageDialog(
+//							null,
+//							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
+//							+ locationFile.getAbsolutePath(),
+//							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
+//							JOptionPane.INFORMATION_MESSAGE
+//					);
+//				}
 
 				Accounts accounts = getDataModelFactory().createAccounts();
 				Transactions transactions = getDataModelFactory().createTransactions();
