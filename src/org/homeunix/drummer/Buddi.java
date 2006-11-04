@@ -88,7 +88,8 @@ public class Buddi {
 		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
 		
-		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
+				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			if (JOptionPane.showConfirmDialog(null, 
 					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
 					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),

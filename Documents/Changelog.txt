@@ -1,3 +1,16 @@
+2.0.0 (November 4 2006)
+Since 1.8.0:
+-Rewrote the display code for the Transactions window, which results in massive speedups
+-Finalized and enhanced Plugin architecture
+-Improved translation architecture, to make it much easier for localizations and initial translations
+-Added color-coded language editor, to help people make translations (available via Preferences -> Advanced -> Edit Languages)
+-Now the program is one single file; all documenation, languages, etc are within the .jar / .exe / .app.
+-Improved the ability of running from a flash drive.  When setting up the shortcut, just specify the -p option, and give a relative path to the preferences file in the same directory as Buddi executable - the rest is automatic
+
+Since 2.0.0rc5:
+-Fixed translation bug for Scheduled Transactions
+-Removed some un-needed dialogs from showing at startup (such as Created new Data File notice, and Upgrade notice if this is the first time they ran the program)
+
 2.0.0rc5 (November 3 2006)
 -Set default directory for opening files and creating new files to be the same directory that the current one is in.
 -At startup / plugin reload, if there is a bad plugin (plugin which throws an exception while loading, usually due to .jar file being moved / deleted), we remove the plugin entry from the Preferences file.
