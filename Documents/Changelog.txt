@@ -1,3 +1,6 @@
+2.1.0 (November 4 2006)
+-Unstable branch of 2.0.0 Stable.
+
 2.0.0 (November 4 2006)
 Since 1.8.0:
 -Rewrote the display code for the Transactions window, which results in massive speedups

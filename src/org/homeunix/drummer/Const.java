@@ -14,9 +14,9 @@ import org.homeunix.drummer.controller.TranslateKeys;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "2.0.0";
-	public static final String BRANCH = "STABLE";
-	public static final boolean DEVEL = false;
+	public static final String VERSION = "2.1.0";
+	public static final String BRANCH = "UNSTABLE";
+	public static final boolean DEVEL = true;
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
