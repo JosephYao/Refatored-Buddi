@@ -13,13 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Buddi;
@@ -28,13 +26,16 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.components.SourceCellRenderer;
+import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
+import org.homeunix.drummer.view.components.SourceNameCellRenderer;
+import org.homeunix.drummer.view.components.SourceTreeTableModel;
 import org.homeunix.thecave.moss.util.Log;
+import org.jdesktop.swingx.JXTreeTable;
 
 public abstract class ListPanelLayout extends AbstractPanel {
 	public static final long serialVersionUID = 0;
 
-	protected final JTree tree;
+	protected final JXTreeTable tree;
 	protected final JButton newButton;
 	protected final JButton editButton;
 	protected final JButton deleteButton;
@@ -42,19 +43,18 @@ public abstract class ListPanelLayout extends AbstractPanel {
 //	protected final JPanel openButtonPanel;
 	protected final JLabel balanceLabel;
 
-	protected final DefaultMutableTreeNode root;
-	protected final DefaultTreeModel treeModel; 
+	protected final SourceTreeTableModel treeModel; 
 
 	protected Source selectedSource;
 
 	protected ListPanelLayout(){
-		root = new DefaultMutableTreeNode();
-		treeModel = new DefaultTreeModel(root);
-		tree = new JTree(treeModel);
+		treeModel = new SourceTreeTableModel();
+		tree = new JXTreeTable(treeModel);
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
-		SourceCellRenderer renderer = new SourceCellRenderer();
-		tree.setCellRenderer(renderer);
+		SourceNameCellRenderer renderer = new SourceNameCellRenderer();
+		tree.setTreeCellRenderer(renderer);
+		tree.getColumn(1).setCellRenderer(new SourceAmountCellRenderer());
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		JScrollPane listScroller = new JScrollPane(tree);
 
@@ -110,7 +110,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		if (Buddi.isMac()){
-			tree.putClientProperty("Quaqua.Tree.style", "striped");
+			tree.putClientProperty("Quaqua.Table.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,3,12));
 //			balanceLabel.putClientProperty("Quaqua.Component.style", "mini");
@@ -132,20 +132,22 @@ public abstract class ListPanelLayout extends AbstractPanel {
 	protected AbstractPanel initActions() {
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+				if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
 
-				if (node == null)
-					return;
+					if (node == null)
+						return;
 
-				if (node.getUserObject() instanceof Source){ 
-					selectedSource = (Source) node.getUserObject();
-					if (Const.DEVEL) Log.debug(selectedSource);
+					if (node.getUserObject() instanceof Source){ 
+						selectedSource = (Source) node.getUserObject();
+						if (Const.DEVEL) Log.debug(selectedSource);
+					}
+					else{
+						if (Const.DEVEL) Log.debug("Object not of type Source");
+						selectedSource = null;
+					}
 				}
-				else{
-					if (Const.DEVEL) Log.debug("Object not of type Source");
-					selectedSource = null;
-				}
-
+				
 				ListPanelLayout.this.updateButtons();
 			}
 		});
@@ -204,7 +206,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		return this;
 	}
 
-	public JTree getTree(){
+	public JXTreeTable getTree(){
 		return tree;
 	}
 }

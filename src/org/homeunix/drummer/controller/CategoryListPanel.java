@@ -110,7 +110,7 @@ public class CategoryListPanel extends ListPanelLayout {
 		long expenses = 0;
 		long income = 0;
 
-		root.removeAllChildren();
+		treeModel.getRoot().removeAllChildren();
 		selectedSource = null;
 		
 		//Since the persistence layer knows of all the categories, and
@@ -127,7 +127,7 @@ public class CategoryListPanel extends ListPanelLayout {
 			DefaultMutableTreeNode n = new DefaultMutableTreeNode(c);
 			DefaultMutableTreeNode child = recursiveAdd(n, c, alreadyEntered);
 			if (child != null){
-				root.add(child);
+				treeModel.getRoot().add(child);
 				nodes.add(child);
 			}
 			
@@ -154,7 +154,7 @@ public class CategoryListPanel extends ListPanelLayout {
 		
 		balanceLabel.setText(sb.toString());
 		
-		treeModel.reload(root);
+		treeModel.reload(treeModel.getRoot());
 		
 		//Expand all the nodes
 		for (DefaultMutableTreeNode node : nodes) {

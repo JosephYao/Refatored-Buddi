@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.1.v200609210005.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200609210005.jar"/>
 	<classpathentry kind="lib" path="lib/moss-0.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/swingx-2006_10_27.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

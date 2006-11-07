@@ -24,7 +24,7 @@ import org.homeunix.thecave.moss.util.Formatter;
  * @author wyatt
  *
  */
-public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
+public class SourceNameCellRenderer extends JLabel implements TreeCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static final StringBuilder sb = new StringBuilder();
 	private static final StringBuilder sbOpen = new StringBuilder();
@@ -39,7 +39,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 	/**
 	 * Creates a new SourceCellRenderer object
 	 */
-	public SourceCellRenderer(){
+	public SourceNameCellRenderer(){
 		super();
 		
 		if (!isMac){
@@ -100,23 +100,11 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				sbClose.insert(0, "</font>");
 			}
 
-			long amount;
-
-			if (tree.isCollapsed(new TreePath(n.getPath())))
-				amount = getTotalAmount(n);
-			else
-				amount = c.getBudgetedAmount();
-
-			sb.append("<html><table><tr><td width=180px>")
+			sb.append("<html>")
 			.append(sbOpen.toString())
 			.append(c.toString())
 			.append(sbClose.toString())
-			.append("</td><td width=70px>")
-			.append(sbOpen.toString())
-			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0)))
-			.append(sbClose.toString())
-			.append("</td></tr></table></html>");
+			.append("</html>");
 
 			this.setText(sb.toString());
 		}
@@ -133,7 +121,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				sbClose.insert(0, "</font>");
 			}
 
-			sb.append("<html><table><tr><td width=200px>")
+			sb.append("<html>")
 			.append(sbOpen.toString())
 			.append(a.toString());
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
@@ -143,12 +131,7 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				.append("%)");
 			}
 			sb.append(sbClose.toString())
-			.append("</td><td width=70px>")
-			.append(sbOpen.toString())
-			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0)))
-			.append(sbClose.toString())
-			.append("</td></tr></table></html>");
+			.append("</html>");
 
 			this.setText(sb.toString());
 		}
@@ -161,16 +144,11 @@ public class SourceCellRenderer extends JLabel implements TreeCellRenderer {
 				sbClose.insert(0, "</font>");
 			}
 
-			sb.append("<html><table><tr><td width=200px>")
+			sb.append("<html>")
 			.append(sbOpen.toString())
 			.append(t.getType().toString())
 			.append(sbClose.toString())
-			.append("</td><td width=70px>")
-			.append(sbOpen.toString())
-			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
-			.append(sbClose.toString())
-			.append("</td></tr></table></html>");
+			.append("</html>");
 
 			this.setText(sb.toString());
 		}

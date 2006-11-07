@@ -134,7 +134,7 @@ public class AccountListPanel extends ListPanelLayout {
 	public AbstractPanel updateContent(){
 		long balance = 0;
 		
-		root.removeAllChildren(); 
+		treeModel.getRoot().removeAllChildren(); 
 		selectedSource = null;
 		
 		Map<Type, DefaultMutableTreeNode> accountTypes = new HashMap<Type, DefaultMutableTreeNode>();
@@ -158,7 +158,7 @@ public class AccountListPanel extends ListPanelLayout {
 							tt.add(a.getBalance());
 						}
 						accountTypes.put(a.getAccountType(), accountType);
-						root.add(accountType);
+						treeModel.getRoot().add(accountType);
 						nodes.add(accountType);
 					}
 					DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
@@ -168,7 +168,7 @@ public class AccountListPanel extends ListPanelLayout {
 				//Don't show categories
 				else {
 					DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
-					root.add(account);
+					treeModel.getRoot().add(account);
 					nodes.add(account);
 				}
 			}
@@ -185,7 +185,7 @@ public class AccountListPanel extends ListPanelLayout {
 		
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)));
 		
-		treeModel.reload(root);
+		treeModel.reload(treeModel.getRoot());
 
 		for (DefaultMutableTreeNode node : nodes) {
 			if (Const.DEVEL) Log.debug("Checking node: " + node);
