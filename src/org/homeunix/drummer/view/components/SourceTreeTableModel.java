@@ -7,12 +7,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
-import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
 public class SourceTreeTableModel extends DefaultTreeTableModel {
@@ -78,41 +72,6 @@ public class SourceTreeTableModel extends DefaultTreeTableModel {
 
 	public void setValueAt(Object arg0, Object arg1, int arg2) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public class AmountFormatWrapper {
-		private long amount;
-		private boolean negative;
-//		private boolean deleted;
-		private final DefaultMutableTreeNode node;
-		private final JXTreeTable tree;
-		
-		public AmountFormatWrapper(long amount, boolean negative, JXTreeTable tree, DefaultMutableTreeNode node) {
-			this.amount = amount;
-			this.negative = negative;
-//			this.deleted = deleted;
-			this.node = node;
-			this.tree = tree;
-		}
-		
-		public long getAmount() {
-			return amount;
-		}
-//		public boolean isDeleted() {
-//			return deleted;
-//		}
-		public boolean isNegative() {
-			return negative;
-		}
-
-		public DefaultMutableTreeNode getNode() {
-			return node;
-		}
-
-		public JXTreeTable getTree() {
-			return tree;
-		}
 		
 	}
 }

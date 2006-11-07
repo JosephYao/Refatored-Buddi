@@ -108,7 +108,7 @@ public class SourceAmountCellRenderer extends JLabel implements TableCellRendere
 				if (node.getChildCount() > 0){
 					sb.append(" (")
 					.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0)))
+					.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amountTotal / 100.0)))
 					.append(")");
 				}
 				
