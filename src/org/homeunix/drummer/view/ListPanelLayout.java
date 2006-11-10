@@ -4,6 +4,7 @@
 package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -28,9 +29,11 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
 import org.homeunix.drummer.view.components.SourceNameCellRenderer;
+import org.homeunix.drummer.view.components.SourceTreeCellRenderer;
 import org.homeunix.drummer.view.components.SourceTreeTableModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
 public abstract class ListPanelLayout extends AbstractPanel {
 	public static final long serialVersionUID = 0;
@@ -43,7 +46,11 @@ public abstract class ListPanelLayout extends AbstractPanel {
 //	protected final JPanel openButtonPanel;
 	protected final JLabel balanceLabel;
 
-	protected final SourceTreeTableModel treeModel; 
+	protected final SourceTreeTableModel treeModel;
+	
+	private static Color LIGHT_BLUE = new Color(237, 243, 254);
+//	private static Color SELECTED = new Color(181, 213, 255);
+	private static Color WHITE = Color.WHITE;
 
 	protected Source selectedSource;
 
@@ -52,10 +59,22 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		tree = new JXTreeTable(treeModel);
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
-		SourceNameCellRenderer renderer = new SourceNameCellRenderer();
-		tree.setTreeCellRenderer(renderer);
-		tree.getColumn(1).setCellRenderer(new SourceAmountCellRenderer());
+		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
+		
+		tree.setTreeCellRenderer(new SourceTreeCellRenderer());
+		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
+		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
+		
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		tree.getColumn(0).setMaxWidth(30);
+		tree.getColumn(0).setMinWidth(30);
+		tree.getColumn(0).setPreferredWidth(30);
+		
+//		tree.getColumn(1).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 1));
+//		tree.getColumn(2).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 2));
+//		tree.packAll();
+		
 		JScrollPane listScroller = new JScrollPane(tree);
 
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
@@ -109,8 +128,10 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		mainPanel.add(listScrollerPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
+		
 		if (Buddi.isMac()){
-			tree.putClientProperty("Quaqua.Table.style", "striped");
+//			tree.putClientProperty("Quaqua.Table.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,3,12));
 //			balanceLabel.putClientProperty("Quaqua.Component.style", "mini");
@@ -179,10 +200,30 @@ public abstract class ListPanelLayout extends AbstractPanel {
 				}
 				else {
 					Log.error("Unknown object in treeExpansionListener: " + o);
-				}				
+				}
+				
+				tree.packAll();
 			}
 		});
-
+		
+//		tree.getColumn(1).addPropertyChangeListener(new PropertyChangeListener(){
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				if (evt.getPropertyName().equals("preferredWidth") && evt.getNewValue() instanceof Integer){
+//					PrefsInstance.getInstance().setColumnWidth(getTableNumber(), 1, (Integer) evt.getNewValue());
+//					PrefsInstance.getInstance().savePrefs();
+//				}
+//			}
+//		});
+//		
+//		tree.getColumn(2).addPropertyChangeListener(new PropertyChangeListener(){
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				if (evt.getPropertyName().equals("preferredWidth") && evt.getNewValue() instanceof Integer){
+//					PrefsInstance.getInstance().setColumnWidth(getTableNumber(), 2, (Integer) evt.getNewValue());
+//					PrefsInstance.getInstance().savePrefs();
+//				}
+//			}
+//		});
+		
 		return this;
 	}
 
@@ -205,8 +246,21 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		}
 		return this;
 	}
+	
+	@Override
+	public AbstractPanel updateContent() {
+		tree.packAll();
+		return this;
+	}
 
 	public JXTreeTable getTree(){
 		return tree;
 	}
+	
+	/**
+	 * Keep track of which type of table this is - Account or Category.
+	 * Used internally for saving column width to preferences. 
+	 * @return
+	 */
+	protected abstract int getTableNumber();
 }

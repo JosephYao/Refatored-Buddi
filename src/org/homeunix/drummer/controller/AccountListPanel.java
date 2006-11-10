@@ -38,6 +38,7 @@ public class AccountListPanel extends ListPanelLayout {
 		
 	public AccountListPanel(){
 		super();
+		
 	}
 	
 	/* (non-Javadoc)
@@ -196,7 +197,7 @@ public class AccountListPanel extends ListPanelLayout {
 			}
 		}
 		
-		return this;
+		return super.updateContent();
 	}
 	
 	/**
@@ -243,5 +244,10 @@ public class AccountListPanel extends ListPanelLayout {
 		public String toString() {
 			return type.toString();
 		}
+	}
+	
+	@Override
+	protected int getTableNumber() {
+		return 0;
 	}
 }

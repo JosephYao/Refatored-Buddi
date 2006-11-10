@@ -347,8 +347,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 //					DataInstance.getInstance().deleteTransaction(t);
 					baseModel.remove(t, model);
 
-//					TransactionsFrame.updateAllTransactionWindows();
+					updateAllTransactionWindows();
 					updateButtons();
+					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 					
 					list.setSelectedIndex(position);
 					if (list.getSelectedValue() instanceof Transaction){

@@ -96,7 +96,7 @@ public class CategoryListPanel extends ListPanelLayout {
 					super.mouseClicked(arg0);
 			}
 		});
-		
+				
 		return this;
 	}
 	
@@ -163,7 +163,7 @@ public class CategoryListPanel extends ListPanelLayout {
 				tree.expandPath(new TreePath(node.getPath()));
 		}
 		
-		return this;
+		return super.updateContent();
 	}
 	
 	private DefaultMutableTreeNode recursiveAdd(DefaultMutableTreeNode n, Category c, Map<Category, Category> alreadyEntered){
@@ -195,4 +195,8 @@ public class CategoryListPanel extends ListPanelLayout {
 			return null;
 	}
 
+	@Override
+	protected int getTableNumber() {
+		return 1;
+	}
 }

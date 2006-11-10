@@ -28,9 +28,12 @@ public class SourceTreeTableModel extends DefaultTreeTableModel {
 	@Override
 	public String getColumnName(int arg0) {
 		if (arg0 == 0){
-			return Translate.getInstance().get(TranslateKeys.NAME);
+			return "";
 		}
 		else if (arg0 == 1){
+			return Translate.getInstance().get(TranslateKeys.NAME);
+		}
+		else if (arg0 == 2){
 			return Translate.getInstance().get(TranslateKeys.AMOUNT);
 		}
 		else{
@@ -40,30 +43,13 @@ public class SourceTreeTableModel extends DefaultTreeTableModel {
 	
 	@Override
 	public int getColumnCount() {
-		return 2;
+		return 3;
 	}
 	
 	public Object getValueAt(Object arg0, int arg1) {
 		if (arg0 instanceof DefaultMutableTreeNode){
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0;
-//			if (arg1 == 0){
-//				return node.getUserObject();
-//			}
-//			
-//			if (arg1 == 1){
-//				if (node.getUserObject() instanceof Account){
-//					Account a = (Account) node.getUserObject();					
-//					return new AmountFormatWrapper(a.getBalance(), a.getBalance() < 0, null, null);
-//				}
-//				else if (node.getUserObject() instanceof Category){
-//					Category c = (Category) node.getUserObject();
-//					return new AmountFormatWrapper(c.getBudgetedAmount(), !c.isIncome(), tree, node);
-//				}
-//				else if (node.getUserObject() instanceof TypeTotal){
-//					TypeTotal t = (TypeTotal) node.getUserObject();
-//					return new AmountFormatWrapper(t.getAmount(), t.getType().isCredit(), null, null);
-//				}
-//			}
+
 			return node;
 		}
 		

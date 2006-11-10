@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "2.1.0";
+	public static final String VERSION = "2.1.1";
 	public static final String BRANCH = "UNSTABLE";
 	public static final boolean DEVEL = true;
 	
@@ -83,7 +83,7 @@ public class Const {
 		"p.",      //Russian Ruble
 		"\u00a5",  //Yen
 		"\u20a3",  //French Franc
-		"S\u20a3", //Swiss Franc (?)
+		"SFr", //Swiss Franc (?)
 		"Rs", //Indian Rupees
 		"Kr", //Norwegian
 		"Bs", //Venezuela
