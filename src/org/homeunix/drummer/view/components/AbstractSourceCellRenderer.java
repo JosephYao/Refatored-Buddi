@@ -3,8 +3,6 @@
  */
 package org.homeunix.drummer.view.components;
 
-import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -12,20 +10,19 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-public abstract class SourceCellRenderer  extends JLabel implements TableCellRenderer {
+import org.homeunix.drummer.Const;
+
+public abstract class AbstractSourceCellRenderer  extends JLabel implements TableCellRenderer {
 
 	final StringBuilder sb = new StringBuilder();
 	final StringBuilder sbOpen = new StringBuilder();
 	final StringBuilder sbClose = new StringBuilder();
 	final StringBuilder sbPrepend = new StringBuilder();
-
-	final static Color SELECTED = new Color(181, 213, 255);
-	final static Color NON_SELECTED = new Color(0, 0, 0, 255);
 	
 	/**
 	 * Creates a new SourceCellRenderer object
 	 */
-	SourceCellRenderer(){
+	AbstractSourceCellRenderer(){
 		super();
 
 		setOpaque(true);
@@ -33,10 +30,10 @@ public abstract class SourceCellRenderer  extends JLabel implements TableCellRen
 
 	Object prepareTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		if (isSelected){
-			this.setBackground(SELECTED);
+			this.setBackground(Const.COLOR_SELECTED);
 		}
 		else {
-			this.setBackground(NON_SELECTED);
+			this.setBackground(Const.COLOR_TRANSPARENT);
 		}
 
 		if (value == null){

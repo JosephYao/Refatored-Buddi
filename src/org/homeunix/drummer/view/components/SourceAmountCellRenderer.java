@@ -18,7 +18,7 @@ import org.homeunix.thecave.moss.util.Formatter;
  * @author wyatt
  *
  */
-public class SourceAmountCellRenderer extends SourceCellRenderer {
+public class SourceAmountCellRenderer extends AbstractSourceCellRenderer {
 	public static final long serialVersionUID = 0;
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

@@ -3,6 +3,10 @@
  */
 package org.homeunix.drummer;
 
+import java.awt.Color;
+
+import javax.swing.JList;
+
 import org.homeunix.drummer.controller.TranslateKeys;
 
 
@@ -35,6 +39,13 @@ public class Const {
 	public final static String DOWNLOAD_URL_ZIP = ".zip";
 	public final static String DOWNLOAD_URL_TGZ = ".tgz";
 	public final static String VERSION_FILE = "version.txt";
+	
+	//Colors
+	public final static Color COLOR_SELECTED = new JList().getSelectionBackground();//new Color(181, 213, 255);
+	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);
+	public final static Color COLOR_EVEN_ROW = new Color(237, 243, 254);
+	public final static Color COLOR_ODD_ROW = Color.WHITE;
+
 	
 	//Languages which are included in the .jar file.  Needed since there
 	// is no good method of reading the main jar file by itself (since

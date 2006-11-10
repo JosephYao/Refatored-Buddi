@@ -3,7 +3,6 @@
  */
 package org.homeunix.drummer.view.components;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 
@@ -12,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -29,10 +29,7 @@ import org.homeunix.thecave.moss.util.Formatter;
 public class TransactionCellRenderer extends JLabel implements ListCellRenderer {
 	public static final long serialVersionUID = 0;
 	private static StringBuilder sb = new StringBuilder();
-	private static boolean isMac = Buddi.isMac();
-	private static Color LIGHT_BLUE = new Color(237, 243, 254);
-	private static Color SELECTED = new Color(181, 213, 255);
-	private static Color WHITE = Color.WHITE;
+//	private static boolean isMac = Buddi.isMac();
 	private Account account;
 		
 	/**
@@ -65,41 +62,38 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 //		else
 //		this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-		if (isMac){
-			if (isSelected){
-				this.setOpaque(true);
-				this.setBackground(SELECTED);				
-			}
-			else {
-				this.setOpaque(false);
-			}
-		}
-		else {
-			if (isSelected){
-				this.setBackground(SELECTED);
-			}
-			else {
-				if (index % 2 == 0)
-					this.setBackground(LIGHT_BLUE);
-				else
-					this.setBackground(WHITE);
-			}
-		}
-//		if (!Buddi.isMac()){
-			if (isSelected){
-				this.setOpaque(true);
-				this.setBackground(SELECTED);
-			}
-			else{
-				if (!isMac){
-					if (index % 2 == 0)
-						this.setBackground(LIGHT_BLUE);
-					else
-						this.setBackground(WHITE);
-				}
-			}
+//		if (isMac){
+//			if (isSelected){
+//				this.setOpaque(true);
+//				this.setBackground(Const.SELECTED);				
+//			}
+//			else {
+//				this.setOpaque(false);
+//			}
 //		}
-			
+//		else {
+//			if (isSelected){
+//				this.setBackground(Const.SELECTED);
+//			}
+//			else {
+//				if (index % 2 == 0)
+//					this.setBackground(Const.LIGHT_BLUE);
+//				else
+//					this.setBackground(Const.WHITE);
+//			}
+//		}
+//		
+		if (isSelected){
+			this.setOpaque(true);
+			this.setBackground(Const.COLOR_SELECTED);
+		}
+		else{
+			if (index % 2 == 0)
+				this.setBackground(Const.COLOR_EVEN_ROW);
+			else
+				this.setBackground(Const.COLOR_ODD_ROW);
+		}
+
 		return this;
 	}
 		
