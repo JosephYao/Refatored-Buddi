@@ -1,4 +1,4 @@
-#Wed Nov 01 20:46:02 CET 2006
+#Wed Nov 29 23:06:36 CET 2006
 LAST_MONTH=Forrige m\u00E5ned
 ENTER_CATEGORY_NAME=Skriv inn kategori navn
 PREFERENCES=Preferanser
@@ -247,7 +247,7 @@ LIABILITY=Gjeld
 LANGUAGE_EDITOR_NAME=Inngi navn til spr\u00E5k som skal editeres.
 LOAD_BACKUP_FILE=Hent inn fra backup...
 WEEK=Uke
-UPGRADE_NOTICE=Hvis det er f\u00F8rste gang du benytter Buddi kan du se bort fra denne meldingen.\n\nADVARSEL\: Versjon 1.8.x introduserer endring i format for datafilen\nfra tidligere versjoner.\nN\u00E5r en \u00E5pner datafiler fra tidligere versjoner med denne versjonen\nvil du ikke lengre kunne datafilen i tidligere versjoner av Buddi.\nVennligst ta sikkerhetskopi av datafilen n\u00E5\!\n\nHvis du \u00F8nsker \u00E5 ta sikkerhetskopi av eksisterende fil avbryt,\nutf\u00F8r sikkerhetskopi og start Buddi p\u00E5 ny.\n\nDenne meldingen vises kun f\u00F8rste gang du starter Buddi.
+UPGRADE_NOTICE=Hvis det er f\u00F8rste gang du benytter Buddi kan du se bort fra denne meldingen.\n\nADVARSEL\: Denne versjon av Buddi introduserer endring i format for datafilen\nfra tidligere versjoner.\nN\u00E5r en \u00E5pner datafiler fra tidligere versjoner med denne versjonen\nvil du ikke lengre kunne datafilen i tidligere versjoner av Buddi.\nVennligst ta sikkerhetskopi av datafilen n\u00E5\!\n\nHvis du \u00F8nsker \u00E5 ta sikkerhetskopi av eksisterende fil avbryt,\nutf\u00F8r sikkerhetskopi og start Buddi p\u00E5 ny.\n\nDenne meldingen vises kun f\u00F8rste gang du starter Buddi.
 SHOW_CREDIT_LIMIT=Vis informasjon om overtrekk og kredittgrense
 VERSION=Versjon
 ERROR=Feil
