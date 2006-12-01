@@ -270,3 +270,6 @@ FORTNIGHT=Fortnight
 UPDATE=Update
 TO=\ \u2192 
 CANCEL=Cancel
+EDIT_ACCOUNT_TYPES=Edit Account Types
+ENTER_ACCOUNT_TYPE_NAME=You must enter the account type name
+CREDIT=Credit

@@ -7,14 +7,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import net.roydesign.mac.MRJAdapter;
 
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.components.BuddiMenu;
@@ -88,16 +86,16 @@ public class Buddi {
 		// TODO Remove this from stable versions after 1.x.0
 		//Temporary notice stating the data format has changed.
 		
-		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
-				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
-			if (JOptionPane.showConfirmDialog(null, 
-					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
-					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE
-			) == JOptionPane.CANCEL_OPTION)
-				System.exit(0);
-		}
+//		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
+//				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+//			if (JOptionPane.showConfirmDialog(null, 
+//					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
+//					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
+//					JOptionPane.OK_CANCEL_OPTION,
+//					JOptionPane.WARNING_MESSAGE
+//			) == JOptionPane.CANCEL_OPTION)
+//				System.exit(0);
+//		}
 		
 		/*
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){

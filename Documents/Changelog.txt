@@ -1,3 +1,6 @@
+2.1.2 (November 30 2006)
+-Added dialog to add / rename Account Types (look under Advanced Options)
+
 2.1.1 (November 10 2006)
 -Converted the JTable in Account and Categories listing to JXTreeTable to give columns.
 

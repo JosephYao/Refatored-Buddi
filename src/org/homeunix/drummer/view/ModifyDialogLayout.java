@@ -18,8 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.homeunix.drummer.controller.AccountModifyDialog;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.controller.TypeModifyDialog;
+import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -47,7 +50,8 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 	
 	protected final DefaultComboBoxModel pulldownModel;
 	
-	protected SourceType source; 
+	protected SourceType source;
+	protected Type type;
 	
 	protected ModifyDialogLayout(Frame owner){
 		super(owner);
@@ -79,20 +83,26 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
 		textPanel.add(nameLabel);
 		textPanel.add(name);
-		textPanel.add(amountLabel);
-		textPanel.add(amount);
-		textPanel.add(pulldownLabel);
-		textPanel.add(pulldown);
-		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit()){
-			textPanel.add(creditLimitLabel);
-			textPanel.add(creditLimit);
+		if (!(this instanceof TypeModifyDialog)){
+			textPanel.add(pulldownLabel);
+			textPanel.add(pulldown);
+			textPanel.add(amountLabel);
+			textPanel.add(amount);
+			if (this instanceof AccountModifyDialog){
+				if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit()){
+					textPanel.add(creditLimitLabel);
+					textPanel.add(creditLimit);
+				}
+				if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()){
+					textPanel.add(interestRateLabel);
+					textPanel.add(interestRate);
+				}
+			}
 		}
-		if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()){
-			textPanel.add(interestRateLabel);
-			textPanel.add(interestRate);
+		if (!(this instanceof AccountModifyDialog)){
+			textPanel.add(gap);
+			textPanel.add(check);
 		}
-		textPanel.add(gap);
-		textPanel.add(check);
 		
 		JPanel textPanelSpacer = new JPanel();
 		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -137,6 +147,11 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 	public AbstractDialog loadSource(SourceType source){
 		this.source = source;
 		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
+		return this;
+	}
+	
+	public AbstractDialog loadType(Type type){
+		this.type = type;
 		return this;
 	}
 	

@@ -32,6 +32,7 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.controller.TypeListDialog;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
 
@@ -239,6 +240,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel editLanguagesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel editTypesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		JButton editLanguages = new JButton(Translate.getInstance().get(TranslateKeys.EDIT_LANGUAGES));
 		editLanguages.addActionListener(new ActionListener(){
@@ -254,6 +256,16 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 			}
 		});
 		
+		JButton editTypes = new JButton(Translate.getInstance().get(TranslateKeys.EDIT_ACCOUNT_TYPES));
+		editTypes.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				new TypeListDialog().openWindow();
+			}
+		});
+		
+		Dimension d = editTypes.getPreferredSize();
+		editLanguages.setPreferredSize(d);
+		
 		JLabel numberOfBackupsLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NUMBER_OF_BACKUPS));
 		JLabel budgetIntervalLabel = new JLabel(Translate.getInstance().get(TranslateKeys.BUDGET_INTERVAL));
 		
@@ -262,11 +274,13 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
 		editLanguagesPanel.add(editLanguages);
+		editTypesPanel.add(editTypes);
 		updatePanel.add(enableUpdateNotifications);
 				
 		advancedPanel.add(budgetIntervalPanel);
 		advancedPanel.add(numberOfBackupsPanel);
 		advancedPanel.add(editLanguagesPanel);
+		advancedPanel.add(editTypesPanel);
 		advancedPanel.add(updatePanel);
 		
 		
