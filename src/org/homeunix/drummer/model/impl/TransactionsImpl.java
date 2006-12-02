@@ -31,9 +31,9 @@ import org.homeunix.drummer.model.Transactions;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getTransactions <em>Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getAllTransactions <em>All Transactions</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
  * </ul>
  * </p>
  *
@@ -165,12 +165,12 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
-				return ((InternalEList)getScheduledTransactions()).basicRemove(otherEnd, msgs);
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				return ((InternalEList)getTransactions()).basicRemove(otherEnd, msgs);
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return basicSetAllTransactions(null, msgs);
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return ((InternalEList)getScheduledTransactions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -195,12 +195,12 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
-				return getScheduledTransactions();
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				return getTransactions();
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return getAllTransactions();
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return getScheduledTransactions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -213,16 +213,16 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
-				getScheduledTransactions().clear();
-				getScheduledTransactions().addAll((Collection)newValue);
-				return;
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				getTransactions().clear();
 				getTransactions().addAll((Collection)newValue);
 				return;
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				setAllTransactions((DataModel)newValue);
+				return;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				getScheduledTransactions().clear();
+				getScheduledTransactions().addAll((Collection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -235,14 +235,14 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
-				getScheduledTransactions().clear();
-				return;
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				getTransactions().clear();
 				return;
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				setAllTransactions((DataModel)null);
+				return;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				getScheduledTransactions().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -255,12 +255,12 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
-				return scheduledTransactions != null && !scheduledTransactions.isEmpty();
 			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
 				return transactions != null && !transactions.isEmpty();
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return getAllTransactions() != null;
+			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
+				return scheduledTransactions != null && !scheduledTransactions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -527,6 +527,44 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Source getTo() {
+		if (to != null && to.eIsProxy()) {
+			InternalEObject oldTo = (InternalEObject)to;
+			to = (Source)eResolveProxy(oldTo);
+			if (to != oldTo) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TRANSACTION__TO, oldTo, to));
+			}
+		}
+		return to;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Source basicGetTo() {
+		return to;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTo(Source newTo) {
+		Source oldTo = to;
+		to = newTo;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__TO, oldTo, to));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.TRANSACTION__AMOUNT:
@@ -693,72 +731,32 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Source getTo() {
-		if (to != null && to.eIsProxy()) {
-			InternalEObject oldTo = (InternalEObject)to;
-			to = (Source)eResolveProxy(oldTo);
-			if (to != oldTo) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.TRANSACTION__TO, oldTo, to));
-			}
-		}
-		return to;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Source basicGetTo() {
-		return to;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTo(Source newTo) {
-		Source oldTo = to;
-		to = newTo;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__TO, oldTo, to));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		return description;
-			
-//		StringBuffer result = new StringBuffer(super.toString());
-//		result.append(" (amount: ");
-//		result.append(amount);
-//		result.append(", description: ");
-//		result.append(description);
-//		result.append(", date: ");
-//		result.append(date);
-//		result.append(", number: ");
-//		result.append(number);
-//		result.append(", memo: ");
-//		result.append(memo);
-//		result.append(", balanceFrom: ");
-//		result.append(balanceFrom);
-//		result.append(", balanceTo: ");
-//		result.append(balanceTo);
-//		result.append(", scheduled: ");
-//		result.append(scheduled);
-//		result.append(", cleared: ");
-//		result.append(cleared);
-//		result.append(", reconciled: ");
-//		result.append(reconciled);
-//		result.append(')');
-//		return result.toString();
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (amount: ");
+		result.append(amount);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", date: ");
+		result.append(date);
+		result.append(", number: ");
+		result.append(number);
+		result.append(", memo: ");
+		result.append(memo);
+		result.append(", balanceFrom: ");
+		result.append(balanceFrom);
+		result.append(", balanceTo: ");
+		result.append(balanceTo);
+		result.append(", scheduled: ");
+		result.append(scheduled);
+		result.append(", cleared: ");
+		result.append(cleared);
+		result.append(", reconciled: ");
+		result.append(reconciled);
+		result.append(')');
+		return result.toString();
 	}
 
 	public int compareTo(Transaction arg0) {

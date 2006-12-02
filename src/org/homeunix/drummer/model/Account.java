@@ -28,7 +28,7 @@ package org.homeunix.drummer.model;
  * @model
  * @generated
  */
-public interface Account extends Source {
+public interface Account extends Source, Comparable<Source> {
 	/**
 	 * Returns the value of the '<em><b>Balance</b></em>' attribute.
 	 * <!-- begin-user-doc -->

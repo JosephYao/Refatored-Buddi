@@ -31,13 +31,21 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		
 		this.schedule = schedule;
 		startDateChooser.setEnabled(schedule == null);
+		endDateChooser.setEnabled(schedule == null);
 		frequencyPulldown.setEnabled(schedule == null);
-		schedulePulldown.setEnabled(schedule == null);
+		
+		
 		initContent();
 		updateSchedulePulldown();
 		transaction.updateContent();
-		
 		loadSchedule(schedule);
+		schedulePulldown.setEnabled(schedule == null);
+		firstWeek_dayButton.setEnabled(false);
+		secondWeek_dayButton.setEnabled(false);
+		thirdWeek_dayButton.setEnabled(false);
+		fourthWeek_dayButton.setEnabled(false);
+		monthFreqPulldown.setEnabled(false);
+		
 	}
 
 	protected String getType(){
@@ -48,6 +56,8 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 	protected AbstractDialog initActions() {
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("sch week: "+getScheduleWeek());
+
 				if (ScheduleModifyDialog.this.ensureInfoCorrect()){
 					if (!ScheduleModifyDialog.this.startDateChooser.getDate().before(new Date())
 							|| schedule != null		//If the schedule has already been defined, we won't bother people again 
@@ -85,7 +95,31 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 				ScheduleModifyDialog.this.updateSchedulePulldown();
 			}
 		});
+		/*
+		firstWeek_dayButton.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				System.out.println("first week status: "+ e.getStateChange());
+			}
+		});
 		
+		secondWeek_dayButton.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				System.out.println("second week status: "+ e.getStateChange());
+			}
+		});
+		
+		thirdWeek_dayButton.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				System.out.println("third week status: "+ e.getStateChange());
+			}
+		});
+		
+		fourthWeek_dayButton.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				System.out.println("fourth week status: "+ e.getStateChange());
+			}
+		});
+		*/
 		return this;
 	}
 
@@ -118,12 +152,72 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 				scheduleModel.addElement(i);
 			}
 		}
+		/*Added the following for the four new features added in scheduling*/
+		else if (getFrequencyType().equals(TranslateKeys.DAY_MONTH.toString())){
+			schedulePulldown.setEnabled(true);
+			firstWeek_dayButton.setEnabled(false);
+			secondWeek_dayButton.setEnabled(false);
+			thirdWeek_dayButton.setEnabled(false);
+			fourthWeek_dayButton.setEnabled(false);
+			monthFreqPulldown.setEnabled(false);
+			
+			scheduleModel.removeAllElements();
+			for (TranslateKeys day2 : Const.FIRST_DAYS) {
+				scheduleModel.addElement(day2);	
+			}
+		}
+		else if (getFrequencyType().equals(TranslateKeys.EVERY_WEEKDAY.toString())){
+			//scheduleModel.removeAllElements();
+			schedulePulldown.setEnabled(false);
+			firstWeek_dayButton.setEnabled(false);
+			secondWeek_dayButton.setEnabled(false);
+			thirdWeek_dayButton.setEnabled(false);
+			fourthWeek_dayButton.setEnabled(false);
+			monthFreqPulldown.setEnabled(false);
+			
+		}else if (getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())){
+			//scheduleModel.removeAllElements();
+			schedulePulldown.setEnabled(true);
+			firstWeek_dayButton.setEnabled(true);
+			secondWeek_dayButton.setEnabled(true);
+			thirdWeek_dayButton.setEnabled(true);
+			fourthWeek_dayButton.setEnabled(true);
+			monthFreqPulldown.setEnabled(false);
+			
+			scheduleModel.removeAllElements();
+			for (TranslateKeys day : Const.DAYS_IN_WEEK) {
+				scheduleModel.addElement(day);	
+			}
+			
+		}else if (getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())){
+			//scheduleModel.removeAllElements();
+			schedulePulldown.setEnabled(true);
+			firstWeek_dayButton.setEnabled(false);
+			secondWeek_dayButton.setEnabled(false);
+			thirdWeek_dayButton.setEnabled(false);
+			fourthWeek_dayButton.setEnabled(false);
+			monthFreqPulldown.setEnabled(true);
+			
+			scheduleModel.removeAllElements();
+			Calendar c = Calendar.getInstance();
+			c.setTime(DateUtil.getEndOfMonth(new Date(), 0));
+			int daysInMonth = c.get(Calendar.DAY_OF_MONTH);
+			for(int i = 1; i <= daysInMonth; i++)
+			{
+				scheduleModel.addElement(i);
+			}
+			
+		}
+		/*added by Nicky*/
 		else{
 			Log.error("Unknown frequency type: " + getFrequencyType());
 		}
 	}
 	
 	private boolean ensureInfoCorrect(){
+		
+		//System.out.println(Calendar.getInstance().get(startDateChooser.getDate()));
+		
 		if ((scheduleName.getText().length() > 0)
 				&& (startDateChooser.getDate() != null)
 				&& (transaction.getAmount() != 0)
@@ -144,8 +238,9 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			t.setMemo(transaction.getMemo());
 			t.setTo(transaction.getTo());
 			t.setFrom(transaction.getFrom());
-
-			DataInstance.getInstance().addSchedule(scheduleName.getText(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), t);
+			System.out.println("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
+			DataInstance.getInstance().addSchedule(scheduleName.getText(), startDateChooser.getDate(), /*null*/endDateChooser.getDate()/*added by Nicky*/, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), t);
+		
 		}
 		else{
 			schedule.setScheduleName(scheduleName.getText());
@@ -156,9 +251,13 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			schedule.setTo(transaction.getTo());
 			schedule.setFrom(transaction.getFrom());
 			schedule.setStartDate(startDateChooser.getDate());
+			//added by Nicky
+			schedule.setEndDate(endDateChooser.getDate());
+			
 			schedule.setFrequencyType(getFrequencyType());
 			schedule.setScheduleDay(getScheduleDay());
-			
+			schedule.setScheduleWeek(getScheduleWeek());
+			schedule.setScheduleMonth(getScheduleMonth());
 			DataInstance.getInstance().saveDataModel();
 		}
 	}
@@ -170,6 +269,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			
 			scheduleName.setText(s.getScheduleName());
 			startDateChooser.setDate(s.getStartDate());
+			endDateChooser.setDate(s.getEndDate());//added by Nicky
 			frequencyPulldown.setSelectedItem(s.getFrequencyType());
 			schedulePulldown.setSelectedIndex(s.getScheduleDay());
 			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
@@ -197,13 +297,59 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			return ((Integer) o) - 1;
 		}
 		else {
-			for (int i = 0; i < Const.DAYS_IN_WEEK.length; i++) {
-				if (Const.DAYS_IN_WEEK[i].equals(o))
-					return i;
+		/*added by Nicky*/	
+			if(getFrequencyType().equals("DAY_MONTH"))
+			{
+				for (int i = 0; i < Const.FIRST_DAYS.length; i++) 
+				{
+					if (Const.FIRST_DAYS[i].equals(o))
+						return i;
+				}
 			}
-			
+			else
+			{
+				for (int i = 0; i < Const.DAYS_IN_WEEK.length; i++) 
+				{
+					if (Const.DAYS_IN_WEEK[i].equals(o))
+						return i;
+				}
+			}
 			if (Const.DEVEL) Log.debug("Unknown object when getting schedule day: " + o);
 			return -1;
 		}		
+		
 	}
+	
+	/**
+	 * Reads the checkboxes and set the appropriate weeks that have been selected 
+	 * for multiple weeks in a month option
+	 */
+	
+		private Integer getScheduleWeek(){
+			int scheduleWeek=0;
+			if(firstWeek_dayButton.isSelected())
+				scheduleWeek += 1 ;
+			if(secondWeek_dayButton.isSelected())
+				scheduleWeek += 2 ;
+			if(thirdWeek_dayButton.isSelected())
+				scheduleWeek += 4 ;
+			if(fourthWeek_dayButton.isSelected())
+				scheduleWeek += 8 ;
+			return scheduleWeek;
+			}		
+		
+	/**
+	 * Reads the monthly gap between two transactions as selected from a pulldown 
+	 * for multiple months in a year option
+	 */
+		
+		private Integer getScheduleMonth()
+		{
+			Object o = monthFreqPulldown.getSelectedItem();
+			
+			if (o instanceof Integer){
+				return ((Integer) o);
+			}
+			return -1;
+		}
 }

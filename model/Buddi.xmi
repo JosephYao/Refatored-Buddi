@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Sep 06 19:24:22 MDT 2006'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 01 18:28:26 MST 2006'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
@@ -906,6 +906,36 @@
                                 <UML:Class xmi.idref = '.:00000000000008DE'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
+                            <UML:Attribute xmi.id = '-104-7--51--52-37f0116a:10ea5ce076b:-8000:00000000000008B7'
+                              name = 'scheduleWeek' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-104-7--51--52-37f0116a:10ea5ce076b:-8000:00000000000008B8'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-104-7--51--52-37f0116a:10ea5ce076b:-8000:00000000000008B9'
+                                      lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000008DD'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-104-7--50--85--467f29c4:10f2205bffe:-8000:00000000000009ED'
+                              name = 'scheduleMonth' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-104-7--50--85--467f29c4:10f2205bffe:-8000:00000000000009EE'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-104-7--50--85--467f29c4:10f2205bffe:-8000:00000000000009EF'
+                                      lower = '1' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000008DD'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
                           </UML:Classifier.feature>
                         </UML:Class>
                         <UML:Association xmi.id = '.:00000000000008D1' name = 'scheduledTransactions'
@@ -974,6 +1004,9 @@
               <UML:Namespace.ownedElement>
                 <UML:Class xmi.id = '.:00000000000008E0' name = 'Date' isSpecification = 'false'
                   isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
+                <UML:Class xmi.id = '-104-7--51--52-37f0116a:10ea5ce076b:-8000:00000000000008B6'
+                  name = 'Vector' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false' isActive = 'false'/>
               </UML:Namespace.ownedElement>
             </UML:Package>
           </UML:Namespace.ownedElement>
@@ -986,6 +1019,9 @@
           isRoot = 'false' isLeaf = 'false' isAbstract = 'false'/>
         <UML:DataType xmi.id = '-64--88-0-51-4770e054:10d2efb09a7:-8000:00000000000008AE'
           name = 'double' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'/>
+        <UML:DataType xmi.id = '-104-7--51--52-37f0116a:10ea5ce076b:-8000:00000000000008B5'
+          name = 'short' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'/>
       </UML:Namespace.ownedElement>
     </UML:Model>

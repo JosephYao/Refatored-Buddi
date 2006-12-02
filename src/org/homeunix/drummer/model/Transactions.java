@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.Transactions#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Transactions#getTransactions <em>Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Transactions#getAllTransactions <em>All Transactions</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Transactions#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
  * </ul>
  * </p>
  *

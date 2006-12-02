@@ -181,6 +181,14 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 				}
 			}
 		});
+		
+		pluginList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()){
+					removeButton.setEnabled(pluginList.getSelectedIndex() != -1);
+				}
+			}
+		});
 
 		return this;
 	}

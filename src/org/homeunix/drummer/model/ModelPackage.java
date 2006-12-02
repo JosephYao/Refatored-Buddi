@@ -245,22 +245,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORIES = 2;
 
 	/**
-	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIES__CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIES__ALL_CATEGORIES = 1;
+	int CATEGORIES__ALL_CATEGORIES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIES__CATEGORIES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Categories</em>' class.
@@ -327,22 +327,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORY__INCOME = SOURCE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Parent</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 3;
+	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Category</em>' class.
@@ -364,13 +364,22 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL = 4;
 
 	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_CATEGORIES = 0;
+
+	/**
 	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TYPES = 0;
+	int DATA_MODEL__ALL_TYPES = 1;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
@@ -379,7 +388,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 1;
+	int DATA_MODEL__ALL_TRANSACTIONS = 2;
 
 	/**
 	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
@@ -388,16 +397,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 2;
-
-	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_CATEGORIES = 3;
+	int DATA_MODEL__ALL_ACCOUNTS = 3;
 
 	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
@@ -708,13 +708,31 @@ public interface ModelPackage extends EPackage {
 	int SCHEDULE__SCHEDULE_NAME = TRANSACTION_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Schedule Week</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__SCHEDULE_WEEK = TRANSACTION_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Schedule Month</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__SCHEDULE_MONTH = TRANSACTION_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Schedule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE_FEATURE_COUNT = TRANSACTION_FEATURE_COUNT + 6;
+	int SCHEDULE_FEATURE_COUNT = TRANSACTION_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionsImpl <em>Transactions</em>}' class.
@@ -727,22 +745,13 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS = 8;
 
 	/**
-	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__TRANSACTIONS = 1;
+	int TRANSACTIONS__TRANSACTIONS = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
@@ -751,7 +760,16 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 2;
+	int TRANSACTIONS__ALL_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Transactions</em>' class.
@@ -810,22 +828,22 @@ public interface ModelPackage extends EPackage {
 	int TYPES = 10;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__ALL_TYPES = 0;
-
-	/**
 	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__TYPES = 1;
+	int TYPES__TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Types</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__ALL_TYPES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Types</em>' class.
@@ -1126,6 +1144,28 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSchedule_ScheduleName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getScheduleWeek <em>Schedule Week</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Schedule Week</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getScheduleWeek()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_ScheduleWeek();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getScheduleMonth <em>Schedule Month</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Schedule Month</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getScheduleMonth()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_ScheduleMonth();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.DataModel#getAllTypes <em>All Types</em>}'.
@@ -1572,20 +1612,20 @@ public interface ModelPackage extends EPackage {
 		EClass CATEGORIES = eINSTANCE.getCategories();
 
 		/**
-		 * The meta object literal for the '<em><b>Categories</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CATEGORIES__CATEGORIES = eINSTANCE.getCategories_Categories();
-
-		/**
 		 * The meta object literal for the '<em><b>All Categories</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference CATEGORIES__ALL_CATEGORIES = eINSTANCE.getCategories_AllCategories();
+
+		/**
+		 * The meta object literal for the '<em><b>Categories</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORIES__CATEGORIES = eINSTANCE.getCategories_Categories();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.CategoryImpl <em>Category</em>}' class.
@@ -1614,20 +1654,20 @@ public interface ModelPackage extends EPackage {
 		EAttribute CATEGORY__INCOME = eINSTANCE.getCategory_Income();
 
 		/**
-		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CATEGORY__PARENT = eINSTANCE.getCategory_Parent();
-
-		/**
 		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference CATEGORY__CHILDREN = eINSTANCE.getCategory_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATEGORY__PARENT = eINSTANCE.getCategory_Parent();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.DataModelImpl <em>Data Model</em>}' class.
@@ -1640,20 +1680,20 @@ public interface ModelPackage extends EPackage {
 		EClass DATA_MODEL = eINSTANCE.getDataModel();
 
 		/**
+		 * The meta object literal for the '<em><b>All Categories</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_CATEGORIES = eINSTANCE.getDataModel_AllCategories();
+
+		/**
 		 * The meta object literal for the '<em><b>All Types</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference DATA_MODEL__ALL_TYPES = eINSTANCE.getDataModel_AllTypes();
-
-		/**
-		 * The meta object literal for the '<em><b>All Accounts</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DATA_MODEL__ALL_ACCOUNTS = eINSTANCE.getDataModel_AllAccounts();
 
 		/**
 		 * The meta object literal for the '<em><b>All Transactions</b></em>' containment reference feature.
@@ -1664,12 +1704,12 @@ public interface ModelPackage extends EPackage {
 		EReference DATA_MODEL__ALL_TRANSACTIONS = eINSTANCE.getDataModel_AllTransactions();
 
 		/**
-		 * The meta object literal for the '<em><b>All Categories</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>All Accounts</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DATA_MODEL__ALL_CATEGORIES = eINSTANCE.getDataModel_AllCategories();
+		EReference DATA_MODEL__ALL_ACCOUNTS = eINSTANCE.getDataModel_AllAccounts();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.ScheduleImpl <em>Schedule</em>}' class.
@@ -1728,6 +1768,22 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCHEDULE__SCHEDULE_NAME = eINSTANCE.getSchedule_ScheduleName();
+
+		/**
+		 * The meta object literal for the '<em><b>Schedule Week</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__SCHEDULE_WEEK = eINSTANCE.getSchedule_ScheduleWeek();
+
+		/**
+		 * The meta object literal for the '<em><b>Schedule Month</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__SCHEDULE_MONTH = eINSTANCE.getSchedule_ScheduleMonth();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.SourceImpl <em>Source</em>}' class.
@@ -1854,20 +1910,20 @@ public interface ModelPackage extends EPackage {
 		EAttribute TRANSACTION__RECONCILED = eINSTANCE.getTransaction_Reconciled();
 
 		/**
-		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TRANSACTION__TO = eINSTANCE.getTransaction_To();
-
-		/**
 		 * The meta object literal for the '<em><b>From</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference TRANSACTION__FROM = eINSTANCE.getTransaction_From();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRANSACTION__TO = eINSTANCE.getTransaction_To();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.TransactionsImpl <em>Transactions</em>}' class.
@@ -1940,20 +1996,20 @@ public interface ModelPackage extends EPackage {
 		EClass TYPES = eINSTANCE.getTypes();
 
 		/**
-		 * The meta object literal for the '<em><b>All Types</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TYPES__ALL_TYPES = eINSTANCE.getTypes_AllTypes();
-
-		/**
 		 * The meta object literal for the '<em><b>Types</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference TYPES__TYPES = eINSTANCE.getTypes_Types();
+
+		/**
+		 * The meta object literal for the '<em><b>All Types</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TYPES__ALL_TYPES = eINSTANCE.getTypes_AllTypes();
 
 		/**
 		 * The meta object literal for the '<em>Date</em>' data type.

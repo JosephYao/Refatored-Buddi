@@ -22,6 +22,8 @@ import java.util.Date;
  *   <li>{@link org.homeunix.drummer.model.Schedule#getLastDateCreated <em>Last Date Created</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleName <em>Schedule Name</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleWeek <em>Schedule Week</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleMonth <em>Schedule Month</em>}</li>
  * </ul>
  * </p>
  *
@@ -185,6 +187,57 @@ public interface Schedule extends Transaction {
 	 * @generated
 	 */
 	void setScheduleName(String value);
-	
+
+	/**
+	 * Returns the value of the '<em><b>Schedule Week</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Schedule Week</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Schedule Week</em>' attribute.
+	 * @see #setScheduleWeek(int)
+	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_ScheduleWeek()
+	 * @model required="true"
+	 * @generated
+	 */
+	int getScheduleWeek();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getScheduleWeek <em>Schedule Week</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Schedule Week</em>' attribute.
+	 * @see #getScheduleWeek()
+	 * @generated
+	 */
+	void setScheduleWeek(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Schedule Month</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Schedule Month</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Schedule Month</em>' attribute.
+	 * @see #setScheduleMonth(int)
+	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_ScheduleMonth()
+	 * @model required="true"
+	 * @generated
+	 */
+	int getScheduleMonth();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getScheduleMonth <em>Schedule Month</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Schedule Month</em>' attribute.
+	 * @see #getScheduleMonth()
+	 * @generated
+	 */
+	void setScheduleMonth(int value);
 
 } // Schedule

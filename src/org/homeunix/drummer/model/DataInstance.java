@@ -549,17 +549,19 @@ public class DataInstance {
 	public Vector<Schedule> getScheduledTransactions(){
 		Vector<Schedule> v = new Vector<Schedule>(dataModel.getAllTransactions().getScheduledTransactions());
 		Collections.sort(v);
-
+		//System.out.println(v);
 		return v;
 	}
-
-	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Transaction transaction){
+	//Integer scheduleWeek, Integer scheduleMonth have been added for the multiple weeks in a month and multiple weeks in a year options
+	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Integer scheduleWeek,Integer scheduleMonth, Transaction transaction){
 		Schedule s = dataModelFactory.createSchedule();
 		s.setScheduleName(name);
 		s.setStartDate(startDate);
 		s.setEndDate(endDate);
 		s.setFrequencyType(frequencyType);
 		s.setScheduleDay(scheduleDay);
+		s.setScheduleWeek(scheduleWeek);
+		s.setScheduleMonth(scheduleMonth);
 		s.setAmount(transaction.getAmount());
 		s.setDescription(transaction.getDescription());
 		s.setNumber(transaction.getNumber());

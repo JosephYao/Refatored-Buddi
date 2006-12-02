@@ -27,6 +27,8 @@ import org.homeunix.drummer.model.Schedule;
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getLastDateCreated <em>Last Date Created</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getEndDate <em>End Date</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleName <em>Schedule Name</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleWeek <em>Schedule Week</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleMonth <em>Schedule Month</em>}</li>
  * </ul>
  * </p>
  *
@@ -152,6 +154,46 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 	 * @ordered
 	 */
 	protected String scheduleName = SCHEDULE_NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getScheduleWeek() <em>Schedule Week</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduleWeek()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int SCHEDULE_WEEK_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getScheduleWeek() <em>Schedule Week</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduleWeek()
+	 * @generated
+	 * @ordered
+	 */
+	protected int scheduleWeek = SCHEDULE_WEEK_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getScheduleMonth() <em>Schedule Month</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduleMonth()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int SCHEDULE_MONTH_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getScheduleMonth() <em>Schedule Month</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScheduleMonth()
+	 * @generated
+	 * @ordered
+	 */
+	protected int scheduleMonth = SCHEDULE_MONTH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -302,6 +344,48 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getScheduleWeek() {
+		return scheduleWeek;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setScheduleWeek(int newScheduleWeek) {
+		int oldScheduleWeek = scheduleWeek;
+		scheduleWeek = newScheduleWeek;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__SCHEDULE_WEEK, oldScheduleWeek, scheduleWeek));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getScheduleMonth() {
+		return scheduleMonth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setScheduleMonth(int newScheduleMonth) {
+		int oldScheduleMonth = scheduleMonth;
+		scheduleMonth = newScheduleMonth;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__SCHEDULE_MONTH, oldScheduleMonth, scheduleMonth));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.SCHEDULE__START_DATE:
@@ -316,6 +400,10 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return getEndDate();
 			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
 				return getScheduleName();
+			case ModelPackage.SCHEDULE__SCHEDULE_WEEK:
+				return new Integer(getScheduleWeek());
+			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
+				return new Integer(getScheduleMonth());
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -344,6 +432,12 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return;
 			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
 				setScheduleName((String)newValue);
+				return;
+			case ModelPackage.SCHEDULE__SCHEDULE_WEEK:
+				setScheduleWeek(((Integer)newValue).intValue());
+				return;
+			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
+				setScheduleMonth(((Integer)newValue).intValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -374,6 +468,12 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
 				setScheduleName(SCHEDULE_NAME_EDEFAULT);
 				return;
+			case ModelPackage.SCHEDULE__SCHEDULE_WEEK:
+				setScheduleWeek(SCHEDULE_WEEK_EDEFAULT);
+				return;
+			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
+				setScheduleMonth(SCHEDULE_MONTH_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -397,6 +497,10 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
 			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
 				return SCHEDULE_NAME_EDEFAULT == null ? scheduleName != null : !SCHEDULE_NAME_EDEFAULT.equals(scheduleName);
+			case ModelPackage.SCHEDULE__SCHEDULE_WEEK:
+				return scheduleWeek != SCHEDULE_WEEK_EDEFAULT;
+			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
+				return scheduleMonth != SCHEDULE_MONTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

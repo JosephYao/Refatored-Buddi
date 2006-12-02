@@ -30,8 +30,8 @@ import org.homeunix.drummer.model.Types;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getAllTypes <em>All Types</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getTypes <em>Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TypesImpl#getAllTypes <em>All Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -112,18 +112,6 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getTypes() {
-		if (types == null) {
-			types = new EObjectContainmentEList(Type.class, this, ModelPackage.TYPES__TYPES);
-		}
-		return types;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ModelPackage.TYPES__ALL_TYPES:
@@ -141,10 +129,10 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.TYPES__ALL_TYPES:
-				return basicSetAllTypes(null, msgs);
 			case ModelPackage.TYPES__TYPES:
 				return ((InternalEList)getTypes()).basicRemove(otherEnd, msgs);
+			case ModelPackage.TYPES__ALL_TYPES:
+				return basicSetAllTypes(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -169,10 +157,10 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.TYPES__ALL_TYPES:
-				return getAllTypes();
 			case ModelPackage.TYPES__TYPES:
 				return getTypes();
+			case ModelPackage.TYPES__ALL_TYPES:
+				return getAllTypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,12 +173,12 @@ public class TypesImpl extends EObjectImpl implements Types {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.TYPES__ALL_TYPES:
-				setAllTypes((DataModel)newValue);
-				return;
 			case ModelPackage.TYPES__TYPES:
 				getTypes().clear();
 				getTypes().addAll((Collection)newValue);
+				return;
+			case ModelPackage.TYPES__ALL_TYPES:
+				setAllTypes((DataModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -203,11 +191,11 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TYPES__ALL_TYPES:
-				setAllTypes((DataModel)null);
-				return;
 			case ModelPackage.TYPES__TYPES:
 				getTypes().clear();
+				return;
+			case ModelPackage.TYPES__ALL_TYPES:
+				setAllTypes((DataModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -220,12 +208,24 @@ public class TypesImpl extends EObjectImpl implements Types {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TYPES__ALL_TYPES:
-				return getAllTypes() != null;
 			case ModelPackage.TYPES__TYPES:
 				return types != null && !types.isEmpty();
+			case ModelPackage.TYPES__ALL_TYPES:
+				return getAllTypes() != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList getTypes() {
+		if (types == null) {
+			types = new EObjectContainmentEList(Type.class, this, ModelPackage.TYPES__TYPES);
+		}
+		return types;
 	}
 
 } //TypesImpl
