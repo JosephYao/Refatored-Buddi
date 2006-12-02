@@ -18,15 +18,26 @@ TEMP=temp
 mkdir $TEMP
 
 for X in ${PLUGINS}; do
+	# Separate the name from the location in the PLUGINS variable
 	PLUGIN_NAME=`echo ${X} | cut -d, -f1`
 	X=`echo ${X} | cut -d, -f2`	
+	
+	# Make a temporary directory
 	mkdir -p ${TEMP}/${X}
+	
+	# Copy the source / docs / languages and compiled classes to $TEMP
 	cp -R bin/${X}/* ${TEMP}/${X}
 	cp -R plugin_src/${X}/* ${TEMP}/${X}
+	
+	# Move the language files to the root of the .jar - this is where Buddi looks for them at runtime
 	mv ${TEMP}/${X}/*.lang $TEMP
+
+	# Actually jar the plugin and associated files, and move it to Plugins
 	cd $TEMP
 	jar -cvf ${PLUGIN_NAME}.jar *
 	mv ${PLUGIN_NAME}.jar ../Plugins
 	cd ..
+	
+	# Cleanup
 	rm -rf ${TEMP}
 done
