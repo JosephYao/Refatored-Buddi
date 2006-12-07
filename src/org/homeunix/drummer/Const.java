@@ -117,15 +117,15 @@ public class Const {
 	};
 	
 	//	added by Nicky .. FOR DAY_MONTH Used in Scheduled Transactions.
-	public final static TranslateKeys[] FIRST_DAYS = {
-		TranslateKeys.FIRST_SUNDAY,
-		TranslateKeys.FIRST_MONDAY,
-		TranslateKeys.FIRST_TUESDAY,
-		TranslateKeys.FIRST_WEDNESDAY,
-		TranslateKeys.FIRST_THURSDAY,
-		TranslateKeys.FIRST_FRIDAY,
-		TranslateKeys.FIRST_SATURDAY
-	};
+//	public final static TranslateKeys[] FIRST_DAYS = {
+//		TranslateKeys.FIRST_SUNDAY,
+//		TranslateKeys.FIRST_MONDAY,
+//		TranslateKeys.FIRST_TUESDAY,
+//		TranslateKeys.FIRST_WEDNESDAY,
+//		TranslateKeys.FIRST_THURSDAY,
+//		TranslateKeys.FIRST_FRIDAY,
+//		TranslateKeys.FIRST_SATURDAY
+//	};
 
 
 	//The plugins which are included in the main Buddi jar.

@@ -55,11 +55,11 @@ import com.toedter.calendar.JDateChooser;
  */
 public class EditableTransaction extends JPanel {
 	public static final long serialVersionUID = 0;
-	
+
 	private final Vector<JComponent> components;
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
-	
+
 	private final JDateChooser date;
 	private final JCurrencyField amount;
 	private final JScrollingComboBox from;
@@ -69,17 +69,17 @@ public class EditableTransaction extends JPanel {
 	private final JHintTextArea memo;
 	private final JCheckBox cleared;
 	private final JCheckBox reconciled;
-	
+
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
-		
+
 	private TransactionsFrameLayout parent;
-	
+
 	private boolean changed;
-	
+
 	public EditableTransaction(TransactionsFrameLayout parent){
 		this.parent = parent;
-				
+
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
 		amount = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
 		from = new JScrollingComboBox();
@@ -89,15 +89,15 @@ public class EditableTransaction extends JPanel {
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.DEFAULT_MEMO));
 		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.CLEARED_SHORT));
 		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT));
-		
+
 		components = new Vector<JComponent>();
-		
+
 		toModel = new DefaultComboBoxModel();
 		fromModel = new DefaultComboBoxModel();
-		
+
 		to.setModel(toModel);
 		from.setModel(fromModel);
-		
+
 		//Add the tooltips
 		date.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_DATE));
 		amount.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_AMOUNT));
@@ -106,16 +106,16 @@ public class EditableTransaction extends JPanel {
 		number.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_NUMBER));
 		description.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_DESC));
 		memo.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_MEMO));
-				
+
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-		
+
 		JScrollPane memoScroller = new JScrollPane(memo);
 		memoScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		memoScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+
 		components.add(date);
 		components.add(amount);
 		components.add(from);
@@ -125,7 +125,7 @@ public class EditableTransaction extends JPanel {
 		components.add(description);
 		components.add(memo);
 		components.add(memoScroller);
-		
+
 		topPanel.add(date);
 		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
@@ -145,36 +145,36 @@ public class EditableTransaction extends JPanel {
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
 		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(to);
-		
+
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(topPanel);
 		if (!Buddi.isMac()) mainPanel.add(Box.createVerticalStrut(3));
 		mainPanel.add(bottomPanel);
-		
+
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
 		if (!Buddi.isMac()) this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
-		
+
 		int textHeight = date.getPreferredSize().height;
 		date.setPreferredSize(new Dimension(50, textHeight));
 		description.setPreferredSize(new Dimension(100, textHeight));
 		number.setPreferredSize(new Dimension(40, textHeight));
-		
+
 		amount.setMinimumSize(new Dimension(180, textHeight));
 		amount.setMaximumSize(new Dimension(210, textHeight));
 		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
 		to.setPreferredSize(from.getPreferredSize());
-		
+
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
-		
+
 		if (parent == null)
 			date.setVisible(false);
-		
+
 		initActions();
 	}
-	
+
 	public void setTransaction(Transaction transaction, boolean force){
 		//If the new transaction is not the same as the old one, then we 
 		// want to reset the form.  Since this can include nulls, we need
@@ -215,54 +215,54 @@ public class EditableTransaction extends JPanel {
 			memo.setValue("");
 			cleared.setSelected(false);
 			reconciled.setSelected(false);
-			
+
 			resetSelection();
 		}
-		
+
 		setChanged(false);
-		
+
 		this.transaction = transaction;
 	}
-			
+
 	public boolean isChanged(){
 		return changed;
-//				|| transaction == null
-//				|| (!transaction.getDescription().equals(getDescription()))
-//				|| (!transaction.getNumber().equals(getNumber()))
-//				|| (transaction.getAmount() != (getAmount()))
-//				|| (!transaction.getFrom().equals(getTransferFrom()))
-//				|| (!transaction.getTo().equals(getTransferTo()))
-//				|| (!transaction.getDate().equals(getDate()))
+//		|| transaction == null
+//		|| (!transaction.getDescription().equals(getDescription()))
+//		|| (!transaction.getNumber().equals(getNumber()))
+//		|| (transaction.getAmount() != (getAmount()))
+//		|| (!transaction.getFrom().equals(getTransferFrom()))
+//		|| (!transaction.getTo().equals(getTransferTo()))
+//		|| (!transaction.getDate().equals(getDate()))
 //		);
 	}
-	
+
 	public void setChanged(boolean changed){
 		this.changed = changed;
 	}
-	
+
 	public Date getDate(){
 		return date.getDate();
 	}
-	
+
 	public String getNumber(){
 		return number.getValue();
 	}
-	
+
 	public String getDescription(){
 		return description.getValue();
 	}
-	
+
 	public Transaction getTransaction(){
 		return transaction;
 	}
-	
+
 	public long getAmount(){
 		if (this.amount != null)
 			return this.amount.getValue();
 		else
 			return 0;
 	}
-	
+
 	public Source getFrom(){
 		if (from.getSelectedItem() instanceof Source) {
 			return (Source) from.getSelectedItem();	
@@ -278,27 +278,27 @@ public class EditableTransaction extends JPanel {
 		}
 		else if (to.getSelectedItem() != null)
 			Log.error("Unknown object selected in TransferTo combobox; returning null.");
-		
+
 		return null;
 	}
 
-	
+
 	public String getMemo(){
 		return memo.getValue();
 	}
-	
+
 	public boolean isCleared(){
 		return cleared.isSelected();
 	}
-	
+
 	public boolean isReconciled(){
 		return reconciled.isSelected();
 	}
-	
+
 	public void updateContent(){
 		//Update the dropdown lists
 		setEnabled(true);
-		
+
 		toModel.removeAllElements();
 		fromModel.removeAllElements();
 		toModel.addElement(null);
@@ -307,10 +307,10 @@ public class EditableTransaction extends JPanel {
 			toModel.addElement(source);
 			fromModel.addElement(source);
 		}
-		
+
 		toModel.addElement(null);
 		fromModel.addElement(null);		
-		
+
 		for (Category c : DataInstance.getInstance().getCategories()){
 			if (c.isIncome())
 				fromModel.addElement(c);
@@ -318,7 +318,7 @@ public class EditableTransaction extends JPanel {
 				toModel.addElement(c);	
 		}
 	}
-	
+
 	private void initActions(){
 		for (JComponent c : components) {
 			c.addKeyListener(new KeyAdapter(){
@@ -327,7 +327,7 @@ public class EditableTransaction extends JPanel {
 					super.keyTyped(arg0);
 				}
 			});
-			
+
 			c.addFocusListener(new FocusAdapter(){
 				public void focusGained(FocusEvent arg0) {
 					if (arg0.getSource() instanceof JTextField 
@@ -338,7 +338,7 @@ public class EditableTransaction extends JPanel {
 				}
 			});
 		}
-		
+
 		// Load the other information (amount, number, etc) from memory
 		description.addFocusListener(new FocusAdapter(){
 			@Override
@@ -380,13 +380,14 @@ public class EditableTransaction extends JPanel {
 				}
 			}
 		});
-		
+
 		// When you select one source, automatically select the other if possible
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (parent != null && parent.getAccount() != null){
-					if (from.getSelectedItem() instanceof Source) {
+//				if (parent != null && parent.getAccount() != null){
+				if (from.getSelectedItem() instanceof Source) {
+					if (parent != null && parent.getAccount() != null){
 						if (!parent.getAccount().equals(from.getSelectedItem())){
 							to.setSelectedItem(parent.getAccount());
 						}
@@ -396,16 +397,23 @@ public class EditableTransaction extends JPanel {
 							to.setSelectedItem(null);
 						}
 					}
+					else {
+						if (from.getSelectedItem() instanceof Category){
+							if (to.getSelectedItem() instanceof Category){
+								to.setSelectedItem(null);
+							}
+						}
+					}
 				}
 			}
 		});
-		
+
 		// When you select one source, automatically select the other if possible
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 //				EditableTransaction.this.setChanged(true);
-				if (parent != null && parent.getAccount() != null){
-					if (to.getSelectedItem() instanceof Source) {
+				if (to.getSelectedItem() instanceof Source) {
+					if (parent != null && parent.getAccount() != null){
 						if (!parent.getAccount().equals(to.getSelectedItem())){
 							from.setSelectedItem(parent.getAccount());
 						}
@@ -415,10 +423,18 @@ public class EditableTransaction extends JPanel {
 							from.setSelectedItem(null);
 						}
 					}
+					else {
+						if (to.getSelectedItem() instanceof Category){
+							if (from.getSelectedItem() instanceof Category){
+								from.setSelectedItem(null);
+							}
+						}
+					}
+
 				}
 			}
 		});
-		
+
 		reconciled.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				EditableTransaction.this.setChanged(true);
@@ -438,11 +454,11 @@ public class EditableTransaction extends JPanel {
 			c.setEnabled(arg0);
 		}
 	}
-	
+
 	public void resetSelection(){
 		date.requestFocusInWindow();
 	}
-	
+
 	/**
 	 * Forces the Cleared and reconciled boxes to update to the current
 	 * values as stored in the model.  Should only be used for the 

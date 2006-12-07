@@ -156,6 +156,23 @@ public class DataInstance {
 			if (contents.size() > 0){
 				dataModel = (DataModel) contents.get(0);
 			}
+			
+			// Once we have this loaded, we need to do some sanity checks.
+			// After a few versions, these can be phased out.
+
+			// Updates the scheduled transaction frequency type to new (2.2) version.
+			// Added December 6 2006, in version 2.1.3; we can probably
+			// remove it after version 2.4 or so...
+			for (Schedule s : getScheduledTransactions()) {
+				if (s.getFrequencyType().equals("WEEK")){
+					s.setFrequencyType(TranslateKeys.WEEKLY.toString());
+					saveDataModel();
+				}
+				if (s.getFrequencyType().equals("MONTH")){
+					s.setFrequencyType(TranslateKeys.MONTHLY_BY_DATE.toString());
+					saveDataModel();
+				}
+			}
 
 			//Save the location to the prefs file, in case we changed it.
 			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());

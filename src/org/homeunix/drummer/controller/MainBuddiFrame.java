@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import javax.swing.JFrame;
@@ -323,128 +324,131 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 	public void updateScheduledTransactions(){
 		//Update any scheduled transactions
 		final Date today = DateUtil.getEndOfDay(new Date());
-		final Calendar tempCal = Calendar.getInstance();
-		final Calendar startCal = Calendar.getInstance();
+		//We specify a GregorianCalendar because we make some assumptions
+		// about numbering of months, etc that may break if we 
+		// use the default calendar for the locale.  It's not the
+		// prettiest code, but it works.  Perhaps we can change
+		// it to be cleaner later on...
+		final GregorianCalendar tempCal = new GregorianCalendar();
 
-		//		System.out.println(new Date(97,10,1));
 		for (Schedule s : DataInstance.getInstance().getScheduledTransactionsBeforeToday()) {
-			System.out.println(s.getScheduleName());
+			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
 
 			Date tempDate = s.getLastDateCreated();
-			Date startDate = s.getStartDate();
 
+			//Temp date is where we will start looping from.  If it is
+			// null, we need to init it to a sane value.
 			if (tempDate == null)
 				tempDate = s.getStartDate();
+
+
 			tempDate = DateUtil.getStartOfDay(tempDate);
-			startDate = DateUtil.getStartOfDay(startDate);//added by Nicky
 
+			//The transaction is scheduled for a date before today and before the EndDate 
+			while (tempDate.before(today) && tempDate.before(s.getEndDate())) {
+				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
+				
+				//We use a Calendar instead of a Date object for comparisons
+				// because the Calendar interface is much nicer.
+				tempCal.setTime(tempDate);
 
+				boolean todayIsTheDay = false;
 
-			startCal.setTime(startDate);
+				//We check each type of schedule, and if it matches,
+				// we set todayIsTheDay to true.  We could do it 
+				// all in one huge if statement, but that is very
+				// hard to read and maintain.
 
-			System.out.println("Start Date: "+startCal.get(Calendar.MONTH));
-
-			//The EndDate of the transaction is been tested if the transaction is even valid anymore
-			if(s.getEndDate()!=null)
-			{
-				//The transaction is scheduled for a date before today and before the EndDate 
-				while (tempDate.before(today) && tempDate.before(s.getEndDate())) 
-				{
-					if (Const.DEVEL)
-						Log.debug("Trying date " + tempDate);
-					tempCal.setTime(tempDate);
-					// If multiple weeks in a day has been selected, The weeks are set and unset according to the 
-					// selection
-					int tempscheduleweek = s.getScheduleWeek();
-					int isFirstWeekSet = 0, isSecondWeekSet = 0, isThirdWeekSet = 0, isFourthWeekSet = 0;
-					isFirstWeekSet = tempscheduleweek % 2;
-					isSecondWeekSet = (tempscheduleweek / 2) % 2;
-					isThirdWeekSet = (tempscheduleweek / 4) % 2;
-					isFourthWeekSet = (tempscheduleweek / 8) % 2;
-
-					//To find the gaps of multiple months between the transaction
-					//the start dates and the current dates data were extracted
-					int current_date_year = tempCal.get(Calendar.YEAR);
-					int start_date_year = startCal.get(Calendar.YEAR);
-					int current_date_month = tempCal.get(Calendar.MONTH);
-					int start_date_month = startCal.get(Calendar.MONTH);
-
-					int year_offset, month_offset;
-					//The year offset and month offset were calculated to determine 
-					//the monthly difference between the current dates and start of
-					//scheduled transaction
-					year_offset = current_date_year - start_date_year;
-
-					month_offset = 12 * (year_offset - 1) + 12
-					- (start_date_month - current_date_month);
-					//////////////////////////////////////////////
-					System.out.println("Years: " + "curr: " + current_date_year
-							+ "year offset: " + year_offset + "month offset:"
-							+ month_offset);
-					System.out.println("strmon: " + start_date_month
-							+ "curr mon: " + current_date_month
-							+ "get sch month: " + s.getScheduleMonth());
-					System.out.println("bits set are" + isFirstWeekSet + " "
-							+ isSecondWeekSet + " " + isThirdWeekSet + " "
-							+ isFourthWeekSet);
-					//tempCal.get(Calendar.MONTH)
-					System.out.println("DEKH "+s.getScheduleDay()+" "+tempCal.get(Calendar.DAY_OF_WEEK)+" month date:"+tempCal.get(Calendar.DAY_OF_MONTH));
-
-					/*
-					 *Checks : Frequency type = Week then check the day if matching with the scheduled day
-					 *		   Frequency type = Month then check for date if matching with the scheduled date
-					 *         Frequency type = Day of a month then check for day if matching with the scheduled day
-					 *		   Frequency type = Every Weekday then check if the day is not a sunday or a saturday
-					 *		   Frequency type = Multiple Weeks every Month then check for the day as well as the week in the month 
-					 *							when it is scheduled
-					 *		   Frequency type = Multiple Months every year then check if the transaction is scheduled 
-					 *							for the month and the date
-					 */
-
-					if ((s.getFrequencyType().equals(TranslateKeys.WEEK.toString())
-							&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK))
-							|| (s.getFrequencyType().equals(TranslateKeys.MONTH.toString())
-									&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_MONTH))
-									|| (s.getFrequencyType().equals(TranslateKeys.DAY_MONTH.toString())
-											&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
-											&& tempCal.get(Calendar.DAY_OF_MONTH) <= 7)
-											||(s.getFrequencyType().equals(TranslateKeys.EVERY_WEEKDAY.toString())
-													&& (tempCal.get(Calendar.DAY_OF_WEEK) < 7)
-													&& (tempCal.get(Calendar.DAY_OF_WEEK) > 1))
-													||(s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())
-															&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
-															&& (((isFirstWeekSet==1)&&(tempCal.get(Calendar.DAY_OF_MONTH) <= 7))
-																	||((isSecondWeekSet==1)&&(tempCal.get(Calendar.DAY_OF_MONTH) > 7)&&(tempCal.get(Calendar.DAY_OF_MONTH) <=14))
-																	||((isThirdWeekSet==1)&&(tempCal.get(Calendar.DAY_OF_MONTH) >14)&&(tempCal.get(Calendar.DAY_OF_MONTH) <=21))
-																	||((isFourthWeekSet==1)&&(tempCal.get(Calendar.DAY_OF_MONTH) >21)&&(tempCal.get(Calendar.DAY_OF_MONTH) <=28))))
-																	||(s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())
-																			&&(month_offset%s.getScheduleMonth()==0)
-																			&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_MONTH) 
-																	)){ 
-
-						Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-
-						t.setDate(tempDate);
-						t.setDescription(s.getDescription());
-						t.setAmount(s.getAmount());
-						t.setTo(s.getTo());
-						t.setFrom(s.getFrom());
-						t.setMemo(s.getMemo());
-						t.setNumber(s.getNumber());
-						t.setScheduled(true);
-
-						//						if (s.getLastDateCreated() == null 
-						//						|| s.getLastDateCreated().before(DateUtil.getStartOfDay(DateUtil.getNextDay(tempDate)))){
-						s.setLastDateCreated(DateUtil.getStartOfDay(DateUtil.getNextDay(tempDate)));
-						//						DataInstance.getInstance().saveDataModel();
-						//						}
-
-						DataInstance.getInstance().addTransaction(t);
-						if (Const.DEVEL) Log.debug("Added scheduled transaction " + t);
-					}
-
-					tempDate = DateUtil.getNextDay(tempDate);
+				//If we are using the Monthly by Date frequency, 
+				// we only check if the given day is equal to the
+				// scheduled day.
+				if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					todayIsTheDay = true;
 				}
+				//If we are using the Monthly by Day of Week,
+				// we check if the given day (Sunday, Monday, etc) is equal to the
+				// scheduleDay, and if the given day is within the first week.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						&& tempCal.get(Calendar.DAY_OF_MONTH) <= 7){
+					todayIsTheDay = true;
+				}
+				//If we are using Weekly frequency, we only need to compare
+				// the number of the day.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					todayIsTheDay = true;
+				}
+				//Every day - it's obvious enough even for a monkey!
+				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_DAY.toString())){
+					todayIsTheDay = true;
+				}
+				//Every weekday - all days but Saturday and Sunday.
+				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_WEEKDAY.toString())
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) < Calendar.SATURDAY)
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) > Calendar.SUNDAY)){
+					todayIsTheDay = true;
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do out bit bashing to determine
+				// if the week is correct.
+				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					int week = s.getScheduleWeek();
+					//The week mask should return 1 for the first week (day 1 - 7), 
+					// 2 for the second week (day 8 - 14), 4 for the third week (day 15 - 21),
+					// and 8 for the fourth week (day 22 - 28).  We then AND it with 
+					// the scheduleWeek to determine if this week matches the criteria
+					// or not.  
+					int weekMask = 2 ^ ((tempCal.get(Calendar.DAY_OF_MONTH) + 1) / 7) + 1;
+					if ((week & weekMask) != 0){
+						todayIsTheDay = true;
+					}
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do out bit bashing to determine
+				// if the month is correct.
+				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					int months = s.getScheduleMonth();
+					//The month mask should be 2 ^ MONTH NUMBER,
+					// where January == 0.
+					// i.e. 1 for January, 4 for March, 2048 for December.
+					int monthMask = 2 ^ tempCal.get(Calendar.MONTH);
+					if ((months & monthMask) != 0){
+						todayIsTheDay = true;
+					}
+				}
+
+				//If one of the above rules matches, we will copy the
+				// scheduled transaction into the transactions list
+				// at the given day.
+				if (todayIsTheDay){
+					Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+
+					t.setDate(tempDate);
+					t.setDescription(s.getDescription());
+					t.setAmount(s.getAmount());
+					t.setTo(s.getTo());
+					t.setFrom(s.getFrom());
+					t.setMemo(s.getMemo());
+					t.setNumber(s.getNumber());
+					t.setScheduled(true);
+
+					s.setLastDateCreated(DateUtil.getEndOfDay(tempDate));
+
+					DataInstance.getInstance().addTransaction(t);
+					if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+				}
+
+				tempDate = DateUtil.getNextDay(tempDate);
 			}
 		}
 	}
