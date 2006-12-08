@@ -343,9 +343,13 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 
 			tempDate = DateUtil.getStartOfDay(tempDate);
-
+			if (Const.DEVEL){
+				Log.debug("tempDate = " + tempDate);
+				Log.debug("startDate = " + s.getStartDate());
+			}
+			
 			//The transaction is scheduled for a date before today and before the EndDate 
-			while (tempDate.before(today) && tempDate.before(s.getEndDate())) {
+			while (tempDate.before(today)) {
 				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
 				
 				//We use a Calendar instead of a Date object for comparisons
@@ -400,14 +404,23 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				// if the week is correct.
 				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					if (Const.DEVEL) {
+						Log.debug("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
+						Log.debug("s.getScheduleWeek() == " + s.getScheduleWeek());
+					}
 					int week = s.getScheduleWeek();
 					//The week mask should return 1 for the first week (day 1 - 7), 
 					// 2 for the second week (day 8 - 14), 4 for the third week (day 15 - 21),
 					// and 8 for the fourth week (day 22 - 28).  We then AND it with 
 					// the scheduleWeek to determine if this week matches the criteria
-					// or not.  
-					int weekMask = 2 ^ ((tempCal.get(Calendar.DAY_OF_MONTH) + 1) / 7) + 1;
+					// or not.
+					int weekNumber = tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1;
+					int weekMask = (int) Math.pow(2, weekNumber);
+					if (Const.DEVEL){
+						Log.debug("The week number is " + weekNumber + ", the week mask is " + weekMask + ", and the day of week in month is " + tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+					}
 					if ((week & weekMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
 						todayIsTheDay = true;
 					}
 				}
@@ -421,8 +434,9 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 					//The month mask should be 2 ^ MONTH NUMBER,
 					// where January == 0.
 					// i.e. 1 for January, 4 for March, 2048 for December.
-					int monthMask = 2 ^ tempCal.get(Calendar.MONTH);
+					int monthMask = (int) Math.pow(2, tempCal.get(Calendar.MONTH));
 					if ((months & monthMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
 						todayIsTheDay = true;
 					}
 				}

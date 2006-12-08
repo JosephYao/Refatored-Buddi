@@ -403,6 +403,11 @@ public class EditableTransaction extends JPanel {
 								to.setSelectedItem(null);
 							}
 						}
+						else if (from.getSelectedItem() != null
+								&& to.getSelectedItem() != null
+								&& from.getSelectedItem().equals(to.getSelectedItem())){
+							to.setSelectedItem(null);
+						}
 					}
 				}
 			}
@@ -428,6 +433,11 @@ public class EditableTransaction extends JPanel {
 							if (from.getSelectedItem() instanceof Category){
 								from.setSelectedItem(null);
 							}
+						}
+						else if (from.getSelectedItem() != null
+								&& to.getSelectedItem() != null
+								&& from.getSelectedItem().equals(to.getSelectedItem())){
+							from.setSelectedItem(null);
 						}
 					}
 

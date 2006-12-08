@@ -50,8 +50,8 @@ import edu.stanford.ejalbert.BrowserLauncher;
  * this class gives us some nicer features (such as auto disabling
  * of parent menus if all children are disabled, frameless menus for
  * better Macintosh menu behaviour, etc).  This is a pretty ugly class
- * (it only contains one huge method), but at least it is layed out
- * quite logically.  
+ * (it only contains one huge method), but at least it is laid out
+ * relatively logically.  
  * <p>
  * We start with initializing the menus, including titles and shortcuts;
  * we then add them to the correct menus, and finally create the action
@@ -297,9 +297,9 @@ public class BuddiMenu extends JScreenMenuBar {
 								Translate.getInstance().get(TranslateKeys.CLOSE_DATA_FILE),
 								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
-							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile(), false);
 							PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
 							PrefsInstance.getInstance().savePrefs();
+							DataInstance.getInstance().loadDataModel(jfc.getSelectedFile(), false);
 							MainBuddiFrame.getInstance().updateContent();
 							JOptionPane.showMessageDialog(
 									null, 

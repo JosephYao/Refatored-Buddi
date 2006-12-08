@@ -7,8 +7,6 @@ import java.awt.Color;
 
 import javax.swing.JList;
 
-import org.homeunix.drummer.controller.TranslateKeys;
-
 
 /**
  * A container for constants, used throughout the rest of the program.
@@ -18,7 +16,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
  */
 public class Const {
 	//Version variables
-	public static final String VERSION = "2.1.2";
+	public static final String VERSION = "2.1.3";
 	public static final String STABLE = "STABLE";
 	public static final String UNSTABLE = "UNSTABLE";
 	public static final String BRANCH = UNSTABLE;
@@ -106,15 +104,15 @@ public class Const {
 	};
 	
 	//The days in the week.  Used in Scheduled Transactions.
-	public final static TranslateKeys[] DAYS_IN_WEEK = {
-		TranslateKeys.SUNDAY,
-		TranslateKeys.MONDAY,
-		TranslateKeys.TUESDAY,
-		TranslateKeys.WEDNESDAY,
-		TranslateKeys.THURSDAY,
-		TranslateKeys.FRIDAY,
-		TranslateKeys.SATURDAY
-	};
+//	public final static TranslateKeys[] DAYS_IN_WEEK = {
+//		TranslateKeys.SUNDAY,
+//		TranslateKeys.MONDAY,
+//		TranslateKeys.TUESDAY,
+//		TranslateKeys.WEDNESDAY,
+//		TranslateKeys.THURSDAY,
+//		TranslateKeys.FRIDAY,
+//		TranslateKeys.SATURDAY
+//	};
 	
 	//	added by Nicky .. FOR DAY_MONTH Used in Scheduled Transactions.
 //	public final static TranslateKeys[] FIRST_DAYS = {

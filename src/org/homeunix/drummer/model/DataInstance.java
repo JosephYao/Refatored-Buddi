@@ -166,10 +166,12 @@ public class DataInstance {
 			for (Schedule s : getScheduledTransactions()) {
 				if (s.getFrequencyType().equals("WEEK")){
 					s.setFrequencyType(TranslateKeys.WEEKLY.toString());
+					Log.notice("Changing schedule frequency from WEEK to " + TranslateKeys.WEEKLY + " for " + s.getScheduleName());
 					saveDataModel();
 				}
 				if (s.getFrequencyType().equals("MONTH")){
 					s.setFrequencyType(TranslateKeys.MONTHLY_BY_DATE.toString());
+					Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.MONTHLY_BY_DATE + " for " + s.getScheduleName());
 					saveDataModel();
 				}
 			}

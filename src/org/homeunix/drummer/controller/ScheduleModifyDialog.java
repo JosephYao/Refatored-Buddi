@@ -72,6 +72,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 									JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 						ScheduleModifyDialog.this.saveSchedule();
 						MainBuddiFrame.getInstance().updateScheduledTransactions();
+						MainBuddiFrame.getInstance().updateContent();
 						TransactionsFrame.updateAllTransactionWindows();
 						ScheduleModifyDialog.this.setVisible(false);
 						ScheduleModifyDialog.this.dispose();
