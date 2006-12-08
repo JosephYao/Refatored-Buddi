@@ -65,7 +65,6 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(doneButton);
@@ -79,6 +78,7 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 		this.getRootPane().setDefaultButton(doneButton);
 		
 		if (Buddi.isMac()){
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}

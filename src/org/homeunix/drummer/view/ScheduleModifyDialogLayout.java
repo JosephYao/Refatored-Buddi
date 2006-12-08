@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -315,8 +316,7 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		transactionPanel.add(transaction, BorderLayout.NORTH);
 		
 		JPanel textPanelSpacer = new JPanel(new BorderLayout());
-		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-
+		
 		textPanelSpacer.add(namePanel, BorderLayout.NORTH);
 		textPanelSpacer.add(transactionPanel, BorderLayout.CENTER);
 		textPanelSpacer.add(schedulePanel, BorderLayout.SOUTH);
@@ -333,11 +333,15 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 
 		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+		if (Buddi.isMac()){
+			textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
+			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
+		}
+		
 		this.setLayout(new BorderLayout());
 		this.setResizable(true);
 		this.setTitle(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTION));
