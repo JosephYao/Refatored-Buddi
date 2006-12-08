@@ -71,7 +71,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 				"", //Domain axis label
 				"", //Range axis label
 				barData,             // data
-				PlotOrientation.VERTICAL,
+				PlotOrientation.HORIZONTAL,
 				true,               // include legend
 				true,
 				false
