@@ -175,6 +175,17 @@ public class DataInstance {
 					Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.MONTHLY_BY_DATE + " for " + s.getScheduleName());
 					saveDataModel();
 				}
+				//This check is for those who have been following the Dev
+				// branch.  When you ran 2.1.3, it upgraded from MONTH
+				// to MONTHLY_BY_DATE, but it did not convert the date
+				// to the new format.  This means that if you had the date
+				// set to 1, it would try to set it to 0, which would not
+				// work.  This check will fix it.
+				if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString())){
+					if (s.getScheduleDay() == 0)
+						s.setScheduleDay(1);
+					saveDataModel();
+				}
 			}
 
 			//Save the location to the prefs file, in case we changed it.
