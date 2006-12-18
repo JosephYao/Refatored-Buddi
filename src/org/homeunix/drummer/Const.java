@@ -15,10 +15,11 @@ import javax.swing.JList;
  *
  */
 public class Const {
-	//Version variables
-	public static final String VERSION = "2.1.3";
 	public static final String STABLE = "STABLE";
 	public static final String UNSTABLE = "UNSTABLE";
+	
+	//Version variables
+	public static final String VERSION = "2.1.4";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -102,29 +103,6 @@ public class Const {
 		"\u20b1",  //Peso
 		"\u20aa"  //Israel Sheqel
 	};
-	
-	//The days in the week.  Used in Scheduled Transactions.
-//	public final static TranslateKeys[] DAYS_IN_WEEK = {
-//		TranslateKeys.SUNDAY,
-//		TranslateKeys.MONDAY,
-//		TranslateKeys.TUESDAY,
-//		TranslateKeys.WEDNESDAY,
-//		TranslateKeys.THURSDAY,
-//		TranslateKeys.FRIDAY,
-//		TranslateKeys.SATURDAY
-//	};
-	
-	//	added by Nicky .. FOR DAY_MONTH Used in Scheduled Transactions.
-//	public final static TranslateKeys[] FIRST_DAYS = {
-//		TranslateKeys.FIRST_SUNDAY,
-//		TranslateKeys.FIRST_MONDAY,
-//		TranslateKeys.FIRST_TUESDAY,
-//		TranslateKeys.FIRST_WEDNESDAY,
-//		TranslateKeys.FIRST_THURSDAY,
-//		TranslateKeys.FIRST_FRIDAY,
-//		TranslateKeys.FIRST_SATURDAY
-//	};
-
 
 	//The plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_PLUGINS = {
