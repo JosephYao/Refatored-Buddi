@@ -1,3 +1,7 @@
+2.1.4 (December 17 2006)
+-Fixed bug when loading existing scheduled transactions
+-Fixed bug which cut off text from Actual / Budgeted graph
+
 2.1.3 (December 7 2006)
 -Added the Scheduled Transactions NCSU project, with some GUI / code cleanup changes.  Now there are 7 frequency options: Monthly by Date (every month on a particular date, e.g. 1st), Monthly by Day of Week (every month on the first, e.g., Saturday of the month), Weekly (every week on, e.g., Wednesday), Every Day, Every Weekday, Multiple weeks every month, and Multiple Months every year.  This should cover most people's needs; if there are some that I have missed, the code is now clean enough that it would not be too difficult to add more.
 

@@ -134,7 +134,8 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		DefaultListCellRenderer pulldownTranslator = new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
-				this.setText(Translate.getInstance().get(obj.toString()));				
+				if (obj != null)
+					this.setText(Translate.getInstance().get(obj.toString()));				
 				return this;
 			}
 		};
@@ -297,7 +298,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			updateSchedulePulldown();
 
 			//Load the changeable fields, including Transaction
-			scheduleName.setText(s.getScheduleName());
+			scheduleName.setValue(s.getScheduleName());
 			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
 			t.setAmount(s.getAmount());
 			t.setDescription(s.getDescription());
@@ -308,14 +309,20 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			if (Const.DEVEL) Log.debug("Transaction to load: " + t);
 			transaction.setTransaction(t, true);
 			
-			//Load the schedule pulldowns
+			//Load the schedule pulldowns, based on which type of 
+			// schedule we're following.
 			startDateChooser.setDate(s.getStartDate());
 			frequencyPulldown.setSelectedItem(s.getFrequencyType());
-			monthlyDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
-			monthlyFirstDayChooser.setSelectedIndex(s.getScheduleDay());
-			weeklyDayChooser.setSelectedIndex(s.getScheduleDay());
-			multipleWeeksDayChooser.setSelectedIndex(s.getScheduleDay());
-			multipleMonthsDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
+			if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString()))
+				monthlyDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
+			if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString()))			
+				monthlyFirstDayChooser.setSelectedIndex(s.getScheduleDay());
+			if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString()))
+				weeklyDayChooser.setSelectedIndex(s.getScheduleDay());
+			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString()))
+				multipleWeeksDayChooser.setSelectedIndex(s.getScheduleDay());
+			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString()))
+				multipleMonthsDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
 			
 			//Load the checkmarks, using bit bashing logic
 			multipleWeeksMonthlyFirstWeek.setSelected((s.getScheduleWeek() & 1) != 0);
@@ -346,9 +353,9 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 	private Integer getScheduleDay(){
 		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MONTHLY_BY_DATE.toString())){
-			//To make it nicer to read in the data file, as well
-			// as backwards compatible, we add 1 to the index.
-			// Don't forget to subtract one when we load it!
+			//To make it nicer to read in the data file, 
+			// we add 1 to the index.  Don't forget to 
+			// subtract one when we load it!
 			return monthlyDateChooser.getSelectedIndex() + 1;
 		}
 		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString())){

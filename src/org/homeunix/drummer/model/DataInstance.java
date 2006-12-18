@@ -171,6 +171,7 @@ public class DataInstance {
 				}
 				if (s.getFrequencyType().equals("MONTH")){
 					s.setFrequencyType(TranslateKeys.MONTHLY_BY_DATE.toString());
+					s.setScheduleDay(s.getScheduleDay() + 1); //Before, we had the first of the month represented by 0.  Now it is 1.
 					Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.MONTHLY_BY_DATE + " for " + s.getScheduleName());
 					saveDataModel();
 				}
