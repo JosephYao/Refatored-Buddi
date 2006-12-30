@@ -83,12 +83,12 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		JPanel textPanel = new JPanel(new GridLayout(0, 2));
 		textPanel.add(nameLabel);
 		textPanel.add(name);
-		if (!(this instanceof TypeModifyDialog)){
+		if (!this.getClass().equals(TypeModifyDialog.class)){
 			textPanel.add(pulldownLabel);
 			textPanel.add(pulldown);
 			textPanel.add(amountLabel);
 			textPanel.add(amount);
-			if (this instanceof AccountModifyDialog){
+			if (this.getClass().equals(AccountModifyDialog.class)){
 				if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit()){
 					textPanel.add(creditLimitLabel);
 					textPanel.add(creditLimit);
@@ -99,7 +99,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 				}
 			}
 		}
-		if (!(this instanceof AccountModifyDialog)){
+		if (!this.getClass().equals(AccountModifyDialog.class)){
 			textPanel.add(gap);
 			textPanel.add(check);
 		}
