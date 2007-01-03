@@ -40,7 +40,7 @@ free to use it, share it, change it, and do just about anything you want
 with it as long as you keep this notice and keep the derivative works 
 licensed under the GPL as well.
 
-If you like this software, please consider donating via the like on 
+If you like this software, please consider donating via the link on 
 the main Buddi homepage (http://buddi.sourceforge.net).  I develop, 
 support, and maintain Buddi in my spare time, and greatly appreciate all 
 support that I recieve.

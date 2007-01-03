@@ -157,6 +157,15 @@ p, ul {
 	padding-top: 0.3cm;
 }
 
+/* Code segments */
+.code {
+        font-family: Monospace;
+        font-size: medium;
+        color: #333
+	background-color: #ccc;
+	text-align: left;
+}
+
 /* Color links nicely */
 .sidebar a:link, .sidebar a:visited, .sidebar a:active {
 	color: #022346;
