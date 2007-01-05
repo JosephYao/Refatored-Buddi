@@ -26,6 +26,7 @@ Special thanks go out to the people who helped in the creation of Buddi.  These 
 <li><a href='http://launch4j.sourceforge.net/'>launch4J</a>: Program to convert .jar to .exe, and add cool features (such as helping download Java)</li>
 <li><a href='http://www.eclipse.org/'>Eclipse</a> and <a href='http://www.eclipse.org/emf/'>Eclipse EMF</a></li>
 <li><a href='http://sourceforge.net/'>Sourceforge.net</a>: Hosting for many open source Unix applications</li>
+<li>YourKit <a href="http://www.yourkit.com">Java Profiler</a> for providing a free license for OSS developers</li>
 </ul>
 
 <p>
