@@ -206,7 +206,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	}
 
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.INCOME_AND_EXPENSES_BY_DESCRIPTION_TITLE);
 	}
 
 	public String getDescription() {

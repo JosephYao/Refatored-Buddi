@@ -58,7 +58,7 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.NET_WORTH_BREAKDOWN_TITLE);
 	}
 	
 	private Map<Account, Long> getAccountBalance(Date date){

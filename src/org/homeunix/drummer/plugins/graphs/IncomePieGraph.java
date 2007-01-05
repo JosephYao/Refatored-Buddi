@@ -73,7 +73,7 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.INCOME_PIE_GRAPH_TITLE);
 	}
 	
 	private Map<Category, Long> getIncomeBetween(Date startDate, Date endDate){

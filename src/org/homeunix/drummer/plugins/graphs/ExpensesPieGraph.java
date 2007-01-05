@@ -72,7 +72,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.EXPENSE_PIE_GRAPH_TITLE);
 	}
 	
 	private Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){

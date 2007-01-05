@@ -85,7 +85,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.NET_WORTH_OVER_TIME_GRAPH_TITLE);
 	}
 	
 	private Map<Account, Long> getAccountBalance(Date date){

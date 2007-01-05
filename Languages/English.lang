@@ -1,4 +1,15 @@
 #Sat Nov 04 09:34:38 MST 2006
+NET_WORTH_OVER_TIME_GRAPH_TITLE=Net Worth Over Time
+NET_WORTH_BREAKDOWN_TITLE=Net Worth Breakdown as of Date
+ACTUAL_VS_BUDGETED_EXPENSES_TITLE=Actual vs. Budgeted Expenses
+EXPENSE_PIE_GRAPH_TITLE=Expense Breakdown
+INCOME_PIE_GRAPH_TITLE=Income Breakdown
+INCOME_AND_EXPENSES_BY_DESCRIPTION_TITLE=Income and Expenses by Description
+INCOME_AND_EXPENSES_BY_CATEGORY_TITLE=Income and Expenses by Category
+CANNOT_WRITE_DATA_FILE=Cannot write to the data file!\nPlease check the file permissions.\nExiting.
+CANNOT_READ_DATA_FILE=Cannot read the data file!\nPlease check the file permissions.\nExiting.
+CANNOT_WRITE_PREFS_FILE=Cannot write to the preferences file!\nPlease check the file permissions.\nExiting.
+CANNOT_READ_PREFS_FILE=Cannot read the preferences file!\nPlease check the file permissions.\nExiting.
 SCHEDULED_TRANSACTION_NAME=<Scheduled Transaction Name>
 FIRST=1st
 SECOND=2nd

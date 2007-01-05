@@ -1,3 +1,9 @@
+2.1.5 (January 4 2007)
+-Fixed bug which could result in data loss, if you did not have write permissions to the data file
+-Added Portuguese and Russian translations
+-Added title bar text to report / graph windows
+-Fixed bug which only showed the name of the account in the Transactions title bar, instead of the name and account type.
+
 2.1.4 (December 17 2006)
 -Fixed bug when loading existing scheduled transactions
 -Fixed bug which cut off text from Actual / Budgeted graph

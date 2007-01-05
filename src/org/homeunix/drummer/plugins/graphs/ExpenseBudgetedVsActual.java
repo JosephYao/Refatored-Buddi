@@ -84,7 +84,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return "";
+		return Translate.getInstance().get(TranslateKeys.ACTUAL_VS_BUDGETED_EXPENSES_TITLE);
 	}
 	
 	private Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){

@@ -66,6 +66,26 @@ public class DataInstance {
 
 		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
 			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+			
+			//Before we open the file, we check that we have read / write 
+			// permission to it.  This is in response to bug #1626996. 
+			if (!dataFile.canWrite()){
+				JOptionPane.showMessageDialog(
+						null,
+						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.ERROR),
+						JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
+			if (!dataFile.canRead()){
+				JOptionPane.showMessageDialog(
+						null,
+						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.ERROR),
+						JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
+			
 			if (dataFile.exists()) {
 				try{
 //					String backupFileLocation = 

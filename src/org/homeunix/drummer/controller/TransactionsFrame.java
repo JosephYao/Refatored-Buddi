@@ -417,7 +417,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 
 	protected AbstractFrame initContent(){
-		this.setTitle(account.getName() + " - " + Translate.getInstance().get(TranslateKeys.TRANSACTIONS));
+//		this.setTitle(account.toString() + " - " + Translate.getInstance().get(TranslateKeys.TRANSACTIONS));
 		list.setListData(DataInstance.getInstance().getTransactions(account));
 		editableTransaction.setTransaction(null, true);
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
@@ -86,7 +87,23 @@ public class PrefsInstance {
 			}
 		}
 		File locationFile = new File(location).getAbsoluteFile();
-		
+		if (!locationFile.canWrite()){
+			JOptionPane.showMessageDialog(
+					null,
+					Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_PREFS_FILE),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+		if (!locationFile.canRead()){
+			JOptionPane.showMessageDialog(
+					null,
+					Translate.getInstance().get(TranslateKeys.CANNOT_READ_PREFS_FILE),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+
 		try{
 			// Create a resource set.
 			resourceSet = new ResourceSetImpl();
@@ -352,7 +369,7 @@ public class PrefsInstance {
 		for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
 			if (o instanceof Plugin){
 				Plugin plugin = (Plugin) o;
-				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + workingDirectoryRegex, ""));
+				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + Buddi.getWorkingDir(), ""));
 			}
 		}
 		
