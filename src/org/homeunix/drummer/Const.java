@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.1.4";
+	public static final String VERSION = "2.1.5";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -59,7 +59,9 @@ public class Const {
 		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",
-		"Norsk"
+		"Norsk",
+		"Portugues_(BR)",
+		"Russian_(RU)"
 	};
 	
 	public final static String[] BUNDLED_DOCUMENTS = {
