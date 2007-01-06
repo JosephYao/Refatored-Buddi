@@ -4,8 +4,9 @@
 
 DEST=/Users/wyatt/Desktop/
 WWWDIR="${DEST}www"
-HELPDIR="Help/"
-INCLUDE="${HELPDIR}inc"
+HELPDIR="Help"
+INCLUDE="${HELPDIR}/inc"
+ENGLISH="${HELPDIR}/en"
 
 
 #Export the SVN source
@@ -13,11 +14,16 @@ rm -rf $WWWDIR
 svn export www $WWWDIR
 
 rm -rf $HELPDIR/*
-echo "cp -R $WWWDIR/* $HELPDIR"
 cp -R $WWWDIR/* $HELPDIR
 
+#Remove the Languages link, as we're not connected to the Internet anyway
+sed -i .bak -e '/.*Languages.*/d' $ENGLISH/inc/header.php
+
 #Replace internal occurrences (in the header) of .php with .html
-sed -i .bak  -e 's/.php/.html/' $INCLUDE/header.php
+sed -i .bak  -e 's/.php/.html/' $ENGLISH/inc/header.php
+
+#Remove language_bar and translate
+rm $HELPDIR/language_bar.php $HELPDIR/translate.php
 
 for X in `ls $HELPDIR/*/*.php`;
 	do
@@ -31,7 +37,7 @@ for X in `ls $HELPDIR/*/*.php`;
 	XNEW=`echo $X | cut -f 1 -d .`
 	
 	cat $INCLUDE/header.php | sed -e 's/.php/.html/' > $XNEW.html
-	cat $HELPDIR/inc/lang.php | sed -e 's/.php/.html/' >> $XNEW.html
+#	cat $HELPDIR/inc/lang.php | sed -e 's/.php/.html/' >> $XNEW.html
 	cat $X | grep -v '<? include ' >> $XNEW.html
 	cat $INCLUDE/footer.php | grep -v 'http://sourceforge.net' | sed -e 's/.php/.html/' >> $XNEW.html
 done

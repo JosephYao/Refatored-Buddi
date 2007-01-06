@@ -154,7 +154,7 @@ public class Buddi {
 		// USB drives, from remote shares (which would not always have
 		// the same path), etc.
 		workingDir = new File("").getAbsolutePath() + File.separator;
-		if (Const.DEVEL) Log.info("Set working directory to " + workingDir);
+		Log.notice("Set working directory to " + workingDir);
 
 		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
