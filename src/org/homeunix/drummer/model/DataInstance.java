@@ -69,7 +69,7 @@ public class DataInstance {
 			
 			//Before we open the file, we check that we have read / write 
 			// permission to it.  This is in response to bug #1626996. 
-			if (!dataFile.canWrite()){
+			if (!dataFile.canWrite() && dataFile.exists()){
 				JOptionPane.showMessageDialog(
 						null,
 						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
@@ -77,7 +77,7 @@ public class DataInstance {
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
-			if (!dataFile.canRead()){
+			if (!dataFile.canRead() && dataFile.exists()){
 				JOptionPane.showMessageDialog(
 						null,
 						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),

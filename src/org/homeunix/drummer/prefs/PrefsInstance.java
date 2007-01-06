@@ -87,7 +87,7 @@ public class PrefsInstance {
 			}
 		}
 		File locationFile = new File(location).getAbsoluteFile();
-		if (!locationFile.canWrite()){
+		if (!locationFile.canWrite() && locationFile.exists()){
 			JOptionPane.showMessageDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_PREFS_FILE),
@@ -95,7 +95,7 @@ public class PrefsInstance {
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
-		if (!locationFile.canRead()){
+		if (!locationFile.canRead() && locationFile.exists()){
 			JOptionPane.showMessageDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.CANNOT_READ_PREFS_FILE),

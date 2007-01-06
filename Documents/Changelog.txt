@@ -1,3 +1,6 @@
+2.1.6 (January 5 2007)
+-Fixed another bug which prevents new data files from being created.
+
 2.1.5 (January 4 2007)
 -Fixed bug which could result in data loss, if you did not have write permissions to the data file
 -Added Portuguese and Russian translations
