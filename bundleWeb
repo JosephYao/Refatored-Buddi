@@ -46,7 +46,6 @@ rm -f $HELPDIR/*/*.php
 rm -f $HELPDIR/*/*.bak
 rm -rf $HELPDIR/*/inc
 rm -rf $HELPDIR/inc
-rm -rf $HELPDIR/.svn
 rm -rf $HELPDIR/*/.svn
 rm -rf $HELPDIR/*/*/.svn
 
