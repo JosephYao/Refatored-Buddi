@@ -41,6 +41,10 @@ public class Const {
 	public final static String DOWNLOAD_URL_TGZ = ".tgz";
 	public final static String VERSION_FILE = "version.txt";
 	
+	//Local help paths
+	public final static String HELP_FOLDER = "Help";
+	public final static String HELP_FILE = "index.html";
+	
 	//Colors
 	public final static Color COLOR_SELECTED = new JList().getSelectionBackground();//new Color(181, 213, 255);
 	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);

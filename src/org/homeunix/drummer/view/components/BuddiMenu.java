@@ -504,17 +504,18 @@ public class BuddiMenu extends JScreenMenuBar {
 		showHelp.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-//					File localHelp = new File(
-//							Const.HELP_FOLDER 
-//							+ File.separator
+					File localHelp = new File(
+							Const.HELP_FOLDER 
+							+ File.separator
+							+ "en"	//Until I get more translations, I will keep it hardcoded to English 
 //							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
-//							+ File.separator
-//							+ Const.HELP_FILE);
-//					final String location;
-//					if (localHelp.exists())
-//						location = "file://" + localHelp.getAbsolutePath();
-//					else
-					final String location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
+							+ File.separator
+							+ Const.HELP_FILE);
+					final String location;
+					if (localHelp.exists())
+						location = "file://" + localHelp.getAbsolutePath();
+					else
+						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 
 					if (Const.DEVEL) Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher bl = new BrowserLauncher(null);
