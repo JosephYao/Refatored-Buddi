@@ -149,7 +149,7 @@ h1, h2, h3 {
 	font-size: medium;
 }
 
-p, ul {
+p, ul, ol {
 	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	font-size: medium;
 	text-align: justify;
