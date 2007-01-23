@@ -9,7 +9,7 @@ That depends on what operating system you are running.  If you are in Windows, s
 
 <h2>How can I password protect / encrypt my data?</h2>
 <p>
-Originally, I felt that this was the duty of the OS, and that Buddi would not implement this feature.  However, after discussing this at length with John Didion, he convinced me that application based encryption (when done properly) is a Good Thing.  He has graciously sent me a patch which performs this function (very elegantly, I may add) using an AES cipher.  This is included in the Development branch as of 1.7.3, and barring any problems, will appear in the 1.8 Stable branch.
+John Didion has graciously sent me a patch which performs this function (very elegantly, I may add) using an AES cipher.  As of now, it is included in both the Stable and Development branches.
 </p>
 <p>
 When using encryption, MAKE SURE you don't forget your password.  You CANNOT read your data file without it.
@@ -39,6 +39,12 @@ On old versions, this was caused when there are special characters included in t
 </p>
 <p>
 In newer versions, this should not happen at all.  If it happens to you, please contact me and let me know the details.
+</p>
+
+<h2>Can I use Buddi for commercial activities?</h2>
+<p>
+Sure thing!  Buddi is released under the GNU General Public License, which is completely compatible with being used in businesses.
+Of course, if you do make money from using Buddi, I would hope that you strongly consider sending me a donation.
 </p>
 
 <h2>Why doesn't Buddi do X?  I want it to do X!</h2>

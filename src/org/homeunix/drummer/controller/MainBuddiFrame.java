@@ -201,9 +201,39 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 						versions.load(mostRecentVersion.openStream());
 
-						if (Const.VERSION.compareTo(versions.get(Const.BRANCH).toString()) < 0){
+						int majorAvailable = 0, minorAvailable = 0, bugfixAvailable = 0;
+						int majorThis = 0, minorThis = 0, bugfixThis = 0;
+						
+						String[] available = versions.get(Const.BRANCH).toString().split("\\.");
+						String[] thisVersion = Const.VERSION.split("\\.");
+
+						if (available.length > 2){
+							majorAvailable = Integer.parseInt(available[0]);
+							minorAvailable = Integer.parseInt(available[1]);
+							bugfixAvailable = Integer.parseInt(available[2]);
+						}
+
+						if (thisVersion.length > 2){
+							majorThis = Integer.parseInt(thisVersion[0]);
+							minorThis = Integer.parseInt(thisVersion[1]);
+							bugfixThis = Integer.parseInt(thisVersion[2]);
+						}
+						
+						Log.debug("This version: " + majorThis + "." + minorThis + "." + bugfixThis);
+						Log.debug("Available version: " + majorAvailable + "." + minorAvailable + "." + bugfixAvailable);
+						
+						if (majorAvailable > majorThis
+								|| (majorAvailable == majorThis && minorAvailable > minorThis)
+								|| (majorAvailable == majorThis && minorAvailable == minorThis && bugfixAvailable > bugfixThis)){
 							return versions.get(Const.BRANCH);
 						}
+						
+						//The old way of checking versions.  This was just
+						// a string compare, so if any of the version numbers 
+						// were greater than 9, then it would not work properly. 
+//						if (Const.VERSION.compareTo(versions.get(Const.BRANCH).toString()) < 0){
+//							return versions.get(Const.BRANCH);
+//						}
 					}
 					catch (MalformedURLException mue){
 						Log.error(mue);
@@ -334,7 +364,9 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		for (Schedule s : DataInstance.getInstance().getScheduledTransactionsBeforeToday()) {
 			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
 
-			Date tempDate = s.getLastDateCreated();
+			//We start one day after the last day, to avoid repeats.  See 
+			// bug #1641937 for more details.
+			Date tempDate = DateUtil.getNextDay(s.getLastDateCreated());
 
 			//Temp date is where we will start looping from.  If it is
 			// null, we need to init it to a sane value.

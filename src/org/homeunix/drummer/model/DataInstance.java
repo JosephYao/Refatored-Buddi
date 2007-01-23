@@ -68,34 +68,7 @@ public class DataInstance {
 		File dataFile = null;
 
 		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
-			final JFileChooser jfc = new JFileChooser();
-			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setFileHidingEnabled(true);
-			jfc.setFileFilter(new FileFilter(){
-				public boolean accept(File arg0) {
-					if (arg0.isDirectory() 
-							|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
-						return true;
-					else
-						return false;
-				}
-
-				public String getDescription() {
-					return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
-				}
-			});
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
-			if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-				if (jfc.getSelectedFile().isDirectory()){
-					if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
-				}
-				else{
-					if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
-					PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
-					PrefsInstance.getInstance().savePrefs();
-				}
-			}
+			promptForNewDataFile();
 		}
 
 		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
@@ -103,21 +76,23 @@ public class DataInstance {
 
 			//Before we open the file, we check that we have read / write 
 			// permission to it.  This is in response to bug #1626996. 
-			if (!dataFile.canWrite() && dataFile.exists()){
+			while (!dataFile.canWrite() && dataFile.exists()){
 				JOptionPane.showMessageDialog(
 						null,
 						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
 						Translate.getInstance().get(TranslateKeys.ERROR),
 						JOptionPane.ERROR_MESSAGE);
-				System.exit(1);
+				promptForNewDataFile();
+				dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			}
-			if (!dataFile.canRead() && dataFile.exists()){
+			while (!dataFile.canRead() && dataFile.exists()){
 				JOptionPane.showMessageDialog(
 						null,
 						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
 						Translate.getInstance().get(TranslateKeys.ERROR),
 						JOptionPane.ERROR_MESSAGE);
-				System.exit(1);
+				promptForNewDataFile();
+				dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			}
 
 			if (dataFile.exists()) {
@@ -674,5 +649,40 @@ public class DataInstance {
 		}
 
 		return newV;
+	}
+	
+	private void promptForNewDataFile(){
+		final JFileChooser jfc = new JFileChooser();
+		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+		jfc.setFileHidingEnabled(true);
+		jfc.setFileFilter(new FileFilter(){
+			public boolean accept(File arg0) {
+				if (arg0.isDirectory() 
+						|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
+					return true;
+				else
+					return false;
+			}
+
+			public String getDescription() {
+				return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+			}
+		});
+		jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
+		if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+			if (jfc.getSelectedFile().isDirectory()){
+				if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+			}
+			else{
+				if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
+				PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
+				PrefsInstance.getInstance().savePrefs();
+			}
+		}
+		else {
+			Log.warning("You clicked cancel.  Exiting.");
+			System.exit(1);
+		}
 	}
 }

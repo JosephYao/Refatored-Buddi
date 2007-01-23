@@ -1,3 +1,6 @@
+2.1.8
+-Added option to open a new file in the event that you don't have read / write permission to the default data file
+
 2.1.7 (January 22 2007)
 -Added new Norsk.lang to reflect new additions to Buddi
 -Fixed bug which prevented manual file backup
