@@ -72,6 +72,7 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 				prefs.setShowInterestRate(showInterestRate.isSelected());
 				prefs.setEnableUpdateNotifications(enableUpdateNotifications.isSelected());
 				prefs.setShowAdvanced(showClearReconcile.isSelected());
+				prefs.setPromptForFileAtStartup(promptForDataFile.isSelected());
 
 				prefs.getLists().getPlugins().clear();
 				for (int i = 0; i < pluginList.getModel().getSize(); i++) {
@@ -189,6 +190,38 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 				}
 			}
 		});
+		
+		otherCurrencyButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				String newCurrency = JOptionPane.showInputDialog(
+						PreferencesDialog.this, 
+						Translate.getInstance().get(TranslateKeys.ENTER_CURRENCY_SYMBOL), 
+						Translate.getInstance().get(TranslateKeys.ENTER_CURRENCY_SYMBOL_TITLE), 
+						JOptionPane.PLAIN_MESSAGE);
+				
+				if (newCurrency != null && newCurrency.length() > 0){
+					currencyModel.removeAllElements();
+					
+					//Set up currency lists
+					boolean customCurrency = true; //Assume custom until proved otherwise, below
+					for (String s : Const.CURRENCY_FORMATS) {
+						currencyModel.addElement(s);
+						if (s.equals(newCurrency)){
+							customCurrency = false;
+							Log.debug("Currency " + newCurrency + " already in list...");
+						}
+					}
+					if (customCurrency){
+						currencyModel.addElement(newCurrency);
+					}
+					
+					currencyFormat.setSelectedItem(newCurrency);
+				}
+				else {
+					Log.debug("Invalid currency: '" + newCurrency + "'");
+				}
+			}
+		});
 
 		return this;
 	}
@@ -216,7 +249,8 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 		budgetInterval.setSelectedItem(PrefsInstance.getInstance().getSelectedInterval());
 		numberOfBackups.setSelectedItem(prefs.getNumberOfBackups());
 		enableUpdateNotifications.setSelected(prefs.isEnableUpdateNotifications());
-
+		promptForDataFile.setSelected(prefs.isPromptForFileAtStartup());
+		
 		pluginListModel.clear();
 		for (Object o : PrefsInstance.getInstance().getPrefs().getLists().getPlugins()) {
 			Plugin plugin = (Plugin) o;

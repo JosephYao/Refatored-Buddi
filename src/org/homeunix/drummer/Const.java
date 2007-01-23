@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.1.6";
+	public static final String VERSION = "2.1.7";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -107,7 +107,8 @@ public class Const {
 		"Bs", //Venezuela
 		"S/.", //Peru
 		"\u20b1",  //Peso
-		"\u20aa"  //Israel Sheqel
+		"\u20aa",  //Israel Sheqel
+		"Kc"	//Something else; requested by a user
 	};
 
 	//The plugins which are included in the main Buddi jar.

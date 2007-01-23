@@ -26,26 +26,16 @@ import org.homeunix.drummer.prefs.Windows;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getMainWindow <em>Main Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getTransactionsWindow <em>Transactions Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.WindowsImpl#getReportsWindow <em>Reports Window</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class WindowsImpl extends EObjectImpl implements Windows {
-	/**
-	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGraphsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes graphsWindow = null;
-
 	/**
 	 * The cached value of the '{@link #getMainWindow() <em>Main Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -57,16 +47,6 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	protected WindowAttributes mainWindow = null;
 
 	/**
-	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReportsWindow()
-	 * @generated
-	 * @ordered
-	 */
-	protected WindowAttributes reportsWindow = null;
-
-	/**
 	 * The cached value of the '{@link #getTransactionsWindow() <em>Transactions Window</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -75,6 +55,26 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 * @ordered
 	 */
 	protected WindowAttributes transactionsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getGraphsWindow() <em>Graphs Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGraphsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes graphsWindow = null;
+
+	/**
+	 * The cached value of the '{@link #getReportsWindow() <em>Reports Window</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReportsWindow()
+	 * @generated
+	 * @ordered
+	 */
+	protected WindowAttributes reportsWindow = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -273,14 +273,14 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
-				return basicSetGraphsWindow(null, msgs);
 			case PrefsPackage.WINDOWS__MAIN_WINDOW:
 				return basicSetMainWindow(null, msgs);
-			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
-				return basicSetReportsWindow(null, msgs);
 			case PrefsPackage.WINDOWS__TRANSACTIONS_WINDOW:
 				return basicSetTransactionsWindow(null, msgs);
+			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
+				return basicSetGraphsWindow(null, msgs);
+			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
+				return basicSetReportsWindow(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -292,14 +292,14 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
-				return getGraphsWindow();
 			case PrefsPackage.WINDOWS__MAIN_WINDOW:
 				return getMainWindow();
-			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
-				return getReportsWindow();
 			case PrefsPackage.WINDOWS__TRANSACTIONS_WINDOW:
 				return getTransactionsWindow();
+			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
+				return getGraphsWindow();
+			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
+				return getReportsWindow();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -311,17 +311,17 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 */
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)newValue);
-				return;
 			case PrefsPackage.WINDOWS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)newValue);
 				return;
-			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)newValue);
-				return;
 			case PrefsPackage.WINDOWS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)newValue);
+				return;
+			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -334,17 +334,17 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
-				setGraphsWindow((WindowAttributes)null);
-				return;
 			case PrefsPackage.WINDOWS__MAIN_WINDOW:
 				setMainWindow((WindowAttributes)null);
 				return;
-			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
-				setReportsWindow((WindowAttributes)null);
-				return;
 			case PrefsPackage.WINDOWS__TRANSACTIONS_WINDOW:
 				setTransactionsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
+				setGraphsWindow((WindowAttributes)null);
+				return;
+			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
+				setReportsWindow((WindowAttributes)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -357,14 +357,14 @@ public class WindowsImpl extends EObjectImpl implements Windows {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
-				return graphsWindow != null;
 			case PrefsPackage.WINDOWS__MAIN_WINDOW:
 				return mainWindow != null;
-			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
-				return reportsWindow != null;
 			case PrefsPackage.WINDOWS__TRANSACTIONS_WINDOW:
 				return transactionsWindow != null;
+			case PrefsPackage.WINDOWS__GRAPHS_WINDOW:
+				return graphsWindow != null;
+			case PrefsPackage.WINDOWS__REPORTS_WINDOW:
+				return reportsWindow != null;
 		}
 		return super.eIsSet(featureID);
 	}

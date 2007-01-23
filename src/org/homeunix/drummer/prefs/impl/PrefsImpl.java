@@ -42,10 +42,11 @@ import org.homeunix.drummer.prefs.Windows;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLists <em>Lists</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLists <em>Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -373,24 +374,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected String lookAndFeelClass = LOOK_AND_FEEL_CLASS_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getLists() <em>Lists</em>}' containment reference.
+	 * The default value of the '{@link #isPromptForFileAtStartup() <em>Prompt For File At Startup</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLists()
+	 * @see #isPromptForFileAtStartup()
 	 * @generated
 	 * @ordered
 	 */
-	protected Lists lists = null;
+	protected static final boolean PROMPT_FOR_FILE_AT_STARTUP_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * The cached value of the '{@link #isPromptForFileAtStartup() <em>Prompt For File At Startup</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLastVersionRun()
+	 * @see #isPromptForFileAtStartup()
 	 * @generated
 	 * @ordered
 	 */
-	protected Version lastVersionRun = null;
+	protected boolean promptForFileAtStartup = PROMPT_FOR_FILE_AT_STARTUP_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getIntervals() <em>Intervals</em>}' containment reference.
@@ -411,6 +412,26 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected Windows windows = null;
+
+	/**
+	 * The cached value of the '{@link #getLists() <em>Lists</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLists()
+	 * @generated
+	 * @ordered
+	 */
+	protected Lists lists = null;
+
+	/**
+	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLastVersionRun()
+	 * @generated
+	 * @ordered
+	 */
+	protected Version lastVersionRun = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -691,14 +712,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__LISTS:
-				return basicSetLists(null, msgs);
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return basicSetLastVersionRun(null, msgs);
 			case PrefsPackage.PREFS__INTERVALS:
 				return basicSetIntervals(null, msgs);
 			case PrefsPackage.PREFS__WINDOWS:
 				return basicSetWindows(null, msgs);
+			case PrefsPackage.PREFS__LISTS:
+				return basicSetLists(null, msgs);
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return basicSetLastVersionRun(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -742,14 +763,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return new Integer(getNumberOfBackups());
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				return getLookAndFeelClass();
-			case PrefsPackage.PREFS__LISTS:
-				return getLists();
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return getLastVersionRun();
+			case PrefsPackage.PREFS__PROMPT_FOR_FILE_AT_STARTUP:
+				return isPromptForFileAtStartup() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__INTERVALS:
 				return getIntervals();
 			case PrefsPackage.PREFS__WINDOWS:
 				return getWindows();
+			case PrefsPackage.PREFS__LISTS:
+				return getLists();
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return getLastVersionRun();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -810,17 +833,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				setLookAndFeelClass((String)newValue);
 				return;
-			case PrefsPackage.PREFS__LISTS:
-				setLists((Lists)newValue);
-				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)newValue);
+			case PrefsPackage.PREFS__PROMPT_FOR_FILE_AT_STARTUP:
+				setPromptForFileAtStartup(((Boolean)newValue).booleanValue());
 				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)newValue);
 				return;
 			case PrefsPackage.PREFS__WINDOWS:
 				setWindows((Windows)newValue);
+				return;
+			case PrefsPackage.PREFS__LISTS:
+				setLists((Lists)newValue);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -881,17 +907,20 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				setLookAndFeelClass(LOOK_AND_FEEL_CLASS_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__LISTS:
-				setLists((Lists)null);
-				return;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				setLastVersionRun((Version)null);
+			case PrefsPackage.PREFS__PROMPT_FOR_FILE_AT_STARTUP:
+				setPromptForFileAtStartup(PROMPT_FOR_FILE_AT_STARTUP_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)null);
 				return;
 			case PrefsPackage.PREFS__WINDOWS:
 				setWindows((Windows)null);
+				return;
+			case PrefsPackage.PREFS__LISTS:
+				setLists((Lists)null);
+				return;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				setLastVersionRun((Version)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -936,14 +965,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return numberOfBackups != NUMBER_OF_BACKUPS_EDEFAULT;
 			case PrefsPackage.PREFS__LOOK_AND_FEEL_CLASS:
 				return LOOK_AND_FEEL_CLASS_EDEFAULT == null ? lookAndFeelClass != null : !LOOK_AND_FEEL_CLASS_EDEFAULT.equals(lookAndFeelClass);
-			case PrefsPackage.PREFS__LISTS:
-				return lists != null;
-			case PrefsPackage.PREFS__LAST_VERSION_RUN:
-				return lastVersionRun != null;
+			case PrefsPackage.PREFS__PROMPT_FOR_FILE_AT_STARTUP:
+				return promptForFileAtStartup != PROMPT_FOR_FILE_AT_STARTUP_EDEFAULT;
 			case PrefsPackage.PREFS__INTERVALS:
 				return intervals != null;
 			case PrefsPackage.PREFS__WINDOWS:
 				return windows != null;
+			case PrefsPackage.PREFS__LISTS:
+				return lists != null;
+			case PrefsPackage.PREFS__LAST_VERSION_RUN:
+				return lastVersionRun != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1121,6 +1152,27 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isPromptForFileAtStartup() {
+		return promptForFileAtStartup;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPromptForFileAtStartup(boolean newPromptForFileAtStartup) {
+		boolean oldPromptForFileAtStartup = promptForFileAtStartup;
+		promptForFileAtStartup = newPromptForFileAtStartup;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__PROMPT_FOR_FILE_AT_STARTUP, oldPromptForFileAtStartup, promptForFileAtStartup));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Lists getLists() {
 		return lists;
 	}
@@ -1243,6 +1295,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(numberOfBackups);
 		result.append(", lookAndFeelClass: ");
 		result.append(lookAndFeelClass);
+		result.append(", promptForFileAtStartup: ");
+		result.append(promptForFileAtStartup);
 		result.append(')');
 		return result.toString();
 	}

@@ -77,7 +77,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenu edit = new JScreenMenu(Translate.getInstance().get(TranslateKeys.EDIT));
 		final JScreenMenu window = new JScreenMenu(Translate.getInstance().get(TranslateKeys.WINDOW));
 		final JScreenMenu help = new JScreenMenu(Translate.getInstance().get(TranslateKeys.HELP));
-		
+
 		final JScreenMenu exports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.EXPORT));
 		final JScreenMenu imports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.IMPORT));
 
@@ -162,16 +162,16 @@ public class BuddiMenu extends JScreenMenuBar {
 		editAutomaticTransactions.addUserFrame(TransactionsFrame.class);
 
 //		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 //		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
-//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 //		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
-//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		toggleReconciled.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		toggleCleared.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		
+
 
 //		edit.add(cut);
 //		edit.add(copy);
@@ -198,9 +198,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BUDDI_HELP));
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		
+
 		help.add(showHelp);
-		
+
 		// Get an About item instance. Here it's for Swing but there
 		// are also AWT variants like getAboutMenuItem().
 		AboutJMenuItem about = app.getAboutJMenuItem();
@@ -318,7 +318,7 @@ public class BuddiMenu extends JScreenMenuBar {
 						}
 					}
 				}
-				
+
 				MainBuddiFrame.getInstance().updateContent();
 			}
 		});
@@ -330,19 +330,20 @@ public class BuddiMenu extends JScreenMenuBar {
 				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE));
 				if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-					if (jfc.getSelectedFile().isDirectory())
+					if (jfc.getSelectedFile().isDirectory()){
 						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR));
+					}
+					else{
+						final String location;
+						if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
+							location = jfc.getSelectedFile().getAbsolutePath();
+						else
+							location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
 
-						else{
-							final String location;
-							if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
-								location = jfc.getSelectedFile().getAbsolutePath();
-							else
-								location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
 
-							DataInstance.getInstance().saveDataModel(location);
-							JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
-						}
+						DataInstance.getInstance().saveDataModel(location);
+						JOptionPane.showMessageDialog(null, Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + location, Translate.getInstance().get(TranslateKeys.FILE_SAVED), JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 		});
@@ -472,7 +473,7 @@ public class BuddiMenu extends JScreenMenuBar {
 				((TransactionsFrame) BuddiMenu.this.frame).toggleReconciled();
 			}
 		});
-		
+
 		editAutomaticTransactions.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				new ScheduledTransactionsListFrame().openWindow();

@@ -53,15 +53,18 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected final JCheckBox showCreditLimit;
 	protected final JCheckBox showInterestRate;
 	protected final JCheckBox showClearReconcile;
+	protected final JCheckBox promptForDataFile;
 	protected final JComboBox numberOfBackups;
 	protected final JButton addButton;
 	protected final JButton removeButton;
+	protected final JButton otherCurrencyButton;
 	protected final JList pluginList;
 	protected final DefaultListModel pluginListModel;
 	
 	protected final JCheckBox enableUpdateNotifications;
 	
 	protected final DefaultComboBoxModel languageModel;
+	protected final DefaultComboBoxModel currencyModel;
 	
 	protected boolean forceRestart = false;
 	
@@ -81,9 +84,11 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		showCreditLimit = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CREDIT_LIMIT));
 		showInterestRate = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_INTEREST_RATE));
 		showClearReconcile = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CLEAR_RECONCILE));
+		promptForDataFile = new JCheckBox(Translate.getInstance().get(TranslateKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
 		languageModel = new DefaultComboBoxModel();
 		language = new JComboBox(languageModel);
-		currencyFormat = new JComboBox(Const.CURRENCY_FORMATS);
+		currencyModel = new DefaultComboBoxModel();
+		currencyFormat = new JComboBox(currencyModel);
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20});
@@ -91,11 +96,24 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		pluginList = new JList(pluginListModel);
 		addButton = new JButton(Translate.getInstance().get(TranslateKeys.ADD));
 		removeButton = new JButton(Translate.getInstance().get(TranslateKeys.REMOVE));
+		otherCurrencyButton = new JButton(Translate.getInstance().get(TranslateKeys.OTHER));
 		
 		//Set up buttons
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
+		
+		//Set up currency lists
+		boolean customCurrency = true; //Assume custom until proved otherwise, below
+		String currency = PrefsInstance.getInstance().getPrefs().getCurrencySymbol();
+		for (String s : Const.CURRENCY_FORMATS) {
+			currencyModel.addElement(s);
+			if (s.equals(currency))
+				customCurrency = false;
+		}
+		if (customCurrency){
+			currencyModel.addElement(currency);
+		}
 		
 		//Set up tooltips
 		showAccountTypes.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SHOW_ACCOUNT_TYPES));
@@ -186,7 +204,8 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		languagePanel.add(language);
 		
 		currencyFormatPanel.add(currencyFormatLabel);
-		currencyFormatPanel.add(currencyFormat);		
+		currencyFormatPanel.add(currencyFormat);
+		currencyFormatPanel.add(otherCurrencyButton);
 		dateFormatPanel.add(dateFormatLabel);
 		dateFormatPanel.add(dateFormat);
 
@@ -241,6 +260,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		JPanel updatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel editLanguagesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel editTypesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel promptForDataFilePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		JButton editLanguages = new JButton(Translate.getInstance().get(TranslateKeys.EDIT_LANGUAGES));
 		editLanguages.addActionListener(new ActionListener(){
@@ -276,13 +296,14 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		editLanguagesPanel.add(editLanguages);
 		editTypesPanel.add(editTypes);
 		updatePanel.add(enableUpdateNotifications);
+		promptForDataFilePanel.add(promptForDataFile);
 				
 		advancedPanel.add(budgetIntervalPanel);
 		advancedPanel.add(numberOfBackupsPanel);
 		advancedPanel.add(editLanguagesPanel);
 		advancedPanel.add(editTypesPanel);
 		advancedPanel.add(updatePanel);
-		
+		advancedPanel.add(promptForDataFilePanel);
 		
 		return getPanelHolder(advancedPanel);
 	}

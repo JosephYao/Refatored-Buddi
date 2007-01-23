@@ -32,10 +32,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isShowAdvanced <em>Show Advanced</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getNumberOfBackups <em>Number Of Backups</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
  * </ul>
  * </p>
  *
@@ -511,6 +512,32 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setLookAndFeelClass(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Prompt For File At Startup</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Prompt For File At Startup</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Prompt For File At Startup</em>' attribute.
+	 * @see #setPromptForFileAtStartup(boolean)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_PromptForFileAtStartup()
+	 * @model
+	 * @generated
+	 */
+	boolean isPromptForFileAtStartup();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Prompt For File At Startup</em>' attribute.
+	 * @see #isPromptForFileAtStartup()
+	 * @generated
+	 */
+	void setPromptForFileAtStartup(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Lists</b></em>' containment reference.

@@ -1,3 +1,9 @@
+2.1.7 (January 22 2007)
+-Added new Norsk.lang to reflect new additions to Buddi
+-Fixed bug which prevented manual file backup
+-Added custom currency input.
+-Added option to prompt for data file at program startup (useful if multiple users are using Buddi on the same account)
+
 2.1.6 (January 5 2007)
 -Fixed another bug which prevents new data files from being created.
 

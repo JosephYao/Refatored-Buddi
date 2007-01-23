@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
@@ -64,9 +67,40 @@ public class DataInstance {
 	private DataInstance(){
 		File dataFile = null;
 
+		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
+			final JFileChooser jfc = new JFileChooser();
+			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			jfc.setFileHidingEnabled(true);
+			jfc.setFileFilter(new FileFilter(){
+				public boolean accept(File arg0) {
+					if (arg0.isDirectory() 
+							|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
+						return true;
+					else
+						return false;
+				}
+
+				public String getDescription() {
+					return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+				}
+			});
+			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
+			if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+				if (jfc.getSelectedFile().isDirectory()){
+					if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+				}
+				else{
+					if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
+					PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
+					PrefsInstance.getInstance().savePrefs();
+				}
+			}
+		}
+
 		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
 			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-			
+
 			//Before we open the file, we check that we have read / write 
 			// permission to it.  This is in response to bug #1626996. 
 			if (!dataFile.canWrite() && dataFile.exists()){
@@ -85,7 +119,7 @@ public class DataInstance {
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
-			
+
 			if (dataFile.exists()) {
 				try{
 //					String backupFileLocation = 
@@ -176,7 +210,7 @@ public class DataInstance {
 			if (contents.size() > 0){
 				dataModel = (DataModel) contents.get(0);
 			}
-			
+
 			// Once we have this loaded, we need to do some sanity checks.
 			// After a few versions, these can be phased out.
 
@@ -233,13 +267,13 @@ public class DataInstance {
 				this.cipher = new AESCryptoCipher(128);
 
 //				if (!locationFile.exists() && !forceNewFile){
-//					JOptionPane.showMessageDialog(
-//							null,
-//							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
-//							+ locationFile.getAbsolutePath(),
-//							Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
-//							JOptionPane.INFORMATION_MESSAGE
-//					);
+//				JOptionPane.showMessageDialog(
+//				null,
+//				Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
+//				+ locationFile.getAbsolutePath(),
+//				Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
+//				JOptionPane.INFORMATION_MESSAGE
+//				);
 //				}
 
 				Accounts accounts = getDataModelFactory().createAccounts();
