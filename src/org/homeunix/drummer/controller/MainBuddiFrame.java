@@ -364,17 +364,20 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		for (Schedule s : DataInstance.getInstance().getScheduledTransactionsBeforeToday()) {
 			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
 
-			//We start one day after the last day, to avoid repeats.  See 
-			// bug #1641937 for more details.
-			Date tempDate = DateUtil.getNextDay(s.getLastDateCreated());
+			Date tempDate = s.getLastDateCreated();
 
 			//Temp date is where we will start looping from.  If it is
 			// null, we need to init it to a sane value.
 			if (tempDate == null)
 				tempDate = s.getStartDate();
 
-
+			//We start one day after the last day, to avoid repeats.  See 
+			// bug #1641937 for more details.
+			tempDate = DateUtil.getNextDay(tempDate);
+			Date lastDayCreated = (Date) tempDate.clone();
+			
 			tempDate = DateUtil.getStartOfDay(tempDate);
+			
 			if (Const.DEVEL){
 				Log.debug("tempDate = " + tempDate);
 				Log.debug("startDate = " + s.getStartDate());
@@ -419,6 +422,17 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				else if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
 					todayIsTheDay = true;
+				}
+				//If we are using BiWeekly frequency, we need to compare
+				// the number of the day as well as ensure that there is one
+				// week between each scheduled transaction.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.BIWEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						&& (DateUtil.daysBetween(lastDayCreated, tempDate) > 13)){
+					todayIsTheDay = true;
+					lastDayCreated = (Date) tempDate.clone();
 				}
 				//Every day - it's obvious enough even for a monkey!
 				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_DAY.toString())){

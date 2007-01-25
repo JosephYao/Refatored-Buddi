@@ -324,6 +324,7 @@ public enum TranslateKeys {
     OF_EACH_MONTH,
     EVERY_DAY,
     WEEKLY,
+    BIWEEKLY,
     MONTHLY_BY_DATE,
     MONTHLY_BY_DAY_OF_WEEK,
     ON_EACH_OF_THE_FOLLOWING_WEEKS,

@@ -1,5 +1,9 @@
-2.1.8
+2.1.8 (January 25 2007)
 -Added option to open a new file in the event that you don't have read / write permission to the default data file
+-Added Bi-Weekly schedule option
+-Added shortcuts for transaction editing
+-Added option of offline help
+-Added Ctrl+W shortcut to close windows on Non Mac systems (this was already present on the Macintosh)
 
 2.1.7 (January 22 2007)
 -Added new Norsk.lang to reflect new additions to Buddi

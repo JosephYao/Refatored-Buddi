@@ -129,6 +129,19 @@ public class EditableTransaction extends JPanel {
 		components.add(memo);
 		components.add(memoScroller);
 
+		int textHeight = date.getPreferredSize().height;
+		date.setPreferredSize(new Dimension(50, textHeight));
+		description.setPreferredSize(new Dimension(100, textHeight));
+		number.setPreferredSize(new Dimension(40, textHeight));
+
+		amount.setMinimumSize(new Dimension(50, textHeight));
+		amount.setMaximumSize(new Dimension(80, textHeight));
+		amount.setPreferredSize(new Dimension(70, textHeight));
+		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
+		to.setPreferredSize(from.getPreferredSize());
+
+		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
+		
 		topPanel.add(date);
 		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
@@ -159,18 +172,6 @@ public class EditableTransaction extends JPanel {
 		this.add(mainPanel);
 		if (!Buddi.isMac()) this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
-
-		int textHeight = date.getPreferredSize().height;
-		date.setPreferredSize(new Dimension(50, textHeight));
-		description.setPreferredSize(new Dimension(100, textHeight));
-		number.setPreferredSize(new Dimension(40, textHeight));
-
-		amount.setMinimumSize(new Dimension(180, textHeight));
-		amount.setMaximumSize(new Dimension(210, textHeight));
-		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
-		to.setPreferredSize(from.getPreferredSize());
-
-		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
 		
 		if (parent == null)
 			date.setVisible(false);

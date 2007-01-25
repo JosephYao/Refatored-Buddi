@@ -148,8 +148,6 @@ function bundle_source {
 # Creates the help bundle
 function bundle_help {
 	./bundleWeb --local
-	zip -r Offline_Help-$VERSION.zip Help
-	mv Offline_Help-$VERSION.zip $DEST
 }
 
 # Remove the bundle directories and build junk in project directory
@@ -181,7 +179,6 @@ put Buddi-$VERSION.zip
 put Buddi-$VERSION.tgz
 put Buddi-$VERSION.dmg
 put Buddi-$VERSION.src.tgz
-put Offline_Help-$VERSION.zip
 bye
 END_OF_FTP
 		echo Upload Complete
@@ -194,7 +191,7 @@ END_OF_FTP
 
 init $*
 make_jar $*
-bundle_help $*
+#bundle_help $*
 bundle_windows $*
 bundle_osx $*
 bundle_generic $*

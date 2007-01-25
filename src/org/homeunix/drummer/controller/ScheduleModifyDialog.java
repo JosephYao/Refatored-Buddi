@@ -38,6 +38,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		startDateChooser.setEnabled(schedule == null);
 		frequencyPulldown.setEnabled(schedule == null);
 		weeklyDayChooser.setEnabled(schedule == null);
+		biWeeklyDayChooser.setEnabled(schedule == null);
 		monthlyDateChooser.setEnabled(schedule == null);
 		monthlyFirstDayChooser.setEnabled(schedule == null);
 		multipleWeeksDayChooser.setEnabled(schedule == null);
@@ -142,6 +143,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 		frequencyPulldown.setRenderer(pulldownTranslator);
 		weeklyDayChooser.setRenderer(pulldownTranslator);
+		biWeeklyDayChooser.setRenderer(pulldownTranslator);
 		monthlyDateChooser.setRenderer(pulldownTranslator);
 		monthlyFirstDayChooser.setRenderer(pulldownTranslator);
 		multipleWeeksDayChooser.setRenderer(pulldownTranslator);
@@ -249,7 +251,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 		//System.out.println(Calendar.getInstance().get(startDateChooser.getDate()));
 
-		if ((scheduleName.getText().length() > 0)
+		if ((scheduleName.getValue().length() > 0)
 				&& (startDateChooser.getDate() != null)
 				&& (transaction.getAmount() != 0)
 				&& (transaction.getDescription().length() > 0)
@@ -270,11 +272,11 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			t.setTo(transaction.getTo());
 			t.setFrom(transaction.getFrom());
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
-			DataInstance.getInstance().addSchedule(scheduleName.getText(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), t);
+			DataInstance.getInstance().addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), t);
 
 		}
 		else{
-			schedule.setScheduleName(scheduleName.getText());
+			schedule.setScheduleName(scheduleName.getValue());
 			schedule.setAmount(transaction.getAmount());
 			schedule.setDescription(transaction.getDescription());
 			schedule.setNumber(transaction.getNumber());
@@ -319,6 +321,8 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 				monthlyFirstDayChooser.setSelectedIndex(s.getScheduleDay());
 			if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString()))
 				weeklyDayChooser.setSelectedIndex(s.getScheduleDay());
+			if (s.getFrequencyType().equals(TranslateKeys.BIWEEKLY.toString()))
+				biWeeklyDayChooser.setSelectedIndex(s.getScheduleDay());
 			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString()))
 				multipleWeeksDayChooser.setSelectedIndex(s.getScheduleDay());
 			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString()))
@@ -363,6 +367,9 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		}
 		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.WEEKLY.toString())){
 			return weeklyDayChooser.getSelectedIndex();
+		}
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.BIWEEKLY.toString())){
+			return biWeeklyDayChooser.getSelectedIndex();
 		}
 		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.EVERY_DAY.toString())){
 			return 0; //We don't use scheduleDay if it is every day

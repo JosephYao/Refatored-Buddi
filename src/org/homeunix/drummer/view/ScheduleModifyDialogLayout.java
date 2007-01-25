@@ -39,6 +39,7 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 	
 	protected final JScrollingComboBox frequencyPulldown;
 	protected final JScrollingComboBox weeklyDayChooser;
+	protected final JScrollingComboBox biWeeklyDayChooser;
 	protected final JScrollingComboBox monthlyDateChooser;
 	protected final JScrollingComboBox monthlyFirstDayChooser;
 	protected final JScrollingComboBox multipleWeeksDayChooser;
@@ -128,6 +129,7 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		frequencyPulldownChoices.add(TranslateKeys.MONTHLY_BY_DATE.toString());
 		frequencyPulldownChoices.add(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString());
 		frequencyPulldownChoices.add(TranslateKeys.WEEKLY.toString());
+		frequencyPulldownChoices.add(TranslateKeys.BIWEEKLY.toString());
 		frequencyPulldownChoices.add(TranslateKeys.EVERY_DAY.toString());
 		frequencyPulldownChoices.add(TranslateKeys.EVERY_WEEKDAY.toString());		
 		frequencyPulldownChoices.add(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString());
@@ -143,7 +145,9 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		weeklyDayChooserChoices.add(TranslateKeys.FRIDAY.toString());
 		weeklyDayChooserChoices.add(TranslateKeys.SATURDAY.toString());
 		weeklyDayChooser = new JScrollingComboBox(weeklyDayChooserChoices);
-		
+
+		//We use the same one for BiWeekly as Weekly.
+		biWeeklyDayChooser = new JScrollingComboBox(weeklyDayChooserChoices);
 		
 		Vector<String> monthlyDateChooserChoices = new Vector<String>();
 		monthlyDateChooserChoices.add(TranslateKeys.FIRST.toString());
@@ -266,6 +270,12 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		weekly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_EVERY)));
 		weekly.add(weeklyDayChooser);
 		cardHolder.add(weekly, TranslateKeys.WEEKLY.toString());
+		
+		//BiWeekly card
+		JPanel biweekly = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		biweekly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_EVERY)));
+		biweekly.add(biWeeklyDayChooser);
+		cardHolder.add(biweekly, TranslateKeys.BIWEEKLY.toString());
 		
 		//Blank Panel - for Every Weekday, and others with no config options
 		cardHolder.add(new JPanel(), TranslateKeys.EVERY_WEEKDAY.toString());
