@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
@@ -113,8 +114,10 @@ public class EditableTransaction extends JPanel {
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 
 		JScrollPane memoScroller = new JScrollPane(memo);
-		memoScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		memo.setWrapStyleWord(true);
+		memo.setLineWrap(true);
 		memoScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		memoScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		components.add(date);
 		components.add(amount);
@@ -168,7 +171,7 @@ public class EditableTransaction extends JPanel {
 		to.setPreferredSize(from.getPreferredSize());
 
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
-
+		
 		if (parent == null)
 			date.setVisible(false);
 

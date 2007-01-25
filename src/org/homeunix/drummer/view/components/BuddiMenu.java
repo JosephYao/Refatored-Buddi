@@ -140,7 +140,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.add(exports);
 		file.add(imports);
 		file.addSeparator();
-		if (Buddi.isMac()){
+		//We want to show the close button on all Mac frames, and 
+		// all non-Mac frames except for the main one.
+		if (!(frame instanceof MainBuddiFrame) || Buddi.isMac()){
 			file.add(close);
 		}
 
@@ -152,7 +154,15 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem toggleReconciled = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_RECONCILED));
 		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_CLEARED));
 		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_TRANSACTIONS));
-
+		//The following items are only on the main buddi screen. 
+		final JScreenMenuItem newAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_CATEGORY));
+		final JScreenMenuItem editAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_CATEGORY));
+		final JScreenMenuItem deleteAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE_CATEGORY));
+		//The following items are only on the transactions screen.
+		final JScreenMenuItem clearTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLEAR) + " / " + Translate.getInstance().get(TranslateKeys.NEW));
+		final JScreenMenuItem recordTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RECORD) + " / " + Translate.getInstance().get(TranslateKeys.UPDATE));
+		final JScreenMenuItem deleteTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE));
+		
 //		cut.addUserFrame(TransactionsFrame.class);
 //		copy.addUserFrame(TransactionsFrame.class);
 //		paste.addUserFrame(TransactionsFrame.class);
@@ -160,6 +170,12 @@ public class BuddiMenu extends JScreenMenuBar {
 		toggleCleared.addUserFrame(TransactionsFrame.class);
 		editAutomaticTransactions.addUserFrame(MainBuddiFrame.class);
 		editAutomaticTransactions.addUserFrame(TransactionsFrame.class);
+		newAccount.addUserFrame(MainBuddiFrame.class);
+		editAccount.addUserFrame(MainBuddiFrame.class);
+		deleteAccount.addUserFrame(MainBuddiFrame.class);
+		clearTransaction.addUserFrame(TransactionsFrame.class);
+		recordTransaction.addUserFrame(TransactionsFrame.class);
+		deleteTransaction.addUserFrame(TransactionsFrame.class);
 
 //		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
 //		Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -171,10 +187,34 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		toggleCleared.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-
+		newAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		editAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		deleteAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		clearTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		recordTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		deleteTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		
 
 //		edit.add(cut);
 //		edit.add(copy);
+//		if (frame instanceof MainBuddiFrame){
+//			edit.add(newAccount);
+//			edit.add(editAccount);
+//			edit.add(deleteAccount);
+//			edit.addSeparator();
+//		}
+		if (frame instanceof TransactionsFrame){
+			edit.add(recordTransaction);
+			edit.add(clearTransaction);
+//			edit.add(deleteTransaction);
+			edit.addSeparator();
+		}
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
 			edit.add(toggleCleared);
 			edit.add(toggleReconciled);
@@ -186,12 +226,18 @@ public class BuddiMenu extends JScreenMenuBar {
 		//Window menu items
 		final JScreenMenuItem minimize = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MINIMIZE));
 		//final JScreenMenuItem zoom = new JScreenMenuItem(Strings.inst().get(Strings.ZOOM));
+		final JScreenMenuItem openMainWindow = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MAIN_BUDDI_WINDOW));
 
 		minimize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
+		if (Buddi.isMac()){
+			window.add(openMainWindow);
+			window.addSeparator();
+		}
 		window.add(minimize);
 		//window.add(zoom);
+		
 
 
 		//Help menu items
@@ -462,6 +508,43 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
+		newAccount.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((MainBuddiFrame) BuddiMenu.this.frame).getCategoryListPanel().clickNew();
+			}
+		});
+
+		editAccount.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((MainBuddiFrame) BuddiMenu.this.frame).getCategoryListPanel().clickEdit();
+			}
+		});
+
+		deleteAccount.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((MainBuddiFrame) BuddiMenu.this.frame).getCategoryListPanel().clickDelete();
+			}
+		});
+		
+		clearTransaction.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((TransactionsFrame) BuddiMenu.this.frame).clickClear();
+			}
+		});
+
+		recordTransaction.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((TransactionsFrame) BuddiMenu.this.frame).clickRecord();
+			}
+		});
+
+		deleteTransaction.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				((TransactionsFrame) BuddiMenu.this.frame).clickDelete();
+			}
+		});
+
+		
 		toggleCleared.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				((TransactionsFrame) BuddiMenu.this.frame).toggleCleared();
@@ -493,6 +576,13 @@ public class BuddiMenu extends JScreenMenuBar {
 					BuddiMenu.this.frame.setExtendedState(JFrame.ICONIFIED);
 			}
 		});
+		
+		openMainWindow.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (!MainBuddiFrame.getInstance().isVisible())
+					MainBuddiFrame.getInstance().setVisible(true);
+			}
+		});
 
 //		zoom.addActionListener(new ActionListener(){
 //		public void actionPerformed(ActionEvent arg0) {
@@ -508,7 +598,7 @@ public class BuddiMenu extends JScreenMenuBar {
 					File localHelp = new File(
 							Const.HELP_FOLDER 
 							+ File.separator
-							+ "en"	//Until I get more translations, I will keep it hardcoded to English 
+							+ "en"	//Until I get more translations of the documentation, I will keep it hardcoded to English 
 //							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
 							+ File.separator
 							+ Const.HELP_FILE);

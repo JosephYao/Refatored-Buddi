@@ -1,4 +1,8 @@
 #Sat Nov 04 09:34:38 MST 2006
+MAIN_BUDDI_WINDOW=Main Buddi Window
+NEW_CATEGORY=New Category
+EDIT_CATEGORY=Edit Category
+DELETE_CATEGORY=Delete Category
 ENTER_CURRENCY_SYMBOL=Please enter your desired currency format:
 ENTER_CURRENCY_SYMBOL_TITLE=Enter Currency Format
 PROMPT_FOR_DATA_FILE_AT_STARTUP=Prompt for data file at startup

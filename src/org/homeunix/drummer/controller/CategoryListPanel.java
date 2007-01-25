@@ -199,4 +199,14 @@ public class CategoryListPanel extends ListPanelLayout {
 	protected int getTableNumber() {
 		return 1;
 	}
+	
+	public void clickNew(){
+		newButton.doClick();
+	}
+	public void clickEdit(){
+		editButton.doClick();
+	}
+	public void clickDelete(){
+		deleteButton.doClick();
+	}
 }

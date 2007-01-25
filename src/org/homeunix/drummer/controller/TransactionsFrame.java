@@ -308,6 +308,8 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				list.ensureIndexIsVisible(list.getSelectedIndex());
 				
 				disableListEvents = false;
+				
+				editableTransaction.resetSelection();
 			}
 
 		});
@@ -636,5 +638,15 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		baseModel.updateNoOrderChange(t);
 		editableTransaction.updateClearedAndReconciled();
 		
+	}
+	
+	public void clickClear(){
+		clearButton.doClick();
+	}
+	public void clickRecord(){
+		recordButton.doClick();
+	}
+	public void clickDelete(){
+		deleteButton.doClick();
 	}
 }

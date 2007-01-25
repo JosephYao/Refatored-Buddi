@@ -185,7 +185,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 		PrefsInstance.getInstance().savePrefs();
 	}
-
+	
 	/**
 	 * Starts a thread which checks the Internet for any new versions.
 	 */

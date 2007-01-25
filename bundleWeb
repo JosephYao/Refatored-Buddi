@@ -49,7 +49,10 @@ rm -rf $HELPDIR/inc
 rm -rf $HELPDIR/*/.svn
 rm -rf $HELPDIR/*/*/.svn
 
-if [ "$1" != "--local" ]; then
+if [ "$1" == "--local" ]; then
+	DATE=`date "+%Y-%m-%d"`
+	tar -czvf Help_$DATE.tgz $HELPDIR
+else
 	#Tar the pages
 	cd $WWWDIR
 	tar -czvf $WWWDIR.tgz *
