@@ -20,6 +20,7 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.thecave.moss.util.Formatter;
 
 public class ExportCSV implements BuddiExportPlugin {
@@ -78,7 +79,8 @@ public class ExportCSV implements BuddiExportPlugin {
 	}
 
 	public Class[] getCorrectWindows() {
-		Class[] windows = new Class[0];
+		Class[] windows = new Class[1];
+		windows[0] = ReportFrameLayout.class;
 		return windows;
 	}
 

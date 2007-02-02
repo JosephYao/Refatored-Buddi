@@ -32,6 +32,7 @@ import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.drummer.view.MainBuddiFrameLayout;
 import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.SwingWorker;
 
@@ -82,6 +83,9 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		updateScheduledTransactions();
 		updateContent();
 
+		//Load the date format from preferences
+		Formatter.getInstance().setDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());
+		
 		DataInstance.getInstance().calculateAllBalances();
 	}
 

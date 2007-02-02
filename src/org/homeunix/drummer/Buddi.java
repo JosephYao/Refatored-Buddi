@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
 
 import net.roydesign.mac.MRJAdapter;
@@ -167,7 +168,8 @@ public class Buddi {
 		Formatter.getInstance(PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		//Create the frameless menu bar (for Mac)
-		MRJAdapter.setFramelessJMenuBar(new BuddiMenu(null));
+		JMenuBar frameless = new BuddiMenu(null);
+		MRJAdapter.setFramelessJMenuBar(frameless);
 
 		//Add any shutdown hoks you want to use.  Currently this
 		// is only enabled in development versions.

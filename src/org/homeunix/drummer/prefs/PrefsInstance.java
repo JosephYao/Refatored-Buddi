@@ -171,7 +171,7 @@ public class PrefsInstance {
 			
 			//Allow upgrading to rotating backups - default to 10
 			if (userPrefs.getPrefs().getNumberOfBackups() == 0){
-				userPrefs.getPrefs().setNumberOfBackups(10);
+				userPrefs.getPrefs().setNumberOfBackups(20);
 				savePrefs();
 			}
 			

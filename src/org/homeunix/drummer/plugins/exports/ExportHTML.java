@@ -48,7 +48,7 @@ public class ExportHTML implements BuddiExportPlugin {
 
 				if (Const.DEVEL) Log.debug("Opening file...");
 				BrowserLauncher bl = new BrowserLauncher(null);
-				bl.openURLinBrowser("file://" + tempFile.getAbsolutePath());
+				bl.openURLinBrowser("file://" + tempFile.getAbsolutePath().replaceAll(" ", "%20"));
 				if (Const.DEVEL) Log.debug("Finished opening file...");
 			}
 			catch (Exception ex){
@@ -61,8 +61,15 @@ public class ExportHTML implements BuddiExportPlugin {
 	}
 	
 	public Class[] getCorrectWindows() {
-		Class[] windows = new Class[0];
-		return windows;
+		try{
+			Class[] windows = new Class[1];
+			windows[0] = Class.forName("org.homeunix.drummer.view.ReportFrameLayout");
+			return windows;
+		}
+		catch (ClassNotFoundException cnfe){
+			Log.error(cnfe);
+			return new Class[0];
+		}
 	}
 
 	public String getDescription() {

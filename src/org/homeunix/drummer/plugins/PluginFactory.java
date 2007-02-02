@@ -57,6 +57,13 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 			//This is where the user's custom code is actually run
 			addExportActionListener(plugin, menuItem, frame);
+//			menuItem.addUserFrame(ExportHTML.class);
+//			if (plugin.getCorrectWindows() != null && plugin.getCorrectWindows().length > 0){
+//				for (Class c : plugin.getCorrectWindows()){
+//					if (c != null)
+//						menuItem.addUserFrame(c);
+//				}
+//			}
 
 			exportMenuItems.add(menuItem);
 		}
@@ -293,7 +300,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					else{
 						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
 					}
-					
+
 					//Update all the accounts with the new totals, etc.  Probably not needed for Import plugins, but 
 					// it's a pretty cheap operation anyway, and it is better safe than sorry...
 					DataInstance.getInstance().calculateAllBalances();
@@ -355,7 +362,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					else {
 						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
 					}
-					
+
 					//Update all the accounts with the new totals, etc.
 					DataInstance.getInstance().calculateAllBalances();
 					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();

@@ -48,20 +48,26 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 				}
 				else{
 					final Account a;
-					if (source == null)
+					if (source == null){
 						a = DataInstance.getInstance().getDataModelFactory().createAccount();
-					else
+						a.setAccountType((Type) pulldown.getSelectedItem());
+						
+						//We don't want to modify creation date unless we
+						// truly ARE creating it now.  This is in regards
+						// to a fix for bug #1650070.
+						a.setCreationDate(new Date());
+					}
+					else{
 						a = source;
+					}
+					
 					a.setName(name.getText());
 					
-					a.setAccountType((Type) pulldown.getSelectedItem());
 					long startingBalance = amount.getValue();
 					if (a.isCredit())
 						startingBalance = Math.abs(startingBalance) * -1;
 					
-					a.setStartingBalance(startingBalance);
-					
-					a.setCreationDate(new Date());
+					a.setStartingBalance(startingBalance);					
 					
 					if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
 						a.setCreditLimit(creditLimit.getValue());

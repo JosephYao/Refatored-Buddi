@@ -32,14 +32,23 @@ This can be accomplished via Prepaid Accounts, implemented via a Credit account.
 
 <h2>Whenever I restart Buddi, it says the data file is corrupt.  What is happening?</h2>
 <p>
-The exact error message is 'There was  a problem reading the data file: Data.buddi The data file exists, but it appears to be corrupted. Do  you want to overwrite, and create a new file? All information  currently in the file will be lost.'
+The exact error message is 'There was  a problem reading the data file: Data.buddi The data file exists, but it appears to be corrupted. Do  you want to overwrite, and create a new file? All information currently in the file will be lost.'
 </p>
 <p>
-On old versions, this was caused when there are special characters included in the data files (whether it be with the Account names, Transaction fields, etc).  This has been fixed in version 1.3.1 Development / 1.2.1 Stable.
+This means that there was something wrong with your data file.  I have only seen a couple of people who have experienced this error on recent versions.  If you have the unfortunate chance of being one of these, please contact me - I am trying to figure out what causes this error, and I will need to talk with you about it.
 </p>
 <p>
-In newer versions, this should not happen at all.  If it happens to you, please contact me and let me know the details.
+Even if you experience this error message, all is not lost.  By default, Buddi keeps 10 backup files containing your data from previous 10 sessions.  For the most part, the most recent session (Data.0.buddi) has a good version of the data.  To revert to a previous good data file, you can do the following:
+<ol>
+<li>With Buddi not running, rename Data.buddi to Data.buddi.corrupted.  This will let me try to troubleshoot the cause of the problem later.</li>
+<li>Start Buddi.  Since it does not find a data file when it start, it will automatically create a new one.  It will prompt you if you want to encrypt the data file; just hit No here.</li>
+<li>Once you are in the Buddi main window, click File -> Restore From Backup File.  It will prompt you for the file to restore from.  Select the backup file Data.0.buddi, and hit OK.  This will copy the contents of the backup file Data.0.buddi to the new (currently blank) data file Data.buddi, and attempt to open it.</li>
+</ol>
 </p>
+<p>
+This should work; if it does not, try repeating these steps again, but using Data.X.buddi instead of Data.0.buddi (where X is the number of the backup file; the higher the numbers, the further in the past the backup is from).
+</p>
+
 
 <h2>Can I use Buddi for commercial activities?</h2>
 <p>

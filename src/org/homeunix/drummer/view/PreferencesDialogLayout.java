@@ -91,7 +91,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		currencyFormat = new JComboBox(currencyModel);
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
-		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20});
+		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
 		pluginListModel = new DefaultListModel();
 		pluginList = new JList(pluginListModel);
 		addButton = new JButton(Translate.getInstance().get(TranslateKeys.ADD));

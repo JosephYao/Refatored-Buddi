@@ -1,3 +1,8 @@
+2.1.9 (February 1 2007)
+-Fixed a bug which would reset the creation date of an account when you modify the name / starting balance.  This would then result in the account not being properly used in net worth and other time senstive graphs.
+-Fixed the Date Format in Transactions Window bug
+-Added a workaround for the bug which only shows 3 levels of Budget categories.  Currently the width is increased to allow users to see about 5 levels; in a future release, I will add logic to automatically expand as needed.
+
 2.1.8 (January 25 2007)
 -Added option to open a new file in the event that you don't have read / write permission to the default data file
 -Added Bi-Weekly schedule option

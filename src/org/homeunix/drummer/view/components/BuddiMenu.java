@@ -604,7 +604,7 @@ public class BuddiMenu extends JScreenMenuBar {
 							+ Const.HELP_FILE);
 					final String location;
 					if (localHelp.exists())
-						location = "file://" + localHelp.getAbsolutePath();
+						location = "file://" + localHelp.getAbsolutePath().replaceAll(" ", "%20");
 					else
 						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
 

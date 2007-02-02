@@ -67,9 +67,11 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		
-		tree.getColumn(0).setMaxWidth(30);
-		tree.getColumn(0).setMinWidth(30);
-		tree.getColumn(0).setPreferredWidth(30);
+		//TODO Try to make this automatically adjust based on depth
+		int treeColumnWidth = 100;
+		tree.getColumn(0).setMaxWidth(treeColumnWidth);
+		tree.getColumn(0).setMinWidth(treeColumnWidth);
+		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
 		
 //		tree.getColumn(1).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 1));
 //		tree.getColumn(2).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 2));
