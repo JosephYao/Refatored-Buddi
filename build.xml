@@ -15,7 +15,7 @@
 		<pathelement location="lib/emf/emf.ecore_2.2.2.v200702010000.jar"/>
 		<pathelement location="lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
 		<pathelement location="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
-		<pathelement location="lib/BrowserLauncher2-10rc4.jar"/>
+		<pathelement location="lib/BrowserLauncher2-10.jar"/>
 		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
 		<pathelement location="lib/truefilter-1.2.jar"/>
 		<pathelement location="lib/moss-0.5.6.jar"/>
@@ -44,7 +44,7 @@
 			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
 			
 			<!-- These are all the included files which normally would go on the classpath -->
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10.jar" relpath=""/> 
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>

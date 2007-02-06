@@ -25,9 +25,12 @@ public class JDocumentDialog extends JDialog {
 	public JDocumentDialog(String document) {
 		JTextArea docArea = new JTextArea(document);
 		docArea.setWrapStyleWord(true);
+		docArea.setLineWrap(true);
 		docArea.setEditable(false);
 		
 		JScrollPane docScroller = new JScrollPane(docArea);
+		docScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		docScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		JButton done = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		done.setPreferredSize(new Dimension(Math.max(100, done.getPreferredSize().width), done.getPreferredSize().height));
@@ -36,6 +39,8 @@ public class JDocumentDialog extends JDialog {
 				JDocumentDialog.this.setVisible(false);
 			}
 		});
+		
+		this.getRootPane().setDefaultButton(done);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(done);
