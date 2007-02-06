@@ -97,7 +97,7 @@ public class SourceAmountCellRenderer extends AbstractSourceCellRenderer {
 			sb.append("<html>")
 			.append(sbOpen);
 			
-			if (t.getAmount() < 0)
+			if (t.getAmount() < 0 ^ t.getType().isCredit())
 				sb.append("-");
 			sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
