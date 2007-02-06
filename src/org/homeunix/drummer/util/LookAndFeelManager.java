@@ -15,6 +15,7 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public final class LookAndFeelManager {
 	public static final long serialVersionUID = 0;
@@ -39,7 +40,7 @@ public final class LookAndFeelManager {
 		}
 		installLookAndFeelsFromResources("META-INF/services/javax.swing.LookAndFeel", cl);
 		installLookAndFeelsFromResources("meta-inf/services/javax.swing.LookAndFeel", cl);
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			installLookAndFeelsFromResources(QUAQUA_LOOK_AND_FEEL, cl);
 		}
 	}
@@ -71,7 +72,7 @@ public final class LookAndFeelManager {
 		if (null != className) {
 			installed = setLookAndFeel0(className);
 		}
-		if (!installed && Buddi.isMac()) {
+		if (!installed && OperatingSystemUtil.isMac()) {
 			installed = setLookAndFeel0(QUAQUA_LOOK_AND_FEEL);
 		}
 		if (!installed) {

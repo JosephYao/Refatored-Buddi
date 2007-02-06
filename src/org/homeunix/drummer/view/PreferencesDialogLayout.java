@@ -28,13 +28,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeListDialog;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public abstract class PreferencesDialogLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -143,7 +143,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		this.getRootPane().setDefaultButton(okButton);
 		this.setPreferredSize(new Dimension(450, 350));
 		
-		if (Buddi.isMac()) {
+		if (OperatingSystemUtil.isMac()) {
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 		}
 		

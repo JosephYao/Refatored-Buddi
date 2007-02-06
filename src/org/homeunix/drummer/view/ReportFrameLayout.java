@@ -28,7 +28,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -36,6 +35,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class ReportFrameLayout extends AbstractFrame {
 	public final static long serialVersionUID = 0;
@@ -96,7 +96,7 @@ public class ReportFrameLayout extends AbstractFrame {
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			reportTree.putClientProperty("Quaqua.Tree.style", "striped");
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

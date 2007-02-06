@@ -25,7 +25,6 @@ import net.roydesign.ui.JScreenMenu;
 import net.roydesign.ui.JScreenMenuBar;
 import net.roydesign.ui.JScreenMenuItem;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.PreferencesDialog;
@@ -41,6 +40,7 @@ import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.PrintUtilities;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -142,7 +142,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		file.addSeparator();
 		//We want to show the close button on all Mac frames, and 
 		// all non-Mac frames except for the main one.
-		if (!(frame instanceof MainBuddiFrame) || Buddi.isMac()){
+		if (!(frame instanceof MainBuddiFrame) || OperatingSystemUtil.isMac()){
 			file.add(close);
 		}
 
@@ -231,7 +231,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		minimize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			window.add(openMainWindow);
 			window.addSeparator();
 		}

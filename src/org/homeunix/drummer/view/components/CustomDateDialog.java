@@ -24,6 +24,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiPluginHelper;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
+import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -119,6 +120,26 @@ public class CustomDateDialog extends AbstractDialog {
 		this.getRootPane().setDefaultButton(okButton);
 		this.setTitle(Translate.getInstance().get(TranslateKeys.CHOOSE_DATE_INTERVAL));
 
+		//Set the start date to be (by default) a time in the past
+		// back as far as the current interval.  For instance, if the 
+		// interval is set to 1 month, and the day is Feb 15, set the 
+		// date to Jan 1.
+		// This is not guaranteed to give perfect results every time,
+		// but if we are giving the user a choice in the date interva;,
+		// we may as well start at a time in the past rather than just
+		// give them the current date, as we have done before now.
+		// Added to address feature request #1649972.
+		Interval i = PrefsInstance.getInstance().getSelectedInterval();
+		if (i.isDays()){
+			startDateChooser.setDate(
+					DateUtil.getNextNDay(new Date(), (int) i.getLength() * -1));
+		}
+		else {
+			startDateChooser.setDate(
+					DateUtil.getBeginOfMonth(new Date(), (int) i.getLength() * -1));								
+		}			
+
+		
 		setVisibility();
 
 		//Call the method to add actions to the buttons
@@ -135,10 +156,12 @@ public class CustomDateDialog extends AbstractDialog {
 			mainLabel.setText(Translate.getInstance().get(TranslateKeys.REPORT_AS_OF_DATE));
 			middleLabel.setVisible(false);
 
-			if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
+			if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY)){
 				endDateChooser.setVisible(false);
-			else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
+			}
+			else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY)){
 				startDateChooser.setVisible(false);
+			}
 		}
 	}
 
@@ -179,9 +202,9 @@ public class CustomDateDialog extends AbstractDialog {
 
 				if (Const.DEVEL) Log.debug("Getting transactions between " + startDate + " and " + endDate);
 
-				BuddiPluginHelper.openNewPanelPluginWindow(plugin, startDate, endDate);
-
 				CustomDateDialog.this.setVisible(false);
+
+				BuddiPluginHelper.openNewPanelPluginWindow(plugin, startDate, endDate);
 			}
 		});
 

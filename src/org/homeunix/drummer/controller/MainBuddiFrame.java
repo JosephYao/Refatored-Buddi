@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 
 import net.roydesign.app.Application;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
@@ -34,6 +33,7 @@ import org.homeunix.drummer.view.MainBuddiFrameLayout;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.SwingWorker;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -131,7 +131,10 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 		});
 
-		if (Buddi.isMac()){
+		// The correct Mac behaviour is to keep the program running
+		// on a Window close; you must click Quit before the program 
+		// stops.  We do that here.
+		if (OperatingSystemUtil.isMac()){
 			getInstance().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			Application.getInstance().addReopenApplicationListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
@@ -275,9 +278,10 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 							else
 								fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
-							if (Buddi.isMac())
+							//Link to the correct download by default.
+							if (OperatingSystemUtil.isMac())
 								fileLocation += Const.DOWNLOAD_URL_DMG;
-							else if (Buddi.isWindows())
+							else if (OperatingSystemUtil.isWindows())
 								fileLocation += Const.DOWNLOAD_URL_ZIP;
 							else
 								fileLocation += Const.DOWNLOAD_URL_TGZ;

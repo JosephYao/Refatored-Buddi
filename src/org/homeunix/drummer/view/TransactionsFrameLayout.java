@@ -19,13 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.thecave.moss.gui.JSearchField;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
@@ -120,7 +120,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.toString());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //			clearSearchField.putClientProperty("Quaqua.Button.style", "square");

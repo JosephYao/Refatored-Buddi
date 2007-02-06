@@ -1,3 +1,9 @@
+2.1.10 (Feburuary 6 2007)
+-Fixed a display bug where budget categories deeper than 3 or 4 would not show.  Now the tree display column width is dynamically calculated, based on tree depth.
+-Updated BrowserLauncher to 1.0 version
+-Changed the Transaction window to have different columns for Debits and Credits (Request #1649969)
+-Misc. UI improvements (including Request #1649970, #1649972, #1651137)
+
 2.1.9 (February 1 2007)
 -Fixed a bug which would reset the creation date of an account when you modify the name / starting balance.  This would then result in the account not being properly used in net worth and other time senstive graphs.
 -Fixed the Date Format in Transactions Window bug

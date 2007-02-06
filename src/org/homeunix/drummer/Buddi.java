@@ -35,34 +35,7 @@ import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
  */
 public class Buddi {
 
-	private static Boolean isMac;
-	private static Boolean isWindows;
 	private static String workingDir;
-	private static final boolean UI_DEBUG = false;
-
-	/**
-	 * Is the program being run on a Macintosh?
-	 * @return <code>true</code> if Buddi is being run on a Mac, <code>false</code> otherwise. 
-	 */
-	public static boolean isMac(){
-		if (isMac == null){
-			isMac = !UI_DEBUG && System.getProperty("os.name").startsWith("Mac OS");
-		}
-
-		return isMac;
-	}
-
-	/**
-	 * Is the program being run on Windows?
-	 * @return <code>true</code> if Buddi is being run on Windows, <code>false</code> otherwise. 
-	 */
-	public static Boolean isWindows(){
-		if (isWindows == null){
-			isWindows = !UI_DEBUG && System.getProperty("os.name").startsWith("Windows");
-		}
-
-		return isWindows;
-	}
 
 	/**
 	 * Gets the current working directory.  This should be the same directory
@@ -107,6 +80,11 @@ public class Buddi {
 			);
 		}
 		 */
+		
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
+		System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
+		System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
 
 		MainBuddiFrame.getInstance().openWindow();
 	}

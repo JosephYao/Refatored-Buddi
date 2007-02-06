@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialog {
 	public static final long serialVersionUID = 0;
@@ -77,7 +77,7 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(doneButton);
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

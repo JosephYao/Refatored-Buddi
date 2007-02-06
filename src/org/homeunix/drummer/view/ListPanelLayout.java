@@ -21,7 +21,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -30,8 +29,9 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
 import org.homeunix.drummer.view.components.SourceNameCellRenderer;
 import org.homeunix.drummer.view.components.SourceTreeCellRenderer;
-import org.homeunix.drummer.view.components.SourceTreeTableModel;
+import org.homeunix.drummer.view.model.SourceTreeTableModel;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
@@ -66,13 +66,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
 		
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		
-		//TODO Try to make this automatically adjust based on depth
-		int treeColumnWidth = 100;
-		tree.getColumn(0).setMaxWidth(treeColumnWidth);
-		tree.getColumn(0).setMinWidth(treeColumnWidth);
-		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
-		
+				
 //		tree.getColumn(1).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 1));
 //		tree.getColumn(2).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 2));
 //		tree.packAll();
@@ -132,7 +126,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 
 		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 //			tree.putClientProperty("Quaqua.Table.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,3,12));
@@ -252,6 +246,12 @@ public abstract class ListPanelLayout extends AbstractPanel {
 	@Override
 	public AbstractPanel updateContent() {
 		tree.packAll();
+				
+		int treeColumnWidth = treeModel.getRoot().getDepth() * 15 + 15;
+		tree.getColumn(0).setMaxWidth(treeColumnWidth);
+		tree.getColumn(0).setMinWidth(treeColumnWidth);
+		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
+		
 		return this;
 	}
 

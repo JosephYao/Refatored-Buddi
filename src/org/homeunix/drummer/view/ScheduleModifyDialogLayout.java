@@ -18,7 +18,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -26,6 +25,7 @@ import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -347,7 +347,7 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 		}

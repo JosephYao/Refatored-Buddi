@@ -140,17 +140,16 @@ public class PluginFactory<T extends BuddiPlugin> {
 	public static Vector<String> getAllPluginsFromJar(File jarFile){
 		Vector<String> classNames = new Vector<String>();
 
-
 		for (JarEntry entry : JarLoader.getAllClasses(jarFile)) {
 			try {
-				if (Const.DEVEL) Log.debug("Loading " + entry.getName() + " (" + filesystemToClass(entry.getName()) + ")");
+				Log.debug("Loading " + entry.getName() + " (" + filesystemToClass(entry.getName()) + ")");
 				Object o = JarLoader.getObject(jarFile, filesystemToClass(entry.getName()));
 				if (o instanceof BuddiPlugin) {
-					if (Const.DEVEL) Log.info("Found BuddiPlugin: " + entry.getName());
+					Log.info("Found BuddiPlugin: " + entry.getName());
 					classNames.add(entry.getName());
 				}
 				else {
-					if (Const.DEVEL) Log.info("Not of type BuddiPlugin: " + o);
+					Log.info("Not of type BuddiPlugin: " + o);
 				}
 			}
 			catch (Exception e){

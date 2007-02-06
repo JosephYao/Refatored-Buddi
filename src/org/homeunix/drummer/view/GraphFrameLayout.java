@@ -21,7 +21,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -32,6 +31,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class GraphFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
@@ -68,7 +68,7 @@ public class GraphFrameLayout extends AbstractFrame {
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		}
 		

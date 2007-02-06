@@ -19,7 +19,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -34,6 +33,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -378,7 +378,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 				this.setText(sb.toString());
 			}
 
-			if (!Buddi.isMac()){
+			if (!OperatingSystemUtil.isMac()){
 				if (isSelected){
 					this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 				}

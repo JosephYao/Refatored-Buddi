@@ -19,12 +19,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -107,7 +107,7 @@ public class AboutDialog extends AbstractDialog {
 		inlayPanel.add(text, BorderLayout.CENTER);
 		inlayPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
-		if (Buddi.isMac()){
+		if (OperatingSystemUtil.isMac()){
 			inlayPanel.setBorder(BorderFactory.createTitledBorder(""));
 		}
 		

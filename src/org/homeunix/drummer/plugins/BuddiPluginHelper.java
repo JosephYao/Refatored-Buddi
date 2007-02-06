@@ -20,9 +20,9 @@ import org.homeunix.thecave.moss.util.Log;
 public class BuddiPluginHelper {
 	public static void openNewPanelPluginWindow(BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
 		if (plugin instanceof BuddiReportPlugin)
-			new ReportFrameLayout((BuddiReportPlugin) plugin, startDate, endDate).openWindow();
+			new ReportFrameLayout((BuddiReportPlugin) plugin, startDate, endDate).openWindow().requestFocusInWindow();
 		else if (plugin instanceof BuddiGraphPlugin)
-			new GraphFrameLayout((BuddiGraphPlugin) plugin, startDate, endDate).openWindow();
+			new GraphFrameLayout((BuddiGraphPlugin) plugin, startDate, endDate).openWindow().requestFocusInWindow();
 		else
 			Log.error("Incorrect plugin type: " + plugin.getClass().getName());
 

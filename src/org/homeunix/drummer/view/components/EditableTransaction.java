@@ -27,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
@@ -44,6 +43,7 @@ import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -134,43 +134,43 @@ public class EditableTransaction extends JPanel {
 		description.setPreferredSize(new Dimension(100, textHeight));
 		number.setPreferredSize(new Dimension(40, textHeight));
 
-		amount.setMinimumSize(new Dimension(50, textHeight));
-		amount.setMaximumSize(new Dimension(80, textHeight));
-		amount.setPreferredSize(new Dimension(70, textHeight));
+		amount.setMinimumSize(new Dimension(150, textHeight));
+		amount.setMaximumSize(new Dimension(180, textHeight));
+		amount.setPreferredSize(new Dimension(170, textHeight));
 		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
 		to.setPreferredSize(from.getPreferredSize());
 
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
 		
 		topPanel.add(date);
-		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
-		if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(number);
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-			if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
+			if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(cleared);
-			if (!Buddi.isMac()) topPanel.add(Box.createHorizontalStrut(3));
+			if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 			topPanel.add(reconciled);
 		}
 
 		bottomPanel.add(amount);
-		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(from);
-		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
-		if (!Buddi.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
 		bottomPanel.add(to);
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(topPanel);
-		if (!Buddi.isMac()) mainPanel.add(Box.createVerticalStrut(3));
+		if (!OperatingSystemUtil.isMac()) mainPanel.add(Box.createVerticalStrut(3));
 		mainPanel.add(bottomPanel);
 
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(mainPanel);
-		if (!Buddi.isMac()) this.add(Box.createHorizontalStrut(3));
+		if (!OperatingSystemUtil.isMac()) this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
 		
 		if (parent == null)

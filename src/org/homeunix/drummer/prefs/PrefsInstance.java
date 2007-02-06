@@ -29,6 +29,7 @@ import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 @SuppressWarnings("unchecked")
 public class PrefsInstance {
@@ -58,34 +59,10 @@ public class PrefsInstance {
 		listAttributesMap = new HashMap<String, ListAttributes>();
 		
 		if (location == null){
-			if (Buddi.isMac()){
-				location = 
-					System.getProperty("user.home") 
-					+ File.separator 
-					+ "Library" + File.separator 
-					+ "Application Support" 
-					+ File.separator 
-					+ "Buddi" + File.separator 
-					+ "prefs.xml";
-			}
-			else if (Buddi.isWindows()){
-
-				location = 
-					System.getProperty("user.home")
-                                        + File.separator
-                                        + "Application Data"
-                                        + File.separator
-                                        + "Buddi" + File.separator
-                                        + "prefs.xml";
-			}
-			else{ //Probably Linux / Unix...
-				location = 
-					System.getProperty("user.home") 
-					+ File.separator + ".buddi" + File.separator  
-					+ "prefs.xml";
-
-			}
+			//We use OperatingSystemUtil to define the correct location for preferences files.
+			location = OperatingSystemUtil.getPreferencesFile("Buddi", "prefs.xml").getAbsolutePath();
 		}
+		
 		File locationFile = new File(location).getAbsoluteFile();
 		if (!locationFile.canWrite() && locationFile.exists()){
 			JOptionPane.showMessageDialog(
