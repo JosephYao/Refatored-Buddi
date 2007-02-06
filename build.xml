@@ -12,9 +12,9 @@
 		<pathelement location="lib/jcommon-1.0.5.jar"/>
 		<pathelement location="lib/quaqua-3.6.11.jar"/>
 		<pathelement location="lib/jcalendar-1.3.2.jar"/>
-		<pathelement location="lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar"/>
-		<pathelement location="lib/emf/emf.ecore_2.2.1.v200609210005.jar"/>
-		<pathelement location="lib/emf/emf.common_2.2.1.v200609210005.jar"/>
+		<pathelement location="lib/emf/emf.ecore_2.2.2.v200702010000.jar"/>
+		<pathelement location="lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
+		<pathelement location="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
 		<pathelement location="lib/BrowserLauncher2-10rc4.jar"/>
 		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
 		<pathelement location="lib/truefilter-1.2.jar"/>
@@ -46,9 +46,9 @@
 			<!-- These are all the included files which normally would go on the classpath -->
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/> 
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200609210005.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.1.v200609210005.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.1.v200609210005.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200702010000.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcalendar-1.3.2.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
