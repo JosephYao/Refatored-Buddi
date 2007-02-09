@@ -5,6 +5,8 @@ package org.homeunix.drummer;
 
 import java.awt.Color;
 
+import javax.swing.JList;
+
 
 /**
  * A container for constants, used throughout the rest of the program.
@@ -17,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.1.10";
+	public static final String VERSION = "2.1.11";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -44,7 +46,9 @@ public class Const {
 	public final static String HELP_FILE = "index.html";
 	
 	//Colors
-	public final static Color COLOR_SELECTED = new Color(181, 213, 255); //new JList().getSelectionBackground();
+	public final static Color COLOR_SELECTED = new JList().getSelectionBackground(); // new Color(181, 213, 255);
+	public final static Color COLOR_SELECTED_TEXT = new JList().getSelectionForeground();
+	public final static Color COLOR_UNSELECTED_TEXT = new JList().getForeground();
 	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);
 	public final static Color COLOR_EVEN_ROW = new Color(237, 243, 254);
 	public final static Color COLOR_ODD_ROW = Color.WHITE;

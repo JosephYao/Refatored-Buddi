@@ -48,7 +48,7 @@ public class ExportHTML implements BuddiExportPlugin {
 
 				if (Const.DEVEL) Log.debug("Opening file...");
 				BrowserLauncher bl = new BrowserLauncher(null);
-				bl.openURLinBrowser("file://" + tempFile.getAbsolutePath().replaceAll(" ", "%20"));
+				bl.openURLinBrowser(tempFile.toURI().toURL().toString());
 				if (Const.DEVEL) Log.debug("Finished opening file...");
 			}
 			catch (Exception ex){

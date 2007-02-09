@@ -602,15 +602,18 @@ public class BuddiMenu extends JScreenMenuBar {
 //							+ PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "")
 							+ File.separator
 							+ Const.HELP_FILE);
-					final String location;
-					if (localHelp.exists())
-						location = "file://" + localHelp.getAbsolutePath().replaceAll(" ", "%20");
-					else
-						location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
-
-					if (Const.DEVEL) Log.debug("Trying to open Help at " + location + "...");
 					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(location);
+					if (localHelp.exists()) {
+//						location = "file://" + localHelp.getAbsolutePath().replaceAll(" ", "%20");
+						if (Const.DEVEL) Log.debug("Trying to open Help at " + localHelp.getAbsolutePath() + "...");
+						bl.openURLinBrowser(localHelp.toURI().toURL().toString());
+					}
+					else {
+						final String location = Const.PROJECT_URL + PrefsInstance.getInstance().getPrefs().getLanguage().replaceAll("-.*$", "") + "/index.php";
+						bl.openURLinBrowser(location);
+					}
+
+					
 				}
 				catch (Exception e){
 					Log.error(e);

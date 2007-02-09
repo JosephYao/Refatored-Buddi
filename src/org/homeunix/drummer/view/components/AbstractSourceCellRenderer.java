@@ -31,9 +31,11 @@ public abstract class AbstractSourceCellRenderer  extends JLabel implements Tabl
 	Object prepareTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		if (isSelected){
 			this.setBackground(Const.COLOR_SELECTED);
+			this.setForeground(Const.COLOR_SELECTED_TEXT);
 		}
 		else {
 			this.setBackground(Const.COLOR_TRANSPARENT);
+			this.setForeground(Const.COLOR_UNSELECTED_TEXT);
 		}
 
 		if (value == null){

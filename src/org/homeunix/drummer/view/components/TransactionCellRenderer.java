@@ -85,8 +85,11 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		if (isSelected){
 			this.setOpaque(true);
 			this.setBackground(Const.COLOR_SELECTED);
+			this.setForeground(Const.COLOR_SELECTED_TEXT);
 		}
 		else{
+			this.setForeground(Const.COLOR_UNSELECTED_TEXT);
+			
 			if (index % 2 == 0)
 				this.setBackground(Const.COLOR_EVEN_ROW);
 			else
