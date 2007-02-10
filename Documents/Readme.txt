@@ -31,6 +31,4 @@ For bug reports and feature requests, please use the designated form on the webs
 Cheers!
 
 Wyatt Olson
-<wyatt.olson@gmail.com>
-
-
+<wyatt.olson+buddi@gmail.com>

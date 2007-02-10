@@ -1,3 +1,12 @@
+2.1.12 (February 10 2007)
+-Final (?) revision on the Transaction window layout.  I feel that this new design is much easier to read, and does not display as much information (I removed the Number field, in addition to the Memo field removed earlier).  Many thanks to Rosanne for suggesting new layouts, working off my suggestions, etc.
+-Fixed bug 1653640, where extra characters show in the documents accessed via Help menu.  Thanks to JST for pointing out where the bug was.
+
+2.1.11 (February 8 2007)
+-Fixed a problem with the HTML export on Windows
+-Corrected the highlight color of text
+-Changed the layout of cells in the Transaction window, to (hopefully) make the values more clear
+
 2.1.10 (Feburuary 6 2007)
 -Fixed a display bug where budget categories deeper than 3 or 4 would not show.  Now the tree display column width is dynamically calculated, based on tree depth.
 -Updated BrowserLauncher to 1.0 version

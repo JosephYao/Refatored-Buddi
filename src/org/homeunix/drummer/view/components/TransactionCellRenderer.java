@@ -102,8 +102,8 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 	/**
 	 * Draws the transaction in HTML in the JLabel.
 	 * The table is organized as follows:
-	 * 20%	45%		15% 15%
-	 * 20%	60%			20%
+	 * 20%	80%
+	 * 5% 45%	15% 15%	20%
 	 * 
 	 * The width of the entire table is determined by the width of the JList.
 	 * @param transaction
@@ -114,16 +114,45 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			sb.delete(0, sb.length());
 
 		sb.append("<html><table width='" + (width - 20) + "'><tr><td colspan='4' width='20%'>");
-		if (transaction != null)
+		if (transaction != null) {
 			sb.append(Formatter.getInstance().getDateFormat().format(transaction.getDate()));
-		sb.append("</td><td colspan='10' width='50%'>");
-		if (transaction != null)
-			sb.append(Formatter.getInstance().getLengthFormat(width / 16).format(transaction.getDescription()));
-		else
+		}
+		
+		sb.append("</td><td colspan='16' width='80%'>");
+		if (transaction != null) {
+			sb.append(Formatter.getInstance().getLengthFormat(width / 10).format(transaction.getDescription()));
+		}
+		else {
 			sb.append("<font color='gray'>")
 			.append(Translate.getInstance().get(TranslateKeys.NEW_TRANSACTION))
 			.append("</font>");
+		}
 
+//		sb.append("</td><td colspan='5' width='25%'>");
+//		if (transaction != null){
+//			sb.append(Formatter.getInstance().getLengthFormat(width / 20).format(transaction.getNumber()));
+//		}
+
+		sb.append("</td></tr><tr><td colspan='2' width='10%'>");
+		if (transaction != null){
+			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
+				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
+			}
+		}
+		
+		sb.append("</td><td colspan='8' width='40%'>");
+		if (transaction != null){
+			sb.append(Formatter.getInstance().getLengthFormat(width / 17).format(
+					transaction.getFrom() 
+					+ " " 
+					+ Translate.getInstance().get(TranslateKeys.TO)
+					+ " "
+					+ transaction.getTo()
+			));	
+		}
+
+		
 		//We have two columns here - one for debits, one for credits.
 		// Debits is on the left, credits on the right.
 		sb.append("</td><td align='right' colspan='3' width='15%'>");
@@ -131,8 +160,10 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
-				sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
+				sb.append("<font color='red'>")
+				.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0))
+				.append("</font>");
 			}
 		}
 
@@ -141,29 +172,13 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
+//				sb.append("<font color='red'>")
 				sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
+//				.append("</font>");
 			}
 		}
 
-		sb.append("</td></tr><tr><td colspan='4' width='20%'>");
-		if (transaction != null){
-			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
-				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
-			}
-			sb.append(Formatter.getInstance().getLengthFormat(width / 40).format(transaction.getNumber()));
-		}
-		sb.append("</td><td colspan='12' width='60%'>");
-		if (transaction != null){
-			sb.append(Formatter.getInstance().getLengthFormat(width / 16).format(
-					transaction.getFrom() 
-					+ " " 
-					+ Translate.getInstance().get(TranslateKeys.TO)
-					+ " "
-					+ transaction.getTo()
-			));	
-		}
 		sb.append("</td><td align='right' colspan='4' width='20%'>");
 		if (transaction != null){
 			long balanceValue;
