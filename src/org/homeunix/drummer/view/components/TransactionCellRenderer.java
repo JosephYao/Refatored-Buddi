@@ -120,7 +120,7 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		
 		sb.append("</td><td colspan='16' width='80%'>");
 		if (transaction != null) {
-			sb.append(Formatter.getInstance().getLengthFormat(width / 10).format(transaction.getDescription()));
+			sb.append(Formatter.getInstance().getLengthFormat(width / 9).format(transaction.getDescription()));
 		}
 		else {
 			sb.append("<font color='gray'>")
@@ -133,17 +133,17 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 //			sb.append(Formatter.getInstance().getLengthFormat(width / 20).format(transaction.getNumber()));
 //		}
 
-		sb.append("</td></tr><tr><td colspan='2' width='10%'>");
+		sb.append("</td></tr><tr><td colspan='1' width='5%'>");
 		if (transaction != null){
 			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
 				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
-				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : "  "));
+				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : ""));
 			}
 		}
 		
-		sb.append("</td><td colspan='8' width='40%'>");
+		sb.append("</td><td colspan='9' width='45%'>");
 		if (transaction != null){
-			sb.append(Formatter.getInstance().getLengthFormat(width / 17).format(
+			sb.append(Formatter.getInstance().getLengthFormat(width / 16).format(
 					transaction.getFrom() 
 					+ " " 
 					+ Translate.getInstance().get(TranslateKeys.TO)
