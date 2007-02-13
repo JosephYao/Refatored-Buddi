@@ -264,12 +264,14 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				t.setCleared(editableTransaction.isCleared());
 				t.setReconciled(editableTransaction.isReconciled());
 
-				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD)))
-//					DataInstance.getInstance().addTransaction(t);
+				if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD))) {
 					baseModel.add(t);
+				}
 				else {
-					DataInstance.getInstance().calculateAllBalances();
-					DataInstance.getInstance().saveDataModel();
+					//These should not be needed anymore, as it is done
+					// within the baseModel.update() method
+//					DataInstance.getInstance().calculateAllBalances();
+//					DataInstance.getInstance().saveDataModel();
 					baseModel.update(t, model);
 				}
 
@@ -606,7 +608,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 
 	/**
-	 * Force an update of every transaction window  
+	 * Force an update of every transaction window.
+	 * 
+	 * To plugin writers: you probably don't need to call this manually;
+	 * instead, register all changes to Transactions with the methods
+	 * addToTransactionListModel(), removeFromTransactionListModel(), and
+	 * updateTransactionListModel().  This should fire updates in all open
+	 * windows as well as save the data model, do misc. housecleaning, etc.
 	 */
 	public static void updateAllTransactionWindows(){
 		for (TransactionsFrameLayout tfl : Collections.unmodifiableCollection(transactionInstances.values())) {
@@ -648,5 +656,49 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 	public void clickDelete(){
 		deleteButton.doClick();
+	}
+	
+	/**
+	 * After creating a new Transaction via DataInstance.getInstance().getDataModelFactory().createTransaction(),
+	 * and filling in all the needed details, you call this method to
+	 * add it to the data model and update all windows automatically.
+	 * 
+	 * Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
+	 * you will not update the windows properly.
+	 * @param t Transaction to add to the data model
+	 */
+	public static void addToTransactionListModel(Transaction t){
+		baseModel.add(t);
+	}
+	
+	/**
+	 * Remove a transaction from the data model and all open windows.
+	 * 
+	 * Note that you should *not* call DataInstance.getInstance().deleteTransaction() directly, as
+	 * you will not update the windows properly.
+	 * @param t Transaction to delete
+	 * @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
+	 * don't have this, you can use null, although you should be aware that there may be some
+	 * problems updating transaction windows with the new data, as the windows will not
+	 * have the update() method called on their FilteredDynamicListModels. 
+	 */
+	public static void removeFromTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
+		baseModel.remove(t, fdlm);
+	}
+	
+	/**
+	 * Notifies all windows that a transaction has been updated.  If you 
+	 * change a transaction and do not register it here after all the changes
+	 * are complete, you will not get the transaction updated in the 
+	 * Transaction windows.
+	 * 
+	 * @param t Transaction to update
+	 * @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
+	 * don't have this, you can use null, although you should be aware that there may be some
+	 * problems updating transaction windows with the new data, as the windows will not
+	 * have the update() method called on their FilteredDynamicListModels. 
+	 */
+	public static void updateTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
+		baseModel.update(t, fdlm);
 	}
 }

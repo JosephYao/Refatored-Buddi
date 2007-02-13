@@ -86,7 +86,8 @@ public class TransactionListModel extends AbstractListModel {
 	 */
 	public void remove(Transaction t, FilteredDynamicListModel fdlm){
 		DataInstance.getInstance().deleteTransaction(t);
-		fdlm.update();
+		if (fdlm != null)
+			fdlm.update();
 		DataInstance.getInstance().saveDataModel();
 	}
 	
@@ -99,8 +100,9 @@ public class TransactionListModel extends AbstractListModel {
 	 */
 	public void update(Transaction t, FilteredDynamicListModel fdlm){
 		ECollections.sort(this.transactions);
-		t.calculateBalance();
-		fdlm.update();
+		DataInstance.getInstance().calculateAllBalances();
+		if (fdlm != null)
+			fdlm.update();
 		DataInstance.getInstance().saveDataModel();
 	}
 	
