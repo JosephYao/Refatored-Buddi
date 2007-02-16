@@ -64,6 +64,9 @@ public class DataInstance {
 		((AESCryptoCipher) cipher).setEncrypted(encrypted);
 	}
 
+	/**
+	 * Creates a new data instance.
+	 */
 	private DataInstance(){
 		File dataFile = null;
 
@@ -127,6 +130,12 @@ public class DataInstance {
 		loadDataModel(dataFile, false);
 	}
 
+	/**
+	 * Loads the given datafile.
+	 * @param locationFile Data file to load
+	 * @param forceNewFile If true, create a new data file at the given location (overwriting
+	 * the file currently there, if any).  If false, load the data file. 
+	 */
 	public void loadDataModel(File locationFile, boolean forceNewFile){
 		// throw away the old cipher (if any) when we load a new data file
 		this.cipher = new AESCryptoCipher(128);
@@ -347,10 +356,17 @@ public class DataInstance {
 		}
 	}
 
+	/**
+	 * Saves the data model in XML format to the default location currently stored in the preferences.
+	 */
 	public void saveDataModel(){
 		saveDataModel(PrefsInstance.getInstance().getPrefs().getDataFile());
 	}
 
+	/**
+	 * Saves the data model in XML format to the given location.
+	 * @param location Location to save the date model to.
+	 */
 	synchronized public void saveDataModel(final String location){
 //		new SwingWorker(){
 //		@Override
@@ -384,30 +400,63 @@ public class DataInstance {
 	}
 
 
+	/**
+	 * Returns the date model instance.  Useful for doing low level operations
+	 * for which there is no helper function in this class.  Note that when 
+	 * modifying the data model directly, there are generally no safeguards.
+	 * Be sure to verify your input, at the risk of corrupting the model
+	 * and losing all data!
+	 * @return
+	 */
 	public DataModel getDataModel(){
 		return dataModel;
 	}
 
+	/**
+	 * Returns an instance of the data model factory, for use in 
+	 * creating different model objects.
+	 * @return
+	 */
 	public ModelFactory getDataModelFactory(){
 		return dataModelFactory;
 	}
 
+	/**
+	 * Forces an update of all the balances.  This O(n) operation can
+	 * take a while with large models; use sparingly if possible
+	 */
 	public void calculateAllBalances(){
 		for (Account a : getAccounts()){
 			a.calculateBalance();
 		}
 	}
 
+	/**
+	 * Adds the specified account to the model.  This should be already 
+	 * created using the ModelFactory.
+	 * @param a Account to add
+	 */
 	public void addAccount(Account a){
 		getDataModel().getAllAccounts().getAccounts().add(a);
 		saveDataModel();
 	}
 
+	/**
+	 * Adds the specified category to the model.  This should be already 
+	 * created using the ModelFactory.
+	 * @param c Category to add
+	 */
 	public void addCategory(Category c){
 		getDataModel().getAllCategories().getCategories().add(c);
 		saveDataModel();
 	}
 
+	/**
+	 * Adds a new type to the data model.  This type is what will show
+	 * up in the New Account window.
+	 * @param name The user-readable name (or the translation key, if it is a translated term)
+	 * @param credit Is this a Credit type? 
+	 */
 	public void addType(String name, boolean credit){
 		Type t = getDataModelFactory().createType();
 		t.setName(name);
@@ -430,6 +479,14 @@ public class DataInstance {
 	}
 
 
+	/**
+	 * Deletes the given source by setting the deleted flag to true.  If 
+	 * you are writing a plugin which must delete a source (why, I don't 
+	 * know, but there may be some situation in which this is desired),
+	 * you are probably better off using this method.  This method can
+	 * be undone with the undeleteSource() method. 
+	 * @param s
+	 */
 	public void deleteSource(Source s){
 		s.setDeleted(true);
 		if (s instanceof Category) {
@@ -444,9 +501,32 @@ public class DataInstance {
 		saveDataModel();
 	}
 
+	/**
+	 * Permanently removes the source from the model.  If the source has
+	 * children, recursively remove them too.  THIS IS A POTENTIALLY
+	 * DANGEROUS OPERATION!  This method does not check for sanity of the
+	 * data model after removing the sources.  If there are transactions
+	 * or other objects which reference this source, it WILL CORRUPT THE
+	 * DATA MODEL.  
+	 * 
+	 * Plugin writers: it is very unlikely that this is the method that you
+	 * want to call.  A much safer method is deleteSource(), which only
+	 * marks the sources as deleted, and does not remove them from the 
+	 * model completely.
+	 * @param s
+	 */
 	public void deleteSourcePermanent(Source s){
 		if (s instanceof Category) {
 			Category c = (Category) s;
+			if (c.getParent() != null){
+				c.getParent().getChildren().remove(c);
+			}
+			for (Object o: c.getChildren()) {
+				if (o instanceof Category){
+					Category child = (Category) o;
+					deleteSourcePermanent(child);
+				}
+			}
 			getDataModel().getAllCategories().getCategories().remove(c);
 		}
 		else if (s instanceof Account) {
@@ -473,6 +553,10 @@ public class DataInstance {
 		}
 	}
 
+	/**
+	 * Sets the Deleted flag of the given source to false.
+	 * @param s
+	 */
 	public void undeleteSource(Source s){
 		s.setDeleted(false);
 		if (s instanceof Category) {
@@ -487,24 +571,40 @@ public class DataInstance {
 		saveDataModel();
 	}
 
+	/**
+	 * Returns all accounts in the model, sorted according to the Account comparator
+	 * @return All accounts in the currently loaded data model
+	 */
 	public Vector<Account> getAccounts(){
 		Vector<Account> v = new Vector<Account>(getDataModel().getAllAccounts().getAccounts());
 		Collections.sort(v);
 		return v;
 	}
 
+	/**
+	 * Returns all categories in the model, sorted according to the Category comparator
+	 * @return All categories in the currently loaded data model
+	 */
 	public Vector<Category> getCategories(){
 		Vector<Category> v = new Vector<Category>(getDataModel().getAllCategories().getCategories());
 		Collections.sort(v);
 		return v;
 	}
 
+	/**
+	 * Returns all types in the model, sorted according to the Type comparator
+	 * @return All types in the currently loaded data model
+	 */
 	public Vector<Type> getTypes(){
 		Vector<Type> v = new Vector<Type>(getDataModel().getAllTypes().getTypes());
 		Collections.sort(v);
 		return v;
 	}
 
+	/**
+	 * Returns all transactions in the model, sorted according to the Transaction comparator
+	 * @return All transactions in the currently loaded data model
+	 */
 	public Vector<Transaction> getTransactions(){
 		Vector<Transaction> transactions = new Vector<Transaction>(getDataModel().getAllTransactions().getTransactions());
 		Collections.sort(transactions);
@@ -531,7 +631,7 @@ public class DataInstance {
 
 	/**
 	 * Returns all transactions within a given time frame.  Must match all
-	 * time arguments (excluding null arguments)
+	 * given time arguments; set an argument to null to ignore
 	 * @param source
 	 * @param year
 	 * @param month
@@ -556,6 +656,13 @@ public class DataInstance {
 		return v;
 	}
 
+	/**
+	 * Returns all transactions which meet the given criteria
+	 * @param description Only return transactions matching this description
+	 * @param startDate Only return transactions happening after this
+	 * @param endDate Only return transactions happening before this
+	 * @return
+	 */
 	public Vector<Transaction> getTransactions(String description, Date startDate, Date endDate){
 		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
 		Vector<Transaction> transactions = new Vector<Transaction>();
@@ -568,6 +675,13 @@ public class DataInstance {
 		return transactions;
 	}
 
+	/**
+	 * Returns all transactions which meet the given criteria
+	 * @param isIncome Does the transaction represent income?
+	 * @param startDate Only return transactions happening after this
+	 * @param endDate Only return transactions happening before this
+	 * @return
+	 */
 	public Vector<Transaction> getTransactions(Boolean isIncome, Date startDate, Date endDate){
 		Vector<Transaction> allTransactions = getTransactions(startDate, endDate);
 		Vector<Transaction> transactions = new Vector<Transaction>();
@@ -588,6 +702,14 @@ public class DataInstance {
 	}
 
 	//TODO Test boundary conditions: does this overlap dates or not?
+	/**
+	 * Return all transactions related to the given source which are 
+	 * between startDate and endDate
+	 * @param source Returned transactions must be either to or from this source
+	 * @param startDate Only return transactions happening after this
+	 * @param endDate Only return transactions happening before this
+	 * @return
+	 */
 	public Vector<Transaction> getTransactions(Source source, Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions(source);
 		Vector<Transaction> v = new Vector<Transaction>();
@@ -605,6 +727,12 @@ public class DataInstance {
 
 	//TODO Test boundary conditions: does this overlap dates or not?
 	// Update - I think that is should be working....
+	/**
+	 * Returns all transactions between start and end
+	 * @param startDate Only return transactions happening after this
+	 * @param endDate Only return transactions happening before this
+	 * @return
+	 */
 	public Vector<Transaction> getTransactions(Date startDate, Date endDate){
 		Vector<Transaction> transactions = getTransactions();
 		Vector<Transaction> v = new Vector<Transaction>();
@@ -620,13 +748,41 @@ public class DataInstance {
 		return v;
 	}
 
+	/**
+	 * Returns all scheduled transactions
+	 * @return A vector of all scheduled transactions
+	 */
 	public Vector<Schedule> getScheduledTransactions(){
 		Vector<Schedule> v = new Vector<Schedule>(dataModel.getAllTransactions().getScheduledTransactions());
 		Collections.sort(v);
 		//System.out.println(v);
 		return v;
 	}
-	//Integer scheduleWeek, Integer scheduleMonth have been added for the multiple weeks in a month and multiple weeks in a year options
+
+	
+	/**
+	 * Adds a new schedule to the model.  Since there are a number of fields
+	 * which MUST be set, we prompt for all of them, instead of relying on the
+	 * calling code to set them all.
+	 * 
+	 * The required objects for this are not obvious at first, and may
+	 * require some interpretation.  Plugin developers: if you need to
+	 * use this method, check the offical Buddi code which calls it
+	 * to see the correct methods and values. 
+	 * 
+	 * @param name Human readable name (which will show up in the list)
+	 * @param startDate Date which the schedule is effective
+	 * @param endDate Date which the schedule expires (not currently used)
+	 * @param frequencyType The type of frequency.  The options for this are 
+	 * in TranslateKeys; unfortunately, there is no good way of checking which is 
+	 * used for FrequencyType and which is not.  You can look in MainBuddiFrame.updateScheduledTransactions()
+	 * for a list of which ones we check for.
+	 * @param scheduleDay The day the schedule is one.  The meanings of the values 
+	 * for this will differ depending on frequencyType.
+	 * @param scheduleWeek Used for multiple weeks in a month option
+	 * @param scheduleMonth Used for multiple months in a yeah option
+	 * @param transaction The transaction to base new scheduled transactions off of
+	 */
 	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Integer scheduleWeek,Integer scheduleMonth, Transaction transaction){
 		Schedule s = dataModelFactory.createSchedule();
 		s.setScheduleName(name);
@@ -647,10 +803,24 @@ public class DataInstance {
 		saveDataModel();
 	}
 
+	/**
+	 * Removes a schedule from the data model.
+	 * @param s
+	 */
 	public void removeSchedule(Schedule s){
 		dataModel.getAllTransactions().getScheduledTransactions().remove(s);
 	}
 
+	/**
+	 * Returns all scheduled transactions who meet the following criteria: 
+	 * 
+	 * 1) Start date is before today
+	 * 2) Last date created is before today (or is not yet set).
+	 * 
+	 * This is used at startup when determining which scheduled transactions
+	 * we need to check and possibly add.
+	 * @return
+	 */
 	public Vector<Schedule> getScheduledTransactionsBeforeToday(){
 		Vector<Schedule> v = getScheduledTransactions();
 		Vector<Schedule> newV = new Vector<Schedule>();
@@ -665,6 +835,12 @@ public class DataInstance {
 		return newV;
 	}
 	
+	/**
+	 * Prompts the user for a new data file.  Should probably not be in 
+	 * this class (fits more in the view package), but since we can
+	 * only call it from here, and we want it to be private, it will
+	 * have to do. 
+	 */
 	private void promptForNewDataFile(){
 		final JFileChooser jfc = new JFileChooser();
 		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
