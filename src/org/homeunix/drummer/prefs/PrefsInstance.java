@@ -346,7 +346,7 @@ public class PrefsInstance {
 		for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
 			if (o instanceof Plugin){
 				Plugin plugin = (Plugin) o;
-				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + Buddi.getWorkingDir(), ""));
+				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + workingDirectoryRegex, ""));
 			}
 		}
 		
