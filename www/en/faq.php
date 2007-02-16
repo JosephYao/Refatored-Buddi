@@ -2,9 +2,26 @@
 
 <h1>Frequently Asked Questions</h1>
 
+<h2>How do I install Buddy?</h2>
+<p>
+There is no need to install Buddi; it is a standalong executable.  Just copy it to where ever you want it to stay (I recommend C:\Program Files\Buddi\ if you are on Windows, or /Applications if you are on a Mac, but you can run it from anywhere).  On its first execution, it will create preference files (see 'How do I uninstall Buddi?' for the location of these files).  That's all!
+</p>
+
 <h2>How do I launch the program?</h2>
 <p>
 That depends on what operating system you are running.  If you are in Windows, simply double click on the Buddi.jar file.  If you are on a Macintosh, double click on the Buddi application bundle.  If you are on Linux or some other platform where the association of .jar to the Java VM has not been set up, type 'java -jar Buddi.jar' on the command line.
+</p>
+
+
+<h2>How do I uninstall Buddi?</h2>
+<p>
+Since I don't use an installer, I do not write anything to the registry, and thus you don't need an uninstaller program.  To uninstall, you can simply remove the Buddi executable (either .exe, .jar, or .app depending on your operating system).
+</p>
+<p>
+The only files which Buddi writes to the hard drive are your data files (Data.*.buddi), and the Preferences file (prefs.xml).  You chose the location of the data files; the preferences file is located differently depending on your operating system.  If you are running on Windows, it will be in C:\Documents and Settings\<user name>\Application Data\Buddi.  If you are running on a Mac, it will be in /Users/<user name>/Library/Application Support/Buddi.  If you are on a different operating system, it will be under ~/.buddi.  Regardless of where it is, you can remove the entire Buddi / .buddi folder if you desire.
+</p>
+<p>
+If you choose to not use Buddi after trying it for a while, I would like to know why.  Please drop me an email, or leave a post on the forums, so that I can improve Buddi for future users.
 </p>
 
 <h2>How can I password protect / encrypt my data?</h2>
@@ -55,6 +72,7 @@ This should work; if it does not, try repeating these steps again, but using Dat
 Sure thing!  Buddi is released under the GNU General Public License, which is completely compatible with being used in businesses.
 Of course, if you do make money from using Buddi, I would hope that you strongly consider sending me a donation.
 </p>
+
 
 <h2>Why doesn't Buddi do X?  I want it to do X!</h2>
 <p>
