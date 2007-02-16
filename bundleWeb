@@ -49,9 +49,10 @@ rm -rf $HELPDIR/inc
 rm -rf $HELPDIR/*/.svn
 rm -rf $HELPDIR/*/*/.svn
 
-if [ "$1" == "--local" ]; then
-	DATE=`date "+%Y-%m-%d"`
-	tar -czvf Help_$DATE.tgz $HELPDIR
+if [ "$1" == "--release" ]; then
+	DATE=`date "+%Y.%m.%d"`
+	FILENAME="Help-$DATE.tgz"
+	tar -czvf FILENAME $HELPDIR
 
 	# Upload release files
 	USER=anonymous
@@ -59,12 +60,13 @@ if [ "$1" == "--local" ]; then
 	ftp -n upload.sf.net << END_OF_FTP
 user $USER $PASS
 cd /incoming
-lcd $DEST
 bin
-put Help_$DATE.tgz
+put $FILENAME
 bye
 END_OF_FTP
 	echo Upload Complete
+
+	rm $FILENAME
 else
 	#Tar the pages
 	cd $WWWDIR
