@@ -80,28 +80,33 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		
 		check = new JCheckBox(Translate.getInstance().get(TranslateKeys.INCOME));
 		
-		JPanel textPanel = new JPanel(new GridLayout(0, 2));
-		textPanel.add(nameLabel);
-		textPanel.add(name);
+		JPanel textPanel = new JPanel(new BorderLayout());
+		JPanel textPanelLeft = new JPanel(new GridLayout(0, 1));
+		JPanel textPanelRight = new JPanel(new GridLayout(0, 1));
+		textPanel.add(textPanelLeft, BorderLayout.WEST);
+		textPanel.add(textPanelRight, BorderLayout.EAST);
+		
+		textPanelLeft.add(nameLabel);
+		textPanelRight.add(name);
 		if (!this.getClass().equals(TypeModifyDialog.class)){
-			textPanel.add(pulldownLabel);
-			textPanel.add(pulldown);
-			textPanel.add(amountLabel);
-			textPanel.add(amount);
+			textPanelLeft.add(pulldownLabel);
+			textPanelRight.add(pulldown);
+			textPanelLeft.add(amountLabel);
+			textPanelRight.add(amount);
 			if (this.getClass().equals(AccountModifyDialog.class)){
 				if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit()){
-					textPanel.add(creditLimitLabel);
-					textPanel.add(creditLimit);
+					textPanelLeft.add(creditLimitLabel);
+					textPanelRight.add(creditLimit);
 				}
 				if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()){
-					textPanel.add(interestRateLabel);
-					textPanel.add(interestRate);
+					textPanelLeft.add(interestRateLabel);
+					textPanelRight.add(interestRate);
 				}
 			}
 		}
 		if (!this.getClass().equals(AccountModifyDialog.class)){
-			textPanel.add(gap);
-			textPanel.add(check);
+			textPanelLeft.add(gap);
+			textPanelRight.add(check);
 		}
 		
 		JPanel textPanelSpacer = new JPanel();

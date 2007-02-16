@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.view.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.swing.AbstractListModel;
@@ -63,6 +64,21 @@ public class TransactionListModel extends AbstractListModel {
 	}
 	
 	//*** Data Access methods
+	/**
+	 * Adds a collection of new transactions to the model.  Mostly used
+	 * for importing transactions, as you won't need to update the 
+	 * windows after each addition.
+	 * @param transactions A collection of transactions
+	 */
+	public void add(Collection<Transaction> transactions){
+		for (Transaction t : transactions) {
+			DataInstance.getInstance().addTransaction(t);	
+		}
+		ECollections.sort(this.transactions);
+		this.fireIntervalAdded(this, 0, this.getSize() - 1);
+		DataInstance.getInstance().saveDataModel();		
+	}
+	
 	/**
 	 * Adds a new transaction to the model.  You should use this method
 	 * instead of DataInstance to ensure that all transactions frames 

@@ -1,3 +1,10 @@
+2.1.13 (February 15 2007)
+-Fixed bug which could potentially corrupt data files
+-Fixed bug which did not allow loading of plugins on Windows
+-Added Javadocs to all methods in DataInstance, to better help plugin developers
+-Fixed GUI bug where dialogs for creating / editing Accounts and Categories had large gap if there existed Accounts / Categories with very long names
+-Added method to TransactionFrame to allow adding multiple transactions at once.  This should avoid the need to update the window multiple times for simple imports.
+
 2.1.12 (February 10 2007)
 -Final (?) revision on the Transaction window layout.  I feel that this new design is much easier to read, and does not display as much information (I removed the Number field, in addition to the Memo field removed earlier).  Many thanks to Rosanne for suggesting new layouts, working off my suggestions, etc.
 -Fixed bug 1653640, where extra characters show in the documents accessed via Help menu.  Thanks to JST for pointing out where the bug was.

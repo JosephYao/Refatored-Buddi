@@ -12,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
@@ -656,6 +657,20 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 	public void clickDelete(){
 		deleteButton.doClick();
+	}
+	
+	/**
+	 * After creating a Collection of new Transactions via 
+	 * DataInstance.getInstance().getDataModelFactory().createTransaction(),
+	 * and filling in all the needed details, you call this method to
+	 * add them to the data model and update all windows automatically.
+	 * 
+	 * Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
+	 * you will not update the windows properly.
+	 * @param t Transaction to add to the data model
+	 */
+	public static void addToTransactionListModel(Collection<Transaction> transactions){
+		baseModel.add(transactions);
 	}
 	
 	/**
