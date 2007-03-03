@@ -1,3 +1,8 @@
+2.2.0 (March 2 2007)
+-Improved display of Accounts and Budget Categories
+-Addition of a much improved Scheduled Transactions dialog (thanks to NCSU students Nicky and Abhik for their help with this)
+-Misc. GUI improvements and tweaks
+
 2.1.13 (February 15 2007)
 -Fixed bug which could potentially corrupt data files
 -Fixed bug which did not allow loading of plugins on Windows
