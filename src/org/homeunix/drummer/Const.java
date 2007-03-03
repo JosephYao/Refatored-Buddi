@@ -19,9 +19,9 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.2.0";
-	public static final String BRANCH = STABLE;
-	public static final boolean DEVEL = false;
+	public static final String VERSION = "2.3.0";
+	public static final String BRANCH = UNSTABLE;
+	public static final boolean DEVEL = true;
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
