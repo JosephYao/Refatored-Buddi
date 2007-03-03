@@ -29,8 +29,17 @@ Downloads
 <li><a href='http://buddi.sourceforge.net/buddi.dmg' target='_top'>Macintosh</a></li>
 <li><a href='http://buddi.sourceforge.net/buddi.zip' target='_top'>Windows</a></li>
 <li><a href='http://buddi.sourceforge.net/buddi.tgz' target='_top'>Linux / Other</a></li>
-<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=890840' target='top'>Plugins</a></li>
+<li><a href='http://sourceforge.net/project/showfiles.php?group_id=167026&package_id=221034' target='top'>Plugins</a></li>
 </ul></li>
+<br>
+Support
+<li>
+<ul>
+<li><a href='http://sourceforge.net/forum/?group_id=167026' target='_top'>Forums</a></li>
+<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841302' target='_top'>Bugs</a></li>
+<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841305' target='_top'>Feature Requests</a></li>
+</ul>
+</li>
 <br>
 How to use Buddi:
 <li>
@@ -47,14 +56,6 @@ How to use Buddi:
 </ul>
 </li>
 <br>
-Support
-<li>
-<ul>
-<li><a href='http://sourceforge.net/forum/?group_id=167026' target='_top'>Forums</a></li>
-<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841302' target='_top'>Bugs</a></li>
-<li><a href='http://sourceforge.net/tracker/?group_id=167026&atid=841305' target='_top'>Feature Requests</a></li>
-</ul>
-</li>
 
 <li><a href='./thanks.php'>Thanks</a></li>
 <li><a href='./links.php'>Links</a></li>

@@ -2,7 +2,7 @@
 
 <h1>Frequently Asked Questions</h1>
 
-<h2>How do I install Buddy?</h2>
+<h2>How do I install Buddi?</h2>
 <p>
 There is no need to install Buddi; it is a standalong executable.  Just copy it to where ever you want it to stay (I recommend C:\Program Files\Buddi\ if you are on Windows, or /Applications if you are on a Mac, but you can run it from anywhere).  On its first execution, it will create preference files (see 'How do I uninstall Buddi?' for the location of these files).  That's all!
 </p>
@@ -18,7 +18,7 @@ That depends on what operating system you are running.  If you are in Windows, s
 Since I don't use an installer, I do not write anything to the registry, and thus you don't need an uninstaller program.  To uninstall, you can simply remove the Buddi executable (either .exe, .jar, or .app depending on your operating system).
 </p>
 <p>
-The only files which Buddi writes to the hard drive are your data files (Data.*.buddi), and the Preferences file (prefs.xml).  You chose the location of the data files; the preferences file is located differently depending on your operating system.  If you are running on Windows, it will be in C:\Documents and Settings\<user name>\Application Data\Buddi.  If you are running on a Mac, it will be in /Users/<user name>/Library/Application Support/Buddi.  If you are on a different operating system, it will be under ~/.buddi.  Regardless of where it is, you can remove the entire Buddi / .buddi folder if you desire.
+The only files which Buddi writes to the hard drive are your data files (Data.*.buddi), and the Preferences file (prefs.xml).  You chose the location of the data files; the preferences file is located differently depending on your operating system.  If you are running on Windows, it will be in C:\Documents and Settings\&lt;user name&gt;\Application Data\Buddi.  If you are running on a Mac, it will be in /Users/&lt;user name&gt;/Library/Application Support/Buddi.  If you are on a different operating system, it will be under ~/.buddi.  Regardless of where it is, you can remove the entire Buddi / .buddi folder if you desire.
 </p>
 <p>
 If you choose to not use Buddi after trying it for a while, I would like to know why.  Please drop me an email, or leave a post on the forums, so that I can improve Buddi for future users.

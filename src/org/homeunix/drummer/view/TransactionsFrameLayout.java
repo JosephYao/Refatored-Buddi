@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,19 +23,22 @@ import javax.swing.ListSelectionModel;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.thecave.moss.gui.JSearchField;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
 	public static final long serialVersionUID = 0;
 
 	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();
-	
+
 	protected final JList list;
 	protected final JScrollPane listScroller;
-	
+
 	protected final EditableTransaction editableTransaction;
 	protected final JButton recordButton;
 	protected final JButton clearButton;
@@ -42,37 +46,83 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JSearchField searchField;
 	protected final JComboBox dateRangeComboBox;
 	protected final JLabel creditRemaining;
-	
+
 	public TransactionsFrameLayout(Account account){
 		if (transactionInstances.get(account) != null)
 			transactionInstances.get(account).setVisible(false);
 
 		transactionInstances.put(account, this);
-		
+
 		//Set up the transaction list
-		list = new JList();
+		list = new JList(){
+			public final static long serialVersionUID = 0;
+
+			@Override
+			public String getToolTipText(MouseEvent event) {
+				int i = locationToIndex(event.getPoint());
+				Object o = getModel().getElementAt(i);
+
+				if (o instanceof Transaction){
+					Transaction transaction = (Transaction) o;
+
+					if (transaction != null){
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("<html>");
+						sb.append(transaction.getDescription());
+
+						if (transaction.getNumber().length() > 0){
+							sb.append("<br>");
+							sb.append("#");
+							sb.append(transaction.getNumber());
+						}
+
+						sb.append("<br>");
+						sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
+						sb.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
+
+						sb.append(transaction.getFrom())
+								.append(" ")
+								.append(Translate.getInstance().get(TranslateKeys.TO))
+								.append(" ")
+								.append(transaction.getTo());
+
+						if (transaction.getMemo().length() > 0){
+							sb.append("<br>");
+							sb.append(transaction.getMemo());
+						}
+
+						sb.append("</html>");
+
+						return sb.toString();
+					}
+				}
+
+				return "";
+			}
+		};
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+
 		dateRangeComboBox = new JComboBox();
 		creditRemaining = new JLabel();
-		
+
 		TransactionCellRenderer renderer = new TransactionCellRenderer();
 		renderer.setAccount(account);
 		list.setCellRenderer(renderer);
-		
+
 		listScroller = new JScrollPane(list);
-						
+
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		
+
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
 		editableTransaction.updateContent();
-		
+
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
 		searchField = new JSearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
-		
+
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
@@ -84,17 +134,17 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FILTER)));
 		searchPanel.add(dateRangeComboBox);
 		searchPanel.add(searchField);
-		
+
 		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 		creditRemainingPanel.add(creditRemaining);
-		
+
 		JPanel topPanel = new JPanel(new BorderLayout());
 		topPanel.add(searchPanel, BorderLayout.EAST);
 		topPanel.add(creditRemainingPanel, BorderLayout.WEST);
-		
+
 		this.getRootPane().setDefaultButton(recordButton);
-		
+
 		JPanel buttonPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanelRight.add(clearButton);
 		buttonPanelRight.add(recordButton);
@@ -109,17 +159,17 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(editableTransaction, BorderLayout.SOUTH);
-		
+
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		this.setLayout(new BorderLayout());
 		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.toString());
 		this.add(mainPanel, BorderLayout.CENTER);
-		
+
 		if (OperatingSystemUtil.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -135,13 +185,13 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		else {
 			editableTransaction.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		}
-		
+
 		//Call the method to add actions to the buttons
 		initActions();
-		
+
 		//Show the window
 		openWindow();
 	}
-		
+
 	public abstract Account getAccount();
 }
