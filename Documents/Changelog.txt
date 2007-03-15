@@ -1,4 +1,8 @@
-2.2.0 (March 2 2007)
+2.3.1
+-Added Search to language editor
+-Updated Norwegian translation
+
+2.3.0 (March 2 2007)
 -Unstable branch of 2.2.0 Stable.
 
 2.2.0 (March 2 2007)

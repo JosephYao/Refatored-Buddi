@@ -47,6 +47,13 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.thecave.moss.gui.JSearchField;
+import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEvent;
+import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEventListener;
+
+import de.schlichtherle.swing.filter.BitSetFilteredDynamicListModel;
+import de.schlichtherle.swing.filter.FilteredDynamicListModel;
+import de.schlichtherle.swing.filter.ListElementFilter;
 
 
 /**
@@ -66,10 +73,11 @@ public class LanguageEditor extends JDialog {
 	public static final long serialVersionUID = 0;
 
 	private final JList list = new JList();
+	private final JSearchField searcher = new JSearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH)); 
 	private final JTextArea value = new JTextArea();
 	private final JTextArea baseValue = new JTextArea();
 	private final JTextArea englishValue = new JTextArea();
-	private final SortedPropertyListModel model = new SortedPropertyListModel();
+	private final FilteredDynamicListModel model = new BitSetFilteredDynamicListModel();
 
 	private final Properties englishProps = new Properties();
 	private final Properties baseProps = new Properties();
@@ -225,13 +233,41 @@ public class LanguageEditor extends JDialog {
 	}
 
 	private void showWindow(final String baseLanguage, final String localeName) throws Exception {
+		model.setSource(new SortedPropertyListModel());
+		model.setFilter(new ListElementFilter(){
+			public static final long serialVersionUID = 0;
+
+			public boolean accept(Object arg0) {
+				if (searcher.getText().length() == 0){
+					return true;
+				}
+				if (arg0 instanceof TranslationKeyValuePair){
+					TranslationKeyValuePair tkvp = (TranslationKeyValuePair) arg0;
+
+					if (tkvp.getBaseValue().toLowerCase().contains(searcher.getText().toLowerCase())) {
+						return true;
+					}
+					if (tkvp.getEnglishValue().toLowerCase().contains(searcher.getText().toLowerCase())) {
+						return true;
+					}
+					if (tkvp.getLocalizedValue().toLowerCase().contains(searcher.getText().toLowerCase())) {
+						return true;
+					}
+					if (tkvp.getKey().toLowerCase().contains(searcher.getText().toLowerCase())) {
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+
 		englishValue.setEditable(false);
 		baseValue.setEditable(false);
 
 		final JLabel englishLabel = new JLabel("English");
 		final JLabel baseLabel = new JLabel(baseLanguage);
 		final JLabel localeLabel = new JLabel(baseLanguage + (localeName.length() > 0 ? " (" + localeName + ")" : ""));
-		
+
 		final JScrollPane listScroller = new JScrollPane(list);
 		final JScrollPane valueScroller = new JScrollPane(value);
 		final JScrollPane baseValueScroller = new JScrollPane(baseValue);
@@ -253,26 +289,28 @@ public class LanguageEditor extends JDialog {
 
 					selectedTKVP = (TranslationKeyValuePair) list.getSelectedValue();
 
-					value.setText(selectedTKVP.getLocalizedValue());
-					baseValue.setText(selectedTKVP.getBaseValue());
-					englishValue.setText(selectedTKVP.getEnglishValue());
-					
-					Rectangle r = value.getVisibleRect();
-					r.width = 0; r.height = 0; r.x = 0; r.y = 0; 
-					value.scrollRectToVisible(r);
-					r = baseValue.getBounds();
-					r.x = 0; r.y = 0;
-					baseValue.scrollRectToVisible(r);
-					r = englishValue.getBounds();
-					r.x = 0; r.y = 0;
-					englishValueScroller.scrollRectToVisible(r);
+					if (selectedTKVP != null){
+						value.setText(selectedTKVP.getLocalizedValue());
+						baseValue.setText(selectedTKVP.getBaseValue());
+						englishValue.setText(selectedTKVP.getEnglishValue());
+
+						Rectangle r = value.getVisibleRect();
+						r.width = 0; r.height = 0; r.x = 0; r.y = 0; 
+						value.scrollRectToVisible(r);
+						r = baseValue.getBounds();
+						r.x = 0; r.y = 0;
+						baseValue.scrollRectToVisible(r);
+						r = englishValue.getBounds();
+						r.x = 0; r.y = 0;
+						englishValueScroller.scrollRectToVisible(r);
+					}
 				}
-				
+
 				value.setEnabled(list.getSelectedIndices().length >= 0);
 			}
 		});
 
-		model.addAll(translationKeyValuePairs);		
+		((SortedPropertyListModel) model.getSource()).addAll(translationKeyValuePairs);		
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
@@ -332,6 +370,13 @@ public class LanguageEditor extends JDialog {
 			}
 		});
 
+		searcher.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
+			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
+				model.update();
+			}
+		});
+
+
 		Dimension d = new Dimension(Math.max(100, cancel.getPreferredSize().width), cancel.getPreferredSize().height);
 		ok.setPreferredSize(d);
 		cancel.setPreferredSize(d);
@@ -348,11 +393,11 @@ public class LanguageEditor extends JDialog {
 
 		JPanel valueScrollerBorder = new JPanel(new GridLayout(0, 1));
 		valueScrollerBorder.setBorder(BorderFactory.createEmptyBorder(1, 12, 5, 12));
-		
+
 		JPanel valueScrollerPanel = new JPanel(new BorderLayout());
 		JPanel baseScrollerPanel = new JPanel(new BorderLayout());
 		JPanel englishScrollerPanel = new JPanel(new BorderLayout());
-		
+
 		valueScrollerPanel.add(localeLabel, BorderLayout.WEST);
 		valueScrollerPanel.add(valueScroller, BorderLayout.CENTER);
 
@@ -362,7 +407,7 @@ public class LanguageEditor extends JDialog {
 		englishScrollerPanel.add(englishLabel, BorderLayout.WEST);
 		englishScrollerPanel.add(englishValueScroller, BorderLayout.CENTER);
 
-		
+
 		valueScrollerBorder.add(valueScrollerPanel);
 		valueScrollerBorder.add(baseScrollerPanel);
 		valueScrollerBorder.add(englishScrollerPanel);
@@ -370,10 +415,17 @@ public class LanguageEditor extends JDialog {
 		JSplitPane editorPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listScrollerBorder, valueScrollerBorder);		
 		editorPane.setDividerLocation(0.5);
 
+		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searcher.setPreferredSize(new Dimension(200, searcher.getPreferredSize().height));
+		searchPanel.add(searcher);
+
+		list.requestFocusInWindow();
+		
 		this.setPreferredSize(new Dimension(500, 500));
 		this.setModal(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout());
+		this.add(searchPanel, BorderLayout.NORTH);
 		this.add(editorPane, BorderLayout.CENTER);
 		this.add(buttons, BorderLayout.SOUTH);
 		this.pack();

@@ -1,4 +1,4 @@
-#Sun Oct 22 17:01:29 MDT 2006
+#Wed Mar 14 23:32:26 MDT 2007
 LAST_MONTH=Mes Pasado
 ENTER_CATEGORY_NAME=Debes introducir el nombre de la Categoria
 PREFERENCES=Preferencias
@@ -72,7 +72,7 @@ EXPORT=Exportar
 DIFFERENCE=Diferencia
 ACCOUNT_TYPE=Tipo de Cuenta
 PASTE=Pegar
-DONATE_MESSAGE=Por favor considera enviar una donacion para ayudar mi trabajo adicional sobre buddy. Yo escribo y soporto Buddi en mi tiempo libre,  y agradecerla cualquier ayuda que pueda optener.  Este mensaje solo aparece una vez cuando actualizas a una nueva version. Si quieres realizar tu donacion mas tarde, hay un boton en el menu Sobre Buddy.
+DONATE_MESSAGE=Por favor considera enviar una donacion para ayudar mi trabajo adicional sobre Buddi. Yo escribo y soporto Buddi en mi tiempo libre,  y agradecerla cualquier ayuda que pueda optener.  Este mensaje solo aparece una vez cuando actualizas a una nueva version. Si quieres realizar tu donacion mas tarde, hay un boton en el menu Sobre Buddi.
 ENCRYPT_DATA_FILE_YES_NO=\u00BFQuieres codificar tu fichero de datos?
 PROBLEM_READING_DATA_FILE_INTRO=Ha habido un problema leyendo el fichero de datos\: 
 ENCRYPT_DATA_FILE_WARNING=Esta accion codificara tu fichero de datos y eliminara los datos originales. Si olvidas tu contrase\u00F1a  NO PODRAS RECUPERAR TUS DATOS \u00BFEstas seguro que quieres codificar tu fichero de datos?

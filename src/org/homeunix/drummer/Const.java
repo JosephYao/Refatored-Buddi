@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.0";
+	public static final String VERSION = "2.3.1";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -98,18 +98,23 @@ public class Const {
 	//Currency formats to appear in Preferences
 	public final static String[] CURRENCY_FORMATS = {
 		"$",
-		"\u20ac",  //Euro
-		"\u00a3",  //British Pounds
-		"p.",      //Russian Ruble
-		"\u00a5",  //Yen
-		"\u20a3",  //French Franc
-		"SFr", //Swiss Franc (?)
-		"Rs", //Indian Rupees
-		"Kr", //Norwegian
-		"Bs", //Venezuela
-		"S/.", //Peru
-		"\u20b1",  //Peso
-		"\u20aa",  //Israel Sheqel
+		"\u20ac", //Euro
+		"\u00a3", //British Pounds
+		"p.",     //Russian Ruble
+		"\u00a5", //Yen
+		"\u20a3", //French Franc
+		"SFr", 		//Swiss Franc (?)
+		"Rs", 		//Indian Rupees
+		"Kr", 		//Norwegian
+		"Bs", 		//Venezuela
+		"S/.", 		//Peru
+		"\u20b1", //Peso
+		"\u20aa", //Israel Sheqel 
+		"Mex$",		//Mexican Peso
+		"R$",			//Brazilian Real
+		"Ch$",		//Chilean Peso
+		"C",			//Costa Rican Colon
+		"Arg$",		//Argentinan Peso
 		"Kc"	//Something else; requested by a user
 	};
 
