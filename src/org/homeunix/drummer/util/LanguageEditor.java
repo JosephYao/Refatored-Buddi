@@ -418,8 +418,6 @@ public class LanguageEditor extends JDialog {
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		searcher.setPreferredSize(new Dimension(200, searcher.getPreferredSize().height));
 		searchPanel.add(searcher);
-
-		list.requestFocusInWindow();
 		
 		this.setPreferredSize(new Dimension(500, 500));
 		this.setModal(true);
@@ -430,6 +428,9 @@ public class LanguageEditor extends JDialog {
 		this.add(buttons, BorderLayout.SOUTH);
 		this.pack();
 		this.setLocationRelativeTo(null);
+		list.requestFocusInWindow();
+		model.update();
+
 		this.setVisible(true);
 	}
 
