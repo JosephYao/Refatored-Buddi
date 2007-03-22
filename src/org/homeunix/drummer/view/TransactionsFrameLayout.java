@@ -44,7 +44,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 	protected final JButton clearButton;
 	protected final JButton deleteButton;
 	protected final JSearchField searchField;
-	protected final JComboBox dateRangeComboBox;
+	protected final JComboBox filterComboBox;
 	protected final JLabel creditRemaining;
 
 	public TransactionsFrameLayout(Account account){
@@ -78,8 +78,9 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 						}
 
 						sb.append("<br>");
-						sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
+						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()));
 						sb.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
+						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
 						sb.append("  ");
 						sb.append(transaction.getFrom())
 								.append(" ")
@@ -103,7 +104,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		};
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		dateRangeComboBox = new JComboBox();
+		filterComboBox = new JComboBox();
 		creditRemaining = new JLabel();
 
 		TransactionCellRenderer renderer = new TransactionCellRenderer();
@@ -127,12 +128,12 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
-		dateRangeComboBox.setPreferredSize(new Dimension(100, dateRangeComboBox.getPreferredSize().height));
+		filterComboBox.setPreferredSize(new Dimension(100, filterComboBox.getPreferredSize().height));
 
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.DATE_FILTER)));
-		searchPanel.add(dateRangeComboBox);
+		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TRANSACTION_FILTER)));
+		searchPanel.add(filterComboBox);
 		searchPanel.add(searchField);
 
 		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

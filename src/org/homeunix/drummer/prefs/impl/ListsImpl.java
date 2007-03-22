@@ -34,8 +34,8 @@ import org.homeunix.drummer.prefs.PrefsPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getPlugins <em>Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.ListsImpl#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,16 +53,6 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	protected EList descDict = null;
 
 	/**
-	 * The cached value of the '{@link #getPlugins() <em>Plugins</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPlugins()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList plugins = null;
-
-	/**
 	 * The cached value of the '{@link #getListEntries() <em>List Entries</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,6 +61,16 @@ public class ListsImpl extends EObjectImpl implements Lists {
 	 * @ordered
 	 */
 	protected EList listEntries = null;
+
+	/**
+	 * The cached value of the '{@link #getPlugins() <em>Plugins</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPlugins()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList plugins = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -135,10 +135,10 @@ public class ListsImpl extends EObjectImpl implements Lists {
 		switch (featureID) {
 			case PrefsPackage.LISTS__DESC_DICT:
 				return ((InternalEList)getDescDict()).basicRemove(otherEnd, msgs);
-			case PrefsPackage.LISTS__PLUGINS:
-				return ((InternalEList)getPlugins()).basicRemove(otherEnd, msgs);
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return ((InternalEList)getListEntries()).basicRemove(otherEnd, msgs);
+			case PrefsPackage.LISTS__PLUGINS:
+				return ((InternalEList)getPlugins()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -152,10 +152,10 @@ public class ListsImpl extends EObjectImpl implements Lists {
 		switch (featureID) {
 			case PrefsPackage.LISTS__DESC_DICT:
 				return getDescDict();
-			case PrefsPackage.LISTS__PLUGINS:
-				return getPlugins();
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return getListEntries();
+			case PrefsPackage.LISTS__PLUGINS:
+				return getPlugins();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -172,13 +172,13 @@ public class ListsImpl extends EObjectImpl implements Lists {
 				getDescDict().clear();
 				getDescDict().addAll((Collection)newValue);
 				return;
-			case PrefsPackage.LISTS__PLUGINS:
-				getPlugins().clear();
-				getPlugins().addAll((Collection)newValue);
-				return;
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				getListEntries().clear();
 				getListEntries().addAll((Collection)newValue);
+				return;
+			case PrefsPackage.LISTS__PLUGINS:
+				getPlugins().clear();
+				getPlugins().addAll((Collection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -194,11 +194,11 @@ public class ListsImpl extends EObjectImpl implements Lists {
 			case PrefsPackage.LISTS__DESC_DICT:
 				getDescDict().clear();
 				return;
-			case PrefsPackage.LISTS__PLUGINS:
-				getPlugins().clear();
-				return;
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				getListEntries().clear();
+				return;
+			case PrefsPackage.LISTS__PLUGINS:
+				getPlugins().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -213,10 +213,10 @@ public class ListsImpl extends EObjectImpl implements Lists {
 		switch (featureID) {
 			case PrefsPackage.LISTS__DESC_DICT:
 				return descDict != null && !descDict.isEmpty();
-			case PrefsPackage.LISTS__PLUGINS:
-				return plugins != null && !plugins.isEmpty();
 			case PrefsPackage.LISTS__LIST_ENTRIES:
 				return listEntries != null && !listEntries.isEmpty();
+			case PrefsPackage.LISTS__PLUGINS:
+				return plugins != null && !plugins.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

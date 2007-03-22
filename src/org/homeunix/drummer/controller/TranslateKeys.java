@@ -74,7 +74,7 @@ public enum TranslateKeys {
     CURRENCY,
 //    CUT,
 //    DATE_AFTER_TODAY,
-    DATE_FILTER,
+//    DATE_FILTER,
     DATE_FORMAT,
     DECRYPT_DATA_FILE,
     DECRYPT_DATA_FILE_WARNING,
@@ -405,4 +405,9 @@ public enum TranslateKeys {
     DELETE_CATEGORY,
 
     MAIN_BUDDI_WINDOW,
+    
+    NOT_RECONCILED,
+    NOT_CLEARED,
+    TRANSACTION_FILTER,
+    SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT
 }

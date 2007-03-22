@@ -47,6 +47,7 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 				if (forceRestart
 						|| !prefs.getLanguage().equals(language.getSelectedItem().toString())
 						|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
+						|| (prefs.isCurrencySymbolAfterAmount() != currencySymbolAfterAmount.isSelected())
 						|| pluginsChanged()){
 
 					Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
@@ -60,6 +61,7 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 				prefs.setLanguage(language.getSelectedItem().toString());
 				prefs.setDateFormat(dateFormat.getSelectedItem().toString());
 				prefs.setCurrencySymbol(currencyFormat.getSelectedItem().toString());
+				prefs.setCurrencySymbolAfterAmount(currencySymbolAfterAmount.isSelected());
 				if (budgetInterval.getSelectedItem() instanceof Interval)
 					prefs.setSelectedInterval(((Interval) budgetInterval.getSelectedItem()).getName());
 				else
@@ -236,7 +238,7 @@ public class PreferencesDialog extends PreferencesDialogLayout {
 		language.setSelectedItem(prefs.getLanguage());
 		dateFormat.setSelectedItem(prefs.getDateFormat());
 		currencyFormat.setSelectedItem(prefs.getCurrencySymbol());
-
+		currencySymbolAfterAmount.setSelected(prefs.isCurrencySymbolAfterAmount());
 
 		showDeletedAccounts.setSelected(prefs.isShowDeletedAccounts());
 		showDeletedCategories.setSelected(prefs.isShowDeletedCategories());

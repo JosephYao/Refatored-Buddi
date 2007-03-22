@@ -162,36 +162,43 @@ public class TransactionListModel extends AbstractListModel {
 				return false;
 			}
 			
-			private boolean acceptDate(Transaction t, TranslateKeys filterDateRange) {
-				if (null == filterDateRange || TranslateKeys.ALL == filterDateRange) {
+			private boolean acceptDate(Transaction t, TranslateKeys filterPulldown) {
+				if (null == filterPulldown || TranslateKeys.ALL == filterPulldown) {
 					return true;
 				}
 
 				Date today = new Date();
 
-				if (TranslateKeys.TODAY == filterDateRange) {
+				if (TranslateKeys.TODAY == filterPulldown) {
 					return DateUtil.getEndOfDay(today).equals(DateUtil.getEndOfDay(t.getDate()));
 				}
-				else if (TranslateKeys.THIS_WEEK == filterDateRange) {
+				else if (TranslateKeys.THIS_WEEK == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getNextNDay(today, -7)).before(t.getDate());
 				}
-				else if (TranslateKeys.THIS_MONTH == filterDateRange) {
+				else if (TranslateKeys.THIS_MONTH == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(today, 0)).before(t.getDate());
 				}
-				else if (TranslateKeys.THIS_QUARTER == filterDateRange) {
+				else if (TranslateKeys.THIS_QUARTER == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(today, 0)).before(t.getDate());
 				} 
-				else if (TranslateKeys.THIS_YEAR == filterDateRange) {
+				else if (TranslateKeys.THIS_YEAR == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfYear(today)).before(t.getDate());				
 				}
-				else if (TranslateKeys.LAST_YEAR == filterDateRange) {
+				else if (TranslateKeys.LAST_YEAR == filterPulldown) {
 					Date startOfLastYear = DateUtil.getStartOfDay(DateUtil.getStartOfYear(DateUtil.getNextNDay(today, -365)));
 					Date endOfLastYear = DateUtil.getEndOfYear(startOfLastYear);
 					return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
 				}
-				else 
-					Log.error("Unknown filter date range: " + filterDateRange);
+				else if (TranslateKeys.NOT_RECONCILED == filterPulldown) {
+					return !t.isReconciled();
+				}
+				else if (TranslateKeys.NOT_CLEARED == filterPulldown) {
+					return !t.isCleared();
+				}
+				else {
+					Log.error("Unknown filter pulldown: " + filterPulldown);
 					return false;
+				}
 			}
 
 			private boolean acceptText(Transaction t, String filterText) {

@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.homeunix.drummer.prefs.Lists#getDescDict <em>Desc Dict</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Lists#getPlugins <em>Plugins</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Lists#getListEntries <em>List Entries</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Lists#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
  *

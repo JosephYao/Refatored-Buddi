@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jan 22 17:49:21 MST 2007'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Mar 21 21:29:04 MDT 2007'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
@@ -263,6 +263,21 @@
                                 <UML:Multiplicity xmi.id = '-64--88-0-51--2d94919e:1104c69e875:-8000:00000000000008D3'>
                                   <UML:Multiplicity.range>
                                     <UML:MultiplicityRange xmi.id = '-64--88-0-51--2d94919e:1104c69e875:-8000:00000000000008D2'
+                                      lower = '0' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:DataType xmi.idref = '.:00000000000009CD'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:00000000000008D2'
+                              name = 'currencySymbolAfterAmount' visibility = 'public' isSpecification = 'false'
+                              ownerScope = 'instance' changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:00000000000008D6'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:00000000000008D5'
                                       lower = '0' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
@@ -1111,6 +1126,15 @@
                   isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
                 <UML:Class xmi.id = '.:00000000000009CA' name = 'Object' isSpecification = 'false'
                   isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
+              </UML:Namespace.ownedElement>
+            </UML:Package>
+            <UML:Package xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000B76'
+              name = 'util' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:Namespace.ownedElement>
+                <UML:Class xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000B77'
+                  name = 'Date' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false' isActive = 'false'/>
               </UML:Namespace.ownedElement>
             </UML:Package>
           </UML:Namespace.ownedElement>

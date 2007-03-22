@@ -149,8 +149,9 @@ public class CategoryListPanel extends ListPanelLayout {
 				.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
-				.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)));
+				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
+				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)))
+				.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 		
 		balanceLabel.setText(sb.toString());
 		

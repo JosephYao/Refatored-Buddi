@@ -35,16 +35,14 @@ import org.homeunix.drummer.view.TransactionsFrameLayout;
 import org.homeunix.drummer.view.model.TransactionListModel;
 import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEvent;
 import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEventListener;
-import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 import de.schlichtherle.swing.filter.FilteredDynamicListModel;
-import de.schlichtherle.swing.filter.ListElementFilter;
 
 public class TransactionsFrame extends TransactionsFrameLayout {
 	public static final long serialVersionUID = 0;	
-	
+
 	@SuppressWarnings("unchecked")
 	/* The baseModel is a custom list model which contains the 
 	 * same EList object that the DataModel contains.  This holds 
@@ -56,7 +54,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	 * updates to the list.
 	 */
 	private final static TransactionListModel baseModel = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
-	
+
 	/* This model is a filtered list model that is obtained from the
 	 * baseModel.  It is a view which contains all transactions in
 	 * the given account which match the String and Date criteria.
@@ -64,25 +62,28 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	private final FilteredDynamicListModel model;
 
 	private Account account;
-	
+
 	private boolean disableListEvents = false;
 
 	//The values for the date chooser combo box.
-	private static final TranslateKeys[] dateRangeFilters = new TranslateKeys[] {
+	private static final TranslateKeys[] availableFilters = new TranslateKeys[] {
 		TranslateKeys.ALL,
 		TranslateKeys.TODAY,
 		TranslateKeys.THIS_WEEK,
 		TranslateKeys.THIS_MONTH,
 		TranslateKeys.THIS_QUARTER,
 		TranslateKeys.THIS_YEAR,
-		TranslateKeys.LAST_YEAR
+		TranslateKeys.LAST_YEAR,
+		null,
+		TranslateKeys.NOT_RECONCILED,
+		TranslateKeys.NOT_CLEARED
 	};
 
 
 	public TransactionsFrame(Account account){
 		super(account);
 		this.account = account;
-		
+
 		Transaction prototype = DataInstance.getInstance().getDataModelFactory().createTransaction();
 		prototype.setDate(new Date());
 		prototype.setDescription("Description");
@@ -92,13 +93,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		prototype.setFrom(null);
 		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 		list.setPrototypeCellValue(prototype);
-		
+
 		model = baseModel.getFilteredListModel(account, this);
 		list.setModel(model);
 
 		editableTransaction.setTransaction(null, true);
 		updateContent();
-		
+
 		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 	}
 
@@ -110,22 +111,34 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 	protected AbstractFrame initActions(){
 
-		dateRangeComboBox.setModel(new DefaultComboBoxModel(dateRangeFilters));
-		dateRangeComboBox.setRenderer(new DefaultListCellRenderer() {
+		filterComboBox.setModel(new DefaultComboBoxModel(availableFilters));
+		filterComboBox.setRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				TranslateKeys key = (TranslateKeys) value;
-				setText(Translate.getInstance().get(key));
+				if (value == null){
+					setText("\u2014");
+				}
+				else {
+					TranslateKeys key = (TranslateKeys) value;
+					setText(Translate.getInstance().get(key));
+				}
 				return this;
 			}			
 		});
 		
-		dateRangeComboBox.addItemListener(new ItemListener() {
+		filterComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (ItemEvent.SELECTED == e.getStateChange()) {
+				if (filterComboBox.getSelectedItem() == null){
+					if (e.getItem().equals(filterComboBox.getItemAt(0))){
+						filterComboBox.setSelectedIndex(1);
+					}
+					Log.debug("null; e.getItem == " + e.getItem());
+					filterComboBox.setSelectedIndex(0);
+				}
+				if (e.getStateChange() == ItemEvent.SELECTED) {
 					model.update();
 				}
 			}			
@@ -136,22 +149,22 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				model.update();
 			}
 		});
-		
+
 //		searchField.getDocument().addDocumentListener(new DocumentListener(){
-//			public void changedUpdate(DocumentEvent arg0) {
-//				model.update();
-//				System.out.println("Change");
-//			}
-//
-//			public void insertUpdate(DocumentEvent arg0) {
-//				model.update();
-//				System.out.println("Add");
-//			}
-//
-//			public void removeUpdate(DocumentEvent arg0) {
-//				model.update();		
-//				System.out.println("Remove");
-//			};
+//		public void changedUpdate(DocumentEvent arg0) {
+//		model.update();
+//		System.out.println("Change");
+//		}
+
+//		public void insertUpdate(DocumentEvent arg0) {
+//		model.update();
+//		System.out.println("Add");
+//		}
+
+//		public void removeUpdate(DocumentEvent arg0) {
+//		model.update();		
+//		System.out.println("Remove");
+//		};
 //		});
 
 		list.addListSelectionListener(new ListSelectionListener(){
@@ -195,7 +208,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 									list.clearSelection();
 								else
 									list.setSelectedValue(editableTransaction.getTransaction(), true);
-								
+
 								editableTransaction.setChanged(true);
 								return;
 							}
@@ -247,7 +260,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					Log.error("Unknown record button state: " + recordButton.getText());
 					return;
 				}
-				
+
 				if (editableTransaction.getFrom().getCreationDate() != null
 						&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
 					editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
@@ -295,9 +308,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				GraphFrameLayout.updateAllGraphWindows();
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
-				
+
 				list.setSelectedValue(t, true);
-				
+
 				if (isUpdate){
 					editableTransaction.setTransaction(t, true);
 				}
@@ -306,12 +319,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					list.ensureIndexIsVisible(list.getSelectedIndex());
 					list.clearSelection();
 				}
-				
+
 				editableTransaction.setChanged(false);
 				list.ensureIndexIsVisible(list.getSelectedIndex());
-				
+
 				disableListEvents = false;
-				
+
 				editableTransaction.resetSelection();
 			}
 
@@ -355,7 +368,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 					updateAllTransactionWindows();
 					updateButtons();
 					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
-					
+
 					list.setSelectedIndex(position);
 					if (list.getSelectedValue() instanceof Transaction){
 						t = (Transaction) list.getSelectedValue();
@@ -366,17 +379,17 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 						editableTransaction.setTransaction(null, true);
 						list.clearSelection();
 					}
-					
+
 					editableTransaction.setChanged(false);
 				}
 			}
 		});
 
 //		clearSearchField.addActionListener(new ActionListener(){
-//			public void actionPerformed(ActionEvent arg0) {
-//				TransactionsFrame.this.searchField.setValue("");
-//
-//			}
+//		public void actionPerformed(ActionEvent arg0) {
+//		TransactionsFrame.this.searchField.setValue("");
+
+//		}
 //		});
 
 		this.addWindowListener(new WindowAdapter(){
@@ -434,7 +447,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 //		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
 //		data.add(null);
 //		list.setListData(data);
-//
+
 		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
 				&& account != null  
 				&& account.getCreditLimit() != 0){
@@ -446,8 +459,9 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 			.append(" (")
 			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
 			.append("%)");
@@ -458,17 +472,17 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		}
 		else
 			creditRemaining.setText("");
-//
+
 //		//Update the search
 //		if (filteredListModel != null && list != null){
-//			filteredListModel.setSource(list.getModel());
-//			list.setModel(filteredListModel);
+//		filteredListModel.setSource(list.getModel());
+//		list.setModel(filteredListModel);
 //		}
-//
+
 //		editableTransaction.updateContent();
 //		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
 //		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-//		
+
 //		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
 		updateButtons();
 
@@ -529,85 +543,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		));
 	}
 
-	public class TransactionListElementFilter implements ListElementFilter {
-		static final long serialVersionUID = 0;
-
-		private TranslateKeys filterDateRange = TranslateKeys.ALL;
-		private String filterText = "";
-
-		public boolean accept(Object obj) {
-			if (null == obj) {
-				return true;
-			}
-			else if (obj instanceof Transaction) {
-				Transaction t = (Transaction) obj;
-				return acceptText(t) && acceptDate(t);
-			}
-			else 
-				return false;			
-		}
-
-		private boolean acceptDate(Transaction t) {
-			if (null == filterDateRange || TranslateKeys.ALL == filterDateRange) {
-				return true;
-			}
-
-			Date today = new Date();
-
-			if (TranslateKeys.TODAY == filterDateRange) {
-				return DateUtil.getEndOfDay(today).equals(DateUtil.getEndOfDay(t.getDate()));
-			}
-			else if (TranslateKeys.THIS_WEEK == filterDateRange) {
-				return DateUtil.getStartOfDay(DateUtil.getNextNDay(today, -7)).before(t.getDate());
-			}
-			else if (TranslateKeys.THIS_MONTH == filterDateRange) {
-				return DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(today, 0)).before(t.getDate());
-			}
-			else if (TranslateKeys.THIS_QUARTER == filterDateRange) {
-				return DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(today, 0)).before(t.getDate());
-			} 
-			else if (TranslateKeys.THIS_YEAR == filterDateRange) {
-				return DateUtil.getStartOfDay(DateUtil.getBeginOfYear(today)).before(t.getDate());				
-			}
-			else if (TranslateKeys.LAST_YEAR == filterDateRange) {
-				Date startOfLastYear = DateUtil.getStartOfDay(DateUtil.getStartOfYear(DateUtil.getNextNDay(today, -365)));
-				Date endOfLastYear = DateUtil.getEndOfYear(startOfLastYear);
-				return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
-			}
-			else 
-				Log.error("Unknown filter date range: " + filterDateRange);
-				return false;
-		}
-
-		private boolean acceptText(Transaction t) {
-			if (null == filterText || 0 == filterText.length()) {
-				return true;
-			}
-			return (t.getDescription().toLowerCase().contains(filterText.toLowerCase())
-					|| t.getNumber().toLowerCase().contains(filterText.toLowerCase())
-					|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
-					|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
-					|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase()));
-		}	
-
-		public TranslateKeys getFilterDateRange() {
-			return this.filterDateRange;
-		}
-
-		public void setFilterDateRange(TranslateKeys key) {
-			this.filterDateRange = key;
-		}
-
-		public String getFilterText() {
-			return filterText;
-		}
-
-		public void setFilterText(String filterText) {
-			this.filterText = filterText;
-		}
-	}
-
-
 	/**
 	 * Force an update of every transaction window.
 	 * 
@@ -623,15 +558,26 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				tfl.updateContent();
 		}
 	}
-	
+
+	/**
+	 * Gets the filter text in the search box
+	 * @return The contents of the search box
+	 */
 	public String getFilterText(){
 		return searchField.getText();
 	}
-	
+
+	/**
+	 * Gets the selected item in the filter pulldown
+	 * @return The selected item in the filter pulldown
+	 */
 	public TranslateKeys getDateRangeFilter(){
-		return (TranslateKeys) dateRangeComboBox.getSelectedItem();
+		return (TranslateKeys) filterComboBox.getSelectedItem();
 	}
-	
+
+	/**
+	 * Forces a toggle on the Cleared state, without needing to save manually.
+	 */
 	public void toggleCleared(){
 		Transaction t = (Transaction) list.getSelectedValue();
 		t.setCleared(!t.isCleared());
@@ -639,16 +585,19 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		baseModel.updateNoOrderChange(t);
 		editableTransaction.updateClearedAndReconciled();
 	}
-	
+
+	/**
+	 * Forces a toggle on the Reconciled state, without needing to save manually.
+	 */
 	public void toggleReconciled(){
 		Transaction t = (Transaction) list.getSelectedValue();
 		t.setReconciled(!t.isReconciled());
 //		DataInstance.getInstance().saveDataModel();
 		baseModel.updateNoOrderChange(t);
 		editableTransaction.updateClearedAndReconciled();
-		
+
 	}
-	
+
 	public void clickClear(){
 		clearButton.doClick();
 	}
@@ -658,7 +607,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public void clickDelete(){
 		deleteButton.doClick();
 	}
-	
+
 	/**
 	 * After creating a Collection of new Transactions via 
 	 * DataInstance.getInstance().getDataModelFactory().createTransaction(),
@@ -672,7 +621,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public static void addToTransactionListModel(Collection<Transaction> transactions){
 		baseModel.add(transactions);
 	}
-	
+
 	/**
 	 * After creating a new Transaction via DataInstance.getInstance().getDataModelFactory().createTransaction(),
 	 * and filling in all the needed details, you call this method to
@@ -685,7 +634,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public static void addToTransactionListModel(Transaction t){
 		baseModel.add(t);
 	}
-	
+
 	/**
 	 * Remove a transaction from the data model and all open windows.
 	 * 
@@ -700,7 +649,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public static void removeFromTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
 		baseModel.remove(t, fdlm);
 	}
-	
+
 	/**
 	 * Notifies all windows that a transaction has been updated.  If you 
 	 * change a transaction and do not register it here after all the changes

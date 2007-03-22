@@ -1,5 +1,7 @@
 2.3.1
 -Added Search to language editor
+-Added Not Reconciled and Not Cleared to the filters on the transaction window
+-Added an option to show the currency sign before or after the amount (for some European currencies)
 -Updated Norwegian translation
 
 2.3.0 (March 2 2007)

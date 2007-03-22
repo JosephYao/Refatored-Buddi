@@ -45,6 +45,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	protected final JComboBox language;
 	protected final JComboBox dateFormat;
 	protected final JComboBox currencyFormat;
+	protected final JCheckBox currencySymbolAfterAmount;
 	protected final JComboBox budgetInterval;
 	protected final JCheckBox showDeletedAccounts;
 	protected final JCheckBox showDeletedCategories;
@@ -89,6 +90,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		language = new JComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
 		currencyFormat = new JComboBox(currencyModel);
+		currencySymbolAfterAmount = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
 		dateFormat = new JComboBox(Const.DATE_FORMATS);
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
@@ -211,6 +213,7 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 
 		localePanel.add(languagePanel);		
 		localePanel.add(currencyFormatPanel);
+		localePanel.add(currencySymbolAfterAmount);
 		localePanel.add(dateFormatPanel);
 		localePanel.add(Box.createVerticalGlue());
 		

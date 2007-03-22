@@ -161,8 +161,9 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
 				sb.append("<font color='red'>")
-				.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0))
+				.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "")
 				.append("</font>");
 			}
 		}
@@ -173,8 +174,9 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
 //				sb.append("<font color='red'>")
-				sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
+				sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
+				.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0))
+				.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 //				.append("</font>");
 			}
 		}
@@ -194,13 +196,15 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					sb.append("<font color='red'>");
 					if (balanceValue <= 0 && balanceValue != 0)
 						balanceValue *= -1;
-					sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
-					sb.append(Formatter.getInstance().getDecimalFormat().format(((double) balanceValue) / 100.0))
+					sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
+					.append(Formatter.getInstance().getDecimalFormat().format(((double) balanceValue) / 100.0))
+					.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "")
 					.append("</font>");
 				}
 				else{
-					sb.append(PrefsInstance.getInstance().getPrefs().getCurrencySymbol());
-					sb.append(Formatter.getInstance().getDecimalFormat().format(((double) balanceValue) / 100.0));
+					sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
+					.append(Formatter.getInstance().getDecimalFormat().format(((double) balanceValue) / 100.0))
+					.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 				}
 				sb.append("</b>");
 			}
