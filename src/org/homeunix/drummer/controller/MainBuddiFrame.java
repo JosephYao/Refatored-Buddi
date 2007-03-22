@@ -80,7 +80,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		super();
 
 		//Check that there are no scheduled transactions which should be happening...
-		updateScheduledTransactions();
+		checkForScheduledActions();
 		updateContent();
 
 		//Load the date format from preferences
@@ -359,7 +359,7 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 + 	 * Checks for the frequency type and based on it finds if a transaction is scheduled for a date
 + 	 * that has gone past.
 	 */
-	public void updateScheduledTransactions(){
+	public void checkForScheduledActions(){
 		//Update any scheduled transactions
 		final Date today = DateUtil.getEndOfDay(new Date());
 		//We specify a GregorianCalendar because we make some assumptions
@@ -499,21 +499,36 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				// scheduled transaction into the transactions list
 				// at the given day.
 				if (todayIsTheDay){
-					Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-
-					t.setDate(tempDate);
-					t.setDescription(s.getDescription());
-					t.setAmount(s.getAmount());
-					t.setTo(s.getTo());
-					t.setFrom(s.getFrom());
-					t.setMemo(s.getMemo());
-					t.setNumber(s.getNumber());
-					t.setScheduled(true);
-
+					if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
 					s.setLastDateCreated(DateUtil.getEndOfDay(tempDate));
+					if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDateCreated());
 
-					DataInstance.getInstance().addTransaction(t);
-					if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+					if (s.getMessage() != null && s.getMessage().length() > 0){
+						JOptionPane.showMessageDialog(this, s.getMessage(), Translate.getInstance().get(TranslateKeys.SCHEDULED_MESSAGE), JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+					if (s.getDate() != null
+							&& s.getDescription() != null) {
+						Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+
+						t.setDate(tempDate);
+						t.setDescription(s.getDescription());
+						t.setAmount(s.getAmount());
+						t.setTo(s.getTo());
+						t.setFrom(s.getFrom());
+						t.setMemo(s.getMemo());
+						t.setNumber(s.getNumber());
+						t.setScheduled(true);
+
+						DataInstance.getInstance().addTransaction(t);
+						if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+					}
+					//We need to save to store the lastCreatedDate; however,
+					// if we did not create a new transaction, we must
+					// manually trigger the save.
+					else {
+						DataInstance.getInstance().saveDataModel();
+					}
 				}
 
 				tempDate = DateUtil.getNextDay(tempDate);

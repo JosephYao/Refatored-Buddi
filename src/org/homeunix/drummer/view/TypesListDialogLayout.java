@@ -50,7 +50,7 @@ public abstract class TypesListDialogLayout extends AbstractDialog {
 		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
 		
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTIONS)));
+		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTIONS)));
 		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
 		
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

@@ -32,7 +32,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		super(MainBuddiFrame.getInstance());
 
 		this.schedule = schedule;
-		
+
 		//If we are viewing existing transactions, we cannot 
 		// modify the schedule at all.
 		startDateChooser.setEnabled(schedule == null);
@@ -72,7 +72,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
 									JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 						ScheduleModifyDialog.this.saveSchedule();
-						MainBuddiFrame.getInstance().updateScheduledTransactions();
+						MainBuddiFrame.getInstance().checkForScheduledActions();
 						MainBuddiFrame.getInstance().updateContent();
 						TransactionsFrame.updateAllTransactionWindows();
 						ScheduleModifyDialog.this.setVisible(false);
@@ -164,10 +164,10 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 //		cardLayout.invalidateLayout(cardHolder);
 //		cardLayout.layoutContainer(cardHolder);
-		
+
 		cardLayout.show(cardHolder, frequencyPulldown.getSelectedItem().toString());
 //		this.pack();
-		
+
 		if (Const.DEVEL) Log.info("Showing card " + frequencyPulldown.getSelectedItem().toString());
 
 //		if (getFrequencyType().equals(TranslateKeys.WEEK.toString())){
@@ -251,32 +251,57 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 		//System.out.println(Calendar.getInstance().get(startDateChooser.getDate()));
 
-		if ((scheduleName.getValue().length() > 0)
-				&& (startDateChooser.getDate() != null)
-				&& (transaction.getAmount() != 0)
+
+		//We must have filled in at least the name and the date.
+		if ((scheduleName.getValue().length() == 0)
+						|| (startDateChooser.getDate() == null)){
+			return false;
+		}
+
+		//If we're just fillinf in the transaction, we need at least
+		// amount, description, to, and from.
+		if ((transaction.getAmount() != 0)
 				&& (transaction.getDescription().length() > 0)
 				&& (transaction.getTo() != null)
-				&& (transaction.getFrom() != null))
+				&& (transaction.getFrom() != null)){
 			return true;
-		else
-			return false;
+		}
+		
+		//If the message is filled in, we can let the action succeed
+		// without the transaction being filled out.  However, if any
+		// part of the transaction is filled in, it all must be.
+		if ((message.getValue().length() > 0)
+						&& (transaction.getAmount() == 0)
+						&& (transaction.getDescription().length() == 0)
+						&& (transaction.getTo() == null)
+						&& (transaction.getFrom() == null)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	private void saveSchedule(){
 		if (this.schedule == null){
-			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-			t.setAmount(transaction.getAmount());
-			t.setDescription(transaction.getDescription());
-			t.setNumber(transaction.getNumber());
-			t.setMemo(transaction.getMemo());
-			t.setTo(transaction.getTo());
-			t.setFrom(transaction.getFrom());
+			Transaction t = null;
+			if (transaction.getDescription() != null
+					&& transaction.getTo() != null
+					&& transaction.getFrom() != null){
+				t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+				t.setAmount(transaction.getAmount());
+				t.setDescription(transaction.getDescription());
+				t.setNumber(transaction.getNumber());
+				t.setMemo(transaction.getMemo());
+				t.setTo(transaction.getTo());
+				t.setFrom(transaction.getFrom());
+			}
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
-			DataInstance.getInstance().addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), t);
+			DataInstance.getInstance().addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
 
 		}
 		else{
 			schedule.setScheduleName(scheduleName.getValue());
+			schedule.setMessage(message.getValue());
 			schedule.setAmount(transaction.getAmount());
 			schedule.setDescription(transaction.getDescription());
 			schedule.setNumber(transaction.getNumber());
@@ -301,16 +326,32 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 			//Load the changeable fields, including Transaction
 			scheduleName.setValue(s.getScheduleName());
-			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+			if (s.getMessage() != null)
+				message.setValue(s.getMessage());
+
+			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction(); 
 			t.setAmount(s.getAmount());
-			t.setDescription(s.getDescription());
-			t.setNumber(s.getNumber());
-			t.setMemo(s.getMemo());
-			t.setTo(s.getTo());
-			t.setFrom(s.getFrom());
+			if (s.getDescription() != null)
+				t.setDescription(s.getDescription());
+			if (s.getNumber() != null)
+				t.setNumber(s.getNumber());
+			if (s.getMemo() != null)
+				t.setMemo(s.getMemo());
+			if (s.getTo() != null)
+				t.setTo(s.getTo());
+			if (s.getFrom() != null)
+				t.setFrom(s.getFrom());
 			if (Const.DEVEL) Log.debug("Transaction to load: " + t);
-			transaction.setTransaction(t, true);
-			
+
+			if (s.getDescription() != null
+					&& s.getTo() != null
+					&& s.getFrom() != null){
+				transaction.setTransaction(t, true);
+			}
+			else {
+				transaction.setVisible(false);
+			}
+
 			//Load the schedule pulldowns, based on which type of 
 			// schedule we're following.
 			startDateChooser.setDate(s.getStartDate());
@@ -327,13 +368,13 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 				multipleWeeksDayChooser.setSelectedIndex(s.getScheduleDay());
 			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString()))
 				multipleMonthsDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
-			
+
 			//Load the checkmarks, using bit bashing logic
 			multipleWeeksMonthlyFirstWeek.setSelected((s.getScheduleWeek() & 1) != 0);
 			multipleWeeksMonthlySecondWeek.setSelected((s.getScheduleWeek() & 2) != 0);
 			multipleWeeksMonthlyThirdWeek.setSelected((s.getScheduleWeek() & 4) != 0);
 			multipleWeeksMonthlyFourthWeek.setSelected((s.getScheduleWeek() & 8) != 0);
-			
+
 			multipleMonthsYearlyJanuary.setSelected((s.getScheduleMonth() & 1) != 0);
 			multipleMonthsYearlyFebruary.setSelected((s.getScheduleMonth() & 2) != 0);
 			multipleMonthsYearlyMarch.setSelected((s.getScheduleMonth() & 4) != 0);
@@ -351,7 +392,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 	private String getFrequencyType(){
 		String frequencyType = frequencyPulldown.getSelectedItem().toString();
-				
+
 		return frequencyType; 
 	}
 
@@ -427,12 +468,12 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 	private Integer getScheduleWeek(){
 		int scheduleWeek = 0;
-		
+
 		scheduleWeek += (multipleWeeksMonthlyFirstWeek.isSelected() ? 1 : 0);
 		scheduleWeek += (multipleWeeksMonthlySecondWeek.isSelected() ? 2 : 0);
 		scheduleWeek += (multipleWeeksMonthlyThirdWeek.isSelected() ? 4 : 0);
 		scheduleWeek += (multipleWeeksMonthlyFourthWeek.isSelected() ? 8 : 0);
-		
+
 		return scheduleWeek;
 	}		
 
@@ -447,7 +488,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 	{
 		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())){
 			int value = 0;
-			
+
 			value += (multipleMonthsYearlyJanuary.isSelected() ? 1 : 0 );
 			value += (multipleMonthsYearlyFebruary.isSelected() ? 2 : 0 );
 			value += (multipleMonthsYearlyMarch.isSelected() ? 4 : 0 );
@@ -460,7 +501,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			value += (multipleMonthsYearlyOctober.isSelected() ? 512 : 0 );
 			value += (multipleMonthsYearlyNovember.isSelected() ? 1024 : 0 );
 			value += (multipleMonthsYearlyDecember.isSelected() ? 2048 : 0 );
-			
+
 			return value;
 		}
 		else {

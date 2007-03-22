@@ -783,7 +783,7 @@ public class DataInstance {
 	 * @param scheduleMonth Used for multiple months in a yeah option
 	 * @param transaction The transaction to base new scheduled transactions off of
 	 */
-	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Integer scheduleWeek,Integer scheduleMonth, Transaction transaction){
+	public void addSchedule(String name, Date startDate, Date endDate, String frequencyType, Integer scheduleDay, Integer scheduleWeek, Integer scheduleMonth, String message, Transaction transaction){
 		Schedule s = dataModelFactory.createSchedule();
 		s.setScheduleName(name);
 		s.setStartDate(startDate);
@@ -792,12 +792,15 @@ public class DataInstance {
 		s.setScheduleDay(scheduleDay);
 		s.setScheduleWeek(scheduleWeek);
 		s.setScheduleMonth(scheduleMonth);
-		s.setAmount(transaction.getAmount());
-		s.setDescription(transaction.getDescription());
-		s.setNumber(transaction.getNumber());
-		s.setMemo(transaction.getMemo());
-		s.setTo(transaction.getTo());
-		s.setFrom(transaction.getFrom());
+		s.setMessage(message);
+		if (transaction != null){
+			s.setAmount(transaction.getAmount());
+			s.setDescription(transaction.getDescription());
+			s.setNumber(transaction.getNumber());
+			s.setMemo(transaction.getMemo());
+			s.setTo(transaction.getTo());
+			s.setFrom(transaction.getFrom());
+		}
 
 		dataModel.getAllTransactions().getScheduledTransactions().add(s);
 		saveDataModel();

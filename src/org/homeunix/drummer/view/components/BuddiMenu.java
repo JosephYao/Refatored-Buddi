@@ -153,7 +153,7 @@ public class BuddiMenu extends JScreenMenuBar {
 //		final JScreenMenuItem paste = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PASTE));
 		final JScreenMenuItem toggleReconciled = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_RECONCILED));
 		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_CLEARED));
-		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_TRANSACTIONS));
+		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
 		//The following items are only on the main buddi screen. 
 		final JScreenMenuItem newAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_CATEGORY));
 		final JScreenMenuItem editAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_CATEGORY));

@@ -180,13 +180,22 @@ public interface ModelPackage extends EPackage {
 	int ACCOUNT__INTEREST_RATE = SOURCE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Due Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACCOUNT__DUE_DATE = SOURCE_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Account Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 4;
+	int ACCOUNT__ACCOUNT_TYPE = SOURCE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Account</em>' class.
@@ -195,7 +204,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 5;
+	int ACCOUNT_FEATURE_COUNT = SOURCE_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.AccountsImpl <em>Accounts</em>}' class.
@@ -245,22 +254,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORIES = 2;
 
 	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIES__ALL_CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIES__CATEGORIES = 1;
+	int CATEGORIES__CATEGORIES = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIES__ALL_CATEGORIES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Categories</em>' class.
@@ -327,22 +336,22 @@ public interface ModelPackage extends EPackage {
 	int CATEGORY__INCOME = SOURCE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 3;
+	int CATEGORY__PARENT = SOURCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__CHILDREN = SOURCE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Category</em>' class.
@@ -364,31 +373,13 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL = 4;
 
 	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_CATEGORIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TYPES = 1;
-
-	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 2;
+	int DATA_MODEL__ALL_TYPES = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
@@ -397,7 +388,25 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 3;
+	int DATA_MODEL__ALL_ACCOUNTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_CATEGORIES = 2;
+
+	/**
+	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_TRANSACTIONS = 3;
 
 	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
@@ -519,22 +528,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTION__RECONCILED = 9;
 
 	/**
-	 * The feature id for the '<em><b>From</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTION__FROM = 10;
-
-	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__TO = 11;
+	int TRANSACTION__TO = 10;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__FROM = 11;
 
 	/**
 	 * The number of structural features of the '<em>Transaction</em>' class.
@@ -636,15 +645,6 @@ public interface ModelPackage extends EPackage {
 	int SCHEDULE__RECONCILED = TRANSACTION__RECONCILED;
 
 	/**
-	 * The feature id for the '<em><b>From</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCHEDULE__FROM = TRANSACTION__FROM;
-
-	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -652,6 +652,15 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCHEDULE__TO = TRANSACTION__TO;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__FROM = TRANSACTION__FROM;
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
@@ -726,13 +735,22 @@ public interface ModelPackage extends EPackage {
 	int SCHEDULE__SCHEDULE_MONTH = TRANSACTION_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__MESSAGE = TRANSACTION_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Schedule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE_FEATURE_COUNT = TRANSACTION_FEATURE_COUNT + 8;
+	int SCHEDULE_FEATURE_COUNT = TRANSACTION_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionsImpl <em>Transactions</em>}' class.
@@ -754,22 +772,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS__TRANSACTIONS = 0;
 
 	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 1;
-
-	/**
 	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 2;
+	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__ALL_TRANSACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Transactions</em>' class.
@@ -828,22 +846,22 @@ public interface ModelPackage extends EPackage {
 	int TYPES = 10;
 
 	/**
-	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__TYPES = 0;
-
-	/**
 	 * The feature id for the '<em><b>All Types</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__ALL_TYPES = 1;
+	int TYPES__ALL_TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__TYPES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Types</em>' class.
@@ -918,6 +936,17 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAccount_InterestRate();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Account#getDueDate <em>Due Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Due Date</em>'.
+	 * @see org.homeunix.drummer.model.Account#getDueDate()
+	 * @see #getAccount()
+	 * @generated
+	 */
+	EAttribute getAccount_DueDate();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.Account#getAccountType <em>Account Type</em>}'.
@@ -1166,6 +1195,17 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSchedule_ScheduleMonth();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Schedule#getMessage <em>Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Message</em>'.
+	 * @see org.homeunix.drummer.model.Schedule#getMessage()
+	 * @see #getSchedule()
+	 * @generated
+	 */
+	EAttribute getSchedule_Message();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.DataModel#getAllTypes <em>All Types</em>}'.
@@ -1568,6 +1608,14 @@ public interface ModelPackage extends EPackage {
 		EAttribute ACCOUNT__INTEREST_RATE = eINSTANCE.getAccount_InterestRate();
 
 		/**
+		 * The meta object literal for the '<em><b>Due Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACCOUNT__DUE_DATE = eINSTANCE.getAccount_DueDate();
+
+		/**
 		 * The meta object literal for the '<em><b>Account Type</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1784,6 +1832,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCHEDULE__SCHEDULE_MONTH = eINSTANCE.getSchedule_ScheduleMonth();
+
+		/**
+		 * The meta object literal for the '<em><b>Message</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULE__MESSAGE = eINSTANCE.getSchedule_Message();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.SourceImpl <em>Source</em>}' class.

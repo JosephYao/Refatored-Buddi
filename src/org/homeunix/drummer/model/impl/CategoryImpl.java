@@ -28,8 +28,8 @@ import org.homeunix.drummer.model.Source;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.impl.CategoryImpl#getBudgetedAmount <em>Budgeted Amount</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.CategoryImpl#isIncome <em>Income</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.impl.CategoryImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.CategoryImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.CategoryImpl#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,16 +77,6 @@ public class CategoryImpl extends SourceImpl implements Category {
 	protected boolean income = INCOME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getChildren()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList children = null;
-
-	/**
 	 * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,6 +85,16 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 * @ordered
 	 */
 	protected Category parent = null;
+
+	/**
+	 * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChildren()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList children = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -218,11 +218,11 @@ public class CategoryImpl extends SourceImpl implements Category {
 				return new Long(getBudgetedAmount());
 			case ModelPackage.CATEGORY__INCOME:
 				return isIncome() ? Boolean.TRUE : Boolean.FALSE;
-			case ModelPackage.CATEGORY__CHILDREN:
-				return getChildren();
 			case ModelPackage.CATEGORY__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
+			case ModelPackage.CATEGORY__CHILDREN:
+				return getChildren();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -241,12 +241,12 @@ public class CategoryImpl extends SourceImpl implements Category {
 			case ModelPackage.CATEGORY__INCOME:
 				setIncome(((Boolean)newValue).booleanValue());
 				return;
+			case ModelPackage.CATEGORY__PARENT:
+				setParent((Category)newValue);
+				return;
 			case ModelPackage.CATEGORY__CHILDREN:
 				getChildren().clear();
 				getChildren().addAll((Collection)newValue);
-				return;
-			case ModelPackage.CATEGORY__PARENT:
-				setParent((Category)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -265,11 +265,11 @@ public class CategoryImpl extends SourceImpl implements Category {
 			case ModelPackage.CATEGORY__INCOME:
 				setIncome(INCOME_EDEFAULT);
 				return;
-			case ModelPackage.CATEGORY__CHILDREN:
-				getChildren().clear();
-				return;
 			case ModelPackage.CATEGORY__PARENT:
 				setParent((Category)null);
+				return;
+			case ModelPackage.CATEGORY__CHILDREN:
+				getChildren().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -286,10 +286,10 @@ public class CategoryImpl extends SourceImpl implements Category {
 				return budgetedAmount != BUDGETED_AMOUNT_EDEFAULT;
 			case ModelPackage.CATEGORY__INCOME:
 				return income != INCOME_EDEFAULT;
-			case ModelPackage.CATEGORY__CHILDREN:
-				return children != null && !children.isEmpty();
 			case ModelPackage.CATEGORY__PARENT:
 				return parent != null;
+			case ModelPackage.CATEGORY__CHILDREN:
+				return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

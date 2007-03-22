@@ -53,7 +53,7 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
 		
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTIONS)));
+		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTIONS)));
 		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
 		
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -72,7 +72,7 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_TRANSACTIONS));
+		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(doneButton);

@@ -24,6 +24,7 @@ import java.util.Date;
  *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleName <em>Schedule Name</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleWeek <em>Schedule Week</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Schedule#getScheduleMonth <em>Schedule Month</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Schedule#getMessage <em>Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -239,5 +240,31 @@ public interface Schedule extends Transaction {
 	 * @generated
 	 */
 	void setScheduleMonth(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Message</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Message</em>' attribute.
+	 * @see #setMessage(String)
+	 * @see org.homeunix.drummer.model.ModelPackage#getSchedule_Message()
+	 * @model
+	 * @generated
+	 */
+	String getMessage();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Schedule#getMessage <em>Message</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Message</em>' attribute.
+	 * @see #getMessage()
+	 * @generated
+	 */
+	void setMessage(String value);
 
 } // Schedule

@@ -6,6 +6,8 @@
  */
 package org.homeunix.drummer.model.impl;
 
+import java.util.Date;
+
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -33,6 +35,7 @@ import org.homeunix.thecave.moss.util.Log;
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getStartingBalance <em>Starting Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getCreditLimit <em>Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getInterestRate <em>Interest Rate</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.AccountImpl#getAccountType <em>Account Type</em>}</li>
  * </ul>
  * </p>
@@ -119,6 +122,26 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * @ordered
 	 */
 	protected long interestRate = INTEREST_RATE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDueDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date DUE_DATE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDueDate() <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDueDate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date dueDate = DUE_DATE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAccountType() <em>Account Type</em>}' reference.
@@ -237,6 +260,27 @@ public class AccountImpl extends SourceImpl implements Account {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDueDate(Date newDueDate) {
+		Date oldDueDate = dueDate;
+		dueDate = newDueDate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.ACCOUNT__DUE_DATE, oldDueDate, dueDate));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Type getAccountType() {
 		if (accountType != null && accountType.eIsProxy()) {
 			InternalEObject oldAccountType = (InternalEObject)accountType;
@@ -285,6 +329,8 @@ public class AccountImpl extends SourceImpl implements Account {
 				return new Long(getCreditLimit());
 			case ModelPackage.ACCOUNT__INTEREST_RATE:
 				return new Long(getInterestRate());
+			case ModelPackage.ACCOUNT__DUE_DATE:
+				return getDueDate();
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				if (resolve) return getAccountType();
 				return basicGetAccountType();
@@ -310,6 +356,9 @@ public class AccountImpl extends SourceImpl implements Account {
 				return;
 			case ModelPackage.ACCOUNT__INTEREST_RATE:
 				setInterestRate(((Long)newValue).longValue());
+				return;
+			case ModelPackage.ACCOUNT__DUE_DATE:
+				setDueDate((Date)newValue);
 				return;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)newValue);
@@ -337,6 +386,9 @@ public class AccountImpl extends SourceImpl implements Account {
 			case ModelPackage.ACCOUNT__INTEREST_RATE:
 				setInterestRate(INTEREST_RATE_EDEFAULT);
 				return;
+			case ModelPackage.ACCOUNT__DUE_DATE:
+				setDueDate(DUE_DATE_EDEFAULT);
+				return;
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				setAccountType((Type)null);
 				return;
@@ -359,6 +411,8 @@ public class AccountImpl extends SourceImpl implements Account {
 				return creditLimit != CREDIT_LIMIT_EDEFAULT;
 			case ModelPackage.ACCOUNT__INTEREST_RATE:
 				return interestRate != INTEREST_RATE_EDEFAULT;
+			case ModelPackage.ACCOUNT__DUE_DATE:
+				return DUE_DATE_EDEFAULT == null ? dueDate != null : !DUE_DATE_EDEFAULT.equals(dueDate);
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
 				return accountType != null;
 		}

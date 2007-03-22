@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 01 18:28:26 MST 2006'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Mar 21 22:22:27 MDT 2007'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.20.x</XMI.exporterVersion>
@@ -132,6 +132,21 @@
                               </UML:StructuralFeature.multiplicity>
                               <UML:StructuralFeature.type>
                                 <UML:DataType xmi.idref = '.:00000000000008E4'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000A18'
+                              name = 'dueDate' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000A1C'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000A1B'
+                                      lower = '0' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:00000000000008E0'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
                           </UML:Classifier.feature>
@@ -321,7 +336,8 @@
                             </UML:Attribute>
                           </UML:Classifier.feature>
                         </UML:Class>
-                        <UML:Generalization xmi.id = '.:0000000000000852' isSpecification = 'false'>
+                        <UML:Generalization xmi.id = '.:0000000000000852' name = 'accountParent'
+                          isSpecification = 'false'>
                           <UML:Generalization.child>
                             <UML:Class xmi.idref = '.:0000000000000831'/>
                           </UML:Generalization.child>
@@ -329,7 +345,8 @@
                             <UML:Class xmi.idref = '.:000000000000082A'/>
                           </UML:Generalization.parent>
                         </UML:Generalization>
-                        <UML:Generalization xmi.id = '.:0000000000000853' isSpecification = 'false'>
+                        <UML:Generalization xmi.id = '.:0000000000000853' name = 'categoryParent'
+                          isSpecification = 'false'>
                           <UML:Generalization.child>
                             <UML:Class xmi.idref = '.:0000000000000838'/>
                           </UML:Generalization.child>
@@ -485,9 +502,10 @@
                               isSpecification = 'false' isNavigable = 'false' ordering = 'unordered' aggregation = 'composite'
                               targetScope = 'instance' changeability = 'changeable'>
                               <UML:AssociationEnd.multiplicity>
-                                <UML:Multiplicity xmi.id = '.:0000000000000874'>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000CF4'>
                                   <UML:Multiplicity.range>
-                                    <UML:MultiplicityRange xmi.id = '.:0000000000000873' lower = '1' upper = '1'/>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000CF3'
+                                      lower = '1' upper = '1'/>
                                   </UML:Multiplicity.range>
                                 </UML:Multiplicity>
                               </UML:AssociationEnd.multiplicity>
@@ -936,6 +954,21 @@
                                 <UML:DataType xmi.idref = '.:00000000000008DD'/>
                               </UML:StructuralFeature.type>
                             </UML:Attribute>
+                            <UML:Attribute xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000D0A'
+                              name = 'message' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                              changeability = 'changeable' targetScope = 'instance'>
+                              <UML:StructuralFeature.multiplicity>
+                                <UML:Multiplicity xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000D17'>
+                                  <UML:Multiplicity.range>
+                                    <UML:MultiplicityRange xmi.id = '-64--88-0-51-141c3303:111778f1785:-8000:0000000000000D16'
+                                      lower = '0' upper = '1'/>
+                                  </UML:Multiplicity.range>
+                                </UML:Multiplicity>
+                              </UML:StructuralFeature.multiplicity>
+                              <UML:StructuralFeature.type>
+                                <UML:Class xmi.idref = '.:00000000000008DE'/>
+                              </UML:StructuralFeature.type>
+                            </UML:Attribute>
                           </UML:Classifier.feature>
                         </UML:Class>
                         <UML:Association xmi.id = '.:00000000000008D1' name = 'scheduledTransactions'
@@ -971,7 +1004,8 @@
                             </UML:AssociationEnd>
                           </UML:Association.connection>
                         </UML:Association>
-                        <UML:Generalization xmi.id = '.:00000000000008FB' isSpecification = 'false'>
+                        <UML:Generalization xmi.id = '.:00000000000008FB' name = 'scheduleParent'
+                          isSpecification = 'false'>
                           <UML:Generalization.child>
                             <UML:Class xmi.idref = '.:00000000000008CA'/>
                           </UML:Generalization.child>

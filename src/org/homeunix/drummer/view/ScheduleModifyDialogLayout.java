@@ -17,12 +17,14 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
+import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -36,6 +38,8 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 	protected final JButton cancelButton;
 
 	protected final JHintTextField scheduleName;
+	
+	protected final JHintTextArea message;
 	
 	protected final JScrollingComboBox frequencyPulldown;
 	protected final JScrollingComboBox weeklyDayChooser;
@@ -82,7 +86,12 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 
 		transaction = new EditableTransaction(null);
 
-		scheduleName = new JHintTextField(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTION_NAME));
+		scheduleName = new JHintTextField(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTION_NAME));
+		
+		message = new JHintTextArea(Translate.getInstance().get(TranslateKeys.MESSAGE_HINT));
+		message.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SCHEDULED_MESSAGE));
+		JScrollPane messageScroller = new JScrollPane(message);
+		messageScroller.setPreferredSize(new Dimension(100, 100));
 		
 		//Create the check boxes for Multiple Weeks each Month.
 		multipleWeeksMonthlyFirstWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.FIRST_WEEK.toString()));
@@ -221,13 +230,14 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		JPanel namePanel = new JPanel(new BorderLayout());
 //		namePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		namePanel.add(scheduleName, BorderLayout.EAST);
+		namePanel.add(messageScroller, BorderLayout.SOUTH);
 
 		//The schedulePanel is where we keep all the options for scheduling
 		JPanel schedulePanel = new JPanel(new BorderLayout());
 		schedulePanel.setBorder(BorderFactory.createTitledBorder((String) null));
 
 		//The top part of the schedule information
-		JLabel intro = new JLabel(Translate.getInstance().get(TranslateKeys.REPEAT_THIS_TRANSACTION));
+		JLabel intro = new JLabel(Translate.getInstance().get(TranslateKeys.REPEAT_THIS_ACTION));
 		cardLayout = new CardLayout();
 		cardHolder = new JPanel(cardLayout);		
 		JPanel introHolder = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -350,11 +360,13 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		if (OperatingSystemUtil.isMac()){
 			textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
+			messageScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			messageScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
 		
 		this.setLayout(new BorderLayout());
 		this.setResizable(true);
-		this.setTitle(Translate.getInstance().get(TranslateKeys.SCHEDULED_TRANSACTION));
+		this.setTitle(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTION));
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
 

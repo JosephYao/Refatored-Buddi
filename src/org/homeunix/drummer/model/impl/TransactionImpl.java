@@ -237,16 +237,6 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	protected boolean reconciled = RECONCILED_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFrom()
-	 * @generated
-	 * @ordered
-	 */
-	protected Source from = null;
-
-	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -255,6 +245,16 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * @ordered
 	 */
 	protected Source to = null;
+
+	/**
+	 * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFrom()
+	 * @generated
+	 * @ordered
+	 */
+	protected Source from = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -587,12 +587,12 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return isCleared() ? Boolean.TRUE : Boolean.FALSE;
 			case ModelPackage.TRANSACTION__RECONCILED:
 				return isReconciled() ? Boolean.TRUE : Boolean.FALSE;
-			case ModelPackage.TRANSACTION__FROM:
-				if (resolve) return getFrom();
-				return basicGetFrom();
 			case ModelPackage.TRANSACTION__TO:
 				if (resolve) return getTo();
 				return basicGetTo();
+			case ModelPackage.TRANSACTION__FROM:
+				if (resolve) return getFrom();
+				return basicGetFrom();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -634,11 +634,11 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 			case ModelPackage.TRANSACTION__RECONCILED:
 				setReconciled(((Boolean)newValue).booleanValue());
 				return;
-			case ModelPackage.TRANSACTION__FROM:
-				setFrom((Source)newValue);
-				return;
 			case ModelPackage.TRANSACTION__TO:
 				setTo((Source)newValue);
+				return;
+			case ModelPackage.TRANSACTION__FROM:
+				setFrom((Source)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -681,11 +681,11 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 			case ModelPackage.TRANSACTION__RECONCILED:
 				setReconciled(RECONCILED_EDEFAULT);
 				return;
-			case ModelPackage.TRANSACTION__FROM:
-				setFrom((Source)null);
-				return;
 			case ModelPackage.TRANSACTION__TO:
 				setTo((Source)null);
+				return;
+			case ModelPackage.TRANSACTION__FROM:
+				setFrom((Source)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -718,10 +718,10 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return cleared != CLEARED_EDEFAULT;
 			case ModelPackage.TRANSACTION__RECONCILED:
 				return reconciled != RECONCILED_EDEFAULT;
-			case ModelPackage.TRANSACTION__FROM:
-				return from != null;
 			case ModelPackage.TRANSACTION__TO:
 				return to != null;
+			case ModelPackage.TRANSACTION__FROM:
+				return from != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -3,6 +3,7 @@
 -Added Not Reconciled and Not Cleared to the filters on the transaction window
 -Added an option to show the currency sign before or after the amount (for some European currencies)
 -Updated Norwegian translation
+-Added an optional message to scheduled transactions.  These are now called 'Scheduled Actions', as you can do more than just schedule transactions to be run.  Any message which you specify will be shown on the scheduled day (or the first program execution after that day); this can therefore be used for reminders on bills, credit card payments, etc.
 
 2.3.0 (March 2 2007)
 -Unstable branch of 2.2.0 Stable.

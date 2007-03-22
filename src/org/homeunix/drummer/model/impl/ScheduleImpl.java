@@ -29,6 +29,7 @@ import org.homeunix.drummer.model.Schedule;
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleName <em>Schedule Name</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleWeek <em>Schedule Week</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getScheduleMonth <em>Schedule Month</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.ScheduleImpl#getMessage <em>Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -194,6 +195,26 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 	 * @ordered
 	 */
 	protected int scheduleMonth = SCHEDULE_MONTH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String MESSAGE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMessage() <em>Message</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected String message = MESSAGE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -386,6 +407,27 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMessage(String newMessage) {
+		String oldMessage = message;
+		message = newMessage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SCHEDULE__MESSAGE, oldMessage, message));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.SCHEDULE__START_DATE:
@@ -404,6 +446,8 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return new Integer(getScheduleWeek());
 			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
 				return new Integer(getScheduleMonth());
+			case ModelPackage.SCHEDULE__MESSAGE:
+				return getMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -438,6 +482,9 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return;
 			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
 				setScheduleMonth(((Integer)newValue).intValue());
+				return;
+			case ModelPackage.SCHEDULE__MESSAGE:
+				setMessage((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -474,6 +521,9 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
 				setScheduleMonth(SCHEDULE_MONTH_EDEFAULT);
 				return;
+			case ModelPackage.SCHEDULE__MESSAGE:
+				setMessage(MESSAGE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -501,6 +551,8 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 				return scheduleWeek != SCHEDULE_WEEK_EDEFAULT;
 			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
 				return scheduleMonth != SCHEDULE_MONTH_EDEFAULT;
+			case ModelPackage.SCHEDULE__MESSAGE:
+				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
 		}
 		return super.eIsSet(featureID);
 	}
