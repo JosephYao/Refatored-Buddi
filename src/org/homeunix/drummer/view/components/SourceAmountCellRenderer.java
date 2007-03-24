@@ -49,13 +49,13 @@ public class SourceAmountCellRenderer extends AbstractSourceCellRenderer {
 			.append(sbOpen)
 			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amount / 100.0)))
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
 
 			if (node.getChildCount() > 0){
 				sb.append(" (")
 				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) amountTotal / 100.0)))
-				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 				.append(")");
 			}
 
@@ -82,7 +82,7 @@ public class SourceAmountCellRenderer extends AbstractSourceCellRenderer {
 			.append(sbOpen)
 			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) a.getBalance() / 100.0)))
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 			.append(sbClose)
 			.append("</html>");
 
@@ -104,7 +104,7 @@ public class SourceAmountCellRenderer extends AbstractSourceCellRenderer {
 				sb.append("-");
 			sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 			.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 			.append(sbClose)
 			.append("</html>");
 

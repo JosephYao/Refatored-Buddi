@@ -55,7 +55,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 				+ ") "
 				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 				+ Formatter.getInstance().getDecimalFormat().format((double) totalExpenses / 100.0)
-				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""),				
+				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""),				
 				pieData,             // data
 				true,               // include legend
 				true,

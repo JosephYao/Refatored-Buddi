@@ -72,7 +72,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 							.append(entry.getActual() < 0 ? "<td class='red'>" : "<td>")
 							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
-							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 							.append("</td></tr>\n");
 					
 					if (child.getChildCount() > 0){
@@ -101,7 +101,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 										.append((isExpense ? "<td class='red'>" : "<td>"))
 										.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 										.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) t.getAmount() / 100.0)))
-										.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+										.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 										.append("</td>");
 							}
 							sb.append("</tr>");
@@ -120,7 +120,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 							.append("<b>")
 							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 							.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
-							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+							.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 							.append("</b></th>")
 							.append("</tr>");
 				}
@@ -289,7 +289,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 						.append((entry.getTotal() < 0 ? "<font color='red'>" : ""))
 						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getTotal() / 100.0)))
-						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 						.append((entry.getTotal() < 0 ? "</font>" : ""))
 						.append("</b></td></tr></table></html>");
 				
@@ -307,7 +307,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 						.append(entry.getActual() < 0 ? "<font color='red'>" : "")
 						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) entry.getActual() / 100.0)))
-						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 						.append(entry.getActual() < 0 ? "</font>" : "")
 						.append("</td></tr></table></html>");
 				
@@ -330,7 +330,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 						.append((isExpense ? "<font color='red'>" : ""))
 						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 						.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) transaction.getAmount() / 100.0)))
-						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+						.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 						.append((isExpense ? "</font>" : ""))
 						.append("</td><td width=350px>")
 						.append(Formatter.getInstance().getLengthFormat(25).format(transaction.getFrom()))

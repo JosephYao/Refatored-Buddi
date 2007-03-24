@@ -461,7 +461,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			.append(": ")
 			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
 			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
 			.append(" (")
 			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
 			.append("%)");

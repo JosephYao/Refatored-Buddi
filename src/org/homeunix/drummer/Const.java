@@ -62,6 +62,7 @@ public class Const {
 		"English_(US)",
 		"English",
 		"Espanol",
+		"Espanol_(ES)",
 		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",
@@ -85,14 +86,24 @@ public class Const {
 	
 	//Date formats to appear in Preferences.
 	public final static String[] DATE_FORMATS = {
+		"yyyy.MM.dd",
 		"yyyy-MM-dd",
-		"yyyy-MMM-dd",
-		"MMMM dd, yyyy",
-		"MMM dd yyyy",
-		"yyyy/MMM/d",
 		"yyyy/MM/dd",
+		
+		"yyyy.MMM.dd",
+		"yyyy-MMM-dd",
+		"yyyy/MMM/dd",
+		
+		"yyyy.MMM.d",
+		"yyyy-MMM-d",
+		"yyyy/MMM/d",
+		
 		"dd.MM.yyyy",
-		"dd/MM/yyyy"
+		"dd-MM-yyyy",
+		"dd/MM/yyyy",
+		
+		"MMMM dd, yyyy",
+		"MMM dd yyyy"
 	};
 	
 	//Currency formats to appear in Preferences

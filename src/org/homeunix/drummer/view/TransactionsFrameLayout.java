@@ -80,7 +80,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 						sb.append("<br>");
 						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()));
 						sb.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
-						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
 						sb.append("  ");
 						sb.append(transaction.getFrom())
 								.append(" ")

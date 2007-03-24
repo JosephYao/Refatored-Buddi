@@ -184,7 +184,11 @@ public class AccountListPanel extends ListPanelLayout {
 		else
 			balanceLabel.setForeground(Color.RED);
 		
-		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) + ": " + (balance >= 0 ? "" : "-") + (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()) + Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)) + (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
+				+ ": " + (balance >= 0 ? "" : "-") 
+				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()) 
+				+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)) 
+				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
 		
 		treeModel.reload(treeModel.getRoot());
 

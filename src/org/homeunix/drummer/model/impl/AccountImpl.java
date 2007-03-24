@@ -448,7 +448,7 @@ public class AccountImpl extends SourceImpl implements Account {
 			result.append("-");
 		result.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()));
 		result.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)));
-		result.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+		result.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
 		return result.toString();
 	}
 
