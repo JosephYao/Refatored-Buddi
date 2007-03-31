@@ -3,6 +3,7 @@ package org.homeunix.drummer.view.components;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.model.Account;
@@ -17,12 +18,15 @@ import org.homeunix.thecave.moss.util.Formatter;
  * @author wyatt
  *
  */
-public class SourceNameCellRenderer extends AbstractSourceCellRenderer {
+public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		Object obj = super.prepareTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+//		Object obj = super.prepareTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+		Object obj = node.getUserObject();
+		
 		if (obj == null){
 			this.setText("");
 		}
