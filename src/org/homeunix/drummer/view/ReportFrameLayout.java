@@ -19,15 +19,14 @@ import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -35,11 +34,15 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
 public class ReportFrameLayout extends AbstractFrame {
 	public final static long serialVersionUID = 0;
-	protected final JTree reportTree;
+	protected final JXTreeTable tree;
+	
 	protected final JButton okButton;
 	protected final JButton editButton;
 	protected String HTMLPage = "";
@@ -56,11 +59,14 @@ public class ReportFrameLayout extends AbstractFrame {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		
-		reportTree = new JTree();
-		reportTree.setRootVisible(false);
-		reportTree.setShowsRootHandles(true);
-		reportTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-
+		tree = new JXTreeTable();
+		tree.setRootVisible(false);
+		tree.setShowsRootHandles(true);
+		tree.setSelectionModel(new DefaultListSelectionModel());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
+		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
+		
 		updateContent();
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
@@ -70,7 +76,7 @@ public class ReportFrameLayout extends AbstractFrame {
 		okButton.setPreferredSize(buttonSize);
 		editButton.setPreferredSize(buttonSize);
 
-		reportTree.setBackground(Color.WHITE);
+		tree.setBackground(Color.WHITE);
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(editButton);
@@ -78,7 +84,7 @@ public class ReportFrameLayout extends AbstractFrame {
 
 		editButton.setEnabled(false);
 
-		JScrollPane reportLabelScroller = new JScrollPane(reportTree);
+		JScrollPane reportLabelScroller = new JScrollPane(tree);
 
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
 //		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
@@ -98,7 +104,7 @@ public class ReportFrameLayout extends AbstractFrame {
 		
 		if (OperatingSystemUtil.isMac()){
 			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-			reportTree.putClientProperty("Quaqua.Tree.style", "striped");
+			tree.putClientProperty("Quaqua.Tree.style", "striped");
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
@@ -110,7 +116,7 @@ public class ReportFrameLayout extends AbstractFrame {
 	
 	@Override
 	public Component getPrintedComponent() {
-		return reportTree;
+		return tree;
 	}
 	
 	@Override
@@ -130,14 +136,14 @@ public class ReportFrameLayout extends AbstractFrame {
 			}
 		});
 		
-		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
-			public void valueChanged(TreeSelectionEvent arg0) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getLastSelectedPathComponent();
-				selectedNode = node;
-			}
-		});
+//		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
+//			public void valueChanged(TreeSelectionEvent arg0) {
+//				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getSelectedRow();
+//				selectedNode = reportTree.get;
+//			}
+//		});
 		
-		reportTree.addMouseListener(new MouseAdapter(){
+		tree.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				editButton.setEnabled(selectedNode != null && selectedNode.getUserObject() instanceof Transaction);
@@ -201,10 +207,22 @@ public class ReportFrameLayout extends AbstractFrame {
 	
 	@Override
 	public AbstractFrame updateContent() {
-		HTMLPage = reportPlugin.getReportHTML(startDate, endDate);
-		reportTree.setModel(reportPlugin.getReportTreeModel(startDate, endDate));
-		reportTree.setCellRenderer(reportPlugin.getTreeCellRenderer());
-		this.setTitle(reportPlugin.getTitle());
+//		HTMLPage = reportPlugin.getReportHTML(startDate, endDate);
+//		reportTree.setModel(reportPlugin.getReportTreeModel(startDate, endDate));
+		tree.setTreeTableModel(reportPlugin.getTreeTableModel(startDate, endDate));
+//		reportTree.setCellRenderer(reportPlugin.getTreeCellRenderer());
+
+		for (int i = 0; i < reportPlugin.getTableCellRenderers().size(); i++){
+			tree.getColumn(i + 1).setCellRenderer(reportPlugin.getTableCellRenderers().get(i));
+		}
+		tree.setTreeCellRenderer(reportPlugin.getTreeCellRenderer());
+
+		this.setTitle(reportPlugin.getTitle() 
+				+ " (" 
+				+ Formatter.getInstance().getDateFormat().format(startDate)
+				+ " - "
+				+ Formatter.getInstance().getDateFormat().format(endDate)
+				+ ")");
 		
 		return this;
 	}

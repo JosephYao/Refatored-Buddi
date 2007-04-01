@@ -19,7 +19,6 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
-import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.jfree.chart.ChartFactory;
@@ -54,9 +53,7 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ") "
-				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-				+ Formatter.getInstance().getDecimalFormat().format((double) totalIncome / 100.0)
-				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""),
+				+ Translate.getFormattedCurrency(totalIncome),
 				pieData,             // data
 				true,               // include legend
 				true,

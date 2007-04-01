@@ -23,7 +23,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 //		Object obj = super.prepareTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 		Object obj = node.getUserObject();
 		
@@ -33,69 +33,36 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(CategoryImpl.class)) {
 			Category c = (Category) obj;
 
-			if (c.isDeleted()){
-				sbOpen.append("<s>");
-				sbClose.insert(0, "</s>");
-			}
-
-			if (!c.isIncome()){
-				sbOpen.append("<font color='red'>");
-				sbClose.insert(0, "</font>");
-			}
-
-			sb.append("<html>")
-			.append(sbPrepend)
-			.append(sbOpen)
-			.append(c.toString())
-			.append(sbClose)
-			.append("</html>");
-
-			this.setText(sb.toString());
+			startTableCellRendererComponent(value, isSelected, row, column, (c.isIncome() ? null : "red"), c.isDeleted());			
+			sb.append(c.toString());
+			endTableCellRendererComponent();
+			
+			return this;
 		}
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-			if (a.isDeleted()){
-				sbOpen.append("<s>");
-				sbClose.insert(0, "</s>");
-			}
-
-			if (a.getBalance() < 0){
-				sbOpen.append("<font color='red'>");
-				sbClose.insert(0, "</font>");
-			}
-
-			sb.append("<html>")
-			.append(sbPrepend)
-			.append(sbOpen)
-			.append(a.toString());
+			startTableCellRendererComponent(value, isSelected, row, column, (a.getBalance() < 0 ? "red" : null), a.isDeleted());			
+			sb.append(a.toString());
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
 					&& (a.getInterestRate() != 0)){
 				sb.append(" (")
 				.append(Formatter.getInstance().getDecimalFormat().format(((double) a.getInterestRate()) / 100))
 				.append("%)");
 			}
-			sb.append(sbClose)
-			.append("</html>");
-
-			this.setText(sb.toString());
+			endTableCellRendererComponent();
+			
+			return this;
 		}
 		//This is a wrapper class for Type which includes the total for all accounts of this type
 		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
-			if (t.getType().isCredit()){
-				sbOpen.append("<font color='red'>");
-				sbClose.insert(0, "</font>");
-			}
-
-			sb.append("<html>")
-			.append(sbOpen)
-			.append(t.getType().toString())
-			.append(sbClose)
-			.append("</html>");
-
-			this.setText(sb.toString());
+			startTableCellRendererComponent(value, isSelected, row, column, (t.getType().isCredit() ? "red" : null), false);
+			sb.append(t.getType().toString());
+			endTableCellRendererComponent();
+			
+			return this;
 		}
 
 		return this;

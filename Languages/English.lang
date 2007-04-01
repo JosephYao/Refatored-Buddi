@@ -370,3 +370,4 @@ SCHEDULED_MESSAGE=Scheduled Message
 MESSAGE_HINT=<Message>
 TOOLTIP_SCHEDULED_MESSAGE=<html>If you wish, you can enter a message here.  This message will be displayed<br>whenever the scheduled action is performed.  If you specify a message,<br>you do not need to put anything in the transaction fields - Buddi<br>will just display the message when it is scheduled.</html>
 EDIT_SCHEDULED_ACTIONS=Edit Scheduled Actions
+GRAPHS=Graphs

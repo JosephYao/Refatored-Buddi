@@ -4,14 +4,21 @@
 package org.homeunix.drummer.plugins;
 
 import java.io.File;
+import java.util.Date;
+import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.view.AbstractFrame;
+import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**
  * @author wyatt
@@ -73,7 +80,22 @@ class BuddiPluginImpl {
 		public void importData(AbstractFrame frame, File file) {}
 	}
 	
-	static class BuddiPanelPluginImpl implements BuddiPanelPlugin {
+	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
+		public DateRangeType getDateRangeType() {
+			return null;
+		}
+		public String getDescription() {
+			return null;
+		}
+		public JPanel getGraphPanel(Date startDate, Date endDate) {
+			return null;
+		}
+		public String getTitle() {
+			return null;
+		}
+	}
+	
+	static class BuddiReportPluginImpl implements BuddiReportPlugin {
 
 		public DateRangeType getDateRangeType() {
 			return null;
@@ -84,6 +106,18 @@ class BuddiPluginImpl {
 		}
 
 		public String getDescription() {
+			return null;
+		}
+		
+		public List<TableCellRenderer> getTableCellRenderers() {
+			return null;
+		}
+		
+		public TreeCellRenderer getTreeCellRenderer() {
+			return null;
+		}
+		
+		public TreeTableModel getTreeTableModel(Date startDate, Date endDate) {
 			return null;
 		}
 	}

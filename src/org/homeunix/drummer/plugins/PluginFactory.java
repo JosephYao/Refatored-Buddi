@@ -29,12 +29,15 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
+import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiGraphPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiImportPluginImpl;
-import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiPanelPluginImpl;
+import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiReportPluginImpl;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractFrame;
@@ -90,11 +93,19 @@ public class PluginFactory<T extends BuddiPlugin> {
 		return importMenuItems;
 	}
 
-	public static List<JPanel> getPanelLaunchers(){
+	public static List<JPanel> getReportPanelLaunchers(){
+		return getPanelLaunchers(BuddiReportPluginImpl.class);
+	}
+
+	public static List<JPanel> getGraphPanelLaunchers(){
+		return getPanelLaunchers(BuddiGraphPluginImpl.class);
+	}
+
+	private static List<JPanel> getPanelLaunchers(Class<? extends BuddiPanelPlugin> pluginType){
 		List<JPanel> panelItems = new LinkedList<JPanel>();
 
 		PluginFactory<BuddiPanelPlugin> factory = new PluginFactory<BuddiPanelPlugin>();
-		List<BuddiPanelPlugin> panelPlugins = factory.getPluginObjects(BuddiPanelPluginImpl.class);
+		List<BuddiPanelPlugin> panelPlugins = factory.getPluginObjects(pluginType);
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiPanelPlugin plugin : panelPlugins) {
@@ -194,9 +205,14 @@ public class PluginFactory<T extends BuddiPlugin> {
 					if (Const.DEVEL) Log.info("Adding Import Plugin " + pluginObject);
 					pluginEntries.add((T) pluginObject);
 				}
-				else if (pluginType instanceof BuddiPanelPlugin
-						&& pluginObject instanceof BuddiPanelPlugin){
-					if (Const.DEVEL) Log.info("Adding Panel Plugin " + pluginObject);
+				else if (pluginType instanceof BuddiReportPlugin
+						&& pluginObject instanceof BuddiReportPlugin){
+					if (Const.DEVEL) Log.info("Adding Report Plugin " + pluginObject);
+					pluginEntries.add((T) pluginObject);
+				}
+				else if (pluginType instanceof BuddiGraphPlugin
+						&& pluginObject instanceof BuddiGraphPlugin){
+					if (Const.DEVEL) Log.info("Adding Graph Plugin " + pluginObject);
 					pluginEntries.add((T) pluginObject);
 				}
 			}

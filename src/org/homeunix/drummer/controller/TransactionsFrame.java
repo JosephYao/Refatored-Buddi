@@ -451,7 +451,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
 				&& account != null  
 				&& account.getCreditLimit() != 0){
-			double amountLeft = (double) (account.getCreditLimit() + account.getBalance()) / 100.0;
+			long amountLeft = (account.getCreditLimit() + account.getBalance());
 			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
 
 			StringBuffer sb = new StringBuffer();
@@ -459,9 +459,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
-			.append(Formatter.getInstance().getDecimalFormat().format(amountLeft))
-			.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""))
+			.append(Translate.getFormattedCurrency(amountLeft))
 			.append(" (")
 			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
 			.append("%)");

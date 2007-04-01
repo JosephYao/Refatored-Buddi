@@ -24,7 +24,6 @@ import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractPanel;
 import org.homeunix.drummer.view.ListPanelLayout;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 /**
@@ -186,9 +185,7 @@ public class AccountListPanel extends ListPanelLayout {
 		
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
 				+ ": " + (balance >= 0 ? "" : "-") 
-				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()) 
-				+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(balance) / 100.0)) 
-				+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+				+ Translate.getFormattedCurrency(balance));
 		
 		treeModel.reload(treeModel.getRoot());
 

@@ -23,7 +23,6 @@ import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractPanel;
 import org.homeunix.drummer.view.ListPanelLayout;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 public class CategoryListPanel extends ListPanelLayout {
@@ -149,9 +148,7 @@ public class CategoryListPanel extends ListPanelLayout {
 				.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
 				.append(": ")
 				.append(((income - expenses) >= 0 ? "" : "-"))
-				.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()))
-				.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) Math.abs(income - expenses) / 100.0)))
-				.append(PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
+				.append(Translate.getFormattedCurrency(income - expenses));
 		
 		balanceLabel.setText(sb.toString());
 		

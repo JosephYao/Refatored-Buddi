@@ -10,12 +10,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public abstract class ReportPanelLayout extends JPanel {
+/**
+ * @author wyatt
+ *
+ * The layout which ReportsPanel and GraphsPanel extend from.
+ * 
+ */
+public abstract class InfomationPanelLayout extends JPanel {
 	public static final long serialVersionUID = 0;
 	protected final JPanel pluginsPanel;
 	
 	
-	protected ReportPanelLayout(){		
+	protected InfomationPanelLayout(){		
 		pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
 				

@@ -7,21 +7,19 @@
 package org.homeunix.drummer.model.impl;
 
 import java.util.Date;
-
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
-import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 /**
@@ -446,9 +444,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		result.append("): ");
 		if ((isCredit() ^ balance <= 0) && balance != 0)
 			result.append("-");
-		result.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()));
-		result.append(Formatter.getInstance().getDecimalFormat().format(Math.abs((double) balance / 100.0)));
-		result.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+		result.append(Translate.getFormattedCurrency(balance));
 		return result.toString();
 	}
 

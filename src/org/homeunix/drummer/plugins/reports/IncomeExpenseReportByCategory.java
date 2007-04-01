@@ -143,8 +143,9 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 
 		sb.append("</table>\n</body>\n</html>");
 
-		return sb.toString();	}
-
+		return sb.toString();	
+	}
+	
 	public TreeModel getReportTreeModel(Date startDate, Date endDate) {
 		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();

@@ -6,24 +6,27 @@
 package org.homeunix.drummer.plugins.interfaces;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
-import javax.swing.tree.TreeModel;
+
+import org.jdesktop.swingx.treetable.TreeTableModel;
 
 public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	
+//	public AbstractTableModel getReportData(Date startDate, Date endDate);
+	
 	/**
-	 * Returns a treemodel used to display the report.
+	 * Returns the data model used to display the report.
 	 * @param startDate Start of report period
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public TreeModel getReportTreeModel(Date startDate, Date endDate);
+	public TreeTableModel getTreeTableModel(Date startDate, Date endDate);
+			
+	public List<TableCellRenderer> getTableCellRenderers();
 	
-	/**
-	 * Returns the tree cell renderer used to draw the ReportTreeModel
-	 * @return
-	 */
 	public TreeCellRenderer getTreeCellRenderer();
 	
 	/**
@@ -33,5 +36,5 @@ public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	 * @param endDate
 	 * @return
 	 */
-	public String getReportHTML(Date startDate, Date endDate);
+//	public String getReportHTML(Date startDate, Date endDate);
 }

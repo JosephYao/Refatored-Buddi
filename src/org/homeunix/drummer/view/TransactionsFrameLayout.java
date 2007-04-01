@@ -24,11 +24,9 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.thecave.moss.gui.JSearchField;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public abstract class TransactionsFrameLayout extends AbstractFrame {
@@ -78,9 +76,7 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 						}
 
 						sb.append("<br>");
-						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol()));
-						sb.append(Formatter.getInstance().getDecimalFormat().format(((double) transaction.getAmount()) / 100.0));
-						sb.append((PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : ""));
+						sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
 						sb.append("  ");
 						sb.append(transaction.getFrom())
 								.append(" ")

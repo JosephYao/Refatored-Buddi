@@ -13,6 +13,7 @@ import javax.swing.JTabbedPane;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.AccountListPanel;
 import org.homeunix.drummer.controller.CategoryListPanel;
+import org.homeunix.drummer.controller.GraphPanel;
 import org.homeunix.drummer.controller.ReportPanel;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -25,6 +26,7 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 	private final AccountListPanel accountListPanel;
 	private final CategoryListPanel categoryListPanel;
 	private final ReportPanel reportPanel;
+	private final GraphPanel graphPanel;
 	private final JTabbedPane tabs;
 		
 	protected MainBuddiFrameLayout(){
@@ -35,10 +37,12 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		accountListPanel = new AccountListPanel();
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
+		graphPanel = new GraphPanel();
 		
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_BUDGET), categoryListPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.REPORTS), reportPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.GRAPHS), graphPanel);
 		
 		mainPanel.add(tabs, BorderLayout.CENTER);
 		

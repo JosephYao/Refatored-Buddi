@@ -26,9 +26,9 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.components.DefaultTreeCellRenderer;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
 import org.homeunix.drummer.view.components.SourceNameCellRenderer;
-import org.homeunix.drummer.view.components.SourceTreeCellRenderer;
 import org.homeunix.drummer.view.model.SourceTreeTableModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -61,12 +61,14 @@ public abstract class ListPanelLayout extends AbstractPanel {
 		tree.setShowsRootHandles(true);
 		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
 		
-		tree.setTreeCellRenderer(new SourceTreeCellRenderer());
+		tree.setTreeCellRenderer(new DefaultTreeCellRenderer());
 		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
 		
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 				
+		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
+		
 //		tree.getColumn(1).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 1));
 //		tree.getColumn(2).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 2));
 //		tree.packAll();
@@ -123,8 +125,6 @@ public abstract class ListPanelLayout extends AbstractPanel {
 //		mainPanel.add(balanceLabelPanel, BorderLayout.NORTH);
 		mainPanel.add(listScrollerPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
 		
 		if (OperatingSystemUtil.isMac()){
 //			tree.putClientProperty("Quaqua.Table.style", "striped");
