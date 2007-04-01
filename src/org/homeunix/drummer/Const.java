@@ -134,6 +134,7 @@ public class Const {
 //		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
 //		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
 		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByCategory",
+		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByDescription",
 
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",

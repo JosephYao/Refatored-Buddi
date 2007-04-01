@@ -11,8 +11,6 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
-import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.util.Formatter;
 
 /**
  * The cell renderer for the Amount column in Accounts and Categories panes.

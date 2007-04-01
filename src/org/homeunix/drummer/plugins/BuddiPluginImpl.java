@@ -22,9 +22,10 @@ import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**
  * @author wyatt
- * Null implementations of the three low level plugin types.  Used
+ * Null implementations of four low level plugin types.  Used
  * to compare instances in the PluginFactory.  Do not instantiate outside
- * of that circumstance.
+ * of that circumstance.  Don't try to use these implementation, or you
+ * will get null pointer exceptions all over the place!
  */
 class BuddiPluginImpl {
 

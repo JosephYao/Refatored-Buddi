@@ -102,7 +102,7 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 					total += actual;
 				else
 					total -= actual;
-				ReportRow rr = new ReportRow(c.toString(), budgeted, actual, difference);
+				ReportRow rr = new ReportRow(c, budgeted, actual, difference);
 				DefaultMutableTreeNode node = new DefaultMutableTreeNode(rr);
 				root.add(node);
 
@@ -209,13 +209,13 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 	}
 	
 	class ReportRow {
-		private String name;
+		private Category category;
 		private long budgeted;
 		private long actual;
 		private long difference;
 		
-		public ReportRow(String name, long budgeted, long actual, long difference) {
-			this.name = name;
+		public ReportRow(Category category, long budgeted, long actual, long difference) {
+			this.category = category;
 			this.budgeted = budgeted;
 			this.actual = actual;
 			this.difference = difference;
@@ -230,8 +230,8 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 		public long getDifference() {
 			return difference;
 		}
-		public String getName() {
-			return name;
+		public Category getCategory() {
+			return category;
 		}
 	}
 	
@@ -263,7 +263,7 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 				else if (o.getClass().equals(ReportRow.class)){
 					ReportRow rr = (ReportRow) o;
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
-					sb.append(Translate.getInstance().get(rr.getName()));
+					sb.append(Translate.getInstance().get(rr.getCategory().toString()));
 				}
 				else if (o.getClass().equals(TransactionImpl.class)){
 					Transaction t = (Transaction) o;
@@ -365,9 +365,15 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 				}
 				else if (o.getClass().equals(ReportRow.class)){
 					ReportRow rr = (ReportRow) o;
-					startTableCellRendererComponent(value, isSelected, row, column, null, false);
+					 
+					long difference = rr.getDifference();
+					
+					if (rr.getCategory().isIncome() && rr.getDifference() != 0){
+						difference *= -1;
+					}
+					
+					startTableCellRendererComponent(value, isSelected, row, column, (difference < 0 ? "red" : null), false);
 					sb.append(Translate.getFormattedCurrency(rr.getDifference()));
-
 				}
 				else if (o.getClass().equals(ReportTotal.class)){
 					ReportTotal rt = (ReportTotal) o;
