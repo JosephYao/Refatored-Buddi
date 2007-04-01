@@ -37,7 +37,8 @@ import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DocumentationFactory;
 import org.homeunix.drummer.view.AboutDialog;
-import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.drummer.view.AbstractBuddiFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -63,9 +64,9 @@ import edu.stanford.ejalbert.BrowserLauncher;
 public class BuddiMenu extends JScreenMenuBar {
 	public static final long serialVersionUID = 0;
 
-	private final AbstractFrame frame;
+	private final AbstractBuddiFrame frame;
 
-	public BuddiMenu(AbstractFrame frame){
+	public BuddiMenu(AbstractBuddiFrame frame){
 		super();
 
 		this.frame = frame;
@@ -255,7 +256,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				new AboutDialog();
+				new AboutDialog().openWindow();
 			}
 		});
 
@@ -490,8 +491,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		print.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (BuddiMenu.this.frame instanceof AbstractFrame){
-					Component toPrint = ((AbstractFrame) BuddiMenu.this.frame).getPrintedComponent();
-
+					// TODO Implement printable output
+//					Component toPrint = ((AbstractFrame) BuddiMenu.this.frame).getPrintedComponent();
+					Component toPrint = null;
 					if (toPrint != null){
 						PrintUtilities pu = new PrintUtilities(toPrint);
 
@@ -566,7 +568,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		close.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (BuddiMenu.this.frame != null)
-					BuddiMenu.this.frame.setVisible(false);
+					BuddiMenu.this.frame.closeWindow();
 			}
 		});
 

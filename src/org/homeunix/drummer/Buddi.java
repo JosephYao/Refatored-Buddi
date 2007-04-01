@@ -3,6 +3,8 @@
  */
 package org.homeunix.drummer;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,9 @@ import net.roydesign.mac.MRJAdapter;
 
 import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -81,12 +85,11 @@ public class Buddi {
 		}
 		 */
 		
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
-		System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
-		System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
-
-		MainBuddiFrame.getInstance().openWindow();
+		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
+		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
+		Point point = new Point(wa.getX(), wa.getY());
+		
+		MainBuddiFrame.getInstance().openWindow(dim, point);
 	}
 
 	/**
@@ -160,6 +163,16 @@ public class Buddi {
 //		}
 //		});
 //		}
+		
+		System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
+		System.setProperty("Quaqua.selectionStyle", "bright");
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
+		System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
+		System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
+		System.setProperty("apple.awt.showGrowBox", "true");
+		System.setProperty("com.apple.mrj.application.growbox.intrudes","true");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Translate.getInstance().get(TranslateKeys.BUDDI));
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

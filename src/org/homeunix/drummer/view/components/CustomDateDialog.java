@@ -26,7 +26,9 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.AbstractDialog;
+import org.homeunix.drummer.view.AbstractBuddiDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -40,7 +42,7 @@ import com.toedter.calendar.JDateChooser;
  * @author wyatt
  *
  */
-public class CustomDateDialog extends AbstractDialog {
+public class CustomDateDialog extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 
 	protected final JButton okButton;
@@ -141,9 +143,6 @@ public class CustomDateDialog extends AbstractDialog {
 
 		
 		setVisibility();
-
-		//Call the method to add actions to the buttons
-		initActions();	
 	}
 
 	private void setVisibility(){
@@ -166,12 +165,12 @@ public class CustomDateDialog extends AbstractDialog {
 	}
 
 
-	@Override
-	protected AbstractDialog clearContent() {
-		return this;
+	public StandardContainer clear() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	@Override
-	protected AbstractDialog initActions() {
+
+	public AbstractDialog init() {
 		okButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,16 +215,13 @@ public class CustomDateDialog extends AbstractDialog {
 
 		return this;
 	}
-	@Override
-	protected AbstractDialog initContent() {
-		return this;
+
+	public void actionPerformed(ActionEvent e) {
 	}
-	@Override
-	public AbstractDialog updateButtons() {
-		return this;
+	public StandardContainer updateButtons() {
+		return null;
 	}
-	@Override
-	protected AbstractDialog updateContent() {
-		return this;
+	public StandardContainer updateContent() {
+		return null;
 	}
 }

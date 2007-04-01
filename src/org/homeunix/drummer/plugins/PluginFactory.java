@@ -40,8 +40,8 @@ import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
 

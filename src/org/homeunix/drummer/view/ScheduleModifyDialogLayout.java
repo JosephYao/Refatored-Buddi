@@ -24,6 +24,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -31,7 +32,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 import com.toedter.calendar.JDateChooser;
 
-public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
+public abstract class ScheduleModifyDialogLayout extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 
 	protected final JButton okButton;
@@ -75,8 +76,6 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 	
 	protected final CardLayout cardLayout;
 	protected final JPanel cardHolder;
-
-//	protected final DefaultComboBoxModel scheduleModel;
 
 	protected ScheduleModifyDialogLayout(Frame owner){
 		super(owner);
@@ -193,8 +192,6 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 
 		monthlyDateChooser = new JScrollingComboBox(monthlyDateChooserChoices);
 		
-		
-		
 		Vector<String> monthlyFirstDayChooserChoices = new Vector<String>();
 		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_SUNDAY.toString());
 		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_MONDAY.toString());
@@ -205,15 +202,11 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_SATURDAY.toString());
 		monthlyFirstDayChooser = new JScrollingComboBox(monthlyFirstDayChooserChoices);
 		
-		
-
 		//We already have a vector defined with Sunday, Monday, etc
 		multipleWeeksDayChooser = new JScrollingComboBox(weeklyDayChooserChoices);		
 		
-		
 		//We already have a vector defined with First, Second, ... Thirty First
 		multipleMonthsDateChooser = new JScrollingComboBox(monthlyDateChooserChoices);
-
 
 		startDateChooser = new JDateChooser(DateUtil.getNextDay(new Date()), PrefsInstance.getInstance().getPrefs().getDateFormat());
 
@@ -225,10 +218,8 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		startDateChooser.setPreferredSize(textSize);
 		scheduleName.setPreferredSize(textSize);
 
-
 		//The namePanel is where we keep the Schedule Name.
 		JPanel namePanel = new JPanel(new BorderLayout());
-//		namePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		namePanel.add(scheduleName, BorderLayout.EAST);
 		namePanel.add(messageScroller, BorderLayout.SOUTH);
 
@@ -369,21 +360,15 @@ public abstract class ScheduleModifyDialogLayout extends AbstractDialog {
 		this.setTitle(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTION));
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
-
-		//Call the method to add actions to the buttons
-		initActions();		
 	}
 
 	protected abstract String getType();
 
-	public AbstractDialog clearContent(){
-
+	public AbstractDialog clear(){
 		return this;
 	}
 
 	public AbstractDialog updateButtons(){
-
 		return this;
 	}
-
 }

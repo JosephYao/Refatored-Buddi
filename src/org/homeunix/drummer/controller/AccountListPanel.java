@@ -4,6 +4,8 @@
 package org.homeunix.drummer.controller;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,6 +24,7 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.view.AbstractPanel;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.thecave.moss.util.Log;
@@ -49,7 +52,7 @@ public class AccountListPanel extends ListPanelLayout {
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				tree.clearSelection();
-				new AccountModifyDialog().clearContent().openWindow();
+				new AccountModifyDialog().clear().openWindow();
 				AccountListPanel.this.updateButtons();
 			}
 		});
@@ -100,7 +103,11 @@ public class AccountListPanel extends ListPanelLayout {
 			public void actionPerformed(ActionEvent arg0) {
 				if (getSelectedAccount() != null){
 					long start = System.currentTimeMillis();
-					new TransactionsFrame(getSelectedAccount());
+					WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
+					Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+					Point point = new Point(wa.getX(), wa.getY());
+
+					new TransactionsFrame(getSelectedAccount()).openWindow(dimension, point);
 					long end = System.currentTimeMillis();
 					if (Const.DEVEL) Log.info("Open button time: " + (end - start));
 					AccountListPanel.this.updateButtons();

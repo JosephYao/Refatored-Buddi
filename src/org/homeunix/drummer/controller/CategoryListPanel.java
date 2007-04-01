@@ -40,7 +40,7 @@ public class CategoryListPanel extends ListPanelLayout {
 		newButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				tree.clearSelection();
-				new CategoryModifyDialog().clearContent().openWindow();
+				new CategoryModifyDialog().clear().openWindow();
 			}
 		});
 		

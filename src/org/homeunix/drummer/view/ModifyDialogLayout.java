@@ -24,10 +24,12 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeModifyDialog;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.util.Formatter;
 
-public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
+public abstract class ModifyDialogLayout<SourceType> extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -76,7 +78,6 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
-//		pulldown.setPreferredSize(new Dimension(150, pulldown.getPreferredSize().height));
 		
 		check = new JCheckBox(Translate.getInstance().get(TranslateKeys.INCOME));
 		
@@ -131,15 +132,12 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
-		this.getRootPane().setDefaultButton(okButton);
-		
-		//Call the method to add actions to the buttons
-		initActions();		
+		this.getRootPane().setDefaultButton(okButton);		
 	}
 	
 	protected abstract String getType();
 	
-	public AbstractDialog clearContent(){
+	public StandardContainer clear(){
 		name.setText("");
 		amount.setValue(0);
 		pulldown.setSelectedItem(null);
@@ -160,9 +158,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractDialog {
 		return this;
 	}
 	
-	public AbstractDialog updateButtons(){
-		
+	public StandardContainer updateButtons() {
 		return this;
 	}
-
 }

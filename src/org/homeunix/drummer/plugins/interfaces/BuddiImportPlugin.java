@@ -7,7 +7,7 @@ package org.homeunix.drummer.plugins.interfaces;
 
 import java.io.File;
 
-import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
 
 public interface BuddiImportPlugin extends BuddiMenuPlugin {

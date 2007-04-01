@@ -5,7 +5,6 @@ package org.homeunix.drummer.controller;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Date;
@@ -19,8 +18,8 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.ScheduleModifyDialogLayout;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.util.Log;
 
 public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
@@ -48,7 +47,6 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			checkBox.setEnabled(schedule == null);
 		}
 
-		initContent();
 		updateSchedulePulldown();
 		transaction.updateContent();
 		loadSchedule(schedule);
@@ -58,44 +56,9 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		return Translate.getInstance().get(TranslateKeys.ACCOUNT);
 	}
 
-	@Override
-	protected AbstractDialog initActions() {
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if (Const.DEVEL) Log.debug("Schedule week: "+ getScheduleWeek());
-
-				if (ScheduleModifyDialog.this.ensureInfoCorrect()){
-					if (!ScheduleModifyDialog.this.startDateChooser.getDate().before(new Date())
-							|| schedule != null		//If the schedule has already been defined, we won't bother people again 
-							|| JOptionPane.showConfirmDialog(ScheduleModifyDialog.this, 
-									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST), 
-									Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
-									JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-						ScheduleModifyDialog.this.saveSchedule();
-						MainBuddiFrame.getInstance().checkForScheduledActions();
-						MainBuddiFrame.getInstance().updateContent();
-						TransactionsFrame.updateAllTransactionWindows();
-						ScheduleModifyDialog.this.setVisible(false);
-						ScheduleModifyDialog.this.dispose();
-					}
-					else
-						if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
-				}
-				else {
-					JOptionPane.showMessageDialog(ScheduleModifyDialog.this, 
-							Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO),
-							Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-
-		cancelButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				ScheduleModifyDialog.this.setVisible(false);
-				ScheduleModifyDialog.this.dispose();
-			}
-		});
+	public AbstractDialog init() {
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
 
 		frequencyPulldown.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -127,11 +90,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 			}
 		});
 		 */
-		return this;
-	}
 
-	@Override
-	protected AbstractDialog initContent() {
 		DefaultListCellRenderer pulldownTranslator = new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
@@ -149,8 +108,6 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		multipleWeeksDayChooser.setRenderer(pulldownTranslator);
 		multipleMonthsDateChooser.setRenderer(pulldownTranslator);
 		//Add any other pulldown boxes here...
-
-		updateContent();
 
 		return this;
 	}
@@ -254,7 +211,7 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 
 		//We must have filled in at least the name and the date.
 		if ((scheduleName.getValue().length() == 0)
-						|| (startDateChooser.getDate() == null)){
+				|| (startDateChooser.getDate() == null)){
 			return false;
 		}
 
@@ -266,18 +223,18 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 				&& (transaction.getFrom() != null)){
 			return true;
 		}
-		
+
 		//If the message is filled in, we can let the action succeed
 		// without the transaction being filled out.  However, if any
 		// part of the transaction is filled in, it all must be.
 		if ((message.getValue().length() > 0)
-						&& (transaction.getAmount() == 0)
-						&& (transaction.getDescription().length() == 0)
-						&& (transaction.getTo() == null)
-						&& (transaction.getFrom() == null)){
+				&& (transaction.getAmount() == 0)
+				&& (transaction.getDescription().length() == 0)
+				&& (transaction.getTo() == null)
+				&& (transaction.getFrom() == null)){
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -506,6 +463,40 @@ public class ScheduleModifyDialog extends ScheduleModifyDialogLayout {
 		}
 		else {
 			return -1;
+		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(okButton)){
+			if (Const.DEVEL) Log.debug("Schedule week: "+ getScheduleWeek());
+
+			if (ScheduleModifyDialog.this.ensureInfoCorrect()){
+				if (!ScheduleModifyDialog.this.startDateChooser.getDate().before(new Date())
+						|| schedule != null		//If the schedule has already been defined, we won't bother people again 
+						|| JOptionPane.showConfirmDialog(ScheduleModifyDialog.this, 
+								Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST), 
+								Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
+								JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+					ScheduleModifyDialog.this.saveSchedule();
+					MainBuddiFrame.getInstance().checkForScheduledActions();
+					MainBuddiFrame.getInstance().updateContent();
+					TransactionsFrame.updateAllTransactionWindows();
+					ScheduleModifyDialog.this.setVisible(false);
+					ScheduleModifyDialog.this.dispose();
+				}
+				else
+					if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
+			}
+			else {
+				JOptionPane.showMessageDialog(ScheduleModifyDialog.this, 
+						Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO),
+						Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else if (e.getSource().equals(cancelButton)){
+			ScheduleModifyDialog.this.setVisible(false);
+			ScheduleModifyDialog.this.dispose();
 		}
 	}
 }

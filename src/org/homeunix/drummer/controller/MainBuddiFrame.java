@@ -7,8 +7,8 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,9 +27,10 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.AbstractFrame;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.drummer.view.MainBuddiFrameLayout;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -81,7 +82,6 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 		//Check that there are no scheduled transactions which should be happening...
 		checkForScheduledActions();
-		updateContent();
 
 		//Load the date format from preferences
 		Formatter.getInstance().setDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());
@@ -89,48 +89,37 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		DataInstance.getInstance().calculateAllBalances();
 	}
 
-	@Override
-	public AbstractFrame openWindow() {
-		initActions();
-
-		startUpdateCheck();
-		startVersionCheck();
-
-		return super.openWindow();
-	}
-
-	@Override
-	protected AbstractFrame initActions() {
-		getInstance().addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				if (Const.DEVEL) Log.debug("Main window resized");
-
-				MainBuddiFrame.getInstance().savePosition();
-
-				super.componentResized(arg0);
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent arg0) {
-				if (Const.DEVEL) Log.debug("Main Window hidden");
-
-				MainBuddiFrame.getInstance().savePosition();
-
-				super.componentHidden(arg0);
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				if (Const.DEVEL) Log.debug("Main Window moved");
-
-				MainBuddiFrame.getInstance().savePosition();
-
-				super.componentMoved(e);
-			}
-
-		});
-
+	public AbstractFrame init() {
+//		getInstance().addComponentListener(new ComponentAdapter(){
+//			@Override
+//			public void componentResized(ComponentEvent arg0) {
+//				if (Const.DEVEL) Log.debug("Main window resized");
+//
+//				MainBuddiFrame.getInstance().savePosition();
+//
+//				super.componentResized(arg0);
+//			}
+//
+//			@Override
+//			public void componentHidden(ComponentEvent arg0) {
+//				if (Const.DEVEL) Log.debug("Main Window hidden");
+//
+//				MainBuddiFrame.getInstance().savePosition();
+//
+//				super.componentHidden(arg0);
+//			}
+//
+//			@Override
+//			public void componentMoved(ComponentEvent e) {
+//				if (Const.DEVEL) Log.debug("Main Window moved");
+//
+//				MainBuddiFrame.getInstance().savePosition();
+//
+//				super.componentMoved(e);
+//			}
+//
+//		});
+		
 		// The correct Mac behaviour is to keep the program running
 		// on a Window close; you must click Quit before the program 
 		// stops.  We do that here.
@@ -144,23 +133,28 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 			});
 		}
 		else{
-			getInstance().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
+		
+		getInstance().addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				savePosition();
+				super.windowClosing(arg0);
+			}
+		});
 
-		return getInstance();
+
+		startVersionCheck();
+		startUpdateCheck();
+		
+		return this;
 	}
 
-	@Override
-	protected AbstractFrame initContent() {
-		return getInstance();
-	}
-
-	@Override
 	public AbstractFrame updateButtons() {
-		return getInstance();
+		return this;
 	}
 
-	@Override
 	public AbstractFrame updateContent() {
 		//Update the title to reflect current data file...
 		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI) + " - " + PrefsInstance.getInstance().getPrefs().getDataFile());
@@ -171,7 +165,6 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		return getInstance();
 	}
 
-	@Override
 	public Component getPrintedComponent() {
 		if (getSelectedPanel() instanceof ListPanelLayout){
 			ListPanelLayout listPanel = (ListPanelLayout) getSelectedPanel();
@@ -534,5 +527,13 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 				tempDate = DateUtil.getNextDay(tempDate);
 			}
 		}
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+	
+	public StandardContainer clear() {
+		return null;
 	}
 }

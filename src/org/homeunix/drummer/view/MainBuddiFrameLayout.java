@@ -18,10 +18,9 @@ import org.homeunix.drummer.controller.ReportPanel;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 
-public abstract class MainBuddiFrameLayout extends AbstractFrame {
+public abstract class MainBuddiFrameLayout extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;
 	private final AccountListPanel accountListPanel;
 	private final CategoryListPanel categoryListPanel;
@@ -49,11 +48,6 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 		JScrollPane scroller = new JScrollPane(mainPanel);
 		scroller.setBorder(BorderFactory.createEmptyBorder());
 		
-		if (OperatingSystemUtil.isMac()){
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		}
-		
-//		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI) + PrefsInstance.getInstance().getPrefs().getDataFile());
 		this.setLayout(new BorderLayout());
 		this.add(scroller, BorderLayout.CENTER);		
 	}
@@ -73,6 +67,8 @@ public abstract class MainBuddiFrameLayout extends AbstractFrame {
 			return categoryListPanel;
 		else if (tabs.getSelectedComponent().equals(reportPanel))
 			return reportPanel;
+		else if (tabs.getSelectedComponent().equals(graphPanel))
+			return graphPanel;
 		else{
 			if (Const.DEVEL) Log.debug("Unknown Tab");
 			return null;

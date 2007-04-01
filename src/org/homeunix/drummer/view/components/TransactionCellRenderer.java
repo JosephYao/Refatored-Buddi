@@ -6,6 +6,7 @@ package org.homeunix.drummer.view.components;
 import java.awt.Component;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -41,6 +42,8 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		else {
 			this.setOpaque(true);
 		}
+		
+		this.setBorder(BorderFactory.createEmptyBorder());
 	}
 
 	/* (non-Javadoc)
@@ -48,39 +51,12 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 	 */
 	public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
 		if (obj != null){
-//			if (obj instanceof Transaction) {
 			Transaction transaction = (Transaction) obj;
 			setTransaction(transaction, list.getWidth());
 		}
 		else{
 			setTransaction(null, list.getWidth());
 		}
-
-//		if(isSelected)
-//		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-//		else
-//		this.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-//		if (isMac){
-//		if (isSelected){
-//		this.setOpaque(true);
-//		this.setBackground(Const.SELECTED);				
-//		}
-//		else {
-//		this.setOpaque(false);
-//		}
-//		}
-//		else {
-//		if (isSelected){
-//		this.setBackground(Const.SELECTED);
-//		}
-//		else {
-//		if (index % 2 == 0)
-//		this.setBackground(Const.LIGHT_BLUE);
-//		else
-//		this.setBackground(Const.WHITE);
-//		}
-//		}
 
 		if (isSelected){
 			this.setOpaque(true);
@@ -128,11 +104,6 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			.append("</font>");
 		}
 
-//		sb.append("</td><td colspan='5' width='25%'>");
-//		if (transaction != null){
-//			sb.append(Formatter.getInstance().getLengthFormat(width / 20).format(transaction.getNumber()));
-//		}
-
 		sb.append("</td></tr><tr><td colspan='1' width='5%'>");
 		if (transaction != null){
 			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
@@ -171,9 +142,7 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-//				sb.append("<font color='red'>")
 				sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
-//				.append("</font>");
 			}
 		}
 

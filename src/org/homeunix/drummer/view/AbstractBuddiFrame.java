@@ -1,0 +1,35 @@
+/*
+ * Created on Apr 1, 2007 by wyatt
+ */
+package org.homeunix.drummer.view;
+
+import java.awt.Toolkit;
+import java.net.URL;
+
+import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+
+/**
+ * @author wyatt
+ *
+ * A class which sits in between the Moss window framework and 
+ * Buddi's implementation of it.  This allows us to do some fancy
+ * things (such as include an icon and set a menu bar) by default, 
+ * without having to do it for every window.
+ */
+public abstract class AbstractBuddiFrame extends AbstractFrame {
+	public AbstractBuddiFrame() {
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (null == cl) {
+			cl = AbstractFrame.class.getClassLoader();
+		}
+
+		URL imageResource = cl.getResource("Buddi.gif");
+		if (null != imageResource) {
+			this.setIconImage(Toolkit.getDefaultToolkit().getImage(imageResource));
+		}
+
+		this.setJMenuBar(new BuddiMenu(this));
+
+	}
+}

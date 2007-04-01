@@ -9,16 +9,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -34,31 +32,34 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public class ReportFrameLayout extends AbstractFrame {
+public class ReportFrameLayout extends AbstractBuddiFrame {
 	public final static long serialVersionUID = 0;
 	protected final JXTreeTable tree;
-	
+
 	protected final JButton okButton;
 	protected final JButton editButton;
 	protected String HTMLPage = "";
 	protected final BuddiReportPlugin reportPlugin;
 	protected final Date startDate, endDate;
-	
+
 	protected static final Vector<ReportFrameLayout> reportFrameInstances = new Vector<ReportFrameLayout>();
-	
+
 	protected DefaultMutableTreeNode selectedNode;
 
-	
+
 	public ReportFrameLayout(BuddiReportPlugin reportPlugin, final Date startDate, final Date endDate){
 		this.reportPlugin = reportPlugin;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		
+
 		tree = new JXTreeTable();
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
@@ -66,9 +67,7 @@ public class ReportFrameLayout extends AbstractFrame {
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
 		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
-		
-		updateContent();
-		
+
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
 
@@ -87,12 +86,7 @@ public class ReportFrameLayout extends AbstractFrame {
 		JScrollPane reportLabelScroller = new JScrollPane(tree);
 
 		JPanel reportPanelSpacer = new JPanel(new BorderLayout());
-//		reportPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		reportPanelSpacer.add(reportLabelScroller, BorderLayout.CENTER);
-
-//		JPanel reportPanel = new JPanel(new BorderLayout());
-//		reportPanel.setBorder(BorderFactory.createTitledBorder(""));
-//		reportPanel.add(reportPanelSpacer, BorderLayout.CENTER);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
@@ -101,111 +95,71 @@ public class ReportFrameLayout extends AbstractFrame {
 
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
-		
+
 		if (OperatingSystemUtil.isMac()){
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			tree.putClientProperty("Quaqua.Tree.style", "striped");
 			reportLabelScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			reportLabelScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		}
-		
+
 		reportFrameInstances.add(this);
-		
-		initActions();
 	}
-	
-	@Override
+
 	public Component getPrintedComponent() {
 		return tree;
 	}
-	
-	@Override
-	protected AbstractFrame initActions() {
-		this.addComponentListener(new ComponentAdapter(){
+
+	public AbstractFrame init() {
+		
+		okButton.addActionListener(this);
+		editButton.addActionListener(this);
+		
+		this.addWindowListener(new WindowAdapter(){
 			@Override
-			public void componentHidden(ComponentEvent arg0) {
+			public void windowClosing(WindowEvent e) {
 				saveWindowPosition();
-				super.componentHidden(arg0);
+				
+				super.windowClosing(e);
 			}
 		});
-		
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				saveWindowPosition();				
-				ReportFrameLayout.this.setVisible(false);
-			}
-		});
-		
-//		reportTree.addTreeSelectionListener(new TreeSelectionListener(){
-//			public void valueChanged(TreeSelectionEvent arg0) {
-//				DefaultMutableTreeNode node = (DefaultMutableTreeNode) reportTree.getSelectedRow();
-//				selectedNode = reportTree.get;
-//			}
-//		});
 		
 		tree.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				editButton.setEnabled(selectedNode != null && selectedNode.getUserObject() instanceof Transaction);
-				
+
 				if (arg0.getClickCount() >= 2){
 					editButton.doClick();
 				}
 				super.mouseClicked(arg0);
 			}
 		});
-		
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				Object o = selectedNode.getUserObject();
-				if (o instanceof Transaction){
-					Transaction transaction = (Transaction) o;
-					Account a;
-					if (transaction.getTo() instanceof Account)
-						a = (Account) transaction.getTo();
-					else if (transaction.getFrom() instanceof Account)
-						a = (Account) transaction.getFrom();	
-					else
-						a = null;
-					
-					if (a != null) {
-						new TransactionsFrame(a, transaction);
-					}
-				}
-			}
-		});
-		
+
 		return this;
 	}
-	
+
 	private void saveWindowPosition(){
 		PrefsInstance.getInstance().checkWindowSanity();
-		
-		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setX(this.getX());
-		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setY(this.getY());
-		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setWidth(this.getWidth());
-		PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow().setHeight(this.getHeight());
-						
+
+		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow();
+		wa.setX(this.getX());
+		wa.setY(this.getY());
+		wa.setWidth(this.getWidth());
+		wa.setHeight(this.getHeight());
+
 		PrefsInstance.getInstance().savePrefs();
-		
+
 		reportFrameInstances.remove(this);
 	}
-	
+
 	public String getHTMLPage(){
 		return HTMLPage;
 	}
-	
-	@Override
-	protected AbstractFrame initContent() {
-		return this;
-	}
-	
-	@Override
+
 	public AbstractFrame updateButtons() {
 		return this;
 	}
-	
-	@Override
+
 	public AbstractFrame updateContent() {
 //		HTMLPage = reportPlugin.getReportHTML(startDate, endDate);
 //		reportTree.setModel(reportPlugin.getReportTreeModel(startDate, endDate));
@@ -223,14 +177,41 @@ public class ReportFrameLayout extends AbstractFrame {
 				+ " - "
 				+ Formatter.getInstance().getDateFormat().format(endDate)
 				+ ")");
-		
+
 		return this;
 	}
-	
+
 	public static void updateAllReportWindows(){
 		for (ReportFrameLayout rfl : Collections.unmodifiableCollection(reportFrameInstances)) {
 			if (rfl != null)
 				rfl.updateContent();
 		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(okButton)){				
+			closeWindow();
+		}
+		else if (e.getSource().equals(editButton)){
+			Object o = selectedNode.getUserObject();
+			if (o instanceof Transaction){
+				Transaction transaction = (Transaction) o;
+				Account a;
+				if (transaction.getTo() instanceof Account)
+					a = (Account) transaction.getTo();
+				else if (transaction.getFrom() instanceof Account)
+					a = (Account) transaction.getFrom();	
+				else
+					a = null;
+
+				if (a != null) {
+					new TransactionsFrame(a, transaction);
+				}
+			}
+		}
+	}
+
+	public StandardContainer clear() {
+		return this;
 	}
 }

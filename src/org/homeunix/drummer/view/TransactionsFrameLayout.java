@@ -29,7 +29,7 @@ import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.thecave.moss.gui.JSearchField;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
-public abstract class TransactionsFrameLayout extends AbstractFrame {
+public abstract class TransactionsFrameLayout extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;
 
 	protected static final Map<Account, TransactionsFrameLayout> transactionInstances = new HashMap<Account, TransactionsFrameLayout>();
@@ -58,40 +58,42 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 			@Override
 			public String getToolTipText(MouseEvent event) {
 				int i = locationToIndex(event.getPoint());
-				Object o = getModel().getElementAt(i);
+				if (i >= 0 && i < getModel().getSize()){
+					Object o = getModel().getElementAt(i);
 
-				if (o instanceof Transaction){
-					Transaction transaction = (Transaction) o;
+					if (o instanceof Transaction){
+						Transaction transaction = (Transaction) o;
 
-					if (transaction != null){
-						StringBuilder sb = new StringBuilder();
+						if (transaction != null){
+							StringBuilder sb = new StringBuilder();
 
-						sb.append("<html>");
-						sb.append(transaction.getDescription());
+							sb.append("<html>");
+							sb.append(transaction.getDescription());
 
-						if (transaction.getNumber().length() > 0){
+							if (transaction.getNumber().length() > 0){
+								sb.append("<br>");
+								sb.append("#");
+								sb.append(transaction.getNumber());
+							}
+
 							sb.append("<br>");
-							sb.append("#");
-							sb.append(transaction.getNumber());
+							sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
+							sb.append("  ");
+							sb.append(transaction.getFrom())
+							.append(" ")
+							.append(Translate.getInstance().get(TranslateKeys.TO))
+							.append(" ")
+							.append(transaction.getTo());
+
+							if (transaction.getMemo().length() > 0){
+								sb.append("<br>");
+								sb.append(transaction.getMemo());
+							}
+
+							sb.append("</html>");
+
+							return sb.toString();
 						}
-
-						sb.append("<br>");
-						sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
-						sb.append("  ");
-						sb.append(transaction.getFrom())
-								.append(" ")
-								.append(Translate.getInstance().get(TranslateKeys.TO))
-								.append(" ")
-								.append(transaction.getTo());
-
-						if (transaction.getMemo().length() > 0){
-							sb.append("<br>");
-							sb.append(transaction.getMemo());
-						}
-
-						sb.append("</html>");
-
-						return sb.toString();
 					}
 				}
 
@@ -170,8 +172,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		if (OperatingSystemUtil.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//			clearSearchField.putClientProperty("Quaqua.Button.style", "square");
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			listScroller.setBorder(BorderFactory.createCompoundBorder(
 					BorderFactory.createEmptyBorder(5, 10, 5, 10),
 					listScroller.getBorder()));
@@ -182,12 +182,6 @@ public abstract class TransactionsFrameLayout extends AbstractFrame {
 		else {
 			editableTransaction.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		}
-
-		//Call the method to add actions to the buttons
-		initActions();
-
-		//Show the window
-		openWindow();
 	}
 
 	public abstract Account getAccount();

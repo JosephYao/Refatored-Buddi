@@ -9,7 +9,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
-import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
 /**
  * This is a simple test plugin which can help to test functionality.  

@@ -4,7 +4,6 @@
 package org.homeunix.drummer.controller;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Date;
@@ -15,10 +14,10 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.AbstractDialog;
 import org.homeunix.drummer.view.GraphFrameLayout;
 import org.homeunix.drummer.view.ModifyDialogLayout;
 import org.homeunix.drummer.view.ReportFrameLayout;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
 public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	public static final long serialVersionUID = 0;
@@ -34,96 +33,18 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 	protected String getType(){
 		return Translate.getInstance().get(TranslateKeys.ACCOUNT);
 	}
-		
-	@Override
-	protected AbstractDialog initActions() {
-		okButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
-					JOptionPane.showMessageDialog(
-							AccountModifyDialog.this, 
-							Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
-							Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-				else{
-					final Account a;
-					if (source == null){
-						a = DataInstance.getInstance().getDataModelFactory().createAccount();
-						a.setAccountType((Type) pulldown.getSelectedItem());
-						
-						//We don't want to modify creation date unless we
-						// truly ARE creating it now.  This is in regards
-						// to a fix for bug #1650070.
-						a.setCreationDate(new Date());
-					}
-					else{
-						a = source;
-					}
-					
-					a.setName(name.getText());
-					
-					long startingBalance = amount.getValue();
-					if (a.isCredit())
-						startingBalance = Math.abs(startingBalance) * -1;
-					
-					a.setStartingBalance(startingBalance);					
-					
-					if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
-						a.setCreditLimit(creditLimit.getValue());
-					
-					if (interestRate.getValue() != 0)
-						a.setInterestRate(interestRate.getValue());
-					
-//					We now don't check if starting balance is 0, so that you can change the balance later.
-//					if (startingBalance != 0){
-//					Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-//					t.setDate(new Date());
-//					t.setAmount(startingBalance);
-//					if (a.isCredit()){
-//						t.setFrom(a);
-//						t.setTo(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceExpense());
-//					}
-//					else{
-//						t.setFrom(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceIncome());
-//						t.setTo(a);						
-//					}
-//					t.setNumber("");
-//					t.setDescription(Strings.inst().get(Strings.STARTING_BALANCE));
-//					t.setMemo("");
-					
-					DataInstance.getInstance().addAccount(a);
-//					DataInstance.getInstance().addTransaction(t);
-//					}
-//					else{
-//						DataInstance.getInstance().addAccount(a);
-//					}
-					
-					
-					a.calculateBalance();
-					
-					if (source == null)
-						DataInstance.getInstance().addAccount(a);
-					else
-						DataInstance.getInstance().saveDataModel();
-										
-					AccountModifyDialog.this.setVisible(false);
-					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
-				}
-				
-				TransactionsFrame.updateAllTransactionWindows();
-				ReportFrameLayout.updateAllReportWindows();
-				GraphFrameLayout.updateAllGraphWindows();
-			}
-		});
-		
-		cancelButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				AccountModifyDialog.this.setVisible(false);
-				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
-			}
-		});
-		
+
+	public AbstractDialog init() {
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+
+		pulldownModel.removeAllElements();
+		pulldownModel.addElement(null);
+
+		for (Type t : DataInstance.getInstance().getTypes()) {
+			pulldownModel.addElement(t);
+		}
+
 		pulldown.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				if (!PrefsInstance.getInstance().getPrefs().isShowCreditLimit())
@@ -145,14 +66,7 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 				}
 			}
 		});
-		
-		return this;
-	}
 
-	@Override
-	protected AbstractDialog initContent() {
-		updateContent();
-		
 		if (source == null){
 			name.setText("");
 			amount.setValue(0);
@@ -166,22 +80,99 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 			amount.setValue(source.getStartingBalance());
 			creditLimit.setValue(source.getCreditLimit());
 			interestRate.setValue(source.getInterestRate());
-	
+
 			pulldown.setSelectedItem(source.getAccountType());
 			pulldown.setEnabled(false);
 		}
-		
+
 		return this;
 	}
 
 	public AbstractDialog updateContent(){
-		pulldownModel.removeAllElements();
-		pulldownModel.addElement(null);
-
-		for (Type t : DataInstance.getInstance().getTypes()) {
-			pulldownModel.addElement(t);
-		}
-		
 		return this;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(okButton)) {
+			if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
+				JOptionPane.showMessageDialog(
+						AccountModifyDialog.this, 
+						Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
+						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			else{
+				final Account a;
+				if (source == null){
+					a = DataInstance.getInstance().getDataModelFactory().createAccount();
+					a.setAccountType((Type) pulldown.getSelectedItem());
+
+					//We don't want to modify creation date unless we
+					// truly ARE creating it now.  This is in regards
+					// to a fix for bug #1650070.
+					a.setCreationDate(new Date());
+				}
+				else{
+					a = source;
+				}
+
+				a.setName(name.getText());
+
+				long startingBalance = amount.getValue();
+				if (a.isCredit())
+					startingBalance = Math.abs(startingBalance) * -1;
+
+				a.setStartingBalance(startingBalance);					
+
+				if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
+					a.setCreditLimit(creditLimit.getValue());
+
+				if (interestRate.getValue() != 0)
+					a.setInterestRate(interestRate.getValue());
+
+//				We now don't check if starting balance is 0, so that you can change the balance later.
+//				if (startingBalance != 0){
+//				Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+//				t.setDate(new Date());
+//				t.setAmount(startingBalance);
+//				if (a.isCredit()){
+//				t.setFrom(a);
+//				t.setTo(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceExpense());
+//				}
+//				else{
+//				t.setFrom(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceIncome());
+//				t.setTo(a);						
+//				}
+//				t.setNumber("");
+//				t.setDescription(Strings.inst().get(Strings.STARTING_BALANCE));
+//				t.setMemo("");
+
+				DataInstance.getInstance().addAccount(a);
+//				DataInstance.getInstance().addTransaction(t);
+//				}
+//				else{
+//				DataInstance.getInstance().addAccount(a);
+//				}
+
+
+				a.calculateBalance();
+
+				if (source == null)
+					DataInstance.getInstance().addAccount(a);
+				else
+					DataInstance.getInstance().saveDataModel();
+
+				AccountModifyDialog.this.setVisible(false);
+				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+			}
+
+			TransactionsFrame.updateAllTransactionWindows();
+			ReportFrameLayout.updateAllReportWindows();
+			GraphFrameLayout.updateAllGraphWindows();
+		}
+		else if (e.getSource().equals(cancelButton)){
+			AccountModifyDialog.this.setVisible(false);
+			MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+		}
 	}
 }

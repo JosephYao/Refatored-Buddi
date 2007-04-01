@@ -17,9 +17,11 @@ import javax.swing.ListSelectionModel;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
-public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialog {
+public abstract class ScheduledTransactionsListFrameLayout extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton doneButton;
@@ -82,16 +84,12 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractDialo
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
-
-		
-		//Call the method to add actions to the buttons
-		initActions();		
 	}
-	
-	public AbstractDialog clearContent(){
+
+	public StandardContainer clear() {
 		return this;
 	}
-		
+	
 	public AbstractDialog updateButtons(){
 		
 		editButton.setEnabled(list.getSelectedIndices().length > 0);

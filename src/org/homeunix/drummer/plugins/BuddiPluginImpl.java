@@ -17,7 +17,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
-import org.homeunix.drummer.view.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**

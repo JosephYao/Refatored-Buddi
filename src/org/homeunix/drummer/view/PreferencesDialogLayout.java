@@ -34,9 +34,9 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeListDialog;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
-public abstract class PreferencesDialogLayout extends AbstractDialog {
+public abstract class PreferencesDialogLayout extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -144,13 +144,9 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(okButton);
 		this.setPreferredSize(new Dimension(450, 350));
-		
-		if (OperatingSystemUtil.isMac()) {
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
-		}
-		
-		//Call the method to add actions to the buttons
-		initActions();		
+//		if (OperatingSystemUtil.isMac()) {
+//			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
+//		}		
 	}
 	
 	public AbstractDialog clearContent(){
@@ -158,7 +154,6 @@ public abstract class PreferencesDialogLayout extends AbstractDialog {
 	}
 		
 	public AbstractDialog updateButtons(){
-		
 		return this;
 	}
 
