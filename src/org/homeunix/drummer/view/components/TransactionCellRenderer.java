@@ -6,7 +6,6 @@ package org.homeunix.drummer.view.components;
 import java.awt.Component;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -42,8 +41,6 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		else {
 			this.setOpaque(true);
 		}
-		
-		this.setBorder(BorderFactory.createEmptyBorder());
 	}
 
 	/* (non-Javadoc)
@@ -89,7 +86,8 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		if (sb.length() > 0)
 			sb.delete(0, sb.length());
 
-		sb.append("<html><table width='" + (width - 20) + "'><tr><td colspan='4' width='20%'>");
+//		sb.append("<html><table width='" + (width - 200) + "px'><tr><td colspan='4' width='20%'>");
+		sb.append("<html><table width='500px'><tr><td colspan='4' width='20%'>");
 		if (transaction != null) {
 			sb.append(Formatter.getInstance().getDateFormat().format(transaction.getDate()));
 		}

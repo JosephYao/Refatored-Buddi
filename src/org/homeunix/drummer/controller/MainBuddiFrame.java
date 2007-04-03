@@ -4,7 +4,9 @@
 package org.homeunix.drummer.controller;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -27,6 +29,7 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.drummer.view.MainBuddiFrameLayout;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
@@ -71,7 +74,12 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 
 		SingletonHolder.instance = null;
 		SingletonHolder.restartProgram();
-		getInstance().openWindow();
+		
+		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
+		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
+		Point point = new Point(wa.getX(), wa.getY());
+
+		MainBuddiFrame.getInstance().openWindow(dim, point);
 	}
 
 	/**

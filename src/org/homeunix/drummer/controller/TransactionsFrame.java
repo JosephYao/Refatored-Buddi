@@ -86,7 +86,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		prototype.setDate(new Date());
 		prototype.setDescription("Description");
 		prototype.setNumber("Number");
-		prototype.setAmount(123456789);
+		prototype.setAmount(123456);
 		prototype.setTo(null);
 		prototype.setFrom(null);
 		prototype.setMemo("Testing 1, 2, 3, 4, 5");
@@ -96,9 +96,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		list.setModel(model);
 
 		editableTransaction.setTransaction(null, true);
-		updateContent();
-
-		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 	}
 
 	public TransactionsFrame(Account account, Transaction transaction) {
@@ -112,7 +109,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		recordButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
-		
+
 		filterComboBox.setModel(new DefaultComboBoxModel(availableFilters));
 		filterComboBox.setRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -219,12 +216,13 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		});
 
 		this.addWindowListener(new WindowAdapter(){
+			
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosed(WindowEvent e) {
 				PrefsInstance.getInstance().checkWindowSanity();
 
 				WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow(); 
-				
+
 				wa.setX(e.getComponent().getX());
 				wa.setY(e.getComponent().getY());
 				wa.setHeight(e.getComponent().getHeight());
@@ -240,16 +238,12 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 		list.setListData(DataInstance.getInstance().getTransactions(account));
 		editableTransaction.setTransaction(null, true);
-
+		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+		
 		return this;
 	}
 
 	public AbstractFrame updateContent(){
-//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent()");
-//		Vector<Transaction> data = DataInstance.getInstance().getTransactions(account);
-//		data.add(null);
-//		list.setListData(data);
-
 		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
 				&& account != null  
 				&& account.getCreditLimit() != 0){
@@ -273,20 +267,7 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		else
 			creditRemaining.setText("");
 
-//		//Update the search
-//		if (filteredListModel != null && list != null){
-//		filteredListModel.setSource(list.getModel());
-//		list.setModel(filteredListModel);
-//		}
-
-//		editableTransaction.updateContent();
-//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() preScroll");
-//		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-
-//		if (Const.DEVEL) Log.info("TransactionsFrame.updateContent() postScroll");
-		updateButtons();
-
-		return this;
+		return updateButtons();
 	}
 
 	public AbstractFrame updateButtons(){
@@ -302,16 +283,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			deleteButton.setEnabled(true);
 		}
 
-//		if (editableTransaction.getDescription().length() > 0 
-//		&& editableTransaction.getDate() != null
-//		&& editableTransaction.getAmount() != 0
-//		&& editableTransaction.getTransferTo() != null
-//		&& editableTransaction.getTransferFrom() != null){
-//		recordButton.setEnabled(true);
-//		}
-//		else
-//		recordButton.setEnabled(false);
-
 		return this;
 	}
 
@@ -325,7 +296,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 	@Override
 	public AbstractFrame openWindow() {
-//		list.setSelectedIndex(list.getModel().getSize() - 1);
 		editableTransaction.resetSelection();
 		return super.openWindow();
 	}
@@ -380,7 +350,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public void toggleCleared(){
 		Transaction t = (Transaction) list.getSelectedValue();
 		t.setCleared(!t.isCleared());
-//		DataInstance.getInstance().saveDataModel();
 		baseModel.updateNoOrderChange(t);
 		editableTransaction.updateClearedAndReconciled();
 	}
@@ -391,7 +360,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	public void toggleReconciled(){
 		Transaction t = (Transaction) list.getSelectedValue();
 		t.setReconciled(!t.isReconciled());
-//		DataInstance.getInstance().saveDataModel();
 		baseModel.updateNoOrderChange(t);
 		editableTransaction.updateClearedAndReconciled();
 
@@ -514,10 +482,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 				baseModel.add(t);
 			}
 			else {
-				//These should not be needed anymore, as it is done
-				// within the baseModel.update() method
-//				DataInstance.getInstance().calculateAllBalances();
-//				DataInstance.getInstance().saveDataModel();
 				baseModel.update(t, model);
 			}
 
@@ -535,7 +499,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 			}
 
 			updateAllTransactionWindows();
-//			updateButtons();
 			ReportFrameLayout.updateAllReportWindows();
 			GraphFrameLayout.updateAllGraphWindows();
 			MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
@@ -586,7 +549,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 
 				Transaction t = (Transaction) list.getSelectedValue();
 				int position = list.getSelectedIndex();
-//				DataInstance.getInstance().deleteTransaction(t);
 				baseModel.remove(t, model);
 
 				updateAllTransactionWindows();
@@ -610,6 +572,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 	}
 
 	public StandardContainer clear() {
-		return null;
+		return this;
 	}
 }
