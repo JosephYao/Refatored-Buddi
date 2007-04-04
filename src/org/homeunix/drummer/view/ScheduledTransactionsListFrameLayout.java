@@ -80,7 +80,6 @@ public abstract class ScheduledTransactionsListFrameLayout extends AbstractBuddi
 		this.getRootPane().setDefaultButton(doneButton);
 		
 		if (OperatingSystemUtil.isMac()){
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}

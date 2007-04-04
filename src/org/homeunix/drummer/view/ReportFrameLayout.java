@@ -11,8 +11,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
@@ -109,20 +107,21 @@ public class ReportFrameLayout extends AbstractBuddiFrame {
 		return tree;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame#preCloseWindow()
+	 */
+	@Override
+	public Object closeWindow() {
+		saveWindowPosition();
+		
+		return super.closeWindow();
+	}
+	
 	public AbstractFrame init() {
 		
 		okButton.addActionListener(this);
 		editButton.addActionListener(this);
-		
-		this.addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent e) {
-				saveWindowPosition();
 				
-				super.windowClosing(e);
-			}
-		});
-		
 		tree.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

@@ -71,7 +71,8 @@ public class TypeModifyDialog extends ModifyDialogLayout<Account> {
 					DataInstance.getInstance().saveDataModel();
 				}
 
-				TypeModifyDialog.this.setVisible(false);
+				TypeModifyDialog.this.closeWindow();
+				
 				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 			}
 
@@ -80,7 +81,8 @@ public class TypeModifyDialog extends ModifyDialogLayout<Account> {
 			GraphFrameLayout.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
-			TypeModifyDialog.this.setVisible(false);
+			TypeModifyDialog.this.closeWindow();
+
 			MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}

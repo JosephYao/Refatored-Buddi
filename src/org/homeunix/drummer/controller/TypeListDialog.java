@@ -48,7 +48,7 @@ public class TypeListDialog extends TypesListDialogLayout {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(doneButton)){
 			TypeListDialog.this.setVisible(false);
-			TypeListDialog.this.dispose();
+			TypeListDialog.this.closeWindow();
 		}
 		else if (e.getSource().equals(newButton)){
 			new TypeModifyDialog().openWindow();

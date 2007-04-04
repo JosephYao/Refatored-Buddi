@@ -8,8 +8,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,17 +75,19 @@ public class GraphFrameLayout extends AbstractBuddiFrame {
 	public AbstractFrame init() {
 		okButton.addActionListener(this);
 
-		this.addComponentListener(new ComponentAdapter(){
-			@Override
-			public void componentHidden(ComponentEvent arg0) {
-				saveWindowPosition();				
-				super.componentHidden(arg0);
-			}
-		});
-
 		return this;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame#closeWindow()
+	 */
+	@Override
+	public Object closeWindow() {
+		saveWindowPosition();
+		
+		return super.closeWindow();
+	}
+	
 	private void saveWindowPosition(){
 		PrefsInstance.getInstance().checkWindowSanity();
 

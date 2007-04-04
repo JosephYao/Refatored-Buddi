@@ -86,8 +86,8 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		if (sb.length() > 0)
 			sb.delete(0, sb.length());
 
-//		sb.append("<html><table width='" + (width - 200) + "px'><tr><td colspan='4' width='20%'>");
-		sb.append("<html><table width='500px'><tr><td colspan='4' width='20%'>");
+		sb.append("<html><table width='" + (width - 200) + "px'><tr><td colspan='4' width='20%'>");
+//		sb.append("<html><table width='500px'><tr><td colspan='4' width='20%'>");
 		if (transaction != null) {
 			sb.append(Formatter.getInstance().getDateFormat().format(transaction.getDate()));
 		}

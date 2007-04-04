@@ -154,7 +154,8 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 				else
 					DataInstance.getInstance().saveDataModel();
 
-				CategoryModifyDialog.this.setVisible(false);
+				CategoryModifyDialog.this.closeWindow();
+				
 				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 
@@ -163,7 +164,8 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 			GraphFrameLayout.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
-			CategoryModifyDialog.this.setVisible(false);
+			CategoryModifyDialog.this.closeWindow();
+			
 			MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
 		}
 		else if (e.getSource().equals(pulldown)){

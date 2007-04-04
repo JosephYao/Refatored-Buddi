@@ -9,8 +9,6 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -97,37 +95,22 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 		DataInstance.getInstance().calculateAllBalances();
 	}
 
-	public AbstractFrame init() {
-//		getInstance().addComponentListener(new ComponentAdapter(){
-//			@Override
-//			public void componentResized(ComponentEvent arg0) {
-//				if (Const.DEVEL) Log.debug("Main window resized");
-//
-//				MainBuddiFrame.getInstance().savePosition();
-//
-//				super.componentResized(arg0);
-//			}
-//
-//			@Override
-//			public void componentHidden(ComponentEvent arg0) {
-//				if (Const.DEVEL) Log.debug("Main Window hidden");
-//
-//				MainBuddiFrame.getInstance().savePosition();
-//
-//				super.componentHidden(arg0);
-//			}
-//
-//			@Override
-//			public void componentMoved(ComponentEvent e) {
-//				if (Const.DEVEL) Log.debug("Main Window moved");
-//
-//				MainBuddiFrame.getInstance().savePosition();
-//
-//				super.componentMoved(e);
-//			}
-//
-//		});
+	@Override
+	public Object closeWindow() {
+		savePosition();
 		
+		//We have a special handler on the Mac to do hide / unhide from
+		// thje dock, so we don't want the default closeWindow to kick in.
+		if (OperatingSystemUtil.isMac()){
+			this.setVisible(false);
+			return null;
+		}
+		else {
+			return super.closeWindow();
+		}
+	}
+	
+	public AbstractFrame init() {
 		// The correct Mac behaviour is to keep the program running
 		// on a Window close; you must click Quit before the program 
 		// stops.  We do that here.
@@ -144,15 +127,6 @@ public class MainBuddiFrame extends MainBuddiFrameLayout {
 			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
 		
-		getInstance().addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				savePosition();
-				super.windowClosing(arg0);
-			}
-		});
-
-
 		startVersionCheck();
 		startUpdateCheck();
 		

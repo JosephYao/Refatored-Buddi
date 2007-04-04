@@ -82,16 +82,6 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		super(account);
 		this.account = account;
 
-		Transaction prototype = DataInstance.getInstance().getDataModelFactory().createTransaction();
-		prototype.setDate(new Date());
-		prototype.setDescription("Description");
-		prototype.setNumber("Number");
-		prototype.setAmount(123456);
-		prototype.setTo(null);
-		prototype.setFrom(null);
-		prototype.setMemo("Testing 1, 2, 3, 4, 5");
-		list.setPrototypeCellValue(prototype);
-
 		model = baseModel.getFilteredListModel(account, this);
 		list.setModel(model);
 
@@ -104,6 +94,21 @@ public class TransactionsFrame extends TransactionsFrameLayout {
 		list.setSelectedValue(transaction, true);
 	}
 
+	@Override
+	public StandardContainer initPostPack() {
+		Transaction prototype = DataInstance.getInstance().getDataModelFactory().createTransaction();
+		prototype.setDate(new Date());
+		prototype.setDescription("Description");
+		prototype.setNumber("Number");
+		prototype.setAmount(123456);
+		prototype.setTo(null);
+		prototype.setFrom(null);
+		prototype.setMemo("Testing 1, 2, 3, 4, 5");
+		list.setPrototypeCellValue(prototype);
+
+		return super.initPostPack();
+	}
+	
 	public AbstractFrame init(){
 
 		recordButton.addActionListener(this);
