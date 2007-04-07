@@ -7,16 +7,21 @@ package org.homeunix.drummer.plugins.interfaces;
 
 import java.util.Date;
 
-import javax.swing.JPanel;
+import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 
 public interface BuddiGraphPlugin extends BuddiPanelPlugin {
 	
 	/**
-	 * Returns a JPanel with the graph in it.
+	 * Returns an in-memory version of the printed page, as an HTML
+	 * file.  An HTMLWrapper is just a small class containing a string
+	 * with the HTML text in it, and a map of String to BufferedImage
+	 * containing all the images referenced in the HTML, by name.
+	 * 
+	 * See HTMLWrapper for more information on what is needed. 
 	 * @param startDate Start of report period
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public JPanel getGraphPanel(Date startDate, Date endDate);
+	public HTMLWrapper getGraph(Date startDate, Date endDate);
 
 }

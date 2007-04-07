@@ -189,8 +189,8 @@ public class AccountListPanel extends AbstractListPanel {
 			balanceLabel.setForeground(Color.RED);
 
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
-				+ ": " + (balance >= 0 ? "" : "-") 
-				+ Translate.getFormattedCurrency(balance));
+				+ ": "  
+				+ Translate.getFormattedCurrency(balance, false));
 
 		treeModel.reload(treeModel.getRoot());
 

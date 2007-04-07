@@ -268,7 +268,7 @@ public class NewIncomeExpenseReportByDescription implements BuddiReportPlugin {
 				else if (o.getClass().equals(ReportRow.class)){
 					ReportRow rr = (ReportRow) o;
 					startTableCellRendererComponent(value, isSelected, row, column, (rr.getAmount() < 0 ? "red" : null), false);
-					sb.append(Translate.getFormattedCurrency(rr.getAmount()));
+					sb.append(Translate.getFormattedCurrency(rr.getAmount(), false));
 				}
 				else if (o.getClass().equals(TransactionImpl.class)){
 					Transaction t = (Transaction) o;
@@ -281,7 +281,7 @@ public class NewIncomeExpenseReportByDescription implements BuddiReportPlugin {
 						isExpense = false;
 
 					startTableCellRendererComponent(value, isSelected, row, column, (isExpense ? "red" : null), false);
-					sb.append(Translate.getFormattedCurrency(t.getAmount()));
+					sb.append(Translate.getFormattedCurrency(t.getAmount(), false));
 				}
 				else {
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);

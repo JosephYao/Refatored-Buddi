@@ -4,13 +4,17 @@
 package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -22,17 +26,21 @@ import net.roydesign.app.Application;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 
-public class MainFrame extends AbstractBuddiFrame {
+public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	public static final long serialVersionUID = 0;
 	
 	private final AccountListPanel accountListPanel;
@@ -183,14 +191,14 @@ public class MainFrame extends AbstractBuddiFrame {
 		return getInstance();
 	}
 
-	public Component getPrintedComponent() {
-		if (getSelectedPanel() instanceof AbstractListPanel){
-			AbstractListPanel listPanel = (AbstractListPanel) getSelectedPanel();
-			return listPanel.getTree();
-		}
-		else
-			return null;
-	}
+//	public Component getPrintedComponent() {
+//		if (getSelectedPanel() instanceof AbstractListPanel){
+//			AbstractListPanel listPanel = (AbstractListPanel) getSelectedPanel();
+//			return listPanel.getTree();
+//		}
+//		else
+//			return null;
+//	}
 
 	public void savePosition(){
 		PrefsInstance.getInstance().checkWindowSanity();
@@ -213,5 +221,95 @@ public class MainFrame extends AbstractBuddiFrame {
 
 	public StandardContainer clear() {
 		return this;
+	}
+	
+	public File exportToHTML() throws IOException {
+		StringBuilder sb = HTMLExportHelper.getHtmlHeader(TranslateKeys.ACCOUNT_AND_CATEGORY_SUMMARY.toString(), null, null, null);
+		sb.append("<h3>").append(Translate.getInstance().get(TranslateKeys.ACCOUNT)).append("</h3>\n\n");
+		sb.append("<table class='main'>\n");
+		
+		Vector<Account> accounts = SourceController.getAccounts();
+		Collections.sort(accounts, new Comparator<Account>(){
+			public int compare(Account o1, Account o2) {
+				//First we sort by credit
+				if (o1.getAccountType().isCredit() != o1.getAccountType().isCredit()){
+					if (!o1.getAccountType().isCredit()){
+						return -1;
+					}
+					else {
+						return 1;
+					}
+				}
+				
+				//Next we sort by Type Name
+				if (!o1.getAccountType().getName().equals(o2.getAccountType().getName())){
+					return o1.getAccountType().getName().compareTo(o2.getAccountType().getName());
+				}
+				
+				//Finally, we sort by Account Name
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		sb.append("<tr>");
+		sb.append("<th>").append(Translate.getInstance().get(TranslateKeys.NAME)).append("</th>");
+		sb.append("<th>").append(Translate.getInstance().get(TranslateKeys.AMOUNT)).append("</th>");
+		sb.append("</tr>\n");
+		
+		for (Account account : accounts) {
+			sb.append("<tr><td>");
+			if (account.getAccountType().isCredit()) sb.append("<font color='red'>");
+			sb.append(Translate.getInstance().get(account.getName()));
+			if (account.getAccountType().isCredit()) sb.append("</font>");
+			sb.append("</td><td>");
+			if (account.getBalance() < 0) sb.append("<font color='red'>");
+			sb.append(Translate.getFormattedCurrency(account.getBalance(), account.getAccountType().isCredit())).append("</td>");
+			if (account.getBalance() < 0) sb.append("</font>");
+			sb.append("</tr>\n");
+		}
+		
+		sb.append("</table>\n\n");
+		
+		sb.append("<h3>").append(Translate.getInstance().get(TranslateKeys.CATEGORY)).append("</h3>\n\n");
+		sb.append("<table class='main'>\n");
+		
+		Vector<Category> categories = SourceController.getCategories();
+		Collections.sort(categories, new Comparator<Category>(){
+			public int compare(Category o1, Category o2) {
+				//First we sort by income
+				if (o1.isIncome() != o2.isIncome()){
+					if (o1.isIncome()){
+						return -1;
+					}
+					else {
+						return 1;
+					}
+				}
+								
+				//Finally, we sort by Category Name
+				return o1.toString().compareTo(o2.toString());
+			}
+		});
+		sb.append("<tr>");
+		sb.append("<th>").append(Translate.getInstance().get(TranslateKeys.NAME)).append("</th>");
+		sb.append("<th>").append(Translate.getInstance().get(TranslateKeys.BUDGETED_AMOUNT)).append("</th>");
+		sb.append("</tr>");
+		
+		for (Category category : categories) {
+			sb.append("<tr><td>");
+			if (!category.isIncome()) sb.append("<font color='red'>");
+			sb.append(Translate.getInstance().get(category.toString()));
+			if (!category.isIncome()) sb.append("</font>");
+			sb.append("</td><td>");
+			if (!category.isIncome()) sb.append("<font color='red'>");
+			sb.append(Translate.getFormattedCurrency(category.getBudgetedAmount(), false)).append("</td>");
+			if (!category.isIncome()) sb.append("</font>");
+			sb.append("</tr>\n");
+		}
+		
+		sb.append("</table>\n\n");
+		
+		sb.append(HTMLExportHelper.getHtmlFooter());
+		
+		return HTMLExportHelper.createHTML("main", new HTMLWrapper(sb.toString(), null));
 	}
 }

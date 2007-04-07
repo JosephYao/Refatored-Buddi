@@ -19,5 +19,5 @@ public interface BuddiPanelPlugin extends BuddiPlugin {
 	 * used in plugins of type Export or Import.
 	 * @return
 	 */
-	public String getTitle();
+	public String getTitle();	
 }

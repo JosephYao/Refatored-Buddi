@@ -144,7 +144,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							}
 
 							sb.append("<br>");
-							sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
+							sb.append(Translate.getFormattedCurrency(transaction.getAmount(), false));
 							sb.append("  ");
 							sb.append(transaction.getFrom())
 							.append(" ")
@@ -427,7 +427,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append(Translate.getFormattedCurrency(amountLeft))
+			.append(Translate.getFormattedCurrency(amountLeft, false))
 			.append(" (")
 			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
 			.append("%)");
@@ -667,7 +667,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			updateAllTransactionWindows();
 			ReportFrame.updateAllReportWindows();
-			GraphFrame.updateAllGraphWindows();
+//			GraphFrame.updateAllGraphWindows();
 			MainFrame.getInstance().getAccountListPanel().updateContent();
 			MainFrame.getInstance().getCategoryListPanel().updateContent();
 

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
+import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.jdesktop.swingx.treetable.TreeTableModel;
 
 public interface BuddiReportPlugin extends BuddiPanelPlugin {
@@ -36,5 +37,5 @@ public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	 * @param endDate
 	 * @return
 	 */
-//	public String getReportHTML(Date startDate, Date endDate);
+	public HTMLWrapper getHTML(Date startDate, Date endDate);
 }

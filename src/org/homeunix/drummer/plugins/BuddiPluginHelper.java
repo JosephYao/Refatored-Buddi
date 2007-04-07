@@ -5,6 +5,7 @@ package org.homeunix.drummer.plugins;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -16,10 +17,12 @@ import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.view.GraphFrame;
+import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.ReportFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
+
+import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {
 	public static void openNewPanelPluginWindow(BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
@@ -33,13 +36,22 @@ public class BuddiPluginHelper {
 			rfl.requestFocusInWindow();
 		}
 		else if (plugin instanceof BuddiGraphPlugin){
-			WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow();
-			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-			Point point = new Point(wa.getX(), wa.getY());
+			try {
+				File index = HTMLExportHelper.createHTML("graph", ((BuddiGraphPlugin) plugin).getGraph(startDate, endDate));
+				BrowserLauncher bl = new BrowserLauncher(null);
+				bl.openURLinBrowser(index.toURI().toURL().toString());
+			}
+			catch (Exception e){
+				Log.error("Error making HTML: " + e);
+			}
 
-			GraphFrame gfl = new GraphFrame((BuddiGraphPlugin) plugin, startDate, endDate);
-			gfl.openWindow(dimension, point);
-			gfl.requestFocusInWindow();
+//			WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow();
+//			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+//			Point point = new Point(wa.getX(), wa.getY());
+
+//			GraphFrame gfl = new GraphFrame((BuddiGraphPlugin) plugin, startDate, endDate);
+//			gfl.openWindow(dimension, point);
+//			gfl.requestFocusInWindow();
 		}
 		else {
 			Log.error("Incorrect plugin type: " + plugin.getClass().getName());

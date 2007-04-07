@@ -3,7 +3,6 @@
  */
 package org.homeunix.drummer.view.components;
 
-import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,11 +38,9 @@ import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.PreferencesDialog;
 import org.homeunix.drummer.view.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.homeunix.thecave.moss.util.PrintUtilities;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -317,10 +314,10 @@ public class BuddiMenu extends JScreenMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 				File newFile = DocumentManager.getInstance().loadFile(null);
-				
+
 				if (newFile == null)
 					return;
-				
+
 				try {
 					FileFunctions.copyFile(newFile, oldFile);
 					DocumentController.loadFile(oldFile);
@@ -340,53 +337,53 @@ public class BuddiMenu extends JScreenMenuBar {
 							Translate.getInstance().get(TranslateKeys.ERROR), 
 							JOptionPane.ERROR_MESSAGE);					
 				}
-//
-//				
+
+
 //				final JFileChooser jfc = new JFileChooser();
 //				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 //				jfc.setFileHidingEnabled(true);
 //				jfc.setFileFilter(DocumentManager.fileFilter);
 //				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
 //				if (jfc.showOpenDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-//					if (jfc.getSelectedFile().isDirectory()){
-//						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
-//					}
-//					else{
-//						if (JOptionPane.showConfirmDialog(
-//								null, 
-//								Translate.getInstance().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
-//								Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE),
-//								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-//							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-//							try{
-//								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
-//								DataInstance.getInstance().loadDataFile(oldFile);
-//								MainFrame.getInstance().updateContent();
-//								JOptionPane.showMessageDialog(
-//										null, 
-//										Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
-//										Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
-//										JOptionPane.INFORMATION_MESSAGE
-//								);
-//							}
-//							catch (IOException ioe){
-//								JOptionPane.showMessageDialog(
-//										null, 
-//										ioe, 
-//										"Flagrant System Error",
-//										JOptionPane.ERROR_MESSAGE
-//								);
-//							}
-//						}
-//						else {
-//							JOptionPane.showMessageDialog(
-//									null, 
-//									Translate.getInstance().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
-//									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
-//									JOptionPane.INFORMATION_MESSAGE
-//							);
-//						}
-//					}
+//				if (jfc.getSelectedFile().isDirectory()){
+//				if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+//				}
+//				else{
+//				if (JOptionPane.showConfirmDialog(
+//				null, 
+//				Translate.getInstance().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
+//				Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE),
+//				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+//				File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+//				try{
+//				FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
+//				DataInstance.getInstance().loadDataFile(oldFile);
+//				MainFrame.getInstance().updateContent();
+//				JOptionPane.showMessageDialog(
+//				null, 
+//				Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
+//				Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
+//				JOptionPane.INFORMATION_MESSAGE
+//				);
+//				}
+//				catch (IOException ioe){
+//				JOptionPane.showMessageDialog(
+//				null, 
+//				ioe, 
+//				"Flagrant System Error",
+//				JOptionPane.ERROR_MESSAGE
+//				);
+//				}
+//				}
+//				else {
+//				JOptionPane.showMessageDialog(
+//				null, 
+//				Translate.getInstance().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
+//				Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
+//				JOptionPane.INFORMATION_MESSAGE
+//				);
+//				}
+//				}
 //				}
 			}
 		});
@@ -423,22 +420,15 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		print.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (BuddiMenu.this.frame instanceof AbstractFrame){
-					// TODO Implement printable output
-//					Component toPrint = ((AbstractFrame) BuddiMenu.this.frame).getPrintedComponent();
-					Component toPrint = null;
-					if (toPrint != null){
-						PrintUtilities pu = new PrintUtilities(toPrint);
-
-						pu.print();
+				if (BuddiMenu.this.frame instanceof HTMLExport){
+					try {
+						File index = ((HTMLExport) BuddiMenu.this.frame).exportToHTML();
+						BrowserLauncher bl = new BrowserLauncher(null);
+						bl.openURLinBrowser(index.toURI().toURL().toString());
 					}
-					else
-						JOptionPane.showMessageDialog(
-								null, 
-								Translate.getInstance().get(TranslateKeys.NOTHING_TO_PRINT),
-								Translate.getInstance().get(TranslateKeys.PRINT_ERROR),
-								JOptionPane.INFORMATION_MESSAGE
-						);
+					catch (Exception e){
+						Log.error("Error making HTML: " + e);
+					}
 				}
 			}
 		});
@@ -582,5 +572,5 @@ public class BuddiMenu extends JScreenMenuBar {
 		});
 		if (!QuitJMenuItem.isAutomaticallyPresent())
 			file.add(quit);
-	}
+}
 }

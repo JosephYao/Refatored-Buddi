@@ -11,6 +11,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
@@ -30,6 +32,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -37,7 +40,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public class ReportFrame extends AbstractBuddiFrame {
+public class ReportFrame extends AbstractBuddiFrame implements HTMLExport {
 	public final static long serialVersionUID = 0;
 	private final JXTreeTable tree;
 
@@ -210,5 +213,13 @@ public class ReportFrame extends AbstractBuddiFrame {
 
 	public StandardContainer clear() {
 		return this;
+	}
+	
+	public File exportToHTML() throws IOException {
+		HTMLWrapper html = reportPlugin.getHTML(startDate, endDate);
+		if (html == null)
+			return null;
+		
+		return HTMLExportHelper.createHTML("report", html);
 	}
 }

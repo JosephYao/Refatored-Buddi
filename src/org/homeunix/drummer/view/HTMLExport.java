@@ -26,5 +26,5 @@ public interface HTMLExport {
 	 * be in the same folder as this one is.
 	 * @throws IOException If the file(s) cannot be created.
 	 */
-	public void exportToHTML(File indexFile) throws IOException;
+	public File exportToHTML() throws IOException;
 }

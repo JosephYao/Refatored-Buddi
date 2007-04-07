@@ -31,35 +31,18 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(CategoryImpl.class)) {
 			Category c = (Category) obj;
 
-			super.startTableCellRendererComponent(value, isSelected, row, column, (!c.isIncome() ? "red" : null), c.isDeleted());
-//			if (c.isDeleted()){
-//				sbOpen.append("<s>");
-//				sbClose.insert(0, "</s>");
-//			}
-
-//			if (!c.isIncome()){
-//				sbOpen.append("<font color='red'>");
-//				sbClose.insert(0, "</font>");
-//			}
-
-			long amountTotal = getTotalAmount(node);
+			startTableCellRendererComponent(value, isSelected, row, column, (!c.isIncome() ? "red" : null), c.isDeleted());
+			
 			long amount = c.getBudgetedAmount();
-
-//			sb.append("<html>")
-//			.append(sbPrepend)
-//			.append(sbOpen)
-			sb.append(Translate.getFormattedCurrency(amount));
-
+			sb.append(Translate.getFormattedCurrency(amount, false));
+			
+			long amountTotal = getTotalAmount(node);
 			if (node.getChildCount() > 0){
 				sb.append(" (")
-				.append(Translate.getFormattedCurrency(amountTotal))
+				.append(Translate.getFormattedCurrency(amountTotal, false))
 				.append(")");
 			}
 
-//			sb.append(sbClose)
-//			.append("</html>");
-
-//			this.setText(sb.toString());
 			endTableCellRendererComponent();
 			
 			return this;
@@ -67,26 +50,9 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-//			if (a.isDeleted()){
-//				sbOpen.append("<s>");
-//				sbClose.insert(0, "</s>");
-//			}
-//
-//			if (a.getBalance() < 0){
-//				sbOpen.append("<font color='red'>");
-//				sbClose.insert(0, "</font>");
-//			}
-
 			startTableCellRendererComponent(value, isSelected, row, column, (a.getBalance() < 0 ? "red" : null), a.isDeleted());
-//			sb.append("<html>")
-//			.append(sbPrepend)
-//			.append(sbOpen)
-			sb.append(Translate.getFormattedCurrency(a.getBalance()));
 			
-//			sb.append(sbClose)
-//			.append("</html>");
-
-//			this.setText(sb.toString());
+			sb.append(Translate.getFormattedCurrency(a.getBalance(), a.getAccountType().isCredit()));
 			endTableCellRendererComponent();
 			
 			return this;
@@ -95,24 +61,12 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
-//			if (t.getType().isCredit()){
-//				sbOpen.append("<font color='red'>");
-//				sbClose.insert(0, "</font>");
-//			}
-//
-//			sb.append("<html>")
-//			.append(sbOpen);
-
 			startTableCellRendererComponent(value, isSelected, row, column, (t.getType().isCredit() ? "red" : null), false);
 			
-			if (t.getAmount() < 0 ^ t.getType().isCredit())
-				sb.append("-");
-			sb.append(Translate.getFormattedCurrency(t.getAmount()));
-//			.append(sbClose)
-//			.append("</html>");
+//			if (t.getAmount() < 0 ^ t.getType().isCredit())
+//				sb.append("-");
+			sb.append(Translate.getFormattedCurrency(t.getAmount(), t.getType().isCredit()));
 
-//			this.setText(sb.toString());
-			
 			endTableCellRendererComponent();
 			
 			return this;

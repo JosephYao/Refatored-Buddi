@@ -301,7 +301,7 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 				else if (o.getClass().equals(ReportRow.class)){
 					ReportRow rr = (ReportRow) o;
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
-					sb.append(Translate.getFormattedCurrency(rr.getBudgeted()));
+					sb.append(Translate.getFormattedCurrency(rr.getBudgeted(), false));
 				}
 				else if (o.getClass().equals(TransactionImpl.class)){
 					Transaction t = (Transaction) o;
@@ -334,12 +334,12 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 				else if (o.getClass().equals(ReportRow.class)){
 					ReportRow rr = (ReportRow) o;
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
-					sb.append(Translate.getFormattedCurrency(rr.getActual()));
+					sb.append(Translate.getFormattedCurrency(rr.getActual(), false));
 				}
 				else if (o.getClass().equals(TransactionImpl.class)){
 					Transaction t = (Transaction) o;
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
-					sb.append(Translate.getFormattedCurrency(t.getAmount()));
+					sb.append(Translate.getFormattedCurrency(t.getAmount(), false));
 				}
 				else {
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
@@ -374,12 +374,12 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 					}
 					
 					startTableCellRendererComponent(value, isSelected, row, column, (difference < 0 ? "red" : null), false);
-					sb.append(Translate.getFormattedCurrency(rr.getDifference()));
+					sb.append(Translate.getFormattedCurrency(rr.getDifference(), false));
 				}
 				else if (o.getClass().equals(ReportTotal.class)){
 					ReportTotal rt = (ReportTotal) o;
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);
-					sb.append(Translate.getFormattedCurrency(rt.getTotal()));
+					sb.append(Translate.getFormattedCurrency(rt.getTotal(), false));
 				}
 				else {
 					startTableCellRendererComponent(value, isSelected, row, column, null, false);

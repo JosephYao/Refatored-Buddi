@@ -221,8 +221,9 @@ public class Translate {
 	 * currency symbol in the correct position (whether before or after the
 	 * amount).
 	 */
-	public static String getFormattedCurrency(long value){
+	public static String getFormattedCurrency(long value, boolean isCredit){
 		return (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
+		+ (isCredit ^ value < 0 ? "-" : "")
 		+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) value / 100.0))
 		+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 	}

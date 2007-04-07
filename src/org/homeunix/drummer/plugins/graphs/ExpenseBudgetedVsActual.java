@@ -3,12 +3,15 @@
  */
 package org.homeunix.drummer.plugins.graphs;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -21,8 +24,10 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.HTMLExportHelper;
+import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import org.homeunix.thecave.moss.images.ImageFunctions;
 import org.homeunix.thecave.moss.util.DateUtil;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -33,7 +38,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 
-	public JPanel getGraphPanel(Date startDate, Date endDate) {
+	public HTMLWrapper getGraph(Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
 		Map<Category, Long> categories = getExpensesBetween(startDate, endDate);
@@ -63,12 +68,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 		}
 		
 		JFreeChart chart = ChartFactory.createBarChart(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET)
-				+ " (" 
-				+ Formatter.getInstance().getDateFormat().format(startDate)
-				+ " - "
-				+ Formatter.getInstance().getDateFormat().format(endDate)
-				+ ")",
+				"", //Title - we do this as a JLabel for more flexibility
 				"", //Domain axis label
 				"", //Range axis label
 				barData,             // data
@@ -81,7 +81,25 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 		CategoryPlot plot = (CategoryPlot) chart.getCategoryPlot();
 		plot.setNoDataMessage("No data available");
 		
-		return new ChartPanel(chart);
+		JPanel graphPanel = new ChartPanel(chart);
+		JFrame tempFrame = new JFrame();
+		tempFrame.add(graphPanel);
+		tempFrame.setBackground(Color.WHITE);
+		tempFrame.pack();
+		
+		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
+				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				null, 
+				startDate, 
+				endDate);
+
+		sb.append("<img src='graph.png' />");
+		sb.append(HTMLExportHelper.getHtmlFooter());
+		
+		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
+		images.put("graph.png", ImageFunctions.getImageFromComponent(graphPanel));
+		
+		return new HTMLWrapper(sb.toString(), images);
 	}
 	
 	public String getTitle() {
@@ -132,5 +150,4 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 	public String getDescription() {
 		return TranslateKeys.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH.toString();
 	}
-
 }

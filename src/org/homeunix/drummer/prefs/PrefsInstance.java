@@ -212,8 +212,9 @@ public class PrefsInstance {
 			}
 			
 			//Set meaningful defaults
-			prefs.setShowDeletedAccounts(true);
-			prefs.setShowDeletedCategories(true);
+			prefs.setShowDeletedAccounts(false);
+			prefs.setShowDeletedCategories(false);
+			prefs.setShowAccountTypes(true);
 			prefs.setShowAutoComplete(true);
 			prefs.setEnableUpdateNotifications(true);
 			prefs.setDateFormat(Const.DATE_FORMATS[0]);

@@ -1,3 +1,11 @@
+2.3.2
+-Complete overhaul of GUI framework.
+	-Corrected MVC architecture.
+		-Moved all GUI classes to the view package
+		-Added static controller classes for specialized data access
+		-Removed all superfluous methods from DataInstance - now it is just the model access layer, with no controller components
+	-This should allow for improved speed and features in future releases, as it has cleaned up the code base substantially.
+
 2.3.1 (March 22 2007)
 -Added Search to language editor
 -Added Not Reconciled and Not Cleared to the filters on the transaction window

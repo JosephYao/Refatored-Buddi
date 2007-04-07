@@ -130,7 +130,7 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
 				sb.append("<font color='red'>")
-				.append(Translate.getFormattedCurrency(transaction.getAmount()))
+				.append(Translate.getFormattedCurrency(transaction.getAmount(), false))
 				.append("</font>");
 			}
 		}
@@ -140,7 +140,7 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-				sb.append(Translate.getFormattedCurrency(transaction.getAmount()));
+				sb.append(Translate.getFormattedCurrency(transaction.getAmount(), false));
 			}
 		}
 
@@ -159,11 +159,11 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					sb.append("<font color='red'>");
 					if (balanceValue <= 0 && balanceValue != 0)
 						balanceValue *= -1;
-					sb.append(Translate.getFormattedCurrency(balanceValue))
+					sb.append(Translate.getFormattedCurrency(balanceValue, false))
 					.append("</font>");
 				}
 				else{
-					sb.append(Translate.getFormattedCurrency(balanceValue));
+					sb.append(Translate.getFormattedCurrency(balanceValue, false));
 				}
 				sb.append("</b>");
 			}

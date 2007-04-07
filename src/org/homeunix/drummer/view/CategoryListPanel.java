@@ -146,8 +146,7 @@ public class CategoryListPanel extends AbstractListPanel {
 		.append(" ")
 		.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
 		.append(": ")
-		.append(((income - expenses) >= 0 ? "" : "-"))
-		.append(Translate.getFormattedCurrency(income - expenses));
+		.append(Translate.getFormattedCurrency(income - expenses, false));
 
 		balanceLabel.setText(sb.toString());
 

@@ -77,7 +77,7 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 
 			TransactionsFrame.updateAllTransactionWindows();
 			ReportFrame.updateAllReportWindows();
-			GraphFrame.updateAllGraphWindows();
+//			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			TypeModifyDialog.this.closeWindow();

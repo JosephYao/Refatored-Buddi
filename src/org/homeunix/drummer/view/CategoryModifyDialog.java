@@ -158,7 +158,7 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 
 			TransactionsFrame.updateAllTransactionWindows();
 			ReportFrame.updateAllReportWindows();
-			GraphFrame.updateAllGraphWindows();
+//			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			CategoryModifyDialog.this.closeWindow();

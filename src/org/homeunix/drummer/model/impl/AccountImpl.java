@@ -444,7 +444,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		result.append("): ");
 		if ((isCredit() ^ balance <= 0) && balance != 0)
 			result.append("-");
-		result.append(Translate.getFormattedCurrency(balance));
+		result.append(Translate.getFormattedCurrency(balance, getAccountType().isCredit()));
 		return result.toString();
 	}
 
