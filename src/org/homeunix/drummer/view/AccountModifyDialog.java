@@ -10,10 +10,12 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
@@ -40,7 +42,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 		pulldownModel.removeAllElements();
 		pulldownModel.addElement(null);
 
-		for (Type t : DataInstance.getInstance().getTypes()) {
+		for (Type t : TypeController.getTypes()) {
 			pulldownModel.addElement(t);
 		}
 
@@ -103,7 +105,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 			else{
 				final Account a;
 				if (source == null){
-					a = DataInstance.getInstance().getDataModelFactory().createAccount();
+					a = ModelFactory.eINSTANCE.createAccount();
 					a.setAccountType((Type) pulldown.getSelectedItem());
 
 					//We don't want to modify creation date unless we
@@ -129,40 +131,14 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 				if (interestRate.getValue() != 0)
 					a.setInterestRate(interestRate.getValue());
 
-//				We now don't check if starting balance is 0, so that you can change the balance later.
-//				if (startingBalance != 0){
-//				Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
-//				t.setDate(new Date());
-//				t.setAmount(startingBalance);
-//				if (a.isCredit()){
-//				t.setFrom(a);
-//				t.setTo(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceExpense());
-//				}
-//				else{
-//				t.setFrom(DataInstance.getInstance().getDataModel().getAllCategories().getStartingBalanceIncome());
-//				t.setTo(a);						
-//				}
-//				t.setNumber("");
-//				t.setDescription(Strings.inst().get(Strings.STARTING_BALANCE));
-//				t.setMemo("");
-
-				DataInstance.getInstance().addAccount(a);
-//				DataInstance.getInstance().addTransaction(t);
-//				}
-//				else{
-//				DataInstance.getInstance().addAccount(a);
-//				}
-
+				SourceController.addAccount(a);
 
 				a.calculateBalance();
 
 				if (source == null)
-					DataInstance.getInstance().addAccount(a);
-				else
-					DataInstance.getInstance().saveDataModel();
+					SourceController.addAccount(a);
 
-				AccountModifyDialog.this.closeWindow();
-				
+				AccountModifyDialog.this.closeWindow();				
 				MainFrame.getInstance().getAccountListPanel().updateContent();
 			}
 

@@ -13,9 +13,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
@@ -453,7 +453,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		long balance = this.getStartingBalance();
 //		long balance = 0;
 		
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(this);
+		Vector<Transaction> transactions = TransactionController.getTransactions(this);
 		
 		for (Transaction transaction : transactions) {
 			//We are moving money *to* this account

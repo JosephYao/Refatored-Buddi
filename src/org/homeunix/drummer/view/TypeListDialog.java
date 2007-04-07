@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
@@ -105,7 +105,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 
 	public AbstractDialog updateContent(){
 
-		Vector<Type> types = DataInstance.getInstance().getTypes();
+		Vector<Type> types = TypeController.getTypes();
 		list.setListData(types);
 
 		return this;

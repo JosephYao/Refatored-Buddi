@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -19,6 +21,7 @@ import javax.swing.JTabbedPane;
 import net.roydesign.app.Application;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -125,6 +128,8 @@ public class MainFrame extends AbstractBuddiFrame {
 
 	@Override
 	public Object closeWindow() {
+		DocumentController.saveFile();
+		
 		savePosition();
 
 		//We have a special handler on the Mac to do hide / unhide from
@@ -149,6 +154,17 @@ public class MainFrame extends AbstractBuddiFrame {
 		else{
 			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
+		
+		Timer timer = new Timer(true);
+		TimerTask task = new TimerTask(){
+			@Override
+			public void run() {
+				DocumentController.saveFile();
+			}
+		};
+		
+		//Auto save the model every 60 seconds
+		timer.schedule(task, 60 * 1000);
 
 		return this;
 	}

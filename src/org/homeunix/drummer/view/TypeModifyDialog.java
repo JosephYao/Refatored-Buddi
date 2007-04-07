@@ -9,10 +9,8 @@ import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
-import org.homeunix.drummer.model.ModelFactory;
-import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
 public class TypeModifyDialog extends AbstractModifyDialog<Account> {
@@ -62,19 +60,14 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else{
-				final Type t;
 				if (type == null){
-					t = ModelFactory.eINSTANCE.createType();
-					t.setName(name.getText());
-					t.setCredit(check.isSelected());
-					DataInstance.getInstance().getDataModel().getAllTypes().getTypes().add(t);
-					DataInstance.getInstance().saveDataModel();
+					TypeController.addType(name.getText(), check.isSelected());
+//					DataInstance.getInstance().saveDataModel();
 				}
 				else {
-					t = type;
-					t.setName(name.getText());
-					t.setCredit(check.isSelected());
-					DataInstance.getInstance().saveDataModel();
+					type.setName(name.getText());
+					type.setCredit(check.isSelected());
+//					DataInstance.getInstance().saveDataModel();
 				}
 
 				TypeModifyDialog.this.closeWindow();

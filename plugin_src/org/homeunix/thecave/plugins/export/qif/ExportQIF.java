@@ -26,10 +26,10 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.view.TransactionsFrame;
@@ -85,10 +85,10 @@ public class ExportQIF implements BuddiExportPlugin {
 		//get all the transactions for current account
 		Vector<Transaction> allTransactions;
 		if (account == null){
-			allTransactions = DataInstance.getInstance().getTransactions();
+			allTransactions = TransactionController.getTransactions();
 		}
 		else {
-			allTransactions = DataInstance.getInstance().getTransactions(account);
+			allTransactions = TransactionController.getTransactions(account);
 		}
 				
 		StringBuilder sb = new StringBuilder();

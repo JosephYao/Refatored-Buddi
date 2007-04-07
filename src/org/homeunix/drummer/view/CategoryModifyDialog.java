@@ -8,10 +8,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -71,7 +72,7 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 		pulldownModel.removeAllElements();
 		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 
-		for (Category c : DataInstance.getInstance().getCategories()) {
+		for (Category c : SourceController.getCategories()) {
 			if (source == null 
 					|| c.isIncome() == check.isSelected())
 				pulldownModel.addElement(c);
@@ -94,7 +95,7 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			else{
 				final Category c;
 				if (source == null)
-					c = DataInstance.getInstance().getDataModelFactory().createCategory();
+					c = ModelFactory.eINSTANCE.createCategory();
 				else
 					c = source;
 
@@ -149,13 +150,10 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 					c.setIncome(false);
 
 				if (source == null)
-					DataInstance.getInstance().addCategory(c);
-				else
-					DataInstance.getInstance().saveDataModel();
-
-				CategoryModifyDialog.this.closeWindow();
+					SourceController.addCategory(c);
 				
 				MainFrame.getInstance().getCategoryListPanel().updateContent();
+				CategoryModifyDialog.this.closeWindow();
 			}
 
 			TransactionsFrame.updateAllTransactionWindows();

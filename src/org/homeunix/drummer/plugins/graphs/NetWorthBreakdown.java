@@ -10,10 +10,11 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.controller.SourceController;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
@@ -64,14 +65,14 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	private Map<Account, Long> getAccountBalance(Date date){
 		Map<Account, Long> map = new HashMap<Account, Long>();
 		
-		for (Account a : DataInstance.getInstance().getAccounts()) {
+		for (Account a : SourceController.getAccounts()) {
 			if (a.getCreationDate().before(date))
 				map.put(a, a.getStartingBalance());
 			else
 				map.put(a, 0l);
 		}
 		
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions();
+		Vector<Transaction> transactions = TransactionController.getTransactions();
 		
 		for (Transaction transaction : transactions) {
 			if (transaction.getDate().before(date)){

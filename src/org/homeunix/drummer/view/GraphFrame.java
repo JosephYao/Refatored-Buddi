@@ -18,11 +18,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.SourceController;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -69,7 +70,7 @@ public class GraphFrame extends AbstractBuddiFrame {
 	}
 
 	protected Vector<Account> getAccounts(){
-		return DataInstance.getInstance().getAccounts();
+		return SourceController.getAccounts();
 	}
 
 	public AbstractFrame init() {
@@ -102,11 +103,11 @@ public class GraphFrame extends AbstractBuddiFrame {
 	}
 
 	protected Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();
 
 		//This map is where we store the totals for this time period.
-		for (Category category : DataInstance.getInstance().getCategories()) {
+		for (Category category : SourceController.getCategories()) {
 			if (!category.isIncome())
 				categories.put(category, new Long(0));
 		}
@@ -139,11 +140,11 @@ public class GraphFrame extends AbstractBuddiFrame {
 	}
 
 	protected Map<Category, Long> getIncomeBetween(Date startDate, Date endDate){
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();
 
 		//This map is where we store the totals for this time period.
-		for (Category category : DataInstance.getInstance().getCategories()) {
+		for (Category category : SourceController.getCategories()) {
 			if (category.isIncome())
 				categories.put(category, new Long(0));
 		}
@@ -178,14 +179,14 @@ public class GraphFrame extends AbstractBuddiFrame {
 	protected Map<Account, Long> getAccountBalance(Date date){
 		Map<Account, Long> map = new HashMap<Account, Long>();
 
-		for (Account a : DataInstance.getInstance().getAccounts()) {
+		for (Account a : SourceController.getAccounts()) {
 			if (a.getCreationDate().before(date))
 				map.put(a, a.getStartingBalance());
 			else
 				map.put(a, 0l);
 		}
 
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions();
+		Vector<Transaction> transactions = TransactionController.getTransactions();
 
 		for (Transaction transaction : transactions) {
 			if (transaction.getDate().before(date)){

@@ -26,9 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.ScheduleController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -587,7 +588,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			if (transaction.getDescription() != null
 					&& transaction.getTo() != null
 					&& transaction.getFrom() != null){
-				t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+				t = ModelFactory.eINSTANCE.createTransaction();
 				t.setAmount(transaction.getAmount());
 				t.setDescription(transaction.getDescription());
 				t.setNumber(transaction.getNumber());
@@ -596,7 +597,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 				t.setFrom(transaction.getFrom());
 			}
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
-			DataInstance.getInstance().addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
+			ScheduleController.addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
 
 		}
 		else{
@@ -615,7 +616,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 //			schedule.setScheduleDay(getScheduleDay());
 //			schedule.setScheduleWeek(getScheduleWeek());
 //			schedule.setScheduleMonth(getScheduleMonth());
-			DataInstance.getInstance().saveDataModel();
+//			DataInstance.getInstance().saveDataModel();
 		}
 	}
 
@@ -629,7 +630,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			if (s.getMessage() != null)
 				message.setValue(s.getMessage());
 
-			Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction(); 
+			Transaction t = ModelFactory.eINSTANCE.createTransaction(); 
 			t.setAmount(s.getAmount());
 			if (s.getDescription() != null)
 				t.setDescription(s.getDescription());
@@ -821,7 +822,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 								Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
 								JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 					ScheduleModifyDialog.this.saveSchedule();
-					DataInstance.getInstance().checkForScheduledActions();
+					ScheduleController.checkForScheduledActions();
 					MainFrame.getInstance().updateContent();
 					TransactionsFrame.updateAllTransactionWindows();
 					ScheduleModifyDialog.this.setVisible(false);

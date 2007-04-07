@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -25,6 +24,7 @@ import net.roydesign.ui.JScreenMenuBar;
 import net.roydesign.ui.JScreenMenuItem;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
@@ -33,13 +33,13 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DocumentationFactory;
 import org.homeunix.drummer.view.AboutDialog;
 import org.homeunix.drummer.view.AbstractBuddiFrame;
-import org.homeunix.drummer.view.BuddiDocumentManager;
+import org.homeunix.drummer.view.DocumentManager;
+import org.homeunix.drummer.view.HTMLExport;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.PreferencesDialog;
 import org.homeunix.drummer.view.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.HTMLExport;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -277,70 +277,117 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		newFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				BuddiDocumentManager.getInstance().newFile(null);
+				File f = DocumentManager.getInstance().newFile(null);
+				DocumentController.newFile(f);
 			}
 		});
 
 		open.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				BuddiDocumentManager.getInstance().loadFile(null);
+				File f = DocumentManager.getInstance().loadFile(null);
+				DocumentController.loadFile(f);
 			}
 		});
 
 		backup.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				BuddiDocumentManager.getInstance().saveFile(null);
+				File f = DocumentManager.getInstance().saveFile(null);
+				if (DocumentController.saveFile(f)){
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + file, 
+							Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.PROBLEM_SAVING_FILE) 
+							+ " " 
+							+ file
+							+ "\n\n"
+							+ Translate.getInstance().get(TranslateKeys.CHECK_CONSOLE), 
+							Translate.getInstance().get(TranslateKeys.ERROR), 
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
 		restore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				final JFileChooser jfc = new JFileChooser();
-				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				jfc.setFileHidingEnabled(true);
-				jfc.setFileFilter(BuddiDocumentManager.fileFilter);
-				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
-				if (jfc.showOpenDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-					if (jfc.getSelectedFile().isDirectory()){
-						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
-					}
-					else{
-						if (JOptionPane.showConfirmDialog(
-								null, 
-								Translate.getInstance().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
-								Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE),
-								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-							try{
-								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
-								DataInstance.getInstance().loadDataFile(oldFile);
-								MainFrame.getInstance().updateContent();
-								JOptionPane.showMessageDialog(
-										null, 
-										Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
-										Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
-										JOptionPane.INFORMATION_MESSAGE
-								);
-							}
-							catch (IOException ioe){
-								JOptionPane.showMessageDialog(
-										null, 
-										ioe, 
-										"Flagrant System Error",
-										JOptionPane.ERROR_MESSAGE
-								);
-							}
-						}
-						else {
-							JOptionPane.showMessageDialog(
-									null, 
-									Translate.getInstance().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
-									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
-									JOptionPane.INFORMATION_MESSAGE
-							);
-						}
-					}
+				File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+				File newFile = DocumentManager.getInstance().loadFile(null);
+				
+				if (newFile == null)
+					return;
+				
+				try {
+					FileFunctions.copyFile(newFile, oldFile);
+					DocumentController.loadFile(oldFile);
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) 
+							+ newFile.getAbsolutePath().toString(), 
+							Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
+							JOptionPane.INFORMATION_MESSAGE
+					);
 				}
+				catch (IOException ioe){
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
+							+ newFile.getAbsolutePath().toString(), 
+							Translate.getInstance().get(TranslateKeys.ERROR), 
+							JOptionPane.ERROR_MESSAGE);					
+				}
+//
+//				
+//				final JFileChooser jfc = new JFileChooser();
+//				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//				jfc.setFileHidingEnabled(true);
+//				jfc.setFileFilter(DocumentManager.fileFilter);
+//				jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
+//				if (jfc.showOpenDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+//					if (jfc.getSelectedFile().isDirectory()){
+//						if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+//					}
+//					else{
+//						if (JOptionPane.showConfirmDialog(
+//								null, 
+//								Translate.getInstance().get(TranslateKeys.CONFIRM_RESTORE_BACKUP_FILE), 
+//								Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE),
+//								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+//							File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+//							try{
+//								FileFunctions.copyFile(jfc.getSelectedFile(), oldFile);
+//								DataInstance.getInstance().loadDataFile(oldFile);
+//								MainFrame.getInstance().updateContent();
+//								JOptionPane.showMessageDialog(
+//										null, 
+//										Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) + jfc.getSelectedFile().getAbsolutePath().toString(), 
+//										Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
+//										JOptionPane.INFORMATION_MESSAGE
+//								);
+//							}
+//							catch (IOException ioe){
+//								JOptionPane.showMessageDialog(
+//										null, 
+//										ioe, 
+//										"Flagrant System Error",
+//										JOptionPane.ERROR_MESSAGE
+//								);
+//							}
+//						}
+//						else {
+//							JOptionPane.showMessageDialog(
+//									null, 
+//									Translate.getInstance().get(TranslateKeys.CANCEL_FILE_RESTORE_MESSAGE), 
+//									Translate.getInstance().get(TranslateKeys.CANCELLED_FILE_RESTORE), 
+//									JOptionPane.INFORMATION_MESSAGE
+//							);
+//						}
+//					}
+//				}
 			}
 		});
 
@@ -354,7 +401,7 @@ public class BuddiMenu extends JScreenMenuBar {
 						JOptionPane.INFORMATION_MESSAGE
 				) == JOptionPane.YES_OPTION){
 					DataInstance.getInstance().createNewCipher(true);
-					DataInstance.getInstance().saveDataModel();
+					DataInstance.getInstance().saveDataFile();
 				}
 			}
 		});
@@ -369,7 +416,7 @@ public class BuddiMenu extends JScreenMenuBar {
 						JOptionPane.INFORMATION_MESSAGE
 				) == JOptionPane.YES_OPTION){
 					DataInstance.getInstance().createNewCipher(false);
-					DataInstance.getInstance().saveDataModel();
+					DataInstance.getInstance().saveDataFile();
 				}
 			}
 		});

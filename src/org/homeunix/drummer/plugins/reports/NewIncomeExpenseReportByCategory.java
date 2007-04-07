@@ -17,10 +17,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
+import org.homeunix.drummer.controller.SourceController;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.impl.TransactionImpl;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
@@ -46,11 +47,11 @@ import org.jdesktop.swingx.treetable.TreeTableModel;
 public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 	
 	public TreeTableModel getTreeTableModel(Date startDate, Date endDate) {		
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();
 
 		//This map is where we store the totals for this time period.
-		for (Category category : DataInstance.getInstance().getCategories()) {
+		for (Category category : SourceController.getCategories()) {
 			categories.put(category, new Long(0));
 		}
 
@@ -107,7 +108,7 @@ public class NewIncomeExpenseReportByCategory implements BuddiReportPlugin {
 				root.add(node);
 
 				//Add each transaction as a subitem of the total.
-				Vector<Transaction> t = DataInstance.getInstance().getTransactions(c, startDate, endDate);
+				Vector<Transaction> t = TransactionController.getTransactions(c, startDate, endDate);
 				for (Transaction transaction : t) {					
 					DefaultMutableTreeNode transactionNode = new DefaultMutableTreeNode(transaction);
 					node.add(transactionNode);

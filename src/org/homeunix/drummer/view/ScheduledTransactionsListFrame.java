@@ -19,9 +19,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.ScheduleController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
@@ -121,7 +121,7 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 
 	public AbstractDialog updateContent(){
 
-		Vector<Schedule> scheduledTransactions = DataInstance.getInstance().getScheduledTransactions();
+		Vector<Schedule> scheduledTransactions = ScheduleController.getScheduledTransactions();
 		list.setListData(scheduledTransactions);
 
 		return this;
@@ -146,8 +146,7 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 			Object o = list.getSelectedValue();
 			if (o instanceof Schedule){
 				Schedule s = (Schedule) o;
-				DataInstance.getInstance().removeSchedule(s);
-				DataInstance.getInstance().saveDataModel();
+				ScheduleController.removeSchedule(s);
 				if (Const.DEVEL) Log.debug("Deleted schedule.");
 			}
 			else {

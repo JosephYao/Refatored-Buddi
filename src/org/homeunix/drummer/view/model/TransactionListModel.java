@@ -10,6 +10,7 @@ import javax.swing.AbstractListModel;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
@@ -72,11 +73,10 @@ public class TransactionListModel extends AbstractListModel {
 	 */
 	public void addAll(Collection<Transaction> transactions){
 		for (Transaction t : transactions) {
-			DataInstance.getInstance().addTransaction(t);	
+			TransactionController.addTransaction(t);	
 		}
 		ECollections.sort(this.transactions);
 		this.fireIntervalAdded(this, 0, this.getSize() - 1);
-		DataInstance.getInstance().saveDataModel();		
 	}
 	
 	/**
@@ -86,11 +86,10 @@ public class TransactionListModel extends AbstractListModel {
 	 * @param t The transaction to add to the list.
 	 */
 	public void add(Transaction t){
-		DataInstance.getInstance().addTransaction(t);
+		TransactionController.addTransaction(t);
 		ECollections.sort(this.transactions);
 		int i = transactions.indexOf(t);
 		this.fireIntervalAdded(this, i, i);
-		DataInstance.getInstance().saveDataModel();
 	}
 	
 	/**
@@ -101,10 +100,9 @@ public class TransactionListModel extends AbstractListModel {
 	 * @param fdlm The filtered dynamic list model from which the removal originated. 
 	 */
 	public void remove(Transaction t, FilteredDynamicListModel fdlm){
-		DataInstance.getInstance().deleteTransaction(t);
+		TransactionController.deleteTransaction(t);
 		if (fdlm != null)
 			fdlm.update();
-		DataInstance.getInstance().saveDataModel();
 	}
 	
 	/**
@@ -119,7 +117,6 @@ public class TransactionListModel extends AbstractListModel {
 		DataInstance.getInstance().calculateAllBalances();
 		if (fdlm != null)
 			fdlm.update();
-		DataInstance.getInstance().saveDataModel();
 	}
 	
 	/**
@@ -134,7 +131,6 @@ public class TransactionListModel extends AbstractListModel {
 		t.calculateBalance();
 		int i = transactions.indexOf(t);
 		this.fireContentsChanged(this, i, i);
-		DataInstance.getInstance().saveDataModel();
 	}
 	
 	//*** Filtered List Model

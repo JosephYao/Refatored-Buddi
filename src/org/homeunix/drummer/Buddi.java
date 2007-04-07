@@ -19,15 +19,16 @@ import javax.swing.SwingUtilities;
 
 import net.roydesign.mac.MRJAdapter;
 
+import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.LookAndFeelManager;
-import org.homeunix.drummer.view.BuddiDocumentManager;
+import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.drummer.view.BuddiDocumentManager.DataFileWrapper;
+import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -114,6 +115,16 @@ public class Buddi {
 		// user choices, this may be a new one, or load an existing one.
 		File dataFile = null;
 
+		/*
+		 * We follow the following steps when deciding if we create a new
+		 * file or open an existing one:
+		 * 
+		 *  1) If the user wants to be prompted, prompt them.  If they hit 
+		 *  cancel here, exit.
+		 *  2) If there is a file in Preferences, try loading that one.
+		 *  3) If there is any problem with the above, prompt the user.
+		 *  4) If the user hits cancel from here, quit.
+		 */
 		//This option allows us to prompt for a new data file at startup every time
 		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
 			chooseDataFileSource();
@@ -165,17 +176,22 @@ public class Buddi {
 		MainFrame.getInstance().openWindow(dim, point);
 	}
 
-	private static void chooseDataFileSource(){
-		DataFileWrapper dfw = BuddiDocumentManager.getInstance().chooseNewOrExistingDataFile();
+	/**
+	 * A helper method to prompt the user with three choices: New data,
+	 * Load data, or cancel (exit).
+	 *
+	 */
+	public static void chooseDataFileSource(){
+		DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
 		if (dfw == null){
 			Log.info("User hit cancel.  Exiting.");
 			System.exit(0);
 		}
 		else if (dfw.isExisting()){
-			DataInstance.getInstance().loadDataFile(dfw.getDataFile());
+			DocumentController.loadFile(dfw.getDataFile());
 		}
 		else {
-			DataInstance.getInstance().newDataFile(dfw.getDataFile());
+			DocumentController.newFile(dfw.getDataFile());
 		}
 	}
 

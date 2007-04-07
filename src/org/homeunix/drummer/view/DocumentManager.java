@@ -13,28 +13,27 @@ import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.abstractwindows.DocumentManager;
 
 
-public class BuddiDocumentManager implements DocumentManager{
+public class DocumentManager {
 	
 	/**
 	 * Get an instance of the DocumentManager.
 	 * @return DocumentManager
 	 */
-	public static BuddiDocumentManager getInstance() {
+	public static DocumentManager getInstance() {
 		return SingletonHolder.instance;
 	}
 
 	private static class SingletonHolder {
-		private static BuddiDocumentManager instance = new BuddiDocumentManager();
+		private static DocumentManager instance = new DocumentManager();
 
 		public static void restartProgram(){
-			instance = new BuddiDocumentManager();
+			instance = new DocumentManager();
 		}
 	}
 	
-	private BuddiDocumentManager(){
+	private DocumentManager(){
 		
 	}
 	
@@ -75,7 +74,7 @@ public class BuddiDocumentManager implements DocumentManager{
 					options[0]);
 
 			if (ret == JOptionPane.YES_OPTION){
-				f = BuddiDocumentManager.getInstance().newFile(null);
+				f = DocumentManager.getInstance().newFile(null);
 				if (f != null){
 					PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
 					PrefsInstance.getInstance().savePrefs();
@@ -83,7 +82,7 @@ public class BuddiDocumentManager implements DocumentManager{
 				}
 			}
 			else if (ret == JOptionPane.NO_OPTION){
-				f = BuddiDocumentManager.getInstance().loadFile(null);
+				f = DocumentManager.getInstance().loadFile(null);
 				if (f != null){
 					PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
 					PrefsInstance.getInstance().savePrefs();

@@ -11,10 +11,11 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.homeunix.drummer.controller.SourceController;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
@@ -88,11 +89,11 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 	}
 	
 	private Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){
-		Vector<Transaction> transactions = DataInstance.getInstance().getTransactions(startDate, endDate);
+		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();
 		
 		//This map is where we store the totals for this time period.
-		for (Category category : DataInstance.getInstance().getCategories()) {
+		for (Category category : SourceController.getCategories()) {
 			if (!category.isIncome())
 				categories.put(category, new Long(0));
 		}

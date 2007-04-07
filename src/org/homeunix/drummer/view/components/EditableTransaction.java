@@ -27,10 +27,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.DictData;
@@ -308,7 +308,7 @@ public class EditableTransaction extends JPanel {
 		fromModel.removeAllElements();
 		toModel.addElement(null);
 		fromModel.addElement(null);
-		for (Source source : DataInstance.getInstance().getAccounts()) {
+		for (Source source : SourceController.getAccounts()) {
 			toModel.addElement(source);
 			fromModel.addElement(source);
 		}
@@ -316,7 +316,7 @@ public class EditableTransaction extends JPanel {
 		toModel.addElement(null);
 		fromModel.addElement(null);		
 
-		for (Category c : DataInstance.getInstance().getCategories()){
+		for (Category c : SourceController.getCategories()){
 			if (c.isIncome())
 				fromModel.addElement(c);
 			else

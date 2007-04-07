@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -34,10 +32,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
@@ -59,7 +59,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
 	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
-
+	
 	private final JList list;
 	private final JScrollPane listScroller;
 
@@ -259,7 +259,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 	@Override
 	public StandardContainer initPostPack() {
-		Transaction prototype = DataInstance.getInstance().getDataModelFactory().createTransaction();
+		Transaction prototype = ModelFactory.eINSTANCE.createTransaction();
 		prototype.setDate(new Date());
 		prototype.setDescription("Description");
 		prototype.setNumber("Number");
@@ -324,7 +324,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							&& editableTransaction.getTransaction() != (Transaction) list.getSelectedValue()){
 						int ret;
 
-						if (isValidRecord()){
+						if (TransactionController.isRecordValid(
+								editableTransaction.getDescription(), 
+								editableTransaction.getDate(), 
+								editableTransaction.getAmount(), 
+								editableTransaction.getTo(), 
+								editableTransaction.getFrom(),
+								TransactionsFrame.this.account)){
 							ret = JOptionPane.showConfirmDialog(
 									null, 
 									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_MESSAGE), 
@@ -383,33 +389,30 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			}
 		});
 
-		this.addWindowListener(new WindowAdapter(){
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				PrefsInstance.getInstance().checkWindowSanity();
-
-				WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow(); 
-
-				wa.setX(e.getComponent().getX());
-				wa.setY(e.getComponent().getY());
-				wa.setHeight(e.getComponent().getHeight());
-				wa.setWidth(e.getComponent().getWidth());
-
-				PrefsInstance.getInstance().savePrefs();
-
-				transactionInstances.put(account, null);
-
-				super.windowClosing(e);
-			}
-		});
-
-		list.setListData(DataInstance.getInstance().getTransactions(account));
-		editableTransaction.setTransaction(null, true);
+//		list.setListData(DataInstance.getInstance().getTransactions(account));
+//		editableTransaction.setTransaction(null, true);
 
 		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 		
 		return this;
+	}
+	
+	@Override
+	public Object closeWindow() {
+		PrefsInstance.getInstance().checkWindowSanity();
+
+		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow(); 
+
+		wa.setX(this.getX());
+		wa.setY(this.getY());
+		wa.setHeight(this.getHeight());
+		wa.setWidth(this.getWidth());
+
+		PrefsInstance.getInstance().savePrefs();
+
+		transactionInstances.put(account, null);
+
+		return super.closeWindow();
 	}
 
 	public AbstractFrame updateContent(){
@@ -469,17 +472,6 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		return super.openWindow();
 	}
 
-	private boolean isValidRecord(){
-		return (!(
-				editableTransaction.getDescription().length() == 0 
-				|| editableTransaction.getDate() == null
-				|| editableTransaction.getAmount() < 0
-				|| editableTransaction.getTo() == null
-				|| editableTransaction.getFrom() == null
-				|| (editableTransaction.getFrom() != account
-						&& editableTransaction.getTo() != account)
-		));
-	}
 
 	/**
 	 * Force an update of every transaction window.
@@ -604,7 +596,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(recordButton)){
-			if (!isValidRecord()){
+			if (!TransactionController.isRecordValid(
+					editableTransaction.getDescription(), 
+					editableTransaction.getDate(), 
+					editableTransaction.getAmount(), 
+					editableTransaction.getTo(), 
+					editableTransaction.getFrom(),
+					this.account)){
 				JOptionPane.showMessageDialog(
 						TransactionsFrame.this,
 						Translate.getInstance().get(TranslateKeys.RECORD_BUTTON_ERROR),
@@ -619,7 +617,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			Transaction t;
 			boolean isUpdate = false;
 			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD))){
-				t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+				t = ModelFactory.eINSTANCE.createTransaction();
 			}
 			else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE))){
 				t = editableTransaction.getTransaction();
