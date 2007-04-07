@@ -16,12 +16,12 @@ import javax.swing.JPanel;
  * The layout which ReportsPanel and GraphsPanel extend from.
  * 
  */
-public abstract class InfomationPanelLayout extends JPanel {
+public abstract class AbstractInfomationPanel extends JPanel {
 	public static final long serialVersionUID = 0;
 	protected final JPanel pluginsPanel;
 	
 	
-	protected InfomationPanelLayout(){		
+	protected AbstractInfomationPanel(){		
 		pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
 				

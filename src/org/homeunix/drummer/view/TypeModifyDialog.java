@@ -1,25 +1,25 @@
 /*
  * Created on May 14, 2006 by wyatt
  */
-package org.homeunix.drummer.controller;
+package org.homeunix.drummer.view;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Type;
-import org.homeunix.drummer.view.GraphFrameLayout;
-import org.homeunix.drummer.view.ModifyDialogLayout;
-import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
-public class TypeModifyDialog extends ModifyDialogLayout<Account> {
+public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 	public static final long serialVersionUID = 0;
 
 	public TypeModifyDialog(){
-		super(MainBuddiFrame.getInstance());
+		super(MainFrame.getInstance());
 
 		check.setText(Translate.getInstance().get(TranslateKeys.CREDIT));
 		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_ACCOUNT_TYPES));
@@ -51,6 +51,7 @@ public class TypeModifyDialog extends ModifyDialogLayout<Account> {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			if (name.getText().length() == 0){
@@ -62,8 +63,13 @@ public class TypeModifyDialog extends ModifyDialogLayout<Account> {
 			}
 			else{
 				final Type t;
-				if (type == null)
-					DataInstance.getInstance().addType(name.getText(), check.isSelected());
+				if (type == null){
+					t = ModelFactory.eINSTANCE.createType();
+					t.setName(name.getText());
+					t.setCredit(check.isSelected());
+					DataInstance.getInstance().getDataModel().getAllTypes().getTypes().add(t);
+					DataInstance.getInstance().saveDataModel();
+				}
 				else {
 					t = type;
 					t.setName(name.getText());
@@ -73,17 +79,17 @@ public class TypeModifyDialog extends ModifyDialogLayout<Account> {
 
 				TypeModifyDialog.this.closeWindow();
 				
-				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+				MainFrame.getInstance().getAccountListPanel().updateContent();
 			}
 
 			TransactionsFrame.updateAllTransactionWindows();
-			ReportFrameLayout.updateAllReportWindows();
-			GraphFrameLayout.updateAllGraphWindows();
+			ReportFrame.updateAllReportWindows();
+			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			TypeModifyDialog.this.closeWindow();
 
-			MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+			MainFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}
 }

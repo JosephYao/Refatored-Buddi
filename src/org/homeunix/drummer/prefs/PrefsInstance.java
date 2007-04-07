@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.common.util.EList;
@@ -28,6 +27,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
 import org.homeunix.thecave.moss.util.FileFunctions;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -45,7 +45,7 @@ public class PrefsInstance {
 	private UserPrefs userPrefs;
 	private PrefsFactory prefsFactory = PrefsFactoryImpl.eINSTANCE;
 
-	//Provide backing for the autocomplete text fields
+	//Provide temporary backing for the autocomplete text fields
 	private final DefaultDictionary descDict;
 	private final Map<String, DictData> defaultsMap;
 	private final Map<String, ListAttributes> listAttributesMap;
@@ -146,7 +146,7 @@ public class PrefsInstance {
 				savePrefs();
 			}
 			
-			//Allow upgrading to rotating backups - default to 10
+			//Allow upgrading to rotating backups - default to 20
 			if (userPrefs.getPrefs().getNumberOfBackups() == 0){
 				userPrefs.getPrefs().setNumberOfBackups(20);
 				savePrefs();
@@ -169,24 +169,9 @@ public class PrefsInstance {
 			Prefs prefs = prefsFactory.createPrefs();
 			userPrefs.setPrefs(prefs);
 			
-			//Create sane defaults for all the properties
-			//Ask the user where to put the data file.  This could possibly be on encrypted disk, etc.
-			// We do not translate this part because we have not yet loaded the langauge files...
-			JOptionPane.showMessageDialog(
-					null,
-					"You need to choose your data file.  You can\n"
-					+ "either choose an existing Buddi data store, or a\n"
-					+ "directory in which a new file will be created.",
-					"Choose Datastore Location...",
-					JOptionPane.INFORMATION_MESSAGE);
+			//Create sane defaults for all the properties...
 			
-			final String dataFileName = chooseDataFile();
-			
-			if (dataFileName == null){
-				Log.critical("Cannot use a null file");
-				System.exit(1);
-			}
-
+			//Prompt for language
 			File languageLocation = new File(Const.LANGUAGE_FOLDER);
 			if (languageLocation.exists() && languageLocation.isDirectory()){
 				Set<String> languageSet = new HashSet<String>();
@@ -218,8 +203,8 @@ public class PrefsInstance {
 				if (retValue != null)
 					prefs.setLanguage(((String) retValue).replaceAll(" ", "_"));
 				else{
-					JOptionPane.showMessageDialog(null, "Invalid selection.  Defaulting to English - you can change this in Preferences.", "Invalid Selection", JOptionPane.ERROR_MESSAGE);
-					prefs.setLanguage("English");	
+					Log.info("User hit cancel.  Exiting.");
+					System.exit(0);
 				}
 			}
 			else{
@@ -227,12 +212,11 @@ public class PrefsInstance {
 			}
 			
 			//Set meaningful defaults
-			prefs.setDataFile(dataFileName);
 			prefs.setShowDeletedAccounts(true);
 			prefs.setShowDeletedCategories(true);
 			prefs.setShowAutoComplete(true);
 			prefs.setEnableUpdateNotifications(true);
-			prefs.setDateFormat("yyyy/MMM/d");
+			prefs.setDateFormat(Const.DATE_FORMATS[0]);
 			prefs.setCurrencySymbol(Const.CURRENCY_FORMATS[0]);
 
 			prefs.setLists(prefsFactory.createLists());
@@ -285,8 +269,6 @@ public class PrefsInstance {
 			year.setDays(false);
 			prefs.getIntervals().getIntervals().add(year);
 
-			
-			
 			prefs.setSelectedInterval(month.toString());
 			
 			ResourceSet resourceSet = new ResourceSetImpl();			
@@ -309,9 +291,20 @@ public class PrefsInstance {
 			}
 			catch (IOException ioe){}
 		}
+		
+		//Load formatting
+		Formatter.getInstance(
+				userPrefs.getPrefs().getDateFormat());
+		
+		//Load language
+		Translate.getInstance().loadLanguage(
+				userPrefs.getPrefs().getLanguage());
 	}
 	
-	public void savePrefs(){		
+	public void savePrefs(){
+		if (location == null){
+			return;
+		}
 		
 		File saveLocation = new File(location);
 		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
@@ -335,18 +328,21 @@ public class PrefsInstance {
 			
 			userPrefs.getPrefs().getLists().getListEntries().add(l);
 		}
-		
-		//If we are using relative directories, replace with the relative dirs.
-		String newDataFile = userPrefs.getPrefs().getDataFile();
-		//Java doesn't like non-escaped backslashes in regexes...
-		String workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\");
-		newDataFile.replaceAll("^" + workingDirectoryRegex, "");
-		userPrefs.getPrefs().setDataFile(newDataFile);
-		
-		for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
-			if (o instanceof Plugin){
-				Plugin plugin = (Plugin) o;
-				plugin.setJarFile(plugin.getJarFile().replaceAll("^" + workingDirectoryRegex, ""));
+
+		String workingDirectoryRegex = "";
+		if (userPrefs.getPrefs().getDataFile() != null){
+			//If we are using relative directories, replace with the relative dirs.
+			String newDataFile = userPrefs.getPrefs().getDataFile();
+			//Java doesn't like non-escaped backslashes in regexes...
+			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\");
+			newDataFile.replaceAll("^" + workingDirectoryRegex, "");
+			userPrefs.getPrefs().setDataFile(newDataFile);
+
+			for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
+				if (o instanceof Plugin){
+					Plugin plugin = (Plugin) o;
+					plugin.setJarFile(plugin.getJarFile().replaceAll("^" + workingDirectoryRegex, ""));
+				}
 			}
 		}
 		
@@ -354,14 +350,14 @@ public class PrefsInstance {
 			FileFunctions.copyFile(saveLocation, backupLocation);
 			
 			URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
-			if (Const.DEVEL) Log.debug("Data saved to " + location);
+			if (Const.DEVEL) Log.debug("Preferences saved to " + location);
 			
 			Resource resource = resourceSet.createResource(fileURI);
 			resource.getContents().add(userPrefs);
 			resource.save(Collections.EMPTY_MAP);
 		}
 		catch (IOException ioe){
-			Log.critical("Error when saving file: " + ioe);
+			Log.critical("Error when saving preferences file: " + ioe);
 		}
 	}
 	
@@ -467,52 +463,52 @@ public class PrefsInstance {
 		return null;
 	}
 	
-	public static String chooseDataFile(){
-		final String dataFileName;
-		
-		final JFileChooser jfc = new JFileChooser();
-		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		jfc.setDialogTitle("Choose Datastore Location...");
-		if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
-			if (jfc.getSelectedFile() != null){
-				String chosenString = jfc.getSelectedFile().getAbsolutePath();
-				if (jfc.getSelectedFile().isDirectory()){
-					dataFileName = 
-						chosenString 
-						+ File.separator + Const.DATA_DEFAULT_FILENAME 
-						+ Const.DATA_FILE_EXTENSION;
-				}
-				else{
-					if (chosenString.endsWith(Const.DATA_FILE_EXTENSION))
-						dataFileName = chosenString;
-					else
-						dataFileName = chosenString + Const.DATA_FILE_EXTENSION;
-				}
-			}
-			else{
-				JOptionPane.showMessageDialog(
-						null,
-						"Error choosing file.",
-						"Exiting.",
-						JOptionPane.ERROR_MESSAGE
-				);
-				return null;					
-			}
-		}
-		else{
-			JOptionPane.showMessageDialog(
-					null,
-					"Did not choose data directory.",
-					"Exiting",
-					JOptionPane.ERROR_MESSAGE
-			);
-			return null;
-		}
-		
-		if (Const.DEVEL) Log.debug("Chosen data file: " + dataFileName);
-		
-		return dataFileName;
-	}
+//	public static String chooseDataFile(){
+//		final String dataFileName;
+//		
+//		final JFileChooser jfc = new JFileChooser();
+//		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+//		jfc.setDialogTitle("Choose Datastore Location...");
+//		if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+//			if (jfc.getSelectedFile() != null){
+//				String chosenString = jfc.getSelectedFile().getAbsolutePath();
+//				if (jfc.getSelectedFile().isDirectory()){
+//					dataFileName = 
+//						chosenString 
+//						+ File.separator + Const.DATA_DEFAULT_FILENAME 
+//						+ Const.DATA_FILE_EXTENSION;
+//				}
+//				else{
+//					if (chosenString.endsWith(Const.DATA_FILE_EXTENSION))
+//						dataFileName = chosenString;
+//					else
+//						dataFileName = chosenString + Const.DATA_FILE_EXTENSION;
+//				}
+//			}
+//			else{
+//				JOptionPane.showMessageDialog(
+//						null,
+//						"Error choosing file.",
+//						"Exiting.",
+//						JOptionPane.ERROR_MESSAGE
+//				);
+//				return null;					
+//			}
+//		}
+//		else{
+//			JOptionPane.showMessageDialog(
+//					null,
+//					"Did not choose data directory.",
+//					"Exiting",
+//					JOptionPane.ERROR_MESSAGE
+//			);
+//			return null;
+//		}
+//		
+//		if (Const.DEVEL) Log.debug("Chosen data file: " + dataFileName);
+//		
+//		return dataFileName;
+//	}
 
 	public void checkWindowSanity(){
 		Prefs prefs = getPrefs();

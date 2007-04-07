@@ -10,11 +10,11 @@ import javax.swing.AbstractListModel;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -70,7 +70,7 @@ public class TransactionListModel extends AbstractListModel {
 	 * windows after each addition.
 	 * @param transactions A collection of transactions
 	 */
-	public void add(Collection<Transaction> transactions){
+	public void addAll(Collection<Transaction> transactions){
 		for (Transaction t : transactions) {
 			DataInstance.getInstance().addTransaction(t);	
 		}

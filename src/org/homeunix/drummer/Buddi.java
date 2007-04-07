@@ -6,26 +6,37 @@ package org.homeunix.drummer;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import net.roydesign.mac.MRJAdapter;
 
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.LookAndFeelManager;
+import org.homeunix.drummer.view.BuddiDocumentManager;
+import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.BuddiDocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
+import org.homeunix.thecave.moss.util.SwingWorker;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
+
+import edu.stanford.ejalbert.BrowserLauncher;
 
 /**
  * The main class, containing the launch methods for Buddi.  This class 
@@ -85,12 +96,87 @@ public class Buddi {
 			);
 		}
 		 */
+		//Ensure the Preferences are loaded first, so that everything can
+		// be translated properly...
+		PrefsInstance.getInstance();
+
+		//Ensure Formatter is set up properly
+		// TODO make a better formatting class
+		Formatter.getInstance().setDateFormat(
+				PrefsInstance.getInstance().getPrefs().getDateFormat());
+
+		//Create the frameless menu bar (for Mac)
+		JMenuBar frameless = new BuddiMenu(null);
+		MRJAdapter.setFramelessJMenuBar(frameless);
+		
+		
+		//Load the data model.  Depending on different options and 
+		// user choices, this may be a new one, or load an existing one.
+		File dataFile = null;
+
+		//This option allows us to prompt for a new data file at startup every time
+		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
+			chooseDataFileSource();
+		}
+		//If the data file is not null, we try to use it.
+		else if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
+			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+
+			//Does the file exist?
+			if (!dataFile.exists()){
+				chooseDataFileSource();
+			}
+			//Before we open the file, we check that we have read / write 
+			// permission to it.  This is in response to bug #1626996. 
+			else if (!dataFile.canWrite()){
+				JOptionPane.showMessageDialog(
+						null,
+						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.ERROR),
+						JOptionPane.ERROR_MESSAGE);
+				chooseDataFileSource();
+			}
+			else if (!dataFile.canRead()){
+				JOptionPane.showMessageDialog(
+						null,
+						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.ERROR),
+						JOptionPane.ERROR_MESSAGE);
+				chooseDataFileSource();
+			}
+			//If all looks well, we try to load the file.
+			else {
+				DataInstance.getInstance().loadDataFile(dataFile);
+			}
+		}
+		//If the data file was null, we need to have the user pick a different one.
+		else {
+			chooseDataFileSource();
+		}
+
+		//Start the initial checks
+		startVersionCheck();
+		startUpdateCheck();
 
 		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
 		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
 		Point point = new Point(wa.getX(), wa.getY());
 
-		MainBuddiFrame.getInstance().openWindow(dim, point);
+		MainFrame.getInstance().openWindow(dim, point);
+	}
+
+	private static void chooseDataFileSource(){
+		DataFileWrapper dfw = BuddiDocumentManager.getInstance().chooseNewOrExistingDataFile();
+		if (dfw == null){
+			Log.info("User hit cancel.  Exiting.");
+			System.exit(0);
+		}
+		else if (dfw.isExisting()){
+			DataInstance.getInstance().loadDataFile(dfw.getDataFile());
+		}
+		else {
+			DataInstance.getInstance().newDataFile(dfw.getDataFile());
+		}
 	}
 
 	/**
@@ -142,16 +228,8 @@ public class Buddi {
 		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 
-		//Load the language
-		Translate.getInstance().loadLanguage(
-				PrefsInstance.getInstance().getPrefs().getLanguage());
-
 		//Load the correct formatter preferences
-		Formatter.getInstance(PrefsInstance.getInstance().getPrefs().getDateFormat());
 
-		//Create the frameless menu bar (for Mac)
-		JMenuBar frameless = new BuddiMenu(null);
-		MRJAdapter.setFramelessJMenuBar(frameless);
 
 		//Add any shutdown hoks you want to use.  Currently this
 		// is only enabled in development versions.
@@ -182,5 +260,158 @@ public class Buddi {
 				launchGUI();
 			}
 		});
+	}
+
+	/**
+	 * Checks if getInstance() version has been run before, and if not, displays any messages that show on first run. 
+	 */
+	private static void startVersionCheck(){
+		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+			PrefsInstance.getInstance().updateVersion();
+
+			SwingWorker worker = new SwingWorker() {
+
+				@Override
+				public Object construct() {
+					return null;
+				}
+
+				@Override
+				public void finished() {
+					String[] buttons = new String[2];
+					buttons[0] = Translate.getInstance().get(TranslateKeys.DONATE);
+					buttons[1] = Translate.getInstance().get(TranslateKeys.NOT_NOW);
+
+					int reply = JOptionPane.showOptionDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.DONATE_MESSAGE),
+							Translate.getInstance().get(TranslateKeys.DONATE_HEADER),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
+
+					if (reply == JOptionPane.YES_OPTION){
+						try{
+							BrowserLauncher bl = new BrowserLauncher(null);
+							bl.openURLinBrowser(Const.DONATE_URL);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+					}
+
+					super.finished();
+				}
+			};
+
+			worker.start();
+		}
+	}
+
+	/**
+	 * Starts a thread which checks the Internet for any new versions.
+	 */
+	public static void startUpdateCheck(){
+		if (PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
+			SwingWorker updateWorker = new SwingWorker(){
+
+				@Override
+				public Object construct() {
+					try{
+						Properties versions = new Properties();
+						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
+
+						versions.load(mostRecentVersion.openStream());
+
+						int majorAvailable = 0, minorAvailable = 0, bugfixAvailable = 0;
+						int majorThis = 0, minorThis = 0, bugfixThis = 0;
+
+						String[] available = versions.get(Const.BRANCH).toString().split("\\.");
+						String[] thisVersion = Const.VERSION.split("\\.");
+
+						if (available.length > 2){
+							majorAvailable = Integer.parseInt(available[0]);
+							minorAvailable = Integer.parseInt(available[1]);
+							bugfixAvailable = Integer.parseInt(available[2]);
+						}
+
+						if (thisVersion.length > 2){
+							majorThis = Integer.parseInt(thisVersion[0]);
+							minorThis = Integer.parseInt(thisVersion[1]);
+							bugfixThis = Integer.parseInt(thisVersion[2]);
+						}
+
+						Log.debug("This version: " + majorThis + "." + minorThis + "." + bugfixThis);
+						Log.debug("Available version: " + majorAvailable + "." + minorAvailable + "." + bugfixAvailable);
+
+						if (majorAvailable > majorThis
+								|| (majorAvailable == majorThis && minorAvailable > minorThis)
+								|| (majorAvailable == majorThis && minorAvailable == minorThis && bugfixAvailable > bugfixThis)){
+							return versions.get(Const.BRANCH);
+						}
+					}
+					catch (MalformedURLException mue){
+						Log.error(mue);
+					}
+					catch (IOException ioe){
+						Log.error(ioe);
+					}
+
+					return null;
+				}
+
+				@Override
+				public void finished() {
+					if (get() != null){
+						String[] buttons = new String[2];
+						buttons[0] = Translate.getInstance().get(TranslateKeys.DOWNLOAD);
+						buttons[1] = Translate.getInstance().get(TranslateKeys.CANCEL);
+
+						int reply = JOptionPane.showOptionDialog(
+								MainFrame.getInstance(), 
+								Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE)
+								+ " " + get() + "\n"
+								+ Translate.getInstance().get(TranslateKeys.NEW_VERSION_MESSAGE_2),
+								Translate.getInstance().get(TranslateKeys.NEW_VERSION),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								buttons,
+								buttons[0]);
+
+						if (reply == JOptionPane.YES_OPTION){
+							String fileLocation;
+							if (Const.BRANCH.equals(Const.STABLE))
+								fileLocation = Const.DOWNLOAD_URL_STABLE;
+							else
+								fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+
+							//Link to the correct download by default.
+							if (OperatingSystemUtil.isMac())
+								fileLocation += Const.DOWNLOAD_URL_DMG;
+							else if (OperatingSystemUtil.isWindows())
+								fileLocation += Const.DOWNLOAD_URL_ZIP;
+							else
+								fileLocation += Const.DOWNLOAD_URL_TGZ;
+
+							try{
+								BrowserLauncher bl = new BrowserLauncher(null);
+								bl.openURLinBrowser(fileLocation);
+							}
+							catch (Exception e){
+								Log.error(e);
+							}
+						}
+					}
+
+					super.finished();
+				}
+			};
+
+			if (Const.DEVEL) Log.debug("Starting update checking...");
+			updateWorker.start();
+		}
 	}
 }

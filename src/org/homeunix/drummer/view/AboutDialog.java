@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
@@ -38,7 +37,7 @@ public class AboutDialog extends AbstractBuddiDialog {
 	private final JLabel text;
 
 	public AboutDialog(){
-		super(MainBuddiFrame.getInstance());
+		super(MainFrame.getInstance());
 
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
 		donateButton = new JButton(Translate.getInstance().get(TranslateKeys.DONATE));

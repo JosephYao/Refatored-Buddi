@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.view.MainFrame;
 
 public class JDocumentDialog extends JDialog {
 	public static final long serialVersionUID = 0;
@@ -50,7 +50,7 @@ public class JDocumentDialog extends JDialog {
 		this.add(docScroller, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.pack();
-		this.setLocationRelativeTo(MainBuddiFrame.getInstance());
+		this.setLocationRelativeTo(MainFrame.getInstance());
 		this.setVisible(true);
 	}
 }

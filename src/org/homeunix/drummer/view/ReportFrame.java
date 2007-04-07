@@ -23,7 +23,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.TransactionsFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -38,22 +37,21 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public class ReportFrameLayout extends AbstractBuddiFrame {
+public class ReportFrame extends AbstractBuddiFrame {
 	public final static long serialVersionUID = 0;
-	protected final JXTreeTable tree;
+	private final JXTreeTable tree;
 
-	protected final JButton okButton;
-	protected final JButton editButton;
-	protected String HTMLPage = "";
-	protected final BuddiReportPlugin reportPlugin;
-	protected final Date startDate, endDate;
+	private final JButton okButton;
+	private final JButton editButton;
+	private String HTMLPage = "";
+	private final BuddiReportPlugin reportPlugin;
+	private final Date startDate, endDate;
 
-	protected static final Vector<ReportFrameLayout> reportFrameInstances = new Vector<ReportFrameLayout>();
+	private static final Vector<ReportFrame> reportFrameInstances = new Vector<ReportFrame>();
 
-	protected DefaultMutableTreeNode selectedNode;
+	private DefaultMutableTreeNode selectedNode;
 
-
-	public ReportFrameLayout(BuddiReportPlugin reportPlugin, final Date startDate, final Date endDate){
+	public ReportFrame(BuddiReportPlugin reportPlugin, final Date startDate, final Date endDate){
 		this.reportPlugin = reportPlugin;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -181,7 +179,7 @@ public class ReportFrameLayout extends AbstractBuddiFrame {
 	}
 
 	public static void updateAllReportWindows(){
-		for (ReportFrameLayout rfl : Collections.unmodifiableCollection(reportFrameInstances)) {
+		for (ReportFrame rfl : Collections.unmodifiableCollection(reportFrameInstances)) {
 			if (rfl != null)
 				rfl.updateContent();
 		}

@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.gui.JPasswordInputDialog;
@@ -198,7 +197,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			
 			if (password == null){
 				JOptionPane.showMessageDialog(
-						MainBuddiFrame.getInstance(), 
+						null, 
 						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD), 
 						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD_TITLE), 
 						JOptionPane.INFORMATION_MESSAGE
@@ -234,7 +233,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			
 			if (!correctPassword){
 				JOptionPane.showMessageDialog(
-						MainBuddiFrame.getInstance(),
+						null,
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD),
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD_TITLE),
 						JOptionPane.ERROR_MESSAGE);

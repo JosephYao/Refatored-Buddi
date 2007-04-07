@@ -16,8 +16,8 @@ import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.view.GraphFrameLayout;
-import org.homeunix.drummer.view.ReportFrameLayout;
+import org.homeunix.drummer.view.GraphFrame;
+import org.homeunix.drummer.view.ReportFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -28,7 +28,7 @@ public class BuddiPluginHelper {
 			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
 			Point point = new Point(wa.getX(), wa.getY());
 			
-			ReportFrameLayout rfl = new ReportFrameLayout((BuddiReportPlugin) plugin, startDate, endDate);
+			ReportFrame rfl = new ReportFrame((BuddiReportPlugin) plugin, startDate, endDate);
 			rfl.openWindow(dimension, point);
 			rfl.requestFocusInWindow();
 		}
@@ -37,7 +37,7 @@ public class BuddiPluginHelper {
 			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
 			Point point = new Point(wa.getX(), wa.getY());
 
-			GraphFrameLayout gfl = new GraphFrameLayout((BuddiGraphPlugin) plugin, startDate, endDate);
+			GraphFrame gfl = new GraphFrame((BuddiGraphPlugin) plugin, startDate, endDate);
 			gfl.openWindow(dimension, point);
 			gfl.requestFocusInWindow();
 		}

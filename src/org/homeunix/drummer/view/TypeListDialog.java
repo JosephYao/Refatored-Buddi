@@ -6,7 +6,8 @@ package org.homeunix.drummer.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,86 +15,131 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
-public abstract class ScheduledTransactionsListFrameLayout extends AbstractBuddiDialog {
+public class TypeListDialog extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
-	
-	protected final JButton doneButton;
-	protected final JButton newButton;
-	protected final JButton editButton;
-	protected final JButton deleteButton;
-	
-	protected final JList list;
-	
-	protected ScheduledTransactionsListFrameLayout(Frame owner){
-		super(owner);
-		
+
+	private final JButton doneButton;
+	private final JButton newButton;
+	private final JButton editButton;
+
+	private final JList list;
+
+	public TypeListDialog(){
+		super(MainFrame.getInstance());
+
 		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
 		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
-		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
-		
+
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		Dimension buttonSize = new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height);
+		Dimension buttonSize = new Dimension(Math.max(100, editButton.getPreferredSize().width), editButton.getPreferredSize().height);
 		doneButton.setPreferredSize(buttonSize);
 		newButton.setPreferredSize(buttonSize);
 		editButton.setPreferredSize(buttonSize);
-		deleteButton.setPreferredSize(buttonSize);
-		
+
 		JScrollPane listScroller = new JScrollPane(list);
-		
+
 		JPanel scrollBorderPanel = new JPanel(new BorderLayout());
 		scrollBorderPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
-		
+
 		JPanel scrollPanel = new JPanel(new BorderLayout());
 		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTIONS)));
 		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
-		
+
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		editTransactionsButtonPanel.add(newButton);
 		editTransactionsButtonPanel.add(editButton);
-		editTransactionsButtonPanel.add(deleteButton);
-		
+
 		scrollPanel.add(editTransactionsButtonPanel, BorderLayout.SOUTH);
-		
+
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-		
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
+
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(doneButton);
-		
+
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-		
-		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
+
+		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_ACCOUNT_TYPES));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(doneButton);
-		
+
 		if (OperatingSystemUtil.isMac()){
 			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
 	}
+	
+	public AbstractDialog init() {
+		newButton.addActionListener(this);
+		editButton.addActionListener(this);
+		doneButton.addActionListener(this);
 
-	public StandardContainer clear() {
+		list.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				TypeListDialog.this.updateButtons();
+			}
+		});
+
 		return this;
 	}
-	
-	public AbstractDialog updateButtons(){
-		
+
+	public AbstractDialog updateContent(){
+
+		Vector<Type> types = DataInstance.getInstance().getTypes();
+		list.setListData(types);
+
+		return this;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(doneButton)){
+			TypeListDialog.this.setVisible(false);
+			TypeListDialog.this.closeWindow();
+		}
+		else if (e.getSource().equals(newButton)){
+			new TypeModifyDialog().openWindow();
+			if (Const.DEVEL) Log.debug("Done creating");
+			updateContent();
+		}
+		else if (e.getSource().equals(editButton)){
+			Object o = list.getSelectedValue();
+			if (o instanceof Type){
+				Type t = (Type) o;
+				new TypeModifyDialog().loadType(t).openWindow();
+				if (Const.DEVEL) Log.debug("Done editing.");
+				updateContent();
+			}
+		}
+	}
+
+	public StandardContainer clear() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public AbstractDialog updateButtons(){		
 		editButton.setEnabled(list.getSelectedIndices().length > 0);
-		deleteButton.setEnabled(list.getSelectedIndices().length > 0);
-		
+
 		return this;
 	}
 }

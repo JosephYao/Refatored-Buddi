@@ -35,7 +35,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public abstract class ListPanelLayout extends AbstractPanel {
+public abstract class AbstractListPanel extends AbstractPanel {
 	public static final long serialVersionUID = 0;
 
 	protected final JXTreeTable tree;
@@ -48,13 +48,13 @@ public abstract class ListPanelLayout extends AbstractPanel {
 
 	protected final SourceTreeTableModel treeModel;
 	
-	private static Color LIGHT_BLUE = new Color(237, 243, 254);
-//	private static Color SELECTED = new Color(181, 213, 255);
-	private static Color WHITE = Color.WHITE;
+	protected static Color LIGHT_BLUE = new Color(237, 243, 254);
+//	protected static Color SELECTED = new Color(181, 213, 255);
+	protected static Color WHITE = Color.WHITE;
 
 	protected Source selectedSource;
 
-	protected ListPanelLayout(){
+	public AbstractListPanel(){
 		treeModel = new SourceTreeTableModel();
 		tree = new JXTreeTable(treeModel);
 		tree.setRootVisible(false);
@@ -165,7 +165,7 @@ public abstract class ListPanelLayout extends AbstractPanel {
 					}
 				}
 				
-				ListPanelLayout.this.updateButtons();
+				AbstractListPanel.this.updateButtons();
 			}
 		});
 

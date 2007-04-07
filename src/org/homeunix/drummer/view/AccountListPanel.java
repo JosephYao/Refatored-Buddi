@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.drummer.controller;
+package org.homeunix.drummer.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,14 +19,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.view.AbstractPanel;
-import org.homeunix.drummer.view.ListPanelLayout;
 import org.homeunix.thecave.moss.util.Log;
 
 /**
@@ -35,7 +35,7 @@ import org.homeunix.thecave.moss.util.Log;
  * @author wolson
  *
  */
-public class AccountListPanel extends ListPanelLayout {
+public class AccountListPanel extends AbstractListPanel {
 	public static final long serialVersionUID = 0;
 		
 	public AccountListPanel(){

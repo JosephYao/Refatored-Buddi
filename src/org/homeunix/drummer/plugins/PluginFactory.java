@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import net.roydesign.ui.JScreenMenuItem;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.DataInstance;
@@ -40,6 +39,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.jar.JarLoader;
@@ -284,7 +284,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 						if (exportPlugin.getFileFilter() != null)
 							jfc.setFileFilter(exportPlugin.getFileFilter());
 
-						if (jfc.showSaveDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+						if (jfc.showSaveDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 							if (jfc.getSelectedFile().isDirectory()){
 								//Cannot select a directory
 								JOptionPane.showMessageDialog(
@@ -319,7 +319,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					//Update all the accounts with the new totals, etc.  Probably not needed for Import plugins, but 
 					// it's a pretty cheap operation anyway, and it is better safe than sorry...
 					DataInstance.getInstance().calculateAllBalances();
-					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+					MainFrame.getInstance().getAccountListPanel().updateContent();
 
 				}
 			}
@@ -346,7 +346,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 						if (importPlugin.getFileFilter() != null)
 							jfc.setFileFilter(importPlugin.getFileFilter());
 
-						if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+						if (jfc.showOpenDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
 							if (jfc.getSelectedFile().isDirectory()){
 								//Cannot select a directory
 								JOptionPane.showMessageDialog(
@@ -380,7 +380,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 					//Update all the accounts with the new totals, etc.
 					DataInstance.getInstance().calculateAllBalances();
-					MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+					MainFrame.getInstance().getAccountListPanel().updateContent();
 				}
 			}
 		});
@@ -411,7 +411,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					// window, which then launches the plugin.
 					else{
 						new CustomDateDialog(
-								MainBuddiFrame.getInstance(),
+								MainFrame.getInstance(),
 								(BuddiPanelPlugin) plugin
 						).openWindow();
 					}

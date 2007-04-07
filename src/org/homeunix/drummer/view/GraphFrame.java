@@ -30,19 +30,19 @@ import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
-public class GraphFrameLayout extends AbstractBuddiFrame {
+public class GraphFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;
 
-	protected static final Vector<GraphFrameLayout> graphFrameInstances = new Vector<GraphFrameLayout>();
+	private static final Vector<GraphFrame> graphFrameInstances = new Vector<GraphFrame>();
 
-	protected JPanel reportPanel;
-	protected final JButton okButton;
-	protected final BuddiGraphPlugin graphPlugin;
-	protected final Date startDate, endDate;
+	private JPanel reportPanel;
+	private final JButton okButton;
+	private final BuddiGraphPlugin graphPlugin;
+	private final Date startDate, endDate;
 
 	private final JPanel reportPanelSpacer;
 
-	public GraphFrameLayout(BuddiGraphPlugin graphPlugin, final Date startDate, final Date endDate){
+	public GraphFrame(BuddiGraphPlugin graphPlugin, final Date startDate, final Date endDate){
 		this.graphPlugin = graphPlugin;
 		this.startDate = startDate;
 		this.endDate = endDate;		
@@ -216,7 +216,7 @@ public class GraphFrameLayout extends AbstractBuddiFrame {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			saveWindowPosition();
-			GraphFrameLayout.this.setVisible(false);
+			GraphFrame.this.setVisible(false);
 		}
 	}
 
@@ -241,7 +241,7 @@ public class GraphFrameLayout extends AbstractBuddiFrame {
 	}
 
 	public static void updateAllGraphWindows(){
-		for (GraphFrameLayout gfl : Collections.unmodifiableCollection(graphFrameInstances)) {
+		for (GraphFrame gfl : Collections.unmodifiableCollection(graphFrameInstances)) {
 			if (gfl != null)
 				gfl.updateContent();
 		}

@@ -14,7 +14,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.ReportFrameLayout;
+import org.homeunix.drummer.view.ReportFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -24,8 +24,8 @@ public class ExportHTML implements BuddiExportPlugin {
 
 	public void exportData(AbstractFrame frame, File file) {
 		if (Const.DEVEL) Log.debug("Exporting HTML");
-		if (frame instanceof ReportFrameLayout){
-			String htmlReport = ((ReportFrameLayout) frame).getHTMLPage();
+		if (frame instanceof ReportFrame){
+			String htmlReport = ((ReportFrame) frame).getHTMLPage();
 
 			File tempFile = new File(
 //					(!reportPath.matches("^\\S*[ ]\\S*$") ? reportPath : "")

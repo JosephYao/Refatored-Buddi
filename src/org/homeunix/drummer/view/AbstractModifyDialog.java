@@ -18,10 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.homeunix.drummer.controller.AccountModifyDialog;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.TypeModifyDialog;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
@@ -29,7 +27,7 @@ import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.util.Formatter;
 
-public abstract class ModifyDialogLayout<SourceType> extends AbstractBuddiDialog {
+public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
 	
 	protected final JButton okButton;
@@ -55,7 +53,7 @@ public abstract class ModifyDialogLayout<SourceType> extends AbstractBuddiDialog
 	protected SourceType source;
 	protected Type type;
 	
-	protected ModifyDialogLayout(Frame owner){
+	protected AbstractModifyDialog(Frame owner){
 		super(owner);
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));

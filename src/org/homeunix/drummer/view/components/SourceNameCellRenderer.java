@@ -5,12 +5,12 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.homeunix.drummer.controller.AccountListPanel.TypeTotal;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.AccountListPanel.TypeTotal;
 import org.homeunix.thecave.moss.util.Formatter;
 
 /**

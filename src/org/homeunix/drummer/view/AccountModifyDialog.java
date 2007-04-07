@@ -1,7 +1,7 @@
 /*
  * Created on May 14, 2006 by wyatt
  */
-package org.homeunix.drummer.controller;
+package org.homeunix.drummer.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -10,20 +10,19 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.GraphFrameLayout;
-import org.homeunix.drummer.view.ModifyDialogLayout;
-import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
-public class AccountModifyDialog extends ModifyDialogLayout<Account> {
+public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 	public static final long serialVersionUID = 0;
 
 	public AccountModifyDialog(){
-		super(MainBuddiFrame.getInstance());
+		super(MainFrame.getInstance());
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.STARTING_BALANCE));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.ACCOUNT_TYPE));
 		check.setVisible(false);
@@ -164,17 +163,17 @@ public class AccountModifyDialog extends ModifyDialogLayout<Account> {
 
 				AccountModifyDialog.this.closeWindow();
 				
-				MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+				MainFrame.getInstance().getAccountListPanel().updateContent();
 			}
 
 			TransactionsFrame.updateAllTransactionWindows();
-			ReportFrameLayout.updateAllReportWindows();
-			GraphFrameLayout.updateAllGraphWindows();
+			ReportFrame.updateAllReportWindows();
+			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			AccountModifyDialog.this.closeWindow();
 			
-			MainBuddiFrame.getInstance().getAccountListPanel().updateContent();
+			MainFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}
 }

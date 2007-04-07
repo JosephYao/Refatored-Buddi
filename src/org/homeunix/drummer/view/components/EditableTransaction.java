@@ -35,7 +35,7 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.TransactionsFrameLayout;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.gui.hint.JHintAutoCompleteTextField;
@@ -74,11 +74,11 @@ public class EditableTransaction extends JPanel {
 	private final DefaultComboBoxModel toModel;
 	private final DefaultComboBoxModel fromModel;
 
-	private TransactionsFrameLayout parent;
+	private TransactionsFrame parent;
 
 	private boolean changed;
 
-	public EditableTransaction(TransactionsFrameLayout parent){
+	public EditableTransaction(TransactionsFrame parent){
 		this.parent = parent;
 
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
@@ -176,6 +176,7 @@ public class EditableTransaction extends JPanel {
 		if (parent == null)
 			date.setVisible(false);
 
+		updateContent();
 		initActions();
 	}
 

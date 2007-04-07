@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.impl.ModelFactoryImpl;
@@ -66,68 +64,180 @@ public class DataInstance {
 
 	/**
 	 * Creates a new data instance.
+	 * 
+	 * We follow the following steps when deciding if we create a new
+	 * file or open an existing one:
+	 * 
+	 *  1) If the user wants to be prompted, prompt them.  If they hit 
+	 *  cancel here, exit.
+	 *  2) If there is a file in Preferences, try loading that one.
+	 *  3) If there is any problem with the above, prompt the user.
+	 *  4) If the user hits cancel from here, quit.
 	 */
 	private DataInstance(){
-		File dataFile = null;
+//		File dataFile = null;
+//
+//		//This option allows us to prompt for a new data file at startup every time
+//		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
+//			int i = PrefsInstance.getInstance().chooseNewOrExistingDataFile();
+//			if (i == 0){
+//				Log.info("User hit cancel when loading file.  Exiting.");
+//				System.exit(0);
+//			}
+//			else if (i == 1){
+//				new
+//			}
+//		}
+//		//If the data file is not null, we try to use it.
+//		else if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
+//			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+//
+//			//Does the file exist?
+//			if (!dataFile.exists()){
+//				PrefsInstance.getInstance().chooseNewOrExistingDataFile();
+//			}
+//			//Before we open the file, we check that we have read / write 
+//			// permission to it.  This is in response to bug #1626996. 
+//			else if (!dataFile.canWrite()){
+//				JOptionPane.showMessageDialog(
+//						null,
+//						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+//						Translate.getInstance().get(TranslateKeys.ERROR),
+//						JOptionPane.ERROR_MESSAGE);
+//				PrefsInstance.getInstance().chooseNewOrExistingDataFile();
+//			}
+//			else if (!dataFile.canRead()){
+//				JOptionPane.showMessageDialog(
+//						null,
+//						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+//						Translate.getInstance().get(TranslateKeys.ERROR),
+//						JOptionPane.ERROR_MESSAGE);
+//				PrefsInstance.getInstance().chooseNewOrExistingDataFile();
+//			}
+//			//If all looks well, we try to load the file.
+//			else {
+//				loadDataFile(dataFile);
+//			}
+//		}
+//		//If the data file was null, we need to have the user pick a different one.
+//		else {
+//			if (!PrefsInstance.getInstance().chooseNewOrExistingDataFile()){
+//				Log.info("User hit cancel when loading file.  Exiting.");
+//				System.exit(0);
+//			}
+//		}
+	}
 
-		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
-			promptForNewDataFile();
+	/**
+	 * Creates a new data file with all the default data, and saves
+	 * it in the given location.  This method does NOT check if the 
+	 * given file already exists; you MUST check this before passing
+	 * a file in, or else you may overwrite something else.
+	 * 
+	 * This method does NOT write the file to the Preferences.  The 
+	 * calling code should do that, and save the new location, if
+	 * desired.
+	 * 
+	 * @param locationFile The file to save to.  SHOULD not exist yet, 
+	 * although we do not check that here.
+	 */
+	public void newDataFile(File locationFile){
+		//If we are making a new file, we want to ask for encryption options again.
+		this.cipher = new AESCryptoCipher(128);
+
+		Accounts accounts = getDataModelFactory().createAccounts();
+		Transactions transactions = getDataModelFactory().createTransactions();
+		Categories categories = getDataModelFactory().createCategories();
+		Types types = getDataModelFactory().createTypes();
+
+		dataModel = getDataModelFactory().createDataModel();
+
+		dataModel.setAllAccounts(accounts);
+		dataModel.setAllTransactions(transactions);
+		dataModel.setAllCategories(categories);
+		dataModel.setAllTypes(types);
+
+		//Default starting categories
+		TranslateKeys[] expenseNames = {
+				TranslateKeys.AUTO, 
+				TranslateKeys.ENTERTAINMENT, 
+				TranslateKeys.HOUSEHOLD, 
+				TranslateKeys.GROCERIES, 
+				TranslateKeys.INVESTMENT_EXPENSES, 
+				TranslateKeys.MISC_EXPENSES, 
+				TranslateKeys.UTILITIES
+		};
+		TranslateKeys[] incomeNames = {
+				TranslateKeys.BONUS, 
+				TranslateKeys.SALARY, 
+				TranslateKeys.INVESTMENT_INCOME
+		};
+
+		for (TranslateKeys s : expenseNames){
+			Category c = getDataModelFactory().createCategory();
+			c.setName(s.toString());
+			c.setBudgetedAmount(0);
+			c.setIncome(false);
+			categories.getCategories().add(c);
+		}
+		for (TranslateKeys s : incomeNames){
+			Category c = getDataModelFactory().createCategory();
+			c.setName(s.toString());
+			c.setBudgetedAmount(0);
+			c.setIncome(true);
+			categories.getCategories().add(c);
 		}
 
-		if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
-			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+		//Default starting types - debit
+		TranslateKeys[] debitNames = {
+				TranslateKeys.CASH, 
+				TranslateKeys.SAVINGS,
+				TranslateKeys.CHEQUING,
+				TranslateKeys.INVESTMENT				
+		};
 
-			//Before we open the file, we check that we have read / write 
-			// permission to it.  This is in response to bug #1626996. 
-			while (!dataFile.canWrite() && dataFile.exists()){
-				JOptionPane.showMessageDialog(
-						null,
-						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
-						Translate.getInstance().get(TranslateKeys.ERROR),
-						JOptionPane.ERROR_MESSAGE);
-				promptForNewDataFile();
-				dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-			}
-			while (!dataFile.canRead() && dataFile.exists()){
-				JOptionPane.showMessageDialog(
-						null,
-						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
-						Translate.getInstance().get(TranslateKeys.ERROR),
-						JOptionPane.ERROR_MESSAGE);
-				promptForNewDataFile();
-				dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-			}
+		for (TranslateKeys s : debitNames){
+			Type t = dataModelFactory.createType();
+			t.setName(s.toString());
+			t.setCredit(false);
+			dataModel.getAllTypes().getTypes().add(t);
+//			addType(s.toString(), false);
+		}				
 
-			if (dataFile.exists()) {
-				try{
-//					String backupFileLocation = 
-//					PrefsInstance.getInstance().getPrefs().getDataFile()
-//					.replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
-//					+ " " + Formatter.getInstance().getFilenameDateFormat().format(new Date())
-//					+ Const.DATA_FILE_EXTENSION;
+		//Default starting types - credit
+		TranslateKeys[] creditNames = {
+				TranslateKeys.LIABILITY,
+				TranslateKeys.CREDIT_CARD,
+				TranslateKeys.PREPAID_ACCOUNT,
+				TranslateKeys.LINE_OF_CREDIT,
+				TranslateKeys.LOAN
+		};
 
-					//Use a rotating backup file, of form 'Data.X.buddi'  
-					// The one with the smallest number X is the most recent.
-					String fileBase = dataFile.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
-					for (int i = PrefsInstance.getInstance().getPrefs().getNumberOfBackups() - 2; i >= 0; i--){
-						File tempBackupDest = new File(fileBase + "." + (i + 1) + Const.DATA_FILE_EXTENSION);
-						File tempBackupSource = new File(fileBase + "." + i + Const.DATA_FILE_EXTENSION);
-						if (tempBackupSource.exists()){
-							FileFunctions.copyFile(tempBackupSource, tempBackupDest);
-							if (Const.DEVEL) Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
-						}
-					}
-					File tempBackupDest = new File(fileBase + ".0" + Const.DATA_FILE_EXTENSION);
-					FileFunctions.copyFile(dataFile, tempBackupDest);
-					if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
-				}
-				catch(IOException ioe){
-					Log.emergency("Failure when attempting to backup when starting program: " + ioe);
-				}
-			}
+		for (TranslateKeys s : creditNames){
+			Type t = dataModelFactory.createType();
+			t.setName(s.toString());
+			t.setCredit(true);
+			dataModel.getAllTypes().getTypes().add(t);
+		}				
+
+		ResourceSet resourceSet = new ResourceSetImpl();			
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+
+		URI fileURI = URI.createFileURI(locationFile.toString());
+		if (Const.DEVEL) Log.debug("Saving new file to " + locationFile.toString());
+		Resource resource = resourceSet.createResource(fileURI);			
+		resource.getContents().add(dataModel);
+
+		Map options = new HashMap(1);
+		options.put(Resource.OPTION_CIPHER, this.cipher);
+
+		try{
+			resource.save(options);
 		}
-
-		loadDataModel(dataFile, false);
+		catch (IOException ioe){
+			Log.warning(ioe);
+		}
 	}
 
 	/**
@@ -136,46 +246,51 @@ public class DataInstance {
 	 * @param forceNewFile If true, create a new data file at the given location (overwriting
 	 * the file currently there, if any).  If false, load the data file. 
 	 */
-	public void loadDataModel(File locationFile, boolean forceNewFile){
+	public void loadDataFile(File locationFile){
 		// throw away the old cipher (if any) when we load a new data file
 		this.cipher = new AESCryptoCipher(128);
 
-		if (!forceNewFile){
-			if (locationFile == null || !locationFile.getParentFile().exists()){
-				JOptionPane.showMessageDialog(
-						null,
-						Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
-						+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() ) 
-						+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
-						Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
-						JOptionPane.ERROR_MESSAGE);
+		//Check that the file is not null.  Assuming the File Chooser
+		// is working properly, this should never be null, but it's good 
+		// to check it...
+		if (locationFile == null 
+				|| !locationFile.exists()){
+			JOptionPane.showMessageDialog(
+					null,
+					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+					+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() ) 
+					+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
+					Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
-				String file = PrefsInstance.chooseDataFile();
-				if (file != null)
-					locationFile = new File(file);
-				else
-					locationFile = null;
+		//Backup the file...
+		try{
+			//Use a rotating backup file, of form 'Data.X.buddi'  
+			// The one with the smallest number X is the most recent.
+			String fileBase = locationFile.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+			for (int i = PrefsInstance.getInstance().getPrefs().getNumberOfBackups() - 2; i >= 0; i--){
+				File tempBackupDest = new File(fileBase + "." + (i + 1) + Const.DATA_FILE_EXTENSION);
+				File tempBackupSource = new File(fileBase + "." + i + Const.DATA_FILE_EXTENSION);
+				if (tempBackupSource.exists()){
+					FileFunctions.copyFile(tempBackupSource, tempBackupDest);
+					if (Const.DEVEL) Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+				}
 			}
-
-			if (locationFile == null){
-				Log.error("Failed to load a null file; exiting (DataInstance.loadDataFile())");
-				System.exit(0);
-			}
-
-			if (!locationFile.exists() && locationFile.getParentFile().exists()){
-				locationFile = new File(locationFile.getParent() + File.separator + Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
-			}
+			File tempBackupDest = new File(fileBase + ".0" + Const.DATA_FILE_EXTENSION);
+			FileFunctions.copyFile(locationFile, tempBackupDest);
+			if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
+		}
+		catch(IOException ioe){
+			Log.emergency("Failure when attempting to backup when starting program: " + ioe);
 		}
 
 		try{
-			if (forceNewFile){
-				throw new Exception();
-			}
-
 			// Create a resource set.
 			resourceSet = new ResourceSetImpl();
 
-			// Register the default resource factory -- only needed for stand-alone!
+			// Register the default resource factory
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 					Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 			resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
@@ -192,7 +307,7 @@ public class DataInstance {
 			// Print the contents of the resource to System.out.
 			EList contents = resource.getContents();
 			if (contents.size() > 0){
-				dataModel = (DataModel) contents.get(0);
+				this.dataModel = (DataModel) contents.get(0);
 			}
 
 			// Once we have this loaded, we need to do some sanity checks.
@@ -225,134 +340,25 @@ public class DataInstance {
 					saveDataModel();
 				}
 			}
+			
+			//Check that there are no scheduled transactions which should be happening...
+			checkForScheduledActions();		
 
-			//Save the location to the prefs file, in case we changed it.
-			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
-			PrefsInstance.getInstance().savePrefs();
+			//Make sure that this is updated when we load...
+			calculateAllBalances();
+
 		}
-		//If there is a problem opening the file, we will prompt to make a new one
+		//If there is a problem opening the file, we will pass control to 
+		// the New / Open dialog in PrefsInstance
 		catch (Exception e){
-			if (locationFile == null)
-				locationFile = new File(Const.DATA_DEFAULT_FILENAME + Const.DATA_FILE_EXTENSION);
-
-			PrefsInstance.getInstance().getPrefs().setDataFile(locationFile.getAbsolutePath());
-			PrefsInstance.getInstance().savePrefs();
-
-			if (forceNewFile || !locationFile.exists() || JOptionPane.showConfirmDialog(
+			JOptionPane.showMessageDialog(
 					null,
-					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
-					+ locationFile.getAbsolutePath()
-					+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_CORRUPTED),
-					Translate.getInstance().get(TranslateKeys.CREATE_NEW_DATA_FILE),
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
+					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+					+ e.getMessage(),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
 
-				//If we are making a new file, we want to ask for encryption options again.
-				this.cipher = new AESCryptoCipher(128);
-
-//				if (!locationFile.exists() && !forceNewFile){
-//				JOptionPane.showMessageDialog(
-//				null,
-//				Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE_MESSAGE)
-//				+ locationFile.getAbsolutePath(),
-//				Translate.getInstance().get(TranslateKeys.CREATED_NEW_DATA_FILE),
-//				JOptionPane.INFORMATION_MESSAGE
-//				);
-//				}
-
-				Accounts accounts = getDataModelFactory().createAccounts();
-				Transactions transactions = getDataModelFactory().createTransactions();
-				Categories categories = getDataModelFactory().createCategories();
-				Types types = getDataModelFactory().createTypes();
-
-				dataModel = getDataModelFactory().createDataModel();
-
-				dataModel.setAllAccounts(accounts);
-				dataModel.setAllTransactions(transactions);
-				dataModel.setAllCategories(categories);
-				dataModel.setAllTypes(types);
-
-				//Default starting categories
-				TranslateKeys[] expenseNames = {
-						TranslateKeys.AUTO, 
-						TranslateKeys.ENTERTAINMENT, 
-						TranslateKeys.HOUSEHOLD, 
-						TranslateKeys.GROCERIES, 
-						TranslateKeys.INVESTMENT_EXPENSES, 
-						TranslateKeys.MISC_EXPENSES, 
-						TranslateKeys.UTILITIES
-				};
-				TranslateKeys[] incomeNames = {
-						TranslateKeys.BONUS, 
-						TranslateKeys.SALARY, 
-						TranslateKeys.INVESTMENT_INCOME
-				};
-
-				for (TranslateKeys s : expenseNames){
-					Category c = getDataModelFactory().createCategory();
-					c.setName(s.toString());
-					c.setBudgetedAmount(0);
-					c.setIncome(false);
-					categories.getCategories().add(c);
-				}
-				for (TranslateKeys s : incomeNames){
-					Category c = getDataModelFactory().createCategory();
-					c.setName(s.toString());
-					c.setBudgetedAmount(0);
-					c.setIncome(true);
-					categories.getCategories().add(c);
-				}
-
-				//Default starting types - debit
-				TranslateKeys[] debitNames = {
-						TranslateKeys.CASH, 
-						TranslateKeys.SAVINGS,
-						TranslateKeys.CHEQUING,
-						TranslateKeys.INVESTMENT				
-				};
-
-				for (TranslateKeys s : debitNames){
-					addType(s.toString(), false);
-				}				
-
-				//Default starting types - credit
-				TranslateKeys[] creditNames = {
-						TranslateKeys.LIABILITY,
-						TranslateKeys.CREDIT_CARD,
-						TranslateKeys.PREPAID_ACCOUNT,
-						TranslateKeys.LINE_OF_CREDIT,
-						TranslateKeys.LOAN
-				};
-
-				for (TranslateKeys s : creditNames){
-					addType(s.toString(), true);
-				}				
-
-				ResourceSet resourceSet = new ResourceSetImpl();			
-				resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-						Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
-
-				URI fileURI = URI.createFileURI(locationFile.toString());
-				if (Const.DEVEL) Log.debug("Saving new file to " + locationFile.toString());
-				Resource resource = resourceSet.createResource(fileURI);			
-				resource.getContents().add(dataModel);
-
-				Map options = new HashMap(1);
-				options.put(Resource.OPTION_CIPHER, this.cipher);
-
-				try{
-					resource.save(options);
-				}
-				catch (IOException ioe){}
-			}
-			else{
-				JOptionPane.showMessageDialog(
-						null, 
-						Translate.getInstance().get(TranslateKeys.CANNOT_READ_FILE),
-						Translate.getInstance().get(TranslateKeys.EXITING_PROGRAM),
-						JOptionPane.ERROR_MESSAGE);
-				System.exit(0);
-			}
+//			PrefsInstance.getInstance().chooseNewOrExistingDataFile();
 		}
 	}
 
@@ -457,13 +463,13 @@ public class DataInstance {
 	 * @param name The user-readable name (or the translation key, if it is a translated term)
 	 * @param credit Is this a Credit type? 
 	 */
-	public void addType(String name, boolean credit){
-		Type t = getDataModelFactory().createType();
-		t.setName(name);
-		t.setCredit(credit);
-		getDataModel().getAllTypes().getTypes().add(t);
-		saveDataModel();
-	}
+//	public void addType(String name, boolean credit){
+//		Type t = getDataModelFactory().createType();
+//		t.setName(name);
+//		t.setCredit(credit);
+//		getDataModel().getAllTypes().getTypes().add(t);
+//		saveDataModel();
+//	}
 
 	/**
 	 * Do not call this method unless you know what you are doing!  If you
@@ -759,7 +765,7 @@ public class DataInstance {
 		return v;
 	}
 
-	
+
 	/**
 	 * Adds a new schedule to the model.  Since there are a number of fields
 	 * which MUST be set, we prompt for all of them, instead of relying on the
@@ -837,45 +843,232 @@ public class DataInstance {
 
 		return newV;
 	}
+
+//	/**
+//	* Prompts the user for a new data file.  Should probably not be in 
+//	* this class (fits more in the view package), but since we can
+//	* only call it from here, and we want it to be private, it will
+//	* have to do. 
+//	*/
+//	private void promptForNewDataFile(){
+//	final JFileChooser jfc = new JFileChooser();
+//	jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//	jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+//	jfc.setFileHidingEnabled(true);
+//	jfc.setFileFilter(new FileFilter(){
+//	public boolean accept(File arg0) {
+//	if (arg0.isDirectory() 
+//	|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
+//	return true;
+//	else
+//	return false;
+//	}
+
+//	public String getDescription() {
+//	return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+//	}
+//	});
+//	jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
+//	if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
+//	if (jfc.getSelectedFile().isDirectory()){
+//	if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
+//	}
+//	else{
+//	if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
+//	PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
+//	PrefsInstance.getInstance().savePrefs();
+//	}
+//	}
+//	else {
+//	Log.warning("You clicked cancel.  Exiting.");
+//	System.exit(1);
+//	}
+//	}
 	
 	/**
-	 * Prompts the user for a new data file.  Should probably not be in 
-	 * this class (fits more in the view package), but since we can
-	 * only call it from here, and we want it to be private, it will
-	 * have to do. 
+	 * Runs through the list of scheduled transactions, and adds any which
+	 * show be executed to the apropriate transacactions list.
++ 	 * Checks for the frequency type and based on it finds if a transaction is scheduled for a date
++ 	 * that has gone past.
 	 */
-	private void promptForNewDataFile(){
-		final JFileChooser jfc = new JFileChooser();
-		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-		jfc.setFileHidingEnabled(true);
-		jfc.setFileFilter(new FileFilter(){
-			public boolean accept(File arg0) {
-				if (arg0.isDirectory() 
-						|| arg0.getName().endsWith(Const.DATA_FILE_EXTENSION))
-					return true;
-				else
-					return false;
+	public void checkForScheduledActions(){
+		//Update any scheduled transactions
+		final Date today = DateUtil.getEndOfDay(new Date());
+		//We specify a GregorianCalendar because we make some assumptions
+		// about numbering of months, etc that may break if we 
+		// use the default calendar for the locale.  It's not the
+		// prettiest code, but it works.  Perhaps we can change
+		// it to be cleaner later on...
+		final GregorianCalendar tempCal = new GregorianCalendar();
+
+		for (Schedule s : DataInstance.getInstance().getScheduledTransactionsBeforeToday()) {
+			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
+
+			Date tempDate = s.getLastDateCreated();
+
+			//Temp date is where we will start looping from.  If it is
+			// null, we need to init it to a sane value.
+			if (tempDate == null)
+				tempDate = s.getStartDate();
+
+			//We start one day after the last day, to avoid repeats.  See 
+			// bug #1641937 for more details.
+			tempDate = DateUtil.getNextDay(tempDate);
+			Date lastDayCreated = (Date) tempDate.clone();
+
+			tempDate = DateUtil.getStartOfDay(tempDate);
+
+			if (Const.DEVEL){
+				Log.debug("tempDate = " + tempDate);
+				Log.debug("startDate = " + s.getStartDate());
 			}
 
-			public String getDescription() {
-				return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+			//The transaction is scheduled for a date before today and before the EndDate 
+			while (tempDate.before(today)) {
+				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
+
+				//We use a Calendar instead of a Date object for comparisons
+				// because the Calendar interface is much nicer.
+				tempCal.setTime(tempDate);
+
+				boolean todayIsTheDay = false;
+
+				//We check each type of schedule, and if it matches,
+				// we set todayIsTheDay to true.  We could do it 
+				// all in one huge if statement, but that is very
+				// hard to read and maintain.
+
+				//If we are using the Monthly by Date frequency, 
+				// we only check if the given day is equal to the
+				// scheduled day.
+				if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					todayIsTheDay = true;
+				}
+				//If we are using the Monthly by Day of Week,
+				// we check if the given day (Sunday, Monday, etc) is equal to the
+				// scheduleDay, and if the given day is within the first week.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						&& tempCal.get(Calendar.DAY_OF_MONTH) <= 7){
+					todayIsTheDay = true;
+				}
+				//If we are using Weekly frequency, we only need to compare
+				// the number of the day.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					todayIsTheDay = true;
+				}
+				//If we are using BiWeekly frequency, we need to compare
+				// the number of the day as well as ensure that there is one
+				// week between each scheduled transaction.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(TranslateKeys.BIWEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						&& (DateUtil.daysBetween(lastDayCreated, tempDate) > 13)){
+					todayIsTheDay = true;
+					lastDayCreated = (Date) tempDate.clone();
+				}
+				//Every day - it's obvious enough even for a monkey!
+				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_DAY.toString())){
+					todayIsTheDay = true;
+				}
+				//Every weekday - all days but Saturday and Sunday.
+				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_WEEKDAY.toString())
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) < Calendar.SATURDAY)
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) > Calendar.SUNDAY)){
+					todayIsTheDay = true;
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do out bit bashing to determine
+				// if the week is correct.
+				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					if (Const.DEVEL) {
+						Log.debug("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
+						Log.debug("s.getScheduleWeek() == " + s.getScheduleWeek());
+					}
+					int week = s.getScheduleWeek();
+					//The week mask should return 1 for the first week (day 1 - 7), 
+					// 2 for the second week (day 8 - 14), 4 for the third week (day 15 - 21),
+					// and 8 for the fourth week (day 22 - 28).  We then AND it with 
+					// the scheduleWeek to determine if this week matches the criteria
+					// or not.
+					int weekNumber = tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1;
+					int weekMask = (int) Math.pow(2, weekNumber);
+					if (Const.DEVEL){
+						Log.debug("The week number is " + weekNumber + ", the week mask is " + weekMask + ", and the day of week in month is " + tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+					}
+					if ((week & weekMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						todayIsTheDay = true;
+					}
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do out bit bashing to determine
+				// if the month is correct.
+				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					int months = s.getScheduleMonth();
+					//The month mask should be 2 ^ MONTH NUMBER,
+					// where January == 0.
+					// i.e. 1 for January, 4 for March, 2048 for December.
+					int monthMask = (int) Math.pow(2, tempCal.get(Calendar.MONTH));
+					if ((months & monthMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						todayIsTheDay = true;
+					}
+				}
+
+				//If one of the above rules matches, we will copy the
+				// scheduled transaction into the transactions list
+				// at the given day.
+				if (todayIsTheDay){
+					if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
+					s.setLastDateCreated(DateUtil.getEndOfDay(tempDate));
+					if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDateCreated());
+
+					if (s.getMessage() != null && s.getMessage().length() > 0){
+						JOptionPane.showMessageDialog(
+								null, 
+								s.getMessage(), 
+								Translate.getInstance().get(TranslateKeys.SCHEDULED_MESSAGE), 
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+
+					if (s.getDate() != null
+							&& s.getDescription() != null) {
+						Transaction t = DataInstance.getInstance().getDataModelFactory().createTransaction();
+
+						t.setDate(tempDate);
+						t.setDescription(s.getDescription());
+						t.setAmount(s.getAmount());
+						t.setTo(s.getTo());
+						t.setFrom(s.getFrom());
+						t.setMemo(s.getMemo());
+						t.setNumber(s.getNumber());
+						t.setScheduled(true);
+
+						DataInstance.getInstance().addTransaction(t);
+						if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+					}
+					//We need to save to store the lastCreatedDate; however,
+					// if we did not create a new transaction, we must
+					// manually trigger the save.
+					else {
+						DataInstance.getInstance().saveDataModel();
+					}
+				}
+
+				tempDate = DateUtil.getNextDay(tempDate);
 			}
-		});
-		jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_TITLE));
-		if (jfc.showOpenDialog(MainBuddiFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-			if (jfc.getSelectedFile().isDirectory()){
-				if (Const.DEVEL) Log.debug(Translate.getInstance().get(TranslateKeys.MUST_SELECT_BUDDI_FILE));
-			}
-			else{
-				if (Const.DEVEL) Log.debug("Loading file " + jfc.getSelectedFile().getAbsolutePath());
-				PrefsInstance.getInstance().getPrefs().setDataFile(jfc.getSelectedFile().getAbsolutePath());
-				PrefsInstance.getInstance().savePrefs();
-			}
-		}
-		else {
-			Log.warning("You clicked cancel.  Exiting.");
-			System.exit(1);
 		}
 	}
 }

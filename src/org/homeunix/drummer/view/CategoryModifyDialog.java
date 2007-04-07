@@ -1,26 +1,25 @@
 /*
  * Created on May 14, 2006 by wyatt
  */
-package org.homeunix.drummer.controller;
+package org.homeunix.drummer.view;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
-import org.homeunix.drummer.view.GraphFrameLayout;
-import org.homeunix.drummer.view.ModifyDialogLayout;
-import org.homeunix.drummer.view.ReportFrameLayout;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.util.Log;
 
-public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
+public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 	public static final long serialVersionUID = 0;
 
 	public CategoryModifyDialog(){
-		super(MainBuddiFrame.getInstance());
+		super(MainFrame.getInstance());
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGETED_AMOUNT));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.PARENT_CATEGORY));
 
@@ -156,17 +155,17 @@ public class CategoryModifyDialog extends ModifyDialogLayout<Category> {
 
 				CategoryModifyDialog.this.closeWindow();
 				
-				MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
+				MainFrame.getInstance().getCategoryListPanel().updateContent();
 			}
 
 			TransactionsFrame.updateAllTransactionWindows();
-			ReportFrameLayout.updateAllReportWindows();
-			GraphFrameLayout.updateAllGraphWindows();
+			ReportFrame.updateAllReportWindows();
+			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			CategoryModifyDialog.this.closeWindow();
 			
-			MainBuddiFrame.getInstance().getCategoryListPanel().updateContent();
+			MainFrame.getInstance().getCategoryListPanel().updateContent();
 		}
 		else if (e.getSource().equals(pulldown)){
 			if (pulldown.getSelectedItem() instanceof Category){

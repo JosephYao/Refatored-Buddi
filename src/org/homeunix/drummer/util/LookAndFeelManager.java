@@ -13,7 +13,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.MainBuddiFrame;
+import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -98,7 +98,7 @@ public final class LookAndFeelManager {
 		}
 				
 		// refresh the frame
-		SwingUtilities.updateComponentTreeUI(MainBuddiFrame.getInstance());
+		SwingUtilities.updateComponentTreeUI(MainFrame.getInstance());
 	}
 	
 	private boolean setLookAndFeel0(String className) {
