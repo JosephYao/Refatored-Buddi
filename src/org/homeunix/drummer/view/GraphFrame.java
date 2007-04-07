@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +33,7 @@ import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
-public class GraphFrame extends AbstractBuddiFrame {
+public class GraphFrame extends AbstractBuddiFrame implements HTMLExport {
 	public static final long serialVersionUID = 0;
 
 	private static final Vector<GraphFrame> graphFrameInstances = new Vector<GraphFrame>();
@@ -248,4 +250,10 @@ public class GraphFrame extends AbstractBuddiFrame {
 		}
 	}
 
+	public File exportToHTML() throws IOException {
+		if (graphPlugin.getHTML() == null)
+			return null;
+		
+		return HTMLExportHelper.createHTML("graph", graphPlugin.getHTML());
+	}
 }
