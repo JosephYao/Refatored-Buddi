@@ -218,7 +218,7 @@ public class AccountListPanel extends AbstractListPanel {
 			if (getSelectedAccount() != null){
 				long start = System.currentTimeMillis();
 
-				TransactionsFrame tf = TransactionsFrame.getPreloader().getTransactionsFrame(getSelectedAccount());
+				TransactionsFrame tf = TransactionsFrame.getPreloader().get(getSelectedAccount());
 				
 				if (tf != null){
 					tf.setVisible(true);

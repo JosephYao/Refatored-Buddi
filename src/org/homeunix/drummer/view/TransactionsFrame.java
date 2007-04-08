@@ -13,10 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -35,7 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.WindowPreLoader;
+import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelFactory;
@@ -59,8 +56,8 @@ import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
-	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
-	private static WindowPreLoader preloader = null;
+//	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
+	private static TransactionsFramePreLoader preloader = null;
 	
 	private final JList list;
 	private final JScrollPane listScroller;
@@ -115,7 +112,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //		if (transactionInstances.get(account) != null)
 //			transactionInstances.get(account).setVisible(false);
 
-		transactionInstances.put(account, this);
+//		transactionInstances.put(account, this);
 
 		filterComboBox = new JComboBox();
 		creditRemaining = new JLabel();
@@ -489,7 +486,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 * windows as well as save the data model, do misc. housecleaning, etc.
 	 */
 	public static void updateAllTransactionWindows(){
-		for (TransactionsFrame tf : Collections.unmodifiableCollection(transactionInstances.values())) {
+		for (TransactionsFrame tf : getPreloader().getAll()) {
 			if (tf != null)
 				tf.updateContent();
 		}
@@ -602,7 +599,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 	public static void reloadModel(){
 		baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
-		preloader = new WindowPreLoader();
+		preloader = new TransactionsFramePreLoader();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -753,9 +750,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		return this;
 	}
 	
-	public static WindowPreLoader getPreloader(){
+	public static TransactionsFramePreLoader getPreloader(){
 		if (preloader == null) 
-			preloader = new WindowPreLoader();
+			preloader = new TransactionsFramePreLoader();
 		return preloader;
 	}
 }
