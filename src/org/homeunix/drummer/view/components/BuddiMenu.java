@@ -158,13 +158,13 @@ public class BuddiMenu extends JScreenMenuBar {
 		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_CLEARED));
 		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
 		//The following items are only on the main buddi screen. 
-		final JScreenMenuItem newAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_CATEGORY));
-		final JScreenMenuItem editAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_CATEGORY));
-		final JScreenMenuItem deleteAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE_CATEGORY));
+//		final JScreenMenuItem newAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_CATEGORY));
+//		final JScreenMenuItem editAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_CATEGORY));
+//		final JScreenMenuItem deleteAccount = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE_CATEGORY));
 		//The following items are only on the transactions screen.
 		final JScreenMenuItem clearTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLEAR) + " / " + Translate.getInstance().get(TranslateKeys.NEW));
 		final JScreenMenuItem recordTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RECORD) + " / " + Translate.getInstance().get(TranslateKeys.UPDATE));
-		final JScreenMenuItem deleteTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE));
+//		final JScreenMenuItem deleteTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DELETE));
 
 //		cut.addUserFrame(TransactionsFrame.class);
 //		copy.addUserFrame(TransactionsFrame.class);
@@ -173,12 +173,12 @@ public class BuddiMenu extends JScreenMenuBar {
 		toggleCleared.addUserFrame(TransactionsFrame.class);
 		editAutomaticTransactions.addUserFrame(MainFrame.class);
 		editAutomaticTransactions.addUserFrame(TransactionsFrame.class);
-		newAccount.addUserFrame(MainFrame.class);
-		editAccount.addUserFrame(MainFrame.class);
-		deleteAccount.addUserFrame(MainFrame.class);
+//		newAccount.addUserFrame(MainFrame.class);
+//		editAccount.addUserFrame(MainFrame.class);
+//		deleteAccount.addUserFrame(MainFrame.class);
 		clearTransaction.addUserFrame(TransactionsFrame.class);
 		recordTransaction.addUserFrame(TransactionsFrame.class);
-		deleteTransaction.addUserFrame(TransactionsFrame.class);
+//		deleteTransaction.addUserFrame(TransactionsFrame.class);
 
 //		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
 //		Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -190,18 +190,18 @@ public class BuddiMenu extends JScreenMenuBar {
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		toggleCleared.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		newAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		editAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		deleteAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		newAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		editAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		deleteAccount.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		clearTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		recordTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		deleteTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
-				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//		deleteTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,
+//				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 
 //		edit.add(cut);
@@ -433,23 +433,23 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
-		newAccount.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickNew();
-			}
-		});
-
-		editAccount.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickEdit();
-			}
-		});
-
-		deleteAccount.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickDelete();
-			}
-		});
+//		newAccount.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickNew();
+//			}
+//		});
+//
+//		editAccount.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickEdit();
+//			}
+//		});
+//
+//		deleteAccount.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				((MainFrame) BuddiMenu.this.frame).getCategoryListPanel().clickDelete();
+//			}
+//		});
 
 		clearTransaction.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -463,11 +463,11 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
-		deleteTransaction.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				((TransactionsFrame) BuddiMenu.this.frame).clickDelete();
-			}
-		});
+//		deleteTransaction.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				((TransactionsFrame) BuddiMenu.this.frame).clickDelete();
+//			}
+//		});
 
 
 		toggleCleared.addActionListener(new ActionListener(){

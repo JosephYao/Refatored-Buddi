@@ -5,7 +5,6 @@ package org.homeunix.drummer.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -24,9 +23,9 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
 public class CategoryListPanel extends AbstractListPanel {
@@ -35,56 +34,14 @@ public class CategoryListPanel extends AbstractListPanel {
 	public CategoryListPanel(){
 		super();
 
-		openButton.setVisible(false);
+
 	}
 
-	protected AbstractPanel initActions(){
-		super.initActions();
+	@Override
+	public StandardContainer init() {
+		super.init();
 
-		newButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				tree.clearSelection();
-				new CategoryModifyDialog().clear().openWindow();
-			}
-		});
-
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (getSelectedCategory() != null)
-					new CategoryModifyDialog().loadSource(getSelectedCategory()).openWindow();
-			}
-		});
-
-		deleteButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (getSelectedCategory() != null) {
-					Category c = getSelectedCategory();
-
-					if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
-
-						//If there are no transactions using this source, ask if user wants to permanently delete source
-						boolean notPermanent = TransactionController.getTransactions(c).size() > 0
-						|| ScheduleController.getScheduledTransactions(c).size() > 0
-						|| c.getChildren().size() > 0
-						|| JOptionPane.showConfirmDialog(
-								CategoryListPanel.this,
-								Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_CATEGORY),
-								Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_CATEGORY),
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
-
-						CategoryListPanelController.deleteCategory(notPermanent, c);
-					}
-					else{
-						CategoryListPanelController.undeleteCategory(c);
-					}
-
-					//We always want to update everything.  It's the cool thing to do.
-					CategoryListPanel.this.updateContent();
-					CategoryListPanel.this.updateButtons();
-				}
-			}
-		});
+		openButton.setVisible(false);
 
 		tree.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
@@ -98,13 +55,7 @@ public class CategoryListPanel extends AbstractListPanel {
 		return this;
 	}
 
-	protected AbstractPanel initContent(){
-		DataInstance.getInstance().calculateAllBalances();
-
-		return this;
-	}
-
-	public AbstractPanel updateContent(){
+	public AbstractBuddiPanel updateContent(){
 		long expenses = 0;
 		long income = 0;
 
@@ -191,18 +142,57 @@ public class CategoryListPanel extends AbstractListPanel {
 			return null;
 	}
 
-	@Override
-	protected int getTableNumber() {
-		return 1;
-	}
+//	@Override
+//	protected int getTableNumber() {
+//		return 1;
+//	}
 
-	public void clickNew(){
-		newButton.doClick();
-	}
-	public void clickEdit(){
-		editButton.doClick();
-	}
-	public void clickDelete(){
-		deleteButton.doClick();
+//	public void clickNew(){
+//		newButton.doClick();
+//	}
+//	public void clickEdit(){
+//		editButton.doClick();
+//	}
+//	public void clickDelete(){
+//		deleteButton.doClick();
+//	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(newButton)){
+			tree.clearSelection();
+			new CategoryModifyDialog().clear().openWindow();
+		}
+		else if (e.getSource().equals(editButton)){
+			if (getSelectedCategory() != null)
+				new CategoryModifyDialog().loadSource(getSelectedCategory()).openWindow();
+		}
+		else if (e.getSource().equals(deleteButton)){
+			if (getSelectedCategory() != null) {
+				Category c = getSelectedCategory();
+
+				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
+
+					//If there are no transactions using this source, ask if user wants to permanently delete source
+					boolean notPermanent = TransactionController.getTransactions(c).size() > 0
+					|| ScheduleController.getScheduledTransactions(c).size() > 0
+					|| c.getChildren().size() > 0
+					|| JOptionPane.showConfirmDialog(
+							CategoryListPanel.this,
+							Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_CATEGORY),
+							Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_CATEGORY),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
+
+					CategoryListPanelController.deleteCategory(notPermanent, c);
+				}
+				else{
+					CategoryListPanelController.undeleteCategory(c);
+				}
+
+				//We always want to update everything.  It's the cool thing to do.
+				this.updateContent();
+				this.updateButtons();
+			}
+		}
 	}
 }

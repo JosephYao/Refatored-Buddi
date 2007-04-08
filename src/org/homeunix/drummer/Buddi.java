@@ -28,6 +28,7 @@ import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.components.BuddiMenu;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -109,8 +110,7 @@ public class Buddi {
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new BuddiMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
-		
-		
+				
 		//Load the data model.  Depending on different options and 
 		// user choices, this may be a new one, or load an existing one.
 		File dataFile = null;
@@ -169,11 +169,15 @@ public class Buddi {
 		startVersionCheck();
 		startUpdateCheck();
 
+		//Open the main window at the saved location
 		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
 		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
 		Point point = new Point(wa.getX(), wa.getY());
 
 		MainFrame.getInstance().openWindow(dim, point);
+		
+		//We do this to force WindowPreLoader to start working...
+		TransactionsFrame.getPreloader();
 	}
 
 	/**

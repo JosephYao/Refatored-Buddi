@@ -4,11 +4,14 @@
 package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 
 /**
  * @author wyatt
@@ -16,15 +19,17 @@ import javax.swing.JPanel;
  * The layout which ReportsPanel and GraphsPanel extend from.
  * 
  */
-public abstract class AbstractInfomationPanel extends JPanel {
+public abstract class AbstractInfomationPanel extends AbstractBuddiPanel {
 	public static final long serialVersionUID = 0;
 	protected final JPanel pluginsPanel;
 	
-	
-	protected AbstractInfomationPanel(){		
+	public AbstractInfomationPanel(){		
 		pluginsPanel = new JPanel();
+	}
+	
+	public StandardContainer init() {
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
-				
+		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 17, 7, 17));
@@ -34,5 +39,17 @@ public abstract class AbstractInfomationPanel extends JPanel {
 						
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);				
-	}	
+
+		return this;
+	}
+	
+	public void actionPerformed(ActionEvent e) {}
+	
+	public StandardContainer updateButtons() {
+		return this;
+	}
+	
+	public StandardContainer updateContent() {
+		return this;
+	}
 }

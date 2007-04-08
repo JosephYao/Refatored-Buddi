@@ -24,7 +24,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -92,7 +92,7 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 		}
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		return this;
 	}
 	

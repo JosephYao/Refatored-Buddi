@@ -34,7 +34,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -57,6 +57,11 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
 		graphPanel = new GraphPanel();
+
+		accountListPanel.open();
+		categoryListPanel.open();
+		reportPanel.open();
+		graphPanel.open();
 		
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
 		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_BUDGET), categoryListPanel);
@@ -222,7 +227,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		}
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		return this;
 	}
 	

@@ -35,6 +35,7 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.controller.WindowPreLoader;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelFactory;
@@ -48,7 +49,7 @@ import org.homeunix.thecave.moss.gui.JSearchField;
 import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEvent;
 import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEventListener;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -59,6 +60,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
 	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
+	private static WindowPreLoader preloader = null;
 	
 	private final JList list;
 	private final JScrollPane listScroller;
@@ -110,8 +112,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public TransactionsFrame(Account account){
 		this.account = account;
 
-		if (transactionInstances.get(account) != null)
-			transactionInstances.get(account).setVisible(false);
+//		if (transactionInstances.get(account) != null)
+//			transactionInstances.get(account).setVisible(false);
 
 		transactionInstances.put(account, this);
 
@@ -258,7 +260,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	}
 
 	@Override
-	public StandardContainer initPostPack() {
+	public StandardWindow initPostPack() {
 		Transaction prototype = ModelFactory.eINSTANCE.createTransaction();
 		prototype.setDate(new Date());
 		prototype.setDescription("Description");
@@ -410,9 +412,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 		PrefsInstance.getInstance().savePrefs();
 
-		transactionInstances.put(account, null);
+//		transactionInstances.put(account, null);
 
-		return super.closeWindow();
+//		return super.closeWindow();
+		
+		this.setVisible(false);
+		
+		return this;
 	}
 
 	public AbstractFrame updateContent(){
@@ -467,7 +473,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	}
 
 	@Override
-	public AbstractFrame openWindow() {
+	public StandardWindow openWindow() {
 		editableTransaction.resetSelection();
 		return super.openWindow();
 	}
@@ -594,6 +600,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		baseModel.update(t, fdlm);
 	}
 
+	public static void reloadModel(){
+		baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+		preloader = new WindowPreLoader();
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(recordButton)){
 			if (!TransactionController.isRecordValid(
@@ -668,8 +679,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			updateAllTransactionWindows();
 //			ReportFrame.updateAllReportWindows();
 //			GraphFrame.updateAllGraphWindows();
-			MainFrame.getInstance().getAccountListPanel().updateContent();
-			MainFrame.getInstance().getCategoryListPanel().updateContent();
+//			MainFrame.getInstance().getAccountListPanel().updateContent();
+//			MainFrame.getInstance().getCategoryListPanel().updateContent();
 
 			list.setSelectedValue(t, true);
 
@@ -738,7 +749,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		}
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		return this;
+	}
+	
+	public static WindowPreLoader getPreloader(){
+		if (preloader == null) 
+			preloader = new WindowPreLoader();
+		return preloader;
 	}
 }

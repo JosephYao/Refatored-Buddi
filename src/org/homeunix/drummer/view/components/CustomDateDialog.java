@@ -28,7 +28,7 @@ import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBuddiDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -165,7 +165,7 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 	}
 
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -218,10 +218,10 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 
 	public void actionPerformed(ActionEvent e) {
 	}
-	public StandardContainer updateButtons() {
+	public StandardWindow updateButtons() {
 		return null;
 	}
-	public StandardContainer updateContent() {
+	public StandardWindow updateContent() {
 		return null;
 	}
 }

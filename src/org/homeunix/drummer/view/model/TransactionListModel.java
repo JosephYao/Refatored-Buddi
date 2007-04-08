@@ -38,7 +38,7 @@ import de.schlichtherle.swing.filter.ListElementFilter;
 public class TransactionListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;
 	
-	private final EList transactions;
+	private EList transactions;
 	
 	/**
 	 * Create a new TransactionListModel object, using a given set of transactions for the data.
@@ -47,6 +47,15 @@ public class TransactionListModel extends AbstractListModel {
 	public TransactionListModel(EList transactions){
 		this.transactions = transactions;
 		ECollections.sort(this.transactions);
+	}
+	
+	/**
+	 * Re-loads the model with new values.  Should only need to be 
+	 * called after a new data model is loaded.
+	 * @param transactions
+	 */
+	public void loadModel(EList transactions){
+		this.transactions = transactions;
 	}
 	
 	//*** Abstract List Model methods

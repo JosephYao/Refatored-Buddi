@@ -30,12 +30,13 @@ import org.homeunix.drummer.view.components.DefaultTreeCellRenderer;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
 import org.homeunix.drummer.view.components.SourceNameCellRenderer;
 import org.homeunix.drummer.view.model.SourceTreeTableModel;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public abstract class AbstractListPanel extends AbstractPanel {
+public abstract class AbstractListPanel extends AbstractBuddiPanel {
 	public static final long serialVersionUID = 0;
 
 	protected final JXTreeTable tree;
@@ -43,7 +44,6 @@ public abstract class AbstractListPanel extends AbstractPanel {
 	protected final JButton editButton;
 	protected final JButton deleteButton;
 	protected final JButton openButton;
-//	protected final JPanel openButtonPanel;
 	protected final JLabel balanceLabel;
 
 	protected final SourceTreeTableModel treeModel;
@@ -57,29 +57,31 @@ public abstract class AbstractListPanel extends AbstractPanel {
 	public AbstractListPanel(){
 		treeModel = new SourceTreeTableModel();
 		tree = new JXTreeTable(treeModel);
-		tree.setRootVisible(false);
-		tree.setShowsRootHandles(true);
-		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
-		
-		tree.setTreeCellRenderer(new DefaultTreeCellRenderer());
-		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
-		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
-		
-		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-				
-		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
-		
-//		tree.getColumn(1).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 1));
-//		tree.getColumn(2).setPreferredWidth(PrefsInstance.getInstance().getColumnWidth(getTableNumber(), 2));
-//		tree.packAll();
-		
-		JScrollPane listScroller = new JScrollPane(tree);
 
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
 		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
 		openButton = new JButton(Translate.getInstance().get(TranslateKeys.OPEN));
 		balanceLabel = new JLabel();
+	}
+
+	public StandardContainer init() {
+		
+		newButton.addActionListener(this);
+		editButton.addActionListener(this);
+		deleteButton.addActionListener(this);
+		openButton.addActionListener(this);
+		
+		tree.setRootVisible(false);
+		tree.setShowsRootHandles(true);
+		tree.setAutoResizeMode(JXTreeTable.AUTO_RESIZE_LAST_COLUMN);
+		tree.setTreeCellRenderer(new DefaultTreeCellRenderer());
+		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
+		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
+		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
+		
+		JScrollPane listScroller = new JScrollPane(tree);
 
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		balanceLabelPanel.add(balanceLabel);
@@ -102,51 +104,27 @@ public abstract class AbstractListPanel extends AbstractPanel {
 		buttonPanelLeft.add(editButton);
 		buttonPanelLeft.add(deleteButton);
 
-//		openButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-//		openButtonPanel.add(openButton);
-
 		JPanel buttonPanel = new JPanel(new BorderLayout());
 		buttonPanel.add(buttonPanelRight, BorderLayout.EAST);
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
-
-//		JPanel mainBorderPanel = new JPanel();
-//		mainBorderPanel.setLayout(new BorderLayout());
-//		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-//		mainBorderPanel.add(listScrollerPanel, BorderLayout.CENTER);
-//		mainBorderPanel.add(buttonPanel, BorderLayout.SOUTH);
-//
-//		mainPanel.add(mainBorderPanel, BorderLayout.CENTER);
-//		mainPanel.add(openButtonPanel, BorderLayout.SOUTH);
-//		mainPanel.add(balanceLabelPanel, BorderLayout.NORTH);
 		mainPanel.add(listScrollerPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		if (OperatingSystemUtil.isMac()){
-//			tree.putClientProperty("Quaqua.Table.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			listScroller.putClientProperty("Quaqua.Component.visualMargin", new Insets(7,12,3,12));
-//			balanceLabel.putClientProperty("Quaqua.Component.style", "mini");
 		}
 
-		//this.setDefaultButton(openButton);
 		this.setPreferredSize(new Dimension(450, 300));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
-		this.setVisible(true);
+//		this.setVisible(true);
 
-		//Call the method to add actions to the buttons
-		initActions();
-		updateContent();
-		updateButtons();
-	}
-
-	@Override
-	protected AbstractPanel initActions() {
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
@@ -202,28 +180,10 @@ public abstract class AbstractListPanel extends AbstractPanel {
 			}
 		});
 		
-//		tree.getColumn(1).addPropertyChangeListener(new PropertyChangeListener(){
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				if (evt.getPropertyName().equals("preferredWidth") && evt.getNewValue() instanceof Integer){
-//					PrefsInstance.getInstance().setColumnWidth(getTableNumber(), 1, (Integer) evt.getNewValue());
-//					PrefsInstance.getInstance().savePrefs();
-//				}
-//			}
-//		});
-//		
-//		tree.getColumn(2).addPropertyChangeListener(new PropertyChangeListener(){
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				if (evt.getPropertyName().equals("preferredWidth") && evt.getNewValue() instanceof Integer){
-//					PrefsInstance.getInstance().setColumnWidth(getTableNumber(), 2, (Integer) evt.getNewValue());
-//					PrefsInstance.getInstance().savePrefs();
-//				}
-//			}
-//		});
-		
 		return this;
 	}
-
-	public AbstractPanel updateButtons(){
+	
+	public AbstractBuddiPanel updateButtons(){
 		if (selectedSource == null){
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
@@ -243,8 +203,7 @@ public abstract class AbstractListPanel extends AbstractPanel {
 		return this;
 	}
 	
-	@Override
-	public AbstractPanel updateContent() {
+	public AbstractBuddiPanel updateContent() {
 		tree.packAll();
 				
 		int treeColumnWidth = treeModel.getRoot().getDepth() * 15 + 15;
@@ -259,10 +218,10 @@ public abstract class AbstractListPanel extends AbstractPanel {
 		return tree;
 	}
 	
-	/**
-	 * Keep track of which type of table this is - Account or Category.
-	 * Used internally for saving column width to preferences. 
-	 * @return
-	 */
-	protected abstract int getTableNumber();
+//	/**
+//	 * Keep track of which type of table this is - Account or Category.
+//	 * Used internally for saving column width to preferences. 
+//	 * @return
+//	 */
+//	protected abstract int getTableNumber();
 }

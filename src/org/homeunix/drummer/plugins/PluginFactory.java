@@ -316,11 +316,12 @@ public class PluginFactory<T extends BuddiPlugin> {
 						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
 					}
 
-					//Update all the accounts with the new totals, etc.  Probably not needed for Import plugins, but 
-					// it's a pretty cheap operation anyway, and it is better safe than sorry...
-					DataInstance.getInstance().calculateAllBalances();
-					MainFrame.getInstance().getAccountListPanel().updateContent();
-
+					//Update all the accounts with the new totals, etc.  
+					// Probably not needed for Import plugins, but 
+					// it's a pretty cheap operation anyway, and it 
+					// is better safe than sorry...
+//					DataInstance.getInstance().calculateAllBalances();
+//					MainFrame.getInstance().getAccountListPanel().updateContent();
 				}
 			}
 		});

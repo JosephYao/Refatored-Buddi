@@ -23,7 +23,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
 import org.homeunix.thecave.moss.util.Formatter;
 
@@ -135,7 +135,7 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 	
 	protected abstract String getType();
 	
-	public StandardContainer clear(){
+	public StandardWindow clear(){
 		name.setText("");
 		amount.setValue(0);
 		pulldown.setSelectedItem(null);
@@ -156,7 +156,7 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		return this;
 	}
 	
-	public StandardContainer updateButtons() {
+	public StandardWindow updateButtons() {
 		return this;
 	}
 }

@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -26,7 +25,6 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -42,77 +40,10 @@ import org.homeunix.thecave.moss.util.Log;
 public class AccountListPanel extends AbstractListPanel {
 	public static final long serialVersionUID = 0;
 
-	public AccountListPanel(){
-		super();
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.homeunix.drummer.view.ListPanelLayout#initActions()
-	 */
-	protected AbstractPanel initActions(){
-		super.initActions();
-
-		newButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				tree.clearSelection();
-				new AccountModifyDialog().clear().openWindow();
-				AccountListPanel.this.updateButtons();
-			}
-		});
-
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				new AccountModifyDialog().loadSource(getSelectedAccount()).openWindow();
-				AccountListPanel.this.updateButtons();
-			}
-		});
-
-		deleteButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (getSelectedAccount() != null) {
-
-					Account a = getSelectedAccount();
-
-					if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
-						boolean notPermanent = TransactionController.getTransactions(a).size() > 0
-						|| ScheduleController.getScheduledTransactions(a).size() > 0
-						|| JOptionPane.showConfirmDialog(
-								AccountListPanel.this,
-								Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_ACCOUNT),
-								Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_ACCOUNT),
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
-						AccountListPanelController.deleteAccount(notPermanent, a);							
-					}
-					else{
-						AccountListPanelController.undeleteAccount(a);
-					}
-
-					//We always want to update everything.  It's the cool thing to do.
-					AccountListPanel.this.updateContent();
-					AccountListPanel.this.updateButtons();
-				}
-			}
-		});
-
-
-		openButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (getSelectedAccount() != null){
-					long start = System.currentTimeMillis();
-					WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
-					Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-					Point point = new Point(wa.getX(), wa.getY());
-
-					new TransactionsFrame(getSelectedAccount()).openWindow(dimension, point);
-					long end = System.currentTimeMillis();
-					if (Const.DEVEL) Log.info("Open button time: " + (end - start));
-					AccountListPanel.this.updateButtons();
-				}
-			}
-		});
-
+	@Override
+	public AbstractBuddiPanel init(){
+		super.init();
+		
 		tree.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getClickCount() >= 2)
@@ -120,23 +51,14 @@ public class AccountListPanel extends AbstractListPanel {
 				super.mouseClicked(arg0);
 			}
 		});
-
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.homeunix.drummer.view.AbstractPanel#initContent()
-	 */
-	protected AbstractPanel initContent(){
-		DataInstance.getInstance().calculateAllBalances();
-
+		
 		return this;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.homeunix.drummer.view.AbstractPanel#updateContent()
 	 */
-	public AbstractPanel updateContent(){
+	public AbstractBuddiPanel updateContent(){
 		long balance = 0;
 
 		treeModel.getRoot().removeAllChildren(); 
@@ -252,8 +174,67 @@ public class AccountListPanel extends AbstractListPanel {
 		}
 	}
 
-	@Override
-	protected int getTableNumber() {
-		return 0;
+//	@Override
+//	protected int getTableNumber() {
+//		return 0;
+//	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(newButton)){
+			tree.clearSelection();
+			new AccountModifyDialog().clear().openWindow();
+			AccountListPanel.this.updateButtons();
+		}
+		else if (e.getSource().equals(editButton)) {
+			new AccountModifyDialog().loadSource(getSelectedAccount()).openWindow();
+			AccountListPanel.this.updateButtons();
+		}
+		else if (e.getSource().equals(deleteButton)){
+			if (getSelectedAccount() != null) {
+
+				Account a = getSelectedAccount();
+
+				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
+					boolean notPermanent = TransactionController.getTransactions(a).size() > 0
+					|| ScheduleController.getScheduledTransactions(a).size() > 0
+					|| JOptionPane.showConfirmDialog(
+							AccountListPanel.this,
+							Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_ACCOUNT),
+							Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_ACCOUNT),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
+					AccountListPanelController.deleteAccount(notPermanent, a);							
+				}
+				else{
+					AccountListPanelController.undeleteAccount(a);
+				}
+
+				//We always want to update everything.  It's the cool thing to do.
+				AccountListPanel.this.updateContent();
+				AccountListPanel.this.updateButtons();
+			}
+		}
+		else if (e.getSource().equals(openButton)){
+			if (getSelectedAccount() != null){
+				long start = System.currentTimeMillis();
+
+				TransactionsFrame tf = TransactionsFrame.getPreloader().getTransactionsFrame(getSelectedAccount());
+				
+				if (tf != null){
+					tf.setVisible(true);
+				}
+				else {
+					WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
+					Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+					Point point = new Point(wa.getX(), wa.getY());
+
+					new TransactionsFrame(getSelectedAccount()).openWindow(dimension, point);
+				}
+				
+				long end = System.currentTimeMillis();
+				if (Const.DEVEL) Log.info("Open button time: " + (end - start));
+				AccountListPanel.this.updateButtons();
+			}
+		}
 	}
 }

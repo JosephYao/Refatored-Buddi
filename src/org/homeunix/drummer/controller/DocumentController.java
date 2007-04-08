@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.Log;
 
 public class DocumentController {
@@ -16,6 +17,7 @@ public class DocumentController {
 	public static void loadFile(File f){
 		PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
 		DataInstance.getInstance().loadDataFile(f);
+		TransactionsFrame.reloadModel();
 		MainFrame.getInstance().updateContent();
 		DataInstance.getInstance().saveDataFile();
 	}
@@ -23,6 +25,7 @@ public class DocumentController {
 	public static void newFile(File f){
 		PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
 		DataInstance.getInstance().newDataFile(f);
+		TransactionsFrame.reloadModel();
 		MainFrame.getInstance().updateContent();
 		DataInstance.getInstance().saveDataFile();
 	}

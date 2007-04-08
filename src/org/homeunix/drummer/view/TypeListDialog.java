@@ -24,7 +24,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -132,7 +132,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 		}
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		// TODO Auto-generated method stub
 		return null;
 	}

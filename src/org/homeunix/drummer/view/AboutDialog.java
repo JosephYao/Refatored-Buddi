@@ -23,7 +23,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -120,7 +120,7 @@ public class AboutDialog extends AbstractBuddiDialog {
 		this.add(inlayPanel, BorderLayout.CENTER);
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		return null;
 	}
 

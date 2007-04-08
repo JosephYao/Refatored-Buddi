@@ -49,7 +49,7 @@ import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -615,7 +615,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		}
 	}
 
-	public StandardContainer clear() {
+	public StandardWindow clear() {
 		return null;
 	}
 
