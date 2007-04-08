@@ -5,6 +5,9 @@
 		-Added static controller classes for specialized data access
 		-Removed all superfluous methods from DataInstance - now it is just the model access layer, with no controller components
 	-This should allow for improved speed and features in future releases, as it has cleaned up the code base substantially.
+-Added thread based Preloader for TransactionsFrames.  This loads all the windows at first, to speed up access later on.
+-Complete overhaul of reports / graphs.  Now these are shown in the web browser, and not in Buddi windows at all.
+-Complete overhaul of printing.  Now longer using Java printing.  All print requests go to a web browser with HTML.
 
 2.3.1 (March 22 2007)
 -Added Search to language editor
