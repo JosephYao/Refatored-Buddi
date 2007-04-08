@@ -5,11 +5,8 @@ package org.homeunix.drummer.plugins;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.filechooser.FileFilter;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
@@ -18,7 +15,6 @@ import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**
  * @author wyatt
@@ -106,16 +102,19 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
-		public List<TableCellRenderer> getTableCellRenderers() {
-			return null;
-		}
-		public TreeCellRenderer getTreeCellRenderer() {
-			return null;
-		}
-		public TreeTableModel getTreeTableModel(Date startDate, Date endDate) {
-			return null;
-		}
-		public HTMLWrapper getHTML(Date startDate, Date endDate) {
+//		public List<TableCellRenderer> getTableCellRenderers() {
+//			return null;
+//		}
+//		public TreeCellRenderer getTreeCellRenderer() {
+//			return null;
+//		}
+//		public TreeTableModel getTreeTableModel(Date startDate, Date endDate) {
+//			return null;
+//		}
+//		public HTMLWrapper getHTML(Date startDate, Date endDate) {
+//			return null;
+//		}
+		public HTMLWrapper getReport(Date startDate, Date endDate) {
 			return null;
 		}
 	}

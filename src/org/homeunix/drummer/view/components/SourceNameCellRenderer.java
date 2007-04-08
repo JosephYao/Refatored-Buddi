@@ -42,7 +42,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (a.getBalance() < 0 ? "red" : null), a.isDeleted());			
+			startTableCellRendererComponent(value, isSelected, row, column, (a.getAccountType().isCredit() ? "red" : null), a.isDeleted());			
 			sb.append(a.toString());
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
 					&& (a.getInterestRate() != 0)){

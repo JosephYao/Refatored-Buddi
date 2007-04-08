@@ -42,17 +42,25 @@ public class HTMLExportHelper {
 
 		sb.append("<style type=\"text/css\">\n");
 		sb.append(".red { color: red; }\n");
+		sb.append(".blue { color: blue; }\n");
+		sb.append(".green { color: green; }\n");
+		
+		sb.append(".right { text-align: right; }\n");
+		sb.append(".center { text-align: center; }\n");
+		sb.append(".left { text-align: left; }\n");
+		
 		sb.append("h1 { font-size: x-large; }\n");
 		sb.append("h2 { font-size: large; }\n");
 		sb.append("h3 { font-size: medium; }\n");
 		sb.append("h4 { font-size: small; }\n");
 		sb.append("h5 { font-size: x-small; }\n");
+		
 		sb.append("table.main { background-color: black; width: 100%; }\n");
-		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
+//		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
 		sb.append("table.main tr { padding-bottom: 1em; }\n");
 		sb.append("table.main th { width: 20%; background-color: #DDE}\n");
 		sb.append("table.main td { width: 20%; background-color: #EEF}\n");
-		sb.append("table.transactions td { width: 30%; background-color: white}\n");
+//		sb.append("table.transactions td { width: 30%; background-color: white}\n");
 		sb.append("</style>\n");
 
 		sb.append("</head>\n");

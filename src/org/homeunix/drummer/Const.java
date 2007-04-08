@@ -151,10 +151,10 @@ public class Const {
 
 	//The plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_PLUGINS = {
-//		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
-//		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
-		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByCategory",
-		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByDescription",
+		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
+		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
+//		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByCategory",
+//		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByDescription",
 
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",
@@ -162,7 +162,7 @@ public class Const {
 		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
 		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime",
 		
-		"org.homeunix.drummer.plugins.exports.ExportHTML",
+//		"org.homeunix.drummer.plugins.exports.ExportHTML",
 		"org.homeunix.drummer.plugins.exports.ExportCSV"
 	};
 		

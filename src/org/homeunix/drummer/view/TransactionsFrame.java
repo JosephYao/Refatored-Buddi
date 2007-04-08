@@ -666,7 +666,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			}
 
 			updateAllTransactionWindows();
-			ReportFrame.updateAllReportWindows();
+//			ReportFrame.updateAllReportWindows();
 //			GraphFrame.updateAllGraphWindows();
 			MainFrame.getInstance().getAccountListPanel().updateContent();
 			MainFrame.getInstance().getCategoryListPanel().updateContent();

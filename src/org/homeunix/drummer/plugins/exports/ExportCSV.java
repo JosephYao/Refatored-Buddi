@@ -18,7 +18,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
-import org.homeunix.drummer.view.ReportFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -79,9 +78,7 @@ public class ExportCSV implements BuddiExportPlugin {
 	}
 
 	public Class[] getCorrectWindows() {
-		Class[] windows = new Class[1];
-		windows[0] = ReportFrame.class;
-		return windows;
+		return null;
 	}
 
 	public String getDescription() {

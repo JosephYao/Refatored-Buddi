@@ -142,9 +142,9 @@ public class BuddiMenu extends JScreenMenuBar {
 		}
 		file.add(exports);
 		file.add(imports);
-		//We want to show the close button on all Mac frames, and 
-		// all non-Mac frames except for the main one.
-		if (!(frame instanceof MainFrame) || OperatingSystemUtil.isMac()){
+		//We want to show the close button on all frames 
+		// except for the main one.
+		if (!(frame instanceof MainFrame)){
 			file.addSeparator();
 			file.add(close);
 		}
@@ -564,10 +564,11 @@ public class BuddiMenu extends JScreenMenuBar {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (MainFrame.getInstance() != null)
-					MainFrame.getInstance().savePosition();
-				if (Const.DEVEL) Log.debug("Exiting");
-				System.exit(0);
+				MainFrame.getInstance().closeWindow();
+//				if (MainFrame.getInstance() != null)
+//					MainFrame.getInstance().savePosition();
+//				if (Const.DEVEL) Log.debug("Exiting");
+//				System.exit(0);
 			}
 		});
 		if (!QuitJMenuItem.isAutomaticallyPresent())

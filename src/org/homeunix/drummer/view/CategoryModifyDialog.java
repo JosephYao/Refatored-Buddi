@@ -91,78 +91,85 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 						Translate.getInstance().get(TranslateKeys.ENTER_CATEGORY_NAME),
 						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
 						JOptionPane.INFORMATION_MESSAGE);
+				return;
 			}
-			else{
-				final Category c;
-				if (source == null)
-					c = ModelFactory.eINSTANCE.createCategory();
-				else
-					c = source;
+			for (Category c : SourceController.getCategories()) {
+				if (c.getName().equalsIgnoreCase(name.getText())){
+					JOptionPane.showMessageDialog(
+							CategoryModifyDialog.this, 
+							Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.ERROR_MESSAGE);
+					return;					
+				}
+			}
 
-				//Check to make sure that there are no loops in the family tree...
-				if (pulldown.getSelectedItem() instanceof Category){
-					Category temp = (Category) pulldown.getSelectedItem();
-					if (temp.equals(c)){
-						if (c.getParent() != null){
-							if (Const.DEVEL) Log.debug("A Category cannot be it's own parent.  Where is your knowledge of Bio?!?");
+			final Category c;
+			if (source == null)
+				c = ModelFactory.eINSTANCE.createCategory();
+			else
+				c = source;
+
+			//Check to make sure that there are no loops in the family tree...
+			if (pulldown.getSelectedItem() instanceof Category){
+				Category temp = (Category) pulldown.getSelectedItem();
+				if (temp.equals(c)){
+					if (c.getParent() != null){
+						if (Const.DEVEL) Log.debug("A Category cannot be it's own parent.  Where is your knowledge of Bio?!?");
+						pulldown.setSelectedItem(c.getParent());
+					}
+					else
+						pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
+					return;
+				}
+				while (temp.getParent() != null){
+					if (temp.getParent().equals(c)){
+						Log.error("A Category cannot be it's own grandpa (or other ancestor), although it seems as though you would like that.");
+						if (c.getParent() != null)
 							pulldown.setSelectedItem(c.getParent());
-						}
 						else
 							pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 						return;
 					}
-					while (temp.getParent() != null){
-						if (temp.getParent().equals(c)){
-							Log.error("A Category cannot be it's own grandpa (or other ancestor), although it seems as though you would like that.");
-							if (c.getParent() != null)
-								pulldown.setSelectedItem(c.getParent());
-							else
-								pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
-							return;
-						}
 
-						temp = temp.getParent();
-					}
+					temp = temp.getParent();
 				}
-
-				c.setName(name.getText());
-				c.setBudgetedAmount(amount.getValue());
-
-				//We need to clear out any old, obsolete references to parents
-				// and children.
-				if (Const.DEVEL) Log.debug("No parent selected.");
-				if (c.getParent() != null){
-					c.getParent().getChildren().remove(c);
-					if (Const.DEVEL) Log.debug("Removing " + c + " from " + c.getParent());
-				}
-
-				if (pulldown.getSelectedItem() instanceof Category){
-					if (Const.DEVEL) Log.debug("Setting parent of " + c + " to " + pulldown.getSelectedItem());
-					((Category) pulldown.getSelectedItem()).getChildren().add(c);
-					c.setParent((Category) pulldown.getSelectedItem());
-				}
-				else
-					c.setParent(null);
-
-				if (check.isSelected())
-					c.setIncome(true);
-				else
-					c.setIncome(false);
-
-				if (source == null)
-					SourceController.addCategory(c);
-				
-				MainFrame.getInstance().getCategoryListPanel().updateContent();
-				CategoryModifyDialog.this.closeWindow();
 			}
 
+			c.setName(name.getText());
+			c.setBudgetedAmount(amount.getValue());
+
+			//We need to clear out any old, obsolete references to parents
+			// and children.
+			if (Const.DEVEL) Log.debug("No parent selected.");
+			if (c.getParent() != null){
+				c.getParent().getChildren().remove(c);
+				if (Const.DEVEL) Log.debug("Removing " + c + " from " + c.getParent());
+			}
+
+			if (pulldown.getSelectedItem() instanceof Category){
+				if (Const.DEVEL) Log.debug("Setting parent of " + c + " to " + pulldown.getSelectedItem());
+				((Category) pulldown.getSelectedItem()).getChildren().add(c);
+				c.setParent((Category) pulldown.getSelectedItem());
+			}
+			else
+				c.setParent(null);
+
+			if (check.isSelected())
+				c.setIncome(true);
+			else
+				c.setIncome(false);
+
+			if (source == null)
+				SourceController.addCategory(c);
+
+			MainFrame.getInstance().getCategoryListPanel().updateContent();
+			CategoryModifyDialog.this.closeWindow();
 			TransactionsFrame.updateAllTransactionWindows();
-			ReportFrame.updateAllReportWindows();
-//			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			CategoryModifyDialog.this.closeWindow();
-			
+
 			MainFrame.getInstance().getCategoryListPanel().updateContent();
 		}
 		else if (e.getSource().equals(pulldown)){

@@ -31,6 +31,21 @@ public class DocumentController {
 		DataInstance.getInstance().saveDataFile();
 	}
 	
+	/**
+	 * Saves the data file in a separate thread.  This can be used
+	 * to schedule a save, but not take up GUI time.
+	 */
+	public static void saveFileSoon(){
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+				saveFile();
+			}
+		});
+		
+		thread.run();
+	}
+
+	
 	public static boolean saveFile(File f){
 		try {
 			DataInstance.getInstance().saveDataFile(f.getAbsolutePath());
@@ -40,5 +55,5 @@ public class DocumentController {
 			Log.error("Error saving data file: " + ioe);
 			return false;
 		}
-	}
+	}	
 }

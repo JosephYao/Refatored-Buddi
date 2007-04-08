@@ -3,17 +3,14 @@
  */
 package org.homeunix.drummer.plugins.graphs;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -25,12 +22,9 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
-import org.homeunix.thecave.moss.images.ImageFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class ExpensesPieGraph implements BuddiGraphPlugin {
@@ -52,13 +46,6 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
-//				Translate.getInstance().get(TranslateKeys.EXPENSES)
-//				+ " (" 
-//				+ Formatter.getInstance().getDateFormat().format(startDate)
-//				+ " - "
-//				+ Formatter.getInstance().getDateFormat().format(endDate)
-//				+ ") "
-//				+ Translate.getFormattedCurrency(totalExpenses, false),
 				"",
 				pieData,             // data
 				true,               // include legend
@@ -66,19 +53,9 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 				false
 		);
 		
-		PiePlot plot = (PiePlot) chart.getPlot();
-		plot.setSectionOutlinesVisible(false);
-		plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-		plot.setNoDataMessage("No data available");
-		plot.setCircular(false);
-		plot.setLabelGap(0.02);
-		
-		JPanel graphPanel = new ChartPanel(chart);
-		JFrame tempFrame = new JFrame();
-		tempFrame.add(graphPanel);
-		tempFrame.setBackground(Color.WHITE);
-		tempFrame.pack();
-		
+		chart.setBackgroundPaint(Color.WHITE);
+		chart.setBorderStroke(new BasicStroke(0));
+				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
 				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
 				null, 
@@ -89,7 +66,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		sb.append(HTMLExportHelper.getHtmlFooter());
 		
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-		images.put("graph.png", ImageFunctions.getImageFromComponent(graphPanel));
+		images.put("graph.png", chart.createBufferedImage(800, 400));
 		
 		return new HTMLWrapper(sb.toString(), images);
 	}

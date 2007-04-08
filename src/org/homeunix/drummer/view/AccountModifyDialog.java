@@ -101,54 +101,60 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 						Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
 						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
 						JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			for (Account a : SourceController.getAccounts()) {
+				if (a.getName().equalsIgnoreCase(name.getText())){
+					JOptionPane.showMessageDialog(
+							AccountModifyDialog.this, 
+							Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.ERROR_MESSAGE);
+					return;					
+				}
+			}
+
+			final Account a;
+			if (source == null){
+				a = ModelFactory.eINSTANCE.createAccount();
+				a.setAccountType((Type) pulldown.getSelectedItem());
+
+				//We don't want to modify creation date unless we
+				// truly ARE creating it now.  This is in regards
+				// to a fix for bug #1650070.
+				a.setCreationDate(new Date());
 			}
 			else{
-				final Account a;
-				if (source == null){
-					a = ModelFactory.eINSTANCE.createAccount();
-					a.setAccountType((Type) pulldown.getSelectedItem());
-
-					//We don't want to modify creation date unless we
-					// truly ARE creating it now.  This is in regards
-					// to a fix for bug #1650070.
-					a.setCreationDate(new Date());
-				}
-				else{
-					a = source;
-				}
-
-				a.setName(name.getText());
-
-				long startingBalance = amount.getValue();
-				if (a.isCredit())
-					startingBalance = Math.abs(startingBalance) * -1;
-
-				a.setStartingBalance(startingBalance);					
-
-				if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
-					a.setCreditLimit(creditLimit.getValue());
-
-				if (interestRate.getValue() != 0)
-					a.setInterestRate(interestRate.getValue());
-
-				SourceController.addAccount(a);
-
-				a.calculateBalance();
-
-				if (source == null)
-					SourceController.addAccount(a);
-
-				AccountModifyDialog.this.closeWindow();				
-				MainFrame.getInstance().getAccountListPanel().updateContent();
+				a = source;
 			}
 
+			a.setName(name.getText());
+
+			long startingBalance = amount.getValue();
+			if (a.isCredit())
+				startingBalance = Math.abs(startingBalance) * -1;
+
+			a.setStartingBalance(startingBalance);					
+
+			if (creditLimit.isEnabled() && creditLimit.getValue() != 0)
+				a.setCreditLimit(creditLimit.getValue());
+
+			if (interestRate.getValue() != 0)
+				a.setInterestRate(interestRate.getValue());
+
+			SourceController.addAccount(a);
+
+			a.calculateBalance();
+
+			if (source == null)
+				SourceController.addAccount(a);
+
+			AccountModifyDialog.this.closeWindow();				
+			MainFrame.getInstance().getAccountListPanel().updateContent();
 			TransactionsFrame.updateAllTransactionWindows();
-			ReportFrame.updateAllReportWindows();
-//			GraphFrame.updateAllGraphWindows();
 		}
 		else if (e.getSource().equals(cancelButton)){
 			AccountModifyDialog.this.closeWindow();
-			
 			MainFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}

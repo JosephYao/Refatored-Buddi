@@ -3,15 +3,13 @@
  */
 package org.homeunix.drummer.plugins.graphs;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -23,14 +21,11 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
-import org.homeunix.thecave.moss.images.ImageFunctions;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -70,13 +65,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 		
 		
 		JFreeChart chart = ChartFactory.createLineChart(
-//				Translate.getInstance().get(TranslateKeys.NET_WORTH)				
-//				+ " (" 
-//				+ Formatter.getInstance().getDateFormat().format(startDate)
-//				+ " - "
-//				+ Formatter.getInstance().getDateFormat().format(new Date())
-//				+ ")",
-				"",
+				"", //Title
 				"", //Domain axis label
 				"", //Range axis label
 				barData,             // data
@@ -86,15 +75,9 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 				false
 		);
 		
-		CategoryPlot plot = (CategoryPlot) chart.getCategoryPlot();
-		plot.setNoDataMessage("No data available");
-		
-		JPanel graphPanel = new ChartPanel(chart);
-		JFrame tempFrame = new JFrame();
-		tempFrame.add(graphPanel);
-		tempFrame.setBackground(Color.WHITE);
-		tempFrame.pack();
-		
+		chart.setBackgroundPaint(Color.WHITE);
+		chart.setBorderStroke(new BasicStroke(0));
+				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
 				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
 				null, 
@@ -105,7 +88,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 		sb.append(HTMLExportHelper.getHtmlFooter());
 		
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-		images.put("graph.png", ImageFunctions.getImageFromComponent(graphPanel));
+		images.put("graph.png", chart.createBufferedImage(800, 400));
 		
 		return new HTMLWrapper(sb.toString(), images);
 	}

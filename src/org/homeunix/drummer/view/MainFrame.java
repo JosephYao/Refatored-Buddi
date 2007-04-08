@@ -17,7 +17,6 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -140,15 +139,19 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		
 		savePosition();
 
+		Log.debug("Exiting.");
+		System.exit(0);
+		
+		return super.closeWindow();
 		//We have a special handler on the Mac to do hide / unhide from
 		// the dock, so we don't want the default closeWindow to kick in.
-		if (OperatingSystemUtil.isMac()){
-			this.setVisible(false);
-			return null;
-		}
-		else {
-			return super.closeWindow();
-		}
+//		if (OperatingSystemUtil.isMac()){
+//			this.setVisible(false);
+//			return null;
+//		}
+//		else {
+//			return super.closeWindow();
+//		}
 	}
 
 	public AbstractFrame init() {
@@ -156,12 +159,12 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		// on a Window close; you must click Quit before the program 
 		// stops.  We do that here.
 		if (OperatingSystemUtil.isMac()){
-			getInstance().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//			getInstance().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			Application.getInstance().addReopenApplicationListener(this);
 		}
-		else{
-			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		}
+//		else{
+//			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//		}
 		
 		Timer timer = new Timer(true);
 		TimerTask task = new TimerTask(){

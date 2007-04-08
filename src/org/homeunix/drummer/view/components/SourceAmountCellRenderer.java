@@ -50,7 +50,11 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (a.getBalance() < 0 ? "red" : null), a.isDeleted());
+			String color = null;
+			if ((a.getAccountType().isCredit() && a.getBalance() <= 0)
+					|| (!a.getAccountType().isCredit() && a.getBalance() < 0))
+				color = "red";
+			startTableCellRendererComponent(value, isSelected, row, column, color, a.isDeleted());
 			
 			sb.append(Translate.getFormattedCurrency(a.getBalance(), a.getAccountType().isCredit()));
 			endTableCellRendererComponent();
@@ -61,7 +65,11 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (t.getType().isCredit() ? "red" : null), false);
+			String color = null;
+			if ((t.getType().isCredit() && t.getAmount() <= 0)
+					|| (!t.getType().isCredit() && t.getAmount() < 0))
+				color = "red";
+			startTableCellRendererComponent(value, isSelected, row, column, color, false);
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");

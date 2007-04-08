@@ -223,7 +223,7 @@ public class Translate {
 	 */
 	public static String getFormattedCurrency(long value, boolean isCredit){
 		return (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-		+ (isCredit ^ value < 0 ? "-" : "")
+		+ (value != 0 && (isCredit ^ value < 0) ? "-" : "")
 		+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) value / 100.0))
 		+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 	}

@@ -6,13 +6,8 @@
 package org.homeunix.drummer.plugins.interfaces;
 
 import java.util.Date;
-import java.util.List;
-
-import javax.swing.table.TableCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
 
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
-import org.jdesktop.swingx.treetable.TreeTableModel;
 
 public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	
@@ -24,18 +19,21 @@ public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public TreeTableModel getTreeTableModel(Date startDate, Date endDate);
-			
-	public List<TableCellRenderer> getTableCellRenderers();
-	
-	public TreeCellRenderer getTreeCellRenderer();
-	
+//	public TreeTableModel getTreeTableModel(Date startDate, Date endDate);
+//			
+//	public List<TableCellRenderer> getTableCellRenderers();
+//	
+//	public TreeCellRenderer getTreeCellRenderer();
 	/**
-	 * Returns a string containing HTML code (with CSS if desired).
-	 * This will be saved to a temporary file and opened in a browser.
-	 * @param startDate Start of 
-	 * @param endDate
+	 * Returns an in-memory version of the printed page, as an HTML
+	 * file.  An HTMLWrapper is just a small class containing a string
+	 * with the HTML text in it, and a map of String to BufferedImage
+	 * containing all the images referenced in the HTML, by name.
+	 * 
+	 * See HTMLWrapper for more information on what is needed. 
+	 * @param startDate Start of report period
+	 * @param endDate End of report period
 	 * @return
 	 */
-	public HTMLWrapper getHTML(Date startDate, Date endDate);
+	public HTMLWrapper getReport(Date startDate, Date endDate);
 }
