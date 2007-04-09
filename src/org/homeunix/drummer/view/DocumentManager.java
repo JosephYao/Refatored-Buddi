@@ -166,14 +166,14 @@ public class DocumentManager {
 	}
 
 	public File loadFile(File file){
-		return loadFile(file, fileFilter);
+		return loadFileWorker(file, fileFilter);
 	}
 	
 	public File loadBackupFile(File file){
-		return loadFile(file, backupFilter);
+		return loadFileWorker(file, backupFilter);
 	}
 	
-	private File loadFile(File file, FileFilter filter){
+	private File loadFileWorker(File file, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -227,14 +227,14 @@ public class DocumentManager {
 	}
 
 	public File saveFile(File file){
-		return saveFile(file, fileFilter);
+		return saveFileWorker(file, fileFilter);
 	}
 
 	public File saveBackupFile(File file){
-		return saveFile(file, backupFilter);
+		return saveFileWorker(file, backupFilter);
 	}
 	
-	private File saveFile(File file, FileFilter filter){
+	private File saveFileWorker(File file, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);

@@ -30,7 +30,7 @@ import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
-import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -108,7 +108,7 @@ public class Buddi {
 				PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		//Create the frameless menu bar (for Mac)
-		JMenuBar frameless = new BuddiMenu(null);
+		JMenuBar frameless = new MainMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
 				
 		//Load the data model.  Depending on different options and 

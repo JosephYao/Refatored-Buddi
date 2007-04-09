@@ -6,7 +6,7 @@ package org.homeunix.drummer.view;
 import java.awt.Toolkit;
 import java.net.URL;
 
-import org.homeunix.drummer.view.components.BuddiMenu;
+import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
 /**
@@ -29,7 +29,7 @@ public abstract class AbstractBuddiFrame extends AbstractFrame {
 			this.setIconImage(Toolkit.getDefaultToolkit().getImage(imageResource));
 		}
 
-		this.setJMenuBar(new BuddiMenu(this));
+		this.setJMenuBar(new MainMenu(this));
 
 	}
 }

@@ -56,6 +56,7 @@ public class TransactionListModel extends AbstractListModel {
 	 */
 	public void loadModel(EList transactions){
 		this.transactions = transactions;
+		ECollections.sort(this.transactions);
 	}
 	
 	//*** Abstract List Model methods
