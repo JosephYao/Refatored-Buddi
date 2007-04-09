@@ -155,7 +155,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 		}
 		else if (e.getSource().equals(cancelButton)){
 			AccountModifyDialog.this.closeWindow();
-			MainFrame.getInstance().getAccountListPanel().updateContent();
+//			MainFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}
 }

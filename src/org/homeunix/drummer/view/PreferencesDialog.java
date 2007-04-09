@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -49,6 +51,7 @@ import org.homeunix.drummer.prefs.Prefs;
 import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
+import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -61,7 +64,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 	private final JButton cancelButton;
 	
 	private final JComboBox language;
-	private final JComboBox dateFormat;
+	private final JScrollingComboBox dateFormat;
 	private final JComboBox currencyFormat;
 	private final JCheckBox currencySymbolAfterAmount;
 	private final JComboBox budgetInterval;
@@ -109,7 +112,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		currencyModel = new DefaultComboBoxModel();
 		currencyFormat = new JComboBox(currencyModel);
 		currencySymbolAfterAmount = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
-		dateFormat = new JComboBox(Const.DATE_FORMATS);
+		dateFormat = new JScrollingComboBox(Const.DATE_FORMATS);
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
 		pluginListModel = new DefaultListModel();
@@ -206,13 +209,28 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				
-				if (value instanceof String){
+				if (value == null){
+					setText("\u2014");
+				}
+				else if (value instanceof String){
 					String str = (String) value;
 					this.setText(new SimpleDateFormat(str).format(new Date()));
 				}
 				
 				return this;
 			}
+		});
+		
+		dateFormat.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (dateFormat.getSelectedItem() == null){
+					if (e.getItem().equals(dateFormat.getItemAt(0))){
+						dateFormat.setSelectedIndex(1);
+					}
+					Log.debug("null; e.getItem == " + e.getItem());
+					dateFormat.setSelectedIndex(0);
+				}
+			}			
 		});
 		
 		languagePanel.add(languageLabel);
@@ -526,10 +544,10 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 					MainFrame.restartProgram();
 				}
 			}
-			else {
-				MainFrame.getInstance().getAccountListPanel().updateContent();
-				MainFrame.getInstance().getCategoryListPanel().updateContent();
-			}
+//			else {
+//				MainFrame.getInstance().getAccountListPanel().updateContent();
+//				MainFrame.getInstance().getCategoryListPanel().updateContent();
+//			}
 			TransactionsFrame.updateAllTransactionWindows();
 
 			PreferencesDialog.this.setVisible(false);
@@ -538,8 +556,8 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		else if (e.getSource().equals(cancelButton)){
 			PreferencesDialog.this.setVisible(false);
 
-			MainFrame.getInstance().getAccountListPanel().updateContent();
-			MainFrame.getInstance().getCategoryListPanel().updateContent();
+//			MainFrame.getInstance().getAccountListPanel().updateContent();
+//			MainFrame.getInstance().getCategoryListPanel().updateContent();
 		}
 		else if (e.getSource().equals(addButton)){
 			final JFileChooser jfc = new JFileChooser();

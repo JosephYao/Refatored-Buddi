@@ -72,7 +72,7 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 
 				TypeModifyDialog.this.closeWindow();
 				
-				MainFrame.getInstance().getAccountListPanel().updateContent();
+//				MainFrame.getInstance().getAccountListPanel().updateContent();
 			}
 
 			TransactionsFrame.updateAllTransactionWindows();
@@ -82,7 +82,7 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 		else if (e.getSource().equals(cancelButton)){
 			TypeModifyDialog.this.closeWindow();
 
-			MainFrame.getInstance().getAccountListPanel().updateContent();
+//			MainFrame.getInstance().getAccountListPanel().updateContent();
 		}
 	}
 }

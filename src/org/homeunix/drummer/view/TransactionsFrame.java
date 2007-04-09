@@ -728,7 +728,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 				updateAllTransactionWindows();
 				updateButtons();
-				MainFrame.getInstance().getAccountListPanel().updateContent();
+//				MainFrame.getInstance().getAccountListPanel().updateContent();
 
 				list.setSelectedIndex(position);
 				if (list.getSelectedValue() instanceof Transaction){

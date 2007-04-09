@@ -196,7 +196,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		getAccountListPanel().updateContent();
 		getCategoryListPanel().updateContent();
 
-		return getInstance();
+		return this;
 	}
 
 //	public Component getPrintedComponent() {

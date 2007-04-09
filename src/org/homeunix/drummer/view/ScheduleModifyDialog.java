@@ -823,10 +823,9 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 								JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 					ScheduleModifyDialog.this.saveSchedule();
 					ScheduleController.checkForScheduledActions();
-					MainFrame.getInstance().updateContent();
-					TransactionsFrame.updateAllTransactionWindows();
-					ScheduleModifyDialog.this.setVisible(false);
-					ScheduleModifyDialog.this.dispose();
+//					MainFrame.getInstance().updateContent();
+//					TransactionsFrame.updateAllTransactionWindows();
+					ScheduleModifyDialog.this.closeWindow();
 				}
 				else
 					if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
@@ -839,8 +838,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			}
 		}
 		else if (e.getSource().equals(cancelButton)){
-			ScheduleModifyDialog.this.setVisible(false);
-			ScheduleModifyDialog.this.dispose();
+			ScheduleModifyDialog.this.closeWindow();
 		}
 	}
 

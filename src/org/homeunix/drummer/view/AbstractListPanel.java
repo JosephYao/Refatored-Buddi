@@ -36,7 +36,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public abstract class AbstractListPanel extends AbstractBuddiPanel {
+public abstract class AbstractListPanel extends AbstractBuddiPanel implements TreeExpansionListener, TreeSelectionListener {
 	public static final long serialVersionUID = 0;
 
 	protected final JXTreeTable tree;
@@ -71,6 +71,8 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel {
 		editButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		openButton.addActionListener(this);
+		tree.addTreeSelectionListener(this);
+		tree.addTreeExpansionListener(this);
 		
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
@@ -123,62 +125,6 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel {
 		this.setPreferredSize(new Dimension(450, 300));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
-//		this.setVisible(true);
-
-		tree.addTreeSelectionListener(new TreeSelectionListener(){
-			public void valueChanged(TreeSelectionEvent arg0) {
-				if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
-					DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
-
-					if (node == null)
-						return;
-
-					if (node.getUserObject() instanceof Source){ 
-						selectedSource = (Source) node.getUserObject();
-						if (Const.DEVEL) Log.debug(selectedSource);
-					}
-					else{
-						if (Const.DEVEL) Log.debug("Object not of type Source");
-						selectedSource = null;
-					}
-				}
-				
-				AbstractListPanel.this.updateButtons();
-			}
-		});
-
-		tree.addTreeExpansionListener(new TreeExpansionListener(){
-			public void treeCollapsed(TreeExpansionEvent arg0) {				
-				Object o = arg0.getPath().getLastPathComponent();
-
-				if (Const.DEVEL) Log.debug("Rolled node: " + o.toString());
-
-				if (o instanceof DefaultMutableTreeNode){
-					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
-					PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), false);
-				}
-				else {
-					Log.error("Unknown object in treeExpansionListener: " + o);
-				}
-			}
-
-			public void treeExpanded(TreeExpansionEvent arg0) {
-				Object o = arg0.getPath().getLastPathComponent();
-
-				if (Const.DEVEL) Log.debug("Unrolled node: " + o.toString());
-
-				if (o instanceof DefaultMutableTreeNode){
-					DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
-					PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), true);
-					PrefsInstance.getInstance().savePrefs();
-				}
-				else {
-					Log.error("Unknown object in treeExpansionListener: " + o);
-				}
-				
-				tree.packAll();
-			}
-		});
 		
 		return this;
 	}
@@ -218,10 +164,54 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel {
 		return tree;
 	}
 	
-//	/**
-//	 * Keep track of which type of table this is - Account or Category.
-//	 * Used internally for saving column width to preferences. 
-//	 * @return
-//	 */
-//	protected abstract int getTableNumber();
+	public void valueChanged(TreeSelectionEvent arg0) {
+		if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
+
+			if (node == null)
+				return;
+
+			if (node.getUserObject() instanceof Source){ 
+				selectedSource = (Source) node.getUserObject();
+				if (Const.DEVEL) Log.debug(selectedSource);
+			}
+			else{
+				if (Const.DEVEL) Log.debug("Object not of type Source");
+				selectedSource = null;
+			}
+		}
+		
+		AbstractListPanel.this.updateButtons();
+	}
+	
+	public void treeCollapsed(TreeExpansionEvent arg0) {				
+		Object o = arg0.getPath().getLastPathComponent();
+
+		if (Const.DEVEL) Log.debug("Rolled node: " + o.toString());
+
+		if (o instanceof DefaultMutableTreeNode){
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+			PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), false);
+		}
+		else {
+			Log.error("Unknown object in treeExpansionListener: " + o);
+		}
+	}
+
+	public void treeExpanded(TreeExpansionEvent arg0) {
+		Object o = arg0.getPath().getLastPathComponent();
+
+		if (Const.DEVEL) Log.debug("Unrolled node: " + o.toString());
+
+		if (o instanceof DefaultMutableTreeNode){
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) o;
+			PrefsInstance.getInstance().setListAttributes(node.getUserObject().toString(), true);
+			PrefsInstance.getInstance().savePrefs();
+		}
+		else {
+			Log.error("Unknown object in treeExpansionListener: " + o);
+		}
+		
+		tree.packAll();
+	}
 }

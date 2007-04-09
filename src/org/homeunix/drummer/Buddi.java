@@ -31,6 +31,7 @@ import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.menu.MainMenu;
+import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -75,19 +76,29 @@ public class Buddi {
 	 */
 	private static void launchGUI(){
 
-		// TODO Remove this from stable versions after 1.x.0
+		// TODO Remove this from stable versions after 2.x.0
 		//Temporary notice stating the data format has changed.
 
-//		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
-//		&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
-//		if (JOptionPane.showConfirmDialog(null, 
-//		Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
-//		Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
-//		JOptionPane.OK_CANCEL_OPTION,
-//		JOptionPane.WARNING_MESSAGE
-//		) == JOptionPane.CANCEL_OPTION)
-//		System.exit(0);
-//		}
+		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
+				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+			//Make a backup of the existing data file, just to be safe...
+			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + "buddi.bak");
+			try {
+				FileFunctions.copyFile(dataFile, backupDataFile);
+			}
+			catch (IOException ioe){
+				Log.warning("Error backing up file: " + ioe);
+			}
+			
+			if (JOptionPane.showConfirmDialog(null, 
+					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
+					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE
+			) == JOptionPane.CANCEL_OPTION)
+				System.exit(0);
+		}
 
 		/*
 		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
