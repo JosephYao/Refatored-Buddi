@@ -204,14 +204,14 @@ public class DataInstance {
 			// The one with the smallest number X is the most recent.
 			String fileBase = locationFile.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
 			for (int i = PrefsInstance.getInstance().getPrefs().getNumberOfBackups() - 2; i >= 0; i--){
-				File tempBackupDest = new File(fileBase + "." + (i + 1) + Const.DATA_FILE_EXTENSION);
-				File tempBackupSource = new File(fileBase + "." + i + Const.DATA_FILE_EXTENSION);
+				File tempBackupDest = new File(fileBase + "." + (i + 1) + Const.BACKUP_FILE_EXTENSION);
+				File tempBackupSource = new File(fileBase + "." + i + Const.BACKUP_FILE_EXTENSION);
 				if (tempBackupSource.exists()){
 					FileFunctions.copyFile(tempBackupSource, tempBackupDest);
 					if (Const.DEVEL) Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
 				}
 			}
-			File tempBackupDest = new File(fileBase + ".0" + Const.DATA_FILE_EXTENSION);
+			File tempBackupDest = new File(fileBase + ".0" + Const.BACKUP_FILE_EXTENSION);
 			FileFunctions.copyFile(locationFile, tempBackupDest);
 			if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
 		}
@@ -275,7 +275,7 @@ public class DataInstance {
 			ScheduleController.checkForScheduledActions();		
 
 			//Make sure that this is updated when we load...
-			calculateAllBalances();
+			SourceController.calculateAllBalances();
 			
 			saveDataFile();
 
@@ -353,13 +353,4 @@ public class DataInstance {
 //	return dataModelFactory;
 //	}
 
-	/**
-	 * Forces an update of all the balances.  This O(n) operation can
-	 * take a while with large models; use sparingly if possible
-	 */
-	public void calculateAllBalances(){
-		for (Account a : SourceController.getAccounts()){
-			a.calculateBalance();
-		}
-	}
 }

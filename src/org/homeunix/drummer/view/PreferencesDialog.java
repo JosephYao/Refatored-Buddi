@@ -46,6 +46,7 @@ import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.Prefs;
+import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
@@ -568,7 +569,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 					);
 				}
 				for (String className : classNames) {
-					Plugin plugin = PrefsInstance.getInstance().getPrefsFactory().createPlugin();
+					Plugin plugin = PrefsFactory.eINSTANCE.createPlugin();
 					plugin.setJarFile(jfc.getSelectedFile().getAbsolutePath());
 					plugin.setClassName(className);
 					if (plugin.getClassName().endsWith(".class"))

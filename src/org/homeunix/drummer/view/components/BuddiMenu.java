@@ -86,10 +86,11 @@ public class BuddiMenu extends JScreenMenuBar {
 		this.add(help);
 
 		//File menu items
-		final JScreenMenuItem open = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE));
-		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE));
-		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_DATA_FILE));
-		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_DATA_FILE));
+		final JScreenMenuItem openFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.OPEN_FILE_MENU));
+		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_FILE_MENU));
+		final JScreenMenuItem saveAsFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.SAVE_AS_FILE_MENU));
+		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_FILE_MENU));
+		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_FILE_MENU));
 		final JScreenMenuItem encrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE));
 		final JScreenMenuItem decrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE));
 		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
@@ -104,7 +105,9 @@ public class BuddiMenu extends JScreenMenuBar {
 
 		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		backup.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
 				KeyEvent.ALT_MASK + KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -127,7 +130,8 @@ public class BuddiMenu extends JScreenMenuBar {
 		// Add the menus to the main menu.
 		if (frame instanceof MainFrame){
 			file.add(newFile);
-			file.add(open);
+			file.add(openFile);
+			file.add(saveAsFile);
 			file.addSeparator();
 			file.add(backup);
 			file.add(restore);
@@ -279,16 +283,40 @@ public class BuddiMenu extends JScreenMenuBar {
 			}
 		});
 
-		open.addActionListener(new ActionListener(){
+		openFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				File f = DocumentManager.getInstance().loadFile(null);
 				DocumentController.loadFile(f);
 			}
 		});
 
+		saveAsFile.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				File f = DocumentManager.getInstance().saveFile(null);
+				if (DocumentController.saveFile(f)){
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.SUCCESSFUL_SAVE_FILE) + file, 
+							Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(
+							null, 
+							Translate.getInstance().get(TranslateKeys.PROBLEM_SAVING_FILE) 
+							+ " " 
+							+ file
+							+ "\n\n"
+							+ Translate.getInstance().get(TranslateKeys.CHECK_CONSOLE), 
+							Translate.getInstance().get(TranslateKeys.ERROR), 
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
 		backup.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				File f = DocumentManager.getInstance().saveFile(null);
+				File f = DocumentManager.getInstance().saveBackupFile(null);
 				if (DocumentController.saveFile(f)){
 					JOptionPane.showMessageDialog(
 							null, 
@@ -313,7 +341,7 @@ public class BuddiMenu extends JScreenMenuBar {
 		restore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-				File newFile = DocumentManager.getInstance().loadFile(null);
+				File newFile = DocumentManager.getInstance().loadBackupFile(null);
 
 				if (newFile == null)
 					return;

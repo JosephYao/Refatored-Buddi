@@ -22,9 +22,9 @@ import javax.swing.JPanel;
 import net.roydesign.ui.JScreenMenuItem;
 
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
@@ -380,7 +380,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					}
 
 					//Update all the accounts with the new totals, etc.
-					DataInstance.getInstance().calculateAllBalances();
+					SourceController.calculateAllBalances();
 					MainFrame.getInstance().getAccountListPanel().updateContent();
 				}
 			}

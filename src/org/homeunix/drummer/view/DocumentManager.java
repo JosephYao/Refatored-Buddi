@@ -52,6 +52,21 @@ public class DocumentManager {
 		}
 	};
 	
+	public static final FileFilter backupFilter = new FileFilter(){
+		@Override
+		public boolean accept(File f) {
+			if (f.isDirectory() || f.getName().endsWith(Const.BACKUP_FILE_EXTENSION)){
+				return true;
+			}
+			return false;
+		}
+		
+		@Override
+		public String getDescription() {
+			return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+		}
+	};
+	
 	/**
 	 * Prompts the user to open an existing file, or create a new one.
 	 */
@@ -151,10 +166,18 @@ public class DocumentManager {
 	}
 
 	public File loadFile(File file){
+		return loadFile(file, fileFilter);
+	}
+	
+	public File loadBackupFile(File file){
+		return loadFile(file, backupFilter);
+	}
+	
+	private File loadFile(File file, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			jfc.setFileFilter(fileFilter);
+			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE));
@@ -204,10 +227,18 @@ public class DocumentManager {
 	}
 
 	public File saveFile(File file){
+		return saveFile(file, fileFilter);
+	}
+
+	public File saveBackupFile(File file){
+		return saveFile(file, backupFilter);
+	}
+	
+	private File saveFile(File file, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			jfc.setFileFilter(fileFilter);
+			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.SAVE_DATA_FILE));

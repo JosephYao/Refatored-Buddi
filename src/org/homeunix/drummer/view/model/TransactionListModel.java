@@ -10,10 +10,10 @@ import javax.swing.AbstractListModel;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -123,7 +123,7 @@ public class TransactionListModel extends AbstractListModel {
 	 */
 	public void update(Transaction t, FilteredDynamicListModel fdlm){
 		ECollections.sort(this.transactions);
-		DataInstance.getInstance().calculateAllBalances();
+		SourceController.calculateAllBalances();
 		if (fdlm != null)
 			fdlm.update();
 	}

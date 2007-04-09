@@ -12,7 +12,7 @@
 #
 #########################
 
-PLUGINS='ExportQIF,org/homeunix/thecave/plugins/export/qif'
+PLUGINS='ExportQIF,org/homeunix/thecave/plugins/export/qif SkinChooser,org/moogiesoft/buddi/plugins/skinchooser'
 
 TEMP=temp
 mkdir $TEMP

@@ -128,4 +128,14 @@ public class SourceController {
 			}
 		}
 	}
+	
+	/**
+	 * Forces an update of all the balances.  This O(n) operation can
+	 * take a while with large models; use sparingly if possible
+	 */
+	public static void calculateAllBalances(){
+		for (Account a : getAccounts()){
+			a.calculateBalance();
+		}
+	}
 }

@@ -24,7 +24,6 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.prefs.impl.PrefsFactoryImpl;
 import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -43,7 +42,6 @@ public class PrefsInstance {
 	}
 	
 	private UserPrefs userPrefs;
-	private PrefsFactory prefsFactory = PrefsFactoryImpl.eINSTANCE;
 
 	//Provide temporary backing for the autocomplete text fields
 	private final DefaultDictionary descDict;
@@ -165,8 +163,8 @@ public class PrefsInstance {
 			// but there is not much you can do.  This only happens 
 			// when the preference file changes format (i.e., version 
 			// upgrade).
-			userPrefs = prefsFactory.createUserPrefs();
-			Prefs prefs = prefsFactory.createPrefs();
+			userPrefs = PrefsFactory.eINSTANCE.createUserPrefs();
+			Prefs prefs = PrefsFactory.eINSTANCE.createPrefs();
 			userPrefs.setPrefs(prefs);
 			
 			//Create sane defaults for all the properties...
@@ -220,14 +218,14 @@ public class PrefsInstance {
 			prefs.setDateFormat(Const.DATE_FORMATS[0]);
 			prefs.setCurrencySymbol(Const.CURRENCY_FORMATS[0]);
 
-			prefs.setLists(prefsFactory.createLists());
-			prefs.setWindows(prefsFactory.createWindows());
-			prefs.setIntervals(prefsFactory.createIntervals());
+			prefs.setLists(PrefsFactory.eINSTANCE.createLists());
+			prefs.setWindows(PrefsFactory.eINSTANCE.createWindows());
+			prefs.setIntervals(PrefsFactory.eINSTANCE.createIntervals());
 			
-			WindowAttributes main = prefsFactory.createWindowAttributes();
-			WindowAttributes transactions = prefsFactory.createWindowAttributes();
-			WindowAttributes graphs = prefsFactory.createWindowAttributes();
-			WindowAttributes reports = prefsFactory.createWindowAttributes();
+			WindowAttributes main = PrefsFactory.eINSTANCE.createWindowAttributes();
+			WindowAttributes transactions = PrefsFactory.eINSTANCE.createWindowAttributes();
+			WindowAttributes graphs = PrefsFactory.eINSTANCE.createWindowAttributes();
+			WindowAttributes reports = PrefsFactory.eINSTANCE.createWindowAttributes();
 			
 			main.setHeight(400);
 			main.setWidth(600);
@@ -240,31 +238,31 @@ public class PrefsInstance {
 			prefs.getWindows().setGraphsWindow(graphs);
 			prefs.getWindows().setReportsWindow(reports);
 			
-			Interval month = prefsFactory.createInterval();
+			Interval month = PrefsFactory.eINSTANCE.createInterval();
 			month.setName(TranslateKeys.MONTH.toString());
 			month.setLength(1);
 			month.setDays(false);  //If days is false, then we assume the length is in months.
 			prefs.getIntervals().getIntervals().add(month);
 
-			Interval week = prefsFactory.createInterval();
+			Interval week = PrefsFactory.eINSTANCE.createInterval();
 			week.setName(TranslateKeys.WEEK.toString());
 			week.setLength(7);
 			week.setDays(true);
 			prefs.getIntervals().getIntervals().add(week);
 			
-			Interval fortnight = prefsFactory.createInterval();
+			Interval fortnight = PrefsFactory.eINSTANCE.createInterval();
 			fortnight.setName(TranslateKeys.FORTNIGHT.toString());
 			fortnight.setLength(14);
 			fortnight.setDays(true);
 			prefs.getIntervals().getIntervals().add(fortnight);
 
-			Interval quarter = prefsFactory.createInterval();
+			Interval quarter = PrefsFactory.eINSTANCE.createInterval();
 			quarter.setName(TranslateKeys.QUARTER.toString());
 			quarter.setLength(3);
 			quarter.setDays(false);
 			prefs.getIntervals().getIntervals().add(quarter);
 
-			Interval year = prefsFactory.createInterval();
+			Interval year = PrefsFactory.eINSTANCE.createInterval();
 			year.setName(TranslateKeys.YEAR.toString());
 			year.setLength(12);
 			year.setDays(false);
@@ -313,7 +311,7 @@ public class PrefsInstance {
 		//Translate between Set<String> (the dictionary) and the persistence model
 		userPrefs.getPrefs().getLists().getDescDict().retainAll(new Vector());
 		for (String s : descDict) {
-			DictEntry d = prefsFactory.createDictEntry();
+			DictEntry d = PrefsFactory.eINSTANCE.createDictEntry();
 			d.setEntry(s);
 			d.setData(defaultsMap.get(s));
 			userPrefs.getPrefs().getLists().getDescDict().add(d);
@@ -323,7 +321,7 @@ public class PrefsInstance {
 		userPrefs.getPrefs().getLists().getListEntries().retainAll(new Vector());
 		for (String s : listAttributesMap.keySet()){
 			//Create an entry in the listEntry structure
-			ListEntry l = prefsFactory.createListEntry();
+			ListEntry l = PrefsFactory.eINSTANCE.createListEntry();
 			l.setEntry(s);
 			l.setAttributes(listAttributesMap.get(s));
 			
@@ -370,10 +368,10 @@ public class PrefsInstance {
 		PrefsInstance.location = location;
 	}
 	
-	public void addDescEntry(String entry){
-		descDict.add(entry);
-		savePrefs();
-	}
+//	public void addDescEntry(String entry){
+//		descDict.add(entry);
+//		savePrefs();
+//	}
 
 	public DefaultDictionary getDescDict() {
 		return descDict;
@@ -382,7 +380,7 @@ public class PrefsInstance {
 	public String getLastVersionRun(){
 		Version version = userPrefs.getPrefs().getLastVersionRun();
 		if (version == null){
-			version = prefsFactory.createVersion();
+			version = PrefsFactory.eINSTANCE.createVersion();
 			version.setVersion("");
 			userPrefs.getPrefs().setLastVersionRun(version);
 		}
@@ -393,7 +391,7 @@ public class PrefsInstance {
 	public void updateVersion(){
 		Version version = userPrefs.getPrefs().getLastVersionRun();
 		if (version == null){
-			version = prefsFactory.createVersion();
+			version = PrefsFactory.eINSTANCE.createVersion();
 			userPrefs.getPrefs().setLastVersionRun(version);
 		}
 		
@@ -403,7 +401,7 @@ public class PrefsInstance {
 	
 	public void setAutoCompleteEntry(String description, 
 			String number, long amount, String from, String to, String memo){
-		DictData dd = prefsFactory.createDictData();
+		DictData dd = PrefsFactory.eINSTANCE.createDictData();
 		dd.setNumber(number);
 		dd.setAmount(amount);
 		dd.setFrom(from);
@@ -422,7 +420,7 @@ public class PrefsInstance {
 		if (listAttributesMap.get(entryName) != null)
 			l = listAttributesMap.get(entryName);
 		else
-			l = prefsFactory.createListAttributes();
+			l = PrefsFactory.eINSTANCE.createListAttributes();
 		
 		l.setUnrolled(unrolled);
 		
@@ -445,10 +443,6 @@ public class PrefsInstance {
 		}
 		
 		return intervals;
-	}
-	
-	public PrefsFactory getPrefsFactory(){
-		return prefsFactory;
 	}
 	
 	public Interval getSelectedInterval(){
@@ -514,13 +508,13 @@ public class PrefsInstance {
 	public void checkWindowSanity(){
 		Prefs prefs = getPrefs();
 		if (prefs.getWindows().getMainWindow() == null)
-			prefs.getWindows().setMainWindow(prefsFactory.createWindowAttributes());
+			prefs.getWindows().setMainWindow(PrefsFactory.eINSTANCE.createWindowAttributes());
 		if (prefs.getWindows().getTransactionsWindow() == null)
-			prefs.getWindows().setTransactionsWindow(prefsFactory.createWindowAttributes());
+			prefs.getWindows().setTransactionsWindow(PrefsFactory.eINSTANCE.createWindowAttributes());
 		if (prefs.getWindows().getGraphsWindow() == null)
-			prefs.getWindows().setGraphsWindow(prefsFactory.createWindowAttributes());
+			prefs.getWindows().setGraphsWindow(PrefsFactory.eINSTANCE.createWindowAttributes());
 		if (prefs.getWindows().getReportsWindow() == null)
-			prefs.getWindows().setReportsWindow(prefsFactory.createWindowAttributes());
+			prefs.getWindows().setReportsWindow(PrefsFactory.eINSTANCE.createWindowAttributes());
 
 		if (prefs.getWindows().getMainWindow().getHeight() < 300)
 			prefs.getWindows().getMainWindow().setHeight(300);
@@ -530,5 +524,17 @@ public class PrefsInstance {
 			prefs.getWindows().getMainWindow().setWidth(400);
 		if (prefs.getWindows().getTransactionsWindow().getWidth() < 500)
 			prefs.getWindows().getTransactionsWindow().setWidth(500);
+	}
+	
+	/**
+	 * Returns the folder in which the preferences file exists.  Can be
+	 * used for plugins to store preferences in a consistent location.
+	 * @return
+	 */
+	public File getPreferencesFolder(){
+		if (location != null)
+			return new File(location).getParentFile();
+		else
+			return OperatingSystemUtil.getPreferencesFile("Buddi", "test").getParentFile();
 	}
 }

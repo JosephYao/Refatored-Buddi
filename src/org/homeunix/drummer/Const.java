@@ -29,6 +29,7 @@ public class Const {
 	
 	//Data file constants
 	public final static String DATA_FILE_EXTENSION = ".buddi";
+	public final static String BACKUP_FILE_EXTENSION = ".buddi.bak";
 	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
 	//Web addresses
