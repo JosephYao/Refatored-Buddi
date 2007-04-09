@@ -1,4 +1,4 @@
-2.3.2
+2.3.2 (April 8 2007)
 -Complete overhaul of GUI framework.
 	-Corrected MVC architecture.
 		-Moved all GUI classes to the view package
@@ -8,6 +8,7 @@
 -Added thread based Preloader for TransactionsFrames.  This loads all the windows at first, to speed up access later on.
 -Complete overhaul of reports / graphs.  Now these are shown in the web browser, and not in Buddi windows at all.
 -Complete overhaul of printing.  Now longer using Java printing.  All print requests go to a web browser with HTML.
+-Greatly sped up program start, recording transactions, opening windows, etc.
 
 2.3.1 (March 22 2007)
 -Added Search to language editor
