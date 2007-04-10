@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.2";
+	public static final String VERSION = "2.3.3";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
