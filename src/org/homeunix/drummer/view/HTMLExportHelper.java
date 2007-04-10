@@ -4,10 +4,11 @@
 package org.homeunix.drummer.view;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Date;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class HTMLExportHelper {
 	 */
 	public static StringBuilder getHtmlHeader(String title, String subtitle, Date startDate, Date endDate){
 		StringBuilder sb = new StringBuilder();
+		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
 		sb.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"); 
 		sb.append("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
 		sb.append("<html>\n");
@@ -124,10 +126,15 @@ public class HTMLExportHelper {
 		htmlFolder.deleteOnExit();
 		htmlFile.deleteOnExit();
 		try{
-			BufferedWriter bw = new BufferedWriter(
-					new FileWriter(htmlFile));
-			bw.write(html.getHtml());
-			bw.close();
+			OutputStreamWriter out = new OutputStreamWriter(
+					new BufferedOutputStream(
+							new FileOutputStream(htmlFile)), "UTF-8");
+			out.write(html.getHtml());
+			out.close();
+//			BufferedWriter bw = new BufferedWriter(
+//					new FileWriter(htmlFile));
+//			bw.write(html.getHtml());
+//			bw.close();
 		}
 		catch (IOException ioe){
 			Log.error("Could not write HTML file.");

@@ -83,7 +83,7 @@ public class Buddi {
 				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 			//Make a backup of the existing data file, just to be safe...
 			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + "buddi.bak");
+			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + Const.BACKUP_FILE_EXTENSION);
 			try {
 				FileFunctions.copyFile(dataFile, backupDataFile);
 			}
@@ -203,9 +203,11 @@ public class Buddi {
 			System.exit(0);
 		}
 		else if (dfw.isExisting()){
+//			PrefsInstance.getInstance().getPrefs().setDataFile(null);
 			DocumentController.loadFile(dfw.getDataFile());
 		}
 		else {
+//			PrefsInstance.getInstance().getPrefs().setDataFile(null);
 			DocumentController.newFile(dfw.getDataFile());
 		}
 	}

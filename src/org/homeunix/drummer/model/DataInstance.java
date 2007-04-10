@@ -153,9 +153,11 @@ public class DataInstance {
 			TypeController.addType(s.toString(), true);
 		}				
 
-		ResourceSet resourceSet = new ResourceSetImpl();			
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+		initResourceSet();
+		
+//		ResourceSet resourceSet = new ResourceSetImpl();			
+//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+//				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 
 		URI fileURI = URI.createFileURI(locationFile.toString());
 		if (Const.DEVEL) Log.debug("Saving new file to " + locationFile.toString());
@@ -220,14 +222,8 @@ public class DataInstance {
 		}
 
 		try{
-			// Create a resource set.
-			resourceSet = new ResourceSetImpl();
-
-			// Register the default resource factory
-			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-					Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
-			resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
-
+			initResourceSet();
+			
 			// Register the package
 			@SuppressWarnings("unused") 
 			ModelPackage modelPackage = ModelPackage.eINSTANCE;
@@ -319,8 +315,10 @@ public class DataInstance {
 
 		URI fileURI = URI.createFileURI(saveLocation.getAbsolutePath());
 
-		if (Const.DEVEL) Log.debug("Data saved to " + location);
-
+		if (Const.DEVEL) Log.debug("Data saved to " + fileURI);
+		if (resourceSet == null)
+			initResourceSet();
+		
 		Resource resource = resourceSet.createResource(fileURI);
 
 		resource.getContents().add(getDataModel());
@@ -344,6 +342,15 @@ public class DataInstance {
 		return dataModel;
 	}
 
+	private void initResourceSet(){
+		// Create a resource set.
+		resourceSet = new ResourceSetImpl();
+
+		// Register the default resource factory
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+		resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
+	}
 //	/**
 //	* Returns an instance of the data model factory, for use in 
 //	* creating different model objects.

@@ -4,6 +4,7 @@
 package org.homeunix.drummer.view;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import org.homeunix.drummer.view.menu.MainMenu;
@@ -17,7 +18,7 @@ import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
  * things (such as include an icon and set a menu bar) by default, 
  * without having to do it for every window.
  */
-public abstract class AbstractBuddiFrame extends AbstractFrame {
+public abstract class AbstractBuddiFrame extends AbstractFrame implements ActionListener {
 	public AbstractBuddiFrame() {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		if (null == cl) {

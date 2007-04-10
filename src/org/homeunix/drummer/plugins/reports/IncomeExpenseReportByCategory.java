@@ -124,7 +124,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.DETAILS)).append("</h1>\n");
 		
 		for (Category c : categories){
-			Vector<Transaction> transactions = TransactionController.getTransactions(c);
+			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
 			
 			
 			if (transactions.size() > 0){

@@ -15,19 +15,23 @@ import org.homeunix.thecave.moss.util.Log;
 public class DocumentController {
 	
 	public static void loadFile(File f){
-		PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
-		DataInstance.getInstance().loadDataFile(f);
-		TransactionsFrame.reloadModel();
-		MainFrame.getInstance().updateContent();
-		DataInstance.getInstance().saveDataFile();
+		if (f != null){
+			PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
+			DataInstance.getInstance().loadDataFile(f);
+			TransactionsFrame.reloadModel();
+			MainFrame.getInstance().updateContent();
+			DataInstance.getInstance().saveDataFile();
+		}
 	}
 	
 	public static void newFile(File f){
-		PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
-		DataInstance.getInstance().newDataFile(f);
-		TransactionsFrame.reloadModel();
-		MainFrame.getInstance().updateContent();
-		DataInstance.getInstance().saveDataFile();
+		if (f != null){
+			PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
+			DataInstance.getInstance().newDataFile(f);
+			TransactionsFrame.reloadModel();
+			MainFrame.getInstance().updateContent();
+			DataInstance.getInstance().saveDataFile();
+		}
 	}
 	
 	public static void saveFile(){
