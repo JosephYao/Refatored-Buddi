@@ -1,3 +1,7 @@
+2.3.4
+-Added the ability to use negative numbers everywhere numbers are used.  To do this, I needed to rewrite the JCurrencyField class in Moss.  This is still a very Beta-quality feature - please provide me with feedback, comments, bug reports, etc on the Feature Request tracker under 
+-Added the ability to search on amounts from Transactions screen
+
 2.3.3 (April 10 2007)
 -Fixed some minor bugs introduced in 2.3.2, including report formatting, NullPointer on file creationg, etc).
 -Created dedicated buddi backup files (.buddi.bak) to simplify backups

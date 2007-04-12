@@ -28,7 +28,7 @@ public class TransactionController {
 		return (!(
 				description.length() == 0 
 				|| date == null
-				|| amount < 0
+//				|| amount < 0
 				|| to == null
 				|| from == null
 				|| (from != thisAccount

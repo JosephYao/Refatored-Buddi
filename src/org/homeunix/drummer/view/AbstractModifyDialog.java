@@ -25,7 +25,6 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
-import org.homeunix.thecave.moss.util.Formatter;
 
 public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDialog {
 	public static final long serialVersionUID = 0;
@@ -62,9 +61,9 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		nameLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NAME));
 		name = new JTextField();
 		amountLabel = new JLabel();
-		amount = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
-		creditLimit = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
-		interestRate = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
+		amount = new JCurrencyField();
+		creditLimit = new JCurrencyField();
+		interestRate = new JCurrencyField();
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();

@@ -82,7 +82,7 @@ public class EditableTransaction extends JPanel {
 		this.parent = parent;
 
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
-		amount = new JCurrencyField(0, 5, Formatter.getInstance().getDecimalFormat());
+		amount = new JCurrencyField();
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));

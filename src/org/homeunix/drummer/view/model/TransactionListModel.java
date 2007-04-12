@@ -215,7 +215,8 @@ public class TransactionListModel extends AbstractListModel {
 						|| t.getNumber().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
-						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase()));
+						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase())
+						|| Long.toString(t.getAmount()).contains(filterText.toLowerCase()));
 			}	
 		});
 		return fdlm;
