@@ -392,3 +392,5 @@ RESTORE_FILE_MENU=Restore
 BACKUP_FILE_MENU=Backup
 SUCCESSFUL_SAVE_FILE=Successfully Saved Data File.
 ACCOUNT_AND_CATEGORY_SUMMARY=Account and Budget Category Summary
+MENU_EDIT_CLEAR_NEW=Clear / New
+MENU_EDIT_RECORD_UPDATE=Record / Update
