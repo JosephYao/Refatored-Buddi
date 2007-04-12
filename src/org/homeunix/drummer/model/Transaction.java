@@ -292,6 +292,32 @@ public interface Transaction extends EObject, Comparable<Transaction> {
 	void setReconciled(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>UID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>UID</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>UID</em>' attribute.
+	 * @see #setUID(String)
+	 * @see org.homeunix.drummer.model.ModelPackage#getTransaction_UID()
+	 * @model
+	 * @generated
+	 */
+	String getUID();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Transaction#getUID <em>UID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>UID</em>' attribute.
+	 * @see #getUID()
+	 * @generated
+	 */
+	void setUID(String value);
+
+	/**
 	 * Returns the value of the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>

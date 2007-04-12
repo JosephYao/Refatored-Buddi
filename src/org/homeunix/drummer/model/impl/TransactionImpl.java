@@ -237,6 +237,26 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	protected boolean reconciled = RECONCILED_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getUID() <em>UID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUID()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUID() <em>UID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUID()
+	 * @generated
+	 * @ordered
+	 */
+	protected String uid = UID_EDEFAULT;
+
+	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -489,6 +509,27 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getUID() {
+		return uid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUID(String newUID) {
+		String oldUID = uid;
+		uid = newUID;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TRANSACTION__UID, oldUID, uid));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Source getFrom() {
 		if (from != null && from.eIsProxy()) {
 			InternalEObject oldFrom = (InternalEObject)from;
@@ -587,6 +628,8 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return isCleared() ? Boolean.TRUE : Boolean.FALSE;
 			case ModelPackage.TRANSACTION__RECONCILED:
 				return isReconciled() ? Boolean.TRUE : Boolean.FALSE;
+			case ModelPackage.TRANSACTION__UID:
+				return getUID();
 			case ModelPackage.TRANSACTION__TO:
 				if (resolve) return getTo();
 				return basicGetTo();
@@ -633,6 +676,9 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return;
 			case ModelPackage.TRANSACTION__RECONCILED:
 				setReconciled(((Boolean)newValue).booleanValue());
+				return;
+			case ModelPackage.TRANSACTION__UID:
+				setUID((String)newValue);
 				return;
 			case ModelPackage.TRANSACTION__TO:
 				setTo((Source)newValue);
@@ -681,6 +727,9 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 			case ModelPackage.TRANSACTION__RECONCILED:
 				setReconciled(RECONCILED_EDEFAULT);
 				return;
+			case ModelPackage.TRANSACTION__UID:
+				setUID(UID_EDEFAULT);
+				return;
 			case ModelPackage.TRANSACTION__TO:
 				setTo((Source)null);
 				return;
@@ -718,6 +767,8 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 				return cleared != CLEARED_EDEFAULT;
 			case ModelPackage.TRANSACTION__RECONCILED:
 				return reconciled != RECONCILED_EDEFAULT;
+			case ModelPackage.TRANSACTION__UID:
+				return UID_EDEFAULT == null ? uid != null : !UID_EDEFAULT.equals(uid);
 			case ModelPackage.TRANSACTION__TO:
 				return to != null;
 			case ModelPackage.TRANSACTION__FROM:
@@ -755,6 +806,8 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 		result.append(cleared);
 		result.append(", reconciled: ");
 		result.append(reconciled);
+		result.append(", UID: ");
+		result.append(uid);
 		result.append(')');
 		return result.toString();
 	}

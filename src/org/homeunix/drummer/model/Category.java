@@ -19,8 +19,8 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.homeunix.drummer.model.Category#getBudgetedAmount <em>Budgeted Amount</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Category#isIncome <em>Income</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.Category#getChildren <em>Children</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Category#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Category#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Category extends Source, Comparable<Source> {
+public interface Category extends Source , Comparable<Source>{
 	/**
 	 * Returns the value of the '<em><b>Budgeted Amount</b></em>' attribute.
 	 * <!-- begin-user-doc -->

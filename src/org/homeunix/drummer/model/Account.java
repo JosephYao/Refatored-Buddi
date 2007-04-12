@@ -8,6 +8,8 @@ package org.homeunix.drummer.model;
 
 
 
+import java.util.Date;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Account</b></em>'.
@@ -20,6 +22,7 @@ package org.homeunix.drummer.model;
  *   <li>{@link org.homeunix.drummer.model.Account#getStartingBalance <em>Starting Balance</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getCreditLimit <em>Credit Limit</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getInterestRate <em>Interest Rate</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.Account#getDueDate <em>Due Date</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.Account#getAccountType <em>Account Type</em>}</li>
  * </ul>
  * </p>
@@ -28,7 +31,7 @@ package org.homeunix.drummer.model;
  * @model
  * @generated
  */
-public interface Account extends Source, Comparable<Source> {
+public interface Account extends Source, Comparable<Source>{
 	/**
 	 * Returns the value of the '<em><b>Balance</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -132,6 +135,32 @@ public interface Account extends Source, Comparable<Source> {
 	 * @generated
 	 */
 	void setInterestRate(long value);
+
+	/**
+	 * Returns the value of the '<em><b>Due Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Due Date</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Due Date</em>' attribute.
+	 * @see #setDueDate(Date)
+	 * @see org.homeunix.drummer.model.ModelPackage#getAccount_DueDate()
+	 * @model dataType="org.homeunix.drummer.model.Date"
+	 * @generated
+	 */
+	Date getDueDate();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.Account#getDueDate <em>Due Date</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Due Date</em>' attribute.
+	 * @see #getDueDate()
+	 * @generated
+	 */
+	void setDueDate(Date value);
 
 	/**
 	 * Returns the value of the '<em><b>Account Type</b></em>' reference.

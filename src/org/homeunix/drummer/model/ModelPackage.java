@@ -373,31 +373,13 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL = 4;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_TYPES = 0;
-
-	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 1;
-
-	/**
 	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_CATEGORIES = 2;
+	int DATA_MODEL__ALL_CATEGORIES = 0;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
@@ -406,7 +388,25 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 3;
+	int DATA_MODEL__ALL_TRANSACTIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_ACCOUNTS = 2;
+
+	/**
+	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_TYPES = 3;
 
 	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
@@ -528,13 +528,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTION__RECONCILED = 9;
 
 	/**
+	 * The feature id for the '<em><b>UID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__UID = 10;
+
+	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__TO = 10;
+	int TRANSACTION__TO = 11;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
@@ -543,7 +552,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__FROM = 11;
+	int TRANSACTION__FROM = 12;
 
 	/**
 	 * The number of structural features of the '<em>Transaction</em>' class.
@@ -552,7 +561,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION_FEATURE_COUNT = 12;
+	int TRANSACTION_FEATURE_COUNT = 13;
 
 	/**
 	 * The feature id for the '<em><b>Amount</b></em>' attribute.
@@ -643,6 +652,15 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCHEDULE__RECONCILED = TRANSACTION__RECONCILED;
+
+	/**
+	 * The feature id for the '<em><b>UID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__UID = TRANSACTION__UID;
 
 	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
@@ -763,22 +781,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS = 8;
 
 	/**
-	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTIONS__TRANSACTIONS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 1;
+	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTIONS__TRANSACTIONS = 1;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
@@ -846,22 +864,22 @@ public interface ModelPackage extends EPackage {
 	int TYPES = 10;
 
 	/**
-	 * The feature id for the '<em><b>All Types</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__ALL_TYPES = 0;
-
-	/**
 	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__TYPES = 1;
+	int TYPES__TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Types</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__ALL_TYPES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Types</em>' class.
@@ -1402,6 +1420,17 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTransaction_Reconciled();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.Transaction#getUID <em>UID</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>UID</em>'.
+	 * @see org.homeunix.drummer.model.Transaction#getUID()
+	 * @see #getTransaction()
+	 * @generated
+	 */
+	EAttribute getTransaction_UID();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.homeunix.drummer.model.Transaction#getFrom <em>From</em>}'.
@@ -1964,6 +1993,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRANSACTION__RECONCILED = eINSTANCE.getTransaction_Reconciled();
+
+		/**
+		 * The meta object literal for the '<em><b>UID</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRANSACTION__UID = eINSTANCE.getTransaction_UID();
 
 		/**
 		 * The meta object literal for the '<em><b>From</b></em>' reference feature.

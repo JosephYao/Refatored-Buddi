@@ -31,8 +31,8 @@ import org.homeunix.drummer.model.Transactions;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getTransactions <em>Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getScheduledTransactions <em>Scheduled Transactions</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getTransactions <em>Transactions</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.TransactionsImpl#getAllTransactions <em>All Transactions</em>}</li>
  * </ul>
  * </p>
@@ -165,10 +165,10 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-				return ((InternalEList)getTransactions()).basicRemove(otherEnd, msgs);
 			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
 				return ((InternalEList)getScheduledTransactions()).basicRemove(otherEnd, msgs);
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				return ((InternalEList)getTransactions()).basicRemove(otherEnd, msgs);
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return basicSetAllTransactions(null, msgs);
 		}
@@ -195,10 +195,10 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-				return getTransactions();
 			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
 				return getScheduledTransactions();
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				return getTransactions();
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return getAllTransactions();
 		}
@@ -213,13 +213,13 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	@SuppressWarnings("unchecked")
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-				getTransactions().clear();
-				getTransactions().addAll((Collection)newValue);
-				return;
 			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
 				getScheduledTransactions().clear();
 				getScheduledTransactions().addAll((Collection)newValue);
+				return;
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				getTransactions().clear();
+				getTransactions().addAll((Collection)newValue);
 				return;
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				setAllTransactions((DataModel)newValue);
@@ -235,11 +235,11 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-				getTransactions().clear();
-				return;
 			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
 				getScheduledTransactions().clear();
+				return;
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				getTransactions().clear();
 				return;
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				setAllTransactions((DataModel)null);
@@ -255,10 +255,10 @@ public class TransactionsImpl extends EObjectImpl implements Transactions {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
-				return transactions != null && !transactions.isEmpty();
 			case ModelPackage.TRANSACTIONS__SCHEDULED_TRANSACTIONS:
 				return scheduledTransactions != null && !scheduledTransactions.isEmpty();
+			case ModelPackage.TRANSACTIONS__TRANSACTIONS:
+				return transactions != null && !transactions.isEmpty();
 			case ModelPackage.TRANSACTIONS__ALL_TRANSACTIONS:
 				return getAllTransactions() != null;
 		}
