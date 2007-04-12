@@ -103,19 +103,20 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
-			for (Account a : SourceController.getAccounts()) {
-				if (a.getName().equalsIgnoreCase(name.getText())){
-					JOptionPane.showMessageDialog(
-							AccountModifyDialog.this, 
-							Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
-							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
-					return;					
-				}
-			}
-
+			
 			final Account a;
 			if (source == null){
+				for (Account account : SourceController.getAccounts()) {
+					if (account.getName().equalsIgnoreCase(name.getText())){
+						JOptionPane.showMessageDialog(
+								AccountModifyDialog.this, 
+								Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
+								Translate.getInstance().get(TranslateKeys.ERROR),
+								JOptionPane.ERROR_MESSAGE);
+						return;					
+					}
+				}
+
 				a = ModelFactory.eINSTANCE.createAccount();
 				a.setAccountType((Type) pulldown.getSelectedItem());
 

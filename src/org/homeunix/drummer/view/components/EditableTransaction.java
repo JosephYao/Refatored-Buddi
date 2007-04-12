@@ -37,11 +37,10 @@ import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
-import org.homeunix.thecave.moss.gui.formatted.JCurrencyField;
+import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
 import org.homeunix.thecave.moss.gui.hint.JHintAutoCompleteTextField;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -62,7 +61,7 @@ public class EditableTransaction extends JPanel {
 	private Transaction transaction; //Set when editing existing one; null otherwise
 
 	private final JDateChooser date;
-	private final JCurrencyField amount;
+	private final JDecimalField amount;
 	private final JScrollingComboBox from;
 	private final JScrollingComboBox to;
 	private final JHintTextField number;
@@ -82,7 +81,7 @@ public class EditableTransaction extends JPanel {
 		this.parent = parent;
 
 		date = new JDateChooser(new Date(), PrefsInstance.getInstance().getPrefs().getDateFormat());
-		amount = new JCurrencyField();
+		amount = new JDecimalField();
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));

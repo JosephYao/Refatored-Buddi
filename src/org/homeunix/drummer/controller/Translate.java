@@ -158,11 +158,12 @@ public class Translate {
 			);
 		}
 		
-		//Yes, I know that this is slow, but we want the user-defined languages to 
-		// override the plugin languages, to give users the ability to change 
-		// the strings for the plugins as well.  If we always load the 
-		// base languages (which includes the user-modified languages from
-		// Languages folder as well), then we are guaranteed to always have this happen.
+		//Yes, I know that this is slow, but we want the user-defined 
+		// languages to override the plugin languages, to give users 
+		// the ability to change the strings for the plugins as well.  
+		// If we always load the base languages (which includes the 
+		// user-modified languages from Languages folder as well), 
+		// then we are guaranteed to always have this happen.
 		loadLanguage(language);
 		
 		return this;

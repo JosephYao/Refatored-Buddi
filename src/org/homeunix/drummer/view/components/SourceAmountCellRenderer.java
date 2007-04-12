@@ -65,15 +65,21 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
+			long amount = 0;
+			for (int i = 0; i < node.getChildCount(); i++){
+				DefaultMutableTreeNode n = (DefaultMutableTreeNode) node.getChildAt(i);
+				amount += ((Account) n.getUserObject()).getBalance();
+			}
+				
 			String color = null;
-			if ((t.getType().isCredit() && t.getAmount() <= 0)
-					|| (!t.getType().isCredit() && t.getAmount() < 0))
+			if ((t.getType().isCredit() && amount <= 0)
+					|| (!t.getType().isCredit() && amount < 0))
 				color = "red";
 			startTableCellRendererComponent(value, isSelected, row, column, color, false);
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");
-			sb.append(Translate.getFormattedCurrency(t.getAmount(), t.getType().isCredit()));
+			sb.append(Translate.getFormattedCurrency(amount, t.getType().isCredit()));
 
 			endTableCellRendererComponent();
 			

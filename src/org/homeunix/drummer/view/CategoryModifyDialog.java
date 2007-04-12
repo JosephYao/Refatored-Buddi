@@ -40,6 +40,15 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 		check.addActionListener(this);
 		pulldown.addActionListener(this);
 
+		pulldownModel.removeAllElements();
+		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
+
+		for (Category c : SourceController.getCategories()) {
+			if (source == null 
+					|| c.isIncome() == check.isSelected())
+				pulldownModel.addElement(c);
+		}
+		
 		if (source == null){
 			updateContent();
 			name.setText("");
@@ -69,16 +78,6 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 	}
 
 	public AbstractDialog updateContent(){
-		pulldownModel.removeAllElements();
-		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
-
-		for (Category c : SourceController.getCategories()) {
-			if (source == null 
-					|| c.isIncome() == check.isSelected())
-				pulldownModel.addElement(c);
-		}
-
-
 		return this;
 	}
 
@@ -93,22 +92,25 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
-			for (Category c : SourceController.getCategories()) {
-				if (c.getName().equalsIgnoreCase(name.getText())){
-					JOptionPane.showMessageDialog(
-							CategoryModifyDialog.this, 
-							Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
-							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
-					return;					
-				}
-			}
 
 			final Category c;
-			if (source == null)
+			if (source == null){
+				for (Category category : SourceController.getCategories()) {
+					if (category.getName().equalsIgnoreCase(name.getText())){
+						JOptionPane.showMessageDialog(
+								CategoryModifyDialog.this, 
+								Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
+								Translate.getInstance().get(TranslateKeys.ERROR),
+								JOptionPane.ERROR_MESSAGE);
+						return;					
+					}
+				}
+	
 				c = ModelFactory.eINSTANCE.createCategory();
-			else
+			}
+			else{
 				c = source;
+			}
 
 			//Check to make sure that there are no loops in the family tree...
 			if (pulldown.getSelectedItem() instanceof Category){
