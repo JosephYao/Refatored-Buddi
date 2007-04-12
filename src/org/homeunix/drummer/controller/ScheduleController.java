@@ -184,7 +184,7 @@ public class ScheduleController {
 				//If we are using the Monthly by Date frequency, 
 				// we only check if the given day is equal to the
 				// scheduled day.
-				if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString())
+				if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())
 						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
 					todayIsTheDay = true;
 				}
@@ -193,7 +193,7 @@ public class ScheduleController {
 				// scheduleDay, and if the given day is within the first week.
 				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
 				// we add 1 to our stored day before comparing it.
-				else if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
 						&& tempCal.get(Calendar.DAY_OF_MONTH) <= 7){
 					todayIsTheDay = true;
@@ -202,7 +202,7 @@ public class ScheduleController {
 				// the number of the day.
 				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
 				// we add 1 to our stored day before comparing it.
-				else if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
 					todayIsTheDay = true;
 				}
@@ -211,18 +211,18 @@ public class ScheduleController {
 				// week between each scheduled transaction.
 				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
 				// we add 1 to our stored day before comparing it.
-				else if (s.getFrequencyType().equals(TranslateKeys.BIWEEKLY.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
 						&& (DateUtil.daysBetween(lastDayCreated, tempDate) > 13)){
 					todayIsTheDay = true;
 					lastDayCreated = (Date) tempDate.clone();
 				}
 				//Every day - it's obvious enough even for a monkey!
-				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_DAY.toString())){
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY.toString())){
 					todayIsTheDay = true;
 				}
 				//Every weekday - all days but Saturday and Sunday.
-				else if (s.getFrequencyType().equals(TranslateKeys.EVERY_WEEKDAY.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString())
 						&& (tempCal.get(Calendar.DAY_OF_WEEK) < Calendar.SATURDAY)
 						&& (tempCal.get(Calendar.DAY_OF_WEEK) > Calendar.SUNDAY)){
 					todayIsTheDay = true;
@@ -231,7 +231,7 @@ public class ScheduleController {
 				// First, we check the frequency type and the day.
 				// If these match, we do out bit bashing to determine
 				// if the week is correct.
-				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
 					if (Const.DEVEL) {
 						Log.debug("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
@@ -257,7 +257,7 @@ public class ScheduleController {
 				// First, we check the frequency type and the day.
 				// If these match, we do out bit bashing to determine
 				// if the month is correct.
-				else if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())
+				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString())
 						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
 					int months = s.getScheduleMonth();
 					//The month mask should be 2 ^ MONTH NUMBER,

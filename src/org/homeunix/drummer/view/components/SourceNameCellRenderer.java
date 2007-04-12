@@ -47,7 +47,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
 					&& (a.getInterestRate() != 0)){
 				sb.append(" (")
-				.append(Formatter.getInstance().getDecimalFormat().format(((double) a.getInterestRate()) / 100))
+				.append(Formatter.getDecimalFormat().format(((double) a.getInterestRate()) / 100))
 				.append("%)");
 			}
 			endTableCellRendererComponent();

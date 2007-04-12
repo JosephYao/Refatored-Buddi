@@ -315,7 +315,7 @@ public class LanguageEditor extends JDialog {
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		final JButton cancel = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
-		final JButton help = new JButton(Translate.getInstance().get(TranslateKeys.HELP));
+		final JButton help = new JButton(Translate.getInstance().get(TranslateKeys.MENU_HELP));
 
 		ok.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {

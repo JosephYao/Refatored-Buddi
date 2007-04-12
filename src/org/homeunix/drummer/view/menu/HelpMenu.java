@@ -30,18 +30,18 @@ public class HelpMenu extends JScreenMenu {
 		// the OS (like on Mac OS X), then append it to our menu
 
 		
-		this.setText(Translate.getInstance().get(TranslateKeys.HELP));
+		this.setText(Translate.getInstance().get(TranslateKeys.MENU_HELP));
 		
-		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BUDDI_HELP));
+		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_HELP_HELP));
 		final AboutJMenuItem about = Application.getInstance().getAboutJMenuItem();
 		
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
-		about.setText(Translate.getInstance().get(TranslateKeys.ABOUT_MENU_ITEM));
+		about.setText(Translate.getInstance().get(TranslateKeys.MENU_HELP_ABOUT));
 		
-		showHelp.setActionCommand(TranslateKeys.HELP.toString());
-		about.setActionCommand(TranslateKeys.ABOUT_MENU_ITEM.toString());
+		showHelp.setActionCommand(TranslateKeys.MENU_HELP.toString());
+		about.setActionCommand(TranslateKeys.MENU_HELP_ABOUT.toString());
 
 		showHelp.addActionListener(controller);
 		about.addActionListener(controller);

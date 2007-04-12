@@ -24,13 +24,13 @@ public class WindowMenu extends JScreenMenu {
 	public WindowMenu(AbstractFrame frame) {
 		controller = new WindowMenuController(frame);
 		
-		this.setText(Translate.getInstance().get(TranslateKeys.WINDOW));
+		this.setText(Translate.getInstance().get(TranslateKeys.MENU_WINDOW));
 		
-		final JScreenMenuItem minimize = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MINIMIZE));
-		final JScreenMenuItem openMainWindow = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MAIN_BUDDI_WINDOW));
+		final JScreenMenuItem minimize = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_WINDOW_MINIMIZE));
+		final JScreenMenuItem openMainWindow = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_WINDOW_MAIN_WINDOW));
 
-		minimize.setActionCommand(TranslateKeys.MINIMIZE.toString());
-		openMainWindow.setActionCommand(TranslateKeys.MAIN_BUDDI_WINDOW.toString());
+		minimize.setActionCommand(TranslateKeys.MENU_WINDOW_MINIMIZE.toString());
+		openMainWindow.setActionCommand(TranslateKeys.MENU_WINDOW_MAIN_WINDOW.toString());
 
 		minimize.addActionListener(controller);
 		openMainWindow.addActionListener(controller);

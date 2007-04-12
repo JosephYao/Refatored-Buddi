@@ -146,7 +146,7 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 	
 	public AbstractDialog loadSource(SourceType source){
 		this.source = source;
-		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
+		this.setTitle(Translate.getInstance().get(TranslateKeys.MENU_EDIT) + " " + getType());
 		return this;
 	}
 	

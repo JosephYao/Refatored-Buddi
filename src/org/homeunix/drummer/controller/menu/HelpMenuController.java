@@ -19,7 +19,7 @@ public class HelpMenuController implements ActionListener {
 	public final static long serialVersionUID = 0;
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(TranslateKeys.HELP.toString())){
+		if (e.getActionCommand().equals(TranslateKeys.MENU_HELP.toString())){
 			try{
 				File localHelp = new File(
 						Const.HELP_FOLDER 
@@ -45,7 +45,7 @@ public class HelpMenuController implements ActionListener {
 				Log.error(ex);
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.ABOUT_MENU_ITEM.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_HELP_ABOUT.toString())){
 			new AboutDialog().openWindow();
 		}
 		else {

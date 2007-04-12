@@ -54,7 +54,6 @@ import org.homeunix.drummer.util.LanguageEditor;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 public class PreferencesDialog extends AbstractBuddiDialog {
@@ -525,8 +524,6 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			}
 
 			PrefsInstance.getInstance().savePrefs();
-
-			Formatter.getInstance().setDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());				
 
 			if (needRestart){
 				int retValue = JOptionPane.showConfirmDialog(

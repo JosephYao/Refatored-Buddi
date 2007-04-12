@@ -22,11 +22,11 @@ public class WindowMenuController implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(TranslateKeys.MINIMIZE.toString())){
+		if (e.getActionCommand().equals(TranslateKeys.MENU_WINDOW_MINIMIZE.toString())){
 			if (frame != null)
 				frame.setExtendedState(JFrame.ICONIFIED);
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.MAIN_BUDDI_WINDOW.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_WINDOW_MAIN_WINDOW.toString())){
 			if (!MainFrame.getInstance().isVisible())
 				MainFrame.getInstance().setVisible(true);
 		}

@@ -16,6 +16,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -89,12 +90,12 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		sb.append("<html><table width='" + (width - 200) + "px'><tr><td colspan='4' width='20%'>");
 //		sb.append("<html><table width='500px'><tr><td colspan='4' width='20%'>");
 		if (transaction != null) {
-			sb.append(Formatter.getInstance().getDateFormat().format(transaction.getDate()));
+			sb.append(FormatterWrapper.getDateFormat().format(transaction.getDate()));
 		}
 		
 		sb.append("</td><td colspan='16' width='80%'>");
 		if (transaction != null) {
-			sb.append(Formatter.getInstance().getLengthFormat(width / 9).format(transaction.getDescription()));
+			sb.append(Formatter.getLengthFormat(width / 9).format(transaction.getDescription()));
 		}
 		else {
 			sb.append("<font color='gray'>")
@@ -105,14 +106,14 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		sb.append("</td></tr><tr><td colspan='1' width='5%'>");
 		if (transaction != null){
 			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.CLEARED_SHORT) + " </font>" : "  "));
-				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT) + " </font>" : ""));
+				sb.append((transaction.isCleared() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.SHORT_CLEARED) + " </font>" : "  "));
+				sb.append((transaction.isReconciled() ? "<font color='green'>" + Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED) + " </font>" : ""));
 			}
 		}
 		
 		sb.append("</td><td colspan='9' width='45%'>");
 		if (transaction != null){
-			sb.append(Formatter.getInstance().getLengthFormat(width / 16).format(
+			sb.append(Formatter.getLengthFormat(width / 16).format(
 					transaction.getFrom() 
 					+ " " 
 					+ Translate.getInstance().get(TranslateKeys.TO)

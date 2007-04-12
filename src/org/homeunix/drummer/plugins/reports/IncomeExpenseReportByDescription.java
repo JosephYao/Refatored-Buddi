@@ -15,9 +15,9 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
-import org.homeunix.thecave.moss.util.Formatter;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -74,7 +74,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 
 				for (Transaction t : descriptions.get(s)) {
 					sb.append("<tr><td>");
-					sb.append(Formatter.getInstance().getDateFormat().format(t.getDate()));
+					sb.append(FormatterWrapper.getDateFormat().format(t.getDate()));
 					
 					sb.append("</td><td>");
 					sb.append(Translate.getInstance().get(t.getFrom().toString()));

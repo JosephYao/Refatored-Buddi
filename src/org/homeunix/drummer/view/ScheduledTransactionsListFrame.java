@@ -43,7 +43,7 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 		
 		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
 		
 		list = new JList();
@@ -81,7 +81,7 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		
-		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
+		this.setTitle(Translate.getInstance().get(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel);
 		this.getRootPane().setDefaultButton(doneButton);

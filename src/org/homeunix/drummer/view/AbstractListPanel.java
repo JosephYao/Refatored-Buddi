@@ -59,7 +59,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree = new JXTreeTable(treeModel);
 
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
 		openButton = new JButton(Translate.getInstance().get(TranslateKeys.OPEN));
 		balanceLabel = new JLabel();

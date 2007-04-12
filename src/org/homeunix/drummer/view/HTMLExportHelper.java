@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.util.Log;
 
 public class HTMLExportHelper {
@@ -76,9 +76,9 @@ public class HTMLExportHelper {
 
 		if (startDate != null && endDate != null){
 			sb.append("<h2>"); 
-			sb.append(Formatter.getInstance().getDateFormat().format(startDate));
+			sb.append(FormatterWrapper.getDateFormat().format(startDate));
 			sb.append(" - ");
-			sb.append(Formatter.getInstance().getDateFormat().format(endDate));
+			sb.append(FormatterWrapper.getDateFormat().format(endDate));
 			sb.append("</h2>");
 		}
 

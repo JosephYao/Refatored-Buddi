@@ -32,7 +32,6 @@ import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
@@ -115,8 +114,8 @@ public class Buddi {
 
 		//Ensure Formatter is set up properly
 		// TODO make a better formatting class
-		Formatter.getInstance().setDateFormat(
-				PrefsInstance.getInstance().getPrefs().getDateFormat());
+//		Formatter.getInstance().setDateFormat(
+//				PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);

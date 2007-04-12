@@ -22,13 +22,13 @@ public class EditMenuController implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(TranslateKeys.TOGGLE_RECONCILED.toString())){
+		if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_TOGGLE_RECONCILED.toString())){
 			((TransactionsFrame) frame).toggleReconciled();
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.TOGGLE_CLEARED.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_TOGGLE_CLEARED.toString())){
 			((TransactionsFrame) frame).toggleCleared();
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.EDIT_SCHEDULED_ACTIONS.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS.toString())){
 			new ScheduledTransactionsListFrame().openWindow();
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.CLEAR.toString())){
@@ -37,7 +37,7 @@ public class EditMenuController implements ActionListener {
 		else if (e.getActionCommand().equals(TranslateKeys.RECORD.toString())){
 			((TransactionsFrame) frame).clickRecord();
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.PREFERENCES_MENU_ITEM.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_PREFERENCES.toString())){
 			new PreferencesDialog().openWindow();
 		}
 		else {

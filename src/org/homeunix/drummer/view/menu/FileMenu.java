@@ -30,33 +30,33 @@ public class FileMenu extends JScreenMenu {
 	public FileMenu(AbstractBuddiFrame frame) {
 		controller = new FileMenuController(frame);
 		
-		this.setText(Translate.getInstance().get(TranslateKeys.FILE));
+		this.setText(Translate.getInstance().get(TranslateKeys.MENU_FILE));
 		
 		//File menu items
-		final JScreenMenuItem openFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.OPEN_FILE_MENU));
-		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.NEW_FILE_MENU));
-		final JScreenMenuItem saveAsFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.SAVE_AS_FILE_MENU));
-		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.BACKUP_FILE_MENU));
-		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RESTORE_FILE_MENU));
-		final JScreenMenuItem encrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE));
-		final JScreenMenuItem decrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE));
-		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.PRINT));
-		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLOSE_WINDOW));
-		final JScreenMenu exports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.EXPORT));
-		final JScreenMenu imports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.IMPORT));
+		final JScreenMenuItem openFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_OPEN));
+		final JScreenMenuItem newFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_NEW));
+		final JScreenMenuItem saveAsFile = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_SAVE_AS));
+		final JScreenMenuItem backup = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_BACKUP));
+		final JScreenMenuItem restore = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_RESTORE));
+		final JScreenMenuItem encrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_ENCRYPT));
+		final JScreenMenuItem decrypt = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_DECRYPT));
+		final JScreenMenuItem print = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_PRINT));
+		final JScreenMenuItem close = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_FILE_CLOSE_WINDOW));
+		final JScreenMenu exports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.MENU_FILE_EXPORT));
+		final JScreenMenu imports = new JScreenMenu(Translate.getInstance().get(TranslateKeys.MENU_FILE_IMPORT));
 		final QuitJMenuItem quit = Application.getInstance().getQuitJMenuItem();
-		quit.setText(Translate.getInstance().get(TranslateKeys.QUIT_MENU_ITEM));
+		quit.setText(Translate.getInstance().get(TranslateKeys.MENU_FILE_QUIT));
 		
-		openFile.setActionCommand(TranslateKeys.OPEN_FILE_MENU.toString());
-		newFile.setActionCommand(TranslateKeys.NEW_FILE_MENU.toString());
-		saveAsFile.setActionCommand(TranslateKeys.SAVE_AS_FILE_MENU.toString());
-		backup.setActionCommand(TranslateKeys.BACKUP_FILE_MENU.toString());
-		restore.setActionCommand(TranslateKeys.RESTORE_FILE_MENU.toString());
-		encrypt.setActionCommand(TranslateKeys.ENCRYPT_DATA_FILE.toString());
-		decrypt.setActionCommand(TranslateKeys.DECRYPT_DATA_FILE.toString());
-		print.setActionCommand(TranslateKeys.PRINT.toString());
-		close.setActionCommand(TranslateKeys.CLOSE_WINDOW.toString());
-		quit.setActionCommand(TranslateKeys.QUIT_MENU_ITEM.toString());
+		openFile.setActionCommand(TranslateKeys.MENU_FILE_OPEN.toString());
+		newFile.setActionCommand(TranslateKeys.MENU_FILE_NEW.toString());
+		saveAsFile.setActionCommand(TranslateKeys.MENU_FILE_SAVE_AS.toString());
+		backup.setActionCommand(TranslateKeys.MENU_FILE_BACKUP.toString());
+		restore.setActionCommand(TranslateKeys.MENU_FILE_RESTORE.toString());
+		encrypt.setActionCommand(TranslateKeys.MENU_FILE_ENCRYPT.toString());
+		decrypt.setActionCommand(TranslateKeys.MENU_FILE_DECRYPT.toString());
+		print.setActionCommand(TranslateKeys.MENU_FILE_PRINT.toString());
+		close.setActionCommand(TranslateKeys.MENU_FILE_CLOSE_WINDOW.toString());
+		quit.setActionCommand(TranslateKeys.MENU_FILE_QUIT.toString());
 		
 		openFile.addActionListener(controller);
 		newFile.addActionListener(controller);

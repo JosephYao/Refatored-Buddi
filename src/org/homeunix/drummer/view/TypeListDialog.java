@@ -42,7 +42,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 
 		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
 		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.EDIT));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
 
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

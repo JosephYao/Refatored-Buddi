@@ -20,7 +20,6 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.util.Formatter;
 
 public class ExportCSV implements BuddiExportPlugin {
 
@@ -57,7 +56,7 @@ public class ExportCSV implements BuddiExportPlugin {
 			sb.append("\"").append(transaction.getDescription()).append("\",");
 			sb.append("\"").append(transaction.getNumber()).append("\",");
 			sb.append("\"").append(transaction.getMemo().replaceAll("\n", " ")).append("\",");
-			sb.append("\"").append(Formatter.getInstance().getDecimalFormat().format(transaction.getAmount() / 100.0)).append("\",");					
+			sb.append("\"").append(Translate.getFormattedCurrency(transaction.getAmount(), false)).append("\",");					
 			sb.append("\"").append((transaction.getFrom() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getFrom().getName())).append("\",");
 			sb.append("\"").append((transaction.getTo() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getTo().getName())).append("\"");							
 			sb.append("\n");

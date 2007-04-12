@@ -115,7 +115,7 @@ public class AboutDialog extends AbstractBuddiDialog {
 		this.setLayout(new BorderLayout());
 		this.getRootPane().setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 		this.getRootPane().setDefaultButton(okButton);
-		this.setTitle(Translate.getInstance().get(TranslateKeys.ABOUT_MENU_ITEM));
+		this.setTitle(Translate.getInstance().get(TranslateKeys.MENU_HELP_ABOUT));
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(inlayPanel, BorderLayout.CENTER);
 	}

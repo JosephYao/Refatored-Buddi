@@ -84,11 +84,11 @@ public class EditableTransaction extends JPanel {
 		amount = new JDecimalField();
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
-		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.DEFAULT_NUMBER));
-		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.DEFAULT_DESCRIPTION));
-		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.DEFAULT_MEMO));
-		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.CLEARED_SHORT));
-		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.RECONCILED_SHORT));
+		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.HINT_NUMBER));
+		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MEMO));
+		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED));
+		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED));
 
 		components = new Vector<JComponent>();
 

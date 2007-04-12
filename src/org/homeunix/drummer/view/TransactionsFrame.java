@@ -30,9 +30,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.drummer.controller.TransactionController;
+import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelFactory;
@@ -432,7 +432,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			.append(": ")
 			.append(Translate.getFormattedCurrency(amountLeft, false))
 			.append(" (")
-			.append(Formatter.getInstance().getDecimalFormat().format(percentLeft))
+			.append(Formatter.getDecimalFormat().format(percentLeft))
 			.append("%)");
 			if (amountLeft < 0)
 				sb.append("</font></html>");

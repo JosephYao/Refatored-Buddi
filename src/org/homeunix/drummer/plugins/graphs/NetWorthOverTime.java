@@ -59,7 +59,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 //				barData.addValue((Number) new Double(accounts.get(a) / 100.0), Formatter.getInstance().getDateFormat().format(d), a.getName());
 				total += accounts.get(a);
 			}
-			barData.addValue((Number) new Double(total / 100.0), Translate.getInstance().get(TranslateKeys.NET_WORTH), Formatter.getInstance().getShortDateFormat().format(d));
+			barData.addValue((Number) new Double(total / 100.0), Translate.getInstance().get(TranslateKeys.NET_WORTH), Formatter.getDateFormat("MM/dd").format(d));
 		}
 		
 		

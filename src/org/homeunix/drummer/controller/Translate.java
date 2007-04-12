@@ -7,6 +7,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -117,6 +118,14 @@ public class Translate {
 			);
 		}
 		
+		//Set the locale
+		String localeLanguage = translations.getProperty(TranslateKeys.LOCALE_LANGUAGE_CODE.toString());
+		String localeCountry = translations.getProperty(TranslateKeys.LOCALE_COUNTRY_CODE.toString());
+		
+		if (localeLanguage == null) localeLanguage = "";
+		if (localeCountry == null) localeCountry = "";
+		Locale.setDefault(new Locale(localeLanguage, localeCountry));
+		
 //		for (Object o : translations.keySet()) {
 //			existingKeys.add(o.toString());
 //		}
@@ -225,7 +234,7 @@ public class Translate {
 	public static String getFormattedCurrency(long value, boolean isCredit){
 		return (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
 		+ (value != 0 && (isCredit ^ value < 0) ? "-" : "")
-		+ Formatter.getInstance().getDecimalFormat().format(Math.abs((double) value / 100.0))
+		+ Formatter.getDecimalFormat().format(Math.abs((double) value / 100.0))
 		+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
 	}
 }

@@ -101,30 +101,30 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 
 		scheduleName = new JHintTextField(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTION_NAME));
 		
-		message = new JHintTextArea(Translate.getInstance().get(TranslateKeys.MESSAGE_HINT));
+		message = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MESSAGE));
 		message.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_SCHEDULED_MESSAGE));
 		JScrollPane messageScroller = new JScrollPane(message);
 		messageScroller.setPreferredSize(new Dimension(100, 100));
 		
 		//Create the check boxes for Multiple Weeks each Month.
-		multipleWeeksMonthlyFirstWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.FIRST_WEEK.toString()));
-		multipleWeeksMonthlySecondWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.SECOND_WEEK.toString()));
-		multipleWeeksMonthlyThirdWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.THIRD_WEEK.toString()));
-		multipleWeeksMonthlyFourthWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.FOURTH_WEEK.toString()));
+		multipleWeeksMonthlyFirstWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_WEEK_FIRST.toString()));
+		multipleWeeksMonthlySecondWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_WEEK_SECOND.toString()));
+		multipleWeeksMonthlyThirdWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_WEEK_THIRD.toString()));
+		multipleWeeksMonthlyFourthWeek = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_WEEK_FOURTH.toString()));
 
 		//Create the check boxes for Multiple Months each Year.
-		multipleMonthsYearlyJanuary = new JCheckBox(Translate.getInstance().get(TranslateKeys.JANUARY.toString()));
-		multipleMonthsYearlyFebruary = new JCheckBox(Translate.getInstance().get(TranslateKeys.FEBRUARY.toString()));
-		multipleMonthsYearlyMarch = new JCheckBox(Translate.getInstance().get(TranslateKeys.MARCH.toString()));
-		multipleMonthsYearlyApril = new JCheckBox(Translate.getInstance().get(TranslateKeys.APRIL.toString()));
-		multipleMonthsYearlyMay = new JCheckBox(Translate.getInstance().get(TranslateKeys.MAY.toString()));
-		multipleMonthsYearlyJune = new JCheckBox(Translate.getInstance().get(TranslateKeys.JUNE.toString()));
-		multipleMonthsYearlyJuly = new JCheckBox(Translate.getInstance().get(TranslateKeys.JULY.toString()));
-		multipleMonthsYearlyAugust = new JCheckBox(Translate.getInstance().get(TranslateKeys.AUGUST.toString()));
-		multipleMonthsYearlySeptember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SEPTEMBER.toString()));
-		multipleMonthsYearlyOctober = new JCheckBox(Translate.getInstance().get(TranslateKeys.OCTOBER.toString()));
-		multipleMonthsYearlyNovember = new JCheckBox(Translate.getInstance().get(TranslateKeys.NOVEMEBER.toString()));
-		multipleMonthsYearlyDecember = new JCheckBox(Translate.getInstance().get(TranslateKeys.DECEMBER.toString()));
+		multipleMonthsYearlyJanuary = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_JANUARY.toString()));
+		multipleMonthsYearlyFebruary = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_FEBRUARY.toString()));
+		multipleMonthsYearlyMarch = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_MARCH.toString()));
+		multipleMonthsYearlyApril = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_APRIL.toString()));
+		multipleMonthsYearlyMay = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_MAY.toString()));
+		multipleMonthsYearlyJune = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_JUNE.toString()));
+		multipleMonthsYearlyJuly = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_JULY.toString()));
+		multipleMonthsYearlyAugust = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_AUGUST.toString()));
+		multipleMonthsYearlySeptember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_SEPTEMBER.toString()));
+		multipleMonthsYearlyOctober = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_OCTOBER.toString()));
+		multipleMonthsYearlyNovember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_NOVEMEBER.toString()));
+		multipleMonthsYearlyDecember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_DECEMBER.toString()));
 
 		//Add all the check boxes to a vector for easy iteration 
 		// when enabling / disabling them
@@ -148,72 +148,72 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		
 		//This is where we give the Frequency dropdown options
 		Vector<String> frequencyPulldownChoices = new Vector<String>();
-		frequencyPulldownChoices.add(TranslateKeys.MONTHLY_BY_DATE.toString());
-		frequencyPulldownChoices.add(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString());
-		frequencyPulldownChoices.add(TranslateKeys.WEEKLY.toString());
-		frequencyPulldownChoices.add(TranslateKeys.BIWEEKLY.toString());
-		frequencyPulldownChoices.add(TranslateKeys.EVERY_DAY.toString());
-		frequencyPulldownChoices.add(TranslateKeys.EVERY_WEEKDAY.toString());		
-		frequencyPulldownChoices.add(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString());
-		frequencyPulldownChoices.add(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString());		
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
+		frequencyPulldownChoices.add(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
 		frequencyPulldown = new JScrollingComboBox(frequencyPulldownChoices);
 		
 		Vector<String> weeklyDayChooserChoices = new Vector<String>();
-		weeklyDayChooserChoices.add(TranslateKeys.SUNDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.MONDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.TUESDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.WEDNESDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.THURSDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.FRIDAY.toString());
-		weeklyDayChooserChoices.add(TranslateKeys.SATURDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_SUNDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_MONDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_TUESDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_WEDNESDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_THURSDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FRIDAY.toString());
+		weeklyDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_SATURDAY.toString());
 		weeklyDayChooser = new JScrollingComboBox(weeklyDayChooserChoices);
 
 		//We use the same one for BiWeekly as Weekly.
 		biWeeklyDayChooser = new JScrollingComboBox(weeklyDayChooserChoices);
 		
 		Vector<String> monthlyDateChooserChoices = new Vector<String>();
-		monthlyDateChooserChoices.add(TranslateKeys.FIRST.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.SECOND.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.THIRD.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.FOURTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.FIFTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.SIXTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.SEVENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.EIGHTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.NINETH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TENTHS.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.ELEVENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWELFTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.THIRTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.FOURTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.FIFTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.SIXTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.SEVENTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.EIGHTEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.NINETEENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTIETH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYFIRST.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYSECOND.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYTHIRD.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYFOURTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYFIFTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYSIXTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYSEVENTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYEIGHTH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.TWENTYNINETH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.THIRTIETH.toString());
-		monthlyDateChooserChoices.add(TranslateKeys.THIRTYFIRST.toString());		
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_FIRST.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_SECOND.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_THIRD.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_FOURTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_FIFTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_SIXTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_SEVENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_EIGHTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_NINETH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_ELEVENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWELFTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_THIRTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_FOURTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_FIFTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_SIXTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_SEVENTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_EIGHTEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_NINETEENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTIETH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYFIRST.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYSECOND.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYTHIRD.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYFOURTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYFIFTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYSIXTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYSEVENTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYEIGHTH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_TWENTYNINETH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_THIRTIETH.toString());
+		monthlyDateChooserChoices.add(TranslateKeys.SCHEDULE_DATE_THIRTYFIRST.toString());		
 
 		monthlyDateChooser = new JScrollingComboBox(monthlyDateChooserChoices);
 		
 		Vector<String> monthlyFirstDayChooserChoices = new Vector<String>();
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_SUNDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_MONDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_TUESDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_WEDNESDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_THURSDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_FRIDAY.toString());
-		monthlyFirstDayChooserChoices.add(TranslateKeys.FIRST_SATURDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_SUNDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_MONDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_TUESDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_WEDNESDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_THURSDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_FRIDAY.toString());
+		monthlyFirstDayChooserChoices.add(TranslateKeys.SCHEDULE_DAY_FIRST_SATURDAY.toString());
 		monthlyFirstDayChooser = new JScrollingComboBox(monthlyFirstDayChooserChoices);
 		
 		//We already have a vector defined with Sunday, Monday, etc
@@ -270,7 +270,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		monthly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_ON_THE)));
 		monthly.add(monthlyDateChooser);
 		monthly.add(new JLabel(Translate.getInstance().get(TranslateKeys.OF_EACH_MONTH)));
-		cardHolder.add(monthly, TranslateKeys.MONTHLY_BY_DATE.toString());
+		cardHolder.add(monthly, TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
 
 
 		//One Day Every Month Card
@@ -278,23 +278,23 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		oneDayMonthly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_ON_THE)));
 		oneDayMonthly.add(monthlyFirstDayChooser);
 		oneDayMonthly.add(new JLabel(Translate.getInstance().get(TranslateKeys.OF_EACH_MONTH)));
-		cardHolder.add(oneDayMonthly, TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString());
+		cardHolder.add(oneDayMonthly, TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString());
 
 		//Weekly card
 		JPanel weekly = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		weekly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_EVERY)));
 		weekly.add(weeklyDayChooser);
-		cardHolder.add(weekly, TranslateKeys.WEEKLY.toString());
+		cardHolder.add(weekly, TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString());
 		
 		//BiWeekly card
 		JPanel biweekly = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		biweekly.add(new JLabel(Translate.getInstance().get(TranslateKeys.AND_REPEATING_EVERY)));
 		biweekly.add(biWeeklyDayChooser);
-		cardHolder.add(biweekly, TranslateKeys.BIWEEKLY.toString());
+		cardHolder.add(biweekly, TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString());
 		
 		//Blank Panel - for Every Weekday, and others with no config options
-		cardHolder.add(new JPanel(), TranslateKeys.EVERY_WEEKDAY.toString());
-		cardHolder.add(new JPanel(), TranslateKeys.EVERY_DAY.toString());
+		cardHolder.add(new JPanel(), TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString());
+		cardHolder.add(new JPanel(), TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY.toString());
 		
 		//Multiple weeks each month card
 		JPanel multipleWeeksMonthly = new JPanel(new BorderLayout());
@@ -309,7 +309,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		multipleWeeksMonthlyCheckboxes.add(multipleWeeksMonthlyThirdWeek);
 		multipleWeeksMonthlyCheckboxes.add(multipleWeeksMonthlyFourthWeek);
 		multipleWeeksMonthly.add(multipleWeeksMonthlyCheckboxes, BorderLayout.EAST);
-		cardHolder.add(multipleWeeksMonthly, TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString());
+		cardHolder.add(multipleWeeksMonthly, TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
 
 		//Multiple months each year card
 		JPanel multipleMonthsYearly = new JPanel(new BorderLayout());
@@ -332,7 +332,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		multipleMonthsYearlyCheckboxes.add(multipleMonthsYearlyNovember);
 		multipleMonthsYearlyCheckboxes.add(multipleMonthsYearlyDecember);
 		multipleMonthsYearly.add(multipleMonthsYearlyCheckboxes, BorderLayout.EAST);
-		cardHolder.add(multipleMonthsYearly, TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString());
+		cardHolder.add(multipleMonthsYearly, TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
 
 		
 		//Done all the fancy stuff... now just put all the panels together
@@ -657,17 +657,17 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			// schedule we're following.
 			startDateChooser.setDate(s.getStartDate());
 			frequencyPulldown.setSelectedItem(s.getFrequencyType());
-			if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString()))
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString()))
 				monthlyDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
-			if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString()))			
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString()))			
 				monthlyFirstDayChooser.setSelectedIndex(s.getScheduleDay());
-			if (s.getFrequencyType().equals(TranslateKeys.WEEKLY.toString()))
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString()))
 				weeklyDayChooser.setSelectedIndex(s.getScheduleDay());
-			if (s.getFrequencyType().equals(TranslateKeys.BIWEEKLY.toString()))
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString()))
 				biWeeklyDayChooser.setSelectedIndex(s.getScheduleDay());
-			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString()))
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString()))
 				multipleWeeksDayChooser.setSelectedIndex(s.getScheduleDay());
-			if (s.getFrequencyType().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString()))
+			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString()))
 				multipleMonthsDateChooser.setSelectedIndex(s.getScheduleDay() - 1);
 
 			//Load the checkmarks, using bit bashing logic
@@ -698,31 +698,31 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 	}
 
 	private Integer getScheduleDay(){
-		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MONTHLY_BY_DATE.toString())){
+		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())){
 			//To make it nicer to read in the data file, 
 			// we add 1 to the index.  Don't forget to 
 			// subtract one when we load it!
 			return monthlyDateChooser.getSelectedIndex() + 1;
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MONTHLY_BY_DAY_OF_WEEK.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString())){
 			return monthlyFirstDayChooser.getSelectedIndex();
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.WEEKLY.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString())){
 			return weeklyDayChooser.getSelectedIndex();
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.BIWEEKLY.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString())){
 			return biWeeklyDayChooser.getSelectedIndex();
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.EVERY_DAY.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY.toString())){
 			return 0; //We don't use scheduleDay if it is every day
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.EVERY_WEEKDAY.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString())){
 			return 0; //We don't use scheduleDay if it is every weekday
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MULTIPLE_WEEKS_EVERY_MONTH.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString())){
 			return multipleWeeksDayChooser.getSelectedIndex();
 		}
-		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())){
+		else if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString())){
 			//To make it nicer to read in the data file, we add 1 
 			// to the index.  Don't forget to subtract one when we load it!
 			return multipleMonthsDateChooser.getSelectedIndex() + 1;
@@ -787,7 +787,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 	 */
 	private Integer getScheduleMonth()
 	{
-		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.MULTIPLE_MONTHS_EVERY_YEAR.toString())){
+		if (frequencyPulldown.getSelectedItem().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString())){
 			int value = 0;
 
 			value += (multipleMonthsYearlyJanuary.isSelected() ? 1 : 0 );

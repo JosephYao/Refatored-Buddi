@@ -28,22 +28,22 @@ public class EditMenu extends JScreenMenu {
 	public EditMenu(AbstractFrame frame) {
 		controller = new EditMenuController(frame);
 		
-		this.setText(Translate.getInstance().get(TranslateKeys.EDIT));
+		this.setText(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
 		
-		final JScreenMenuItem toggleReconciled = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_RECONCILED));
-		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.TOGGLE_CLEARED));
-		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.EDIT_SCHEDULED_ACTIONS));
-		final JScreenMenuItem clearTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.CLEAR) + " / " + Translate.getInstance().get(TranslateKeys.NEW));
-		final JScreenMenuItem recordTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.RECORD) + " / " + Translate.getInstance().get(TranslateKeys.UPDATE));
+		final JScreenMenuItem toggleReconciled = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_TOGGLE_RECONCILED));
+		final JScreenMenuItem toggleCleared = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_TOGGLE_CLEARED));
+		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS));
+		final JScreenMenuItem clearTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_CLEAR_NEW));
+		final JScreenMenuItem recordTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_RECORD_UPDATE));
 		final PreferencesJMenuItem preferences = Application.getInstance().getPreferencesJMenuItem();
-		preferences.setText(Translate.getInstance().get(TranslateKeys.PREFERENCES_MENU_ITEM));
+		preferences.setText(Translate.getInstance().get(TranslateKeys.MENU_EDIT_PREFERENCES));
 
-		toggleReconciled.setActionCommand(TranslateKeys.TOGGLE_RECONCILED.toString());
-		toggleCleared.setActionCommand(TranslateKeys.TOGGLE_CLEARED.toString());
-		editAutomaticTransactions.setActionCommand(TranslateKeys.EDIT_SCHEDULED_ACTIONS.toString());
-		clearTransaction.setActionCommand(TranslateKeys.CLEAR.toString());
-		recordTransaction.setActionCommand(TranslateKeys.RECORD.toString());
-		preferences.setActionCommand(TranslateKeys.PREFERENCES_MENU_ITEM.toString());
+		toggleReconciled.setActionCommand(TranslateKeys.MENU_EDIT_TOGGLE_RECONCILED.toString());
+		toggleCleared.setActionCommand(TranslateKeys.MENU_EDIT_TOGGLE_CLEARED.toString());
+		editAutomaticTransactions.setActionCommand(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS.toString());
+		clearTransaction.setActionCommand(TranslateKeys.MENU_EDIT_CLEAR_NEW.toString());
+		recordTransaction.setActionCommand(TranslateKeys.MENU_EDIT_RECORD_UPDATE.toString());
+		preferences.setActionCommand(TranslateKeys.MENU_EDIT_PREFERENCES.toString());
 
 		toggleReconciled.addActionListener(controller);
 		toggleCleared.addActionListener(controller);

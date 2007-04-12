@@ -32,19 +32,19 @@ public class FileMenuController implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(TranslateKeys.NEW_FILE_MENU.toString())){
+		if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_NEW.toString())){
 			File f = DocumentManager.getInstance().newFile(null);
 			if (f != null){
 				DocumentController.newFile(f);
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.OPEN_FILE_MENU.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_OPEN.toString())){
 			File f = DocumentManager.getInstance().loadFile(null);
 			if (f != null){
 				DocumentController.loadFile(f);
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.SAVE_AS_FILE_MENU.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_SAVE_AS.toString())){
 			File f = DocumentManager.getInstance().saveFile(null);
 			if (f != null){
 				if (DocumentController.saveFile(f)){
@@ -68,7 +68,7 @@ public class FileMenuController implements ActionListener {
 				}
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.BACKUP_FILE_MENU.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_BACKUP.toString())){
 			File f = DocumentManager.getInstance().saveBackupFile(null);
 			if (f != null){
 				if (DocumentController.saveFile(f)){
@@ -92,7 +92,7 @@ public class FileMenuController implements ActionListener {
 				}
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.RESTORE_FILE_MENU.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_RESTORE.toString())){
 			File oldFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			File newFile = DocumentManager.getInstance().loadBackupFile(null);
 
@@ -119,7 +119,7 @@ public class FileMenuController implements ActionListener {
 			}
 		}
 
-		else if (e.getActionCommand().equals(TranslateKeys.ENCRYPT_DATA_FILE.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_ENCRYPT.toString())){
 			if (JOptionPane.showConfirmDialog(
 					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_WARNING),
@@ -131,7 +131,7 @@ public class FileMenuController implements ActionListener {
 				DataInstance.getInstance().saveDataFile();
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.DECRYPT_DATA_FILE.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_DECRYPT.toString())){
 			if (JOptionPane.showConfirmDialog(
 					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.DECRYPT_DATA_FILE_WARNING),
@@ -143,7 +143,7 @@ public class FileMenuController implements ActionListener {
 				DataInstance.getInstance().saveDataFile();
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.PRINT.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_PRINT.toString())){
 			if (frame instanceof HTMLExport){
 				try {
 					File index = ((HTMLExport) frame).exportToHTML();
@@ -155,7 +155,7 @@ public class FileMenuController implements ActionListener {
 				}
 			}
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.CLOSE_WINDOW.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_CLOSE_WINDOW.toString())){
 			if (frame != null)
 				frame.closeWindow();
 		}

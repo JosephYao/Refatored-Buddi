@@ -26,7 +26,6 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
 import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -290,11 +289,7 @@ public class PrefsInstance {
 			}
 			catch (IOException ioe){}
 		}
-		
-		//Load formatting
-		Formatter.getInstance(
-				userPrefs.getPrefs().getDateFormat());
-		
+				
 		//Load language
 		Translate.getInstance().loadLanguage(
 				userPrefs.getPrefs().getLanguage());

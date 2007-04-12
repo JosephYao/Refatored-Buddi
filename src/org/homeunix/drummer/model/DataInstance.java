@@ -247,13 +247,13 @@ public class DataInstance {
 			// remove it after version 2.4 or so...
 			for (Schedule s : ScheduleController.getScheduledTransactions()) {
 				if (s.getFrequencyType().equals("WEEK")){
-					s.setFrequencyType(TranslateKeys.WEEKLY.toString());
-					Log.notice("Changing schedule frequency from WEEK to " + TranslateKeys.WEEKLY + " for " + s.getScheduleName());
+					s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString());
+					Log.notice("Changing schedule frequency from WEEK to " + TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY + " for " + s.getScheduleName());
 				}
 				if (s.getFrequencyType().equals("MONTH")){
-					s.setFrequencyType(TranslateKeys.MONTHLY_BY_DATE.toString());
+					s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
 					s.setScheduleDay(s.getScheduleDay() + 1); //Before, we had the first of the month represented by 0.  Now it is 1.
-					Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.MONTHLY_BY_DATE + " for " + s.getScheduleName());
+					Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for " + s.getScheduleName());
 				}
 				//This check is for those who have been following the Dev
 				// branch.  When you ran 2.1.3, it upgraded from MONTH
@@ -261,7 +261,7 @@ public class DataInstance {
 				// to the new format.  This means that if you had the date
 				// set to 1, it would try to set it to 0, which would not
 				// work.  This check will fix it.
-				if (s.getFrequencyType().equals(TranslateKeys.MONTHLY_BY_DATE.toString())){
+				if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())){
 					if (s.getScheduleDay() == 0)
 						s.setScheduleDay(1);
 				}

@@ -99,7 +99,7 @@ public class ExportQIF implements BuddiExportPlugin {
 			sb.append("\n");
 			sb.append("D").append(formatDate(account.getCreationDate()));
 			sb.append("\n");
-			sb.append("T").append(Formatter.getInstance().getDecimalFormat().format(account.getBalance()));
+			sb.append("T").append(Formatter.getDecimalFormat().format(account.getBalance()));
 			sb.append("\n");
 			sb.append("CX").append("\n");
 			sb.append("P").append("Opening Balance\n");
@@ -120,7 +120,7 @@ public class ExportQIF implements BuddiExportPlugin {
 			sb.append("\n");
 			sb.append("M").append(transaction.getMemo().replaceAll("\n", " "));
 			sb.append("\n");
-			sb.append("T").append(Formatter.getInstance().getDecimalFormat().format(transaction.getAmount() / 100.0));
+			sb.append("T").append(Formatter.getDecimalFormat().format(transaction.getAmount() / 100.0));
 			sb.append("\n");
 			sb.append("L").append((transaction.getFrom() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getFrom().getName()));
 			sb.append("\n");
