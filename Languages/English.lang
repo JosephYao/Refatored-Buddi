@@ -396,3 +396,14 @@ SUCCESSFUL_SAVE_FILE=Successfully Saved Data File.
 ACCOUNT_AND_CATEGORY_SUMMARY=Account and Budget Category Summary
 MENU_EDIT_CLEAR_NEW=Clear / New
 MENU_EDIT_RECORD_UPDATE=Record / Update
+
+CATEGORY_MODIFY_EDIT=Edit Existing Category
+CATEGORY_MODIFY_NEW=Create New Category
+ACCOUNT_MODIFY_EDIT=Edit Existing Account
+ACCOUNT_MODIFY_NEW=Create New Account
+TYPE_MODIFY_EDIT=Edit Existing Type
+TYPE_MODIFY_NEW=Create New Type
+BUTTON_EDIT=Edit
+BUTTON_NEW=New
+BUTTON_DELETE=Delete
+TYPE_MODIFY_MESSAGE_CANNOT_DELETE=Cannot delete Type.  Make sure that it\nis not currently being referenced in any Accounts.
