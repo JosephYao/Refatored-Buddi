@@ -72,16 +72,16 @@ public class DocumentManager {
 	 */
 	public DataFileWrapper chooseNewOrExistingDataFile(){
 		String[] options = {
-				Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE_OPTION),
-				Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE_OPTION),
-				Translate.getInstance().get(TranslateKeys.CANCEL),
+				Translate.getInstance().get(TranslateKeys.BUTTON_NEW_DATA_FILE),
+				Translate.getInstance().get(TranslateKeys.BUTTON_OPEN_DATA_FILE),
+				Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL),
 		};
 		File f = null;
 		while (f == null){
 			int ret = JOptionPane.showOptionDialog(
 					null, 
-					Translate.getInstance().get(TranslateKeys.NEW_OR_EXISTING_DATA_FILE),
-					Translate.getInstance().get(TranslateKeys.CHOOSE_DATASTORE_LOCATION),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_CHOOSE_NEW_OR_EXISTING_DATA_FILE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_CHOOSE_NEW_OR_EXISTING_DATA_FILE_TITLE),
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,
@@ -119,7 +119,7 @@ public class DocumentManager {
 			jfc.setFileFilter(fileFilter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.NEW_DATA_FILE));
+			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_NEW_DATA_FILE_TITLE));
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
 				//We no longer allow overwriting existing files.  If
 				// the user selects an existing file, we show an
@@ -127,7 +127,7 @@ public class DocumentManager {
 				if (jfc.getSelectedFile().exists()){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_OVER_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_OVER_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -136,7 +136,7 @@ public class DocumentManager {
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
 					JOptionPane.showMessageDialog(
 							null,
-							Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -180,7 +180,7 @@ public class DocumentManager {
 			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.OPEN_DATA_FILE));
+			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE));
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 				if (!jfc.getSelectedFile().exists()){
 					
@@ -190,14 +190,14 @@ public class DocumentManager {
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
 					JOptionPane.showMessageDialog(
 							null,
-							Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}
 				else if (!jfc.getSelectedFile().canRead()){
 					JOptionPane.showMessageDialog(
 							null,
-							Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -241,7 +241,7 @@ public class DocumentManager {
 			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.SAVE_DATA_FILE));
+			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE));
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
 				//We no longer allow overwriting existing files.  If
 				// the user selects an existing file, we show an
@@ -249,7 +249,7 @@ public class DocumentManager {
 				if (jfc.getSelectedFile().exists()){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_OVER_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_OVER_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -258,7 +258,7 @@ public class DocumentManager {
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
 					JOptionPane.showMessageDialog(
 							null,
-							Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
 							JOptionPane.ERROR_MESSAGE);
 				}

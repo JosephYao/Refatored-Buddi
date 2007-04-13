@@ -55,8 +55,8 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 	protected AbstractModifyDialog(Frame owner){
 		super(owner);
 		
-		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 				
 		nameLabel = new JLabel(Translate.getInstance().get(TranslateKeys.NAME));
 		name = new JTextField();
@@ -132,21 +132,19 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		this.getRootPane().setDefaultButton(okButton);		
 	}
 	
-	protected abstract String getType();
-	
 	public StandardWindow clear(){
 		name.setText("");
 		amount.setValue(0);
 		pulldown.setSelectedItem(null);
 		check.setSelected(false);
 		this.source = null;
-		this.setTitle(Translate.getInstance().get(TranslateKeys.NEW) + " " + getType());
+//		this.setTitle(Translate.getInstance().get(TranslateKeys.NEW) + " " + getType());
 		return this;
 	}
 	
 	public AbstractDialog loadSource(SourceType source){
 		this.source = source;
-		this.setTitle(Translate.getInstance().get(TranslateKeys.MENU_EDIT) + " " + getType());
+//		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
 		return this;
 	}
 	

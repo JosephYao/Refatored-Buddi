@@ -152,7 +152,7 @@ public class Buddi {
 			else if (!dataFile.canWrite()){
 				JOptionPane.showMessageDialog(
 						null,
-						Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 						Translate.getInstance().get(TranslateKeys.ERROR),
 						JOptionPane.ERROR_MESSAGE);
 				chooseDataFileSource();
@@ -160,7 +160,7 @@ public class Buddi {
 			else if (!dataFile.canRead()){
 				JOptionPane.showMessageDialog(
 						null,
-						Translate.getInstance().get(TranslateKeys.CANNOT_READ_DATA_FILE),
+						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
 						Translate.getInstance().get(TranslateKeys.ERROR),
 						JOptionPane.ERROR_MESSAGE);
 				chooseDataFileSource();
@@ -311,13 +311,13 @@ public class Buddi {
 				@Override
 				public void finished() {
 					String[] buttons = new String[2];
-					buttons[0] = Translate.getInstance().get(TranslateKeys.DONATE);
-					buttons[1] = Translate.getInstance().get(TranslateKeys.NOT_NOW);
+					buttons[0] = Translate.getInstance().get(TranslateKeys.BUTTON_DONATE);
+					buttons[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NOT_NOW);
 
 					int reply = JOptionPane.showOptionDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.DONATE_MESSAGE),
-							Translate.getInstance().get(TranslateKeys.DONATE_HEADER),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ASK_FOR_DONATION),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE,
 							null,
@@ -398,8 +398,8 @@ public class Buddi {
 				public void finished() {
 					if (get() != null){
 						String[] buttons = new String[2];
-						buttons[0] = Translate.getInstance().get(TranslateKeys.DOWNLOAD);
-						buttons[1] = Translate.getInstance().get(TranslateKeys.CANCEL);
+						buttons[0] = Translate.getInstance().get(TranslateKeys.BUTTON_DOWNLOAD);
+						buttons[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
 
 						int reply = JOptionPane.showOptionDialog(
 								MainFrame.getInstance(), 

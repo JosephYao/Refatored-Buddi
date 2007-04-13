@@ -23,10 +23,6 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_ACCOUNT_TYPES));
 	}
 
-	protected String getType(){
-		return Translate.getInstance().get(TranslateKeys.ACCOUNT);
-	}
-
 	public AbstractDialog init() {
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
@@ -35,11 +31,13 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 			name.setText("");
 			check.setSelected(false);
 			check.setEnabled(true);
+			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_EDIT));
 		}
 		else{
 			name.setText(Translate.getInstance().get(type.getName()));
 			check.setSelected(type.isCredit());
 			check.setEnabled(false);
+			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_NEW));
 		}
 
 		return this;

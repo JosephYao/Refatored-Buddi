@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -34,15 +35,17 @@ public class TypeListDialog extends AbstractBuddiDialog {
 	private final JButton doneButton;
 	private final JButton newButton;
 	private final JButton editButton;
+	private final JButton deleteButton;
 
 	private final JList list;
 
 	public TypeListDialog(){
 		super(MainFrame.getInstance());
 
-		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
-		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
+		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DONE));
+		newButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_NEW));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_EDIT));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -51,20 +54,22 @@ public class TypeListDialog extends AbstractBuddiDialog {
 		doneButton.setPreferredSize(buttonSize);
 		newButton.setPreferredSize(buttonSize);
 		editButton.setPreferredSize(buttonSize);
+		deleteButton.setPreferredSize(buttonSize);
 
 		JScrollPane listScroller = new JScrollPane(list);
 
-		JPanel scrollBorderPanel = new JPanel(new BorderLayout());
-		scrollBorderPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
+//		JPanel scrollBorderPanel = new JPanel(new BorderLayout());
+//		scrollBorderPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+//		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
 
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTIONS)));
-		scrollPanel.add(scrollBorderPanel, BorderLayout.CENTER);
+//		scrollPanel.setBorder(BorderFactory.createTitledBorder(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTIONS)));
+		scrollPanel.add(listScroller, BorderLayout.CENTER);
 
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		editTransactionsButtonPanel.add(newButton);
 		editTransactionsButtonPanel.add(editButton);
+		editTransactionsButtonPanel.add(deleteButton);
 
 		scrollPanel.add(editTransactionsButtonPanel, BorderLayout.SOUTH);
 
@@ -88,11 +93,12 @@ public class TypeListDialog extends AbstractBuddiDialog {
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
 	}
-	
+
 	public AbstractDialog init() {
 		newButton.addActionListener(this);
 		editButton.addActionListener(this);
 		doneButton.addActionListener(this);
+		deleteButton.addActionListener(this);
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
@@ -130,6 +136,20 @@ public class TypeListDialog extends AbstractBuddiDialog {
 				updateContent();
 			}
 		}
+		else if (e.getSource().equals(deleteButton)){
+			Object o = list.getSelectedValue();
+			if (o instanceof Type){
+				Type t = (Type) o;				
+				if (!TypeController.deleteType(t)){
+					JOptionPane.showMessageDialog(
+							this,
+							Translate.getInstance().get(TranslateKeys.MESSAGE_CANNOT_DELETE_TYPE),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.ERROR_MESSAGE);
+				}
+				updateContent();
+			}
+		}
 	}
 
 	public StandardWindow clear() {
@@ -139,6 +159,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 
 	public AbstractDialog updateButtons(){		
 		editButton.setEnabled(list.getSelectedIndices().length > 0);
+		deleteButton.setEnabled(list.getSelectedIndices().length > 0);
 
 		return this;
 	}

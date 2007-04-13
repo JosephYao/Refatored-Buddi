@@ -14,13 +14,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.homeunix.drummer.controller.TransactionController;
-import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
-import org.homeunix.thecave.moss.util.Log;
 
 /**
  * <!-- begin-user-doc -->
@@ -435,18 +433,18 @@ public class AccountImpl extends SourceImpl implements Account {
 		return result.toString();
 	}
 	
-	public String toStringLong() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(name);
-		result.append(" (");
-		result.append(accountType);
-		result.append("): ");
-		if ((isCredit() ^ balance <= 0) && balance != 0)
-			result.append("-");
-		result.append(Translate.getFormattedCurrency(balance, getAccountType().isCredit()));
-		return result.toString();
-	}
+//	public String toStringLong() {
+//		if (eIsProxy()) return super.toString();
+//
+//		StringBuffer result = new StringBuffer(name);
+//		result.append(" (");
+//		result.append(accountType);
+//		result.append("): ");
+//		if ((isCredit() ^ balance <= 0) && balance != 0)
+//			result.append("-");
+//		result.append(Translate.getFormattedCurrency(balance, getAccountType().isCredit()));
+//		return result.toString();
+//	}
 
 	
 	public void calculateBalance(){
@@ -475,10 +473,9 @@ public class AccountImpl extends SourceImpl implements Account {
 	public boolean isCredit(){
 		if (getAccountType() != null)
 			return getAccountType().isCredit();
-		else{
-			Log.critical("null type for account " + this.toStringLong());
+		else
+//			Log.critical("null type for account " + this.toStringLong());
 			return false;
-		}
 	}
 	
 	public int compareTo(Source arg0) {

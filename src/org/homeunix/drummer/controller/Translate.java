@@ -13,16 +13,12 @@ import java.util.Properties;
 import javax.swing.JOptionPane;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.jar.JarLoader;
-import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 
 public class Translate {
 	private final Properties translations = new Properties();
-//	private final Set<String> existingKeys = new HashSet<String>();
-//	private final Set<String> usedKeys = new HashSet<String>();
 	
 	/**
 	 * Returns a singleton instance of the Translate class.
@@ -212,29 +208,4 @@ public class Translate {
 //		
 //		return existingKeys;
 //	}
-
-	/**
-	 * Converts a long value (in cents: 10000 == $100.00) to a string
-	 * with proper decimal values, with the user's desired currency
-	 * sign in the user's specified position (whether behind or in front
-	 * of the amount).  It is highly recommended that you use this method
-	 * to output monetary values, as it presents the user with a constant
-	 * look for currency.
-	 * 
-	 * Technically, this is not a translation method, so it could be argued 
-	 * that it should not be here.  I put it here to avoid the creation of
-	 * another class to do just one function.
-	 * @param value The currency amount, in cents (as per Buddi's internal 
-	 * representation of currency).  For instance, to represent the value
-	 * $123.45, you would pass in 12345. 
-	 * @return A string with proper decimal places, plus the user's defined 
-	 * currency symbol in the correct position (whether before or after the
-	 * amount).
-	 */
-	public static String getFormattedCurrency(long value, boolean isCredit){
-		return (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? "" : PrefsInstance.getInstance().getPrefs().getCurrencySymbol())
-		+ (value != 0 && (isCredit ^ value < 0) ? "-" : "")
-		+ Formatter.getDecimalFormat().format(Math.abs((double) value / 100.0))
-		+ (PrefsInstance.getInstance().getPrefs().isCurrencySymbolAfterAmount() ? " " + PrefsInstance.getInstance().getPrefs().getCurrencySymbol() : "");
-	}
 }

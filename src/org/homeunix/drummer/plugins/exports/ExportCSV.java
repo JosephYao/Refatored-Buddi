@@ -18,6 +18,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
@@ -56,7 +57,7 @@ public class ExportCSV implements BuddiExportPlugin {
 			sb.append("\"").append(transaction.getDescription()).append("\",");
 			sb.append("\"").append(transaction.getNumber()).append("\",");
 			sb.append("\"").append(transaction.getMemo().replaceAll("\n", " ")).append("\",");
-			sb.append("\"").append(Translate.getFormattedCurrency(transaction.getAmount(), false)).append("\",");					
+			sb.append("\"").append(FormatterWrapper.getFormattedCurrencyGeneric(transaction.getAmount(), false, false)).append("\",");					
 			sb.append("\"").append((transaction.getFrom() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getFrom().getName())).append("\",");
 			sb.append("\"").append((transaction.getTo() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getTo().getName())).append("\"");							
 			sb.append("\n");

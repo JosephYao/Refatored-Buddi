@@ -3,7 +3,6 @@
  */
 package org.homeunix.drummer.view;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +24,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -87,17 +87,19 @@ public class CategoryListPanel extends AbstractListPanel {
 
 		}
 
-		if (income < expenses)
-			balanceLabel.setForeground(Color.RED);
-		else
-			balanceLabel.setForeground(Color.BLACK);
+//		if (income < expenses)
+//			balanceLabel.setForeground(Color.RED);
+//		else
+//			balanceLabel.setForeground(Color.BLACK);
 
 		StringBuffer sb = new StringBuffer();
-		sb.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
+		sb.append("<html>")
+		.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
 		.append(" ")
 		.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
 		.append(": ")
-		.append(Translate.getFormattedCurrency(income - expenses, false));
+		.append(FormatterWrapper.getFormattedCurrencyForCategory(income - expenses, true))
+		.append("</html>");
 
 		balanceLabel.setText(sb.toString());
 
@@ -170,7 +172,7 @@ public class CategoryListPanel extends AbstractListPanel {
 			if (getSelectedCategory() != null) {
 				Category c = getSelectedCategory();
 
-				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
+				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE))){
 
 					//If there are no transactions using this source, ask if user wants to permanently delete source
 					boolean notPermanent = TransactionController.getTransactions(c).size() > 0

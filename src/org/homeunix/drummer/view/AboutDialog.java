@@ -39,8 +39,8 @@ public class AboutDialog extends AbstractBuddiDialog {
 	public AboutDialog(){
 		super(MainFrame.getInstance());
 
-		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		donateButton = new JButton(Translate.getInstance().get(TranslateKeys.DONATE));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
+		donateButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DONATE));
 
 		Dimension buttonSize = new Dimension(Math.max(100, donateButton.getPreferredSize().width), donateButton.getPreferredSize().height);
 

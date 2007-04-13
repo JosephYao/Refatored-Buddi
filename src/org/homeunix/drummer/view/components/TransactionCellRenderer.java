@@ -130,9 +130,10 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
-				sb.append("<font color='red'>")
-				.append(Translate.getFormattedCurrency(transaction.getAmount(), false))
-				.append("</font>");
+				sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(transaction.getAmount(), false));
+//				sb.append("<font color='red'>")
+//				.append(Translate.getFormattedCurrency(transaction.getAmount(), false))
+//				.append("</font>");
 			}
 		}
 
@@ -141,7 +142,8 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-				sb.append(Translate.getFormattedCurrency(transaction.getAmount(), false));
+//				sb.append(Translate.getFormattedCurrency(transaction.getAmount(), false));
+				sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(transaction.getAmount(), true));
 			}
 		}
 
@@ -156,16 +158,17 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 					balanceValue = transaction.getBalanceTo();
 
 				sb.append("<b>");
-				if (balanceValue < 0){
-					sb.append("<font color='red'>");
-					if (balanceValue <= 0 && balanceValue != 0)
-						balanceValue *= -1;
-					sb.append(Translate.getFormattedCurrency(balanceValue, false))
-					.append("</font>");
-				}
-				else{
-					sb.append(Translate.getFormattedCurrency(balanceValue, false));
-				}
+				sb.append(FormatterWrapper.getFormattedCurrencyForAccount(balanceValue, account.getAccountType().isCredit()));
+//				if (balanceValue < 0){
+//					sb.append("<font color='red'>");
+//					if (balanceValue <= 0 && balanceValue != 0)
+//						balanceValue *= -1;
+//					sb.append(FormatterWrapper.getFormattedCurrencyForAccount(balanceValue, account.getAccountType().isCredit()))
+//					.append("</font>");
+//				}
+//				else{
+//					sb.append(Translate.getFormattedCurrency(balanceValue, false));
+//				}
 				sb.append("</b>");
 			}
 		}

@@ -68,7 +68,7 @@ public class HTMLExportHelper {
 		sb.append("</head>\n");
 		sb.append("<body>\n");
 
-		sb.append("<h1>").append(Translate.getInstance().get(title)).append("</h1>");
+		sb.append("<h1>").append(Translate.getInstance().get(title)).append("</h1>\n");
 
 		if (subtitle != null){
 			sb.append("<h2>").append(Translate.getInstance().get(subtitle)).append("</h2>\n");
@@ -79,10 +79,11 @@ public class HTMLExportHelper {
 			sb.append(FormatterWrapper.getDateFormat().format(startDate));
 			sb.append(" - ");
 			sb.append(FormatterWrapper.getDateFormat().format(endDate));
-			sb.append("</h2>");
+			sb.append("</h2>\n");
 		}
 
-
+		sb.append("<hr>\n\n");
+		
 		return sb;
 	}
 	

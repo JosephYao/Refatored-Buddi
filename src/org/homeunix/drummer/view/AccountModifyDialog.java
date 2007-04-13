@@ -31,10 +31,6 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 		gap.setVisible(false);
 	}
 
-	protected String getType(){
-		return Translate.getInstance().get(TranslateKeys.ACCOUNT);
-	}
-
 	public AbstractDialog init() {
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
@@ -75,15 +71,17 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 			interestRate.setValue(0);
 			pulldown.setSelectedItem(null);
 			pulldown.setEnabled(true);
+			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_EDIT));
 		}
 		else{
 			name.setText(source.getName());
-			amount.setValue(source.getStartingBalance());
+			amount.setValue(source.getStartingBalance() * -1);
 			creditLimit.setValue(source.getCreditLimit());
 			interestRate.setValue(source.getInterestRate());
 
 			pulldown.setSelectedItem(source.getAccountType());
 			pulldown.setEnabled(false);
+			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_NEW));
 		}
 
 		return this;
@@ -133,7 +131,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 
 			long startingBalance = amount.getValue();
 			if (a.isCredit())
-				startingBalance = Math.abs(startingBalance) * -1;
+				startingBalance = startingBalance * -1;
 
 			a.setStartingBalance(startingBalance);					
 

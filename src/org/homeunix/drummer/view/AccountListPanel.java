@@ -3,7 +3,6 @@
  */
 package org.homeunix.drummer.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -29,6 +28,7 @@ import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.util.Log;
 
 /**
@@ -105,14 +105,16 @@ public class AccountListPanel extends AbstractListPanel {
 			balance += a.getBalance();
 		}
 
-		if (balance >= 0)
-			balanceLabel.setForeground(Color.BLACK);
-		else
-			balanceLabel.setForeground(Color.RED);
+//		if (balance >= 0)
+//			balanceLabel.setForeground(Color.BLACK);
+//		else
+//			balanceLabel.setForeground(Color.RED);
 
-		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
+		balanceLabel.setText("<html>"
+				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
 				+ ": "  
-				+ Translate.getFormattedCurrency(balance, false));
+				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
+				+ "</html>");
 
 		treeModel.reload(treeModel.getRoot());
 
@@ -194,7 +196,7 @@ public class AccountListPanel extends AbstractListPanel {
 
 				Account a = getSelectedAccount();
 
-				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.DELETE))){
+				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE))){
 					boolean notPermanent = TransactionController.getTransactions(a).size() > 0
 					|| ScheduleController.getScheduledTransactions(a).size() > 0
 					|| JOptionPane.showConfirmDialog(

@@ -169,36 +169,36 @@ public class TransactionListModel extends AbstractListModel {
 			}
 			
 			private boolean acceptDate(Transaction t, TranslateKeys filterPulldown) {
-				if (null == filterPulldown || TranslateKeys.ALL == filterPulldown) {
+				if (null == filterPulldown || TranslateKeys.TRANSACTION_FILTER_ALL == filterPulldown) {
 					return true;
 				}
 
 				Date today = new Date();
 
-				if (TranslateKeys.TODAY == filterPulldown) {
+				if (TranslateKeys.TRANSACTION_FILTER_TODAY == filterPulldown) {
 					return DateUtil.getEndOfDay(today).equals(DateUtil.getEndOfDay(t.getDate()));
 				}
-				else if (TranslateKeys.THIS_WEEK == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_THIS_WEEK == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getNextNDay(today, -7)).before(t.getDate());
 				}
-				else if (TranslateKeys.THIS_MONTH == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_THIS_MONTH == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(today, 0)).before(t.getDate());
 				}
-				else if (TranslateKeys.THIS_QUARTER == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(today, 0)).before(t.getDate());
 				} 
-				else if (TranslateKeys.THIS_YEAR == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_THIS_YEAR == filterPulldown) {
 					return DateUtil.getStartOfDay(DateUtil.getBeginOfYear(today)).before(t.getDate());				
 				}
-				else if (TranslateKeys.LAST_YEAR == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_LAST_YEAR == filterPulldown) {
 					Date startOfLastYear = DateUtil.getStartOfDay(DateUtil.getStartOfYear(DateUtil.getNextNDay(today, -365)));
 					Date endOfLastYear = DateUtil.getEndOfYear(startOfLastYear);
 					return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
 				}
-				else if (TranslateKeys.NOT_RECONCILED == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED == filterPulldown) {
 					return !t.isReconciled();
 				}
-				else if (TranslateKeys.NOT_CLEARED == filterPulldown) {
+				else if (TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED == filterPulldown) {
 					return !t.isCleared();
 				}
 				else {

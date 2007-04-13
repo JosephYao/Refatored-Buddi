@@ -94,8 +94,8 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 	public ScheduleModifyDialog(Schedule schedule){
 		super(MainFrame.getInstance());
 
-		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 
 		transaction = new EditableTransaction(null);
 

@@ -58,9 +58,9 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		treeModel = new SourceTreeTableModel();
 		tree = new JXTreeTable(treeModel);
 
-		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
-		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
+		newButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_NEW));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_EDIT));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		openButton = new JButton(Translate.getInstance().get(TranslateKeys.OPEN));
 		balanceLabel = new JLabel();
 	}
@@ -134,7 +134,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			openButton.setEnabled(false);
-			deleteButton.setText(Translate.getInstance().get(TranslateKeys.DELETE));
+			deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		}
 		else{
 			editButton.setEnabled(true);
@@ -144,7 +144,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 			if (selectedSource.isDeleted())
 				deleteButton.setText(Translate.getInstance().get(TranslateKeys.UNDELETE));
 			else
-				deleteButton.setText(Translate.getInstance().get(TranslateKeys.DELETE));
+				deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		}
 		return this;
 	}

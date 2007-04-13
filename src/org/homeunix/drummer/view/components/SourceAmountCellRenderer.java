@@ -5,11 +5,11 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.AccountListPanel.TypeTotal;
 
 /**
@@ -31,15 +31,15 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(CategoryImpl.class)) {
 			Category c = (Category) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (!c.isIncome() ? "red" : null), c.isDeleted());
+			startTableCellRendererComponent(value, isSelected, row, column, c.isDeleted());
 			
-			long amount = c.getBudgetedAmount();
-			sb.append(Translate.getFormattedCurrency(amount, false));
+//			long amount = c.getBudgetedAmount();
+			sb.append(FormatterWrapper.getFormattedCurrencyForCategory(c.getBudgetedAmount(), c.isIncome()));
 			
 			long amountTotal = getTotalAmount(node);
 			if (node.getChildCount() > 0){
 				sb.append(" (")
-				.append(Translate.getFormattedCurrency(amountTotal, false))
+				.append(FormatterWrapper.getFormattedCurrencyForCategory(amountTotal, c.isIncome()))
 				.append(")");
 			}
 
@@ -50,13 +50,13 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-			String color = null;
-			if ((a.getAccountType().isCredit() && a.getBalance() <= 0)
-					|| (!a.getAccountType().isCredit() && a.getBalance() < 0))
-				color = "red";
-			startTableCellRendererComponent(value, isSelected, row, column, color, a.isDeleted());
+//			String color = null;
+//			if ((a.getAccountType().isCredit() && a.getBalance() <= 0)
+//					|| (!a.getAccountType().isCredit() && a.getBalance() < 0))
+//				color = "red";
+			startTableCellRendererComponent(value, isSelected, row, column, a.isDeleted());
 			
-			sb.append(Translate.getFormattedCurrency(a.getBalance(), a.getAccountType().isCredit()));
+			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(a.getBalance(), a.getAccountType().isCredit()));
 			endTableCellRendererComponent();
 			
 			return this;
@@ -71,15 +71,15 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 				amount += ((Account) n.getUserObject()).getBalance();
 			}
 				
-			String color = null;
-			if ((t.getType().isCredit() && amount <= 0)
-					|| (!t.getType().isCredit() && amount < 0))
-				color = "red";
-			startTableCellRendererComponent(value, isSelected, row, column, color, false);
+//			String color = null;
+//			if ((t.getType().isCredit() && amount <= 0)
+//					|| (!t.getType().isCredit() && amount < 0))
+//				color = "red";
+			startTableCellRendererComponent(value, isSelected, row, column, false);
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");
-			sb.append(Translate.getFormattedCurrency(amount, t.getType().isCredit()));
+			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(amount, t.getType().isCredit()));
 
 			endTableCellRendererComponent();
 			

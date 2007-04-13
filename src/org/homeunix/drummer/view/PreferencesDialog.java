@@ -93,8 +93,8 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		super(MainFrame.getInstance());
 		
 		//Instantiate buttons
-		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 		
 		//Instantiate final preferences widgets
 		showDeletedAccounts = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_DELETED_ACCOUNTS));
@@ -116,9 +116,9 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
 		pluginListModel = new DefaultListModel();
 		pluginList = new JList(pluginListModel);
-		addButton = new JButton(Translate.getInstance().get(TranslateKeys.ADD));
-		removeButton = new JButton(Translate.getInstance().get(TranslateKeys.REMOVE));
-		otherCurrencyButton = new JButton(Translate.getInstance().get(TranslateKeys.OTHER));
+		addButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_ADD));
+		removeButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_REMOVE));
+		otherCurrencyButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OTHER));
 		
 		//Set up buttons
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), okButton.getPreferredSize().height);

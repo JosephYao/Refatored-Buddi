@@ -62,8 +62,8 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 
 		this.plugin = plugin;
 
-		okButton = new JButton(Translate.getInstance().get(TranslateKeys.OK));
-		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
+		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 
 		Dimension buttonSize = new Dimension(100, okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

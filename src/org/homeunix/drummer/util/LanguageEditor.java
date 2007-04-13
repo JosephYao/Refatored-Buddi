@@ -313,8 +313,8 @@ public class LanguageEditor extends JDialog {
 		((SortedPropertyListModel) model.getSource()).addAll(translationKeyValuePairs);		
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
-		final JButton cancel = new JButton(Translate.getInstance().get(TranslateKeys.CANCEL));
+		final JButton ok = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DONE));
+		final JButton cancel = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 		final JButton help = new JButton(Translate.getInstance().get(TranslateKeys.MENU_HELP));
 
 		ok.addActionListener(new ActionListener(){

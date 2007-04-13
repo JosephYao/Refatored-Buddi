@@ -6,6 +6,7 @@ package org.homeunix.drummer.controller;
 import java.util.Collections;
 import java.util.Vector;
 
+import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Type;
@@ -35,5 +36,23 @@ public class TypeController {
 		Vector<Type> v = new Vector<Type>(DataInstance.getInstance().getDataModel().getAllTypes().getTypes());
 		Collections.sort(v);
 		return v;
+	}
+	
+	/**
+	 * Attempts to remove a Type object, after doing some checks to 
+	 * ensure you can safely remove it.
+	 * 
+	 * @param t Type to remove
+	 * @return <code>true</code> if the Type was successfully deleted, 
+	 * <code>false</code> otherwise.
+	 */
+	public static boolean deleteType(Type t){
+		for (Account a : SourceController.getAccounts()) {
+			if (a.getAccountType().equals(t)){
+				return false;
+			}
+		}
+		
+		return DataInstance.getInstance().getDataModel().getAllTypes().getTypes().remove(t);
 	}
 }

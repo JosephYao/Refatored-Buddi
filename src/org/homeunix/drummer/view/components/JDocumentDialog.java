@@ -32,7 +32,7 @@ public class JDocumentDialog extends JDialog {
 		docScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		docScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		JButton done = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
+		JButton done = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DONE));
 		done.setPreferredSize(new Dimension(Math.max(100, done.getPreferredSize().width), done.getPreferredSize().height));
 		done.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {

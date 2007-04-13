@@ -10,6 +10,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.AccountListPanel.TypeTotal;
 import org.homeunix.thecave.moss.util.Formatter;
 
@@ -33,8 +34,8 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(CategoryImpl.class)) {
 			Category c = (Category) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (c.isIncome() ? null : "red"), c.isDeleted());			
-			sb.append(c.toString());
+			startTableCellRendererComponent(value, isSelected, row, column, c.isDeleted());			
+			sb.append(FormatterWrapper.getFormattedNameForCategory(c));
 			endTableCellRendererComponent();
 			
 			return this;
@@ -42,8 +43,8 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(AccountImpl.class)) {			
 			Account a = (Account) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (a.getAccountType().isCredit() ? "red" : null), a.isDeleted());			
-			sb.append(a.toString());
+			startTableCellRendererComponent(value, isSelected, row, column, a.isDeleted());			
+			sb.append(FormatterWrapper.getFormattedNameForAccount(a));
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
 					&& (a.getInterestRate() != 0)){
 				sb.append(" (")
@@ -58,8 +59,8 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 		else if (obj.getClass().equals(TypeTotal.class)) {			
 			TypeTotal t = (TypeTotal) obj;
 
-			startTableCellRendererComponent(value, isSelected, row, column, (t.getType().isCredit() ? "red" : null), false);
-			sb.append(t.getType().toString());
+			startTableCellRendererComponent(value, isSelected, row, column, false);
+			sb.append(FormatterWrapper.getFormattedNameForType(t.getType()));
 			endTableCellRendererComponent();
 			
 			return this;

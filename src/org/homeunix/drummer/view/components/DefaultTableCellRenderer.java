@@ -32,14 +32,14 @@ public class DefaultTableCellRenderer  extends JLabel implements TableCellRender
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		startTableCellRendererComponent(value, isSelected, row, column, null, false);
+		startTableCellRendererComponent(value, isSelected, row, column, false);
 		sb.append("");
 		endTableCellRendererComponent();
 		
 		return this;
 	}
 	
-	public void startTableCellRendererComponent(Object value, boolean isSelected, int row, int column, String htmlFontColor, boolean isCrossedOut) {
+	public void startTableCellRendererComponent(Object value, boolean isSelected, int row, int column, boolean isCrossedOut) {
 		if (isSelected){
 			this.setBackground(Const.COLOR_SELECTED);
 			this.setForeground(Const.COLOR_SELECTED_TEXT);
@@ -78,10 +78,10 @@ public class DefaultTableCellRenderer  extends JLabel implements TableCellRender
 			sbClose.insert(0, "</s>");
 		}
 
-		if (htmlFontColor != null){
-			sbOpen.append("<font color='").append(htmlFontColor).append("'>");
-			sbClose.insert(0, "</font>");
-		}
+//		if (htmlFontColor != null){
+//			sbOpen.append("<font color='").append(htmlFontColor).append("'>");
+//			sbClose.insert(0, "</font>");
+//		}
 		
 		sb.append("<html>")
 		.append(sbPrepend)

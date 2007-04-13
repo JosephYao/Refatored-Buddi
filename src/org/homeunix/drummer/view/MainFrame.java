@@ -32,6 +32,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
@@ -270,7 +271,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 			if (account.getAccountType().isCredit()) sb.append("</font>");
 			sb.append("</td><td>");
 			if (account.getBalance() < 0) sb.append("<font color='red'>");
-			sb.append(Translate.getFormattedCurrency(account.getBalance(), account.getAccountType().isCredit())).append("</td>");
+			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(account.getBalance(), account.getAccountType().isCredit())).append("</td>");
 			if (account.getBalance() < 0) sb.append("</font>");
 			sb.append("</tr>\n");
 		}
@@ -309,7 +310,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 			if (!category.isIncome()) sb.append("</font>");
 			sb.append("</td><td>");
 			if (!category.isIncome()) sb.append("<font color='red'>");
-			sb.append(Translate.getFormattedCurrency(category.getBudgetedAmount(), false)).append("</td>");
+			sb.append(FormatterWrapper.getFormattedCurrencyForCategory(category.getBudgetedAmount(), category.isIncome())).append("</td>");
 			if (!category.isIncome()) sb.append("</font>");
 			sb.append("</tr>\n");
 		}

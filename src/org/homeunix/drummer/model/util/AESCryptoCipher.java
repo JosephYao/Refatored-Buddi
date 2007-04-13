@@ -102,8 +102,8 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.OK),
-					Translate.getInstance().get(TranslateKeys.CANCEL)
+					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
+					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
 			);
 			String password = jpid.askForPassword(true, true);
 			
@@ -190,8 +190,8 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.OK),
-					Translate.getInstance().get(TranslateKeys.CANCEL)
+					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
+					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
 			);
 			String password = jpid.askForPassword(false, false);
 			

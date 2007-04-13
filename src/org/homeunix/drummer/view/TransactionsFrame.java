@@ -39,6 +39,7 @@ import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.drummer.view.model.TransactionListModel;
@@ -88,22 +89,22 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 */
 	private final FilteredDynamicListModel model;
 
-	private Account account;
+	private final Account account;
 
 	private boolean disableListEvents = false;
 
 	//The values for the date chooser combo box.
 	private static final TranslateKeys[] availableFilters = new TranslateKeys[] {
-		TranslateKeys.ALL,
-		TranslateKeys.TODAY,
-		TranslateKeys.THIS_WEEK,
-		TranslateKeys.THIS_MONTH,
-		TranslateKeys.THIS_QUARTER,
-		TranslateKeys.THIS_YEAR,
-		TranslateKeys.LAST_YEAR,
+		TranslateKeys.TRANSACTION_FILTER_ALL,
+		TranslateKeys.TRANSACTION_FILTER_TODAY,
+		TranslateKeys.TRANSACTION_FILTER_THIS_WEEK,
+		TranslateKeys.TRANSACTION_FILTER_THIS_MONTH,
+		TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER,
+		TranslateKeys.TRANSACTION_FILTER_THIS_YEAR,
+		TranslateKeys.TRANSACTION_FILTER_LAST_YEAR,
 		null,
-		TranslateKeys.NOT_RECONCILED,
-		TranslateKeys.NOT_CLEARED
+		TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED,
+		TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED
 	};
 	
 	public TransactionsFrame(Account account){
@@ -143,7 +144,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							}
 
 							sb.append("<br>");
-							sb.append(Translate.getFormattedCurrency(transaction.getAmount(), false));
+							sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(transaction.getAmount(), transaction.getTo().equals(TransactionsFrame.this.account)));
 							sb.append("  ");
 							sb.append(transaction.getFrom())
 							.append(" ")
@@ -181,7 +182,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
-		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		searchField = new JSearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
 
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
@@ -426,11 +427,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
 
 			StringBuffer sb = new StringBuffer();
-			if (amountLeft < 0)
-				sb.append("<html><font color='red'>");
+			sb.append("<html>");
+//			if (amountLeft < 0)
+//				sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append(Translate.getFormattedCurrency(amountLeft, false))
+			.append(FormatterWrapper.getFormattedCurrencyForAccount(amountLeft, account.isCredit()))
 			.append(" (")
 			.append(Formatter.getDecimalFormat().format(percentLeft))
 			.append("%)");
@@ -454,7 +456,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		}
 		else{
 			recordButton.setText(Translate.getInstance().get(TranslateKeys.UPDATE));
-			clearButton.setText(Translate.getInstance().get(TranslateKeys.NEW));
+			clearButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_NEW));
 			deleteButton.setEnabled(true);
 		}
 

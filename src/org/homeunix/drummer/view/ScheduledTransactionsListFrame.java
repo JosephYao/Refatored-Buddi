@@ -41,10 +41,10 @@ public class ScheduledTransactionsListFrame extends AbstractBuddiDialog {
 	public ScheduledTransactionsListFrame(){
 		super(MainFrame.getInstance());
 		
-		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.DONE));
-		newButton = new JButton(Translate.getInstance().get(TranslateKeys.NEW));
-		editButton = new JButton(Translate.getInstance().get(TranslateKeys.MENU_EDIT));
-		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.DELETE));
+		doneButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DONE));
+		newButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_NEW));
+		editButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_EDIT));
+		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

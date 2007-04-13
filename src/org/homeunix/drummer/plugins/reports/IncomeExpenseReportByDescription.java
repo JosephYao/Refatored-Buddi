@@ -11,6 +11,7 @@ import java.util.Vector;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
@@ -32,6 +33,8 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	public HTMLWrapper getReport(Date startDate, Date endDate) {
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
+		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.DETAILS)).append("</h1>\n");
+		
 		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<String, Vector<Transaction>> descriptions = new HashMap<String, Vector<Transaction>>();
 		
@@ -56,10 +59,10 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 				}
 				
 				
-				sb.append(total < 0 ? "<h3 class='red'>" : "<h3>");
+				sb.append(total < 0 ? "<h2 class='red'>" : "<h2>");
 				sb.append(s).append(": ");
-				sb.append(Translate.getFormattedCurrency(total, total < 0));
-				sb.append("</h3>\n");
+				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(total, total < 0, total < 0));
+				sb.append("</h2>\n");
 
 				sb.append("<table class='main'>\n");
 
@@ -79,10 +82,10 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 					sb.append("</td><td>");
 					sb.append(Translate.getInstance().get(t.getFrom().toString()));
 					sb.append(Translate.getInstance().get(TranslateKeys.TO_HTML_SAFE));
-					sb.append(Translate.getInstance().get(t.getFrom().toString()));
+					sb.append(Translate.getInstance().get(t.getTo().toString()));
 					
-					sb.append(t.getTo() instanceof Category ? "</td><td>" : "</td><td class='red'>");
-					sb.append(Translate.getFormattedCurrency(t.getAmount(), false));
+					sb.append("</td><td>");
+					sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), t.getTo() instanceof Account));
 
 					sb.append("</td></tr>\n");
 				}
@@ -104,6 +107,6 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	}
 
 	public String getDescription() {
-		return TranslateKeys.REPORT_INCOME_EXPENSES_BY_DESCRIPTION.toString();
+		return Translate.getInstance().get(TranslateKeys.REPORT_INCOME_EXPENSES_BY_DESCRIPTION);
 	}
 }
