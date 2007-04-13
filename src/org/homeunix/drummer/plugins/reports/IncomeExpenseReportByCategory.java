@@ -165,7 +165,8 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 			}
 		}
 		
-		
+		sb.append(HTMLExportHelper.getHtmlFooter());
+	
 		return new HTMLWrapper(sb.toString(), null);
 	}
 	

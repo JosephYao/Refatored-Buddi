@@ -43,9 +43,14 @@ public class HTMLExportHelper {
 		sb.append("</title>\n");
 
 		sb.append("<style type=\"text/css\">\n");
+		sb.append("body { background-color: #a3b8ce; color: #222; min-width: 50em; margin: 1em; padding: 0em; }\n";
+		sb.append(".content { border: 1em solid white; background-color: white; margin: 0em; }\n");
+		sb.append(".header { background-color: #59a1ea; padding-left: 4em; height: 8em; margin: 0em; top: -1em; font-variant: small-caps; font-weight: bold; font-size-adjust: 0.6; border-left: 8em solid #dfc700; }\n");
+		sb.append(".separator { height: 0.4em; background-color: black; color: black; }\n");
+		sb.append(".empty { font-size-adjust: 0; height: 0em; }\n");
+
+			
 		sb.append(".red { color: red; }\n");
-		sb.append(".blue { color: blue; }\n");
-		sb.append(".green { color: green; }\n");
 		
 		sb.append(".right { text-align: right; }\n");
 		sb.append(".center { text-align: center; }\n");
@@ -56,6 +61,8 @@ public class HTMLExportHelper {
 		sb.append("h3 { font-size: medium; }\n");
 		sb.append("h4 { font-size: small; }\n");
 		sb.append("h5 { font-size: x-small; }\n");
+
+		sb.append("hr { color: black; background-color: black; height: 0.3em; border: 0em; }\n");
 		
 		sb.append("table.main { background-color: black; width: 100%; }\n");
 //		sb.append("table.transactions { background-color: white; width: 100%; padding-left: 3em; }\n");
@@ -66,8 +73,9 @@ public class HTMLExportHelper {
 		sb.append("</style>\n");
 
 		sb.append("</head>\n");
-		sb.append("<body>\n");
+		sb.append("<body>\n<div class='separator'></div>\n");
 
+		sb.append("<div class='header'>\n<div class='empty'>&nbsp;</div>");
 		sb.append("<h1>").append(Translate.getInstance().get(title)).append("</h1>\n");
 
 		if (subtitle != null){
@@ -82,7 +90,7 @@ public class HTMLExportHelper {
 			sb.append("</h2>\n");
 		}
 
-		sb.append("<hr>\n\n");
+		sb.append("</div>\n<div class='separator'></div>\n<div class='content'>\n\n");
 		
 		return sb;
 	}
@@ -90,7 +98,7 @@ public class HTMLExportHelper {
 	public static StringBuilder getHtmlFooter(){
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("</html>");
+		sb.append("</div>\n</body>\n</html>");
 		
 		return sb;
 	}
