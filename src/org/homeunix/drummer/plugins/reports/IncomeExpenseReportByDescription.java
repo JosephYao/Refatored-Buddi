@@ -33,7 +33,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	public HTMLWrapper getReport(Date startDate, Date endDate) {
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
-		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.DETAILS)).append("</h1>\n");
+		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
 		
 		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<String, Vector<Transaction>> descriptions = new HashMap<String, Vector<Transaction>>();
@@ -81,7 +81,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 					
 					sb.append("</td><td>");
 					sb.append(Translate.getInstance().get(t.getFrom().toString()));
-					sb.append(Translate.getInstance().get(TranslateKeys.TO_HTML_SAFE));
+					sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
 					sb.append(Translate.getInstance().get(t.getTo().toString()));
 					
 					sb.append("</td><td>");

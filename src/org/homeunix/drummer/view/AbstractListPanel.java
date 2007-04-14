@@ -142,7 +142,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 			openButton.setEnabled(true);
 
 			if (selectedSource.isDeleted())
-				deleteButton.setText(Translate.getInstance().get(TranslateKeys.UNDELETE));
+				deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_UNDELETE));
 			else
 				deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		}

@@ -14,9 +14,7 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import net.roydesign.ui.JScreenMenuItem;
@@ -24,7 +22,6 @@ import net.roydesign.ui.JScreenMenuItem;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
@@ -39,6 +36,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
@@ -268,37 +266,11 @@ public class PluginFactory<T extends BuddiPlugin> {
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (plugin instanceof BuddiExportPlugin){
-					File file = null;
 					BuddiExportPlugin exportPlugin = (BuddiExportPlugin) plugin;
-
+					File file = null;
+					
 					if (exportPlugin.isPromptForFile()){
-						//Create a file chooser to give plugin a file. 
-						final JFileChooser jfc = new JFileChooser();
-						jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-						//Sets the title
-						if (exportPlugin.getFileChooserTitle() != null)
-							jfc.setDialogTitle(exportPlugin.getFileChooserTitle());
-
-						//Sets the filter
-						if (exportPlugin.getFileFilter() != null)
-							jfc.setFileFilter(exportPlugin.getFileFilter());
-
-						if (jfc.showSaveDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-							if (jfc.getSelectedFile().isDirectory()){
-								//Cannot select a directory
-								JOptionPane.showMessageDialog(
-										null, 
-										Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), 
-										Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), 
-										JOptionPane.ERROR_MESSAGE);
-								return;
-							}
-							else{
-								file = jfc.getSelectedFile();
-							}
-						}
-
+						file = DocumentManager.getInstance().saveFile(null, exportPlugin.getFileChooserTitle(), exportPlugin.getFileFilter());
 					}
 
 					if (!exportPlugin.isPromptForFile() || file != null){
@@ -331,37 +303,11 @@ public class PluginFactory<T extends BuddiPlugin> {
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (plugin instanceof BuddiImportPlugin){
-					File file = null;
 					BuddiImportPlugin importPlugin = (BuddiImportPlugin) plugin;
+					File file = null;
 
 					if (importPlugin.isPromptForFile()){
-						//Create a file chooser to give plugin a file. 
-						final JFileChooser jfc = new JFileChooser();
-						jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-						//Sets the title
-						if (importPlugin.getFileChooserTitle() != null)
-							jfc.setDialogTitle(importPlugin.getFileChooserTitle());
-
-						//Sets the filter
-						if (importPlugin.getFileFilter() != null)
-							jfc.setFileFilter(importPlugin.getFileFilter());
-
-						if (jfc.showOpenDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION){
-							if (jfc.getSelectedFile().isDirectory()){
-								//Cannot select a directory
-								JOptionPane.showMessageDialog(
-										null, 
-										Translate.getInstance().get(TranslateKeys.CANNOT_SAVE_OVER_DIR), 
-										Translate.getInstance().get(TranslateKeys.CHOOSE_BACKUP_FILE), 
-										JOptionPane.ERROR_MESSAGE);
-								return;
-							}
-							else{
-								file = jfc.getSelectedFile();
-							}
-						}
-
+						file = DocumentManager.getInstance().loadFile(null, importPlugin.getFileChooserTitle(), importPlugin.getFileFilter());
 					}
 
 					if (!importPlugin.isPromptForFile() || file != null){

@@ -39,13 +39,13 @@ public class FileMenuController implements ActionListener {
 			}
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_OPEN.toString())){
-			File f = DocumentManager.getInstance().loadFile(null);
+			File f = DocumentManager.getInstance().loadDataFile(null);
 			if (f != null){
 				DocumentController.loadFile(f);
 			}
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_SAVE_AS.toString())){
-			File f = DocumentManager.getInstance().saveFile(null);
+			File f = DocumentManager.getInstance().saveDataFile(null);
 			if (f != null){
 				if (DocumentController.saveFile(f)){
 					JOptionPane.showMessageDialog(
@@ -58,7 +58,7 @@ public class FileMenuController implements ActionListener {
 				else {
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.PROBLEM_SAVING_FILE) 
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE) 
 							+ " " 
 							+ f
 							+ "\n\n"
@@ -82,7 +82,7 @@ public class FileMenuController implements ActionListener {
 				else {
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.PROBLEM_SAVING_FILE) 
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE) 
 							+ " " 
 							+ f
 							+ "\n\n"
@@ -111,7 +111,7 @@ public class FileMenuController implements ActionListener {
 				catch (IOException ioe){
 					JOptionPane.showMessageDialog(
 							null, 
-							Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO) 
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE) 
 							+ newFile.getAbsolutePath().toString(), 
 							Translate.getInstance().get(TranslateKeys.ERROR), 
 							JOptionPane.ERROR_MESSAGE);					

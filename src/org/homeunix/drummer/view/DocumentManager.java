@@ -48,7 +48,7 @@ public class DocumentManager {
 
 		@Override
 		public String getDescription() {
-			return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+			return Translate.getInstance().get(TranslateKeys.FILE_DESCRIPTION_BUDDI);
 		}
 	};
 	
@@ -63,7 +63,7 @@ public class DocumentManager {
 		
 		@Override
 		public String getDescription() {
-			return Translate.getInstance().get(TranslateKeys.BUDDI_FILE_DESC);
+			return Translate.getInstance().get(TranslateKeys.FILE_DESCRIPTION_BUDDI);
 		}
 	};
 	
@@ -97,7 +97,7 @@ public class DocumentManager {
 				}
 			}
 			else if (ret == JOptionPane.NO_OPTION){
-				f = DocumentManager.getInstance().loadFile(null);
+				f = DocumentManager.getInstance().loadDataFile(null);
 				if (f != null){
 					PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
 					PrefsInstance.getInstance().savePrefs();
@@ -165,22 +165,22 @@ public class DocumentManager {
 		return file;
 	}
 
-	public File loadFile(File file){
-		return loadFileWorker(file, fileFilter);
+	public File loadDataFile(File file){
+		return loadFile(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), fileFilter);
 	}
 	
 	public File loadBackupFile(File file){
-		return loadFileWorker(file, backupFilter);
+		return loadFile(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), backupFilter);
 	}
 	
-	private File loadFileWorker(File file, FileFilter filter){
+	public File loadFile(File file, String title, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE));
+			jfc.setDialogTitle(title);
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 				if (!jfc.getSelectedFile().exists()){
 					
@@ -226,22 +226,22 @@ public class DocumentManager {
 		return file;
 	}
 
-	public File saveFile(File file){
-		return saveFileWorker(file, fileFilter);
+	public File saveDataFile(File file){
+		return saveFile(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), fileFilter);
 	}
 
 	public File saveBackupFile(File file){
-		return saveFileWorker(file, backupFilter);
+		return saveFile(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), backupFilter);
 	}
 	
-	private File saveFileWorker(File file, FileFilter filter){
+	public File saveFile(File file, String title, FileFilter filter){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			jfc.setFileFilter(filter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
-			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE));
+			jfc.setDialogTitle(title);
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
 				//We no longer allow overwriting existing files.  If
 				// the user selects an existing file, we show an

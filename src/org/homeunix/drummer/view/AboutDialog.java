@@ -60,7 +60,7 @@ public class AboutDialog extends AbstractBuddiDialog {
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
 		"<html><center><h5>")
-		.append(Translate.getInstance().get(TranslateKeys.VERSION))
+		.append(Translate.getInstance().get(TranslateKeys.ABOUT_VERSION))
 		.append(" ")
 		.append(Const.VERSION)
 		.append("</h5></center></html");

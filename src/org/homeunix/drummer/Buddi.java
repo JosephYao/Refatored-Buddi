@@ -91,8 +91,8 @@ public class Buddi {
 			}
 			
 			if (JOptionPane.showConfirmDialog(null, 
-					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE),
-					Translate.getInstance().get(TranslateKeys.UPGRADE_NOTICE_TITLE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
 					JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.WARNING_MESSAGE
 			) == JOptionPane.CANCEL_OPTION)

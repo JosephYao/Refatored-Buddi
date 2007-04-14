@@ -53,7 +53,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 			}
 		});
 		
-		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.SUMMARY)).append("</h1>\n");
+		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_SUMMARY)).append("</h1>\n");
 		sb.append("<table class='main'>\n");
 		
 		sb.append("<tr><th>");
@@ -121,7 +121,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		
 		sb.append("<hr>\n");
 		
-		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.DETAILS)).append("</h1>\n");
+		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
 		
 		for (Category c : categories){
 			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
@@ -154,7 +154,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 					
 					sb.append("</td><td width='35%'>");
 					sb.append(Translate.getInstance().get(t.getFrom().toString()));
-					sb.append(Translate.getInstance().get(TranslateKeys.TO_HTML_SAFE));
+					sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
 					sb.append(Translate.getInstance().get(t.getTo().toString()));
 					
 					sb.append("</td><td width='15%' class='right'>");

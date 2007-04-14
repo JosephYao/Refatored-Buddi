@@ -201,8 +201,8 @@ public class AccountListPanel extends AbstractListPanel {
 					|| ScheduleController.getScheduledTransactions(a).size() > 0
 					|| JOptionPane.showConfirmDialog(
 							AccountListPanel.this,
-							Translate.getInstance().get(TranslateKeys.NO_TRANSACTIONS_USING_ACCOUNT),
-							Translate.getInstance().get(TranslateKeys.PERMANENT_DELETE_ACCOUNT),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT),
+							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT_TITLE),
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
 					AccountListPanelController.deleteAccount(notPermanent, a);							

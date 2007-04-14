@@ -192,9 +192,9 @@ public class DataInstance {
 				|| !locationFile.exists()){
 			JOptionPane.showMessageDialog(
 					null,
-					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE)
 					+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() ) 
-					+ Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_DIR_NOT_EXIST),
+					+ Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE_NOT_EXIST),
 					Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
 					JOptionPane.ERROR_MESSAGE);
 			return;
@@ -281,7 +281,7 @@ public class DataInstance {
 		catch (Exception e){
 			JOptionPane.showMessageDialog(
 					null,
-					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_DATA_FILE_INTRO)
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE)
 					+ e.getMessage(),
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					JOptionPane.ERROR_MESSAGE);

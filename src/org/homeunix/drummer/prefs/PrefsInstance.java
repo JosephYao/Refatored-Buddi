@@ -64,7 +64,7 @@ public class PrefsInstance {
 		if (!locationFile.canWrite() && locationFile.exists()){
 			JOptionPane.showMessageDialog(
 					null,
-					Translate.getInstance().get(TranslateKeys.CANNOT_WRITE_PREFS_FILE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_PREFS_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
@@ -72,7 +72,7 @@ public class PrefsInstance {
 		if (!locationFile.canRead() && locationFile.exists()){
 			JOptionPane.showMessageDialog(
 					null,
-					Translate.getInstance().get(TranslateKeys.CANNOT_READ_PREFS_FILE),
+					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_PREFS_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
@@ -238,31 +238,31 @@ public class PrefsInstance {
 			prefs.getWindows().setReportsWindow(reports);
 			
 			Interval month = PrefsFactory.eINSTANCE.createInterval();
-			month.setName(TranslateKeys.MONTH.toString());
+			month.setName(TranslateKeys.INTERVAL_MONTH.toString());
 			month.setLength(1);
 			month.setDays(false);  //If days is false, then we assume the length is in months.
 			prefs.getIntervals().getIntervals().add(month);
 
 			Interval week = PrefsFactory.eINSTANCE.createInterval();
-			week.setName(TranslateKeys.WEEK.toString());
+			week.setName(TranslateKeys.INTERVAL_WEEK.toString());
 			week.setLength(7);
 			week.setDays(true);
 			prefs.getIntervals().getIntervals().add(week);
 			
 			Interval fortnight = PrefsFactory.eINSTANCE.createInterval();
-			fortnight.setName(TranslateKeys.FORTNIGHT.toString());
+			fortnight.setName(TranslateKeys.INTERVAL_FORTNIGHT.toString());
 			fortnight.setLength(14);
 			fortnight.setDays(true);
 			prefs.getIntervals().getIntervals().add(fortnight);
 
 			Interval quarter = PrefsFactory.eINSTANCE.createInterval();
-			quarter.setName(TranslateKeys.QUARTER.toString());
+			quarter.setName(TranslateKeys.INTERVAL_QUARTER.toString());
 			quarter.setLength(3);
 			quarter.setDays(false);
 			prefs.getIntervals().getIntervals().add(quarter);
 
 			Interval year = PrefsFactory.eINSTANCE.createInterval();
-			year.setName(TranslateKeys.YEAR.toString());
+			year.setName(TranslateKeys.INTERVAL_YEAR.toString());
 			year.setLength(12);
 			year.setDays(false);
 			prefs.getIntervals().getIntervals().add(year);

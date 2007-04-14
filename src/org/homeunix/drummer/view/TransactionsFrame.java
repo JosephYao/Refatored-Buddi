@@ -181,7 +181,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
 
-		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.RECORD));
+		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
 		deleteButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
 		searchField = new JSearchField(Translate.getInstance().get(TranslateKeys.DEFAULT_SEARCH));
@@ -451,12 +451,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public AbstractFrame updateButtons(){
 		if (editableTransaction == null 
 				|| editableTransaction.getTransaction() == null){
-			recordButton.setText(Translate.getInstance().get(TranslateKeys.RECORD));
+			recordButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD));
 			clearButton.setText(Translate.getInstance().get(TranslateKeys.CLEAR));
 			deleteButton.setEnabled(false);
 		}
 		else{
-			recordButton.setText(Translate.getInstance().get(TranslateKeys.UPDATE));
+			recordButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_UPDATE));
 			clearButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_NEW));
 			deleteButton.setEnabled(true);
 		}
@@ -627,10 +627,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			Transaction t;
 			boolean isUpdate = false;
-			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD))){
+			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD))){
 				t = ModelFactory.eINSTANCE.createTransaction();
 			}
-			else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.UPDATE))){
+			else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_UPDATE))){
 				t = editableTransaction.getTransaction();
 				isUpdate = true;
 			}
@@ -656,7 +656,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			t.setCleared(editableTransaction.isCleared());
 			t.setReconciled(editableTransaction.isReconciled());
 
-			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.RECORD))) {
+			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD))) {
 				baseModel.add(t);
 			}
 			else {
