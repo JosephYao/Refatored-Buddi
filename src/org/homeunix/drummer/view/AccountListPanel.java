@@ -110,11 +110,11 @@ public class AccountListPanel extends AbstractListPanel {
 //		else
 //			balanceLabel.setForeground(Color.RED);
 
-		balanceLabel.setText("<html>"
-				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
-				+ ": "  
-				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
-				+ "</html>");
+//		balanceLabel.setText("<html>"
+//				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
+//				+ ": "  
+//				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
+//				+ "</html>");
 
 		treeModel.reload(treeModel.getRoot());
 
@@ -126,8 +126,25 @@ public class AccountListPanel extends AbstractListPanel {
 				if (Const.DEVEL) Log.debug("Unrolling node: " + l);
 			}
 		}
+		
+		updateNetWorth();
 
 		return super.updateContent();
+	}
+	
+	public void updateNetWorth() {
+		
+		long balance = 0;
+		
+		for (Account a : SourceController.getAccounts()) {
+			balance += a.getBalance();
+		}
+		
+		balanceLabel.setText("<html>"
+				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
+				+ ": "  
+				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
+				+ "</html>");		
 	}
 
 	/**

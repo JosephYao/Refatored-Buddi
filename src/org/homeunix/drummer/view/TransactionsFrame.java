@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.drummer.controller.DocumentController;
+import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.controller.Translate;
@@ -676,10 +677,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							editableTransaction.getMemo());
 			}
 
+			SourceController.calculateAllBalances();
 			updateAllTransactionWindows();
 //			ReportFrame.updateAllReportWindows();
 //			GraphFrame.updateAllGraphWindows();
-//			MainFrame.getInstance().getAccountListPanel().updateContent();
+			MainFrame.getInstance().getAccountListPanel().updateNetWorth();
 //			MainFrame.getInstance().getCategoryListPanel().updateContent();
 
 			list.setSelectedValue(t, true);
