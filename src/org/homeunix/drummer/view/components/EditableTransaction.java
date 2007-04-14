@@ -133,9 +133,8 @@ public class EditableTransaction extends JPanel {
 		description.setPreferredSize(new Dimension(100, textHeight));
 		number.setPreferredSize(new Dimension(40, textHeight));
 
-		amount.setMinimumSize(new Dimension(150, textHeight));
-		amount.setMaximumSize(new Dimension(180, textHeight));
-		amount.setPreferredSize(new Dimension(170, textHeight));
+		amount.setMaximumSize(new Dimension(150, textHeight));
+		amount.setPreferredSize(new Dimension(150, textHeight));
 		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
 		to.setPreferredSize(from.getPreferredSize());
 

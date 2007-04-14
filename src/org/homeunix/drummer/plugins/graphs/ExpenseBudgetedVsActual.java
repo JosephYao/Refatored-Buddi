@@ -5,6 +5,7 @@ package org.homeunix.drummer.plugins.graphs;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Date;
@@ -81,11 +82,14 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 				startDate, 
 				endDate);
 
-		sb.append("<img src='graph.png' />");
+		sb.append("<img class='center_img' src='graph.png' />");
 		sb.append(HTMLExportHelper.getHtmlFooter());
 		
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-		images.put("graph.png", chart.createBufferedImage(800, 400));
+		images.put("graph.png", 
+				chart.createBufferedImage(
+						Toolkit.getDefaultToolkit().getScreenSize().width - 200, 
+						cats.size() * 50));
 		
 		return new HTMLWrapper(sb.toString(), images);
 	}

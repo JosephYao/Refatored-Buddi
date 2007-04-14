@@ -286,7 +286,7 @@ public class ScheduleController {
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 
-					if (s.getDate() != null
+					if (tempDate != null
 							&& s.getDescription() != null) {
 						Transaction t = ModelFactory.eINSTANCE.createTransaction();
 
@@ -301,6 +301,12 @@ public class ScheduleController {
 
 						TransactionController.addTransaction(t);
 						if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+					}
+					else {
+						Log.info("There was an error adding a scheduled transaction:\n\tDate = " 
+								+ tempDate
+								+ "\n\tDescription = " 
+								+ s.getDescription());
 					}
 					//We need to save to store the lastCreatedDate
 					DataInstance.getInstance().saveDataFile();

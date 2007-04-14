@@ -56,6 +56,8 @@ public class HTMLExportHelper {
 		sb.append(".center { text-align: center; }\n");
 		sb.append(".left { text-align: left; }\n");
 		
+		sb.append(".center_img { display: block; margin-left: auto; margin-right: auto; }\n");
+		
 		sb.append("h1 { font-size: x-large; }\n");
 		sb.append("h2 { font-size: large; }\n");
 		sb.append("h3 { font-size: medium; }\n");
@@ -88,6 +90,16 @@ public class HTMLExportHelper {
 			sb.append(" - ");
 			sb.append(FormatterWrapper.getDateFormat().format(endDate));
 			sb.append("</h2>\n");
+		}
+		else if (startDate != null){
+			sb.append("<h2>"); 
+			sb.append(FormatterWrapper.getDateFormat().format(startDate));
+			sb.append("</h2>\n");			
+		}
+		else if (endDate != null){
+			sb.append("<h2>"); 
+			sb.append(FormatterWrapper.getDateFormat().format(endDate));
+			sb.append("</h2>\n");	
 		}
 
 		sb.append("</div>\n<div class='separator'></div>\n<div class='content'>\n\n");
