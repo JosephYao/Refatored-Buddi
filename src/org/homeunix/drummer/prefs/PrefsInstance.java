@@ -121,8 +121,9 @@ public class PrefsInstance {
 				}
 			}
 			
-			//Do some final sanity checks.  Probably not needed for everyday use, but
-			// needed for some upgrades (i.e., from 1.1.5 to 1.1.6).
+			//Do some final sanity checks.  Probably not needed for 
+			// everyday use, but needed for some 
+			// upgrades (i.e., from 1.1.5 to 1.1.6).
 			if (userPrefs.getPrefs().getSelectedInterval() == null 
 					|| userPrefs.getPrefs().getIntervals() == null
 					|| userPrefs.getPrefs().getIntervals().getIntervals() == null)
@@ -142,6 +143,42 @@ public class PrefsInstance {
 					userPrefs.getPrefs().setLanguage("Norsk");
 				savePrefs();
 			}
+			
+			//Change Interval names to reflect new TranslationKeys in 
+			// and beyond version 2.3.4.  Can probably remove this
+			// after 2.6.x.
+			for (Object o : userPrefs.getPrefs().getIntervals().getIntervals()) {
+				if (o instanceof Interval){
+					Interval interval = (Interval) o;
+					
+					if (interval.getName().equals("WEEK"))
+						interval.setName(TranslateKeys.INTERVAL_WEEK.toString());
+					else if (interval.getName().equals("FORTNIGHT"))
+						interval.setName(TranslateKeys.INTERVAL_FORTNIGHT.toString());
+					else if (interval.getName().equals("MONTH"))
+						interval.setName(TranslateKeys.INTERVAL_MONTH.toString());
+					else if (interval.getName().equals("QUARTER"))
+						interval.setName(TranslateKeys.INTERVAL_QUARTER.toString());
+					else if (interval.getName().equals("YEAR"))
+						interval.setName(TranslateKeys.INTERVAL_YEAR.toString());
+					savePrefs();
+				}
+			}
+			
+			//Finish off the above checks by updating the selected interval too.
+			String interval = userPrefs.getPrefs().getSelectedInterval();
+			if (interval.equals("WEEK"))
+				userPrefs.getPrefs().setSelectedInterval(TranslateKeys.INTERVAL_WEEK.toString());
+			else if (interval.equals("FORTNIGHT"))
+				userPrefs.getPrefs().setSelectedInterval(TranslateKeys.INTERVAL_FORTNIGHT.toString());
+			else if (interval.equals("MONTH"))
+				userPrefs.getPrefs().setSelectedInterval(TranslateKeys.INTERVAL_MONTH.toString());
+			else if (interval.equals("QUARTER"))
+				userPrefs.getPrefs().setSelectedInterval(TranslateKeys.INTERVAL_QUARTER.toString());
+			else if (interval.equals("YEAR"))
+				userPrefs.getPrefs().setSelectedInterval(TranslateKeys.INTERVAL_YEAR.toString());
+			savePrefs();
+
 			
 			//Allow upgrading to rotating backups - default to 20
 			if (userPrefs.getPrefs().getNumberOfBackups() == 0){
@@ -449,7 +486,7 @@ public class PrefsInstance {
 			}
 		}
 		
-		if (Const.DEVEL) Log.debug("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
+		Log.error("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
 		return null;
 	}
 	

@@ -149,14 +149,17 @@ public class ScheduleController {
 
 			Date tempDate = s.getLastDateCreated();
 
-			//Temp date is where we will start looping from.  If it is
-			// null, we need to init it to a sane value.
-			if (tempDate == null)
+			//Temp date is where we will start looping from.
+			if (tempDate == null){
+				//If it is null, we need to init it to a sane value.
 				tempDate = s.getStartDate();
-
-			//We start one day after the last day, to avoid repeats.  See 
-			// bug #1641937 for more details.
-			tempDate = DateUtil.getNextDay(tempDate);
+			}
+			else {
+				//We start one day after the last day, to avoid repeats.  
+				// See bug #1641937 for more details.
+				tempDate = DateUtil.getNextDay(tempDate);
+			}
+			
 			Date lastDayCreated = (Date) tempDate.clone();
 
 			tempDate = DateUtil.getStartOfDay(tempDate);
@@ -229,7 +232,7 @@ public class ScheduleController {
 				}
 				//To make this one clearer, we do it in two passes.
 				// First, we check the frequency type and the day.
-				// If these match, we do out bit bashing to determine
+				// If these match, we do our bit bashing to determine
 				// if the week is correct.
 				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
@@ -255,7 +258,7 @@ public class ScheduleController {
 				}
 				//To make this one clearer, we do it in two passes.
 				// First, we check the frequency type and the day.
-				// If these match, we do out bit bashing to determine
+				// If these match, we do our bit bashing to determine
 				// if the month is correct.
 				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString())
 						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){

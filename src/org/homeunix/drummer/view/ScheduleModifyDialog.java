@@ -364,7 +364,6 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 
 		if (OperatingSystemUtil.isMac()){
 			textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-			mainPanel.setBorder(BorderFactory.createEmptyBorder(7, 12, 12, 12));
 			messageScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			messageScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}

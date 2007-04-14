@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -30,6 +28,8 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.plugins.PluginFactory;
+import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.FormatterWrapper;
@@ -50,32 +50,12 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	private final JTabbedPane tabs;
 		
 	protected MainFrame(){
-		JPanel mainPanel = new JPanel(new BorderLayout());
-		
 		tabs = new JTabbedPane();
 		
 		accountListPanel = new AccountListPanel();
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
-		graphPanel = new GraphPanel();
-
-		accountListPanel.open();
-		categoryListPanel.open();
-		reportPanel.open();
-		graphPanel.open();
-		
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_BUDGET), categoryListPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.REPORTS), reportPanel);
-		tabs.addTab(Translate.getInstance().get(TranslateKeys.GRAPHS), graphPanel);
-		
-		mainPanel.add(tabs, BorderLayout.CENTER);
-		
-		JScrollPane scroller = new JScrollPane(mainPanel);
-		scroller.setBorder(BorderFactory.createEmptyBorder());
-		
-		this.setLayout(new BorderLayout());
-		this.add(scroller, BorderLayout.CENTER);		
+		graphPanel = new GraphPanel();	
 	}
 	
 	public AccountListPanel getAccountListPanel(){
@@ -161,6 +141,37 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	}
 
 	public AbstractFrame init() {
+		
+		//We try calling all runnable plugins as soon as possible
+		// here, to allow them to modify whatever they need to
+		// at startup.		
+		for (BuddiRunnablePlugin runnable : PluginFactory.getRunnablePlugins()) {
+			if (Const.DEVEL) Log.debug("Running plugin " + runnable.getDescription());
+			runnable.run();
+			if (Const.DEVEL) Log.debug("Finished running plugin " + runnable.getDescription());
+		}
+		
+		accountListPanel.open();
+		categoryListPanel.open();
+		reportPanel.open();
+		graphPanel.open();
+		
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_ACCOUNTS), accountListPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.MY_BUDGET), categoryListPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.REPORTS), reportPanel);
+		tabs.addTab(Translate.getInstance().get(TranslateKeys.GRAPHS), graphPanel);
+		
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		mainPanel.add(tabs, BorderLayout.CENTER);
+		
+		JScrollPane scroller = new JScrollPane(mainPanel);
+		scroller.setBorder(BorderFactory.createEmptyBorder());
+		
+		this.setLayout(new BorderLayout());
+		this.add(scroller, BorderLayout.CENTER);
+		
+		
+		
 		// The correct Mac behaviour is to keep the program running
 		// on a Window close; you must click Quit before the program 
 		// stops.  We do that here.
@@ -172,16 +183,16 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 //			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 //		}
 		
-		Timer timer = new Timer(true);
-		TimerTask task = new TimerTask(){
-			@Override
-			public void run() {
-				DocumentController.saveFile();
-			}
-		};
-		
-		//Auto save the model every 60 seconds
-		timer.schedule(task, 60 * 1000);
+//		Timer timer = new Timer(true);
+//		TimerTask task = new TimerTask(){
+//			@Override
+//			public void run() {
+//				DocumentController.saveFile();
+//			}
+//		};
+//		
+//		//Auto save the model every 60 seconds
+//		timer.schedule(task, 60 * 1000);
 
 		return this;
 	}

@@ -13,6 +13,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
@@ -116,6 +117,16 @@ class BuddiPluginImpl {
 //		}
 		public HTMLWrapper getReport(Date startDate, Date endDate) {
 			return null;
+		}
+	}
+	
+	static class BuddiRunnablePluginImpl implements BuddiRunnablePlugin {
+		public String getDescription() {
+			return null;
+		}
+		
+		public void run() {
+			
 		}
 	}
 }

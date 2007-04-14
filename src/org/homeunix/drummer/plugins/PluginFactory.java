@@ -28,12 +28,14 @@ import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiGraphPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiImportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiReportPluginImpl;
+import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiRunnablePluginImpl;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
+import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.DocumentManager;
@@ -71,6 +73,19 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		return exportMenuItems;
 	}
+	
+	/**
+	 * Returns a list of all BuddiRunnablePlugins in the system.
+	 * 
+	 * @return
+	 */
+	public static List<BuddiRunnablePlugin> getRunnablePlugins(){
+		PluginFactory<BuddiRunnablePlugin> factory = new PluginFactory<BuddiRunnablePlugin>();
+		List<BuddiRunnablePlugin> runnablePlugins = factory.getPluginObjects(BuddiRunnablePluginImpl.class);
+
+		return runnablePlugins;
+	}
+
 
 	public static List<JScreenMenuItem> getImportMenuItems(final AbstractFrame frame){
 		List<JScreenMenuItem> importMenuItems = new LinkedList<JScreenMenuItem>();
