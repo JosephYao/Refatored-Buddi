@@ -57,7 +57,7 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_INCOME_PIE_GRAPH), 
 				null, 
 				startDate, 
 				endDate);
@@ -72,7 +72,7 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.INCOME_PIE_GRAPH_TITLE);
+		return Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_INCOME_PIE_GRAPH);
 	}
 	
 	private Map<Category, Long> getIncomeBetween(Date startDate, Date endDate){
@@ -117,6 +117,6 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 	}
 
 	public String getDescription() {
-		return TranslateKeys.INCOME_PIE_GRAPH.toString();
+		return TranslateKeys.GRAPH_DESCRIPTION_INCOME_PIE_GRAPH.toString();
 	}
 }

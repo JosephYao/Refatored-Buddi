@@ -57,7 +57,7 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				Translate.getInstance().get(TranslateKeys.NET_WORTH), 
 				null, 
 				startDate, 
 				endDate);
@@ -72,7 +72,7 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.NET_WORTH_BREAKDOWN_TITLE);
+		return Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_NET_WORTH_BREAKDOWN);
 	}
 	
 	private Map<Account, Long> getAccountBalance(Date date){
@@ -114,6 +114,6 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	}
 	
 	public String getDescription() {
-		return TranslateKeys.NETWORTH_PIE_GRAPH.toString();
+		return TranslateKeys.GRAPH_DESCRIPTION_NET_WORTH_BREAKDOWN.toString();
 	}
 }

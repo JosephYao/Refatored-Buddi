@@ -43,7 +43,7 @@ public class HTMLExportHelper {
 		sb.append("</title>\n");
 
 		sb.append("<style type=\"text/css\">\n");
-		sb.append("body { background-color: #a3b8ce; color: #222; min-width: 50em; margin: 1em; padding: 0em; }\n";
+		sb.append("body { background-color: #a3b8ce; color: #222; min-width: 50em; margin: 1em; padding: 0em; }\n");
 		sb.append(".content { border: 1em solid white; background-color: white; margin: 0em; }\n");
 		sb.append(".header { background-color: #59a1ea; padding-left: 4em; height: 8em; margin: 0em; top: -1em; font-variant: small-caps; font-weight: bold; font-size-adjust: 0.6; border-left: 8em solid #dfc700; }\n");
 		sb.append(".separator { height: 0.4em; background-color: black; color: black; }\n");

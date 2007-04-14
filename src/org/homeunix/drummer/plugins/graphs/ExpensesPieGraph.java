@@ -57,7 +57,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH), 
 				null, 
 				startDate, 
 				endDate);
@@ -72,7 +72,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.EXPENSE_PIE_GRAPH_TITLE);
+		return Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH);
 	}
 	
 	private Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){
@@ -117,6 +117,6 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 	}
 	
 	public String getDescription() {
-		return TranslateKeys.EXPENSE_PIE_GRAPH.toString();
+		return TranslateKeys.GRAPH_DESCRIPTION_EXPENSE_PIE_GRAPH.toString();
 	}
 }

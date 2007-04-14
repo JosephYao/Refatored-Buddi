@@ -59,7 +59,9 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 //				barData.addValue((Number) new Double(accounts.get(a) / 100.0), Formatter.getInstance().getDateFormat().format(d), a.getName());
 				total += accounts.get(a);
 			}
-			barData.addValue((Number) new Double(total / 100.0), Translate.getInstance().get(TranslateKeys.NET_WORTH), Formatter.getDateFormat("MM/dd").format(d));
+			barData.addValue((Number) new Double(total / 100.0), 
+					Translate.getInstance().get(TranslateKeys.NET_WORTH), 
+					Formatter.getDateFormat("MM/dd").format(d));
 		}
 		
 		
@@ -79,7 +81,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME), 
 				null, 
 				startDate, 
 				endDate);
@@ -94,7 +96,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 	}
 	
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.NET_WORTH_OVER_TIME_GRAPH_TITLE);
+		return Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME);
 	}
 	
 	private Map<Account, Long> getAccountBalance(Date date){

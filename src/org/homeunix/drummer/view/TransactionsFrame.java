@@ -29,6 +29,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.controller.Translate;
@@ -412,11 +413,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 //		transactionInstances.put(account, null);
 
-//		return super.closeWindow();
+		return super.closeWindow();
 		
-		this.setVisible(false);
+//		this.setVisible(false);
 		
-		return this;
+//		return this;
 	}
 
 	public AbstractFrame updateContent(){
@@ -488,10 +489,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 * windows as well as save the data model, do misc. housecleaning, etc.
 	 */
 	public static void updateAllTransactionWindows(){
-		for (TransactionsFrame tf : getPreloader().getAll()) {
-			if (tf != null)
-				tf.updateContent();
-		}
+//		for (TransactionsFrame tf : getPreloader().getAll()) {
+//			if (tf != null)
+//				tf.updateContent();
+//		}
 	}
 
 	/**
@@ -698,6 +699,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			disableListEvents = false;
 
 			editableTransaction.resetSelection();
+			
+			DocumentController.saveFileSoon();
 		}
 		else if (e.getSource().equals(clearButton)){
 			if (!editableTransaction.isChanged()
@@ -712,7 +715,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				editableTransaction.updateContent();
 				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 				list.clearSelection();
-
+				
 				updateButtons();
 			}
 		}

@@ -76,7 +76,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
-				Translate.getInstance().get(TranslateKeys.EXPENSE_ACTUAL_BUDGET), 
+				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_EXPENSE_ACTUAL_BUDGET), 
 				null, 
 				startDate, 
 				endDate);
@@ -136,6 +136,6 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 	}
 
 	public String getDescription() {
-		return TranslateKeys.EXPENSE_ACTUAL_BUDGET_BAR_GRAPH.toString();
+		return TranslateKeys.GRAPH_DESCRIPTION_EXPENSE_ACTUAL_BUDGET.toString();
 	}
 }

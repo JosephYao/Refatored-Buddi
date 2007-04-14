@@ -59,9 +59,9 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.NAME));
 		sb.append("</th><th>");
-		sb.append(Translate.getInstance().get(TranslateKeys.BUDGETED));
-		sb.append("</th><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.ACTUAL));
+		sb.append("</th><th>");
+		sb.append(Translate.getInstance().get(TranslateKeys.BUDGETED));
 		sb.append("</th><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.DIFFERENCE));
 		sb.append("</th></tr>\n");
@@ -96,11 +96,12 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 				sb.append("<td>");
 				sb.append(Translate.getInstance().get(c.toString()));
 				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(budgeted, c.isIncome()));
+				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(actual, c.isIncome()));
 				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(actual, c.isIncome()));				
+				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(budgeted, c.isIncome()));				
 				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(budgeted - actual, !c.isIncome()));				
+				long difference = actual - budgeted;
+				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(difference, difference > 0 ^ c.isIncome(), difference < 0));				
 				sb.append("</td></tr>\n");
 			}
 		}
@@ -108,11 +109,12 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.TOTAL));
 		sb.append("</th><th class='right'>");
+		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalActual, totalActual < 0, false));
+		sb.append("</th><th class='right'>");
 		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalBudgeted, totalBudgeted < 0, false));
 		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalActual, totalActual < 0, false));				
-		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalBudgeted - totalActual, totalBudgeted - totalActual < 0, false));				
+		long totalDifference = totalActual - totalBudgeted; 
+		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalDifference, totalDifference < 0, false));				
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
@@ -144,19 +146,19 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 
 
 				for (Transaction t : transactions) {
-					sb.append("<tr><td>");
+					sb.append("<tr><td width='20%'>");
 					sb.append(FormatterWrapper.getDateFormat().format(t.getDate()));
 					
-					sb.append("</td><td>");
+					sb.append("</td><td width='30%'>");
 					sb.append(Translate.getInstance().get(t.getDescription()));
 					
-					sb.append("</td><td>");
+					sb.append("</td><td width='35%'>");
 					sb.append(Translate.getInstance().get(t.getFrom().toString()));
 					sb.append(Translate.getInstance().get(TranslateKeys.TO_HTML_SAFE));
 					sb.append(Translate.getInstance().get(t.getTo().toString()));
 					
-					sb.append("</td><td class='right'>");
-					sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), false));
+					sb.append("</td><td width='15%' class='right'>");
+					sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), c.isIncome()));
 
 					sb.append("</td></tr>\n");
 				}
