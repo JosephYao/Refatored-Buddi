@@ -113,7 +113,7 @@ public class TransactionCellRenderer extends JLabel implements ListCellRenderer 
 		
 		sb.append("</td><td colspan='9' width='45%'>");
 		if (transaction != null){
-			sb.append(Formatter.getLengthFormat(width / 16).format(
+			sb.append(Formatter.getLengthFormat(width / 20).format(
 					transaction.getFrom() 
 					+ " " 
 					+ Translate.getInstance().get(TranslateKeys.TO)
