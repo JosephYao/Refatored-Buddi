@@ -3,15 +3,17 @@
  */
 package org.homeunix.drummer.plugins.reports;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
@@ -46,7 +48,10 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 				descriptions.get(transaction.getDescription()).add(transaction);			
 		}
 		
-		for (String s : descriptions.keySet()){			
+		List<String> descriptionList = new LinkedList<String>(descriptions.keySet());
+		Collections.sort(descriptionList);
+		
+		for (String s : descriptionList){			
 			if (descriptions.get(s).size() > 0){
 				long total = 0;
 				for (Transaction t : descriptions.get(s)) {
@@ -64,33 +69,13 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(total, total < 0, total < 0));
 				sb.append("</h2>\n");
 
-				sb.append("<table class='main'>\n");
-
-				sb.append("<tr><th>");
-				sb.append(Translate.getInstance().get(TranslateKeys.DATE));
-				sb.append("</th><th>");
-				sb.append(Translate.getInstance().get(TranslateKeys.SOURCE_TO_FROM));
-				sb.append("</th><th>");
-				sb.append(Translate.getInstance().get(TranslateKeys.AMOUNT));
-				sb.append("</th></tr>\n");
-
+				sb.append(HTMLExportHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : descriptions.get(s)) {
-					sb.append("<tr><td>");
-					sb.append(FormatterWrapper.getDateFormat().format(t.getDate()));
-					
-					sb.append("</td><td>");
-					sb.append(Translate.getInstance().get(t.getFrom().toString()));
-					sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
-					sb.append(Translate.getInstance().get(t.getTo().toString()));
-					
-					sb.append("</td><td>");
-					sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), t.getTo() instanceof Account));
-
-					sb.append("</td></tr>\n");
+					sb.append(HTMLExportHelper.getHtmlTransactionRow(t, null));
 				}
 
-				sb.append("</table>\n\n");
+				sb.append(HTMLExportHelper.getHtmlTransactionFooter());
 			}
 		}
 		
@@ -103,10 +88,14 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 	}
 
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.INCOME_AND_EXPENSES_BY_DESCRIPTION_TITLE);
+		return Translate.getInstance().get(TranslateKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_DESCRIPTION);
 	}
 
 	public String getDescription() {
-		return Translate.getInstance().get(TranslateKeys.REPORT_INCOME_EXPENSES_BY_DESCRIPTION);
+		return Translate.getInstance().get(TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_DESCRIPTION);
+	}
+	
+	public boolean isEnabled() {
+		return true;
 	}
 }

@@ -29,6 +29,18 @@ Amount- <= This Account: Black, Negative, Left Column
 Amount+ => This Account: Black, Positive, Right Column 
 Amount- => This Account: Red, Negative, Right Column
 
+//If there is no associated account (i.e., for some reports), Transaction values should display as follows:
+//From	To	+/-	Color
+A	A	+	Black
+A	A	-	Red
+A	C	+	Red
+A	C	-	Black
+C	A	+	Black
+C	A	-	Red
+
+Simplified, this is equivalent to If "To == Category && Value >= 0" or "To == Account && Value < 0" then value is Red.
+
+
 Totals:
 //Generic account totals should always be expressed as a Debit account.  The only exception to this is TypeTotal when the type is credit; in this case, they should be shown as a Credit account 
 

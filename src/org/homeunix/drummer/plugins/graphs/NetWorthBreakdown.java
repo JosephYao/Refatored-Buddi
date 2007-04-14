@@ -120,4 +120,8 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	public String getDescription() {
 		return TranslateKeys.GRAPH_DESCRIPTION_NET_WORTH_BREAKDOWN.toString();
 	}
+	
+	public boolean isEnabled() {
+		return true;
+	}
 }

@@ -74,11 +74,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		
 		return new HTMLWrapper(sb.toString(), images);
 	}
-	
-	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH);
-	}
-	
+		
 	private Map<Category, Long> getExpensesBetween(Date startDate, Date endDate){
 		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
 		Map<Category, Long> categories = new HashMap<Category, Long>();
@@ -122,5 +118,13 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 	
 	public String getDescription() {
 		return TranslateKeys.GRAPH_DESCRIPTION_EXPENSE_PIE_GRAPH.toString();
+	}
+
+	public String getTitle() {
+		return TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH.toString();
+	}
+
+	public boolean isEnabled() {
+		return true;
 	}
 }

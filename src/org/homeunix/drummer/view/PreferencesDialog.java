@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -62,9 +60,9 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 	private final JButton okButton;
 	private final JButton cancelButton;
 	
-	private final JComboBox language;
+	private final JScrollingComboBox language;
 	private final JScrollingComboBox dateFormat;
-	private final JComboBox currencyFormat;
+	private final JScrollingComboBox currencyFormat;
 	private final JCheckBox currencySymbolAfterAmount;
 	private final JComboBox budgetInterval;
 	private final JCheckBox showDeletedAccounts;
@@ -79,6 +77,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 	private final JButton addButton;
 	private final JButton removeButton;
 	private final JButton otherCurrencyButton;
+	private final JButton otherDateFormatButton;
 	private final JList pluginList;
 	private final DefaultListModel pluginListModel;
 	
@@ -86,6 +85,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 	
 	private final DefaultComboBoxModel languageModel;
 	private final DefaultComboBoxModel currencyModel;
+	private final DefaultComboBoxModel dateFormatModel;
 	
 	private boolean forceRestart = false;
 	
@@ -107,11 +107,12 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		showClearReconcile = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CLEAR_RECONCILE));
 		promptForDataFile = new JCheckBox(Translate.getInstance().get(TranslateKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
 		languageModel = new DefaultComboBoxModel();
-		language = new JComboBox(languageModel);
+		language = new JScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
-		currencyFormat = new JComboBox(currencyModel);
+		currencyFormat = new JScrollingComboBox(currencyModel);
 		currencySymbolAfterAmount = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
-		dateFormat = new JScrollingComboBox(Const.DATE_FORMATS);
+		dateFormatModel = new DefaultComboBoxModel();
+		dateFormat = new JScrollingComboBox(dateFormatModel);
 		budgetInterval = new JComboBox(PrefsInstance.getInstance().getIntervals());		
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
 		pluginListModel = new DefaultListModel();
@@ -119,11 +120,14 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		addButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_ADD));
 		removeButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_REMOVE));
 		otherCurrencyButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OTHER));
+		otherDateFormatButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OTHER));
 		
 		//Set up buttons
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), okButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
+		otherCurrencyButton.setPreferredSize(buttonSize);
+		otherDateFormatButton.setPreferredSize(buttonSize);
 		
 		//Set up currency lists
 		boolean customCurrency = true; //Assume custom until proved otherwise, below
@@ -135,6 +139,18 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		}
 		if (customCurrency){
 			currencyModel.addElement(currency);
+		}
+		
+		//Set up Date Format list
+		boolean customDateFormat = true; //Assume custom until proved otherwise, below
+		String dateFormat = PrefsInstance.getInstance().getPrefs().getDateFormat();
+		for (String s : Const.DATE_FORMATS) {
+			dateFormatModel.addElement(s);
+			if (s.equals(dateFormat))
+				customDateFormat = false;
+		}
+		if (customDateFormat){
+			dateFormatModel.addElement(dateFormat);
 		}
 		
 		//Set up tooltips
@@ -208,43 +224,40 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				
-				if (value == null){
-					setText("\u2014");
-				}
-				else if (value instanceof String){
-					String str = (String) value;
-					this.setText(new SimpleDateFormat(str).format(new Date()));
+				if (value != null){
+					this.setText(new SimpleDateFormat(value.toString()).format(new Date()));
 				}
 				
 				return this;
 			}
 		});
 		
-		dateFormat.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (dateFormat.getSelectedItem() == null){
-					if (e.getItem().equals(dateFormat.getItemAt(0))){
-						dateFormat.setSelectedIndex(1);
-					}
-					Log.debug("null; e.getItem == " + e.getItem());
-					dateFormat.setSelectedIndex(0);
-				}
-			}			
-		});
+//		dateFormat.addItemListener(new ItemListener() {
+//			public void itemStateChanged(ItemEvent e) {
+//				if (dateFormat.getSelectedItem() == null){
+//					if (e.getItem().equals(dateFormat.getItemAt(0))){
+//						dateFormat.setSelectedIndex(1);
+//					}
+//					Log.debug("null; e.getItem == " + e.getItem());
+//					dateFormat.setSelectedIndex(0);
+//				}
+//			}			
+//		});
 		
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
 		
+		dateFormatPanel.add(dateFormatLabel);
+		dateFormatPanel.add(dateFormat);
+		dateFormatPanel.add(otherDateFormatButton);
 		currencyFormatPanel.add(currencyFormatLabel);
 		currencyFormatPanel.add(currencyFormat);
 		currencyFormatPanel.add(otherCurrencyButton);
-		dateFormatPanel.add(dateFormatLabel);
-		dateFormatPanel.add(dateFormat);
 
 		localePanel.add(languagePanel);		
+		localePanel.add(dateFormatPanel);
 		localePanel.add(currencyFormatPanel);
 		localePanel.add(currencySymbolAfterAmount);
-		localePanel.add(dateFormatPanel);
 		localePanel.add(Box.createVerticalGlue());
 		
 		return getPanelHolder(localePanel);
@@ -377,7 +390,8 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 		cancelButton.addActionListener(this);
 		addButton.addActionListener(this);
 		removeButton.addActionListener(this);
-		currencyFormat.addActionListener(this);
+		otherCurrencyButton.addActionListener(this);
+		otherDateFormatButton.addActionListener(this);
 
 		pluginList.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
@@ -627,6 +641,52 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			}
 			else {
 				Log.debug("Invalid currency: '" + newCurrency + "'");
+			}
+		}
+		else if (e.getSource().equals(otherDateFormatButton)){
+			String newDateFormat = JOptionPane.showInputDialog(
+						this, 
+						Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_DATE_FORMAT), 
+						Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_DATE_FORMAT_TITLE), 
+						JOptionPane.PLAIN_MESSAGE);
+
+			if (newDateFormat != null 
+					&& newDateFormat.length() > 0){
+				
+				//Test out the new format, to see if it complies with
+				// the format rules.
+				try {
+					new SimpleDateFormat(newDateFormat);
+				}
+				catch (IllegalArgumentException iae){
+					JOptionPane.showMessageDialog(
+							this, 
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_INCORRECT_FORMAT), 
+							Translate.getInstance().get(TranslateKeys.ERROR), 
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				
+				dateFormatModel.removeAllElements();
+
+				//Set up currency lists
+				boolean customDateFormat = true; //Assume custom until proved otherwise, below
+				for (String s : Const.DATE_FORMATS) {
+					dateFormatModel.addElement(s);
+					if (s.equals(newDateFormat)){
+						customDateFormat = false;
+						Log.debug("Date Format " + newDateFormat + " already in list...");
+					}
+				}
+				if (customDateFormat){
+					dateFormatModel.addElement(newDateFormat);
+				}
+
+				dateFormatModel.setSelectedItem(newDateFormat);
+			}
+			else {
+				Log.debug("Invalid Date Format: '" + newDateFormat + "'");
 			}
 		}
 	}

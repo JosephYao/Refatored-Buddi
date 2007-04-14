@@ -123,4 +123,8 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 	public String getDescription() {
 		return TranslateKeys.GRAPH_DESCRIPTION_INCOME_PIE_GRAPH.toString();
 	}
+	
+	public boolean isEnabled() {
+		return true;
+	}
 }

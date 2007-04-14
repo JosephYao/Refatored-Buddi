@@ -144,4 +144,8 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 	public String getDescription() {
 		return TranslateKeys.NETWORTH_LINE_GRAPH.toString();
 	}
+	
+	public boolean isEnabled() {
+		return true;
+	}
 }

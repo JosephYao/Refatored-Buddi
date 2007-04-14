@@ -71,7 +71,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 			interestRate.setValue(0);
 			pulldown.setSelectedItem(null);
 			pulldown.setEnabled(true);
-			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_EDIT));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_NEW));
 		}
 		else{
 			name.setText(source.getName());
@@ -81,7 +81,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 
 			pulldown.setSelectedItem(source.getAccountType());
 			pulldown.setEnabled(false);
-			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_NEW));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.ACCOUNT_MODIFY_EDIT));
 		}
 
 		return this;

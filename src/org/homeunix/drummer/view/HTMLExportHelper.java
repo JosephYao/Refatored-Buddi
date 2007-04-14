@@ -15,6 +15,9 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.homeunix.drummer.controller.Translate;
+import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Source;
+import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.util.Log;
@@ -107,6 +110,10 @@ public class HTMLExportHelper {
 		return sb;
 	}
 	
+	/**
+	 * Get the HTML footer, matched to the header supplied from getHtmlHeader()
+	 * @return
+	 */
 	public static StringBuilder getHtmlFooter(){
 		StringBuilder sb = new StringBuilder();
 		
@@ -114,7 +121,70 @@ public class HTMLExportHelper {
 		
 		return sb;
 	}
+	
+	/**
+	 * Returns an HTML table row consisting of information from the given transaction. 
+	 * @param t Transaction to display.
+	 * @param associatedSource Associated source.  This would be the account which 
+	 * the transaction frame is associated with, for instace.  This can be null
+	 * if there is none.
+	 * @return
+	 */
+	public static StringBuilder getHtmlTransactionRow(Transaction t, Source associatedSource){
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<tr><td width='20%'>");
+		sb.append(FormatterWrapper.getDateFormat().format(t.getDate()));
+		
+		sb.append("</td><td width='30%'>");
+		sb.append(Translate.getInstance().get(t.getDescription()));
+		
+		sb.append("</td><td width='35%'>");
+		sb.append(Translate.getInstance().get(t.getFrom().toString()));
+		sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
+		sb.append(Translate.getInstance().get(t.getTo().toString()));
+		
+		sb.append("</td><td width='15%' class='right'>");
+		if (associatedSource != null)
+			sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), t.getFrom().equals(associatedSource)));
+		else 
+			sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t));
 
+		sb.append("</td></tr>\n");
+		
+		return sb;		
+	}
+
+	/**
+	 * Returns the start of a table for displaying transactions,
+	 * including the header row.
+	 * @return
+	 */
+	public static StringBuilder getHtmlTransactionHeader(){
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<table class='main'>\n");
+		sb.append("<tr><th>");
+		sb.append(Translate.getInstance().get(TranslateKeys.DATE));
+		sb.append("</th><th>");
+		sb.append(Translate.getInstance().get(TranslateKeys.DESCRIPTION));
+		sb.append("</th><th>");
+		sb.append(Translate.getInstance().get(TranslateKeys.SOURCE_TO_FROM));
+		sb.append("</th><th>");
+		sb.append(Translate.getInstance().get(TranslateKeys.AMOUNT));
+		sb.append("</th></tr>\n");
+
+		return sb;
+	}
+	
+	/**
+	 * Returns the end of a table for displaying transactions.
+	 * @return
+	 */
+	public static StringBuilder getHtmlTransactionFooter(){
+		return new StringBuilder("</table>\n\n");
+	}
+	
 	/**
 	 * Saves the HTML and associated images to disk.  Returns the
 	 * file object of the associated HTML index on success, or null

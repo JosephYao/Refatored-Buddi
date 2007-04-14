@@ -24,13 +24,12 @@ import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
- * report plugins (although this one is kind of ugly, so you may not 
- * want to use it..)
+ * report plugins
  * 
  * @author wyatt
  *
  */
-public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
+public class AverageIncomeExpenseByCategory implements BuddiReportPlugin {
 	
 	public HTMLWrapper getReport(Date startDate, Date endDate) {
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
@@ -61,12 +60,12 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		sb.append("</th><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.ACTUAL));
 		sb.append("</th><th>");
-		sb.append(Translate.getInstance().get(TranslateKeys.BUDGETED));
-		sb.append("</th><th>");
-		sb.append(Translate.getInstance().get(TranslateKeys.DIFFERENCE));
+		sb.append(Translate.getInstance().get(TranslateKeys.AVERAGE));
+		sb.append(" / ");
+		sb.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()));
 		sb.append("</th></tr>\n");
 		
-		long totalActual = 0, totalBudgeted = 0;
+		long totalActual = 0, totalAverage = 0;
 		
 		for (Category c : categories){
 			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
@@ -82,12 +81,12 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 				}
 			}
 
-			long budgeted = BudgetCalculator.getEquivalentByInterval(c.getBudgetedAmount(), PrefsInstance.getInstance().getSelectedInterval(), startDate, endDate);
+			long average = BudgetCalculator.getAverageByInterval(actual, PrefsInstance.getInstance().getSelectedInterval(), startDate, endDate);
 			if (c.isIncome()){
-				totalBudgeted += budgeted;
+				totalAverage += average;
 			}
 			else {
-				totalBudgeted -= budgeted;
+				totalAverage -= average;
 			}
 			
 
@@ -98,10 +97,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 				sb.append("</td><td class='right'>");
 				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(actual, c.isIncome()));
 				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(budgeted, c.isIncome()));				
-				sb.append("</td><td class='right'>");
-				long difference = actual - budgeted;
-				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(difference, difference > 0 ^ c.isIncome(), difference < 0));				
+				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(average, c.isIncome()));				
 				sb.append("</td></tr>\n");
 			}
 		}
@@ -111,10 +107,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		sb.append("</th><th class='right'>");
 		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalActual, totalActual < 0, false));
 		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalBudgeted, totalBudgeted < 0, false));
-		sb.append("</th><th class='right'>");
-		long totalDifference = totalActual - totalBudgeted; 
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalDifference, totalDifference < 0, false));				
+		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalAverage, totalAverage < 0, false));
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
@@ -134,6 +127,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 
 				sb.append(HTMLExportHelper.getHtmlTransactionHeader());
 
+
 				for (Transaction t : transactions) {
 					sb.append(HTMLExportHelper.getHtmlTransactionRow(t, c));
 				}
@@ -152,11 +146,11 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 	}
 
 	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_CATEGORY);
+		return Translate.getInstance().get(TranslateKeys.REPORT_TITLE_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY);
 	}
 
 	public String getDescription() {
-		return TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
+		return TranslateKeys.REPORT_DESCRIPTION_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY.toString();
 	}
 	
 	public boolean isEnabled() {

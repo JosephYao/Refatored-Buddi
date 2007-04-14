@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.4";
+	public static final String VERSION = "2.3.5";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -87,42 +87,42 @@ public class Const {
 	
 	//Date formats to appear in Preferences.
 	public final static String[] DATE_FORMATS = {
-		"yyyy.MM.dd",
-		"yyyy-MM-dd",
+//		"yyyy.MM.dd",
+//		"yyyy-MM-dd",
 		"yyyy/MM/dd",
-		null,
-		"yyyy.MMM.dd",
-		"yyyy-MMM-dd",
+//		null,
+//		"yyyy.MMM.dd",
+//		"yyyy-MMM-dd",
 		"yyyy/MMM/dd",
-		null,		
-		"yyyy.MMM.d",
-		"yyyy-MMM-d",
-		"yyyy/MMM/d",
-		null,
-		"dd.MM.yyyy",
-		"dd-MM-yyyy",
+//		null,		
+//		"yyyy.MMM.d",
+//		"yyyy-MMM-d",
+//		"yyyy/MMM/d",
+//		null,
+//		"dd.MM.yyyy",
+//		"dd-MM-yyyy",
 		"dd/MM/yyyy",
-		null,
-		"dd.MMM.yyyy",
-		"dd-MMM-yyyy",
+//		null,
+//		"dd.MMM.yyyy",
+//		"dd-MMM-yyyy",
 		"dd/MMM/yyyy",
-		null,
-		"d.MMM.yyyy",
-		"d-MMM-yyyy",
-		"d/MMM/yyyy",
-		null,
-		"MM.dd.yyyy",
-		"MM-dd-yyyy",
+//		null,
+//		"d.MMM.yyyy",
+//		"d-MMM-yyyy",
+//		"d/MMM/yyyy",
+//		null,
+//		"MM.dd.yyyy",
+//		"MM-dd-yyyy",
 		"MM/dd/yyyy",
-		null,
-		"MMM.dd.yyyy",
-		"MMM-dd-yyyy",
+//		null,
+//		"MMM.dd.yyyy",
+//		"MMM-dd-yyyy",
 		"MMM/dd/yyyy",
-		null,
-		"MMM.d.yyyy",
-		"MMM-d-yyyy",
-		"MMM/d/yyyy",
-		null,
+//		null,
+//		"MMM.d.yyyy",
+//		"MMM-d-yyyy",
+//		"MMM/d/yyyy",
+//		null,
 		"MMMM dd, yyyy",
 		"MMM dd yyyy"
 	};
@@ -154,8 +154,9 @@ public class Const {
 	public final static String[] BUILT_IN_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
-//		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByCategory",
-//		"org.homeunix.drummer.plugins.reports.NewIncomeExpenseReportByDescription",
+		"org.homeunix.drummer.plugins.reports.AverageIncomeExpenseByCategory",
+		"org.homeunix.drummer.plugins.reports.TransactionsNotCleared",
+		"org.homeunix.drummer.plugins.reports.TransactionsNotReconciled",
 
 		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
 		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",

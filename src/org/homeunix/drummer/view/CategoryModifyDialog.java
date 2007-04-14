@@ -51,7 +51,7 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			amount.setValue(0);
 			pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 			check.setSelected(false);
-			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_EDIT));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_NEW));
 		}
 		else{
 			name.setText(Translate.getInstance().get(source.getName()));
@@ -70,7 +70,7 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			else
 				pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 			
-			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_NEW));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_EDIT));
 		}
 
 		return this;

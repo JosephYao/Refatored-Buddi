@@ -62,10 +62,10 @@ public class PluginFactory<T extends BuddiPlugin> {
 			addExportActionListener(plugin, menuItem, frame);
 //			menuItem.addUserFrame(ExportHTML.class);
 //			if (plugin.getCorrectWindows() != null && plugin.getCorrectWindows().length > 0){
-//				for (Class c : plugin.getCorrectWindows()){
-//					if (c != null)
-//						menuItem.addUserFrame(c);
-//				}
+//			for (Class c : plugin.getCorrectWindows()){
+//			if (c != null)
+//			menuItem.addUserFrame(c);
+//			}
 //			}
 
 			exportMenuItems.add(menuItem);
@@ -73,7 +73,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		return exportMenuItems;
 	}
-	
+
 	/**
 	 * Returns a list of all BuddiRunnablePlugins in the system.
 	 * 
@@ -122,30 +122,32 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiPanelPlugin plugin : panelPlugins) {
-			JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			if (plugin.isEnabled()){
+				JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-			//Select the correct options for the dropdown, based on the plugin
-			Vector<DateChoice> dateChoices;
-			if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL))
-				dateChoices = BuddiPluginHelper.getInterval();
-			else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
-				dateChoices = BuddiPluginHelper.getStartOnly();
-			else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
-				dateChoices = BuddiPluginHelper.getEndOnly();
-			else
-				dateChoices = new Vector<DateChoice>();
+				//Select the correct options for the dropdown, based on the plugin
+				Vector<DateChoice> dateChoices;
+				if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL))
+					dateChoices = BuddiPluginHelper.getInterval();
+				else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
+					dateChoices = BuddiPluginHelper.getStartOnly();
+				else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
+					dateChoices = BuddiPluginHelper.getEndOnly();
+				else
+					dateChoices = new Vector<DateChoice>();
 
-			//Get the combobox 
-			final JComboBox dateSelect = new JComboBox(dateChoices);
-			dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
+				//Get the combobox 
+				final JComboBox dateSelect = new JComboBox(dateChoices);
+				dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
 
-			//Add the launchers
-			addPanelActionListener(plugin, dateSelect);
+				//Add the launchers
+				addPanelActionListener(plugin, dateSelect);
 
-			panel.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
-			panel.add(dateSelect);
+				panel.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
+				panel.add(dateSelect);
 
-			panelItems.add(panel);
+				panelItems.add(panel);
+			}
 		}
 
 		return panelItems;
@@ -283,7 +285,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 				if (plugin instanceof BuddiExportPlugin){
 					BuddiExportPlugin exportPlugin = (BuddiExportPlugin) plugin;
 					File file = null;
-					
+
 					if (exportPlugin.isPromptForFile()){
 						file = DocumentManager.getInstance().saveFile(null, exportPlugin.getFileChooserTitle(), exportPlugin.getFileFilter());
 					}

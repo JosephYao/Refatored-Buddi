@@ -79,6 +79,9 @@ class BuddiPluginImpl {
 	}
 	
 	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
+		public boolean isEnabled() {
+			return false;
+		}
 		public DateRangeType getDateRangeType() {
 			return null;
 		}
@@ -94,6 +97,9 @@ class BuddiPluginImpl {
 	}
 	
 	static class BuddiReportPluginImpl implements BuddiReportPlugin {
+		public boolean isEnabled() {
+			return false;
+		}
 		public DateRangeType getDateRangeType() {
 			return null;
 		}
