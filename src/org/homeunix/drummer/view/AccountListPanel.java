@@ -237,24 +237,22 @@ public class AccountListPanel extends AbstractListPanel {
 			if (getSelectedAccount() != null){
 				long start = System.currentTimeMillis();
 
-				//TODO Get the preloader working again
-//				TransactionsFrame tf = TransactionsFrame.getPreloader().get(getSelectedAccount());
-				TransactionsFrame tf = null;
+//				final JStatusDialog progress = new JStatusDialog(
+//						MainFrame.getInstance(), 
+//						Translate.getInstance().get(TranslateKeys.MESSAGE_OPENING_WINDOW));
+//				progress.openWindow(new Dimension(150, 50), null);
 				
-				if (tf != null){
-					tf.setVisible(true);
-				}
-				else {
-					WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
-					Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-					Point point = new Point(wa.getX(), wa.getY());
+				WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
+				Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+				Point point = new Point(wa.getX(), wa.getY());
 
-					new TransactionsFrame(getSelectedAccount()).openWindow(dimension, point);
-				}
+				new TransactionsFrame(getSelectedAccount()).openWindow(dimension, point);
 				
 				long end = System.currentTimeMillis();
 				if (Const.DEVEL) Log.info("Open button time: " + (end - start));
 				AccountListPanel.this.updateButtons();
+				
+//				progress.closeWindow();
 			}
 		}
 	}

@@ -96,9 +96,13 @@ public class SourceController {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Vector<Account> getAccounts(){
-		Vector<Account> v = new Vector<Account>(DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts());
-		Collections.sort(v);
-		return v;
+		if (DataInstance.getInstance().getDataModel() != null){
+			Vector<Account> v = new Vector<Account>(DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts());
+			Collections.sort(v);
+			return v;
+		}
+		else 
+			return new Vector<Account>();
 	}
 
 	/**
@@ -107,9 +111,13 @@ public class SourceController {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Vector<Category> getCategories(){
-		Vector<Category> v = new Vector<Category>(DataInstance.getInstance().getDataModel().getAllCategories().getCategories());
-		Collections.sort(v);
-		return v;
+		if (DataInstance.getInstance().getDataModel() != null){
+			Vector<Category> v = new Vector<Category>(DataInstance.getInstance().getDataModel().getAllCategories().getCategories());
+			Collections.sort(v);
+			return v;
+		}
+		else 
+			return new Vector<Category>();
 	}
 	
 	/**

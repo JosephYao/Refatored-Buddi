@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.thecave.moss.gui.JPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -54,7 +55,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 	private Boolean encrypted;
 	private Key key;
 	private byte[] salt;
-	
+
 	public AESCryptoCipher() {
 		try {
 			this.keySize = Cipher.getMaxAllowedKeyLength(ALGORITHM) / 8;
@@ -63,7 +64,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			throw new RuntimeException(ex);
 		}
 	}
-	
+
 	public AESCryptoCipher(int keyLength) {
 		try {
 			this.keySize = Math.min(keyLength / 8, Cipher.getMaxAllowedKeyLength(ALGORITHM) / 8);
@@ -76,12 +77,12 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 	public void setEncrypted(boolean encrypted){
 		this.encrypted = encrypted;
 	}
-	
+
 	public OutputStream encrypt(OutputStream out) throws Exception {
 		if (this.encrypted == null) {
 			// ask the user if the stream should be encrypted
 			int choice = JOptionPane.showConfirmDialog(
-					null, 
+					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_YES_NO),
 					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_TITLE),
 					JOptionPane.YES_NO_OPTION);
@@ -94,19 +95,22 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 		if (this.key == null) {
 			JPasswordInputDialog jpid = new JPasswordInputDialog(
-					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
-					Translate.getInstance().get(TranslateKeys.PASSWORD),
-					Translate.getInstance().get(TranslateKeys.CONFIRM_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					Translate.getInstance().get(TranslateKeys.HINT_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.HINT_CONFIRM_PASSWORD),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
 					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
 			);
-			String password = jpid.askForPassword(true, true);
-			
+			String password = jpid.askForPassword(
+					MainFrame.getInstance(),
+					true, 
+					true);
+
 			if (password == null){
 				this.encrypted = false;
 				return out;
@@ -168,7 +172,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			// we're loading an unencrypted file, so clear the cached key, etc.
 			this.key = null;
 			this.salt = null;
-			
+
 			return buffered;
 		}
 
@@ -182,64 +186,69 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		do {
 			// ask for the password, which we use to generate the AES key
 			JPasswordInputDialog jpid = new JPasswordInputDialog(
-					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.ENTER_PASSWORD_TITLE),
-					Translate.getInstance().get(TranslateKeys.PASSWORD),
-					Translate.getInstance().get(TranslateKeys.CONFIRM_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					Translate.getInstance().get(TranslateKeys.HINT_PASSWORD),
+					Translate.getInstance().get(TranslateKeys.HINT_CONFIRM_PASSWORD),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.NO_PASSWORD_ENTERED),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
 					Translate.getInstance().get(TranslateKeys.ERROR),
 					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
 					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
 			);
-			String password = jpid.askForPassword(false, false);
-			
+			String password = jpid.askForPassword(
+					MainFrame.getInstance(),
+					false, 
+					true);
+
 			if (password == null){
 				JOptionPane.showMessageDialog(
-						null, 
-						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD), 
-						Translate.getInstance().get(TranslateKeys.EMPTY_PASSWORD_TITLE), 
+						MainFrame.getInstance(), 
+						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD), 
+						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
 						JOptionPane.INFORMATION_MESSAGE
 				);
 
-				System.exit(1);
+				throw new BadPasswordException(Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
 			}
+			//If the password is empty, it is not correct.
+			else if (!password.equals("")){
 
-			if (Const.DEVEL) Log.debug("Read password");
-			
-			this.key = PBKDF2.getInstance().passwordToKey(
-					password, this.keySize, KEY_ALGORITHM, this.salt);
+				if (Const.DEVEL) Log.debug("Read password");
 
-			// now create the decryption cipher
-			cipher = Cipher.getInstance(ALGORITHM);
-			cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
-			
-			if (Const.DEVEL) Log.debug("Created CIS");
-			CipherInputStream cis = new CipherInputStream(buffered, cipher);
+				this.key = PBKDF2.getInstance().passwordToKey(
+						password, this.keySize, KEY_ALGORITHM, this.salt);
 
-			cis.mark(prologueLength);
+				// now create the decryption cipher
+				cipher = Cipher.getInstance(ALGORITHM);
+				cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
 
-			test = new byte[prologueLength];
-			read = cis.read(test);
-			String testStr = new String(test);
-			if (Const.DEVEL) Log.debug("testStr == " + testStr);
-			
-			//Check if the file is really decoded.
-			correctPassword = new Boolean(XML_PROLOGUE.equals(testStr));
+				if (Const.DEVEL) Log.debug("Created CIS");
+				CipherInputStream cis = new CipherInputStream(buffered, cipher);
 
-			cis.reset();
-			buffered.reset();
-			
+				cis.mark(prologueLength);
+
+				test = new byte[prologueLength];
+				read = cis.read(test);
+				String testStr = new String(test);
+				if (Const.DEVEL) Log.debug("testStr == " + testStr);
+
+				//Check if the file is really decoded.
+				correctPassword = new Boolean(XML_PROLOGUE.equals(testStr));
+
+				cis.reset();
+				buffered.reset();
+			}
 			if (!correctPassword){
 				JOptionPane.showMessageDialog(
-						null,
+						MainFrame.getInstance(),
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD),
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD_TITLE),
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} while (!correctPassword);
-		
+
 		cipher = Cipher.getInstance(ALGORITHM);
 		cipher.init(Cipher.DECRYPT_MODE, this.key, new IvParameterSpec(this.salt));
 		return new CipherInputStream(buffered, cipher);		
@@ -248,16 +257,36 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 	public void finish(InputStream in) throws Exception {
 		// TODO Auto-generated method stub		
 	}
-	
+
 	public class CipherException extends Exception {
 		public final static long serialVersionUID = 0;
-		
+
 		public CipherException(){
 			super();
 		}
 
 		public CipherException(String message){
 			super(message);
+		}
+	}
+
+	public class BadPasswordException extends Exception {
+		public final static long serialVersionUID = 0;
+		private String message;
+
+		public BadPasswordException(String message) {
+			super(message);
+			this.message = message;
+		}
+
+		@Override
+		public String getMessage() {
+			return message;
+		}
+
+		@Override
+		public String toString() {
+			return getMessage();
 		}
 	}
 }

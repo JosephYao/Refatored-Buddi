@@ -53,8 +53,8 @@ public class TransactionController {
 	}
 	
 	/**
-	 * Do not call this method unless you know what you are doing!  If you
-	 * are writing plugin code, the method you probably want is 
+	 * <b>Do not call this method unless you know what you are doing!</b>
+	 * If you are writing plugin code, the method you probably want is 
 	 * TransactionsFrame.addToTransactionListModel().  This will add the
 	 * transaction, and automatically update all open windows.
 	 * @param t

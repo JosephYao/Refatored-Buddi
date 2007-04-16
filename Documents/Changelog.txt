@@ -3,7 +3,9 @@
 -Added three new reports: Average amount / category, UnCleared Transactions, and UnReconciled Transactions.
 -Added BuddiRunnablePlugin, which allows developers to run arbitrary code more easily in a plugin if they want to do something which does not fit as a Menu or Panel plugin.  These plugins are run at startup, in the init() method of MainFrame.
 -Added additional convenience methods for HTML export and Formatting, in HTMLExportHelper and FormatterWrapper.
--Misc. small bug fixes introduced in previous versions.
+-Finished (?) the loading infrastructure.  Now all areas which load / save / backup documents go through one source, DocumentManager.  This allows us to maintain a consistent interface for end users, and prevents duplicate code.
+-Fixed bug which resulted in scheduled transactions to not be added in order.
+-Fixed other miscellaneous small bugs introduced in previous versions.
 
 2.3.4 (April 13 2007)
 -Added the ability to use negative numbers everywhere numbers are used.  To do this, I needed to rewrite the JCurrencyField class in Moss.  This is still a very Beta-quality feature - please provide me with feedback, comments, bug reports, etc on the Feature Request tracker under 

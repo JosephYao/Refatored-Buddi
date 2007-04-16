@@ -14,6 +14,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -32,7 +35,6 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
-import org.homeunix.drummer.controller.TransactionsFramePreLoader;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -59,9 +61,9 @@ import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
-//	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
-	private static TransactionsFramePreLoader preloader = null;
-	
+	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
+//	private static TransactionsFramePreLoader preloader = null;
+
 	private final JList list;
 	private final JScrollPane listScroller;
 
@@ -83,7 +85,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 * you go through the model, it automatically fires the correct 
 	 * updates to the list.
 	 */
-	private final static TransactionListModel baseModel = new TransactionListModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+	private final static TransactionListModel baseModel = new TransactionListModel(DataInstance.getInstance().getDataModel() != null ? DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions() : ModelFactory.eINSTANCE.createTransactions().getTransactions());
 
 	/* This model is a filtered list model that is obtained from the
 	 * baseModel.  It is a view which contains all transactions in
@@ -96,26 +98,30 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	private boolean disableListEvents = false;
 
 	//The values for the date chooser combo box.
-	private static final TranslateKeys[] availableFilters = new TranslateKeys[] {
-		TranslateKeys.TRANSACTION_FILTER_ALL,
-		TranslateKeys.TRANSACTION_FILTER_TODAY,
-		TranslateKeys.TRANSACTION_FILTER_THIS_WEEK,
-		TranslateKeys.TRANSACTION_FILTER_THIS_MONTH,
-		TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER,
-		TranslateKeys.TRANSACTION_FILTER_THIS_YEAR,
-		TranslateKeys.TRANSACTION_FILTER_LAST_YEAR,
-		null,
-		TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED,
-		TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED
-	};
-	
+	private final Vector<TranslateKeys> availableFilters;
+
+
 	public TransactionsFrame(Account account){
 		this.account = account;
 
-//		if (transactionInstances.get(account) != null)
-//			transactionInstances.get(account).setVisible(false);
+		if (transactionInstances.get(account) != null)
+			transactionInstances.get(account).setVisible(false);
 
-//		transactionInstances.put(account, this);
+		transactionInstances.put(account, this);
+
+		availableFilters = new Vector<TranslateKeys>();
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_ALL);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_TODAY);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_WEEK);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_MONTH);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_YEAR);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_LAST_YEAR);
+		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+			availableFilters.add(null);
+			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED);
+			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED);
+		}
 
 		filterComboBox = new JComboBox();
 		creditRemaining = new JLabel();
@@ -194,8 +200,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		filterComboBox.setPreferredSize(new Dimension(100, filterComboBox.getPreferredSize().height));
 
 		model = baseModel.getFilteredListModel(account, this);
-		list.setModel(model);
-		
+//		list.setModel(model);
+
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TRANSACTION_FILTER)));
@@ -233,7 +239,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-		
+
 		this.setLayout(new BorderLayout());
 		this.setTitle(Translate.getInstance().get(TranslateKeys.TRANSACTIONS) + " - " + account.toString());
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -253,6 +259,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		}
 	}
 
+	/**
+	 * Opens the window, and selects the given transaction.
+	 * @param account
+	 * @param transaction
+	 */
 	public TransactionsFrame(Account account, Transaction transaction) {
 		this(account);
 
@@ -271,9 +282,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 		list.setPrototypeCellValue(prototype);
 
+		list.setModel(model);		
+		list.ensureIndexIsVisible(model.getSize() - 1);
+		
 		return super.initPostPack();
 	}
-	
+
 	public AbstractFrame init(){
 
 		recordButton.addActionListener(this);
@@ -394,11 +408,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //		list.setListData(DataInstance.getInstance().getTransactions(account));
 //		editableTransaction.setTransaction(null, true);
 
-		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-		
+//		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+
 		return this;
 	}
-	
+
 	@Override
 	public Object closeWindow() {
 		PrefsInstance.getInstance().checkWindowSanity();
@@ -412,12 +426,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 		PrefsInstance.getInstance().savePrefs();
 
-//		transactionInstances.put(account, null);
+		transactionInstances.put(account, null);
 
 		return super.closeWindow();
-		
+
 //		this.setVisible(false);
-		
+
 //		return this;
 	}
 
@@ -431,7 +445,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			StringBuffer sb = new StringBuffer();
 			sb.append("<html>");
 //			if (amountLeft < 0)
-//				sb.append("<html><font color='red'>");
+//			sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
 			.append(FormatterWrapper.getFormattedCurrencyForAccount(amountLeft, account.isCredit()))
@@ -469,9 +483,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		return account;
 	}
 
-	public Component getPrintedComponent() {
-		return list;
-	}
+//	public Component getPrintedComponent() {
+//	return list;
+//	}
 
 	@Override
 	public StandardWindow openWindow() {
@@ -490,10 +504,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 * windows as well as save the data model, do misc. housecleaning, etc.
 	 */
 	public static void updateAllTransactionWindows(){
-//		for (TransactionsFrame tf : getPreloader().getAll()) {
-//			if (tf != null)
-//				tf.updateContent();
-//		}
+		for (TransactionsFrame tf : transactionInstances.values()) {
+			if (tf != null)
+				tf.updateContent();
+		}
 	}
 
 	/**
@@ -508,7 +522,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 * Gets the selected item in the filter pulldown
 	 * @return The selected item in the filter pulldown
 	 */
-	public TranslateKeys getDateRangeFilter(){
+	public TranslateKeys getFilterComboBox(){
 		return (TranslateKeys) filterComboBox.getSelectedItem();
 	}
 
@@ -603,9 +617,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 	public static void reloadModel(){
 		baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
-		preloader = new TransactionsFramePreLoader();
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(recordButton)){
 			if (!TransactionController.isRecordValid(
@@ -691,7 +704,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			}
 			else {
 				editableTransaction.setTransaction(null, true);
-				list.ensureIndexIsVisible(list.getSelectedIndex());
+//				list.ensureIndexIsVisible(list.getSelectedIndex());
 				list.clearSelection();
 			}
 
@@ -701,7 +714,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			disableListEvents = false;
 
 			editableTransaction.resetSelection();
-			
+
 			DocumentController.saveFileSoon();
 		}
 		else if (e.getSource().equals(clearButton)){
@@ -717,7 +730,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				editableTransaction.updateContent();
 				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 				list.clearSelection();
-				
+
 				updateButtons();
 			}
 		}
@@ -756,10 +769,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public StandardWindow clear() {
 		return this;
 	}
-	
-	public static TransactionsFramePreLoader getPreloader(){
-		if (preloader == null) 
-			preloader = new TransactionsFramePreLoader();
-		return preloader;
-	}
+
+//	public static TransactionsFramePreLoader getPreloader(){
+//	if (preloader == null) 
+//	preloader = new TransactionsFramePreLoader();
+//	return preloader;
+//	}
 }

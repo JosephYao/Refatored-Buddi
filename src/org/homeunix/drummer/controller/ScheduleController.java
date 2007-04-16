@@ -17,6 +17,7 @@ import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -302,7 +303,7 @@ public class ScheduleController {
 						t.setNumber(s.getNumber());
 						t.setScheduled(true);
 
-						TransactionController.addTransaction(t);
+						TransactionsFrame.addToTransactionListModel(t);
 						if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
 					}
 					else {

@@ -28,6 +28,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -203,7 +204,11 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 
 	public AbstractFrame updateContent() {
 		//Update the title to reflect current data file...
-		this.setTitle(Translate.getInstance().get(TranslateKeys.BUDDI) + " - " + PrefsInstance.getInstance().getPrefs().getDataFile());
+		this.setTitle(
+				Translate.getInstance().get(TranslateKeys.BUDDI) 
+				+ (DataInstance.getInstance().getDataModel() != null 
+						? " - " + PrefsInstance.getInstance().getPrefs().getDataFile() 
+								: ""));
 
 		getAccountListPanel().updateContent();
 		getCategoryListPanel().updateContent();

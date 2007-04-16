@@ -287,7 +287,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					File file = null;
 
 					if (exportPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().saveFile(null, exportPlugin.getFileChooserTitle(), exportPlugin.getFileFilter());
+						file = DocumentManager.getInstance().showSaveFileDialog(null, exportPlugin.getFileChooserTitle(), exportPlugin.getFileFilter());
 					}
 
 					if (!exportPlugin.isPromptForFile() || file != null){
@@ -324,7 +324,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					File file = null;
 
 					if (importPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().loadFile(null, importPlugin.getFileChooserTitle(), importPlugin.getFileFilter());
+						file = DocumentManager.getInstance().showLoadFileDialog(null, importPlugin.getFileChooserTitle(), importPlugin.getFileFilter());
 					}
 
 					if (!importPlugin.isPromptForFile() || file != null){

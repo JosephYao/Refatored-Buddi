@@ -162,7 +162,7 @@ public class TransactionListModel extends AbstractListModel {
 				Transaction t = (Transaction) arg0;
 				
 				if (t.getTo().equals(a) || t.getFrom().equals(a)){
-					return acceptDate(t, frame.getDateRangeFilter()) && acceptText(t, frame.getFilterText());
+					return acceptDate(t, frame.getFilterComboBox()) && acceptText(t, frame.getFilterText());
 				}
 				
 				return false;

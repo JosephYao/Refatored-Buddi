@@ -19,17 +19,14 @@ import javax.swing.SwingUtilities;
 
 import net.roydesign.mac.MRJAdapter;
 
-import org.homeunix.drummer.controller.DocumentController;
+import org.homeunix.drummer.controller.ReturnCodes;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.drummer.view.DocumentManager.DataFileWrapper;
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -74,12 +71,25 @@ public class Buddi {
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
 	private static void launchGUI(){
-
+		//Ensure the Preferences are loaded first, so that everything can
+		// be translated properly...
+		PrefsInstance.getInstance();
+		
 		// TODO Remove this from stable versions after 2.x.0
 		//Temporary notice stating the data format has changed.
-
-		if (PrefsInstance.getInstance().getLastVersionRun().length() > 0 
+		if (Const.BRANCH.equals(Const.UNSTABLE)
+				&& PrefsInstance.getInstance().getLastVersionRun().length() > 0 
 				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+
+			if (JOptionPane.showConfirmDialog(null, 
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE
+			) == JOptionPane.CANCEL_OPTION)
+				System.exit(0);
+
+			
 			//Make a backup of the existing data file, just to be safe...
 			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + Const.BACKUP_FILE_EXTENSION);
@@ -88,106 +98,31 @@ public class Buddi {
 			}
 			catch (IOException ioe){
 				Log.warning("Error backing up file: " + ioe);
-			}
-			
-			if (JOptionPane.showConfirmDialog(null, 
-					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE
-			) == JOptionPane.CANCEL_OPTION)
-				System.exit(0);
+			}			
 		}
-
-		/*
-		if (!PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
-			JOptionPane.showMessageDialog(null, 
-					"Warning: This version of Buddi contains code for encrypting and\ndecrypting of data files.  While a few individuals have tested\nas much as possible, it is still likely that there are bugs which\ncould result in loss of data.\n\nMake sure you have backups of any critical files before proceeding!",
-					"Warning: Encryption Added",
-					JOptionPane.WARNING_MESSAGE
-			);
-		}
-		 */
-		//Ensure the Preferences are loaded first, so that everything can
-		// be translated properly...
-		PrefsInstance.getInstance();
-
-		//Ensure Formatter is set up properly
-		// TODO make a better formatting class
-//		Formatter.getInstance().setDateFormat(
-//				PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
 				
-		//Load the data model.  Depending on different options and 
-		// user choices, this may be a new one, or load an existing one.
-		File dataFile = null;
-
-		/*
-		 * We follow the following steps when deciding if we create a new
-		 * file or open an existing one:
-		 * 
-		 *  1) If the user wants to be prompted, prompt them.  If they hit 
-		 *  cancel here, exit.
-		 *  2) If there is a file in Preferences, try loading that one.
-		 *  3) If there is any problem with the above, prompt the user.
-		 *  4) If the user hits cancel from here, quit.
-		 */
-		//This option allows us to prompt for a new data file at startup every time
-		if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()){
-			chooseDataFileSource();
-		}
-		//If the data file is not null, we try to use it.
-		else if (PrefsInstance.getInstance().getPrefs().getDataFile() != null){
-			dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-
-			//Does the file exist?
-			if (!dataFile.exists()){
-				chooseDataFileSource();
-			}
-			//Before we open the file, we check that we have read / write 
-			// permission to it.  This is in response to bug #1626996. 
-			else if (!dataFile.canWrite()){
-				JOptionPane.showMessageDialog(
-						null,
-						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
-						Translate.getInstance().get(TranslateKeys.ERROR),
-						JOptionPane.ERROR_MESSAGE);
-				chooseDataFileSource();
-			}
-			else if (!dataFile.canRead()){
-				JOptionPane.showMessageDialog(
-						null,
-						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
-						Translate.getInstance().get(TranslateKeys.ERROR),
-						JOptionPane.ERROR_MESSAGE);
-				chooseDataFileSource();
-			}
-			//If all looks well, we try to load the file.
-			else {
-				DataInstance.getInstance().loadDataFile(dataFile);
-			}
-		}
-		//If the data file was null, we need to have the user pick a different one.
-		else {
-			chooseDataFileSource();
+		//Open the main window at the saved location
+		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
+		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
+		Point point = new Point(wa.getX(), wa.getY());
+		MainFrame.getInstance().openWindow(dim, point);
+		
+		//Ensure that we load a data file.
+		ReturnCodes returnCode = DocumentManager.getInstance().selectDesiredDataFile();
+		if (returnCode.equals(ReturnCodes.CANCEL)){
+			System.exit(1);
 		}
 
 		//Start the initial checks
 		startVersionCheck();
 		startUpdateCheck();
-
-		//Open the main window at the saved location
-		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
-		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
-		Point point = new Point(wa.getX(), wa.getY());
-
-		MainFrame.getInstance().openWindow(dim, point);
 		
 		//We do this to force WindowPreLoader to start working...
-		TransactionsFrame.getPreloader();
+//		TransactionsFrame.getPreloader();
 	}
 
 	/**
@@ -195,21 +130,21 @@ public class Buddi {
 	 * Load data, or cancel (exit).
 	 *
 	 */
-	public static void chooseDataFileSource(){
-		DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
-		if (dfw == null){
-			Log.info("User hit cancel.  Exiting.");
-			System.exit(0);
-		}
-		else if (dfw.isExisting()){
-//			PrefsInstance.getInstance().getPrefs().setDataFile(null);
-			DocumentController.loadFile(dfw.getDataFile());
-		}
-		else {
-//			PrefsInstance.getInstance().getPrefs().setDataFile(null);
-			DocumentController.newFile(dfw.getDataFile());
-		}
-	}
+//	public static void chooseDataFileSource(){
+//		DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
+//		if (dfw == null){
+//			Log.info("User hit cancel.  Exiting.");
+//			System.exit(0);
+//		}
+//		else if (dfw.isExisting()){
+////			PrefsInstance.getInstance().getPrefs().setDataFile(null);
+//			DocumentController.loadFile(dfw.getDataFile());
+//		}
+//		else {
+////			PrefsInstance.getInstance().getPrefs().setDataFile(null);
+//			DocumentController.newFile(dfw.getDataFile());
+//		}
+//	}
 
 	/**
 	 * Main method for Buddi.  Can pass certain command line options
