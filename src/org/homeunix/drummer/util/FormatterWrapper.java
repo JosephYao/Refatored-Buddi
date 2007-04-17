@@ -26,9 +26,6 @@ public class FormatterWrapper {
 	 * to output monetary values, as it presents the user with a constant
 	 * look for currency.
 	 * 
-	 * Technically, this is not a translation method, so it could be argued 
-	 * that it should not be here.  I put it here to avoid the creation of
-	 * another class to do just one function.
 	 * @param value The currency amount, in cents (as per Buddi's internal 
 	 * representation of currency).  For instance, to represent the value
 	 * $123.45, you would pass in 12345.
@@ -49,7 +46,7 @@ public class FormatterWrapper {
 			(red ? "<font color='red'>" : "")
 			+ (symbolAfterAmount ? "" : symbol)
 			+ Formatter.getDecimalFormat().format((double) value / 100.0)  
-			+ (symbolAfterAmount ? symbol : "")
+			+ (symbolAfterAmount ? " " + symbol : "")
 			+ (red ? "</font>" : "");
 
 		return formatted;
