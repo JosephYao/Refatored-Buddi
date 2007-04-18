@@ -23,7 +23,7 @@ public class BuddiPluginHelper {
 	public static void openNewPanelPluginWindow(BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
 		if (plugin instanceof BuddiReportPlugin){
 			try {
-				File index = HTMLExportHelper.createHTML("graph", ((BuddiReportPlugin) plugin).getReport(startDate, endDate));
+				File index = HTMLExportHelper.createHTML("report", ((BuddiReportPlugin) plugin).getReport(startDate, endDate));
 				BrowserLauncher bl = new BrowserLauncher(null);
 				bl.openURLinBrowser(index.toURI().toURL().toString());
 			}

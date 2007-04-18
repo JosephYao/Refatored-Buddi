@@ -1,4 +1,9 @@
-2.3.5
+2.3.6 (April 17 2007)
+-Added print CSS to make better looking printed reports
+-Fixed bug #1702200 (Budget / Actual graph incorrect)
+-Fixed some translations
+
+2.3.5 (April 16 2007)
 -Updated Russian translation
 -Added three new reports: Average amount / category, UnCleared Transactions, and UnReconciled Transactions.
 -Added BuddiRunnablePlugin, which allows developers to run arbitrary code more easily in a plugin if they want to do something which does not fit as a Menu or Panel plugin.  These plugins are run at startup, in the init() method of MainFrame.

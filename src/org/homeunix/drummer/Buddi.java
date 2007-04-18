@@ -120,9 +120,6 @@ public class Buddi {
 		//Start the initial checks
 		startVersionCheck();
 		startUpdateCheck();
-		
-		//We do this to force WindowPreLoader to start working...
-//		TransactionsFrame.getPreloader();
 	}
 
 	/**
@@ -250,7 +247,7 @@ public class Buddi {
 					buttons[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NOT_NOW);
 
 					int reply = JOptionPane.showOptionDialog(
-							null, 
+							MainFrame.getInstance(), 
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ASK_FOR_DONATION),
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
 							JOptionPane.YES_NO_OPTION,
