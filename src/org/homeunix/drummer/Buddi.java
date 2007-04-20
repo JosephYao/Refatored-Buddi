@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -16,6 +17,8 @@ import java.util.Properties;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import net.roydesign.mac.MRJAdapter;
 
@@ -74,7 +77,7 @@ public class Buddi {
 		//Ensure the Preferences are loaded first, so that everything can
 		// be translated properly...
 		PrefsInstance.getInstance();
-		
+
 		// TODO Remove this from stable versions after 2.x.0
 		//Temporary notice stating the data format has changed.
 		if (Const.BRANCH.equals(Const.UNSTABLE)
@@ -89,7 +92,7 @@ public class Buddi {
 			) == JOptionPane.CANCEL_OPTION)
 				System.exit(0);
 
-			
+
 			//Make a backup of the existing data file, just to be safe...
 			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
 			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + Const.BACKUP_FILE_EXTENSION);
@@ -104,13 +107,13 @@ public class Buddi {
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
-				
+
 		//Open the main window at the saved location
 		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
 		Dimension dim = new Dimension(wa.getWidth(), wa.getHeight());
 		Point point = new Point(wa.getX(), wa.getY());
 		MainFrame.getInstance().openWindow(dim, point);
-		
+
 		//Ensure that we load a data file.
 		ReturnCodes returnCode = DocumentManager.getInstance().selectDesiredDataFile();
 		if (returnCode.equals(ReturnCodes.CANCEL)){
@@ -128,19 +131,19 @@ public class Buddi {
 	 *
 	 */
 //	public static void chooseDataFileSource(){
-//		DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
-//		if (dfw == null){
-//			Log.info("User hit cancel.  Exiting.");
-//			System.exit(0);
-//		}
-//		else if (dfw.isExisting()){
-////			PrefsInstance.getInstance().getPrefs().setDataFile(null);
-//			DocumentController.loadFile(dfw.getDataFile());
-//		}
-//		else {
-////			PrefsInstance.getInstance().getPrefs().setDataFile(null);
-//			DocumentController.newFile(dfw.getDataFile());
-//		}
+//	DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
+//	if (dfw == null){
+//	Log.info("User hit cancel.  Exiting.");
+//	System.exit(0);
+//	}
+//	else if (dfw.isExisting()){
+////	PrefsInstance.getInstance().getPrefs().setDataFile(null);
+//	DocumentController.loadFile(dfw.getDataFile());
+//	}
+//	else {
+////	PrefsInstance.getInstance().getPrefs().setDataFile(null);
+//	DocumentController.newFile(dfw.getDataFile());
+//	}
 //	}
 
 	/**
@@ -152,16 +155,19 @@ public class Buddi {
 		String prefsLocation = "";
 		Integer verbosity = new Integer(0);
 		String lnf = "";
+		String font = "";
 
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
-			+ "--lnf\tclassName\tJava Look and Feel to use\n";
+			+ "--lnf\tclassName\tJava Look and Feel to use\n"
+			+ "--font\tfontName\tFont to use by default\n";
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("-p", prefsLocation);
 		map.put("-v", verbosity);
 		map.put("--lnf", lnf);
+		map.put("--font", font);
 		try{
 			map = ParseCommands.parse(args, map, help);
 		}
@@ -172,6 +178,7 @@ public class Buddi {
 		prefsLocation = (String) map.get("-p");
 		verbosity = (Integer) map.get("-v");
 		lnf = (String) map.get("--lnf");
+		font = (String) map.get("--font");
 
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
@@ -179,6 +186,19 @@ public class Buddi {
 
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
+		}
+
+		if (font != null){
+//			FontUIResource f = new FontUIResource(new Font(font, Font.PLAIN, 12));
+			Enumeration<Object> keys = UIManager.getDefaults().keys();
+			while (keys.hasMoreElements()) {
+				Object key = keys.nextElement();
+				Object value = UIManager.get(key);
+				if (value instanceof FontUIResource){
+					FontUIResource f = (FontUIResource) value;
+					UIManager.put(key, new FontUIResource(f.getName(), f.getStyle(), f.getSize()));
+				}
+			}  
 		}
 
 		//Set the working path.  If we save files (plugins, data files) 

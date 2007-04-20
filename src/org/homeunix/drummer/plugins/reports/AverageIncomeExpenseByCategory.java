@@ -94,20 +94,20 @@ public class AverageIncomeExpenseByCategory implements BuddiReportPlugin {
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(Translate.getInstance().get(c.toString()));
-				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(actual, c.isIncome()));
-				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(average, c.isIncome()));				
+				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, actual) ? " red'" : "'") + ">");
+				sb.append(FormatterWrapper.getFormattedCurrency(actual));
+				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, average) ? " red'" : "'") + "'>");
+				sb.append(FormatterWrapper.getFormattedCurrency(average));				
 				sb.append("</td></tr>\n");
 			}
 		}
 		
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.TOTAL));
-		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalActual, totalActual < 0, false));
-		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalAverage, totalAverage < 0, false));
+		sb.append("</th><th class='right" + (FormatterWrapper.isRed(totalActual) ? " red'" : "'") + "'>");
+		sb.append(FormatterWrapper.getFormattedCurrency(totalActual));
+		sb.append("</th><th class='right" + (FormatterWrapper.isRed(totalAverage) ? " red'" : "'") + "'>");
+		sb.append(FormatterWrapper.getFormattedCurrency(totalAverage));
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");

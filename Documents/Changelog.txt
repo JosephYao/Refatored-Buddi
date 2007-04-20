@@ -1,3 +1,6 @@
+2.3.7
+-Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells
+
 2.3.6 (April 17 2007)
 -Added print CSS to make better looking printed reports
 -Fixed bug #1702200 (Budget / Actual graph incorrect)

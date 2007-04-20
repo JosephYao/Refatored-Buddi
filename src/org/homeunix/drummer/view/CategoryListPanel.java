@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -92,16 +93,21 @@ public class CategoryListPanel extends AbstractListPanel {
 //		else
 //			balanceLabel.setForeground(Color.BLACK);
 
-		StringBuffer sb = new StringBuffer();
-		sb.append("<html>")
-		.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
-		.append(" ")
-		.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
-		.append(": ")
-		.append(FormatterWrapper.getFormattedCurrencyForCategory(income - expenses, true))
-		.append("</html>");
+//		StringBuffer sb = new StringBuffer();
+//		sb.append("<html>")
+//		.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
+//		.append(" ")
+//		.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
+//		.append(": ")
+//		.append(FormatterWrapper.getFormattedCurrencyForCategory(income - expenses, true))
+//		.append("</html>");
 
-		balanceLabel.setText(sb.toString());
+		balanceLabel.setForeground(FormatterWrapper.isRed(income - expenses) ? Color.RED : Color.BLACK);
+		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME)
+				+ " "
+				+ Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName())
+				+ ": "  
+				+ FormatterWrapper.getFormattedCurrency(income - expenses));
 
 		treeModel.reload(treeModel.getRoot());
 

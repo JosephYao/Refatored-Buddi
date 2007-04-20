@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -140,11 +141,10 @@ public class AccountListPanel extends AbstractListPanel {
 			balance += a.getBalance();
 		}
 		
-		balanceLabel.setText("<html>"
-				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
+		balanceLabel.setForeground(FormatterWrapper.isRed(balance) ? Color.RED : Color.BLACK);
+		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
 				+ ": "  
-				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
-				+ "</html>");		
+				+ FormatterWrapper.getFormattedCurrency(balance));
 	}
 
 	/**

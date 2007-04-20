@@ -33,13 +33,16 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 
 			startTableCellRendererComponent(value, isSelected, row, column, c.isDeleted());
 			
-//			long amount = c.getBudgetedAmount();
-			sb.append(FormatterWrapper.getFormattedCurrencyForCategory(c.getBudgetedAmount(), c.isIncome()));
+			sb.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "");
+			sb.append(FormatterWrapper.getFormattedCurrency(c.getBudgetedAmount()));
+			sb.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "</font>" : "");
 			
 			long amountTotal = getTotalAmount(node);
 			if (node.getChildCount() > 0){
 				sb.append(" (")
-				.append(FormatterWrapper.getFormattedCurrencyForCategory(amountTotal, c.isIncome()))
+				.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "")
+				.append(FormatterWrapper.getFormattedCurrency(amountTotal))
+				.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "</font>" : "")
 				.append(")");
 			}
 
@@ -55,8 +58,10 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 //					|| (!a.getAccountType().isCredit() && a.getBalance() < 0))
 //				color = "red";
 			startTableCellRendererComponent(value, isSelected, row, column, a.isDeleted());
-			
-			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(a.getBalance(), a.getAccountType().isCredit()));
+
+			sb.append(FormatterWrapper.isRed(a, a.getBalance()) ? "<font color='red'>" : "");
+			sb.append(FormatterWrapper.getFormattedCurrency(a.getBalance(), a.isCredit()));
+			sb.append(FormatterWrapper.isRed(a, a.getBalance()) ? "</font>" : "");
 			endTableCellRendererComponent();
 			
 			return this;
@@ -79,7 +84,9 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");
-			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(amount, t.getType().isCredit()));
+			sb.append(FormatterWrapper.isRed(t.getType()) ? "<font color='red'>" : "");
+			sb.append(FormatterWrapper.getFormattedCurrency(amount));
+			sb.append(FormatterWrapper.isRed(t.getType()) ? "</font>" : "");
 
 			endTableCellRendererComponent();
 			

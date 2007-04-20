@@ -66,7 +66,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 				
 				sb.append(total < 0 ? "<h2 class='red'>" : "<h2>");
 				sb.append(s).append(": ");
-				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(total, total < 0, total < 0));
+				sb.append(FormatterWrapper.getFormattedCurrency(total, total < 0));
 				sb.append("</h2>\n");
 
 				sb.append(HTMLExportHelper.getHtmlTransactionHeader());

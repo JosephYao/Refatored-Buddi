@@ -95,26 +95,26 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(Translate.getInstance().get(c.toString()));
-				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(actual, c.isIncome()));
-				sb.append("</td><td class='right'>");
-				sb.append(FormatterWrapper.getFormattedCurrencyForCategory(budgeted, c.isIncome()));				
-				sb.append("</td><td class='right'>");
+				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, actual) ? " red'>" : "'>"));
+				sb.append(FormatterWrapper.getFormattedCurrency(actual));
+				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, budgeted) ? " red'>" : "'>"));
+				sb.append(FormatterWrapper.getFormattedCurrency(budgeted));				
 				long difference = actual - budgeted;
-				sb.append(FormatterWrapper.getFormattedCurrencyGeneric(difference, difference > 0 ^ c.isIncome(), difference < 0));				
+				sb.append("</td><td class='right" + (difference > 0 ^ c.isIncome() ? " red'>" : "'>"));
+				sb.append(FormatterWrapper.getFormattedCurrency(difference, difference < 0));				
 				sb.append("</td></tr>\n");
 			}
 		}
 		
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.TOTAL));
-		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalActual, totalActual < 0, false));
-		sb.append("</th><th class='right'>");
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalBudgeted, totalBudgeted < 0, false));
-		sb.append("</th><th class='right'>");
+		sb.append("</th><th class='right" + (totalActual < 0 ? " red'>" : "'>"));
+		sb.append(FormatterWrapper.getFormattedCurrency(totalActual));
+		sb.append("</th><th class='right" + (totalBudgeted < 0 ? " red'>" : "'>"));
+		sb.append(FormatterWrapper.getFormattedCurrency(totalBudgeted));
 		long totalDifference = totalActual - totalBudgeted; 
-		sb.append(FormatterWrapper.getFormattedCurrencyGeneric(totalDifference, totalDifference < 0, false));				
+		sb.append("</th><th class='right" + (totalDifference < 0 ? " red'>" : "'>"));
+		sb.append(FormatterWrapper.getFormattedCurrency(totalDifference));				
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");

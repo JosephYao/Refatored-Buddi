@@ -57,7 +57,7 @@ public class ExportCSV implements BuddiExportPlugin {
 			sb.append("\"").append(transaction.getDescription()).append("\",");
 			sb.append("\"").append(transaction.getNumber()).append("\",");
 			sb.append("\"").append(transaction.getMemo().replaceAll("\n", " ")).append("\",");
-			sb.append("\"").append(FormatterWrapper.getFormattedCurrencyGeneric(transaction.getAmount(), false, false)).append("\",");					
+			sb.append("\"").append(FormatterWrapper.getFormattedCurrency(transaction.getAmount())).append("\",");					
 			sb.append("\"").append((transaction.getFrom() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getFrom().getName())).append("\",");
 			sb.append("\"").append((transaction.getTo() instanceof Account ? "Account:" : "Category:")).append(Translate.getInstance().get(transaction.getTo().getName())).append("\"");							
 			sb.append("\n");

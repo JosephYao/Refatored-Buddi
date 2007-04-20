@@ -173,13 +173,15 @@ public class HTMLExportHelper {
 		sb.append(Translate.getInstance().get(t.getFrom().toString()));
 		sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
 		sb.append(Translate.getInstance().get(t.getTo().toString()));
-		
-		sb.append("</td><td width='15%' class='right'>");
-		if (associatedSource != null)
-			sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t.getAmount(), t.getFrom().equals(associatedSource)));
-		else 
-			sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(t));
 
+		boolean red;
+		if (associatedSource != null)
+			red = FormatterWrapper.isRed(t, t.getFrom().equals(associatedSource));
+		else 
+			red = FormatterWrapper.isRed(t);
+		
+		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
+		sb.append(FormatterWrapper.getFormattedCurrency(t.getAmount()));
 		sb.append("</td></tr>\n");
 		
 		return sb;		

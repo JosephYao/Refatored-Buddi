@@ -281,14 +281,10 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		sb.append("</tr>\n");
 		
 		for (Account account : accounts) {
-			sb.append("<tr><td>");
-			if (account.getAccountType().isCredit()) sb.append("<font color='red'>");
+			sb.append("<tr><td" + (FormatterWrapper.isRed(account) ? " class='red'>" : ">"));
 			sb.append(Translate.getInstance().get(account.getName()));
-			if (account.getAccountType().isCredit()) sb.append("</font>");
-			sb.append("</td><td>");
-			if (account.getBalance() < 0) sb.append("<font color='red'>");
-			sb.append(FormatterWrapper.getFormattedCurrencyForAccount(account.getBalance(), account.getAccountType().isCredit())).append("</td>");
-			if (account.getBalance() < 0) sb.append("</font>");
+			sb.append("</td><td" + (FormatterWrapper.isRed(account, account.getBalance()) ? " class='red'>" : ">"));
+			sb.append(FormatterWrapper.getFormattedCurrency(account.getBalance())).append("</td>");
 			sb.append("</tr>\n");
 		}
 		
@@ -320,14 +316,10 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		sb.append("</tr>");
 		
 		for (Category category : categories) {
-			sb.append("<tr><td>");
-			if (!category.isIncome()) sb.append("<font color='red'>");
+			sb.append("<tr><td" + (FormatterWrapper.isRed(category) ? " class='red'>" : ">"));
 			sb.append(Translate.getInstance().get(category.toString()));
-			if (!category.isIncome()) sb.append("</font>");
-			sb.append("</td><td>");
-			if (!category.isIncome()) sb.append("<font color='red'>");
-			sb.append(FormatterWrapper.getFormattedCurrencyForCategory(category.getBudgetedAmount(), category.isIncome())).append("</td>");
-			if (!category.isIncome()) sb.append("</font>");
+			sb.append("</td><td" + (FormatterWrapper.isRed(category, category.getBudgetedAmount()) ? " class='red'>" : ">"));
+			sb.append(FormatterWrapper.getFormattedCurrency(category.getBudgetedAmount(), category.isIncome())).append("</td>");
 			sb.append("</tr>\n");
 		}
 		

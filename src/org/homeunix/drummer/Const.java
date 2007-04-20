@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.6";
+	public static final String VERSION = "2.3.7";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -63,7 +63,7 @@ public class Const {
 		"English_(US)",
 		"English",
 		"Espanol",
-		"Espanol_(ES)",
+		"Espanol_(MX)",
 		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",

@@ -152,7 +152,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							}
 
 							sb.append("<br>");
-							sb.append(FormatterWrapper.getFormattedCurrencyForTransaction(transaction.getAmount(), transaction.getTo().equals(TransactionsFrame.this.account)));
+							if (FormatterWrapper.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
+								sb.append("<font color='red'>");
+							sb.append(FormatterWrapper.getFormattedCurrency(transaction.getAmount()));
+							if (FormatterWrapper.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
+								sb.append("</font>");
+							
 							sb.append("  ");
 							sb.append(transaction.getFrom())
 							.append(" ")
@@ -448,7 +453,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //			sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append(FormatterWrapper.getFormattedCurrencyForAccount(amountLeft, account.isCredit()))
+			.append(FormatterWrapper.isRed(account, amountLeft) ? "<font color='red'>" : "")
+			.append(FormatterWrapper.getFormattedCurrency(amountLeft))
+			.append(FormatterWrapper.isRed(account, (long) percentLeft) ? "</font>" : "")
 			.append(" (")
 			.append(Formatter.getDecimalFormat().format(percentLeft))
 			.append("%)");
