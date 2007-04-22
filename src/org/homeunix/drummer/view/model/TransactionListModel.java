@@ -66,7 +66,12 @@ public class TransactionListModel extends AbstractListModel {
 	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	public Object getElementAt(int index) {
-		return transactions.get(index);
+		if (transactions != null 
+				&& index >= 0 
+				&& index < transactions.size())
+			return transactions.get(index);
+		else
+			return null;
 	}
 
 	/* (non-Javadoc)

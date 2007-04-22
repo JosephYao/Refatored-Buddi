@@ -92,6 +92,8 @@ public class ScheduleController {
 			s.setMemo(transaction.getMemo());
 			s.setTo(transaction.getTo());
 			s.setFrom(transaction.getFrom());
+			s.setCleared(transaction.isCleared());
+			s.setReconciled(transaction.isReconciled());
 		}
 
 		DataInstance.getInstance().getDataModel().getAllTransactions().getScheduledTransactions().add(s);
@@ -301,6 +303,8 @@ public class ScheduleController {
 						t.setFrom(s.getFrom());
 						t.setMemo(s.getMemo());
 						t.setNumber(s.getNumber());
+						t.setCleared(s.isCleared());
+						t.setReconciled(s.isReconciled());
 						t.setScheduled(true);
 
 						TransactionsFrame.addToTransactionListModel(t);

@@ -437,6 +437,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		DefaultListCellRenderer pulldownTranslator = new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 			public Component getListCellRendererComponent(JList list, Object obj, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, obj, index, isSelected, cellHasFocus);
 				if (obj != null)
 					this.setText(Translate.getInstance().get(obj.toString()));				
 				return this;
@@ -594,6 +595,8 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 				t.setMemo(transaction.getMemo());
 				t.setTo(transaction.getTo());
 				t.setFrom(transaction.getFrom());
+				t.setCleared(transaction.isCleared());
+				t.setReconciled(transaction.isReconciled());
 			}
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
 			ScheduleController.addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
@@ -608,6 +611,8 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			schedule.setMemo(transaction.getMemo());
 			schedule.setTo(transaction.getTo());
 			schedule.setFrom(transaction.getFrom());
+			schedule.setCleared(transaction.isCleared());
+			schedule.setReconciled(transaction.isReconciled());
 
 			// We should not have to save this, as it cannot be modified.
 //			schedule.setStartDate(startDateChooser.getDate());

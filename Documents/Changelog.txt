@@ -1,3 +1,6 @@
+2.3.8
+-Honor C and R in scheduled transactions (bug #1705246)
+
 2.3.7 (April 21 2007)
 -Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.
 -Fixed bug in loading code which could potentially overwrite files which you try to open.
