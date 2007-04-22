@@ -84,9 +84,9 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");
-			sb.append(FormatterWrapper.isRed(t.getType()) ? "<font color='red'>" : "");
-			sb.append(FormatterWrapper.getFormattedCurrency(amount));
-			sb.append(FormatterWrapper.isRed(t.getType()) ? "</font>" : "");
+			sb.append(FormatterWrapper.isRed(t.getType(), amount) ? "<font color='red'>" : "");
+			sb.append(FormatterWrapper.getFormattedCurrency(amount, t.getType().isCredit()));
+			sb.append(FormatterWrapper.isRed(t.getType(), amount) ? "</font>" : "");
 
 			endTableCellRendererComponent();
 			

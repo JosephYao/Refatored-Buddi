@@ -1,5 +1,7 @@
 2.3.7
--Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells
+-Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.
+-Fixed bug in loading code which could potentially overwrite files which you try to open.
+-Fixed some misc. formatting bugs
 
 2.3.6 (April 17 2007)
 -Added print CSS to make better looking printed reports

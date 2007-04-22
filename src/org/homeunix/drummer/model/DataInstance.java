@@ -289,7 +289,7 @@ public class DataInstance {
 		//Make sure that this is updated when we load...
 		SourceController.calculateAllBalances();
 
-		saveDataFile();
+//		saveDataFile();
 
 		return ReturnCodes.SUCCESS;
 //		}

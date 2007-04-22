@@ -220,6 +220,15 @@ public class FormatterWrapper {
 		return t.isCredit();
 	}
 
+	public static boolean isRed(Type t, long value){
+		if (t.isCredit()){
+			return value <= 0;	
+		}
+		else {
+			return value < 0;
+		}
+	}
+	
 	public static boolean isRed(Transaction t){
 		if ((t.getTo() instanceof Category && t.getAmount() >= 0)
 				|| (t.getTo() instanceof Account && t.getAmount() < 0))

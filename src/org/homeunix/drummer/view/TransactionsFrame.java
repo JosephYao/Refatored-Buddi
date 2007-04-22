@@ -4,11 +4,14 @@
 package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -32,6 +35,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -55,16 +59,21 @@ import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.jdesktop.swingx.JXList;
+import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
 import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 
 public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
+	private static final int MIN_WIDTH = 600;
+	private static final int MIN_HEIGHT = 400;
+	
 	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
 //	private static TransactionsFramePreLoader preloader = null;
 
-	private final JList list;
+	private final JXList list;
 	private final JScrollPane listScroller;
 
 	private final EditableTransaction editableTransaction;
@@ -110,24 +119,11 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		transactionInstances.put(account, this);
 
 		availableFilters = new Vector<TranslateKeys>();
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_ALL);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_TODAY);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_WEEK);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_MONTH);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_YEAR);
-		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_LAST_YEAR);
-		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-			availableFilters.add(null);
-			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED);
-			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED);
-		}
-
 		filterComboBox = new JComboBox();
 		creditRemaining = new JLabel();
 
 		//Set up the transaction list
-		list = new JList(){
+		list = new JXList(){
 			public final static long serialVersionUID = 0;
 
 			@Override
@@ -299,6 +295,30 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 
+		this.addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent e) {
+				if (e.getComponent().getWidth() < MIN_WIDTH)
+					e.getComponent().setSize(MIN_WIDTH, e.getComponent().getHeight());
+				if (e.getComponent().getHeight() < MIN_HEIGHT)
+					e.getComponent().setSize(e.getComponent().getWidth(), MIN_HEIGHT);
+			}
+		});
+		
+		list.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
+		
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_ALL);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_TODAY);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_WEEK);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_MONTH);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_YEAR);
+		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_LAST_YEAR);
+		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+			availableFilters.add(null);
+			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED);
+			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED);
+		}
+		
 		filterComboBox.setModel(new DefaultComboBoxModel(availableFilters));
 		filterComboBox.setRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;

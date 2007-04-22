@@ -1,4 +1,4 @@
-#Wed Apr 18 18:39:33 CEST 2007
+#Tue Apr 17 19:23:04 CEST 2007
 CREATED_NEW_DATA_FILE_MESSAGE=Nuevo archivo de datos creado\:
 AND_REPEATING_EVERY=y repitiendo cada
 PLUGIN_FILTER_LAST_YEAR=\u00DAltimo a\u00F1o
@@ -234,7 +234,7 @@ TOOLTIP_DATE=Fecha de la transacci\u00F3n.
 MENU_EDIT_SCHEDULED_ACTIONS=Editar acciones programadas
 SCHEDULE_DATE_THIRTYFIRST=31
 CATEGORY=Categor\u00EDa
-BUTTON_NEW=Nueva
+BUTTON_NEW=Nuevo
 BUTTON_DELETE=Eliminar
 SCHEDULED_NOT_ENOUGH_INFO_TITLE=Transacci\u00F3n programada no completa
 SCHEDULE_MONTH_MARCH=Marzo
@@ -288,10 +288,11 @@ TRANSACTION_CHANGED_INVALID_MESSAGE=Existen cambios sin guardar en la transacci\
 REPORT_BY_DESCRIPTION_HEADER=Informe de transacciones por descripci\u00F3n
 MORE_INFO_NEEDED=Se necesita m\u00E1s informaci\u00F3n
 HINT_NUMBER=<N\u00FAmero>
-GRAPH_TITLE_NET_WORTH_OVER_TIME=Saldo neto en cierto plazo
+GRAPH_TITLE_NET_WORTH_OVER_TIME=Saldo neto en un plazo
 REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY=Mostrar mis ingresos y gastos por categor\u00EDa de
 RESTART_NEEDED_TITLE=Se necesita reiniciar
 BUTTON_EDIT=Editar
+MENU_EDIT=Editar
 SCHEDULED_TRANSACTION=Transacci\u00F3n programada
 SCHEDULE_DATE_SEVENTH=7
 ENCRYPT_DATA_FILE_TITLE=\u00BFCifrar archivo de datos?

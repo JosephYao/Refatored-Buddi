@@ -5,6 +5,7 @@ package org.homeunix.drummer.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Insets;
 
@@ -12,12 +13,15 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 /**
@@ -34,7 +38,11 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 	private Transaction transaction;
 	
 	private boolean showAdvanced = PrefsInstance.getInstance().getPrefs().isShowAdvanced();
-//	private final 
+//	private boolean isSelected; 
+	private int lastWidth;
+	private int descriptionLength, toFromLength;
+	
+	private static final Color GREEN = new Color(0, 128, 0);
 
 	/**
 	 * Creates a new TransactionCellRenderer object
@@ -46,7 +54,8 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		else {
 			this.setOpaque(true);
 		}
-		
+	
+		//Make this big enough to have two lines of text.
 		this.setPreferredSize(new JLabel("<html>A<br>B</html>").getPreferredSize());
 	}
 	
@@ -59,6 +68,35 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			transaction = null;
 			System.out.println("Null");
 		}
+		
+		//If the size has changed, adjust the allowed lengths of strings
+		// We do this by creating a 'worst case' string, consisting of
+		// X's.  We measure the length of this string, in the current
+		// font and size, against the available width which we have.
+		if (this.lastWidth != list.getWidth() && this.getGraphics() != null){
+			//On the top line, we allocate 150px for date; the description
+			// can take up to (width - 150)px.
+			FontMetrics fm = this.getGraphics().getFontMetrics();
+			String test = "XXXXX";
+			for(; fm.stringWidth(test) < (list.getWidth() - 150); test += "X"){
+				descriptionLength = test.length();
+			}
+			
+			//On the bottom line, we allocate 300px for all of the
+			// balances, and 50 for the C R; 
+			// We can take up to (width - 350)px for the toFrom field.  
+			test = "XXX";
+			for(; fm.stringWidth(test) < (list.getWidth() - 350); test += "X"){
+				toFromLength = test.length();
+			}
+			
+			if (Const.DEVEL) Log.debug("Recalculated string sizes to " + descriptionLength + " and " + toFromLength);
+			
+			lastWidth = list.getWidth();
+		}
+		
+//		this.isSelected = isSelected;
+		
 		return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
 	}
 
@@ -94,40 +132,44 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		int width = this.getWidth();
 		
 		if (transaction != null){
+//			Color textColor = (isSelected ? Const.COLOR_SELECTED_TEXT : Const.COLOR_UNSELECTED_TEXT);
+			Color textColor = g.getColor();
+			
+			
 			//Date
 			g.drawString(FormatterWrapper.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
 			
 			//Description
-			g.drawString(transaction.getDescription(), 150, height / 2 - 5);
+			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, height / 2 - 5);
 			
 			//Cleared and Reconciled
 			if (showAdvanced){
-				g.setColor(Color.GREEN);
+				g.setColor(GREEN);
 				if (transaction.isCleared())
 					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED), 20, height - 5);
 				if (transaction.isReconciled())
 					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED), 30, height - 5);
-				g.setColor(Color.BLACK);
+				g.setColor(textColor);
 			}
 			
 			//To / From sources
-			g.drawString(transaction.getFrom() + " " + Translate.getInstance().get(TranslateKeys.TO) + " " + transaction.getTo(), 50, height - 5);
+			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + " " + Translate.getInstance().get(TranslateKeys.TO) + " " + transaction.getTo()), 50, height - 5);
 
 			//Left column
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
-				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : Color.BLACK);
+				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
 				g.drawString(FormatterWrapper.getFormattedCurrency(transaction.getAmount()), width - 300, height - 5);
-				g.setColor(Color.BLACK);
+				g.setColor(textColor);
 			}
 			//Right Column
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : Color.BLACK);
+				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
 				g.drawString(FormatterWrapper.getFormattedCurrency(transaction.getAmount()), width - 200, height - 5);
-				g.setColor(Color.BLACK);
+				g.setColor(textColor);
 			}
 			
 			//Balance
@@ -140,9 +182,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				else
 					balanceValue = transaction.getBalanceTo();
 
-				g.setColor(FormatterWrapper.isRed(account, balanceValue) ? Color.RED : Color.BLACK);
-				g.drawString(FormatterWrapper.getFormattedCurrency(balanceValue), width - 100, height - 5);
-				g.setColor(Color.BLACK);
+				g.setColor(FormatterWrapper.isRed(account, balanceValue) ? Color.RED : textColor);
+				g.drawString(FormatterWrapper.getFormattedCurrency(balanceValue, account.isCredit()), width - 100, height - 5);
+				g.setColor(textColor);
 			}
 		}
 

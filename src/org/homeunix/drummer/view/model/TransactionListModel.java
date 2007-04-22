@@ -15,8 +15,10 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
 import de.schlichtherle.swing.filter.BitSetFilteredDynamicListModel;
@@ -157,6 +159,7 @@ public class TransactionListModel extends AbstractListModel {
 		fdlm.setSource(this);
 		fdlm.setFilter(new ListElementFilter(){
 			public static final long serialVersionUID = 0;
+			private String decimal = Formatter.getDecimalFormat().format(100).replaceAll("\\d", "");
 			
 			public boolean accept(Object arg0) {
 				Transaction t = (Transaction) arg0;
@@ -216,7 +219,7 @@ public class TransactionListModel extends AbstractListModel {
 						|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase())
-						|| Long.toString(t.getAmount()).contains(filterText.toLowerCase()));
+						|| FormatterWrapper.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(filterText.toLowerCase()));
 			}	
 		});
 		return fdlm;

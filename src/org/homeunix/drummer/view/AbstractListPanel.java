@@ -48,9 +48,9 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 
 	protected final SourceTreeTableModel treeModel;
 	
-	protected static Color LIGHT_BLUE = new Color(237, 243, 254);
+//	protected static Color LIGHT_BLUE = new Color(237, 243, 254);
 //	protected static Color SELECTED = new Color(181, 213, 255);
-	protected static Color WHITE = Color.WHITE;
+//	protected static Color WHITE = Color.WHITE;
 
 	protected Source selectedSource;
 
@@ -81,7 +81,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.addHighlighter(new AlternateRowHighlighter(WHITE, LIGHT_BLUE, Color.BLACK));
+		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
 		
 		JScrollPane listScroller = new JScrollPane(tree);
 
