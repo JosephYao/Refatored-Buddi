@@ -19,8 +19,8 @@ import org.homeunix.thecave.moss.util.Log;
 public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 	public static final long serialVersionUID = 0;
 
-	public CategoryModifyDialog(){
-		super(MainFrame.getInstance());
+	public CategoryModifyDialog(Category category){
+		super(MainFrame.getInstance(), category);
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGETED_AMOUNT));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.PARENT_CATEGORY));
 
@@ -35,48 +35,49 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 		cancelButton.addActionListener(this);
 		check.addActionListener(this);
 		pulldown.addActionListener(this);
-
-		pulldownModel.removeAllElements();
-		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
-
-		for (Category c : SourceController.getCategories()) {
-			if (source == null 
-					|| c.isIncome() == check.isSelected())
-				pulldownModel.addElement(c);
-		}
 		
 		if (source == null){
-			updateContent();
 			name.setText("");
 			amount.setValue(0);
-			pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
 			check.setSelected(false);
 			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_NEW));
 		}
 		else{
 			name.setText(Translate.getInstance().get(source.getName()));
 			amount.setValue(source.getBudgetedAmount());
-			if (source.isIncome())
-				check.setSelected(true);
-			else
-				check.setSelected(false);
-
-			updateContent();
-
-			if (source.getParent() != null){
-				if (Const.DEVEL) Log.debug(source.getParent());
-				pulldown.setSelectedItem(source.getParent());
-			}
-			else
-				pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
-			
+			check.setSelected(source.isIncome());
 			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_EDIT));
 		}
-
+		
+		System.out.println(source == null);
+		check.setEnabled(source == null);
+		
+		updateContent();
+		
 		return this;
 	}
 
 	public AbstractDialog updateContent(){
+
+		pulldownModel.removeAllElements();
+		pulldownModel.addElement(Translate.getInstance().get(TranslateKeys.NO_PARENT));
+		
+		//Show parent category only if this is a new category, or
+		// the category is the same type as the selected one.
+		for (Category c : SourceController.getCategories()) {
+			if (source == null 
+					|| c.isIncome() == check.isSelected())
+				pulldownModel.addElement(c);
+		}
+		
+		if (source != null && source.getParent() != null){
+			if (Const.DEVEL) Log.debug(source.getParent());
+			pulldown.setSelectedItem(source.getParent());
+		}
+		else
+			pulldown.setSelectedItem(Translate.getInstance().get(TranslateKeys.NO_PARENT));
+
+		
 		return this;
 	}
 
@@ -174,13 +175,13 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			MainFrame.getInstance().getCategoryListPanel().updateContent();
 		}
 		else if (e.getSource().equals(pulldown)){
-			if (pulldown.getSelectedItem() instanceof Category){
-				check.setEnabled(false);
+			if (pulldown.getSelectedItem() instanceof Category)
 				check.setSelected(((Category) pulldown.getSelectedItem()).isIncome());
-			}
-			else{
-				check.setEnabled(true);
-			}
+
+			check.setEnabled(source == null 
+					&& pulldown.getSelectedItem() != null 
+					&& pulldown.getSelectedItem().equals(Translate.getInstance().get(TranslateKeys.NO_PARENT)));
+
 		}
 		else if (e.getSource().equals(check)){
 			updateContent();

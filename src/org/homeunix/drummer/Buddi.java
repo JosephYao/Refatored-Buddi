@@ -122,7 +122,7 @@ public class Buddi {
 
 		//Start the initial checks
 		startVersionCheck();
-		startUpdateCheck();
+		startUpdateCheck(false);
 	}
 
 	/**
@@ -297,8 +297,8 @@ public class Buddi {
 	/**
 	 * Starts a thread which checks the Internet for any new versions.
 	 */
-	public static void startUpdateCheck(){
-		if (PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
+	public static void startUpdateCheck(final boolean confirm){
+		if (confirm || PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
 			SwingWorker updateWorker = new SwingWorker(){
 
 				@Override
@@ -388,6 +388,14 @@ public class Buddi {
 								Log.error(e);
 							}
 						}
+					}
+					//There was no updates - if we want a confirmation, show it
+					else if (confirm){
+						JOptionPane.showMessageDialog(
+								MainFrame.getInstance(), 
+								Translate.getInstance().get(TranslateKeys.MESSAGE_NO_NEW_VERSION), 
+								Translate.getInstance().get(TranslateKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
+								JOptionPane.INFORMATION_MESSAGE);
 					}
 
 					super.finished();

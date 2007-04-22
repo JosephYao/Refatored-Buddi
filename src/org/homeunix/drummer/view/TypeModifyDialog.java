@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
-import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 
-public class TypeModifyDialog extends AbstractModifyDialog<Account> {
+public class TypeModifyDialog extends AbstractModifyDialog<Type> {
 	public static final long serialVersionUID = 0;
 
-	public TypeModifyDialog(){
-		super(MainFrame.getInstance());
+	public TypeModifyDialog(Type type){
+		super(MainFrame.getInstance(), type);
 
 		check.setText(Translate.getInstance().get(TranslateKeys.CREDIT));
 		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT_ACCOUNT_TYPES));
@@ -27,15 +27,15 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 
-		if (type == null){
+		if (source == null){
 			name.setText("");
 			check.setSelected(false);
 			check.setEnabled(true);
 			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_EDIT));
 		}
 		else{
-			name.setText(Translate.getInstance().get(type.getName()));
-			check.setSelected(type.isCredit());
+			name.setText(Translate.getInstance().get(source.getName()));
+			check.setSelected(source.isCredit());
 			check.setEnabled(false);
 			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_NEW));
 		}
@@ -58,13 +58,13 @@ public class TypeModifyDialog extends AbstractModifyDialog<Account> {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else{
-				if (type == null){
+				if (source == null){
 					TypeController.addType(name.getText(), check.isSelected());
 //					DataInstance.getInstance().saveDataModel();
 				}
 				else {
-					type.setName(name.getText());
-					type.setCredit(check.isSelected());
+					source.setName(name.getText());
+					source.setCredit(check.isSelected());
 //					DataInstance.getInstance().saveDataModel();
 				}
 

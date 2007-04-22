@@ -201,11 +201,11 @@ public class AccountListPanel extends AbstractListPanel {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newButton)){
 			tree.clearSelection();
-			new AccountModifyDialog().clear().openWindow();
+			new AccountModifyDialog(null).clear().openWindow();
 			AccountListPanel.this.updateButtons();
 		}
 		else if (e.getSource().equals(editButton)) {
-			new AccountModifyDialog().loadSource(getSelectedAccount()).openWindow();
+			new AccountModifyDialog(getSelectedAccount()).openWindow();
 			AccountListPanel.this.updateButtons();
 		}
 		else if (e.getSource().equals(deleteButton)){

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -47,6 +48,9 @@ public class HelpMenuController implements ActionListener {
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_HELP_ABOUT.toString())){
 			new AboutDialog().openWindow();
+		}
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_HELP_CHECK_FOR_UPDATES.toString())){
+			Buddi.startUpdateCheck(true);
 		}
 		else {
 			Log.debug("Clicked " + e.getActionCommand());

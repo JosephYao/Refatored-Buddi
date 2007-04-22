@@ -23,8 +23,8 @@ import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 	public static final long serialVersionUID = 0;
 
-	public AccountModifyDialog(){
-		super(MainFrame.getInstance());
+	public AccountModifyDialog(Account account){
+		super(MainFrame.getInstance(), account);
 		amountLabel.setText(Translate.getInstance().get(TranslateKeys.STARTING_BALANCE));
 		pulldownLabel.setText(Translate.getInstance().get(TranslateKeys.ACCOUNT_TYPE));
 		check.setVisible(false);

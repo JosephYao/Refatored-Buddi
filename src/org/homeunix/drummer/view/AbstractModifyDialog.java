@@ -13,16 +13,14 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
 
@@ -34,7 +32,7 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 	
 	protected final JTextField name;
 	protected final JDecimalField amount;
-	protected final JComboBox pulldown;
+	protected final JScrollingComboBox pulldown;
 	protected final JCheckBox check;
 	protected final JDecimalField creditLimit;
 	protected final JDecimalField interestRate;
@@ -49,11 +47,14 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 	
 	protected final DefaultComboBoxModel pulldownModel;
 	
-	protected SourceType source;
-	protected Type type;
+	protected final SourceType source;
+//	protected final Type type;
 	
-	protected AbstractModifyDialog(Frame owner){
+	protected AbstractModifyDialog(Frame owner, SourceType source){
 		super(owner);
+		
+		this.source = source;
+//		this.type = type;
 		
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
 		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
@@ -67,7 +68,7 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();
-		pulldown = new JComboBox(pulldownModel);
+		pulldown = new JScrollingComboBox(pulldownModel);
 		
 		creditLimitLabel = new JLabel(Translate.getInstance().get(TranslateKeys.OVERDRAFT_LIMIT) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
 		interestRateLabel = new JLabel(Translate.getInstance().get(TranslateKeys.INTEREST_RATE) + " " + Translate.getInstance().get(TranslateKeys.OPTIONAL_TAG));
@@ -137,21 +138,21 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		amount.setValue(0);
 		pulldown.setSelectedItem(null);
 		check.setSelected(false);
-		this.source = null;
+//		this.source = null;
 //		this.setTitle(Translate.getInstance().get(TranslateKeys.NEW) + " " + getType());
 		return this;
 	}
 	
-	public AbstractDialog loadSource(SourceType source){
-		this.source = source;
-//		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
-		return this;
-	}
+//	public AbstractDialog loadSource(SourceType source){
+//		this.source = source;
+////		this.setTitle(Translate.getInstance().get(TranslateKeys.EDIT) + " " + getType());
+//		return this;
+//	}
 	
-	public AbstractDialog loadType(Type type){
-		this.type = type;
-		return this;
-	}
+//	public AbstractDialog loadType(Type type){
+//		this.type = type;
+//		return this;
+//	}
 	
 	public StandardWindow updateButtons() {
 		return this;

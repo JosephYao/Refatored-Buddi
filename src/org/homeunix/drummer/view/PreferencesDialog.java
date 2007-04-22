@@ -499,6 +499,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 					|| !prefs.getLanguage().equals(language.getSelectedItem().toString())
 					|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
 					|| (prefs.isCurrencySymbolAfterAmount() != currencySymbolAfterAmount.isSelected())
+					|| (prefs.isEnableUpdateNotifications() != enableUpdateNotifications.isSelected())
 					|| pluginsChanged()){
 
 				Translate.getInstance().loadLanguage(language.getSelectedItem().toString());

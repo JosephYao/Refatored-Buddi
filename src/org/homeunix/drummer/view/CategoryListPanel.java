@@ -168,11 +168,11 @@ public class CategoryListPanel extends AbstractListPanel {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newButton)){
 			tree.clearSelection();
-			new CategoryModifyDialog().clear().openWindow();
+			new CategoryModifyDialog(null).clear().openWindow();
 		}
 		else if (e.getSource().equals(editButton)){
 			if (getSelectedCategory() != null)
-				new CategoryModifyDialog().loadSource(getSelectedCategory()).openWindow();
+				new CategoryModifyDialog(getSelectedCategory()).openWindow();
 		}
 		else if (e.getSource().equals(deleteButton)){
 			if (getSelectedCategory() != null) {

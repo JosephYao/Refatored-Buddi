@@ -16,6 +16,7 @@ import net.roydesign.ui.JScreenMenuItem;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.menu.HelpMenuController;
+import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DocumentationFactory;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
@@ -33,6 +34,7 @@ public class HelpMenu extends JScreenMenu {
 		this.setText(Translate.getInstance().get(TranslateKeys.MENU_HELP));
 		
 		final JScreenMenuItem showHelp = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_HELP_HELP));
+		final JScreenMenuItem checkForUpdates = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_HELP_CHECK_FOR_UPDATES));
 		final AboutJMenuItem about = Application.getInstance().getAboutJMenuItem();
 		
 		showHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
@@ -41,9 +43,11 @@ public class HelpMenu extends JScreenMenu {
 		about.setText(Translate.getInstance().get(TranslateKeys.MENU_HELP_ABOUT));
 		
 		showHelp.setActionCommand(TranslateKeys.MENU_HELP.toString());
+		checkForUpdates.setActionCommand(TranslateKeys.MENU_HELP_CHECK_FOR_UPDATES.toString());
 		about.setActionCommand(TranslateKeys.MENU_HELP_ABOUT.toString());
 
 		showHelp.addActionListener(controller);
+		checkForUpdates.addActionListener(controller);
 		about.addActionListener(controller);
 
 		this.add(showHelp);
@@ -53,6 +57,10 @@ public class HelpMenu extends JScreenMenu {
 		this.addSeparator();
 		this.add(DocumentationFactory.getDocumentsMenu());
 		this.add(DocumentationFactory.getLicensesMenu());
+		if (!PrefsInstance.getInstance().getPrefs().isEnableUpdateNotifications()){
+			this.addSeparator();
+			this.add(checkForUpdates);
+		}
 
 	}
 }

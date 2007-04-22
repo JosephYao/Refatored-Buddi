@@ -123,7 +123,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 			TypeListDialog.this.closeWindow();
 		}
 		else if (e.getSource().equals(newButton)){
-			new TypeModifyDialog().openWindow();
+			new TypeModifyDialog(null).openWindow();
 			if (Const.DEVEL) Log.debug("Done creating");
 			updateContent();
 		}
@@ -131,7 +131,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 			Object o = list.getSelectedValue();
 			if (o instanceof Type){
 				Type t = (Type) o;
-				new TypeModifyDialog().loadType(t).openWindow();
+				new TypeModifyDialog(t).openWindow();
 				if (Const.DEVEL) Log.debug("Done editing.");
 				updateContent();
 			}
