@@ -1,7 +1,9 @@
-2.3.7
+2.3.7 (April 21 2007)
 -Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.
 -Fixed bug in loading code which could potentially overwrite files which you try to open.
 -Fixed some misc. formatting bugs
+-Fixed bug which prevented proper editing of existing budget categories (bug #1705087)
+-Added manual update check if automatic checks are disabled
 
 2.3.6 (April 17 2007)
 -Added print CSS to make better looking printed reports
