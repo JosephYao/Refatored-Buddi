@@ -224,7 +224,9 @@ public class TransactionListModel extends AbstractListModel {
 						|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase())
-						|| FormatterWrapper.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(filterText.toLowerCase()));
+						|| FormatterWrapper.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(filterText.toLowerCase()))
+						|| FormatterWrapper.getDateFormat().format(t.getDate()).toLowerCase().contains(filterText.toLowerCase());
+				
 			}	
 		});
 		return fdlm;

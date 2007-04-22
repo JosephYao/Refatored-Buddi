@@ -129,6 +129,7 @@ public class AccountListPanel extends AbstractListPanel {
 		}
 		
 		updateNetWorth();
+		updateButtons();
 
 		return super.updateContent();
 	}

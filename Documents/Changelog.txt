@@ -1,5 +1,9 @@
 2.3.8
 -Honor C and R in scheduled transactions (bug #1705246)
+-Implemented selective windows for Export / Import plugins (request #1590185)
+-Reports / Graphs now generate in their own worker thread (request #1702649)
+-Added search by Date to transaction search (request #1696159)
+-Moved Export to CSV plugin to buddi-plugins
 
 2.3.7 (April 21 2007)
 -Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.

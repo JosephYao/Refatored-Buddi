@@ -19,7 +19,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.7";
+	public static final String VERSION = "2.3.8";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	
@@ -165,7 +165,8 @@ public class Const {
 		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime",
 		
 //		"org.homeunix.drummer.plugins.exports.ExportHTML",
-		"org.homeunix.drummer.plugins.exports.ExportCSV"
+//		"org.homeunix.drummer.plugins.exports.ExportCSV"
+//		"org.homeunix.drummer.plugins.exports.TestPlugin"
 	};
 		
 	private Const(){}

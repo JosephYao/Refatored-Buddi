@@ -56,19 +56,24 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiExportPlugin plugin : exportPlugins) {
-			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
+			boolean correctWindow = true;
+			
+			if (plugin.getCorrectWindows() != null && frame != null){
+				correctWindow = false;
+				for (Class c : plugin.getCorrectWindows()) {
+					if (frame.getClass().equals(c)) {
+						correctWindow = true;
+						break;
+					}
+				}
+			}
+			if (correctWindow){
+				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
-			//This is where the user's custom code is actually run
-			addExportActionListener(plugin, menuItem, frame);
-//			menuItem.addUserFrame(ExportHTML.class);
-//			if (plugin.getCorrectWindows() != null && plugin.getCorrectWindows().length > 0){
-//			for (Class c : plugin.getCorrectWindows()){
-//			if (c != null)
-//			menuItem.addUserFrame(c);
-//			}
-//			}
-
-			exportMenuItems.add(menuItem);
+				//This is where the user's custom code is actually run
+				addExportActionListener(plugin, menuItem, frame);
+				exportMenuItems.add(menuItem);
+			}
 		}
 
 		return exportMenuItems;
@@ -95,12 +100,24 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiImportPlugin plugin : importPlugins) {
-			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
+			boolean correctWindow = true;
+			
+			if (plugin.getCorrectWindows() != null && frame != null){
+				correctWindow = false;
+				for (Class c : plugin.getCorrectWindows()) {
+					if (frame.getClass().equals(c)) {
+						correctWindow = true;
+						break;
+					}
+				}
+			}
+			if (correctWindow){
+				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
-			//This is where the user's custom code is actually run
-			addImportActionListener(plugin, menuItem, frame);
-
-			importMenuItems.add(menuItem);
+				//This is where the user's custom code is actually run
+				addImportActionListener(plugin, menuItem, frame);
+				importMenuItems.add(menuItem);
+			}
 		}
 
 		return importMenuItems;

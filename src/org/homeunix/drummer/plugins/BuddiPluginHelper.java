@@ -14,53 +14,60 @@ import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper;
+import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.thecave.moss.gui.JStatusDialog;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.SwingWorker;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {
-	public static void openNewPanelPluginWindow(BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
-		if (plugin instanceof BuddiReportPlugin){
-			try {
-				File index = HTMLExportHelper.createHTML("report", ((BuddiReportPlugin) plugin).getReport(startDate, endDate));
-				BrowserLauncher bl = new BrowserLauncher(null);
-				bl.openURLinBrowser(index.toURI().toURL().toString());
-			}
-			catch (Exception e){
-				Log.error("Error making HTML: " + e);
-			}
+	public static void openNewPanelPluginWindow(final BuddiPanelPlugin plugin, final Date startDate, final Date endDate){
+		final JStatusDialog status = new JStatusDialog(
+				MainFrame.getInstance(),
+				Translate.getInstance().get(plugin instanceof BuddiReportPlugin ? TranslateKeys.MESSAGE_GENERATING_REPORT : TranslateKeys.MESSAGE_GENERATING_GRAPH));
 
-//			WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getReportsWindow();
-//			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-//			Point point = new Point(wa.getX(), wa.getY());
-//			
-//			ReportFrame rfl = new ReportFrame((BuddiReportPlugin) plugin, startDate, endDate);
-//			rfl.openWindow(dimension, point);
-//			rfl.requestFocusInWindow();
-		}
-		else if (plugin instanceof BuddiGraphPlugin){
-			try {
-				File index = HTMLExportHelper.createHTML("graph", ((BuddiGraphPlugin) plugin).getGraph(startDate, endDate));
-				BrowserLauncher bl = new BrowserLauncher(null);
-				bl.openURLinBrowser(index.toURI().toURL().toString());
+		status.openWindow();
+		
+		SwingWorker worker = new SwingWorker(){
+			@Override
+			public Object construct() {
+				if (plugin instanceof BuddiReportPlugin){
+					try {
+						File index = HTMLExportHelper.createHTML("report", ((BuddiReportPlugin) plugin).getReport(startDate, endDate));
+						BrowserLauncher bl = new BrowserLauncher(null);
+						bl.openURLinBrowser(index.toURI().toURL().toString());
+					}
+					catch (Exception e){
+						Log.error("Error making HTML: " + e);
+					}
+				}
+				else if (plugin instanceof BuddiGraphPlugin){
+					try {
+						File index = HTMLExportHelper.createHTML("graph", ((BuddiGraphPlugin) plugin).getGraph(startDate, endDate));
+						BrowserLauncher bl = new BrowserLauncher(null);
+						bl.openURLinBrowser(index.toURI().toURL().toString());
+					}
+					catch (Exception e){
+						Log.error("Error making HTML: " + e);
+					}
+				}
+				else {
+					Log.error("Incorrect plugin type: " + plugin.getClass().getName());
+				}
+				
+				return null;
 			}
-			catch (Exception e){
-				Log.error("Error making HTML: " + e);
+			
+			@Override
+			public void finished() {
+				status.closeWindow();
+				super.finished();
 			}
+		};
 
-//			WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getGraphsWindow();
-//			Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-//			Point point = new Point(wa.getX(), wa.getY());
-
-//			GraphFrame gfl = new GraphFrame((BuddiGraphPlugin) plugin, startDate, endDate);
-//			gfl.openWindow(dimension, point);
-//			gfl.requestFocusInWindow();
-		}
-		else {
-			Log.error("Incorrect plugin type: " + plugin.getClass().getName());
-		}
-
+		worker.start();
 	}
 
 	protected static Vector<DateChoice> getInterval() {
