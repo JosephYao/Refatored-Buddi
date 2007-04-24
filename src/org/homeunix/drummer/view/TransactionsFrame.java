@@ -178,8 +178,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		};
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		TransactionCellRenderer renderer = new TransactionCellRenderer();
-		renderer.setAccount(account);
+		TransactionCellRenderer renderer = new TransactionCellRenderer(account);
+//		renderer.setAccount(account);
 		list.setCellRenderer(renderer);
 
 		listScroller = new JScrollPane(list);
