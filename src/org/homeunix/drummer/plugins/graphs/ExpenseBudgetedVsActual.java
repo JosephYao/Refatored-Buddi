@@ -27,6 +27,7 @@ import org.homeunix.drummer.util.BudgetCalculator;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -42,19 +43,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 		Vector<Category> cats = new Vector<Category>(categories.keySet());
 		Collections.sort(cats);
 		
-//		double numberOfBudgetPeriods;
 		Interval interval = PrefsInstance.getInstance().getSelectedInterval();
-//		if (!interval.isDays()){
-//			if (DateUtil.daysBetween(startDate, endDate) <= 25){
-//				numberOfBudgetPeriods = DateUtil.daysBetween(startDate, endDate) / (30 * interval.getLength());
-//			}
-//			else{
-//				numberOfBudgetPeriods = (DateUtil.monthsBetween(startDate, endDate) + 1) / interval.getLength();
-//			}
-//		}
-//		else{
-//			numberOfBudgetPeriods = (DateUtil.daysBetween(startDate, endDate) + 1) / interval.getLength();
-//		}
 		
 		for (Category c : cats) {
 			if (categories.get(c) > 0 || c.getBudgetedAmount() > 0){
@@ -145,5 +134,9 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 	
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public Version getMinimumVersion() {
+		return new Version("2.3.4");
 	}
 }

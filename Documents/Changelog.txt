@@ -4,6 +4,9 @@
 -Reports / Graphs now generate in their own worker thread (request #1702649)
 -Added search by Date to transaction search (request #1696159)
 -Moved Export to CSV plugin to buddi-plugins
+-Added MinimumVersion tag to plugins, to specify which versions of Buddi are compatible.
+-Rewrote Source deletion code, to be more user friendly and less buggy.  Beta testers: Please test this!  Use a test file for this, not your real data file!  8-)
+-Fixed bug in loading code which could result in unintentional data file encryption
 
 2.3.7 (April 21 2007)
 -Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.

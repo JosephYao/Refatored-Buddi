@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JMenuBar;
@@ -36,7 +36,9 @@ import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
 import org.homeunix.thecave.moss.util.SwingWorker;
-import org.homeunix.thecave.moss.util.ParseCommands.ParseException;
+import org.homeunix.thecave.moss.util.Version;
+import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
+import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -152,33 +154,23 @@ public class Buddi {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String prefsLocation = "";
-		Integer verbosity = new Integer(0);
-		String lnf = "";
-		String font = "";
-
 		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n";
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("-p", prefsLocation);
-		map.put("-v", verbosity);
-		map.put("--lnf", lnf);
-		map.put("--font", font);
-		try{
-			map = ParseCommands.parse(args, map, help);
-		}
-		catch (ParseException pe){
-			Log.critical(pe);
-			System.exit(1);
-		}
-		prefsLocation = (String) map.get("-p");
-		verbosity = (Integer) map.get("-v");
-		lnf = (String) map.get("--lnf");
-		font = (String) map.get("--font");
+		List<ParseVariable> variables = new LinkedList<ParseVariable>();
+		variables.add(new ParseVariable("-p", String.class, false));
+		variables.add(new ParseVariable("-v", Integer.class, false));
+		variables.add(new ParseVariable("--lnf", String.class, false));
+		variables.add(new ParseVariable("--font", String.class, false));
+				
+		ParseResults results = ParseCommands.parse(args, variables, help);
+		String prefsLocation = results.getString("-p");
+		Integer verbosity = results.getInteger("-v");
+		String lnf = results.getString("--lnf");
+		String font = results.getString("--font");
 
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
@@ -188,15 +180,17 @@ public class Buddi {
 			Log.setLogLevel(verbosity);
 		}
 
+		//If we specify a different font, replace all font instances with it.
+		// This is useful for some locales, in which the default font
+		// won't work properly.
 		if (font != null){
-//			FontUIResource f = new FontUIResource(new Font(font, Font.PLAIN, 12));
 			Enumeration<Object> keys = UIManager.getDefaults().keys();
 			while (keys.hasMoreElements()) {
 				Object key = keys.nextElement();
 				Object value = UIManager.get(key);
 				if (value instanceof FontUIResource){
 					FontUIResource f = (FontUIResource) value;
-					UIManager.put(key, new FontUIResource(f.getName(), f.getStyle(), f.getSize()));
+					UIManager.put(key, new FontUIResource(font, f.getStyle(), f.getSize()));
 				}
 			}  
 		}
@@ -212,21 +206,7 @@ public class Buddi {
 		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 
-		//Load the correct formatter preferences
-
-
-		//Add any shutdown hoks you want to use.  Currently this
-		// is only enabled in development versions.
-//		if (Const.DEVEL){
-//		Runtime.getRuntime().addShutdownHook(new Thread(){
-//		@Override
-//		public void run() {
-
-//		super.run();
-//		}
-//		});
-//		}
-
+		//Set some Mac-specific GUI options
 		if (OperatingSystemUtil.isMac()){
 			System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
 			System.setProperty("Quaqua.selectionStyle", "bright");
@@ -239,6 +219,7 @@ public class Buddi {
 			System.setProperty("com.apple.mrj.application.apple.menu.about.name", Translate.getInstance().get(TranslateKeys.BUDDI));
 		}
 
+		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				launchGUI();
@@ -309,32 +290,31 @@ public class Buddi {
 
 						versions.load(mostRecentVersion.openStream());
 
-						int majorAvailable = 0, minorAvailable = 0, bugfixAvailable = 0;
-						int majorThis = 0, minorThis = 0, bugfixThis = 0;
+//						int majorAvailable = 0, minorAvailable = 0, bugfixAvailable = 0;
+//						int majorThis = 0, minorThis = 0, bugfixThis = 0;
 
-						String[] available = versions.get(Const.BRANCH).toString().split("\\.");
-						String[] thisVersion = Const.VERSION.split("\\.");
+						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
+						Version thisVersion = new Version(Const.VERSION);
+//						String[] available = versions.get(Const.BRANCH).toString().split("\\.");
+//						String[] thisVersion = Const.VERSION.split("\\.");
+//
+//						if (available.length > 2){
+//							majorAvailable = Integer.parseInt(available[0]);
+//							minorAvailable = Integer.parseInt(available[1]);
+//							bugfixAvailable = Integer.parseInt(available[2]);
+//						}
+//
+//						if (thisVersion.length > 2){
+//							majorThis = Integer.parseInt(thisVersion[0]);
+//							minorThis = Integer.parseInt(thisVersion[1]);
+//							bugfixThis = Integer.parseInt(thisVersion[2]);
+//						}
 
-						if (available.length > 2){
-							majorAvailable = Integer.parseInt(available[0]);
-							minorAvailable = Integer.parseInt(available[1]);
-							bugfixAvailable = Integer.parseInt(available[2]);
-						}
+						Log.debug("This version: " + thisVersion);
+						Log.debug("Available version: " + availableVersion);
 
-						if (thisVersion.length > 2){
-							majorThis = Integer.parseInt(thisVersion[0]);
-							minorThis = Integer.parseInt(thisVersion[1]);
-							bugfixThis = Integer.parseInt(thisVersion[2]);
-						}
-
-						Log.debug("This version: " + majorThis + "." + minorThis + "." + bugfixThis);
-						Log.debug("Available version: " + majorAvailable + "." + minorAvailable + "." + bugfixAvailable);
-
-						if (majorAvailable > majorThis
-								|| (majorAvailable == majorThis && minorAvailable > minorThis)
-								|| (majorAvailable == majorThis && minorAvailable == minorThis && bugfixAvailable > bugfixThis)){
-							return versions.get(Const.BRANCH);
-						}
+						if (thisVersion.compareTo(availableVersion) < 0)
+							return availableVersion;
 					}
 					catch (MalformedURLException mue){
 						Log.error(mue);

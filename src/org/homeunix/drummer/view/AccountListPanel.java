@@ -13,15 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.AccountListPanelController;
-import org.homeunix.drummer.controller.ScheduleController;
 import org.homeunix.drummer.controller.SourceController;
-import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
@@ -215,18 +211,19 @@ public class AccountListPanel extends AbstractListPanel {
 				Account a = getSelectedAccount();
 
 				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE))){
-					boolean notPermanent = TransactionController.getTransactions(a).size() > 0
-					|| ScheduleController.getScheduledTransactions(a).size() > 0
-					|| JOptionPane.showConfirmDialog(
-							AccountListPanel.this,
-							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT),
-							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT_TITLE),
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
-					AccountListPanelController.deleteAccount(notPermanent, a);							
+//					boolean notPermanent = TransactionController.getTransactions(a).size() > 0
+//					|| ScheduleController.getScheduledTransactions(a).size() > 0
+//					|| JOptionPane.showConfirmDialog(
+//							AccountListPanel.this,
+//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT),
+//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT_TITLE),
+//							JOptionPane.YES_NO_OPTION,
+//							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
+//					AccountListPanelController.deleteAccount(notPermanent, a);
+					SourceController.deleteAccount(a);
 				}
 				else{
-					AccountListPanelController.undeleteAccount(a);
+					SourceController.undeleteSource(a);
 				}
 
 				//We always want to update everything.  It's the cool thing to do.

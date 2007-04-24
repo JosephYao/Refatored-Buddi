@@ -23,6 +23,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -123,5 +124,8 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 	
 	public boolean isEnabled() {
 		return true;
+	}
+	public Version getMinimumVersion() {
+		return new Version("2.3.4");
 	}
 }

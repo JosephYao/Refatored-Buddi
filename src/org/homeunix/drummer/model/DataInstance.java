@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.URIConverter.Cipher;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.homeunix.drummer.Const;
@@ -82,6 +83,11 @@ public class DataInstance {
 	 * although we do not check that here.
 	 */
 	public ReturnCodes newDataFile(File locationFile){
+		//Keep backups of existing data
+		Cipher oldCipher = this.cipher;
+		DataModel oldDataModel = this.dataModel;
+		ResourceSet oldResourceSet = this.resourceSet;
+		
 		//If we are making a new file, we want to ask for encryption options again.
 		this.cipher = new AESCryptoCipher(128);
 
@@ -175,6 +181,12 @@ public class DataInstance {
 			Log.warning(ioe);
 		}
 		
+		//In the event of an error, we will restore the data 
+		// to its previous state.
+		this.dataModel = oldDataModel;
+		this.cipher = oldCipher;
+		this.resourceSet = oldResourceSet;
+		
 		return ReturnCodes.ERROR;
 	}
 
@@ -187,6 +199,11 @@ public class DataInstance {
 	 * @return True if the file is successfully loaded, false otherwise. 
 	 */
 	public ReturnCodes loadDataFile(File locationFile){
+		//Backup existing data
+		Cipher oldCipher = this.cipher;
+		DataModel oldDataModel = this.dataModel;
+		ResourceSet oldResourceSet = this.resourceSet;
+		
 		// throw away the old cipher (if any) when we load a new data file
 		this.cipher = new AESCryptoCipher(128);
 
@@ -230,6 +247,13 @@ public class DataInstance {
 			//This generally means that the password was incorrect,
 			// although it could also be used for other errors.
 			// In any case, we cannot open the file.
+			
+			//We also have to return the data instance to the old
+			// state.
+			this.cipher = oldCipher;
+			this.dataModel = oldDataModel;
+			this.resourceSet = oldResourceSet;
+			
 			return ReturnCodes.ERROR;
 		}
 

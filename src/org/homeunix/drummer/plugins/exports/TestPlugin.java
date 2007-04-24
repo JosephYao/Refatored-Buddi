@@ -11,6 +11,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * This is a simple test plugin which can help to test functionality.  
@@ -51,4 +52,7 @@ public class TestPlugin implements BuddiExportPlugin {
 		return Translate.getInstance().get("FOO");
 	}
 
+	public Version getMinimumVersion() {
+		return null;
+	}
 }

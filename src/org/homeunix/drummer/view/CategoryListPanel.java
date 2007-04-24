@@ -11,15 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.CategoryListPanelController;
-import org.homeunix.drummer.controller.ScheduleController;
 import org.homeunix.drummer.controller.SourceController;
-import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
@@ -179,22 +175,23 @@ public class CategoryListPanel extends AbstractListPanel {
 				Category c = getSelectedCategory();
 
 				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE))){
-					
-					//If there are no transactions using this source, ask if user wants to permanently delete source
-					boolean notPermanent = TransactionController.getTransactions(c).size() > 0
-					|| ScheduleController.getScheduledTransactions(c).size() > 0
-					|| c.getChildren().size() > 0
-					|| JOptionPane.showConfirmDialog(
-							CategoryListPanel.this,
-							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_CATEGORY),
-							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_CATEGORY_TITLE),
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
-
-					CategoryListPanelController.deleteCategory(notPermanent, c);
+//					//If there are no transactions using this source, ask if user wants to permanently delete source
+//					boolean notPermanent = TransactionController.getTransactions(c).size() > 0
+//					|| ScheduleController.getScheduledTransactions(c).size() > 0
+//					|| c.getChildren().size() > 0
+//					|| JOptionPane.showConfirmDialog(
+//							CategoryListPanel.this,
+//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_CATEGORY),
+//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_CATEGORY_TITLE),
+//							JOptionPane.YES_NO_OPTION,
+//							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
+//
+//					CategoryListPanelController.deleteCategory(notPermanent, c);
+					SourceController.deleteCategory(c);
 				}
 				else{
-					CategoryListPanelController.undeleteCategory(c);
+					SourceController.undeleteSource(c);
+//					CategoryListPanelController.undeleteCategory(c);
 				}
 
 				//We always want to update everything.  It's the cool thing to do.

@@ -163,12 +163,13 @@ public class DocumentManager {
 			Log.error("Error creating file.");
 		}
 
+		JOptionPane.showMessageDialog(
+				MainFrame.getInstance(),
+				Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CREATING_FILE),
+				Translate.getInstance().get(TranslateKeys.ERROR),
+				JOptionPane.ERROR_MESSAGE);
+		
 		return ReturnCodes.ERROR;
-//		DataInstance.getInstance().newDataFile(file);
-//		PrefsInstance.getInstance().getPrefs().setDataFile(file.getAbsolutePath());
-//		MainBuddiFrame.getInstance().updateContent();
-
-//		return file;
 	}
 
 	public ReturnCodes loadDataFile(File file){
@@ -182,7 +183,13 @@ public class DocumentManager {
 			returnCode = ReturnCodes.ERROR;
 		}
 
-		if (Const.DEVEL) Log.debug("Return code from DocumentManage.loadDataFile() is " + returnCode);
+		if (!returnCode.equals(ReturnCodes.SUCCESS))
+			JOptionPane.showMessageDialog(
+					MainFrame.getInstance(),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_OPENING_FILE),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
+
 		return returnCode;
 	}
 
@@ -217,6 +224,12 @@ public class DocumentManager {
 						JOptionPane.ERROR_MESSAGE);					
 			}
 		}
+		
+		JOptionPane.showMessageDialog(
+				MainFrame.getInstance(),
+				Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_OPENING_FILE),
+				Translate.getInstance().get(TranslateKeys.ERROR),
+				JOptionPane.ERROR_MESSAGE);
 
 		return ReturnCodes.ERROR;
 	}
@@ -300,6 +313,13 @@ public class DocumentManager {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		
+		if (returnCode.equals(ReturnCodes.SUCCESS))
+			JOptionPane.showMessageDialog(
+					MainFrame.getInstance(),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
+		
 		return returnCode;
 	}
 
@@ -330,11 +350,19 @@ public class DocumentManager {
 						Translate.getInstance().get(TranslateKeys.ERROR), 
 						JOptionPane.ERROR_MESSAGE);
 			}
-			
-			return returnCode;
+		}
+		else {
+			returnCode = ReturnCodes.ERROR;
 		}
 		
-		return ReturnCodes.ERROR;
+		if (!returnCode.equals(ReturnCodes.SUCCESS))
+			JOptionPane.showMessageDialog(
+					MainFrame.getInstance(),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE),
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.ERROR_MESSAGE);
+		
+		return returnCode;
 	}
 
 	public File showSaveFileDialog(File file, String title, FileFilter filter){

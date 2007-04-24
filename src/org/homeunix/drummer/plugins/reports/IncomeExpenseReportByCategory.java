@@ -21,6 +21,7 @@ import org.homeunix.drummer.util.BudgetCalculator;
 import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -161,5 +162,8 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 	
 	public boolean isEnabled() {
 		return true;
+	}
+	public Version getMinimumVersion() {
+		return new Version("2.3.4");
 	}
 }

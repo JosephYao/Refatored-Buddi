@@ -44,6 +44,7 @@ import org.homeunix.drummer.view.components.CustomDateDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.Version;
 
 
 public class PluginFactory<T extends BuddiPlugin> {
@@ -189,7 +190,13 @@ public class PluginFactory<T extends BuddiPlugin> {
 				Object o = JarLoader.getObject(jarFile, filesystemToClass(entry.getName()));
 				if (o instanceof BuddiPlugin) {
 					Log.info("Found BuddiPlugin: " + entry.getName());
-					classNames.add(entry.getName());
+					
+					Version pluginVersion = ((BuddiPlugin) o).getMinimumVersion(); 
+					if (pluginVersion == null 
+							|| pluginVersion.compareTo(new Version(Const.VERSION)) > 0) 
+						classNames.add(entry.getName());
+					else
+						Log.error("This plugin is for a newer version of Buddi.  To use it, please upgrade to version " + pluginVersion + " or later.");
 				}
 				else {
 					Log.info("Not of type BuddiPlugin: " + o);

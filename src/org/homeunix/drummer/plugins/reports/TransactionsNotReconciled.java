@@ -16,6 +16,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotReconciled implements BuddiReportPlugin {
 	public HTMLWrapper getReport(Date startDate, Date endDate) {
@@ -77,5 +78,8 @@ public class TransactionsNotReconciled implements BuddiReportPlugin {
 	
 	public boolean isEnabled() {
 		return PrefsInstance.getInstance().getPrefs().isShowAdvanced();
+	}
+	public Version getMinimumVersion() {
+		return new Version("2.3.4");
 	}
 }

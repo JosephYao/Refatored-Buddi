@@ -16,6 +16,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * @author wyatt
@@ -51,6 +52,9 @@ class BuddiPluginImpl {
 		public boolean isPromptForFile() {
 			return false;
 		}
+		public Version getMinimumVersion() {
+			return null;
+		}
 	}
 	
 	static class BuddiImportPluginImpl implements BuddiImportPlugin {
@@ -58,7 +62,9 @@ class BuddiPluginImpl {
 		public Class[] getCorrectWindows() {
 			return null;
 		}
-
+		public Version getMinimumVersion() {
+			return null;
+		}
 		public String getDescription() {
 			return null;
 		}
@@ -81,6 +87,9 @@ class BuddiPluginImpl {
 	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
 		public boolean isEnabled() {
 			return false;
+		}
+		public Version getMinimumVersion() {
+			return null;
 		}
 		public DateRangeType getDateRangeType() {
 			return null;
@@ -106,21 +115,12 @@ class BuddiPluginImpl {
 		public String getTitle() {
 			return null;
 		}
+		public Version getMinimumVersion() {
+			return null;
+		}
 		public String getDescription() {
 			return null;
 		}
-//		public List<TableCellRenderer> getTableCellRenderers() {
-//			return null;
-//		}
-//		public TreeCellRenderer getTreeCellRenderer() {
-//			return null;
-//		}
-//		public TreeTableModel getTreeTableModel(Date startDate, Date endDate) {
-//			return null;
-//		}
-//		public HTMLWrapper getHTML(Date startDate, Date endDate) {
-//			return null;
-//		}
 		public HTMLWrapper getReport(Date startDate, Date endDate) {
 			return null;
 		}
@@ -130,7 +130,9 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
-		
+		public Version getMinimumVersion() {
+			return null;
+		}
 		public void run() {
 			
 		}

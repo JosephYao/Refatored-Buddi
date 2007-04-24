@@ -4,6 +4,10 @@
 package org.homeunix.drummer.controller;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import org.homeunix.drummer.model.Account;
@@ -40,18 +44,18 @@ public class SourceController {
 	 * be undone with the undeleteSource() method. 
 	 * @param s
 	 */
-	public static void deleteSource(Source s){
-		s.setDeleted(true);
-		if (s instanceof Category) {
-			Category c = (Category) s;
-			for (Object o : c.getChildren()) {
-				if (o instanceof Category) {
-					Category child = (Category) o;
-					deleteSource(child);
-				}
-			}
-		}
-	}
+//	public static void deleteSource(Source s){
+//		s.setDeleted(true);
+//		if (s instanceof Category) {
+//			Category c = (Category) s;
+//			for (Object o : c.getChildren()) {
+//				if (o instanceof Category) {
+//					Category child = (Category) o;
+//					deleteSource(child);
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * Permanently removes the source from the model.  If the source has
@@ -70,26 +74,110 @@ public class SourceController {
 	 * was an error (including not being able to delete because of
 	 * data model sanity).
 	 */
-	public static void deleteSourcePermanent(Source s){
-		if (s instanceof Category) {
-			Category c = (Category) s;
-			if (c.getParent() != null){
-				c.getParent().getChildren().remove(c);
-			}
-			for (Object o: c.getChildren()) {
-				if (o instanceof Category){
-					Category child = (Category) o;
-					deleteSourcePermanent(child);
-				}
-			}
-			DataInstance.getInstance().getDataModel().getAllCategories().getCategories().remove(c);
+//	public static void deleteSourcePermanent(Source s){
+//		if (s instanceof Category) {
+//			Category c = (Category) s;
+//			if (c.getParent() != null){
+//				c.getParent().getChildren().remove(c);
+//			}
+//			for (Object o: c.getChildren()) {
+//				if (o instanceof Category){
+//					Category child = (Category) o;
+//					deleteSourcePermanent(child);
+//				}
+//			}
+//			DataInstance.getInstance().getDataModel().getAllCategories().getCategories().remove(c);
+//		}
+//		else if (s instanceof Account) {
+//			Account a = (Account) s;
+//			DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts().remove(a);
+//		}
+//	}
+	
+	/**
+	 * Deletes the selected category.  If possible, we will permanently
+	 * delete the category; if it is referenced from other places in 
+	 * the data model, we will only temporarily delete it.
+	 * @param c
+	 * @return true if permanently deleted, false if temporarily
+	 */
+	public static void deleteCategory(Category c){
+		List<Category> catsToDelete = new LinkedList<Category>(getCategoriesForDeletion(c));
+		
+		//We either delete all the categories permanently, or none.
+		// We run through each one and test to see if we can delete
+		// it permanently; if we find one which we cannot, we
+		// flag the list as such with permanent = false.
+		boolean permanent = true;
+		for (Category category : catsToDelete) {
+			if (TransactionController.getTransactions(category).size() > 0
+					|| ScheduleController.getScheduledTransactions(category).size() > 0)
+				permanent = false;
 		}
-		else if (s instanceof Account) {
-			Account a = (Account) s;
-			DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts().remove(a);
+		
+		//We now execute the deletion.
+		for (Category category : catsToDelete) {
+			if (permanent){
+				if (category.getParent() != null)
+					category.getParent().getChildren().remove(category);
+				DataInstance.getInstance().getDataModel().getAllCategories().getCategories().remove(category);
+			}
+			else {
+				category.setDeleted(true);
+			}
 		}
+		
+		DocumentController.saveFileSoon();
+//		
+//		//If any of these checks are true, we only temporarily delete
+//		if (TransactionController.getTransactions(c).size() > 0
+//					|| ScheduleController.getScheduledTransactions(c).size() > 0
+//					|| c.getChildren().size() > 0){
+//			c.setDeleted(true);			
+//		}
+//		//Otherwise, we can nuke it, baby!
+//		else {
+//			if (c.getParent() != null)
+//				c.getParent().getChildren().remove(c);
+//			DataInstance.getInstance().getDataModel().getAllCategories().getCategories().remove(c);
+//		}		
 	}
 	
+	/**
+	 * Returns a Set of all categories at and under the given one. 
+	 * @param c
+	 * @return
+	 */
+	private static Set<Category> getCategoriesForDeletion(Category c){
+		Set<Category> catsToDelete = new HashSet<Category>();
+		
+		catsToDelete.add(c);
+		for (Object o : c.getChildren()) {
+			if (o instanceof Category) {
+				Category child = (Category) o;
+				catsToDelete.add(child);
+				catsToDelete.addAll(getCategoriesForDeletion(child));
+			}
+		}
+
+		return catsToDelete;
+	}
+	
+	public static void deleteAccount(Account a){
+		//Check if this is being used somewhere.  If so, 
+		// we do the 'delete flag' deletion.
+		if (TransactionController.getTransactions(a).size() > 0
+				|| ScheduleController.getScheduledTransactions(a).size() > 0){
+			a.setDeleted(true);
+		}
+		//We can permanently delete this one...
+		else {
+			DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts().remove(a);
+		}
+		
+		DocumentController.saveFileSoon();
+	}
+		
 	/**
 	 * Returns all accounts in the model, sorted according to the Account comparator
 	 * @return All accounts in the currently loaded data model
@@ -126,15 +214,15 @@ public class SourceController {
 	 */
 	public static void undeleteSource(Source s){
 		s.setDeleted(false);
+		
 		if (s instanceof Category) {
 			Category c = (Category) s;
-			for (Object o : c.getChildren()) {
-				if (o instanceof Category) {
-					Category child = (Category) o;
-					undeleteSource(child);
-				}
+			if (c.getParent() != null && c.getParent().isDeleted()){
+				undeleteSource(c.getParent());
 			}
 		}
+		
+		DocumentController.saveFileSoon();
 	}
 	
 	/**
