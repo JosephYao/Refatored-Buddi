@@ -6,8 +6,9 @@
 -Moved Export to CSV plugin to buddi-plugins
 -Added MinimumVersion tag to plugins, to specify which versions of Buddi are compatible.
 -Rewrote Source deletion code, to be more user friendly and less buggy.  Beta testers: Please test this!  Use a test file for this, not your real data file!  8-)
--Fixed bug in loading code which could result in unintentional data file encryption
+-Fixed bug in loading code which could result in unintentional data file encryption.
 -Fixed bug in TransactionCellRenderer which would result in the first line's description and to / from showing up as '...'.
+-Improved code when selecting / updating transactions in the TransactionsFrame.
 
 2.3.7 (April 21 2007)
 -Rewrote transaction list renderer without HTML - now I use Graphics2D to draw the cells.  This results in faster code with fewer display problems.

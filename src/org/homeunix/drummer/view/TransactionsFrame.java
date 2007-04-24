@@ -719,28 +719,19 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			SourceController.calculateAllBalances();
 			updateAllTransactionWindows();
-//			ReportFrame.updateAllReportWindows();
-//			GraphFrame.updateAllGraphWindows();
 			MainFrame.getInstance().getAccountListPanel().updateNetWorth();
-//			MainFrame.getInstance().getCategoryListPanel().updateContent();
 
-			list.setSelectedValue(t, true);
-
-			if (isUpdate){
-				editableTransaction.setTransaction(t, true);
+			editableTransaction.setTransaction(null, true);
+			list.clearSelection();
+			
+			if (!isUpdate){
+				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 			}
-			else {
-				editableTransaction.setTransaction(null, true);
-//				list.ensureIndexIsVisible(list.getSelectedIndex());
-				list.clearSelection();
-			}
-
-			editableTransaction.setChanged(false);
-			list.ensureIndexIsVisible(list.getSelectedIndex());
 
 			disableListEvents = false;
 
 			editableTransaction.resetSelection();
+			editableTransaction.setChanged(false);
 
 			DocumentController.saveFileSoon();
 		}
@@ -789,6 +780,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				}
 
 				editableTransaction.setChanged(false);
+				
+				DocumentController.saveFileSoon();
 			}
 		}
 	}
