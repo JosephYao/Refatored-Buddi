@@ -355,6 +355,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
 				model.update();
+				list.ensureIndexIsVisible(model.getSize() - 1);
 			}
 		});
 

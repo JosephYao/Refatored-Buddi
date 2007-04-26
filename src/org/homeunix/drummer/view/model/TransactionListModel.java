@@ -160,7 +160,7 @@ public class TransactionListModel extends AbstractListModel {
 	 * @return
 	 */
 	public FilteredDynamicListModel getFilteredListModel(final Account a, final TransactionsFrame frame){
-		final FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();  
+		final FilteredDynamicListModel fdlm = new BitSetFilteredDynamicListModel();
 		fdlm.setSource(this);
 		fdlm.setFilter(new ListElementFilter(){
 			public static final long serialVersionUID = 0;

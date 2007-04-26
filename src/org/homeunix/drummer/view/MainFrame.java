@@ -180,6 +180,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 //			getInstance().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			Application.getInstance().addReopenApplicationListener(this);
 		}
+		
 //		else{
 //			getInstance().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 //		}
@@ -194,6 +195,15 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 //		
 //		//Auto save the model every 60 seconds
 //		timer.schedule(task, 60 * 1000);
+//
+//		Application.getInstance().addOpenDocumentListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				ApplicationEvent ae = (ApplicationEvent) e;
+//				File file = ae.getFile();
+//				if (Const.DEVEL) Log.debug("Opening File: " + file);
+//				DocumentManager.getInstance().loadDataFile(file);
+//			}
+//		});
 
 		return this;
 	}

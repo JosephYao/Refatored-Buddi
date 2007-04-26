@@ -56,6 +56,7 @@ import edu.stanford.ejalbert.BrowserLauncher;
 public class Buddi {
 
 	private static String workingDir;
+	private static String fileToLoad;
 
 	/**
 	 * Gets the current working directory.  This should be the same directory
@@ -109,6 +110,16 @@ public class Buddi {
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
+		
+//		Application.getApplication().addApplicationListener(new ApplicationAdapter(){
+//			@Override
+//			public void handleOpenFile(com.apple.eawt.ApplicationEvent arg0) {
+//				File file = new File(arg0.getFilename());
+//				System.out.println("Opening File: " + file);
+//				DocumentManager.getInstance().loadDataFile(file);
+//				super.handleOpenFile(arg0);
+//			}
+//		});
 
 		//Open the main window at the saved location
 		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
@@ -117,36 +128,15 @@ public class Buddi {
 		MainFrame.getInstance().openWindow(dim, point);
 
 		//Ensure that we load a data file.
-		ReturnCodes returnCode = DocumentManager.getInstance().selectDesiredDataFile();
+		ReturnCodes returnCode = DocumentManager.getInstance().selectDesiredDataFile(fileToLoad);
 		if (returnCode.equals(ReturnCodes.CANCEL)){
 			System.exit(1);
 		}
-
+		
 		//Start the initial checks
 		startVersionCheck();
 		startUpdateCheck(false);
 	}
-
-	/**
-	 * A helper method to prompt the user with three choices: New data,
-	 * Load data, or cancel (exit).
-	 *
-	 */
-//	public static void chooseDataFileSource(){
-//	DataFileWrapper dfw = DocumentManager.getInstance().chooseNewOrExistingDataFile();
-//	if (dfw == null){
-//	Log.info("User hit cancel.  Exiting.");
-//	System.exit(0);
-//	}
-//	else if (dfw.isExisting()){
-////	PrefsInstance.getInstance().getPrefs().setDataFile(null);
-//	DocumentController.loadFile(dfw.getDataFile());
-//	}
-//	else {
-////	PrefsInstance.getInstance().getPrefs().setDataFile(null);
-//	DocumentController.newFile(dfw.getDataFile());
-//	}
-//	}
 
 	/**
 	 * Main method for Buddi.  Can pass certain command line options
@@ -154,7 +144,7 @@ public class Buddi {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String help = "USAGE: java -jar Buddi.jar <options>, where options include:\n" 
+		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
@@ -171,7 +161,8 @@ public class Buddi {
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
-
+		fileToLoad = (results.getCommands().size() > 0 ? results.getCommands().get(0) : null); 
+		
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
 		}

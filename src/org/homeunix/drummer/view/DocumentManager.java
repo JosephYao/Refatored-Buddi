@@ -429,14 +429,16 @@ public class DocumentManager {
 	 * We use the following steps when deciding if we create a new
 	 * file or open an existing one:
 	 * 
-	 *  1) If the user wants to be prompted, prompt them.  If they hit 
+	 *  1) If there is a file passed in, load it.  This will allow
+	 *  you to open files initially at load time.
+	 *  2) If the user wants to be prompted, prompt them.  If they hit 
 	 *  cancel here, exit.
-	 *  2) If there is a file in Preferences, try loading that one.
-	 *  3) If there is any problem with the above, prompt the user.
-	 *  4) If the user hits cancel from here, return cancel (most
+	 *  3) If there is a file in Preferences, try loading that one.
+	 *  4) If there is any problem with the above, prompt the user.
+	 *  5) If the user hits cancel from here, return cancel (most
 	 *  likely will result in a quit from the calling code).
 	 */
-	public ReturnCodes selectDesiredDataFile(){
+	public ReturnCodes selectDesiredDataFile(String fileToLoad){
 		//Load the data model.  Depending on different options and 
 		// user choices, this may be a new one, or load an existing one.
 		File dataFile = null;
@@ -445,8 +447,13 @@ public class DocumentManager {
 		while (!returnCode.equals(ReturnCodes.SUCCESS)
 				&& !returnCode.equals(ReturnCodes.CANCEL)){
 
+			//If we passed in a data file to load, try to load it.
+			if (fileToLoad != null){
+				returnCode = DocumentController.loadFile(new File(fileToLoad));
+				fileToLoad = null;
+			}
 			//This option allows us to prompt for a new data file at startup every time
-			if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()
+			else if (PrefsInstance.getInstance().getPrefs().isPromptForFileAtStartup()
 					|| returnCode.equals(ReturnCodes.ERROR)){
 				if (Const.DEVEL) Log.debug("User requested prompt for data file at start time, or there was an error.");
 				returnCode = DocumentManager.getInstance().chooseFile();
