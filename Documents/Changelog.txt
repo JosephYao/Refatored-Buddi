@@ -6,7 +6,7 @@
 -Fixed bug where C and R were not loaded when opening an old Scheduled Transaction
 -Added console logging of errors / exceptions when loading plugins, for better debugging by third parties (Bug #1711359)
 -Fixed bug which could crash Buddi when loading a plugin from a previous version, with different methods defined in the plugin interface.
-
+-Added new sanity checks to data files to convert frequency type to correct string (Bug #1711457)
 
 2.3.8 (April 23 2007)
 -Honor C and R in scheduled transactions (bug #1705246)

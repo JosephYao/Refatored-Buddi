@@ -280,12 +280,13 @@ public class DataInstance {
 
 
 		// Once we have this loaded, we need to do some sanity checks.
-		// After a few versions, these can be phased out.
-
-		// Updates the scheduled transaction frequency type to new (2.2) version.
-		// Added December 6 2006, in version 2.1.3; we can probably
-		// remove it after version 2.4 or so...
+		// After a few versions, these can be phased out.  The dates
+		// and descriptions should be included in each group.
 		for (Schedule s : ScheduleController.getScheduledTransactions()) {
+
+			// Updates the scheduled transaction frequency type to new (2.2) version.
+			// Added December 6 2006, in version 2.1.3; we can probably
+			// remove it after version 2.4 or so...
 			if (s.getFrequencyType().equals("WEEK")){
 				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString());
 				Log.notice("Changing schedule frequency from WEEK to " + TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY + " for " + s.getScheduleName());
@@ -295,12 +296,68 @@ public class DataInstance {
 				s.setScheduleDay(s.getScheduleDay() + 1); //Before, we had the first of the month represented by 0.  Now it is 1.
 				Log.notice("Changing schedule frequency from MONTH to " + TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for " + s.getScheduleName());
 			}
+			
+			
+			//Updates to the new frequency names in 2.3.x.  Added May 2 2007,
+			// we should probably leave it in until at least version
+			// 2.8 or later.
+			if (s.getFrequencyType().equals("MONTHLY_BY_DATE")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
+				Log.notice("Changing schedule frequency from MONTHLY_BY_DATE to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("BIWEEKLY")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString());
+				Log.notice("Changing schedule frequency from BIWEEKLY to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("EVERY_DAY")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY.toString());
+				Log.notice("Changing schedule frequency from EVERY_DAY to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_EVERY_DAY + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("EVERY_WEEKDAY")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString());
+				Log.notice("Changing schedule frequency from EVERY_WEEKDAY to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_EVERY_WEEKDAY + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("MONTHLY_BY_DAY_OF_WEEK")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString());
+				Log.notice("Changing schedule frequency from MONTHLY_BY_DAY_OF_WEEK to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("MULTIPLE_MONTHS_EVERY_YEAR")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
+				Log.notice("Changing schedule frequency from MULTIPLE_MONTHS_EVERY_YEAR to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("MULTIPLE_WEEKS_EVERY_MONTH")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
+				Log.notice("Changing schedule frequency from MULTIPLE_WEEKS_EVERY_MONTH to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH + " for "
+						+ s.getScheduleName());
+			}
+			if (s.getFrequencyType().equals("WEEKLY")) {
+				s.setFrequencyType(TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY.toString());
+				Log.notice("Changing schedule frequency from WEEKLY to "
+						+ TranslateKeys.SCHEDULE_FREQUENCY_WEEKLY + " for "
+						+ s.getScheduleName());
+			}
+
+			
 			//This check is for those who have been following the Dev
 			// branch.  When you ran 2.1.3, it upgraded from MONTH
 			// to MONTHLY_BY_DATE, but it did not convert the date
 			// to the new format.  This means that if you had the date
 			// set to 1, it would try to set it to 0, which would not
 			// work.  This check will fix it.
+			// We should be able to remove this sometime around 2.6 or so.
 			if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())){
 				if (s.getScheduleDay() == 0)
 					s.setScheduleDay(1);
