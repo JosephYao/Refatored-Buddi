@@ -724,6 +724,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			editableTransaction.setTransaction(null, true);
 			list.clearSelection();
+			updateButtons();
 			
 			if (!isUpdate){
 				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
