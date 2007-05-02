@@ -86,7 +86,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 	
 	private final Vector<JCheckBox> checkBoxes = new Vector<JCheckBox>();
 	
-	private final EditableTransaction transaction;
+	private final EditableTransaction editableTransaction;
 	
 	private final CardLayout cardLayout;
 	private final JPanel cardHolder;
@@ -97,7 +97,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		okButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_OK));
 		cancelButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL));
 
-		transaction = new EditableTransaction(null);
+		editableTransaction = new EditableTransaction(null);
 
 		scheduleName = new JHintTextField(Translate.getInstance().get(TranslateKeys.SCHEDULED_ACTION_NAME));
 		
@@ -123,7 +123,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		multipleMonthsYearlyAugust = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_AUGUST.toString()));
 		multipleMonthsYearlySeptember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_SEPTEMBER.toString()));
 		multipleMonthsYearlyOctober = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_OCTOBER.toString()));
-		multipleMonthsYearlyNovember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_NOVEMEBER.toString()));
+		multipleMonthsYearlyNovember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_NOVEMBER.toString()));
 		multipleMonthsYearlyDecember = new JCheckBox(Translate.getInstance().get(TranslateKeys.SCHEDULE_MONTH_DECEMBER.toString()));
 
 		//Add all the check boxes to a vector for easy iteration 
@@ -338,7 +338,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		//Done all the fancy stuff... now just put all the panels together
 		JPanel transactionPanel = new JPanel(new BorderLayout());
 		transactionPanel.setBorder(BorderFactory.createEmptyBorder(7, 0, 10, 0));
-		transactionPanel.add(transaction, BorderLayout.NORTH);
+		transactionPanel.add(editableTransaction, BorderLayout.NORTH);
 		
 		JPanel textPanelSpacer = new JPanel(new BorderLayout());
 		
@@ -391,7 +391,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		}
 
 		updateSchedulePulldown();
-		transaction.updateContent();
+		editableTransaction.updateContent();
 		loadSchedule(schedule);
 	}
 
@@ -561,10 +561,10 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 
 		//If we're just fillinf in the transaction, we need at least
 		// amount, description, to, and from.
-		if ((transaction.getAmount() != 0)
-				&& (transaction.getDescription().length() > 0)
-				&& (transaction.getTo() != null)
-				&& (transaction.getFrom() != null)){
+		if ((editableTransaction.getAmount() != 0)
+				&& (editableTransaction.getDescription().length() > 0)
+				&& (editableTransaction.getTo() != null)
+				&& (editableTransaction.getFrom() != null)){
 			return true;
 		}
 
@@ -572,10 +572,10 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		// without the transaction being filled out.  However, if any
 		// part of the transaction is filled in, it all must be.
 		if ((message.getValue().length() > 0)
-				&& (transaction.getAmount() == 0)
-				&& (transaction.getDescription().length() == 0)
-				&& (transaction.getTo() == null)
-				&& (transaction.getFrom() == null)){
+				&& (editableTransaction.getAmount() == 0)
+				&& (editableTransaction.getDescription().length() == 0)
+				&& (editableTransaction.getTo() == null)
+				&& (editableTransaction.getFrom() == null)){
 			return true;
 		}
 
@@ -585,18 +585,18 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 	private void saveSchedule(){
 		if (this.schedule == null){
 			Transaction t = null;
-			if (transaction.getDescription() != null
-					&& transaction.getTo() != null
-					&& transaction.getFrom() != null){
+			if (editableTransaction.getDescription() != null
+					&& editableTransaction.getTo() != null
+					&& editableTransaction.getFrom() != null){
 				t = ModelFactory.eINSTANCE.createTransaction();
-				t.setAmount(transaction.getAmount());
-				t.setDescription(transaction.getDescription());
-				t.setNumber(transaction.getNumber());
-				t.setMemo(transaction.getMemo());
-				t.setTo(transaction.getTo());
-				t.setFrom(transaction.getFrom());
-				t.setCleared(transaction.isCleared());
-				t.setReconciled(transaction.isReconciled());
+				t.setAmount(editableTransaction.getAmount());
+				t.setDescription(editableTransaction.getDescription());
+				t.setNumber(editableTransaction.getNumber());
+				t.setMemo(editableTransaction.getMemo());
+				t.setTo(editableTransaction.getTo());
+				t.setFrom(editableTransaction.getFrom());
+				t.setCleared(editableTransaction.isCleared());
+				t.setReconciled(editableTransaction.isReconciled());
 			}
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
 			ScheduleController.addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
@@ -605,14 +605,14 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		else{
 			schedule.setScheduleName(scheduleName.getValue());
 			schedule.setMessage(message.getValue());
-			schedule.setAmount(transaction.getAmount());
-			schedule.setDescription(transaction.getDescription());
-			schedule.setNumber(transaction.getNumber());
-			schedule.setMemo(transaction.getMemo());
-			schedule.setTo(transaction.getTo());
-			schedule.setFrom(transaction.getFrom());
-			schedule.setCleared(transaction.isCleared());
-			schedule.setReconciled(transaction.isReconciled());
+			schedule.setAmount(editableTransaction.getAmount());
+			schedule.setDescription(editableTransaction.getDescription());
+			schedule.setNumber(editableTransaction.getNumber());
+			schedule.setMemo(editableTransaction.getMemo());
+			schedule.setTo(editableTransaction.getTo());
+			schedule.setFrom(editableTransaction.getFrom());
+			schedule.setCleared(editableTransaction.isCleared());
+			schedule.setReconciled(editableTransaction.isReconciled());
 
 			// We should not have to save this, as it cannot be modified.
 //			schedule.setStartDate(startDateChooser.getDate());
@@ -626,7 +626,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 
 	private void loadSchedule(Schedule s){
 		if (s != null){
-			transaction.updateContent();
+			editableTransaction.updateContent();
 			updateSchedulePulldown();
 
 			//Load the changeable fields, including Transaction
@@ -634,27 +634,15 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			if (s.getMessage() != null)
 				message.setValue(s.getMessage());
 
-			Transaction t = ModelFactory.eINSTANCE.createTransaction(); 
-			t.setAmount(s.getAmount());
-			if (s.getDescription() != null)
-				t.setDescription(s.getDescription());
-			if (s.getNumber() != null)
-				t.setNumber(s.getNumber());
-			if (s.getMemo() != null)
-				t.setMemo(s.getMemo());
-			if (s.getTo() != null)
-				t.setTo(s.getTo());
-			if (s.getFrom() != null)
-				t.setFrom(s.getFrom());
-			if (Const.DEVEL) Log.debug("Transaction to load: " + t);
+			Transaction t = (Transaction) s;
 
 			if (s.getDescription() != null
 					&& s.getTo() != null
 					&& s.getFrom() != null){
-				transaction.setTransaction(t, true);
+				editableTransaction.setTransaction(t, true);
 			}
 			else {
-				transaction.setVisible(false);
+				editableTransaction.setVisible(false);
 			}
 
 			//Load the schedule pulldowns, based on which type of 

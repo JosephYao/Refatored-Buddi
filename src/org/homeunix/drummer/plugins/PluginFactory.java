@@ -203,7 +203,17 @@ public class PluginFactory<T extends BuddiPlugin> {
 				}
 			}
 			catch (Exception e){
-				Log.error(e);
+				Log.warning("Exception when instantiating plugin " + entry.getName() + ": if Const.DEVEL is set, stack trace follows:");
+				if (Const.DEVEL)
+					e.printStackTrace();
+			}
+			catch (AbstractMethodError ame){				
+				Log.critical("Error when instantiating plugin " + entry.getName() + ".  This is probably due to loading a very old plugin in a new version of Buddi.  For debugging, stack trace follows:");
+				ame.printStackTrace();
+			}
+			catch (Error e){
+				Log.critical("Error when instantiating plugin " + entry.getName() + ": stack trace follows:");
+				e.printStackTrace();
 			}
 		}
 
