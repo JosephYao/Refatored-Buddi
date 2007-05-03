@@ -70,7 +70,21 @@
 		</delete>
 	</target>
 	
-	<target name="jar" depends="clean,compile">
+	<target name="jar" depends="clean,compile" description="create component jars">
+		<jar destfile="Buddi-plugin-api.jar" basedir="bin">
+		   <fileset dir="bin">
+			 <include name="net/sourceforge/buddi/api/**"/>
+			 <include name="org/homeunix/drummer/plugins/interfaces/BuddiPluginGeneric.class"/>
+		   </fileset>
+			<manifest>
+               <attribute name="Built-By" value="${user.name}"/>
+               <section name="BuddiPluginAPI">
+                   <attribute name="Title" value="BuddiPluginAPI"/>
+                   <attribute name="Version" value="2.3.9"/>
+                   <attribute name="Vendor" value="https://sourceforge.net/projects/buddi-plugins/"/>
+               </section>
+           </manifest>
+		</jar>
 		<jar destfile="Buddi-base.jar" basedir="bin" includes="**/*.class" />
 		<jar destfile="Buddi-languages.jar" basedir="Languages" includes="**/*.lang" />
 		<jar destfile="Buddi-documents.jar" basedir="Documents" includes="**/*.txt" />

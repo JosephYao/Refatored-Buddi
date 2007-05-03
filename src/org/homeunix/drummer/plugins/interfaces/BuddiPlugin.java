@@ -5,7 +5,7 @@ package org.homeunix.drummer.plugins.interfaces;
 
 import org.homeunix.thecave.moss.util.Version;
 
-public interface BuddiPlugin {
+public interface BuddiPlugin extends BuddiPluginGeneric {
 	/**
 	 * Returns the description text, as seen on the main window 
 	 * under Reports tab, or in the menu
