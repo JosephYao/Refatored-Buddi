@@ -8,6 +8,8 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
 
+import org.homeunix.thecave.moss.util.Version;
+
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
 import net.sourceforge.buddi.api.manager.UtilityManager;
@@ -26,6 +28,10 @@ class BuddiPluginAPIImpl {
 
         public void exportData(DataManager dataManager, JFrame frame, File file) {}
 
+        public Version getMinimumAPIVersion() {
+        	return null;
+        }
+        
         public boolean isMenuActive(DataManager dataManager) {
             return false;
         }
@@ -51,6 +57,10 @@ class BuddiPluginAPIImpl {
 
         public void importData(ImportManager importManager, JFrame frame, File file) {}
 
+        public Version getMinimumAPIVersion() {
+        	return null;
+        }
+        
         public boolean isMenuActive(DataManager dataManager) {
             return false;
         }

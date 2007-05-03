@@ -2,9 +2,33 @@
 <project basedir="." default="fatjar" name="Buddi">
 	<property environment="env"/>
 	
+<!--
 	<property name="BUDDI_HOME" value="/Users/wyatt/Documents/Programming/Workplace/Buddi"/>
 	<property name="FATJAR_PATH" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
-	
+-->
+
+	<property name="BUDDI_HOME"  value="${env.BUDDI_HOME}"/>
+	<property name="FATJAR_PATH"  value="${env.FATJAR_PATH}"/>
+
+	<target name="checkProperties" description="Internal target - used to verify properties point at valid files">
+		<available file="${BUDDI_HOME}" type="dir" property="BUDDI_HOME.exists"/>
+		<available file="${FATJAR_PATH}" type="file" property="FATJAR_PATH.exists"/>
+	</target>  
+
+	<target name="no.BUDDI_HOME" unless="BUDDI_HOME.exists" description="internal">
+		<fail>"BUDDI_HOME" must be defined and point to a valid directory.</fail>
+	</target>  
+
+	<target name="no.FATJAR_PATH" unless="FATJAR_PATH.exists" description="internal">
+		<fail>"FATJAR_PATH" must be defined and point to a valid jar file.</fail>
+	</target>  
+
+	<target name="checkForRequiredProperies"  description="Internal target - used to verify configuration" depends="checkProperties,no.BUDDI_HOME,no.FATJAR_PATH">
+	</target>  
+
+	<target name="init"  description="Internal target - used to set up all targets" depends="checkForRequiredProperies">
+	</target>  
+
 	<!-- Define the classpath for this build.  Needed for the jarring. -->
 	<path id="Buddi.classpath">
 		<pathelement location="bin"/>
@@ -23,15 +47,15 @@
 	</path> 
 
 	<!-- Define the tasks and associated classes for FatJar -->
-	<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+	<target depends="init,jar" name="fatjar" description="Create Fat Jar">
+		<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
+		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
 	
-	<target depends="jar" name="fatjar">
 		<fatjar.build output="Buddi.jar">
 			<fatjar.manifest mainclass="org.homeunix.drummer.Buddi"/>
 			<!-- This is the skinny jar file, just compiled below -->
@@ -58,11 +82,11 @@
 		</fatjar.build>
 	</target>
 
-	<target name="compile">
+	<target name="compile" description="Compile Buddi">
 		<javac srcdir="src" destdir="bin" classpath=""/>
 	</target>
 
-	<target name="clean">
+	<target name="clean" description="Delete component .Jars">
 		<delete>
 			<fileset dir=".">
 				<include name="*.jar"/>
@@ -70,7 +94,7 @@
 		</delete>
 	</target>
 	
-	<target name="jar" depends="clean,compile" description="create component jars">
+	<target name="jar" depends="clean,compile" description="Create component .Jars">
 		<jar destfile="Buddi-plugin-api.jar" basedir="bin">
 		   <fileset dir="bin">
 			 <include name="net/sourceforge/buddi/api/**"/>
