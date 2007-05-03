@@ -1,4 +1,4 @@
-2.3.9
+2.3.9 (May 2 2007)
 -Scroll to the bottom of the transactions list when searching (Bug #1706872)
 -Can now open data files which are passed as an argument on the command line (as done on Linux / Windows).  Still cannot open files on a Mac, as they use a different framework for opening.
 -Fixed minor translation bugs
