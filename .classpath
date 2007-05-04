@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.ecore_2.2.2.v200702010000.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Buddi_Plugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
