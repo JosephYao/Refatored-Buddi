@@ -3,6 +3,7 @@ package net.sourceforge.buddi.api.plugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiGenericAPIPlugin;
 import org.homeunix.thecave.moss.util.Version;
 
+import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.UtilityManager;
 
 public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {
@@ -22,4 +23,9 @@ public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {
      * @return
      */
     public Version getMinimumAPIVersion();
+    
+    /**
+     * Returns menu should currently be active.
+     */
+    public boolean isPluginActive(DataManager dataManager);
 }

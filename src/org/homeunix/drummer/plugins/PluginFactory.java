@@ -72,18 +72,18 @@ public class PluginFactory<T extends BuddiGenericAPIPlugin> {
 
         //Iterate through each plugin, and create a menu item for each.
         for (BuddiExportPlugin plugin : exportPlugins) {
-            boolean correctWindow = true;
-            
-            if (plugin.getCorrectWindows() != null && frame != null){
-                correctWindow = false;
-                for (Class c : plugin.getCorrectWindows()) {
-                    if (frame.getClass().equals(c)) {
-                        correctWindow = true;
-                        break;
-                    }
-                }
-            }
-            if (correctWindow){
+//            boolean correctWindow = true;
+//            
+//            if (plugin.getCorrectWindows() != null && frame != null){
+//                correctWindow = false;
+//                for (Class c : plugin.getCorrectWindows()) {
+//                    if (frame.getClass().equals(c)) {
+//                        correctWindow = true;
+//                        break;
+//                    }
+//                }
+//            }
+            if (plugin.isPluginActive()){
                 JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
                 //This is where the user's custom code is actually run
@@ -191,18 +191,18 @@ public class PluginFactory<T extends BuddiGenericAPIPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiImportPlugin plugin : importPlugins) {
-			boolean correctWindow = true;
-			
-			if (plugin.getCorrectWindows() != null && frame != null){
-				correctWindow = false;
-				for (Class c : plugin.getCorrectWindows()) {
-					if (frame.getClass().equals(c)) {
-						correctWindow = true;
-						break;
-					}
-				}
-			}
-			if (correctWindow){
+//			boolean correctWindow = true;
+//			
+//			if (plugin.getCorrectWindows() != null && frame != null){
+//				correctWindow = false;
+//				for (Class c : plugin.getCorrectWindows()) {
+//					if (frame.getClass().equals(c)) {
+//						correctWindow = true;
+//						break;
+//					}
+//				}
+//			}
+			if (plugin.isPluginActive()){
 				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
 				//This is where the user's custom code is actually run

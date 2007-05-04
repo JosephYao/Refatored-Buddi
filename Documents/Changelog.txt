@@ -1,6 +1,7 @@
 2.3.10
 -Removed Translate.get(TranslateKeys) from API
 -Moved BuddiMenuPlugin.isMenuActive() to BuddiPlugin.isPluginActive(), to allow more than just one type of plugins to report their state.  Currently this is not used, but it will be.
+-Added support for user.dir system property (allows override of working directory, used for Unix launcher)
 
 2.3.9 (May 2 2007)
 -Scroll to the bottom of the transactions list when searching (Bug #1706872)

@@ -69,7 +69,7 @@ public class Buddi {
 		if (workingDir == null){
 			workingDir = "";
 		}
-
+		
 		return workingDir;
 	}
 
@@ -191,7 +191,12 @@ public class Buddi {
 		// us to use relative paths for such things as running from
 		// USB drives, from remote shares (which would not always have
 		// the same path), etc.
-		workingDir = new File("").getAbsolutePath() + File.separator;
+		if (System.getProperty("user.dir").length() > 0)
+			workingDir = new File(System.getProperty("user.dir")).getAbsolutePath();
+		
+		//If we did not set it via user.dir, we set it here.
+		if (workingDir.length() == 0)
+			workingDir = new File("").getAbsolutePath() + File.separator;
 		Log.notice("Set working directory to " + workingDir);
 
 		//Load the correct Look and Feel

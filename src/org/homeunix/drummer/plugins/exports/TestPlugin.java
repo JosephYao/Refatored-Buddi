@@ -9,7 +9,6 @@ import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
-import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -28,12 +27,12 @@ public class TestPlugin implements BuddiExportPlugin {
 		System.out.println(Translate.getInstance().get("FOO"));
 	}
 
-	public Class[] getCorrectWindows() {
-		// TODO Auto-generated method stub
-		Class[] c = new Class[1];
-		c[0] = TransactionsFrame.class;
-		return c;
-	}
+//	public Class[] getCorrectWindows() {
+//		// TODO Auto-generated method stub
+//		Class[] c = new Class[1];
+//		c[0] = TransactionsFrame.class;
+//		return c;
+//	}
 
 	public String getFileChooserTitle() {
 		return "Title";
