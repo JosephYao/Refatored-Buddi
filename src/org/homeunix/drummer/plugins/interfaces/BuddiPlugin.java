@@ -5,7 +5,7 @@ package org.homeunix.drummer.plugins.interfaces;
 
 import org.homeunix.thecave.moss.util.Version;
 
-public interface BuddiPlugin extends BuddiPluginGeneric {
+public interface BuddiPlugin extends BuddiGenericAPIPlugin {
 	/**
 	 * Returns the description text, as seen on the main window 
 	 * under Reports tab, or in the menu
@@ -23,4 +23,12 @@ public interface BuddiPlugin extends BuddiPluginGeneric {
 	 * containing the minimum version number. 
 	 */
 	public Version getMinimumVersion();
+	
+	/**
+	 * Should this plugin be activated?  Most people can just
+	 * put true here; if there is some logic which determines if this
+	 * is to be shown or not, though, you can add it here.
+	 * @return
+	 */
+	public boolean isPluginActive();
 }

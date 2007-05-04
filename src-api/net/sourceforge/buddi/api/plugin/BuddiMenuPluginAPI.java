@@ -7,5 +7,5 @@ public interface BuddiMenuPluginAPI extends BuddiFilePluginAPI {
     /**
      * Returns menu should currently be active.
      */
-    public boolean isMenuActive(DataManager dataManager);
+    public boolean isPluginActive(DataManager dataManager);
 }

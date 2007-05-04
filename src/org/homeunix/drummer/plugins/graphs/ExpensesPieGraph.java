@@ -125,7 +125,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		return TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH.toString();
 	}
 
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	public Version getMinimumVersion() {

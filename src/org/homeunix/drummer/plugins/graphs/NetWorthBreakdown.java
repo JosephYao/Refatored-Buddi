@@ -122,7 +122,7 @@ public class NetWorthBreakdown implements BuddiGraphPlugin {
 		return TranslateKeys.GRAPH_DESCRIPTION_NET_WORTH_BREAKDOWN.toString();
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	public Version getMinimumVersion() {

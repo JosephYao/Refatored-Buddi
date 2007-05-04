@@ -1,5 +1,5 @@
 package org.homeunix.drummer.plugins.interfaces;
 
-public interface BuddiPluginGeneric {
+public interface BuddiGenericAPIPlugin {
 
 }

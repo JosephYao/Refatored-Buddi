@@ -160,7 +160,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		return TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	public Version getMinimumVersion() {

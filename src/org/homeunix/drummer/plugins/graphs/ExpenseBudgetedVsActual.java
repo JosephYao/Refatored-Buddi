@@ -132,7 +132,7 @@ public class ExpenseBudgetedVsActual implements BuddiGraphPlugin {
 		return TranslateKeys.GRAPH_DESCRIPTION_EXPENSE_ACTUAL_BUDGET.toString();
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	

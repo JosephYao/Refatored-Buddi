@@ -55,6 +55,9 @@ class BuddiPluginImpl {
 		public Version getMinimumVersion() {
 			return null;
 		}
+		public boolean isPluginActive() {
+			return true;
+		}
 	}
 	
 	static class BuddiImportPluginImpl implements BuddiImportPlugin {
@@ -80,12 +83,14 @@ class BuddiPluginImpl {
 		public boolean isPromptForFile() {
 			return false;
 		}
-
+		public boolean isPluginActive() {
+			return true;
+		}
 		public void importData(AbstractFrame frame, File file) {}
 	}
 	
 	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
-		public boolean isEnabled() {
+		public boolean isPluginActive() {
 			return false;
 		}
 		public Version getMinimumVersion() {
@@ -106,7 +111,7 @@ class BuddiPluginImpl {
 	}
 	
 	static class BuddiReportPluginImpl implements BuddiReportPlugin {
-		public boolean isEnabled() {
+		public boolean isPluginActive() {
 			return false;
 		}
 		public DateRangeType getDateRangeType() {
@@ -135,6 +140,9 @@ class BuddiPluginImpl {
 		}
 		public void run() {
 			
+		}
+		public boolean isPluginActive() {
+			return true;
 		}
 	}
 }

@@ -96,7 +96,7 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 		return Translate.getInstance().get(TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_DESCRIPTION);
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	public Version getMinimumVersion() {

@@ -1,11 +1,11 @@
 package net.sourceforge.buddi.api.plugin;
 
-import org.homeunix.drummer.plugins.interfaces.BuddiPluginGeneric;
+import org.homeunix.drummer.plugins.interfaces.BuddiGenericAPIPlugin;
 import org.homeunix.thecave.moss.util.Version;
 
 import net.sourceforge.buddi.api.manager.UtilityManager;
 
-public interface BuddiPluginAPI extends BuddiPluginGeneric {
+public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {
 
     /**
      * Returns the description text, as seen on the main window 

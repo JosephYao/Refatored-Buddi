@@ -51,6 +51,9 @@ class BuddiPluginAPIImpl {
         public String getDescription(UtilityManager utilityManager) {
             return null;
         }
+        public boolean isPluginActive(DataManager dataManager) {
+        	return false;
+        }
 	}
 	
 	static class BuddiImportPluginAPIImpl implements BuddiImportPluginAPI {
@@ -79,6 +82,9 @@ class BuddiPluginAPIImpl {
 
         public String getDescription(UtilityManager utilityManager) {
             return null;
+        }
+        public boolean isPluginActive(DataManager dataManager) {
+        	return false;
         }
 	}
 	

@@ -1,7 +1,5 @@
 package net.sourceforge.buddi.api.manager;
 
-import net.sourceforge.buddi.api.translate.TranslateKeys;
-
 public interface UtilityManager {
     /**
      * Returns the translation, based on the given string.
@@ -9,13 +7,6 @@ public interface UtilityManager {
      * @return The translation in currently loaded language
      */
     public String translate(String key);
-
-    /**
-     * Returns the translation, based on the given TranslateKey.
-     * @param key The key to translate
-     * @return The translation in currently loaded language
-     */
-    public String translate(TranslateKeys key);
     
     /**
      * Converts a long value (in cents: 10000 == $100.00) to a string

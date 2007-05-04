@@ -125,7 +125,7 @@ public class IncomePieGraph implements BuddiGraphPlugin {
 		return TranslateKeys.GRAPH_DESCRIPTION_INCOME_PIE_GRAPH.toString();
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return true;
 	}
 	public Version getMinimumVersion() {

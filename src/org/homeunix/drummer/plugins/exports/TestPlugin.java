@@ -55,4 +55,8 @@ public class TestPlugin implements BuddiExportPlugin {
 	public Version getMinimumVersion() {
 		return null;
 	}
+	
+	public boolean isPluginActive() {
+		return true;
+	}
 }

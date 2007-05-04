@@ -19,13 +19,5 @@ public interface BuddiPanelPlugin extends BuddiPlugin {
 	 * used in plugins of type Export or Import.
 	 * @return
 	 */
-	public String getTitle();
-	
-	/**
-	 * Should this plugin be added to the panel?  Most people can just
-	 * put true here; if there is some logic which determines if this
-	 * is to be shown or not, though, you can add it here.
-	 * @return
-	 */
-	public boolean isEnabled();
+	public String getTitle();	
 }

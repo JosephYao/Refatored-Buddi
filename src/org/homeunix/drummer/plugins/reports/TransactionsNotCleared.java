@@ -76,7 +76,7 @@ public class TransactionsNotCleared implements BuddiReportPlugin {
 		return TranslateKeys.REPORT_TITLE_TRANSACTIONS_NOT_CLEARED.toString();
 	}
 	
-	public boolean isEnabled() {
+	public boolean isPluginActive() {
 		return PrefsInstance.getInstance().getPrefs().isShowAdvanced();
 	}
 	public Version getMinimumVersion() {

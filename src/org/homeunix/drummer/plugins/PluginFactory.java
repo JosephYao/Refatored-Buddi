@@ -46,7 +46,7 @@ import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiPluginGeneric;
+import org.homeunix.drummer.plugins.interfaces.BuddiGenericAPIPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.Plugin;
@@ -62,7 +62,7 @@ import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 
 
-public class PluginFactory<T extends BuddiPluginGeneric> {
+public class PluginFactory<T extends BuddiGenericAPIPlugin> {
 
     protected static List<JScreenMenuItem> getExportMenuItemsNonAPI(final AbstractFrame frame){
         List<JScreenMenuItem> exportMenuItems = new LinkedList<JScreenMenuItem>();
@@ -256,7 +256,7 @@ public class PluginFactory<T extends BuddiPluginGeneric> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiPanelPlugin plugin : panelPlugins) {
-			if (plugin.isEnabled()){
+			if (plugin.isPluginActive()){
 				JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 				//Select the correct options for the dropdown, based on the plugin
@@ -319,7 +319,7 @@ public class PluginFactory<T extends BuddiPluginGeneric> {
                     Log.info("Found BuddiPluginAPI: " + entry.getName());
                     // TODO: should probably check versions here as well
                 }
-                else if (o instanceof BuddiPluginGeneric) {
+                else if (o instanceof BuddiGenericAPIPlugin) {
                     classNames.add(entry.getName());
                     Log.info("Found BuddiPluginGeneric: " + entry.getName());
                     // TODO: should probably check versions here as well
@@ -494,7 +494,7 @@ public class PluginFactory<T extends BuddiPluginGeneric> {
     private static void addExportAPIActionListener(final BuddiExportPluginAPI plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
         DataManager dataManager = createDataManager(frame);
 
-        boolean flag = plugin.isMenuActive(dataManager);
+        boolean flag = plugin.isPluginActive(dataManager);
         menuItem.setEnabled(flag);
 
         menuItem.addActionListener(new ActionListener(){
@@ -572,7 +572,7 @@ public class PluginFactory<T extends BuddiPluginGeneric> {
     private static void addImportAPIActionListener(final BuddiImportPluginAPI plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
         DataManager dataManager = createDataManager(frame);
 
-        boolean flag = plugin.isMenuActive(dataManager);
+        boolean flag = plugin.isPluginActive(dataManager);
         menuItem.setEnabled(flag);
 
         menuItem.addActionListener(new ActionListener(){
