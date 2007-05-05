@@ -164,7 +164,7 @@ public class Const {
 		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
 		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime",
 		
-//		"org.homeunix.thecave.plugins.export.qif.ExportQIF"
+		"org.homeunix.thecave.plugins.export.qif.ExportQIF"
 		
 //		"org.homeunix.drummer.plugins.exports.ExportHTML",
 //		"org.homeunix.drummer.plugins.exports.ExportCSV"

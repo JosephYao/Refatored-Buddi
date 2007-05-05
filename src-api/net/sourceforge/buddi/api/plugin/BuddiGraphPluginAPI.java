@@ -5,23 +5,18 @@
  */
 package net.sourceforge.buddi.api.plugin;
 
-import java.util.Date;
+import net.sourceforge.buddi.api.manager.DataManager;
 
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
 
-public interface BuddiGraphPluginAPI extends BuddiPanelPluginAPI {
+public abstract class BuddiGraphPluginAPI implements BuddiGraphPlugin, BuddiPluginAPI {
+	protected DataManager dataManager;
+
+	public void setDataManager(DataManager dataManager){
+		this.dataManager = dataManager;
+	}
 	
-	/**
-	 * Returns an in-memory version of the printed page, as an HTML
-	 * file.  An HTMLWrapper is just a small class containing a string
-	 * with the HTML text in it, and a map of String to BufferedImage
-	 * containing all the images referenced in the HTML, by name.
-	 * 
-	 * See HTMLWrapper for more information on what is needed. 
-	 * @param startDate Start of report period
-	 * @param endDate End of report period
-	 * @return
-	 */
-	public HTMLWrapper getGraph(Date startDate, Date endDate);
-
+	public DataManager getDataManager(){
+		return dataManager;
+	}
 }

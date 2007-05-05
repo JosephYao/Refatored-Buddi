@@ -3,19 +3,7 @@ package net.sourceforge.buddi.api.plugin;
 import org.homeunix.drummer.plugins.interfaces.BuddiGenericAPIPlugin;
 import org.homeunix.thecave.moss.util.Version;
 
-import net.sourceforge.buddi.api.manager.DataManager;
-import net.sourceforge.buddi.api.manager.UtilityManager;
-
-public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {
-
-    /**
-     * Returns the description text, as seen on the main window 
-     * under Reports tab, or in the menu
-     * @return
-     */
-    public String getDescription(UtilityManager utilityManager);
-    
-    
+public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {    
     /**
      * Returns the minimum version of the API.  When loading, 
      * we should not load if the implemented API version is 
@@ -24,8 +12,8 @@ public interface BuddiPluginAPI extends BuddiGenericAPIPlugin {
      */
     public Version getMinimumAPIVersion();
     
-    /**
-     * Returns menu should currently be active.
-     */
-    public boolean isPluginActive(DataManager dataManager);
+//    /**
+//     * Returns menu should currently be active.
+//     */
+//    public boolean isPluginActive(DataManager dataManager);
 }
