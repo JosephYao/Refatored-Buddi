@@ -206,7 +206,7 @@ public class PrefsInstance {
 			//Create sane defaults for all the properties...
 			
 			//Prompt for language
-			File languageLocation = new File(Const.LANGUAGE_FOLDER);
+			File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
 			if (languageLocation.exists() && languageLocation.isDirectory()){
 				Set<String> languageSet = new HashSet<String>();
 				for (File f: languageLocation.listFiles()){

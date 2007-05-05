@@ -156,17 +156,17 @@ public class LanguageEditor extends JDialog {
 		localizedProps.clear();
 
 		//English
-		String englishFileName = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
+		String englishFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
 		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
 
 		//Base Language (e.g., Espanol)
-		String baseFileName = Const.LANGUAGE_FOLDER + File.separator + baseLanguage + Const.LANGUAGE_EXTENSION;
+		String baseFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + baseLanguage + Const.LANGUAGE_EXTENSION;
 		String baseResource = "/" + baseLanguage + Const.LANGUAGE_EXTENSION;
 
 		String localizedFileName, localizedResource;
 		if (localeName.length() > 0){
 			//Localized Language (e.g., Espanol_(MX))
-			localizedFileName = Const.LANGUAGE_FOLDER + File.separator + baseLanguage + "_(" + localeName + ")" + Const.LANGUAGE_EXTENSION;
+			localizedFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + baseLanguage + "_(" + localeName + ")" + Const.LANGUAGE_EXTENSION;
 			localizedResource = "/" + baseLanguage + "_(" + localeName + ")" + Const.LANGUAGE_EXTENSION;
 		}
 		else {

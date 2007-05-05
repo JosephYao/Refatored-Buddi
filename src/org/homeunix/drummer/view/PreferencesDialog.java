@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -452,7 +453,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			languages.add(language);			
 		}
 
-		File languageLocation = new File(Const.LANGUAGE_FOLDER);
+		File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
 		if (languageLocation.exists() && languageLocation.isDirectory()){
 			for (File f: languageLocation.listFiles())
 				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))

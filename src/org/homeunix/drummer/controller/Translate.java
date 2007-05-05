@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
@@ -54,15 +55,15 @@ public class Translate {
 	 */
 	public Translate loadLanguage(String language){
 		//English
-		String englishFileName = Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
+		String englishFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
 		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
 		
 		//Base Language (e.g., Espanol)
-		String baseFileName = Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
+		String baseFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
 		String baseResource = "/" + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
 
 		//Localized Language (e.g., Espanol_(MX))
-		String localizedFileName = Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
+		String localizedFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
 		String localizedResource = "/" + language + Const.LANGUAGE_EXTENSION;
 		
 		try{
@@ -121,10 +122,6 @@ public class Translate {
 		if (localeLanguage == null) localeLanguage = "";
 		if (localeCountry == null) localeCountry = "";
 		Locale.setDefault(new Locale(localeLanguage, localeCountry));
-		
-//		for (Object o : translations.keySet()) {
-//			existingKeys.add(o.toString());
-//		}
 		
 		return this;
 	}
