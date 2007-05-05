@@ -8,11 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.thecave.moss.gui.JStatusDialog;

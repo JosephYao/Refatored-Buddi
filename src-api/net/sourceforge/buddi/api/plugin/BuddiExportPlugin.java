@@ -3,7 +3,7 @@
  * 
  * The interface which can be extended to create export files
  */
-package org.homeunix.drummer.plugins.interfaces;
+package net.sourceforge.buddi.api.plugin;
 
 import java.io.File;
 

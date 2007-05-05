@@ -1,7 +1,7 @@
 /*
  * Created on Oct 3, 2006 by wyatt
  */
-package org.homeunix.drummer.plugins.interfaces;
+package net.sourceforge.buddi.api.plugin;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 

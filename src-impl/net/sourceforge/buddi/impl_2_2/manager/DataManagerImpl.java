@@ -19,6 +19,7 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.thecave.moss.util.Version;
 
 public class DataManagerImpl extends UtilityManagerImpl implements DataManager {
 
@@ -134,4 +135,7 @@ public class DataManagerImpl extends UtilityManagerImpl implements DataManager {
         return immutableTransactionList;
     }
 
+    public Version getAPIVersion(){
+    	return new Version("2.2");
+    }
 }

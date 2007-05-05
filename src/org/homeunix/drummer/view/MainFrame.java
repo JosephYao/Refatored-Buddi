@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import net.roydesign.app.Application;
+import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
@@ -30,7 +31,6 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.plugins.PluginFactory;
-import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.FormatterWrapper;

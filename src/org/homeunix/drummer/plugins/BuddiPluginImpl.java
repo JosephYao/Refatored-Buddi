@@ -8,12 +8,14 @@ import java.util.Date;
 
 import javax.swing.filechooser.FileFilter;
 
+import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
+
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
+import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
@@ -52,10 +54,10 @@ class BuddiPluginImpl {
 		public boolean isPromptForFile() {
 			return false;
 		}
-		public Version getMinimumVersion() {
+		public Version getAPIVersion() {
 			return null;
 		}
-		public boolean isPluginActive() {
+		public boolean isPluginActive(DocumentManager documentManager) {
 			return true;
 		}
 	}
@@ -65,7 +67,7 @@ class BuddiPluginImpl {
 		public Class[] getCorrectWindows() {
 			return null;
 		}
-		public Version getMinimumVersion() {
+		public Version getAPIVersion() {
 			return null;
 		}
 		public String getDescription() {
@@ -83,17 +85,17 @@ class BuddiPluginImpl {
 		public boolean isPromptForFile() {
 			return false;
 		}
-		public boolean isPluginActive() {
+		public boolean isPluginActive(DocumentManager documentManager) {
 			return true;
 		}
 		public void importData(AbstractFrame frame, File file) {}
 	}
 	
 	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
-		public boolean isPluginActive() {
+		public boolean isPluginActive(DocumentManager documentManager) {
 			return false;
 		}
-		public Version getMinimumVersion() {
+		public Version getAPIVersion() {
 			return null;
 		}
 		public DateRangeType getDateRangeType() {
@@ -111,7 +113,7 @@ class BuddiPluginImpl {
 	}
 	
 	static class BuddiReportPluginImpl implements BuddiReportPlugin {
-		public boolean isPluginActive() {
+		public boolean isPluginActive(DocumentManager documentManager) {
 			return false;
 		}
 		public DateRangeType getDateRangeType() {
@@ -120,7 +122,7 @@ class BuddiPluginImpl {
 		public String getTitle() {
 			return null;
 		}
-		public Version getMinimumVersion() {
+		public Version getAPIVersion() {
 			return null;
 		}
 		public String getDescription() {
@@ -135,13 +137,13 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
-		public Version getMinimumVersion() {
+		public Version getAPIVersion() {
 			return null;
 		}
 		public void run() {
 			
 		}
-		public boolean isPluginActive() {
+		public boolean isPluginActive(DocumentManager documentManager) {
 			return true;
 		}
 	}

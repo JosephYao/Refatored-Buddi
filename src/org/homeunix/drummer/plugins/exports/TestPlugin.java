@@ -7,8 +7,10 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
+
 import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
+import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -51,11 +53,11 @@ public class TestPlugin implements BuddiExportPlugin {
 		return Translate.getInstance().get("FOO");
 	}
 
-	public Version getMinimumVersion() {
+	public Version getAPIVersion() {
 		return null;
 	}
 	
-	public boolean isPluginActive() {
+	public boolean isPluginActive(DocumentManager documentManager) {
 		return true;
 	}
 }

@@ -18,6 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.roydesign.ui.JScreenMenuItem;
+import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.SourceController;
@@ -29,13 +36,6 @@ import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiGraphPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiImportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiReportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiRunnablePluginImpl;
-import org.homeunix.drummer.plugins.interfaces.BuddiExportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiGraphPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiImportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiPanelPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
-import org.homeunix.drummer.plugins.interfaces.BuddiRunnablePlugin;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.DocumentManager;
@@ -44,7 +44,6 @@ import org.homeunix.drummer.view.components.CustomDateDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.Version;
 
 
 public class PluginFactory<T extends BuddiPlugin> {
@@ -68,13 +67,14 @@ public class PluginFactory<T extends BuddiPlugin> {
 //					}
 //				}
 //			}
-			if (plugin.isPluginActive()){
+			//TODO Add a listener to check if the plugin is active
+//			if (plugin.isPluginActive()){
 				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
 				//This is where the user's custom code is actually run
 				addExportActionListener(plugin, menuItem, frame);
 				exportMenuItems.add(menuItem);
-			}
+//			}
 		}
 
 		return exportMenuItems;
@@ -112,13 +112,14 @@ public class PluginFactory<T extends BuddiPlugin> {
 //					}
 //				}
 //			}
-			if (plugin.isPluginActive()){
+			//TODO Add a listener to check if the plugin is active
+//			if (plugin.isPluginActive()){
 				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
 
 				//This is where the user's custom code is actually run
 				addImportActionListener(plugin, menuItem, frame);
 				importMenuItems.add(menuItem);
-			}
+//			}
 		}
 
 		return importMenuItems;
@@ -140,7 +141,8 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiPanelPlugin plugin : panelPlugins) {
-			if (plugin.isPluginActive()){
+			//TODO Add a listener to check if the plugin is active
+//			if (plugin.isPluginActive()){
 				JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 				//Select the correct options for the dropdown, based on the plugin
@@ -165,7 +167,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 				panel.add(dateSelect);
 
 				panelItems.add(panel);
-			}
+//			}
 		}
 
 		return panelItems;
@@ -191,12 +193,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 				if (o instanceof BuddiPlugin) {
 					Log.info("Found BuddiPlugin: " + entry.getName());
 					
-					Version pluginVersion = ((BuddiPlugin) o).getMinimumVersion(); 
-					if (pluginVersion == null 
-							|| pluginVersion.compareTo(new Version(Const.VERSION)) > 0) 
+//					BuddiPlugin plugin = (BuddiPlugin) o;
+//					Version pluginAPIVersion = plugin.getAPIVersion(); 
+					//TODO Check version
+//					if (pluginAPIVersion == null 
+//							|| (pluginAPIVersion.getMajor() == plugin.getAPIVersion().getMajor()
+//									&& pluginAPIVersion.getMinor() == plugin.getAPIVersion().getMinor())) 
 						classNames.add(entry.getName());
-					else
-						Log.error("This plugin is for a newer version of Buddi.  To use it, please upgrade to version " + pluginVersion + " or later.");
+//					else
+//						Log.error("This plugin is for the " + pluginAPIVersion + " branch of Buddi; you are running.  To use it, please upgrade to version " + pluginAPIVersion + " or later.");
 				}
 				else {
 					Log.info("Not of type BuddiPlugin: " + o);

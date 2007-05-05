@@ -11,14 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.plugins.interfaces.BuddiReportPlugin;
 import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Version;
@@ -96,10 +98,11 @@ public class IncomeExpenseReportByDescription implements BuddiReportPlugin {
 		return Translate.getInstance().get(TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_DESCRIPTION);
 	}
 	
-	public boolean isPluginActive() {
+	public boolean isPluginActive(DocumentManager documentManager) {
 		return true;
 	}
-	public Version getMinimumVersion() {
-		return new Version("2.3.4");
+	public Version getAPIVersion() {
+//		return new Version("2.3.4");
+		return null;
 	}
 }
