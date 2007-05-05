@@ -14,6 +14,8 @@ import net.roydesign.app.Application;
 import net.roydesign.app.QuitJMenuItem;
 import net.roydesign.ui.JScreenMenu;
 import net.roydesign.ui.JScreenMenuItem;
+import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
+import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
@@ -91,12 +93,16 @@ public class FileMenu extends JScreenMenu {
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 
 		//Get all the export and import plugins
-		for (JScreenMenuItem menuItem : PluginFactory.getExportMenuItems(frame)) {
+		for (BuddiExportPlugin menuItem : PluginFactory.getExportMenuItems(frame)) {
 			exports.add(menuItem);
+			if (MainFrame.getInstance() != null)
+				MainFrame.getInstance().getLoadedPlugins().addPlugin(menuItem);
 		}
 
-		for (JScreenMenuItem menuItem : PluginFactory.getImportMenuItems(frame)) {
+		for (BuddiImportPlugin menuItem : PluginFactory.getImportMenuItems(frame)) {
 			imports.add(menuItem);
+			if (MainFrame.getInstance() != null)
+				MainFrame.getInstance().getLoadedPlugins().addPlugin(menuItem);
 		}
 
 		// Add the menus to the main menu.

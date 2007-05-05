@@ -6,6 +6,8 @@ import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableCategory;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 
+import org.homeunix.thecave.moss.util.Version;
+
 public interface DataManager extends UtilityManager {
 
     /**
@@ -52,4 +54,9 @@ public interface DataManager extends UtilityManager {
      * @return ImmutableTransaction Collection of all transactions for specified account
      */
     public Collection<ImmutableTransaction> getTransactionsForAccount(ImmutableAccount account);
+    
+    /**
+     * @return Version The version of the API (should only be Major.Minor)
+     */
+    public Version getAPIVersion();
 }

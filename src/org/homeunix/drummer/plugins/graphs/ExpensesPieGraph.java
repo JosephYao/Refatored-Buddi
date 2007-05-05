@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -22,7 +23,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Log;
@@ -31,7 +31,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
-public class ExpensesPieGraph implements BuddiGraphPlugin {
+public class ExpensesPieGraph extends BuddiGraphPlugin {
+	
+	public static final long serialVersionUID = 0;
 	
 	public HTMLWrapper getGraph(Date startDate, Date endDate) {
 		DefaultPieDataset pieData = new DefaultPieDataset();
@@ -127,7 +129,7 @@ public class ExpensesPieGraph implements BuddiGraphPlugin {
 		return TranslateKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH.toString();
 	}
 
-	public boolean isPluginActive(DocumentManager documentManager) {
+	public boolean isPluginActive(DataManager dataManager) {
 		return true;
 	}
 	public Version getAPIVersion() {

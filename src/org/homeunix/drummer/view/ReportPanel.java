@@ -3,7 +3,7 @@
  */
 package org.homeunix.drummer.view;
 
-import javax.swing.JPanel;
+import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
 
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
@@ -15,8 +15,9 @@ public class ReportPanel extends AbstractInfomationPanel {
 	public StandardContainer init() {
 		super.init();
 		
-		for (JPanel panel : PluginFactory.getReportPanelLaunchers()) {
+		for (BuddiPanelPlugin panel : PluginFactory.getReportPanelLaunchers()) {
 			pluginsPanel.add(panel);
+			MainFrame.getInstance().getLoadedPlugins().addPlugin(panel);
 		}
 
 		return this;

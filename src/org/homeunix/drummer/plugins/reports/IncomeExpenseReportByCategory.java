@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -20,7 +21,6 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BudgetCalculator;
 import org.homeunix.drummer.util.FormatterWrapper;
-import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Version;
@@ -33,7 +33,9 @@ import org.homeunix.thecave.moss.util.Version;
  * @author wyatt
  *
  */
-public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
+public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
+	
+	public static final long serialVersionUID = 0;
 	
 	public HTMLWrapper getReport(Date startDate, Date endDate) {
 		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
@@ -162,7 +164,7 @@ public class IncomeExpenseReportByCategory implements BuddiReportPlugin {
 		return TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
 	}
 	
-	public boolean isPluginActive(DocumentManager documentManager) {
+	public boolean isPluginActive(DataManager dataManager) {
 		return true;
 	}
 	public Version getAPIVersion() {

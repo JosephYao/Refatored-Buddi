@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -21,7 +22,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -33,8 +33,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class NetWorthOverTime implements BuddiGraphPlugin {
+public class NetWorthOverTime extends BuddiGraphPlugin {
 
+	public static final long serialVersionUID = 0;
+	
 	public HTMLWrapper getGraph(Date startDate, Date endDate) {
 		final int NUM_SAMPLES = 12;
 		
@@ -148,7 +150,7 @@ public class NetWorthOverTime implements BuddiGraphPlugin {
 		return TranslateKeys.NETWORTH_LINE_GRAPH.toString();
 	}
 	
-	public boolean isPluginActive(DocumentManager documentManager) {
+	public boolean isPluginActive(DataManager dataManager) {
 		return true;
 	}
 	public Version getAPIVersion() {

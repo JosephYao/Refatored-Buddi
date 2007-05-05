@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.swing.filechooser.FileFilter;
 
+import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.ImportManager;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
@@ -15,7 +17,6 @@ import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
@@ -29,8 +30,10 @@ import org.homeunix.thecave.moss.util.Version;
  */
 class BuddiPluginImpl {
 
-	static class BuddiExportPluginImpl implements BuddiExportPlugin {
+	static class BuddiExportPluginImpl extends BuddiExportPlugin {
 
+		public static final long serialVersionUID = 0;
+		
 		public void exportData(AbstractFrame frame) {}
 
 		public Class[] getCorrectWindows() {
@@ -41,7 +44,7 @@ class BuddiPluginImpl {
 			return null;
 		}
 
-		public void exportData(AbstractFrame frame, File file) {}
+		public void exportData(DataManager dataManager, File file) {}
 
 		public String getFileChooserTitle() {
 			return null;
@@ -57,13 +60,15 @@ class BuddiPluginImpl {
 		public Version getAPIVersion() {
 			return null;
 		}
-		public boolean isPluginActive(DocumentManager documentManager) {
+		public boolean isPluginActive(DataManager dataManager) {
 			return true;
 		}
 	}
 	
-	static class BuddiImportPluginImpl implements BuddiImportPlugin {
+	static class BuddiImportPluginImpl extends BuddiImportPlugin {
 
+		public static final long serialVersionUID = 0;
+		
 		public Class[] getCorrectWindows() {
 			return null;
 		}
@@ -85,14 +90,17 @@ class BuddiPluginImpl {
 		public boolean isPromptForFile() {
 			return false;
 		}
-		public boolean isPluginActive(DocumentManager documentManager) {
+		public boolean isPluginActive(DataManager dataManager) {
 			return true;
 		}
-		public void importData(AbstractFrame frame, File file) {}
+		public void importData(ImportManager importManager, File file) {}
 	}
 	
-	static class BuddiGraphPluginImpl implements BuddiGraphPlugin {
-		public boolean isPluginActive(DocumentManager documentManager) {
+	static class BuddiGraphPluginImpl extends BuddiGraphPlugin {
+		
+		public static final long serialVersionUID = 0;
+		
+		public boolean isPluginActive(DataManager dataManager) {
 			return false;
 		}
 		public Version getAPIVersion() {
@@ -112,8 +120,11 @@ class BuddiPluginImpl {
 		}
 	}
 	
-	static class BuddiReportPluginImpl implements BuddiReportPlugin {
-		public boolean isPluginActive(DocumentManager documentManager) {
+	static class BuddiReportPluginImpl extends BuddiReportPlugin {
+		
+		public static final long serialVersionUID = 0;
+		
+		public boolean isPluginActive(DataManager dataManager) {
 			return false;
 		}
 		public DateRangeType getDateRangeType() {
@@ -143,7 +154,7 @@ class BuddiPluginImpl {
 		public void run() {
 			
 		}
-		public boolean isPluginActive(DocumentManager documentManager) {
+		public boolean isPluginActive(DataManager dataManager) {
 			return true;
 		}
 	}

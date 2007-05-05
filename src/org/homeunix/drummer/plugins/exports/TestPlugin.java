@@ -7,11 +7,10 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
 
 import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.view.DocumentManager;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -23,9 +22,11 @@ import org.homeunix.thecave.moss.util.Version;
  * @author wyatt
  *
  */
-public class TestPlugin implements BuddiExportPlugin {
+public class TestPlugin extends BuddiExportPlugin {
 
-	public void exportData(AbstractFrame frame, File file) {
+	public static final long serialVersionUID = 0;
+	
+	public void exportData(DataManager dataManager, File file) {
 		System.out.println(Translate.getInstance().get("FOO"));
 	}
 
@@ -57,7 +58,7 @@ public class TestPlugin implements BuddiExportPlugin {
 		return null;
 	}
 	
-	public boolean isPluginActive(DocumentManager documentManager) {
+	public boolean isPluginActive(DataManager dataManager) {
 		return true;
 	}
 }

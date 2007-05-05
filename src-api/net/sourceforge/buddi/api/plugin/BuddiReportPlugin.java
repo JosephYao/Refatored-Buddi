@@ -9,21 +9,7 @@ import java.util.Date;
 
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 
-public interface BuddiReportPlugin extends BuddiPanelPlugin {
-	
-//	public AbstractTableModel getReportData(Date startDate, Date endDate);
-	
-	/**
-	 * Returns the data model used to display the report.
-	 * @param startDate Start of report period
-	 * @param endDate End of report period
-	 * @return
-	 */
-//	public TreeTableModel getTreeTableModel(Date startDate, Date endDate);
-//			
-//	public List<TableCellRenderer> getTableCellRenderers();
-//	
-//	public TreeCellRenderer getTreeCellRenderer();
+public abstract class BuddiReportPlugin extends BuddiPanelPlugin {
 	/**
 	 * Returns an in-memory version of the printed page, as an HTML
 	 * file.  An HTMLWrapper is just a small class containing a string
@@ -35,5 +21,5 @@ public interface BuddiReportPlugin extends BuddiPanelPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public HTMLWrapper getReport(Date startDate, Date endDate);
+	public abstract HTMLWrapper getReport(Date startDate, Date endDate);
 }

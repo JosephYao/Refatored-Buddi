@@ -168,7 +168,7 @@ public class Const {
 		
 //		"org.homeunix.drummer.plugins.exports.ExportHTML",
 //		"org.homeunix.drummer.plugins.exports.ExportCSV"
-//		"org.homeunix.drummer.plugins.exports.TestPlugin"
+		"org.homeunix.drummer.plugins.exports.TestPlugin"
 	};
 		
 	private Const(){}

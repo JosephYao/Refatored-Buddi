@@ -3,21 +3,24 @@
  */
 package net.sourceforge.buddi.api.plugin;
 
+import javax.swing.JPanel;
+
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 
-public interface BuddiPanelPlugin extends BuddiPlugin {
+public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin {
+	
+	public static final long serialVersionUID = 0;
+	
 	/**
 	 * Returns the type of date range to use in the combo box.
 	 * Only used for plugin types Report or Graph; not used in Import
 	 * or Export.
 	 * @return
 	 */
-	public DateRangeType getDateRangeType();
+	public abstract DateRangeType getDateRangeType();
 	
 	/**
-	 * Returns the title to appear in the JFrame title bar.  Not
-	 * used in plugins of type Export or Import.
-	 * @return
+	 * @return The title to appear in report.
 	 */
-	public String getTitle();	
+	public abstract String getTitle();	
 }

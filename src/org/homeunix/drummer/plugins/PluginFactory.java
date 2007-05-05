@@ -15,9 +15,7 @@ import java.util.jar.JarEntry;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import net.roydesign.ui.JScreenMenuItem;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
@@ -27,7 +25,6 @@ import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
 import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
@@ -38,46 +35,55 @@ import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiReportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiRunnablePluginImpl;
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.drummer.view.AbstractBuddiFrame;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
 
 
 public class PluginFactory<T extends BuddiPlugin> {
 
-	public static List<JScreenMenuItem> getExportMenuItems(final AbstractFrame frame){
-		List<JScreenMenuItem> exportMenuItems = new LinkedList<JScreenMenuItem>();
+	public static List<BuddiExportPlugin> getExportMenuItems(final AbstractBuddiFrame frame){
+//		List<BuddiExportPlugin> exportMenuItems = new LinkedList<BuddiExportPlugin>();
 
 		PluginFactory<BuddiExportPlugin> factory = new PluginFactory<BuddiExportPlugin>();
 		List<BuddiExportPlugin> exportPlugins = factory.getPluginObjects(BuddiExportPluginImpl.class);
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiExportPlugin plugin : exportPlugins) {
-//			boolean correctWindow = true;
-//			
-//			if (plugin.getCorrectWindows() != null && frame != null){
-//				correctWindow = false;
-//				for (Class c : plugin.getCorrectWindows()) {
-//					if (frame.getClass().equals(c)) {
-//						correctWindow = true;
-//						break;
-//					}
-//				}
-//			}
-			//TODO Add a listener to check if the plugin is active
-//			if (plugin.isPluginActive()){
-				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
+			
+			//This is where the user's custom code is actually run
+			final BuddiExportPlugin finalPlugin = plugin;
+			plugin.setText(plugin.getDescription());
+			plugin.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					File file = null;
 
-				//This is where the user's custom code is actually run
-				addExportActionListener(plugin, menuItem, frame);
-				exportMenuItems.add(menuItem);
-//			}
+					if (finalPlugin.isPromptForFile()){
+						file = DocumentManager.getInstance().showSaveFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
+					}
+
+					if (!finalPlugin.isPromptForFile() || file != null){
+						try{
+							finalPlugin.exportData(frame.getDataManager(), file);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+						catch (Error e){
+							Log.error(e);
+						}
+					}
+					else{
+						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+					}
+				}
+			});
 		}
 
-		return exportMenuItems;
+		return exportPlugins;
 	}
 
 	/**
@@ -92,49 +98,87 @@ public class PluginFactory<T extends BuddiPlugin> {
 		return runnablePlugins;
 	}
 
-
-	public static List<JScreenMenuItem> getImportMenuItems(final AbstractFrame frame){
-		List<JScreenMenuItem> importMenuItems = new LinkedList<JScreenMenuItem>();
-
+	public static List<BuddiImportPlugin> getImportMenuItems(final AbstractBuddiFrame frame){
 		PluginFactory<BuddiImportPlugin> factory = new PluginFactory<BuddiImportPlugin>();
 		List<BuddiImportPlugin> importPlugins = factory.getPluginObjects(BuddiImportPluginImpl.class);
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiImportPlugin plugin : importPlugins) {
-//			boolean correctWindow = true;
-//			
-//			if (plugin.getCorrectWindows() != null && frame != null){
-//				correctWindow = false;
-//				for (Class c : plugin.getCorrectWindows()) {
-//					if (frame.getClass().equals(c)) {
-//						correctWindow = true;
-//						break;
-//					}
-//				}
-//			}
-			//TODO Add a listener to check if the plugin is active
-//			if (plugin.isPluginActive()){
-				JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
+			
+			//This is where the user's custom code is actually run
+			final BuddiImportPlugin finalPlugin = plugin;
+			plugin.setText(plugin.getDescription());
+			plugin.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					File file = null;
 
-				//This is where the user's custom code is actually run
-				addImportActionListener(plugin, menuItem, frame);
-				importMenuItems.add(menuItem);
-//			}
+					if (finalPlugin.isPromptForFile()){
+						file = DocumentManager.getInstance().showSaveFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
+					}
+
+					if (!finalPlugin.isPromptForFile() || file != null){
+						try{
+							finalPlugin.importData(frame.getImportManager(), file);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+						catch (Error e){
+							Log.error(e);
+						}
+					}
+					else{
+						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+					}
+				}
+			});
 		}
 
-		return importMenuItems;
+		return importPlugins;
 	}
+	
+//	public static List<JScreenMenuItem> getImportMenuItems(final AbstractFrame frame){
+//		List<JScreenMenuItem> importMenuItems = new LinkedList<JScreenMenuItem>();
+//
+//		PluginFactory<BuddiImportPlugin> factory = new PluginFactory<BuddiImportPlugin>();
+//		List<BuddiImportPlugin> importPlugins = factory.getPluginObjects(BuddiImportPluginImpl.class);
+//
+//		//Iterate through each plugin, and create a menu item for each.
+//		for (BuddiImportPlugin plugin : importPlugins) {
+////			boolean correctWindow = true;
+//
+////			if (plugin.getCorrectWindows() != null && frame != null){
+////			correctWindow = false;
+////			for (Class c : plugin.getCorrectWindows()) {
+////			if (frame.getClass().equals(c)) {
+////			correctWindow = true;
+////			break;
+////			}
+////			}
+////			}
+//			//TODO Add a listener to check if the plugin is active
+////			if (plugin.isPluginActive()){
+//			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
+//
+//			//This is where the user's custom code is actually run
+//			addImportActionListener(plugin, menuItem, frame);
+//			importMenuItems.add(menuItem);
+////			}
+//		}
+//
+//		return importMenuItems;
+//	}
 
-	public static List<JPanel> getReportPanelLaunchers(){
+	public static List<BuddiPanelPlugin> getReportPanelLaunchers(){
 		return getPanelLaunchers(BuddiReportPluginImpl.class);
 	}
 
-	public static List<JPanel> getGraphPanelLaunchers(){
+	public static List<BuddiPanelPlugin> getGraphPanelLaunchers(){
 		return getPanelLaunchers(BuddiGraphPluginImpl.class);
 	}
 
-	private static List<JPanel> getPanelLaunchers(Class<? extends BuddiPanelPlugin> pluginType){
-		List<JPanel> panelItems = new LinkedList<JPanel>();
+	private static List<BuddiPanelPlugin> getPanelLaunchers(Class<? extends BuddiPanelPlugin> pluginType){
+		List<BuddiPanelPlugin> panelItems = new LinkedList<BuddiPanelPlugin>();
 
 		PluginFactory<BuddiPanelPlugin> factory = new PluginFactory<BuddiPanelPlugin>();
 		List<BuddiPanelPlugin> panelPlugins = factory.getPluginObjects(pluginType);
@@ -143,30 +187,30 @@ public class PluginFactory<T extends BuddiPlugin> {
 		for (BuddiPanelPlugin plugin : panelPlugins) {
 			//TODO Add a listener to check if the plugin is active
 //			if (plugin.isPluginActive()){
-				JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			plugin.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-				//Select the correct options for the dropdown, based on the plugin
-				Vector<DateChoice> dateChoices;
-				if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL))
-					dateChoices = BuddiPluginHelper.getInterval();
-				else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
-					dateChoices = BuddiPluginHelper.getStartOnly();
-				else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
-					dateChoices = BuddiPluginHelper.getEndOnly();
-				else
-					dateChoices = new Vector<DateChoice>();
+			//Select the correct options for the dropdown, based on the plugin
+			Vector<DateChoice> dateChoices;
+			if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL))
+				dateChoices = BuddiPluginHelper.getInterval();
+			else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY))
+				dateChoices = BuddiPluginHelper.getStartOnly();
+			else if (plugin.getDateRangeType().equals(DateRangeType.END_ONLY))
+				dateChoices = BuddiPluginHelper.getEndOnly();
+			else
+				dateChoices = new Vector<DateChoice>();
 
-				//Get the combobox 
-				final JComboBox dateSelect = new JComboBox(dateChoices);
-				dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
+			//Get the combobox 
+			final JComboBox dateSelect = new JComboBox(dateChoices);
+			dateSelect.setPreferredSize(new Dimension(Math.max(150, dateSelect.getPreferredSize().width), dateSelect.getPreferredSize().height));
 
-				//Add the launchers
-				addPanelActionListener(plugin, dateSelect);
+			//Add the launchers
+			addPanelActionListener(plugin, dateSelect);
 
-				panel.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
-				panel.add(dateSelect);
+			plugin.add(new JLabel(Translate.getInstance().get(plugin.getDescription())));
+			plugin.add(dateSelect);
 
-				panelItems.add(panel);
+			panelItems.add(plugin);
 //			}
 		}
 
@@ -192,16 +236,16 @@ public class PluginFactory<T extends BuddiPlugin> {
 				Object o = JarLoader.getObject(jarFile, filesystemToClass(entry.getName()));
 				if (o instanceof BuddiPlugin) {
 					Log.info("Found BuddiPlugin: " + entry.getName());
-					
+
 //					BuddiPlugin plugin = (BuddiPlugin) o;
 //					Version pluginAPIVersion = plugin.getAPIVersion(); 
 					//TODO Check version
 //					if (pluginAPIVersion == null 
-//							|| (pluginAPIVersion.getMajor() == plugin.getAPIVersion().getMajor()
-//									&& pluginAPIVersion.getMinor() == plugin.getAPIVersion().getMinor())) 
-						classNames.add(entry.getName());
+//					|| (pluginAPIVersion.getMajor() == plugin.getAPIVersion().getMajor()
+//					&& pluginAPIVersion.getMinor() == plugin.getAPIVersion().getMinor())) 
+					classNames.add(entry.getName());
 //					else
-//						Log.error("This plugin is for the " + pluginAPIVersion + " branch of Buddi; you are running.  To use it, please upgrade to version " + pluginAPIVersion + " or later.");
+//					Log.error("This plugin is for the " + pluginAPIVersion + " branch of Buddi; you are running.  To use it, please upgrade to version " + pluginAPIVersion + " or later.");
 				}
 				else {
 					Log.info("Not of type BuddiPlugin: " + o);
@@ -318,76 +362,43 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 	}
 
-	private static void addExportActionListener(final BuddiExportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
-		menuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (plugin instanceof BuddiExportPlugin){
-					BuddiExportPlugin exportPlugin = (BuddiExportPlugin) plugin;
-					File file = null;
+//	private static void addExportActionListener(final BuddiExportPlugin plugin){
+//
+//	}
 
-					if (exportPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().showSaveFileDialog(null, exportPlugin.getFileChooserTitle(), exportPlugin.getFileFilter());
-					}
-
-					if (!exportPlugin.isPromptForFile() || file != null){
-						try{
-							((BuddiExportPlugin) plugin).exportData(frame, file);
-						}
-						catch (Exception e){
-							Log.error(e);
-						}
-						catch (Error e){
-							Log.error(e);
-						}
-					}
-					else{
-						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
-					}
-
-					//Update all the accounts with the new totals, etc.  
-					// Probably not needed for Import plugins, but 
-					// it's a pretty cheap operation anyway, and it 
-					// is better safe than sorry...
-//					DataInstance.getInstance().calculateAllBalances();
+//	private static void addImportActionListener(final BuddiImportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
+//		menuItem.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent arg0) {
+//				if (plugin instanceof BuddiImportPlugin){
+//					BuddiImportPlugin importPlugin = (BuddiImportPlugin) plugin;
+//					File file = null;
+//
+//					if (importPlugin.isPromptForFile()){
+//						file = DocumentManager.getInstance().showLoadFileDialog(null, importPlugin.getFileChooserTitle(), importPlugin.getFileFilter());
+//					}
+//
+//					if (!importPlugin.isPromptForFile() || file != null){
+//						try {
+//							((BuddiImportPlugin) plugin).importData(frame, file);
+//						}
+//						catch (Exception e){
+//							Log.error(e);
+//						}
+//						catch (Error e){
+//							Log.error(e);
+//						}
+//					}
+//					else {
+//						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
+//					}
+//
+//					//Update all the accounts with the new totals, etc.
+//					SourceController.calculateAllBalances();
 //					MainFrame.getInstance().getAccountListPanel().updateContent();
-				}
-			}
-		});
-	}
-
-	private static void addImportActionListener(final BuddiImportPlugin plugin, JScreenMenuItem menuItem, final AbstractFrame frame){
-		menuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				if (plugin instanceof BuddiImportPlugin){
-					BuddiImportPlugin importPlugin = (BuddiImportPlugin) plugin;
-					File file = null;
-
-					if (importPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().showLoadFileDialog(null, importPlugin.getFileChooserTitle(), importPlugin.getFileFilter());
-					}
-
-					if (!importPlugin.isPromptForFile() || file != null){
-						try {
-							((BuddiImportPlugin) plugin).importData(frame, file);
-						}
-						catch (Exception e){
-							Log.error(e);
-						}
-						catch (Error e){
-							Log.error(e);
-						}
-					}
-					else {
-						Log.warning("Plugin did not run - plugin requires valid file, which was not selected.");
-					}
-
-					//Update all the accounts with the new totals, etc.
-					SourceController.calculateAllBalances();
-					MainFrame.getInstance().getAccountListPanel().updateContent();
-				}
-			}
-		});
-	}
+//				}
+//			}
+//		});
+//	}
 
 	private static void addPanelActionListener(final BuddiPanelPlugin plugin, final JComboBox dateSelect){
 		dateSelect.addActionListener(new ActionListener(){

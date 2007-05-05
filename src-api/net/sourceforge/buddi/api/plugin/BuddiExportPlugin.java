@@ -7,10 +7,10 @@ package net.sourceforge.buddi.api.plugin;
 
 import java.io.File;
 
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import net.sourceforge.buddi.api.manager.DataManager;
 
+public abstract class BuddiExportPlugin extends BuddiMenuPlugin {
 
-public interface BuddiExportPlugin extends BuddiMenuPlugin {
 	/**
 	 * Exports data as required.  The implementor chooses where to send
 	 * the file (it is reccomended to open a JFileChooser, but
@@ -22,5 +22,6 @@ public interface BuddiExportPlugin extends BuddiMenuPlugin {
 	 * If you specify isPromptForFile() == false, this
 	 * string will be null.
 	 */
-	public void exportData(AbstractFrame frame, File file);
+	public abstract void exportData(DataManager dataManager, File file);
+	
 }

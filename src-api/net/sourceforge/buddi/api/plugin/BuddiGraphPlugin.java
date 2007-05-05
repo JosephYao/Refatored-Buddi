@@ -9,7 +9,7 @@ import java.util.Date;
 
 import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 
-public interface BuddiGraphPlugin extends BuddiPanelPlugin {
+public abstract class BuddiGraphPlugin extends BuddiPanelPlugin {
 	
 	/**
 	 * Returns an in-memory version of the printed page, as an HTML
@@ -22,6 +22,6 @@ public interface BuddiGraphPlugin extends BuddiPanelPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public HTMLWrapper getGraph(Date startDate, Date endDate);
+	public abstract HTMLWrapper getGraph(Date startDate, Date endDate);
 
 }

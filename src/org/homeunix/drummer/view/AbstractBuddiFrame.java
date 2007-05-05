@@ -7,6 +7,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.ImportManager;
+
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
@@ -33,4 +36,8 @@ public abstract class AbstractBuddiFrame extends AbstractFrame implements Action
 		this.setJMenuBar(new MainMenu(this));
 
 	}
+	
+	public abstract DataManager getDataManager();
+	
+	public abstract ImportManager getImportManager();
 }

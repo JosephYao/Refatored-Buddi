@@ -35,6 +35,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.ImportManager;
+import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.SourceController;
@@ -797,4 +801,14 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //	preloader = new TransactionsFramePreLoader();
 //	return preloader;
 //	}
+	
+	@Override
+	public DataManager getDataManager() {
+		return getImportManager();
+	}
+	
+	@Override
+	public ImportManager getImportManager() {
+		return new ImportManagerImpl(null, null, (Transaction) list.getSelectedValue());
+	}
 }

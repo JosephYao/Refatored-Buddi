@@ -20,7 +20,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import net.roydesign.app.Application;
+import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.ImportManager;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
+import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
@@ -30,6 +33,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
+import org.homeunix.drummer.plugins.LoadedPlugins;
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
@@ -49,14 +53,16 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	private final ReportPanel reportPanel;
 	private final GraphPanel graphPanel;
 	private final JTabbedPane tabs;
+	private final LoadedPlugins loadedPlugins;
 		
-	protected MainFrame(){
+	private MainFrame(){
 		tabs = new JTabbedPane();
 		
 		accountListPanel = new AccountListPanel();
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
-		graphPanel = new GraphPanel();	
+		graphPanel = new GraphPanel();
+		loadedPlugins = new LoadedPlugins();
 	}
 	
 	public AccountListPanel getAccountListPanel(){
@@ -338,5 +344,24 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		sb.append(HTMLExportHelper.getHtmlFooter());
 		
 		return HTMLExportHelper.createHTML("main", new HTMLWrapper(sb.toString(), null));
+	}
+	
+	public LoadedPlugins getLoadedPlugins(){
+		return loadedPlugins;
+	}
+
+	@Override
+	public DataManager getDataManager() {
+		return getImportManager();
+	}
+	
+	@Override
+	public ImportManager getImportManager() {
+		if (tabs.getSelectedComponent().equals(accountListPanel))
+			return new ImportManagerImpl(getAccountListPanel().getSelectedAccount(), null, null);
+		else if (tabs.getSelectedComponent().equals(categoryListPanel))
+			return new ImportManagerImpl(null, getCategoryListPanel().getSelectedCategory(), null);
+
+		return new ImportManagerImpl(null, null, null);
 	}
 }

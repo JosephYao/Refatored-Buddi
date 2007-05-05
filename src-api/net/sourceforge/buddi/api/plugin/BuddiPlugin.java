@@ -3,7 +3,8 @@
  */
 package net.sourceforge.buddi.api.plugin;
 
-import org.homeunix.drummer.view.DocumentManager;
+import net.sourceforge.buddi.api.manager.DataManager;
+
 import org.homeunix.thecave.moss.util.Version;
 
 public interface BuddiPlugin {
@@ -30,8 +31,8 @@ public interface BuddiPlugin {
 	 * Should this plugin be activated?  Most people can just
 	 * put true here; if there is some logic which determines if this
 	 * is to be shown or not, though, you can add it here.
-	 * @param documentManager The document manager associated with this plugin
+	 * @param dataManager The data manager associated with this plugin
 	 * @return
 	 */
-	public boolean isPluginActive(DocumentManager documentManager);
+	public boolean isPluginActive(DataManager dataManager);
 }
