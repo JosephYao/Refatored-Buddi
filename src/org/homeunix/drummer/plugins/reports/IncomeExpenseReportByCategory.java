@@ -8,8 +8,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableCategoryImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -20,9 +25,6 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BudgetCalculator;
-import org.homeunix.drummer.util.FormatterWrapper;
-import org.homeunix.drummer.view.HTMLExportHelper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -37,8 +39,8 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(Date startDate, Date endDate) {
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		Vector<Category> categories = SourceController.getCategories();
 		Collections.sort(categories, new Comparator<Category>(){
@@ -100,13 +102,13 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(Translate.getInstance().get(c.toString()));
-				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, actual) ? " red'>" : "'>"));
-				sb.append(FormatterWrapper.getFormattedCurrency(actual));
-				sb.append("</td><td class='right" + (FormatterWrapper.isRed(c, budgeted) ? " red'>" : "'>"));
-				sb.append(FormatterWrapper.getFormattedCurrency(budgeted));				
+				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'>" : "'>"));
+				sb.append(APICommonFormatter.getFormattedCurrency(actual));
+				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), budgeted) ? " red'>" : "'>"));
+				sb.append(APICommonFormatter.getFormattedCurrency(budgeted));				
 				long difference = actual - budgeted;
 				sb.append("</td><td class='right" + (difference > 0 ^ c.isIncome() ? " red'>" : "'>"));
-				sb.append(FormatterWrapper.getFormattedCurrency(difference, difference < 0));				
+				sb.append(APICommonFormatter.getFormattedCurrency(difference, difference < 0));				
 				sb.append("</td></tr>\n");
 			}
 		}
@@ -114,12 +116,12 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.TOTAL));
 		sb.append("</th><th class='right" + (totalActual < 0 ? " red'>" : "'>"));
-		sb.append(FormatterWrapper.getFormattedCurrency(totalActual));
+		sb.append(APICommonFormatter.getFormattedCurrency(totalActual));
 		sb.append("</th><th class='right" + (totalBudgeted < 0 ? " red'>" : "'>"));
-		sb.append(FormatterWrapper.getFormattedCurrency(totalBudgeted));
+		sb.append(APICommonFormatter.getFormattedCurrency(totalBudgeted));
 		long totalDifference = totalActual - totalBudgeted; 
 		sb.append("</th><th class='right" + (totalDifference < 0 ? " red'>" : "'>"));
-		sb.append(FormatterWrapper.getFormattedCurrency(totalDifference));				
+		sb.append(APICommonFormatter.getFormattedCurrency(totalDifference));				
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
@@ -137,17 +139,17 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append(Translate.getInstance().get(c.toString()));
 				sb.append("</h2>\n");
 
-				sb.append(HTMLExportHelper.getHtmlTransactionHeader());
+				sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : transactions) {
-					sb.append(HTMLExportHelper.getHtmlTransactionRow(t, c));
+					sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), new ImmutableCategoryImpl(c)));
 				}
 
-				sb.append(HTMLExportHelper.getHtmlTransactionFooter());
+				sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
 			}
 		}
 		
-		sb.append(HTMLExportHelper.getHtmlFooter());
+		sb.append(APICommonHTMLHelper.getHtmlFooter());
 	
 		return new HTMLWrapper(sb.toString(), null);
 	}

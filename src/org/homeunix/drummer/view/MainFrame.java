@@ -20,8 +20,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import net.roydesign.app.Application;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
 
@@ -37,8 +39,7 @@ import org.homeunix.drummer.plugins.LoadedPlugins;
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.util.FormatterWrapper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
@@ -265,7 +266,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	}
 	
 	public File exportToHTML() throws IOException {
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(TranslateKeys.ACCOUNT_AND_CATEGORY_SUMMARY.toString(), null, null, null);
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(TranslateKeys.ACCOUNT_AND_CATEGORY_SUMMARY.toString(), null, null, null);
 		sb.append("<h3>").append(Translate.getInstance().get(TranslateKeys.ACCOUNT)).append("</h3>\n\n");
 		sb.append("<table class='main'>\n");
 		
@@ -297,10 +298,10 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		sb.append("</tr>\n");
 		
 		for (Account account : accounts) {
-			sb.append("<tr><td" + (FormatterWrapper.isRed(account) ? " class='red'>" : ">"));
+			sb.append("<tr><td" + (BuddiInternalFormatter.isRed(account) ? " class='red'>" : ">"));
 			sb.append(Translate.getInstance().get(account.getName()));
-			sb.append("</td><td" + (FormatterWrapper.isRed(account, account.getBalance()) ? " class='red'>" : ">"));
-			sb.append(FormatterWrapper.getFormattedCurrency(account.getBalance())).append("</td>");
+			sb.append("</td><td" + (BuddiInternalFormatter.isRed(account, account.getBalance()) ? " class='red'>" : ">"));
+			sb.append(BuddiInternalFormatter.getFormattedCurrency(account.getBalance())).append("</td>");
 			sb.append("</tr>\n");
 		}
 		
@@ -332,18 +333,18 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		sb.append("</tr>");
 		
 		for (Category category : categories) {
-			sb.append("<tr><td" + (FormatterWrapper.isRed(category) ? " class='red'>" : ">"));
+			sb.append("<tr><td" + (BuddiInternalFormatter.isRed(category) ? " class='red'>" : ">"));
 			sb.append(Translate.getInstance().get(category.toString()));
-			sb.append("</td><td" + (FormatterWrapper.isRed(category, category.getBudgetedAmount()) ? " class='red'>" : ">"));
-			sb.append(FormatterWrapper.getFormattedCurrency(category.getBudgetedAmount(), category.isIncome())).append("</td>");
+			sb.append("</td><td" + (BuddiInternalFormatter.isRed(category, category.getBudgetedAmount()) ? " class='red'>" : ">"));
+			sb.append(BuddiInternalFormatter.getFormattedCurrency(category.getBudgetedAmount(), category.isIncome())).append("</td>");
 			sb.append("</tr>\n");
 		}
 		
 		sb.append("</table>\n\n");
 		
-		sb.append(HTMLExportHelper.getHtmlFooter());
+		sb.append(APICommonHTMLHelper.getHtmlFooter());
 		
-		return HTMLExportHelper.createHTML("main", new HTMLWrapper(sb.toString(), null));
+		return APICommonHTMLHelper.createHTML("main", new HTMLWrapper(sb.toString(), null));
 	}
 	
 	public LoadedPlugins getLoadedPlugins(){

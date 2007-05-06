@@ -11,8 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
@@ -20,9 +24,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.util.FormatterWrapper;
-import org.homeunix.drummer.view.HTMLExportHelper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -33,8 +34,8 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(Date startDate, Date endDate) {
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
 		
@@ -67,16 +68,16 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 				
 				sb.append(total < 0 ? "<h2 class='red'>" : "<h2>");
 				sb.append(s).append(": ");
-				sb.append(FormatterWrapper.getFormattedCurrency(total, total < 0));
+				sb.append(APICommonFormatter.getFormattedCurrency(total, total < 0));
 				sb.append("</h2>\n");
 
-				sb.append(HTMLExportHelper.getHtmlTransactionHeader());
+				sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : descriptions.get(s)) {
-					sb.append(HTMLExportHelper.getHtmlTransactionRow(t, null));
+					sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));
 				}
 
-				sb.append(HTMLExportHelper.getHtmlTransactionFooter());
+				sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
 			}
 		}
 		

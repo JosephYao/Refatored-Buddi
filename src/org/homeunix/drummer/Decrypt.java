@@ -3,6 +3,9 @@
  */
 package org.homeunix.drummer;
 
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +16,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.model.util.AESCryptoCipher;
+import org.homeunix.drummer.view.components.JDocumentDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 
 public class Decrypt {
 
@@ -51,10 +56,36 @@ public class Decrypt {
 			InputStream plaintext = cipher.decrypt(new FileInputStream(file));
 			BufferedReader in = new BufferedReader(new InputStreamReader(plaintext));
 
+			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = in.readLine()) != null){
-				System.out.println(line);
+				sb.append(line).append("\n");
 			}
+			
+			JDocumentDialog dialog = new JDocumentDialog(sb.toString()){
+				public static final long serialVersionUID = 0;
+				@Override
+				public StandardContainer init() {
+					super.init();
+					
+					this.addWindowListener(new WindowAdapter(){
+						@Override
+						public void windowClosing(WindowEvent e) {
+							System.exit(0);
+						}
+					});
+					
+					return this;
+				}
+				
+				@Override
+				public Object closeWindow() {
+					super.closeWindow();
+					System.exit(0);
+					return null;
+				}	
+			};
+			dialog.openWindow(new Dimension(640, 480), null);
 		}
 	}
 

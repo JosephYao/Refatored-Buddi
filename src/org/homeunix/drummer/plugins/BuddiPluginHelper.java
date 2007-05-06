@@ -8,13 +8,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.view.HTMLExportHelper;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.thecave.moss.gui.JStatusDialog;
 import org.homeunix.thecave.moss.util.DateUtil;
@@ -36,22 +37,34 @@ public class BuddiPluginHelper {
 			public Object construct() {
 				if (plugin instanceof BuddiReportPlugin){
 					try {
-						File index = HTMLExportHelper.createHTML("report", ((BuddiReportPlugin) plugin).getReport(startDate, endDate));
+						File index = APICommonHTMLHelper.createHTML(
+								"report", 
+								((BuddiReportPlugin) plugin).getReport(
+										MainFrame.getInstance().getDataManager(),
+										startDate, 
+										endDate));
 						BrowserLauncher bl = new BrowserLauncher(null);
 						bl.openURLinBrowser(index.toURI().toURL().toString());
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
+						if (Const.DEVEL) e.printStackTrace();
 					}
 				}
 				else if (plugin instanceof BuddiGraphPlugin){
 					try {
-						File index = HTMLExportHelper.createHTML("graph", ((BuddiGraphPlugin) plugin).getGraph(startDate, endDate));
+						File index = APICommonHTMLHelper.createHTML(
+								"graph", 
+								((BuddiGraphPlugin) plugin).getGraph(
+										MainFrame.getInstance().getDataManager(),
+										startDate, 
+										endDate));
 						BrowserLauncher bl = new BrowserLauncher(null);
 						bl.openURLinBrowser(index.toURI().toURL().toString());
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
+						if (Const.DEVEL) e.printStackTrace();
 					}
 				}
 				else {

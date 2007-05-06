@@ -6,24 +6,31 @@ package org.homeunix.drummer.view.components;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 
-public class JDocumentDialog extends JDialog {
+public class JDocumentDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;
 	
+	private final JTextArea docArea;
+	
 	public JDocumentDialog(String document) {
-		JTextArea docArea = new JTextArea(document);
+		super((Frame) null);
+		docArea = new JTextArea(document);
+	}
+	
+	public StandardContainer init() {
 		docArea.setWrapStyleWord(true);
 		docArea.setLineWrap(true);
 		docArea.setEditable(false);
@@ -36,7 +43,7 @@ public class JDocumentDialog extends JDialog {
 		done.setPreferredSize(new Dimension(Math.max(100, done.getPreferredSize().width), done.getPreferredSize().height));
 		done.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				JDocumentDialog.this.setVisible(false);
+				JDocumentDialog.this.closeWindow();
 			}
 		});
 		
@@ -45,12 +52,19 @@ public class JDocumentDialog extends JDialog {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(done);
 		
-		this.setPreferredSize(new Dimension(640, 480));
 		this.setLayout(new BorderLayout());
 		this.add(docScroller, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
-		this.pack();
-		this.setLocationRelativeTo(MainFrame.getInstance());
-		this.setVisible(true);
+
+		
+		return this;
+	}
+	
+	public StandardContainer updateButtons() {
+		return this;
+	}
+	
+	public StandardContainer updateContent() {
+		return this;
 	}
 }

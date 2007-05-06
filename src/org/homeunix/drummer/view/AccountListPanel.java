@@ -16,6 +16,8 @@ import java.util.Vector;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
@@ -25,7 +27,6 @@ import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.util.Log;
 
 /**
@@ -138,10 +139,10 @@ public class AccountListPanel extends AbstractListPanel {
 			balance += a.getBalance();
 		}
 		
-		balanceLabel.setForeground(FormatterWrapper.isRed(balance) ? Color.RED : Color.BLACK);
+		balanceLabel.setForeground(APICommonFormatter.isRed(balance) ? Color.RED : Color.BLACK);
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.NET_WORTH) 
 				+ ": "  
-				+ FormatterWrapper.getFormattedCurrency(balance));
+				+ APICommonFormatter.getFormattedCurrency(balance));
 	}
 
 	/**

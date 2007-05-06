@@ -1,7 +1,7 @@
 /*
  * Created on Oct 7, 2006 by wyatt
  */
-package org.homeunix.drummer.view;
+package net.sourceforge.buddi.api.manager;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -14,15 +14,16 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import net.sourceforge.buddi.api.model.ImmutableSource;
+import net.sourceforge.buddi.api.model.ImmutableTransaction;
+
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Source;
-import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.thecave.moss.util.Log;
 
-public class HTMLExportHelper {
+public class APICommonHTMLHelper {
 
 
 	/**
@@ -119,19 +120,19 @@ public class HTMLExportHelper {
 
 		if (startDate != null && endDate != null){
 			sb.append("<h2>"); 
-			sb.append(FormatterWrapper.getDateFormat().format(startDate));
+			sb.append(BuddiInternalFormatter.getDateFormat().format(startDate));
 			sb.append(" - ");
-			sb.append(FormatterWrapper.getDateFormat().format(endDate));
+			sb.append(BuddiInternalFormatter.getDateFormat().format(endDate));
 			sb.append("</h2>\n");
 		}
 		else if (startDate != null){
 			sb.append("<h2>"); 
-			sb.append(FormatterWrapper.getDateFormat().format(startDate));
+			sb.append(BuddiInternalFormatter.getDateFormat().format(startDate));
 			sb.append("</h2>\n");			
 		}
 		else if (endDate != null){
 			sb.append("<h2>"); 
-			sb.append(FormatterWrapper.getDateFormat().format(endDate));
+			sb.append(BuddiInternalFormatter.getDateFormat().format(endDate));
 			sb.append("</h2>\n");	
 		}
 
@@ -160,28 +161,31 @@ public class HTMLExportHelper {
 	 * if there is none.
 	 * @return
 	 */
-	public static StringBuilder getHtmlTransactionRow(Transaction t, Source associatedSource){
+	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSource associatedSource){
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("<tr><td width='20%'>");
-		sb.append(FormatterWrapper.getDateFormat().format(t.getDate()));
+		sb.append(BuddiInternalFormatter.getDateFormat().format(t.getDate()));
 		
 		sb.append("</td><td width='30%'>");
 		sb.append(Translate.getInstance().get(t.getDescription()));
 		
 		sb.append("</td><td width='35%'>");
+		System.out.println(t);
+		System.out.println(t.getFrom());
+		System.out.println(t.getFrom().toString());
 		sb.append(Translate.getInstance().get(t.getFrom().toString()));
 		sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
 		sb.append(Translate.getInstance().get(t.getTo().toString()));
 
 		boolean red;
 		if (associatedSource != null)
-			red = FormatterWrapper.isRed(t, t.getFrom().equals(associatedSource));
+			red = APICommonFormatter.isRed(t, t.getFrom().equals(associatedSource));
 		else 
-			red = FormatterWrapper.isRed(t);
+			red = APICommonFormatter.isRed(t);
 		
 		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
-		sb.append(FormatterWrapper.getFormattedCurrency(t.getAmount()));
+		sb.append(APICommonFormatter.getFormattedCurrency(t.getAmount()));
 		sb.append("</td></tr>\n");
 		
 		return sb;		

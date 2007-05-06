@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileFilter;
 
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
@@ -17,7 +18,6 @@ import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -112,7 +112,7 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
-		public HTMLWrapper getGraph(Date startDate, Date endDate) {
+		public HTMLWrapper getGraph(DataManager dataManager, Date startDate, Date endDate) {
 			return null;
 		}
 		public String getTitle() {
@@ -139,7 +139,7 @@ class BuddiPluginImpl {
 		public String getDescription() {
 			return null;
 		}
-		public HTMLWrapper getReport(Date startDate, Date endDate) {
+		public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
 			return null;
 		}
 	}

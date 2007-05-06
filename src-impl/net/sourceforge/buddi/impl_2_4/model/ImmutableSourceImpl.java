@@ -3,7 +3,6 @@ package net.sourceforge.buddi.impl_2_4.model;
 import java.util.Date;
 
 import net.sourceforge.buddi.api.model.ImmutableSource;
-import net.sourceforge.buddi.impl_2_2.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Source;
 
@@ -34,7 +33,7 @@ public class ImmutableSourceImpl implements ImmutableSource {
     }
 
     public int compareTo(ImmutableSource immutableSource) {
-        throw new UnimplementedException();
+        return source.compareTo(((ImmutableSourceImpl) immutableSource).getImpl());
     }
 
     public boolean equals(Object obj) {
@@ -46,5 +45,10 @@ public class ImmutableSourceImpl implements ImmutableSource {
         ImmutableSourceImpl immutableSourceImpl = (ImmutableSourceImpl)obj;
         
         return source.equals(immutableSourceImpl.getImpl());
+    }
+    
+    @Override
+    public String toString() {
+    	return source.toString();
     }
 }

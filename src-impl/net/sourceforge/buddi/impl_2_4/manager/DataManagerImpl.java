@@ -3,16 +3,19 @@ package net.sourceforge.buddi.impl_2_4.manager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableCategory;
+import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
-import net.sourceforge.buddi.impl_2_2.model.ImmutableAccountImpl;
-import net.sourceforge.buddi.impl_2_2.model.ImmutableCategoryImpl;
-import net.sourceforge.buddi.impl_2_2.model.ImmutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableAccountImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableCategoryImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableSourceImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -21,7 +24,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.thecave.moss.util.Version;
 
-public class DataManagerImpl extends UtilityManagerImpl implements DataManager {
+public class DataManagerImpl implements DataManager {
 
     private final ImmutableAccount selectedImmutableAccount;
     private final ImmutableCategory selectedImmutableCategory;
@@ -106,11 +109,36 @@ public class DataManagerImpl extends UtilityManagerImpl implements DataManager {
         return getTransactionsForList(transactionVector);
     }
 
-    public Collection<ImmutableTransaction> getTransactionsForAccount(ImmutableAccount account) {
-        Vector<Transaction> transactionVector = TransactionController.getTransactions(((ImmutableAccountImpl)account).getImpl());
+    public Collection<ImmutableTransaction> getTransactions(ImmutableSource source) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(((ImmutableSourceImpl) source).getImpl());
         return getTransactionsForList(transactionVector);
     }
 
+    public Collection<ImmutableTransaction> getTransactions(Boolean isIncome, Date startDate, Date endDate) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(isIncome, startDate, endDate);
+        return getTransactionsForList(transactionVector);
+    }
+    
+    public Collection<ImmutableTransaction> getTransactions(Date startDate, Date endDate) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(startDate, endDate);
+        return getTransactionsForList(transactionVector);
+    }
+
+    public Collection<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(((ImmutableSourceImpl) source).getImpl(), startDate, endDate);
+        return getTransactionsForList(transactionVector);
+    }
+    
+    public Collection<ImmutableTransaction> getTransactions(ImmutableSource source, Integer year, Integer month, Integer dayOfMonth) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(((ImmutableSourceImpl) source).getImpl(), year, month, dayOfMonth);
+        return getTransactionsForList(transactionVector);
+    }
+    
+    public Collection<ImmutableTransaction> getTransactions(String description, Date startDate, Date endDate) {
+        Vector<Transaction> transactionVector = TransactionController.getTransactions(description, startDate, endDate);
+        return getTransactionsForList(transactionVector);
+    }
+    
     private Collection<ImmutableTransaction> getTransactionsForList(Vector<Transaction> transactionVector) {
         if (null == transactionVector)
         {

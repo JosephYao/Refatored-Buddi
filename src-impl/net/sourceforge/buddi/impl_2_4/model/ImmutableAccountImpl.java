@@ -4,7 +4,7 @@ import java.util.Date;
 
 import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableType;
-import net.sourceforge.buddi.impl_2_2.exception.UnimplementedException;
+import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Account;
 
@@ -72,4 +72,8 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
         return 0 == compareTo(immutableAccountImpl);
     }
 
+    @Override
+    public String toString() {
+		return account.toString();
+    }
 }

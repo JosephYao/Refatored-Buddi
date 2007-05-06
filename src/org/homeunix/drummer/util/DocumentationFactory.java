@@ -3,6 +3,7 @@
  */
 package org.homeunix.drummer.util;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class DocumentationFactory {
 			final String string = getDocumentText(s);
 			item.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					new JDocumentDialog(string);
+					JDocumentDialog dialog = new JDocumentDialog(string);
+					dialog.openWindow(new Dimension(640, 480), null);
 				}
 			});
 			documentsMenu.add(item);

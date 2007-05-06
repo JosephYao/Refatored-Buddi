@@ -1,7 +1,9 @@
 2.3.10
+-Very many changes, especially to the API.  Plugin developers - please thouroughly test your existing code, and report and errors caused by the changes.
 -Removed Translate.get(TranslateKeys) from API
 -Added support for user.dir system property (allows override of working directory, used for Unix launcher)
 -Merged API plugin tree with non-API plugin tree.  This allows us to use existing plugin loading code to load API plugins, elimintaing the need to duplicate code.
+-Moved some of the helper classes to the API package
 
 2.3.9 (May 2 2007)
 -Scroll to the bottom of the transactions list when searching (Bug #1706872)

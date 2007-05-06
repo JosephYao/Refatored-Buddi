@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.swing.AbstractListModel;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
+
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.homeunix.drummer.controller.SourceController;
@@ -15,7 +17,6 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -224,8 +225,8 @@ public class TransactionListModel extends AbstractListModel {
 						|| t.getMemo().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getFrom().getName().toLowerCase().contains(filterText.toLowerCase())
 						|| t.getTo().getName().toLowerCase().contains(filterText.toLowerCase())
-						|| FormatterWrapper.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(filterText.toLowerCase()))
-						|| FormatterWrapper.getDateFormat().format(t.getDate()).toLowerCase().contains(filterText.toLowerCase());
+						|| APICommonFormatter.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(filterText.toLowerCase()))
+						|| APICommonFormatter.getDateFormat().format(t.getDate()).toLowerCase().contains(filterText.toLowerCase());
 				
 			}	
 		});

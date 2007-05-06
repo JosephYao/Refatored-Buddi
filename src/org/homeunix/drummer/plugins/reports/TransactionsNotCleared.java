@@ -7,8 +7,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
@@ -16,15 +19,13 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.view.HTMLExportHelper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotCleared extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(Date startDate, Date endDate) {
+	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
 		Vector<Transaction> temp = TransactionController.getTransactions(startDate, endDate);
 		Vector<Transaction> transactions = new Vector<Transaction>();
@@ -38,7 +39,7 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 		Collections.sort(transactions);
 
 		//Output transactions to HTML in StringBuilder
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		if (!PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
 			sb.append("<h1>")
@@ -54,16 +55,16 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 			.append(Translate.getInstance().get(TranslateKeys.REPORT_TRANSACTIONS_NOT_CLEARED))
 			.append("</h1>");
 
-			sb.append(HTMLExportHelper.getHtmlTransactionHeader());
+			sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
 			
 			for (Transaction t : transactions) {
-				sb.append(HTMLExportHelper.getHtmlTransactionRow(t, null));	
+				sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));	
 			}
 		
-			sb.append(HTMLExportHelper.getHtmlTransactionFooter());
+			sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
 		}
 		
-		sb.append(HTMLExportHelper.getHtmlFooter());
+		sb.append(APICommonHTMLHelper.getHtmlFooter());
 		
 		//Wrap in HTMLWrapper for return
 		return new HTMLWrapper(sb.toString(), null);

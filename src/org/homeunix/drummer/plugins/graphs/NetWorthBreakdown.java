@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -22,8 +24,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.HTMLExportHelper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
@@ -35,7 +35,7 @@ public class NetWorthBreakdown extends BuddiGraphPlugin {
 
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getGraph(Date startDate, Date endDate) {
+	public HTMLWrapper getGraph(DataManager dataManager, Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
 		Map<Account, Long> accounts = getAccountBalance(endDate);
@@ -62,14 +62,14 @@ public class NetWorthBreakdown extends BuddiGraphPlugin {
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.setBorderStroke(new BasicStroke(0));
 				
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(
 				Translate.getInstance().get(TranslateKeys.NET_WORTH), 
 				null, 
 				startDate, 
 				endDate);
 
 		sb.append("<img class='center_img' src='graph.png' />");
-		sb.append(HTMLExportHelper.getHtmlFooter());
+		sb.append(APICommonHTMLHelper.getHtmlFooter());
 		
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 		images.put("graph.png", 

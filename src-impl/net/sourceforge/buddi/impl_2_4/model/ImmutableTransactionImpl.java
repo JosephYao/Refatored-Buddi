@@ -5,7 +5,10 @@ import java.util.Date;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.thecave.moss.util.Log;
 
 public class ImmutableTransactionImpl implements ImmutableTransaction {
 
@@ -64,18 +67,26 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
 
     private ImmutableSource immutableSourceFrom = null;
     public ImmutableSource getFrom() {
-        if (null == immutableSourceFrom)
-        {
-            immutableSourceFrom = new ImmutableSourceImpl(transaction.getFrom());
+        if (immutableSourceFrom == null){
+        	if (transaction.getFrom() instanceof Category)
+        		immutableSourceFrom = new ImmutableCategoryImpl((Category) transaction.getFrom());
+        	else if (transaction.getFrom() instanceof Account)
+        		immutableSourceFrom = new ImmutableAccountImpl((Account) transaction.getFrom());
+        	else 
+        		Log.critical("From not of type Account or Category!");
         }
         return immutableSourceFrom;
     }
 
     private ImmutableSource immutableSourceTo = null;
     public ImmutableSource getTo() {
-        if (null == immutableSourceTo)
-        {
-            immutableSourceTo = new ImmutableSourceImpl(transaction.getTo());
+        if (immutableSourceTo == null){
+        	if (transaction.getTo() instanceof Category)
+        		immutableSourceTo = new ImmutableCategoryImpl((Category) transaction.getTo());
+        	else if (transaction.getTo() instanceof Account)
+        		immutableSourceTo = new ImmutableAccountImpl((Account) transaction.getTo());
+        	else
+        		Log.critical("To not of type Account or Category!");
         }
         return immutableSourceTo;
     }
@@ -95,4 +106,8 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
         return 0 == compareTo(immutableTransactionImpl);
     }
 
+    @Override
+    public String toString() {
+    	return transaction.toString();
+    }
 }

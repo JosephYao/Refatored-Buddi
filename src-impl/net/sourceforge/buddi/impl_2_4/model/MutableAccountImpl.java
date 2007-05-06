@@ -2,12 +2,12 @@ package net.sourceforge.buddi.impl_2_4.model;
 
 import java.util.Date;
 
-import org.homeunix.drummer.model.Account;
-
 import net.sourceforge.buddi.api.exception.ValidationException;
 import net.sourceforge.buddi.api.model.ImmutableType;
 import net.sourceforge.buddi.api.model.MutableAccount;
-import net.sourceforge.buddi.impl_2_2.exception.UnimplementedException;
+import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
+
+import org.homeunix.drummer.model.Account;
 
 public class MutableAccountImpl extends MutableSourceImpl implements MutableAccount {
 

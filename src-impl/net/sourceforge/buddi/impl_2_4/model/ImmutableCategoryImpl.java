@@ -38,10 +38,9 @@ public class ImmutableCategoryImpl extends ImmutableSourceImpl implements Immuta
 
     private ImmutableCategory immutableCategoryParent = null;
     public ImmutableCategory getParent() {
-        if (null == immutableCategoryParent)
-        {
-            immutableCategoryParent = new ImmutableCategoryImpl(category.getParent());
-        }
+        if (immutableCategoryParent == null 
+        		&& category.getParent() != null)
+        	immutableCategoryParent = new ImmutableCategoryImpl(category.getParent());
         return immutableCategoryParent;
     }
 
@@ -103,4 +102,7 @@ public class ImmutableCategoryImpl extends ImmutableSourceImpl implements Immuta
         return 0 == compareTo(immutableCategoryImpl);
     }
 
+	public String toString() {
+		return category.toString();
+	}
 }

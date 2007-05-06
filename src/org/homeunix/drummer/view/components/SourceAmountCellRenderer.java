@@ -9,7 +9,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
-import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.drummer.view.AccountListPanel.TypeTotal;
 
 /**
@@ -33,16 +33,16 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 
 			startTableCellRendererComponent(value, isSelected, row, column, c.isDeleted());
 			
-			sb.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "");
-			sb.append(FormatterWrapper.getFormattedCurrency(c.getBudgetedAmount()));
-			sb.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "</font>" : "");
+			sb.append(BuddiInternalFormatter.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "");
+			sb.append(BuddiInternalFormatter.getFormattedCurrency(c.getBudgetedAmount()));
+			sb.append(BuddiInternalFormatter.isRed(c, c.getBudgetedAmount()) ? "</font>" : "");
 			
 			long amountTotal = getTotalAmount(node);
 			if (node.getChildCount() > 0){
 				sb.append(" (")
-				.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "")
-				.append(FormatterWrapper.getFormattedCurrency(amountTotal))
-				.append(FormatterWrapper.isRed(c, c.getBudgetedAmount()) ? "</font>" : "")
+				.append(BuddiInternalFormatter.isRed(c, c.getBudgetedAmount()) ? "<font color='red'>" : "")
+				.append(BuddiInternalFormatter.getFormattedCurrency(amountTotal))
+				.append(BuddiInternalFormatter.isRed(c, c.getBudgetedAmount()) ? "</font>" : "")
 				.append(")");
 			}
 
@@ -59,9 +59,9 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 //				color = "red";
 			startTableCellRendererComponent(value, isSelected, row, column, a.isDeleted());
 
-			sb.append(FormatterWrapper.isRed(a, a.getBalance()) ? "<font color='red'>" : "");
-			sb.append(FormatterWrapper.getFormattedCurrency(a.getBalance(), a.isCredit()));
-			sb.append(FormatterWrapper.isRed(a, a.getBalance()) ? "</font>" : "");
+			sb.append(BuddiInternalFormatter.isRed(a, a.getBalance()) ? "<font color='red'>" : "");
+			sb.append(BuddiInternalFormatter.getFormattedCurrency(a.getBalance(), a.isCredit()));
+			sb.append(BuddiInternalFormatter.isRed(a, a.getBalance()) ? "</font>" : "");
 			endTableCellRendererComponent();
 			
 			return this;
@@ -84,9 +84,9 @@ public class SourceAmountCellRenderer extends DefaultTableCellRenderer {
 			
 //			if (t.getAmount() < 0 ^ t.getType().isCredit())
 //				sb.append("-");
-			sb.append(FormatterWrapper.isRed(t.getType(), amount) ? "<font color='red'>" : "");
-			sb.append(FormatterWrapper.getFormattedCurrency(amount, t.getType().isCredit()));
-			sb.append(FormatterWrapper.isRed(t.getType(), amount) ? "</font>" : "");
+			sb.append(BuddiInternalFormatter.isRed(t.getType(), amount) ? "<font color='red'>" : "");
+			sb.append(BuddiInternalFormatter.getFormattedCurrency(amount, t.getType().isCredit()));
+			sb.append(BuddiInternalFormatter.isRed(t.getType(), amount) ? "</font>" : "");
 
 			endTableCellRendererComponent();
 			

@@ -2,15 +2,15 @@ package net.sourceforge.buddi.impl_2_4.model;
 
 import java.util.Date;
 
-import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.Transaction;
-
 import net.sourceforge.buddi.api.exception.ValidationException;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 import net.sourceforge.buddi.api.model.MutableTransaction;
-import net.sourceforge.buddi.impl_2_2.exception.UnimplementedException;
+import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
+
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.Transaction;
 
 public class MutableTransactionImpl extends ImmutableTransactionImpl implements MutableTransaction {
 

@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -22,8 +24,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
-import org.homeunix.drummer.view.HTMLExportHelper;
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
 import org.homeunix.thecave.moss.util.DateUtil;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
@@ -37,7 +37,7 @@ public class NetWorthOverTime extends BuddiGraphPlugin {
 
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getGraph(Date startDate, Date endDate) {
+	public HTMLWrapper getGraph(DataManager dataManager, Date startDate, Date endDate) {
 		final int NUM_SAMPLES = 12;
 		
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
@@ -86,14 +86,14 @@ public class NetWorthOverTime extends BuddiGraphPlugin {
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.setBorderStroke(new BasicStroke(0));
 				
-		StringBuilder sb = HTMLExportHelper.getHtmlHeader(
+		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(
 				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME), 
 				null, 
 				startDate, 
 				endDate);
 
 		sb.append("<img class='center_img' src='graph.png' />");
-		sb.append(HTMLExportHelper.getHtmlFooter());
+		sb.append(APICommonHTMLHelper.getHtmlFooter());
 		
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 		images.put("graph.png", 

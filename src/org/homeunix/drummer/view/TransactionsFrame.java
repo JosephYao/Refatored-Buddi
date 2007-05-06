@@ -51,7 +51,7 @@ import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
-import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
 import org.homeunix.drummer.view.model.TransactionListModel;
@@ -152,10 +152,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							}
 
 							sb.append("<br>");
-							if (FormatterWrapper.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
+							if (BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
 								sb.append("<font color='red'>");
-							sb.append(FormatterWrapper.getFormattedCurrency(transaction.getAmount()));
-							if (FormatterWrapper.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
+							sb.append(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()));
+							if (BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
 								sb.append("</font>");
 							
 							sb.append("  ");
@@ -478,9 +478,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //			sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
 			.append(": ")
-			.append(FormatterWrapper.isRed(account, amountLeft) ? "<font color='red'>" : "")
-			.append(FormatterWrapper.getFormattedCurrency(amountLeft))
-			.append(FormatterWrapper.isRed(account, (long) percentLeft) ? "</font>" : "")
+			.append(BuddiInternalFormatter.isRed(account, amountLeft) ? "<font color='red'>" : "")
+			.append(BuddiInternalFormatter.getFormattedCurrency(amountLeft))
+			.append(BuddiInternalFormatter.isRed(account, (long) percentLeft) ? "</font>" : "")
 			.append(" (")
 			.append(Formatter.getDecimalFormat().format(percentLeft))
 			.append("%)");

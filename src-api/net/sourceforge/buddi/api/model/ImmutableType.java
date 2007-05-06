@@ -1,10 +1,8 @@
 package net.sourceforge.buddi.api.model;
 
-public interface ImmutableType {
+public interface ImmutableType extends Comparable<ImmutableType> {
 
     public String getName();
     public boolean isCredit();
-
-    public int compareTo(ImmutableType type);
 
 }

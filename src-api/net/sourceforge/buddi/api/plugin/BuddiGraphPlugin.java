@@ -7,7 +7,9 @@ package net.sourceforge.buddi.api.plugin;
 
 import java.util.Date;
 
-import org.homeunix.drummer.view.HTMLExportHelper.HTMLWrapper;
+import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
+
 
 public abstract class BuddiGraphPlugin extends BuddiPanelPlugin {
 	
@@ -22,6 +24,6 @@ public abstract class BuddiGraphPlugin extends BuddiPanelPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public abstract HTMLWrapper getGraph(Date startDate, Date endDate);
+	public abstract HTMLWrapper getGraph(DataManager dataManager, Date startDate, Date endDate);
 
 }

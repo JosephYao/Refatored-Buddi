@@ -12,9 +12,9 @@ import net.sourceforge.buddi.api.model.ImmutableTransaction;
 import net.sourceforge.buddi.api.model.MutableAccount;
 import net.sourceforge.buddi.api.model.MutableCategory;
 import net.sourceforge.buddi.api.model.MutableTransaction;
-import net.sourceforge.buddi.impl_2_2.model.MutableAccountImpl;
-import net.sourceforge.buddi.impl_2_2.model.MutableCategoryImpl;
-import net.sourceforge.buddi.impl_2_2.model.MutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_4.model.MutableAccountImpl;
+import net.sourceforge.buddi.impl_2_4.model.MutableCategoryImpl;
+import net.sourceforge.buddi.impl_2_4.model.MutableTransactionImpl;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -121,7 +121,7 @@ public class ImportManagerImpl extends DataManagerImpl implements ImportManager 
     }
 
     public Collection<ImmutableTransaction> getTransactionsForAccount(ImmutableAccount account) {
-        Collection<ImmutableTransaction> matchingTransactions = super.getTransactionsForAccount(account);
+        Collection<ImmutableTransaction> matchingTransactions = super.getTransactions(account);
         
         for (ImmutableTransaction transaction : temporaryTransactionList) {
             if (transaction.getFrom() != null && transaction.getTo() != null && 

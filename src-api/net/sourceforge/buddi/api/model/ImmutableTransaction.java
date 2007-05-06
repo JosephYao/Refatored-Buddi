@@ -2,7 +2,7 @@ package net.sourceforge.buddi.api.model;
 
 import java.util.Date;
 
-public interface ImmutableTransaction {
+public interface ImmutableTransaction extends Comparable<ImmutableTransaction>{
     public long getAmount();
     public String getDescription();
     public Date getDate();
@@ -15,6 +15,4 @@ public interface ImmutableTransaction {
     public boolean isReconciled();
     public ImmutableSource getFrom();
     public ImmutableSource getTo();
-
-    public int compareTo(ImmutableTransaction transaction);
 }

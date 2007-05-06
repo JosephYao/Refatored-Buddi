@@ -10,7 +10,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.impl.AccountImpl;
 import org.homeunix.drummer.model.impl.CategoryImpl;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.drummer.view.AccountListPanel.TypeTotal;
 import org.homeunix.thecave.moss.util.Formatter;
 
@@ -35,7 +35,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 			Category c = (Category) obj;
 
 			startTableCellRendererComponent(value, isSelected, row, column, c.isDeleted());			
-			sb.append(FormatterWrapper.getFormattedNameForCategory(c));
+			sb.append(BuddiInternalFormatter.getFormattedNameForCategory(c));
 			endTableCellRendererComponent();
 			
 			return this;
@@ -44,7 +44,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 			Account a = (Account) obj;
 
 			startTableCellRendererComponent(value, isSelected, row, column, a.isDeleted());			
-			sb.append(FormatterWrapper.getFormattedNameForAccount(a));
+			sb.append(BuddiInternalFormatter.getFormattedNameForAccount(a));
 			if (PrefsInstance.getInstance().getPrefs().isShowInterestRate()
 					&& (a.getInterestRate() != 0)){
 				sb.append(" (")
@@ -60,7 +60,7 @@ public class SourceNameCellRenderer extends DefaultTableCellRenderer {
 			TypeTotal t = (TypeTotal) obj;
 
 			startTableCellRendererComponent(value, isSelected, row, column, false);
-			sb.append(FormatterWrapper.getFormattedNameForType(t.getType()));
+			sb.append(BuddiInternalFormatter.getFormattedNameForType(t.getType()));
 			endTableCellRendererComponent();
 			
 			return this;

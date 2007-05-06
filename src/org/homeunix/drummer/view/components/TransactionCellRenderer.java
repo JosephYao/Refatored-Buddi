@@ -20,7 +20,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.FormatterWrapper;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -114,7 +114,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			Color textColor = g.getColor();			
 
 			//Date
-			g.drawString(FormatterWrapper.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
+			g.drawString(BuddiInternalFormatter.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
 
 			//Description
 			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, height / 2 - 5);
@@ -136,16 +136,16 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
-				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(FormatterWrapper.getFormattedCurrency(transaction.getAmount()), width - 300, height - 5);
+				g.setColor(BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), width - 300, height - 5);
 				g.setColor(textColor);
 			}
 			//Right Column
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-				g.setColor(FormatterWrapper.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(FormatterWrapper.getFormattedCurrency(transaction.getAmount()), width - 200, height - 5);
+				g.setColor(BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), width - 200, height - 5);
 				g.setColor(textColor);
 			}
 
@@ -159,8 +159,8 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 					else
 						balanceValue = transaction.getBalanceTo();
 
-					g.setColor(FormatterWrapper.isRed(account, balanceValue) ? Color.RED : textColor);
-					g.drawString(FormatterWrapper.getFormattedCurrency(balanceValue, account.isCredit()), width - 100, height - 5);
+					g.setColor(BuddiInternalFormatter.isRed(account, balanceValue) ? Color.RED : textColor);
+					g.drawString(BuddiInternalFormatter.getFormattedCurrency(balanceValue, account.isCredit()), width - 100, height - 5);
 					g.setColor(textColor);
 				}
 			}

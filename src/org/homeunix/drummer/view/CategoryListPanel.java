@@ -14,6 +14,8 @@ import java.util.Vector;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
@@ -21,7 +23,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.FormatterWrapper;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -98,12 +99,12 @@ public class CategoryListPanel extends AbstractListPanel {
 //		.append(FormatterWrapper.getFormattedCurrencyForCategory(income - expenses, true))
 //		.append("</html>");
 
-		balanceLabel.setForeground(FormatterWrapper.isRed(income - expenses) ? Color.RED : Color.BLACK);
+		balanceLabel.setForeground(APICommonFormatter.isRed(income - expenses) ? Color.RED : Color.BLACK);
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME)
 				+ " "
 				+ Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName())
 				+ ": "  
-				+ FormatterWrapper.getFormattedCurrency(income - expenses));
+				+ APICommonFormatter.getFormattedCurrency(income - expenses));
 
 		treeModel.reload(treeModel.getRoot());
 

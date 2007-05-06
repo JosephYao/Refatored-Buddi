@@ -41,4 +41,8 @@ public class ImmutableTypeImpl implements ImmutableType {
         return 0 == compareTo(immutableTypeImpl);
     }
 
+    @Override
+    public String toString() {
+    	return type.toString();
+    }
 }
