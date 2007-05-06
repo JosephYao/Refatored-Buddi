@@ -1,4 +1,4 @@
-2.3.10
+2.3.10 (May 6 2007)
 -Very many changes, especially to the API.  Plugin developers - please thouroughly test your existing code, and report and errors caused by the changes.
 -Removed Translate.get(TranslateKeys) from API
 -Added support for user.dir system property (allows override of working directory, used for Unix launcher)
