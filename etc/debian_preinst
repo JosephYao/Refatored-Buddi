@@ -3,4 +3,8 @@ if [ "$1" = install ]; then
     for X in buddi Buddi.jar; do
         dpkg-divert --package buddi --rename --add /usr/bin/$X
     done
+
+    dpkg-divert --package buddi --rename --add /usr/share/applications/buddi.desktop
+    dpkg-divert --package buddi --rename --add /usr/share/icons/hicolor/48x48/apps/buddi.png
+    dpkg-divert --package buddi --rename --add /usr/share/doc/buddi/README
 fi

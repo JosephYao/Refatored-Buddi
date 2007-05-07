@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Buddi
+Exec=/usr/bin/buddi
+Icon=buddi.png
+Comment=Personal Budget Software
+Terminal=false
+Categories=Application;Office;
+Type=Application
+

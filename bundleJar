@@ -92,8 +92,12 @@ function bundle_debian {
 	mkdir -p $DEBIAN/usr/bin
 	cp Buddi.jar $DEBIAN/usr/bin
 	cp etc/buddi $DEBIAN/usr/bin
+	mkdir -p $DEBIAN/usr/share/applications
+	cp etc/buddi.desktop $DEBIAN/usr/share/applications/buddi.desktop
+	mkdir -p $DEBIAN/usr/share/icons/hicolor/48x48/apps/
+	cp img/buddi-48x48.png $DEBIAN/usr/share/icons/hicolor/48x48/apps/buddi.png
 	mkdir -p $DEBIAN/usr/share/doc/buddi
-	cp etc/debian_README $DEBIAN/usr/share/doc/buddi
+	cp etc/debian_README $DEBIAN/usr/share/doc/buddi/README
 	cp etc/debian_control $DEBIAN/control
 	cp etc/debian_preinst $DEBIAN/preinst
 	cp etc/debian_postrm $DEBIAN/postrm
@@ -115,7 +119,7 @@ function bundle_debian {
 
 	# create the data tarball
 	# (the tar options "czvf" mean create, zip, verbose, and filename.)
-	tar czvf data.tar.gz usr/bin/ usr/share/doc/
+	tar czvf data.tar.gz usr/ 
 
 	# create the control tarball
 	tar czvf control.tar.gz control preinst postrm

@@ -3,4 +3,8 @@ if [ "$1" = remove ]; then
     for X in buddi Buddi.jar; do 
         dpkg-divert --package buddi --rename --remove /usr/bin/$X
     done
+
+    dpkg-divert --package buddi --rename --remove /usr/share/applications/buddi.desktop
+    dpkg-divert --package buddi --rename --remove /usr/share/icons/hicolor/48x48/apps/buddi.png
+    dpkg-divert --package buddi --rename --add /usr/share/doc/buddi/README
 fi

@@ -23,10 +23,10 @@ JAVA=`which java`
 # the data file is within this directory) will be used as a relative path in
 # the preferences file.  If you plan on editing languages, you will need
 # to have write access to this directory.
-WORKING_DIR="/home/wyatt/.buddi"
+WORKING_DIR="${HOME}/.buddi"
 
 # The location of the Buddi.jar file.
-JAR_DIR="/usr/local/bin"
+JAR_DIR="/usr/bin"
 
 ####
 # End User Configuration
