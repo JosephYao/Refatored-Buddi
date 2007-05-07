@@ -64,6 +64,7 @@ public class Const {
 		"English",
 		"Espanol",
 		"Espanol_(MX)",
+		"Italiano",
 		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",

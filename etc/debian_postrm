@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "$1" = remove ]; then
+    for X in buddi Buddi.jar; do 
+        dpkg-divert --package buddi --rename --remove /usr/bin/$X
+    done
+fi

@@ -26,6 +26,8 @@ function init {
 	export FATJAR_PATH
 
 	DEST=/Users/wyatt/Desktop/Buddi
+	DEBIANROOT=$DEST/Debian
+	DEBIAN=$DEBIANROOT/Buddi
 	OSXROOT=$DEST/Buddi_OSX
 	OSX=$OSXROOT/Buddi
 	GENERICROOT=$DEST/Generic
@@ -77,6 +79,60 @@ function bundle_generic {
 #	cp -R $DEST/$SOURCE/Licenses $GENERIC
 
 	tar -C $GENERICROOT -czf $DEST/Buddi-$VERSION.tgz Buddi
+}
+
+
+
+function bundle_debian {
+
+	# Makes the Debian package.  Thanks to Leif Ryge at 
+	# http://synthesize.us/HOWTO_make_a_deb_archive_without_dpkg for 
+	# instructions on how to do this without dpkg.
+
+	mkdir -p $DEBIAN/usr/bin
+	cp Buddi.jar $DEBIAN/usr/bin
+	cp etc/buddi $DEBIAN/usr/bin
+	mkdir -p $DEBIAN/usr/share/doc/buddi
+	cp etc/debian_README $DEBIAN/usr/share/doc/buddi
+	cp etc/debian_control $DEBIAN/control
+	cp etc/debian_preinst $DEBIAN/preinst
+	cp etc/debian_postrm $DEBIAN/postrm
+
+	# Setting this environment variable fixes Apple's modified GNU tar so 
+	# that it won't make dot-underscore AppleDouble files. Google it 
+	# for details...
+	export COPY_EXTENDED_ATTRIBUTES_DISABLE=1
+
+	# Save current directory
+	CURRDIR=`pwd`
+
+	cd ${DEBIAN}
+
+	# Update control file with version and size information
+	SIZE=`du -ks usr|cut -f 1`
+	sed -i .bak  -e "s/BUDDI_VERSION/$VERSION/" $DEBIAN/control
+	sed -i .bak  -e "s/BUDDI_SIZE/$SIZE/" $DEBIAN/control
+
+	# create the data tarball
+	# (the tar options "czvf" mean create, zip, verbose, and filename.)
+	tar czvf data.tar.gz usr/bin/ usr/share/doc/
+
+	# create the control tarball
+	tar czvf control.tar.gz control preinst postrm
+
+	# create the debian-binary file
+	echo 2.0 > debian-binary
+
+	# create the ar (deb) archive
+	ar -r buddi.deb debian-binary control.tar.gz data.tar.gz
+
+	# move the new deb up a directory
+	mv buddi.deb ${DEST}/buddi-${VERSION}.deb
+
+	# remove the tarballs, and cd back up to where we started
+	rm data.tar.gz control.tar.gz
+	
+	cd ${CURRDIR}
 }
 
 
@@ -160,6 +216,7 @@ function clean {
 	rm -rf $DEST/$SOURCE
 	rm -rf $WINDOWSROOT
 	rm -rf $OSXROOT
+	rm -rf $DEBIANROOT
 	rm -rf $GENERICROOT
 	
 	rm Buddi.exe
@@ -183,6 +240,7 @@ bin
 put Buddi-$VERSION.zip
 put Buddi-$VERSION.tgz
 put Buddi-$VERSION.dmg
+put Buddi-$VERSION.deb
 put Buddi-$VERSION.src.tgz
 bye
 END_OF_FTP
@@ -197,6 +255,7 @@ END_OF_FTP
 init $*
 make_jar $*
 #bundle_help $*
+bundle_debian $*
 bundle_windows $*
 bundle_osx $*
 bundle_generic $*

@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "$1" = install ]; then
+    for X in buddi Buddi.jar; do
+        dpkg-divert --package buddi --rename --add /usr/bin/$X
+    done
+fi
