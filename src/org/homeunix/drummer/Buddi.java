@@ -156,7 +156,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
 				
-		ParseResults results = ParseCommands.parse(args, variables, help);
+		ParseResults results = ParseCommands.parse(args, help, variables);
 		String prefsLocation = results.getString("-p");
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
