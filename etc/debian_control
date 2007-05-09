@@ -3,7 +3,7 @@ Version: BUDDI_VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: sun-java5-jre (>= 1.5)
+Depends: sun-java5-jre | sun-java6-jre
 Installed-Size: BUDDI_SIZE
 Maintainer: Wyatt Olson <wyatt.olson@gmail.com>
 Description: A personal finance program which helps users keep to a budget.

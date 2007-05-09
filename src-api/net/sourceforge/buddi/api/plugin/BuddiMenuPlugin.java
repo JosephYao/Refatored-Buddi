@@ -7,6 +7,12 @@ package net.sourceforge.buddi.api.plugin;
 
 import net.roydesign.ui.JScreenMenuItem;
 
-public abstract class BuddiMenuPlugin extends JScreenMenuItem implements BuddiFilePlugin {
+public abstract class BuddiMenuPlugin extends JScreenMenuItem implements BuddiFilePlugin, AutoRefreshPlugin {
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.buddi.api.plugin.AutoRefreshPlugin#getRefreshInterval()
+	 */
+	public int getRefreshInterval() {
+		return 2;
+	}
 }

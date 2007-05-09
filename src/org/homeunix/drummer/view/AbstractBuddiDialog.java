@@ -5,9 +5,12 @@ package org.homeunix.drummer.view;
 
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 
 /**
  * @author wyatt
@@ -32,6 +35,14 @@ public abstract class AbstractBuddiDialog extends AbstractDialog implements Acti
 	}
 	
 	private void setupAbstractBuddiDialog() {		
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (null == cl) {
+			cl = AbstractFrame.class.getClassLoader();
+		}
 
+		URL imageResource = cl.getResource("Buddi.gif");
+		if (null != imageResource) {
+			((java.awt.Frame) this.getOwner()).setIconImage(Toolkit.getDefaultToolkit().getImage(imageResource));
+		}
 	}
 }

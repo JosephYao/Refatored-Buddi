@@ -5,6 +5,11 @@ if [ "$1" = remove ]; then
     done
 
     dpkg-divert --package buddi --rename --remove /usr/share/applications/buddi.desktop
-    dpkg-divert --package buddi --rename --remove /usr/share/icons/hicolor/48x48/apps/buddi.png
-    dpkg-divert --package buddi --rename --add /usr/share/doc/buddi/README
+
+    for X in 16 22 24 32 36 48 64 72 96 128 192; do 
+        dpkg-divert --package buddi --rename --remove /usr/share/icons/hicolor/${X}x${X}/apps/buddi.png
+    done 
+    dpkg-divert --package buddi --rename --remove /usr/share/pixmaps/buddi.png
+    
+    dpkg-divert --package buddi --rename --remove /usr/share/doc/buddi/README
 fi

@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 import java.util.jar.JarEntry;
 
@@ -41,10 +43,11 @@ import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.components.CustomDateDialog;
 import org.homeunix.thecave.moss.jar.JarLoader;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.Version;
 
 
 public class PluginFactory<T extends BuddiPlugin> {
-
+	
 	public static List<BuddiExportPlugin> getExportMenuItems(final AbstractBuddiFrame frame){
 //		List<BuddiExportPlugin> exportMenuItems = new LinkedList<BuddiExportPlugin>();
 
@@ -57,6 +60,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 			//This is where the user's custom code is actually run
 			final BuddiExportPlugin finalPlugin = plugin;
 			plugin.setText(plugin.getDescription());
+			
+			Timer t = new Timer();
+			t.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					finalPlugin.setEnabled(finalPlugin.isPluginActive(MainFrame.getInstance().getDataManager()));
+				}	
+			}, 0, plugin.getRefreshInterval() * 1000);
+			
 			plugin.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					File file = null;
@@ -108,6 +120,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 			//This is where the user's custom code is actually run
 			final BuddiImportPlugin finalPlugin = plugin;
 			plugin.setText(plugin.getDescription());
+			
+			Timer t = new Timer();
+			t.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					finalPlugin.setEnabled(finalPlugin.isPluginActive(MainFrame.getInstance().getDataManager()));
+				}	
+			}, 0, plugin.getRefreshInterval() * 1000);
+			
 			plugin.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					File file = null;
@@ -137,38 +158,6 @@ public class PluginFactory<T extends BuddiPlugin> {
 		return importPlugins;
 	}
 	
-//	public static List<JScreenMenuItem> getImportMenuItems(final AbstractFrame frame){
-//		List<JScreenMenuItem> importMenuItems = new LinkedList<JScreenMenuItem>();
-//
-//		PluginFactory<BuddiImportPlugin> factory = new PluginFactory<BuddiImportPlugin>();
-//		List<BuddiImportPlugin> importPlugins = factory.getPluginObjects(BuddiImportPluginImpl.class);
-//
-//		//Iterate through each plugin, and create a menu item for each.
-//		for (BuddiImportPlugin plugin : importPlugins) {
-////			boolean correctWindow = true;
-//
-////			if (plugin.getCorrectWindows() != null && frame != null){
-////			correctWindow = false;
-////			for (Class c : plugin.getCorrectWindows()) {
-////			if (frame.getClass().equals(c)) {
-////			correctWindow = true;
-////			break;
-////			}
-////			}
-////			}
-//			//TODO Add a listener to check if the plugin is active
-////			if (plugin.isPluginActive()){
-//			JScreenMenuItem menuItem = new JScreenMenuItem(plugin.getDescription());
-//
-//			//This is where the user's custom code is actually run
-//			addImportActionListener(plugin, menuItem, frame);
-//			importMenuItems.add(menuItem);
-////			}
-//		}
-//
-//		return importMenuItems;
-//	}
-
 	public static List<BuddiPanelPlugin> getReportPanelLaunchers(){
 		return getPanelLaunchers(BuddiReportPluginImpl.class);
 	}
@@ -185,7 +174,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 		//Iterate through each plugin, and create a menu item for each.
 		for (BuddiPanelPlugin plugin : panelPlugins) {
-			//TODO Add a listener to check if the plugin is active
+			final BuddiPanelPlugin tempPlugin = plugin;
+			Timer t = new Timer();
+			t.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					tempPlugin.setVisible(tempPlugin.isPluginActive(MainFrame.getInstance().getDataManager()));
+				}	
+			}, 0, plugin.getRefreshInterval() * 1000);
+				
 //			if (plugin.isPluginActive()){
 			plugin.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
@@ -237,15 +234,14 @@ public class PluginFactory<T extends BuddiPlugin> {
 				if (o instanceof BuddiPlugin) {
 					Log.info("Found BuddiPlugin: " + entry.getName());
 
-//					BuddiPlugin plugin = (BuddiPlugin) o;
-//					Version pluginAPIVersion = plugin.getAPIVersion(); 
-					//TODO Check version
-//					if (pluginAPIVersion == null 
-//					|| (pluginAPIVersion.getMajor() == plugin.getAPIVersion().getMajor()
-//					&& pluginAPIVersion.getMinor() == plugin.getAPIVersion().getMinor())) 
-					classNames.add(entry.getName());
-//					else
-//					Log.error("This plugin is for the " + pluginAPIVersion + " branch of Buddi; you are running.  To use it, please upgrade to version " + pluginAPIVersion + " or later.");
+					BuddiPlugin plugin = (BuddiPlugin) o;
+					Version pluginAPIVersion = plugin.getAPIVersion(); 
+					if (Const.API_VERSION.isGreaterMinor(pluginAPIVersion)
+							|| Const.API_VERSION.isSameMinor(pluginAPIVersion)){
+						classNames.add(entry.getName());
+					}
+					else
+						Log.error("This plugin is for the " + pluginAPIVersion + " version of the API.  You are running version " + Const.API_VERSION + ".  To use this plugin, please upgrade to version " + pluginAPIVersion + " or later.");
 				}
 				else {
 					Log.info("Not of type BuddiPlugin: " + o);

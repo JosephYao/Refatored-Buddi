@@ -94,8 +94,12 @@ function bundle_debian {
 	cp etc/buddi $DEBIAN/usr/bin
 	mkdir -p $DEBIAN/usr/share/applications
 	cp etc/buddi.desktop $DEBIAN/usr/share/applications/buddi.desktop
-	mkdir -p $DEBIAN/usr/share/icons/hicolor/48x48/apps/
-	cp img/buddi-48x48.png $DEBIAN/usr/share/icons/hicolor/48x48/apps/buddi.png
+	for X in 16 22 24 32 36 48 64 72 96 128 192; do
+		mkdir -p $DEBIAN/usr/share/icons/hicolor/${X}x${X}/apps/
+		cp img/buddi-${X}x${X}.png $DEBIAN/usr/share/icons/hicolor/${X}x${X}/apps/buddi.png
+	done
+	mkdir -p $DEBIAN/usr/share/pixmaps/
+	cp img/buddi-48x48.png $DEBIAN/usr/share/pixmaps/buddi.png
 	mkdir -p $DEBIAN/usr/share/doc/buddi
 	cp etc/debian_README $DEBIAN/usr/share/doc/buddi/README
 	cp etc/debian_control $DEBIAN/control

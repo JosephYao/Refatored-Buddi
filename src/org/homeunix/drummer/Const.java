@@ -7,6 +7,8 @@ import java.awt.Color;
 
 import javax.swing.JList;
 
+import org.homeunix.thecave.moss.util.Version;
+
 
 /**
  * A container for constants, used throughout the rest of the program.
@@ -19,9 +21,10 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.10";
+	public static final String VERSION = "2.3.11";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
+	public static final Version API_VERSION = new Version("2.4");
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";

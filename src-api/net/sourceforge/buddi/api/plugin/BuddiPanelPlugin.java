@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 
-public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin {
+public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin, AutoRefreshPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
@@ -22,5 +22,12 @@ public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin {
 	/**
 	 * @return The title to appear in report.
 	 */
-	public abstract String getTitle();	
+	public abstract String getTitle();
+	
+	/* (non-Javadoc)
+	 * @see net.sourceforge.buddi.api.plugin.AutoRefreshPlugin#getRefreshInterval()
+	 */
+	public int getRefreshInterval() {
+		return 2;
+	}
 }

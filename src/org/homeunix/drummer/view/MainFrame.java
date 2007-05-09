@@ -133,7 +133,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		
 		savePosition();
 
-		Log.debug("Exiting.");
+		Log.info("Exiting.");
 		System.exit(0);
 		
 		return super.closeWindow();
@@ -358,9 +358,13 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	
 	@Override
 	public ImportManager getImportManager() {
-		if (tabs.getSelectedComponent().equals(accountListPanel))
+		if (tabs != null
+				&& tabs.getSelectedComponent() != null
+				&& tabs.getSelectedComponent().equals(accountListPanel))
 			return new ImportManagerImpl(getAccountListPanel().getSelectedAccount(), null, null);
-		else if (tabs.getSelectedComponent().equals(categoryListPanel))
+		else if (tabs != null
+				&& tabs.getSelectedComponent() != null
+				&& tabs.getSelectedComponent().equals(categoryListPanel))
 			return new ImportManagerImpl(null, getCategoryListPanel().getSelectedCategory(), null);
 
 		return new ImportManagerImpl(null, null, null);

@@ -152,7 +152,6 @@ public class AccountListPanel extends AbstractListPanel {
 	 */
 	public Account getSelectedAccount(){
 
-		if (Const.DEVEL) Log.debug(selectedSource);
 		if (selectedSource instanceof Account)
 			return (Account) selectedSource;
 		else

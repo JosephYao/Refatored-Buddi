@@ -1,3 +1,9 @@
+2.3.11
+-Fixed bug which would not show language prompt when creating new Prefs.xml file in some situations
+-Added Debian package
+-Added timers to plugins which check the enabled status every 2 seconds, and updates the plugin accordingly.
+-Only load plugins for which the Buddi API Version is greater than or equal to the Plugin API version (only comparing Major.Minor versions).
+
 2.3.10 (May 6 2007)
 -Very many changes, especially to the API.  Plugin developers - please thouroughly test your existing code, and report and errors caused by the changes.
 -Removed Translate.get(TranslateKeys) from API
