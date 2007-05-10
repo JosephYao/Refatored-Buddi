@@ -1,4 +1,4 @@
-2.3.11
+2.3.11 (May 9 2007)
 -Fixed bug which would not show language prompt when creating new Prefs.xml file in some situations
 -Added Debian package
 -Added timers to plugins which check the enabled status every 2 seconds, and updates the plugin accordingly.

@@ -141,6 +141,24 @@ function bundle_debian {
 	rm data.tar.gz control.tar.gz
 	
 	cd ${CURRDIR}
+
+
+	if [ "$1" == "--release" ]; then
+		# Make the Packages file for releases
+
+		SIZE_BYTES=`ls -l ${DEST}/buddi-${VERSION}.deb | cut -f 9 -d ' '`
+		MD5SUM=`md5 ${DEST}/buddi-${VERSION}.deb | cut -f 4 -d ' '`
+
+		# Copy the tempplate Packages file to working dir for modifications
+		cp etc/debian_Packages Packages
+		sed -i .bak  -e "s/BUDDI_VERSION/${VERSION}/" Packages
+		sed -i .bak  -e "s/BUDDI_SIZE/${SIZE}/" Packages
+		sed -i .bak  -e "s/BYTES/${SIZE_BYTES}/" Packages
+		sed -i .bak  -e "s/BUDDI_MD5SUM/${MD5SUM}/" Packages
+
+		# Remove backup Packages file
+		rm Packages.bak
+	fi
 }
 
 
@@ -235,7 +253,23 @@ function clean {
 # Upload the bundles
 function upload {
 	if [ "$1" == "--release" ]; then
-		svn copy https://svn.sourceforge.net/svnroot/buddi/trunk https://svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
+		svn copy https://buddisvn.sourceforge.net/svnroot/buddi/trunk https://buddi.svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
+		echo Package=${PACKAGE}
+
+		#Upload Debian Packages.gz to root of Buddi SF.net page
+		gzip Packages
+		scp Packages.gz olsonw@shell.sf.net:/home/groups/b/bu/buddi/htdocs/
+		rm Packages.gz
+
+                # Depending on if this is a Stable or a Distribution release,
+		# we need to upload to different locations.
+		grep BRANCH src/org/homeunix/drummer/Const.java | grep -q UNSTABLE
+		if [ "$?" == 0 ]; then
+			ssh olsonw@shell.sf.net 'rm -rf /home/groups/b/bu/buddi/htdocs/debian/dists/development; for X in all i386 amd64 powerpc sparc; do mkdir -p /home/groups/b/bu/buddi/htdocs/debian/dists/development/main/binary-${X}; cp /home/groups/b/bu/buddi/htdocs/Packages.gz /home/groups/b/bu/buddi/htdocs/debian/dists/development/main/binary-${X}; done; rm /home/groups/b/bu/buddi/htdocs/Packages.gz'
+		else
+			ssh olsonw@shell.sf.net 'rm -rf /home/groups/b/bu/buddi/htdocs/debian/dists/stable; for X in all i386 amd64 powerpc sparc; do mkdir -p /home/groups/b/bu/buddi/htdocs/debian/dists/stable/main/binary-${X}; cp /home/groups/b/bu/buddi/htdocs/Packages.gz /home/groups/b/bu/buddi/htdocs/debian/dists/stable/main/binary-${X}; done; rm /home/groups/b/bu/buddi/htdocs/Packages.gz'
+		fi
+
 
 		# Upload release files
 		USER=anonymous
