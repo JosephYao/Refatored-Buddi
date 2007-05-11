@@ -212,7 +212,10 @@ public class DataInstance {
 		// to check it...
 		if (locationFile == null 
 				|| !locationFile.exists()){
-			JOptionPane.showMessageDialog(
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE)
 					+ "\n"
@@ -220,7 +223,11 @@ public class DataInstance {
 					+ "\n"
 					+ Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE_NOT_EXIST),
 					Translate.getInstance().get(TranslateKeys.MISSING_DATA_FILE),
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
 			return ReturnCodes.ERROR;
 		}
 
@@ -370,23 +377,7 @@ public class DataInstance {
 		//Make sure that this is updated when we load...
 		SourceController.calculateAllBalances();
 
-//		saveDataFile();
-
 		return ReturnCodes.SUCCESS;
-//		}
-//		//If there is a problem opening the file, we will pass control to 
-//		// the New / Open dialog to choose a new one.
-//		catch (Exception e){
-//		Log.error("Error reading file: " + e);
-//		JOptionPane.showMessageDialog(
-//		null,
-//		Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE),
-//		Translate.getInstance().get(TranslateKeys.ERROR),
-//		JOptionPane.ERROR_MESSAGE);
-
-//		return false;
-//		//Buddi.chooseDataFileSource();
-//		}
 	}
 
 	/**

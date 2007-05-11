@@ -285,11 +285,19 @@ public class ScheduleController {
 					if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDateCreated());
 
 					if (s.getMessage() != null && s.getMessage().length() > 0){
-						JOptionPane.showMessageDialog(
+						String[] options = new String[1];
+						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
 								null, 
 								s.getMessage(), 
 								Translate.getInstance().get(TranslateKeys.SCHEDULED_MESSAGE), 
-								JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]
+								);
 					}
 
 					if (tempDate != null

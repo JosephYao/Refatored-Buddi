@@ -211,15 +211,6 @@ public class AccountListPanel extends AbstractListPanel {
 				Account a = getSelectedAccount();
 
 				if (deleteButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE))){
-//					boolean notPermanent = TransactionController.getTransactions(a).size() > 0
-//					|| ScheduleController.getScheduledTransactions(a).size() > 0
-//					|| JOptionPane.showConfirmDialog(
-//							AccountListPanel.this,
-//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT),
-//							Translate.getInstance().get(TranslateKeys.MESSAGE_PERMANENT_DELETE_ACCOUNT_TITLE),
-//							JOptionPane.YES_NO_OPTION,
-//							JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION;
-//					AccountListPanelController.deleteAccount(notPermanent, a);
 					SourceController.deleteAccount(a);
 				}
 				else{

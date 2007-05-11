@@ -44,24 +44,36 @@ public class FileMenuController implements ActionListener {
 			DocumentManager.getInstance().loadBackupFile(null, null);
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_ENCRYPT.toString())){
-			if (JOptionPane.showConfirmDialog(
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+			if (JOptionPane.showOptionDialog(
 					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ENCRYPT_DATA_FILE_WARNING),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_CHANGE_ENCRYPTION_TITLE),
 					JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE
+					JOptionPane.INFORMATION_MESSAGE,
+					null,
+					options,
+					options[0]
 			) == JOptionPane.YES_OPTION){
 				DataInstance.getInstance().createNewCipher(true);
 				DataInstance.getInstance().saveDataFile();
 			}
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_FILE_DECRYPT.toString())){
-			if (JOptionPane.showConfirmDialog(
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+			if (JOptionPane.showOptionDialog(
 					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.MESSAGE_DECRYPT_DATA_FILE_WARNING),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_CHANGE_ENCRYPTION_TITLE),
 					JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE
+					JOptionPane.INFORMATION_MESSAGE,
+					null,
+					options,
+					options[0]
 			) == JOptionPane.YES_OPTION){
 				DataInstance.getInstance().createNewCipher(false);
 				DataInstance.getInstance().saveDataFile();

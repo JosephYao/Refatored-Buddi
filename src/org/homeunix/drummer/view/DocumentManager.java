@@ -121,20 +121,35 @@ public class DocumentManager {
 				// the user selects an existing file, we show an
 				// error and prompt for another file.
 				if (jfc.getSelectedFile().exists()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null, 
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_OVER_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				//Check that we have write permission to the folder where this
 				// file was selected.
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
-					JOptionPane.showMessageDialog(
+					if (Const.DEVEL) Log.debug("DocumentManager.newDataFile(): !jfc.getSelectedFile().getParentFile().canWrite().  jfc.getSelectedFile() = " + jfc.getSelectedFile() + ", jfc.getSelectedFile().getParent() = " + jfc.getSelectedFile().getParentFile());
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				//User has selected a new file name.  Make sure the extension
 				// is correct, and use this file.
@@ -163,11 +178,18 @@ public class DocumentManager {
 			Log.error("Error creating file.");
 		}
 
-		JOptionPane.showMessageDialog(
+		String[] options = new String[1];
+		options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+		JOptionPane.showOptionDialog(
 				MainFrame.getInstance(),
 				Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CREATING_FILE),
 				Translate.getInstance().get(TranslateKeys.ERROR),
-				JOptionPane.ERROR_MESSAGE);
+				JOptionPane.DEFAULT_OPTION,
+				JOptionPane.ERROR_MESSAGE,
+				null,
+				options,
+				options[0]);
 		
 		return ReturnCodes.ERROR;
 	}
@@ -183,13 +205,21 @@ public class DocumentManager {
 			returnCode = ReturnCodes.ERROR;
 		}
 
-		if (!returnCode.equals(ReturnCodes.SUCCESS))
-			JOptionPane.showMessageDialog(
+		if (!returnCode.equals(ReturnCodes.SUCCESS)){
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					MainFrame.getInstance(),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_OPENING_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE);
-
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
+		}
+		
 		return returnCode;
 	}
 
@@ -204,32 +234,53 @@ public class DocumentManager {
 			try {
 				FileFunctions.copyFile(backupFile, restoreTo);
 				DocumentController.loadFile(restoreTo);
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						null, 
 						Translate.getInstance().get(TranslateKeys.SUCCESSFUL_RESTORE_FILE) 
 						+ backupFile.getAbsolutePath().toString(), 
-						Translate.getInstance().get(TranslateKeys.RESTORED_FILE), 
-						JOptionPane.INFORMATION_MESSAGE
+						Translate.getInstance().get(TranslateKeys.RESTORED_FILE),
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
 				);
 
 				return ReturnCodes.SUCCESS;
 			}
 			catch (IOException ioe){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						null, 
 						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_READING_FILE) 
 						+ "\n" 
 						+ backupFile.getAbsolutePath().toString(), 
 						Translate.getInstance().get(TranslateKeys.ERROR), 
-						JOptionPane.ERROR_MESSAGE);					
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]);					
 			}
 		}
 		
-		JOptionPane.showMessageDialog(
+		String[] options = new String[1];
+		options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+		JOptionPane.showOptionDialog(
 				MainFrame.getInstance(),
 				Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_OPENING_FILE),
 				Translate.getInstance().get(TranslateKeys.ERROR),
-				JOptionPane.ERROR_MESSAGE);
+				JOptionPane.DEFAULT_OPTION,
+				JOptionPane.ERROR_MESSAGE,
+				null,
+				options,
+				options[0]);
 
 		return ReturnCodes.ERROR;
 	}
@@ -249,18 +300,32 @@ public class DocumentManager {
 				//Check that we have write permission to the folder where this
 				// file was selected.
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				else if (!jfc.getSelectedFile().canRead()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				else {
 					file = jfc.getSelectedFile();
@@ -272,18 +337,6 @@ public class DocumentManager {
 			}
 		}
 
-		//We now have a file; let's try to load it.
-//		if (JOptionPane.showConfirmDialog(
-//		null, 
-//		Translate.getInstance().get(TranslateKeys.CONFIRM_LOAD_BACKUP_FILE), 
-//		Translate.getInstance().get(TranslateKeys.CLOSE_DATA_FILE),
-//		JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-//		DataInstance.getInstance().loadDataFile(file);
-//		PrefsInstance.getInstance().getPrefs().setDataFile(file.getAbsolutePath());
-//		PrefsInstance.getInstance().savePrefs();
-//		MainBuddiFrame.getInstance().updateContent();
-//		}
-
 		return file;
 	}
 
@@ -293,32 +346,54 @@ public class DocumentManager {
 		ReturnCodes returnCode = ReturnCodes.INITIAL;
 		if (f != null){
 			returnCode = DocumentController.saveFile(f);
-			JOptionPane.showMessageDialog(
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					null, 
 					Translate.getInstance().get(TranslateKeys.SUCCESSFUL_SAVE_FILE) 
 					+ f, 
 					Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
-					JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.INFORMATION_MESSAGE,
+					null,
+					options,
+					options[0]);
 		}
 		else {
 			returnCode = ReturnCodes.ERROR;
-			JOptionPane.showMessageDialog(
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					null, 
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE) 
 					+ " " 
 					+ f
 					+ "\n\n"
 					+ Translate.getInstance().get(TranslateKeys.CHECK_CONSOLE), 
-					Translate.getInstance().get(TranslateKeys.ERROR), 
-					JOptionPane.ERROR_MESSAGE);
+					Translate.getInstance().get(TranslateKeys.ERROR),
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
 		}
 		
-		if (returnCode.equals(ReturnCodes.SUCCESS))
-			JOptionPane.showMessageDialog(
+		if (returnCode.equals(ReturnCodes.SUCCESS)){
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					MainFrame.getInstance(),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
+		}
 		
 		return returnCode;
 	}
@@ -332,15 +407,25 @@ public class DocumentManager {
 			returnCode = DocumentController.saveFile(f);
 			
 			if (returnCode.equals(ReturnCodes.SUCCESS)){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						null, 
 						Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) 
 						+ f, 
-						Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
-						JOptionPane.INFORMATION_MESSAGE);
+						Translate.getInstance().get(TranslateKeys.FILE_SAVED),
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]);
 			}
 			else {
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						null, 
 						Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE) 
 						+ " " 
@@ -348,20 +433,32 @@ public class DocumentManager {
 						+ "\n\n"
 						+ Translate.getInstance().get(TranslateKeys.CHECK_CONSOLE), 
 						Translate.getInstance().get(TranslateKeys.ERROR), 
-						JOptionPane.ERROR_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]);
 			}
 		}
 		else {
 			returnCode = ReturnCodes.ERROR;
 		}
 		
-		if (!returnCode.equals(ReturnCodes.SUCCESS))
-			JOptionPane.showMessageDialog(
+		if (!returnCode.equals(ReturnCodes.SUCCESS)){
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					MainFrame.getInstance(),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE);
-		
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
+		}
+			
 		return returnCode;
 	}
 
@@ -378,20 +475,34 @@ public class DocumentManager {
 				// the user selects an existing file, we show an
 				// error and prompt for another file.
 				if (jfc.getSelectedFile().exists()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null, 
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_OVER_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				//Check that we have write permission to the folder where this
 				// file was selected.
 				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				//User has selected a new file name.  Make sure the extension
 				// is correct, and use this file.
@@ -410,13 +521,6 @@ public class DocumentManager {
 				return null;
 			}
 		}
-
-//		DataInstance.getInstance().saveDataModel(file.getAbsolutePath());
-//		JOptionPane.showMessageDialog(
-//		null, 
-//		Translate.getInstance().get(TranslateKeys.SUCCESSFUL_BACKUP) + file, 
-//		Translate.getInstance().get(TranslateKeys.FILE_SAVED), 
-//		JOptionPane.INFORMATION_MESSAGE);
 
 		return file;
 	}
@@ -470,19 +574,34 @@ public class DocumentManager {
 				//Before we open the file, we check that we have read / write 
 				// permission to it.  This is in response to bug #1626996. 
 				else if (!dataFile.canWrite()){
-					JOptionPane.showMessageDialog(
+					if (Const.DEVEL) Log.debug("DocumentManager.selectDesiredFile(): !dataFile.canWrite()");
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 					returnCode = DocumentManager.getInstance().chooseFile();
 				}
 				else if (!dataFile.canRead()){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 					returnCode = DocumentManager.getInstance().chooseFile();
 				}
 				//If all looks well, we try to load the file.

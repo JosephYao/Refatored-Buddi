@@ -1,6 +1,11 @@
-2.3.11 (May 9 2007)
+2.3.12
+-Added translations for Yes / No / Cancel / OK buttons in JOptionPanes (bug #1697734)
+-Added Italian translation
+-Fixed bug #1716654 (cannot save items in My Documents).
+
+2.3.11 (May 10 2007)
 -Fixed bug which would not show language prompt when creating new Prefs.xml file in some situations
--Added Debian package
+-Added Debian package and respository.  You can access this from Debian based Linux distributions by adding the line "deb http://buddi.sourceforge.net/debian development main" to your /etc/apt/sources.list file, and selecting Buddi as the package through your favorite package manager.  (Once 2.4.0.0 Stable is released, you can use the same line as above, but replace 'development' with 'stable' to access the Stable version).
 -Added timers to plugins which check the enabled status every 2 seconds, and updates the plugin accordingly.
 -Only load plugins for which the Buddi API Version is greater than or equal to the Plugin API version (only comparing Major.Minor versions).
 

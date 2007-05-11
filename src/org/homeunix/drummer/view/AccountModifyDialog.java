@@ -94,11 +94,18 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)) {
 			if (name.getText().length() == 0 || pulldown.getSelectedItem() == null){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						AccountModifyDialog.this, 
 						Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_NAME_AND_TYPE),
 						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
-						JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]);
 				return;
 			}
 			
@@ -106,11 +113,18 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 			if (source == null){
 				for (Account account : SourceController.getAccounts()) {
 					if (account.getName().equalsIgnoreCase(name.getText())){
-						JOptionPane.showMessageDialog(
+						String[] options = new String[1];
+						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
 								AccountModifyDialog.this, 
 								Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
 								Translate.getInstance().get(TranslateKeys.ERROR),
-								JOptionPane.ERROR_MESSAGE);
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE,
+								null,
+								options,
+								options[0]);
 						return;					
 					}
 				}

@@ -171,9 +171,6 @@ public class APICommonHTMLHelper {
 		sb.append(Translate.getInstance().get(t.getDescription()));
 		
 		sb.append("</td><td width='35%'>");
-		System.out.println(t);
-		System.out.println(t.getFrom());
-		System.out.println(t.getFrom().toString());
 		sb.append(Translate.getInstance().get(t.getFrom().toString()));
 		sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
 		sb.append(Translate.getInstance().get(t.getTo().toString()));

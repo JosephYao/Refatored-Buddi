@@ -87,11 +87,18 @@ public class Buddi {
 				&& PrefsInstance.getInstance().getLastVersionRun().length() > 0 
 				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
 
-			if (JOptionPane.showConfirmDialog(null, 
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
+
+			if (JOptionPane.showOptionDialog(null, 
 					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
 					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					options,
+					options[0]
 			) == JOptionPane.CANCEL_OPTION)
 				System.exit(0);
 
@@ -367,11 +374,18 @@ public class Buddi {
 					}
 					//There was no updates - if we want a confirmation, show it
 					else if (confirm){
-						JOptionPane.showMessageDialog(
+						String[] options = new String[1];
+						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
 								MainFrame.getInstance(), 
 								Translate.getInstance().get(TranslateKeys.MESSAGE_NO_NEW_VERSION), 
 								Translate.getInstance().get(TranslateKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
-								JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]);
 					}
 
 					super.finished();

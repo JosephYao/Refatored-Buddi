@@ -51,11 +51,18 @@ public class TypeModifyDialog extends AbstractModifyDialog<Type> {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			if (name.getText().length() == 0){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						TypeModifyDialog.this, 
 						Translate.getInstance().get(TranslateKeys.ENTER_ACCOUNT_TYPE_NAME),
 						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
-						JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]);
 			}
 			else{
 				if (source == null){

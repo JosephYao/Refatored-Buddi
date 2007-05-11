@@ -807,12 +807,20 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 			if (Const.DEVEL) Log.debug("Schedule week: "+ getScheduleWeek());
 
 			if (ScheduleModifyDialog.this.ensureInfoCorrect()){
+				String[] options = new String[2];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+				options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
+
 				if (!ScheduleModifyDialog.this.startDateChooser.getDate().before(new Date())
 						|| schedule != null		//If the schedule has already been defined, we won't bother people again 
-						|| JOptionPane.showConfirmDialog(ScheduleModifyDialog.this, 
+						|| JOptionPane.showOptionDialog(ScheduleModifyDialog.this, 
 								Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST), 
 								Translate.getInstance().get(TranslateKeys.START_DATE_IN_THE_PAST_TITLE), 
-								JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE,
+								null,
+								options,
+								options[0]) == JOptionPane.OK_OPTION){
 					ScheduleModifyDialog.this.saveSchedule();
 					ScheduleController.checkForScheduledActions();
 //					MainFrame.getInstance().updateContent();
@@ -823,10 +831,17 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 					if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
 			}
 			else {
-				JOptionPane.showMessageDialog(ScheduleModifyDialog.this, 
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(ScheduleModifyDialog.this, 
 						Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO),
 						Translate.getInstance().get(TranslateKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
-						JOptionPane.ERROR_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]);
 			}
 		}
 		else if (e.getSource().equals(cancelButton)){

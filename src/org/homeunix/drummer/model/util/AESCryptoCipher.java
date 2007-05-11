@@ -81,11 +81,19 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 	public OutputStream encrypt(OutputStream out) throws Exception {
 		if (this.encrypted == null) {
 			// ask the user if the stream should be encrypted
-			int choice = JOptionPane.showConfirmDialog(
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
+			int choice = JOptionPane.showOptionDialog(
 					MainFrame.getInstance(), 
 					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_YES_NO),
 					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_TITLE),
-					JOptionPane.YES_NO_OPTION);
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[0]);
 			this.encrypted = new Boolean(JOptionPane.YES_OPTION == choice);
 		}
 
@@ -203,11 +211,18 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 					true);
 
 			if (password == null){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						MainFrame.getInstance(), 
 						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD), 
 						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
-						JOptionPane.INFORMATION_MESSAGE
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
 				);
 
 				throw new BadPasswordException(Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
@@ -241,11 +256,18 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 				buffered.reset();
 			}
 			if (!correctPassword){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						MainFrame.getInstance(),
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD),
 						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD_TITLE),
-						JOptionPane.ERROR_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]);
 			}
 		} while (!correctPassword);
 

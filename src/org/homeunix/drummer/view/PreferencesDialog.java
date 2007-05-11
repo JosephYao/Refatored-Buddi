@@ -542,12 +542,19 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			PrefsInstance.getInstance().savePrefs();
 
 			if (needRestart){
-				int retValue = JOptionPane.showConfirmDialog(
+				String[] options = new String[2];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+				options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
+				int retValue = JOptionPane.showOptionDialog(
 						PreferencesDialog.this,
 						Translate.getInstance().get(TranslateKeys.RESTART_NEEDED),
 						Translate.getInstance().get(TranslateKeys.RESTART_NEEDED_TITLE),
 						JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
 				);
 
 				if (retValue == JOptionPane.YES_OPTION){
@@ -593,10 +600,18 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 				Vector<String> classNames = PluginFactory.getAllPluginsFromJar(jfc.getSelectedFile());
 				if (classNames.size() == 0){
-					JOptionPane.showMessageDialog(PreferencesDialog.this, 
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							PreferencesDialog.this, 
 							Translate.getInstance().get(TranslateKeys.NO_PLUGINS_IN_JAR), 
 							Translate.getInstance().get(TranslateKeys.NO_PLUGINS_IN_JAR_TITLE), 
-							JOptionPane.WARNING_MESSAGE
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							options,
+							options[0]
 					);
 				}
 				for (String className : classNames) {
@@ -661,11 +676,18 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 					new SimpleDateFormat(newDateFormat);
 				}
 				catch (IllegalArgumentException iae){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							this, 
 							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_INCORRECT_FORMAT), 
-							Translate.getInstance().get(TranslateKeys.ERROR), 
-							JOptionPane.ERROR_MESSAGE);
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 					return;
 				}
 

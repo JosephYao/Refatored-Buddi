@@ -3,10 +3,14 @@
  */
 package org.homeunix.drummer.util;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.Log;
 
 public class BudgetCalculator {
 	
@@ -26,9 +30,8 @@ public class BudgetCalculator {
 	 */
 	public static long getEquivalentByInterval(long value, Interval interval, Date startDate, Date endDate){
 		//Find out how many days are in this interval.
-		double daysInInterval = 
-			interval.getLength() * (interval.isDays() ? 1 : 30);
-
+		long daysInInterval = getDaysInInterval(interval, startDate, endDate);
+		
 		double numberOfBudgetPeriods = 
 			(DateUtil.daysBetween(startDate, endDate) + 1) / daysInInterval;
 		return (long) (value * numberOfBudgetPeriods);
@@ -52,14 +55,45 @@ public class BudgetCalculator {
 	 * @return
 	 */
 	public static long getAverageByInterval(long value, Interval interval, Date startDate, Date endDate){
-		long daysInInterval = 
-			interval.getLength() * (interval.isDays() ? 1 : 30);
-		long daysBetweenDates =
-			DateUtil.daysBetween(startDate, endDate);
+		long daysInInterval = getDaysInInterval(interval, startDate, endDate);		
 		
+		long daysBetweenDates =
+			DateUtil.daysBetweenInclusive(startDate, endDate);
 		
 		double average = (value * daysInInterval) / (double) daysBetweenDates;
 		
 		return (long) average;
+	}
+	
+	private static long getDaysInInterval(Interval interval, Date startDate, Date endDate){
+		long daysInInterval;
+		
+		Calendar start = new GregorianCalendar();
+		Calendar end = new GregorianCalendar();
+		start.setTime(startDate);
+		end.setTime(endDate);
+		
+		//If the interval is measured in days, we just pass that in.
+		if (interval.isDays()){
+			daysInInterval = interval.getLength();
+		}
+		//The start and the end are not in the same month.  For now,
+		// we just return the length * 30, as otherwise would
+		// require all sorts of special case code.  The longer
+		// range the forecase, the more inaccurate it will be 
+		// anyways, so this should not be too much of a loss.
+		else if (start.get(Calendar.YEAR) != end.get(Calendar.YEAR)
+				|| start.get(Calendar.MONTH) != end.get(Calendar.MONTH)){
+			if (Const.DEVEL) Log.debug("Start != End month; assuming 30 days for average budget");
+			daysInInterval = interval.getLength() * 30;
+		}
+		//The start and end are in the same month; return the number 
+		// of days in that month.
+		else {			
+			daysInInterval = start.getActualMaximum(Calendar.DAY_OF_MONTH);
+			if (Const.DEVEL) Log.debug("Start == End month; " + daysInInterval + " accurate for month.");
+		}
+		
+		return daysInInterval;
 	}
 }

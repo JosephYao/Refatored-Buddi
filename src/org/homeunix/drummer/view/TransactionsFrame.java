@@ -377,11 +377,19 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 								editableTransaction.getTo(), 
 								editableTransaction.getFrom(),
 								TransactionsFrame.this.account)){
-							ret = JOptionPane.showConfirmDialog(
+							String[] options = new String[2];
+							options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+							options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
+							ret = JOptionPane.showOptionDialog(
 									null, 
 									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_MESSAGE), 
 									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
-									JOptionPane.YES_NO_CANCEL_OPTION);
+									JOptionPane.YES_NO_CANCEL_OPTION,
+									JOptionPane.PLAIN_MESSAGE,
+									null,
+									options,
+									options[0]);
 							if (ret == JOptionPane.YES_OPTION){
 								recordButton.doClick();
 							}
@@ -398,11 +406,19 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							}
 						}
 						else{
-							ret = JOptionPane.showConfirmDialog(
+							String[] options = new String[2];
+							options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+							options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
+							ret = JOptionPane.showOptionDialog(
 									null, 
 									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_INVALID_MESSAGE), 
 									Translate.getInstance().get(TranslateKeys.TRANSACTION_CHANGED_TITLE),
-									JOptionPane.YES_NO_OPTION);
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.PLAIN_MESSAGE,
+									null,
+									options,
+									options[0]);
 							if (ret == JOptionPane.NO_OPTION){
 								editableTransaction.setChanged(false);
 
@@ -660,11 +676,18 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 					editableTransaction.getTo(), 
 					editableTransaction.getFrom(),
 					this.account)){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						TransactionsFrame.this,
 						Translate.getInstance().get(TranslateKeys.RECORD_BUTTON_ERROR),
 						Translate.getInstance().get(TranslateKeys.ERROR),
-						JOptionPane.ERROR_MESSAGE
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]
 				);
 				return;
 			}
@@ -742,13 +765,20 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			DocumentController.saveFileSoon();
 		}
 		else if (e.getSource().equals(clearButton)){
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
 			if (!editableTransaction.isChanged()
-					|| JOptionPane.showConfirmDialog(
+					|| JOptionPane.showOptionDialog(
 							TransactionsFrame.this,
 							Translate.getInstance().get(TranslateKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
 							Translate.getInstance().get(TranslateKeys.CLEAR_TRANSACTION),
 							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							options,
+							options[0]) == JOptionPane.YES_OPTION){
 
 				editableTransaction.setTransaction(null, true);
 				editableTransaction.updateContent();
@@ -759,12 +789,19 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			}
 		}
 		else if (e.getSource().equals(deleteButton)){
-			if (JOptionPane.showConfirmDialog(
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+
+			if (JOptionPane.showOptionDialog(
 					TransactionsFrame.this, 
 					Translate.getInstance().get(TranslateKeys.DELETE_TRANSACTION_LOSE_CHANGES),
 					Translate.getInstance().get(TranslateKeys.DELETE_TRANSACTION),
 					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[0]) == JOptionPane.YES_OPTION){
 
 				Transaction t = (Transaction) list.getSelectedValue();
 				int position = list.getSelectedIndex();

@@ -62,19 +62,33 @@ public class PrefsInstance {
 
 		File locationFile = new File(location).getAbsoluteFile();
 		if (!locationFile.canWrite() && locationFile.exists()){
-			JOptionPane.showMessageDialog(
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_PREFS_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
 			System.exit(1);
 		}
 		if (!locationFile.canRead() && locationFile.exists()){
-			JOptionPane.showMessageDialog(
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
 					null,
 					Translate.getInstance().get(TranslateKeys.PROBLEM_READING_PREFS_FILE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]);
 			System.exit(1);
 		}
 
@@ -486,53 +500,6 @@ public class PrefsInstance {
 		Log.error("Can't find Interval: " + userPrefs.getPrefs().getSelectedInterval());
 		return null;
 	}
-
-//	public static String chooseDataFile(){
-//	final String dataFileName;
-
-//	final JFileChooser jfc = new JFileChooser();
-//	jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-//	jfc.setDialogTitle("Choose Datastore Location...");
-//	if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
-//	if (jfc.getSelectedFile() != null){
-//	String chosenString = jfc.getSelectedFile().getAbsolutePath();
-//	if (jfc.getSelectedFile().isDirectory()){
-//	dataFileName = 
-//	chosenString 
-//	+ File.separator + Const.DATA_DEFAULT_FILENAME 
-//	+ Const.DATA_FILE_EXTENSION;
-//	}
-//	else{
-//	if (chosenString.endsWith(Const.DATA_FILE_EXTENSION))
-//	dataFileName = chosenString;
-//	else
-//	dataFileName = chosenString + Const.DATA_FILE_EXTENSION;
-//	}
-//	}
-//	else{
-//	JOptionPane.showMessageDialog(
-//	null,
-//	"Error choosing file.",
-//	"Exiting.",
-//	JOptionPane.ERROR_MESSAGE
-//	);
-//	return null;					
-//	}
-//	}
-//	else{
-//	JOptionPane.showMessageDialog(
-//	null,
-//	"Did not choose data directory.",
-//	"Exiting",
-//	JOptionPane.ERROR_MESSAGE
-//	);
-//	return null;
-//	}
-
-//	if (Const.DEVEL) Log.debug("Chosen data file: " + dataFileName);
-
-//	return dataFileName;
-//	}
 
 	public void checkWindowSanity(){
 		Prefs prefs = getPrefs();

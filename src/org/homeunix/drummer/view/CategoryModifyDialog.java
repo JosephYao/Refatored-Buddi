@@ -49,7 +49,6 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			this.setTitle(Translate.getInstance().get(TranslateKeys.CATEGORY_MODIFY_EDIT));
 		}
 		
-		System.out.println(source == null);
 		check.setEnabled(source == null);
 		
 		updateContent();
@@ -85,11 +84,18 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			if (name.getText().length() == 0){
-				JOptionPane.showMessageDialog(
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
 						CategoryModifyDialog.this, 
 						Translate.getInstance().get(TranslateKeys.ENTER_CATEGORY_NAME),
 						Translate.getInstance().get(TranslateKeys.MORE_INFO_NEEDED),
-						JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]);
 				return;
 			}
 
@@ -97,11 +103,18 @@ public class CategoryModifyDialog extends AbstractModifyDialog<Category> {
 			if (source == null){
 				for (Category category : SourceController.getCategories()) {
 					if (category.getName().equalsIgnoreCase(name.getText())){
-						JOptionPane.showMessageDialog(
+						String[] options = new String[1];
+						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
 								CategoryModifyDialog.this, 
 								Translate.getInstance().get(TranslateKeys.NAME_MUST_BE_UNIQUE),
 								Translate.getInstance().get(TranslateKeys.ERROR),
-								JOptionPane.ERROR_MESSAGE);
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE,
+								null,
+								options,
+								options[0]);
 						return;					
 					}
 				}

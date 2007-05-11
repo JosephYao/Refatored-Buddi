@@ -141,11 +141,18 @@ public class TypeListDialog extends AbstractBuddiDialog {
 			if (o instanceof Type){
 				Type t = (Type) o;				
 				if (!TypeController.deleteType(t)){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							this,
 							Translate.getInstance().get(TranslateKeys.MESSAGE_CANNOT_DELETE_TYPE),
 							Translate.getInstance().get(TranslateKeys.ERROR),
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
 				}
 				updateContent();
 			}

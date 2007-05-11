@@ -191,11 +191,18 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 
 				if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL)
 						&& endDate.before(startDate)){
-					JOptionPane.showMessageDialog(
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
 							null, 
 							Translate.getInstance().get(TranslateKeys.START_DATE_AFTER_END_DATE), 
-							Translate.getInstance().get(TranslateKeys.REPORT_DATE_ERROR), 
-							JOptionPane.ERROR_MESSAGE
+							Translate.getInstance().get(TranslateKeys.REPORT_DATE_ERROR),
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]
 					);
 					return;
 				}

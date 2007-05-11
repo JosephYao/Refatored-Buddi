@@ -253,7 +253,7 @@ function clean {
 # Upload the bundles
 function upload {
 	if [ "$1" == "--release" ]; then
-		svn copy https://buddisvn.sourceforge.net/svnroot/buddi/trunk https://buddi.svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
+		svn copy https://buddi.svn.sourceforge.net/svnroot/buddi/trunk https://buddi.svn.sourceforge.net/svnroot/buddi/tags/$VERSION -m "Tagging release $VERSION"
 		echo Package=${PACKAGE}
 
 		#Upload Debian Packages.gz to root of Buddi SF.net page

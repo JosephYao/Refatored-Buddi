@@ -106,10 +106,17 @@ public class LanguageEditor extends JDialog {
 		);
 
 		if (tempLanguage == null || tempLanguage.length() == 0){
-			JOptionPane.showMessageDialog(this, 
+			String[] options = new String[1];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(this, 
 					Translate.getInstance().get(TranslateKeys.LANGUAGE_EDITOR_BLANK_VALUE),
 					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.ERROR_MESSAGE
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]
 			);
 
 			throw new Exception("Blank Language");
@@ -122,7 +129,8 @@ public class LanguageEditor extends JDialog {
 		if (defaultLocale.equals(language))
 			defaultLocale = "";
 
-		String tempLocaleName = JOptionPane.showInputDialog(null, 
+		String tempLocaleName = JOptionPane.showInputDialog(
+				null, 
 				Translate.getInstance().get(TranslateKeys.LANGUAGE_EDITOR_LOCALE),
 				defaultLocale
 		);
@@ -347,7 +355,9 @@ public class LanguageEditor extends JDialog {
 					newProps.store(new FileOutputStream(saveFile), null);
 				}
 				catch (Exception e){
-					JOptionPane.showMessageDialog(LanguageEditor.this, e);
+					JOptionPane.showMessageDialog(
+							LanguageEditor.this,
+							e);
 				}
 
 				//Close the window.
@@ -364,8 +374,18 @@ public class LanguageEditor extends JDialog {
 
 		help.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(LanguageEditor.this,
-						Translate.getInstance().get(TranslateKeys.LANGUAGE_EDITOR_HELP)
+				String[] options = new String[1];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+				
+				JOptionPane.showOptionDialog(
+						LanguageEditor.this,
+						Translate.getInstance().get(TranslateKeys.LANGUAGE_EDITOR_HELP),
+						"",
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.DEFAULT_OPTION,
+						null,
+						options,
+						options[0]
 				);
 			}
 		});
