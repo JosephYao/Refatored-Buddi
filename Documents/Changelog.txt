@@ -1,4 +1,4 @@
-2.3.12
+2.3.12 (May 14 2007)
 -Added translations for Yes / No / Cancel / OK buttons in JOptionPanes (bug #1697734)
 -Added Italian translation
 -Fixed bug #1716654 (cannot save items in My Documents)
