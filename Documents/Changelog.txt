@@ -3,6 +3,7 @@
 -Added Italian translation
 -Fixed bug #1716654 (cannot save items in My Documents)
 -Fixed bug #1710575 (Incorrect budget reports for non-30 day months)
+-Updated Norwegian translation
 
 2.3.11 (May 10 2007)
 -Fixed bug which would not show language prompt when creating new Prefs.xml file in some situations

@@ -136,7 +136,7 @@ public class DocumentManager {
 				}
 				//Check that we have write permission to the folder where this
 				// file was selected.
-				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
+				else if (!isFolderWritable(jfc.getSelectedFile().getParentFile())){
 					if (Const.DEVEL) Log.debug("DocumentManager.newDataFile(): !jfc.getSelectedFile().getParentFile().canWrite().  jfc.getSelectedFile() = " + jfc.getSelectedFile() + ", jfc.getSelectedFile().getParent() = " + jfc.getSelectedFile().getParentFile());
 					String[] options = new String[1];
 					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
@@ -299,7 +299,7 @@ public class DocumentManager {
 				}
 				//Check that we have write permission to the folder where this
 				// file was selected.
-				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
+				else if (!isFolderWritable(jfc.getSelectedFile().getParentFile())){
 					String[] options = new String[1];
 					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -490,7 +490,7 @@ public class DocumentManager {
 				}
 				//Check that we have write permission to the folder where this
 				// file was selected.
-				else if (!jfc.getSelectedFile().getParentFile().canWrite()){
+				else if (!isFolderWritable(jfc.getSelectedFile().getParentFile())){
 					String[] options = new String[1];
 					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -619,6 +619,40 @@ public class DocumentManager {
 		}
 		
 		return returnCode;
+	}
+	
+	/**
+	 * Simple test to see if a folder is writable.  File.canWrite()
+	 * does not work on all Windows folders, as the folder may
+	 * be set RO but permissions allow it to be written.
+	 * This is in response to bug #1716654, "Error creating
+	 * a new file in My Documents folder".
+	 * @param folder
+	 * @return
+	 */
+	private boolean isFolderWritable(File folder){
+		if (!folder.isDirectory())
+			return false;
+		if (folder.canWrite())
+			return true;
+		File testFile = null;
+		final int MAX_CHECKS = 25;
+		for (int i = 0; i <= MAX_CHECKS && (testFile == null || testFile.exists()); i++){
+			testFile = new File(folder.getAbsolutePath() + File.separator + "." + Math.random());
+			if (i == MAX_CHECKS)
+				return false; //Could not test file - all tests already existed
+		}
+		
+		try {
+			testFile.createNewFile();
+			if (testFile.exists()){
+				testFile.delete();
+				return true;
+			}
+		}
+		catch (IOException ioe){}
+		
+		return false;
 	}
 
 	public class DataFileWrapper {
