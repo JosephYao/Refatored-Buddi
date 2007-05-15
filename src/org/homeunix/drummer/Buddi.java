@@ -57,6 +57,7 @@ public class Buddi {
 
 	private static String workingDir;
 	private static String fileToLoad;
+	private static boolean debian = false;
 
 	/**
 	 * Gets the current working directory.  This should be the same directory
@@ -73,6 +74,18 @@ public class Buddi {
 		return workingDir;
 	}
 
+	/** 
+	 * @return True if running on Debian, false otherwise.  This is 
+	 * obtained through the startup flag --debian, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on Linux - if the flag is set, we will download
+	 * a .deb when a new version is released, otherwise we will
+	 * download a .jar.
+	 */
+	public static boolean isDebian(){
+		return debian;
+	}
+	
 	/**
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
@@ -156,18 +169,21 @@ public class Buddi {
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n";
+		// Undocumented flag --debian will specify a .deb download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
 		variables.add(new ParseVariable("-p", String.class, false));
 		variables.add(new ParseVariable("-v", Integer.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
+		variables.add(new ParseVariable("--debian", Boolean.class, false));
 				
 		ParseResults results = ParseCommands.parse(args, help, variables);
 		String prefsLocation = results.getString("-p");
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
+		debian = results.getBoolean("--debian");
 		fileToLoad = (results.getCommands().size() > 0 ? results.getCommands().get(0) : null); 
 		
 		if (prefsLocation != null){
@@ -360,8 +376,13 @@ public class Buddi {
 								fileLocation += Const.DOWNLOAD_URL_DMG;
 							else if (OperatingSystemUtil.isWindows())
 								fileLocation += Const.DOWNLOAD_URL_ZIP;
-							else
-								fileLocation += Const.DOWNLOAD_URL_TGZ;
+							else {
+								//Check for any specific distributions here
+								if (Buddi.isDebian())
+									fileLocation += Const.DOWNLOAD_URL_DEB;
+								else
+									fileLocation += Const.DOWNLOAD_URL_TGZ;
+							}
 
 							try{
 								BrowserLauncher bl = new BrowserLauncher(null);

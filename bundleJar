@@ -91,7 +91,7 @@ function bundle_debian {
 
 	mkdir -p $DEBIAN/usr/bin
 	cp Buddi.jar $DEBIAN/usr/bin
-	cp etc/buddi $DEBIAN/usr/bin
+	cp etc/debian_buddi $DEBIAN/usr/bin/buddi
 	mkdir -p $DEBIAN/usr/share/applications
 	cp etc/buddi.desktop $DEBIAN/usr/share/applications/buddi.desktop
 	for X in 16 22 24 32 36 48 64 72 96 128 192; do
