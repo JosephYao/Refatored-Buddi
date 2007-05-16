@@ -846,6 +846,6 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	
 	@Override
 	public ImportManager getImportManager() {
-		return new ImportManagerImpl(null, null, (Transaction) list.getSelectedValue());
+		return new ImportManagerImpl(getAccount(), null, (Transaction) list.getSelectedValue());
 	}
 }

@@ -1,3 +1,6 @@
+2.3.13
+-Added flag on Debian buddi launch script to specify that the .deb is desired, instead of the default Linux .jar file.  I can do similar things for other special platforms as needed.
+
 2.3.12 (May 14 2007)
 -Added translations for Yes / No / Cancel / OK buttons in JOptionPanes (bug #1697734)
 -Added Italian translation

@@ -12,4 +12,8 @@ if [ "$1" = remove ]; then
     dpkg-divert --package buddi --rename --remove /usr/share/pixmaps/buddi.png
     
     dpkg-divert --package buddi --rename --remove /usr/share/doc/buddi/README
+
+    dpkg-divert --package buddi --rename --remove /usr/share/mime/packages/buddi.xml
+
+    update-mime-database /usr/share/mime
 fi
