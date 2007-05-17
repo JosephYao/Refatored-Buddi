@@ -14,11 +14,9 @@ if [ "$1" = install ]; then
     dpkg-divert --package buddi --rename --add /usr/share/doc/buddi/README
     
     dpkg-divert --package buddi --rename --add /usr/share/mime/packages/buddi.xml
-
-    update-mime-database /usr/share/mime
-
     # Update the default applications for Buddi files
     echo "application/x-buddi=buddi.desktop" >> /usr/share/applications/defaults.list
-    echo "application/x-buddi=buddi.desktop" >> /usr/share/applications/mimeinfo.cache
-    
+
+    update-mime-database /usr/share/mime
+    update-desktop-database /usr/share/applications 
 fi

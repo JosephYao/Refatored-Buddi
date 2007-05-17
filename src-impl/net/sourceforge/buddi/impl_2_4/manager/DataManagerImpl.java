@@ -37,9 +37,20 @@ public class DataManagerImpl implements DataManager {
 //    }
     
     public DataManagerImpl(Account selectedAccount, Category selectedCategory, Transaction selectedTransaction) {
-    	this.selectedImmutableAccount = new ImmutableAccountImpl(selectedAccount);
-    	this.selectedImmutableCategory = new ImmutableCategoryImpl(selectedCategory);  
-    	this.selectedImmutableTransaction = new ImmutableTransactionImpl(selectedTransaction);
+    	if (selectedAccount != null)
+    		this.selectedImmutableAccount = new ImmutableAccountImpl(selectedAccount);
+    	else 
+    		this.selectedImmutableAccount = null;
+    	
+    	if (selectedCategory != null)
+    		this.selectedImmutableCategory = new ImmutableCategoryImpl(selectedCategory);
+    	else
+    		this.selectedImmutableCategory = null;
+    	
+    	if (selectedTransaction != null)
+    		this.selectedImmutableTransaction = new ImmutableTransactionImpl(selectedTransaction);
+    	else
+    		this.selectedImmutableTransaction = null;
     }
 
     public ImmutableAccount getSelectedAccount() {
