@@ -57,7 +57,7 @@ public class Buddi {
 
 	private static String workingDir;
 	private static String fileToLoad;
-	private static boolean debian = false;
+	private static Boolean debian = false;
 
 	/**
 	 * Gets the current working directory.  This should be the same directory
@@ -83,6 +83,8 @@ public class Buddi {
 	 * download a .jar.
 	 */
 	public static boolean isDebian(){
+		if (debian == null)
+			debian = false;
 		return debian;
 	}
 	

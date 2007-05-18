@@ -15,8 +15,6 @@ if [ "$1" = remove ]; then
 
     dpkg-divert --package buddi --rename --remove /usr/share/mime/packages/buddi.xml
 
-    update-mime-database /usr/share/mime
-
     # Remove Buddi from the defaults list.  If someone knows of a better
     #  way to do this, please let me know.
     sed "/buddi\.desktop/d" /usr/share/applications/defaults.list > /usr/share/applications/defaults.list.new

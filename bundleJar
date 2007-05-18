@@ -106,6 +106,7 @@ function bundle_debian {
 	cp etc/debian_README $DEBIAN/usr/share/doc/buddi/README
 	cp etc/debian_control $DEBIAN/control
 	cp etc/debian_preinst $DEBIAN/preinst
+	cp etc/debian_preinst $DEBIAN/postinst
 	cp etc/debian_postrm $DEBIAN/postrm
 
 	# Setting this environment variable fixes Apple's modified GNU tar so 
@@ -128,7 +129,7 @@ function bundle_debian {
 	tar czvf data.tar.gz usr/ 
 
 	# create the control tarball
-	tar czvf control.tar.gz control preinst postrm
+	tar czvf control.tar.gz control preinst postinst postrm
 
 	# create the debian-binary file
 	echo 2.0 > debian-binary
