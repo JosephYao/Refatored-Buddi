@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.swing.filechooser.FileFilter;
 
 import net.sourceforge.buddi.api.manager.DataManager;
+import net.sourceforge.buddi.api.manager.DateRangeType;
 import net.sourceforge.buddi.api.manager.ImportManager;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
@@ -17,7 +18,6 @@ import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
-import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 

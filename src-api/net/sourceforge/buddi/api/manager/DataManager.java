@@ -12,7 +12,7 @@ import org.homeunix.thecave.moss.util.Version;
 
 public interface DataManager {
 
-    /**
+	/**
      * @return ImmutableAccount currently selected in main screen, associated account if in TransactionFrame, or null if no account selected.
      */
     public ImmutableAccount getAccount();

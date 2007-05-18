@@ -239,11 +239,5 @@ public class BuddiPluginHelper {
 		public boolean isCustom(){
 			return custom;
 		}
-	}
-
-	public static enum DateRangeType {
-		INTERVAL,
-		START_ONLY,
-		END_ONLY
 	}	
 }

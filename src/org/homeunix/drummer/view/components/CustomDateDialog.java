@@ -18,13 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import net.sourceforge.buddi.api.manager.DateRangeType;
 import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.plugins.BuddiPluginHelper;
-import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBuddiDialog;

@@ -18,6 +18,7 @@ import java.util.jar.JarEntry;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import net.sourceforge.buddi.api.manager.DateRangeType;
 import net.sourceforge.buddi.api.plugin.BuddiExportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
@@ -29,7 +30,6 @@ import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.plugins.BuddiPluginHelper.DateChoice;
-import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiExportPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiGraphPluginImpl;
 import org.homeunix.drummer.plugins.BuddiPluginImpl.BuddiImportPluginImpl;

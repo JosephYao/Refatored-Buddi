@@ -82,7 +82,8 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree.setTreeCellRenderer(new DefaultTreeCellRenderer());
 		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
-		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+//		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
 		
 		JScrollPane listScroller = new JScrollPane(tree);

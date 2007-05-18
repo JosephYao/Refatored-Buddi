@@ -10,6 +10,7 @@ import java.util.Vector;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
+import net.sourceforge.buddi.api.manager.DateRangeType;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
@@ -17,7 +18,6 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.util.Version;
 

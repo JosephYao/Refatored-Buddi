@@ -5,7 +5,7 @@ package net.sourceforge.buddi.api.plugin;
 
 import javax.swing.JPanel;
 
-import org.homeunix.drummer.plugins.BuddiPluginHelper.DateRangeType;
+import net.sourceforge.buddi.api.manager.DateRangeType;
 
 public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin, AutoRefreshPlugin {
 	
