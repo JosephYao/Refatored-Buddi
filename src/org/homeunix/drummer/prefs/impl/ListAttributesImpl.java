@@ -143,16 +143,9 @@ public class ListAttributesImpl extends EObjectImpl implements ListAttributes {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
 	 */
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (unrolled: ");
-		result.append(unrolled);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 } //ListAttributesImpl

@@ -13,19 +13,19 @@ import org.homeunix.thecave.moss.util.Version;
 public interface DataManager {
 
     /**
-     * @return ImmutableAccount currently selected in interface or null if no account selected.
+     * @return ImmutableAccount currently selected in main screen, associated account if in TransactionFrame, or null if no account selected.
      */
-    public ImmutableAccount getSelectedAccount();
+    public ImmutableAccount getAccount();
     
     /**
      * @return ImmutableCategory currently selected in interface or null if no category selected.
      */
-    public ImmutableCategory getSelectedCategory();
+    public ImmutableCategory getCategory();
 
     /**
      * @return ImmutableTransaction currently selected in interface or null if no transaction selected.
      */
-    public ImmutableTransaction getSelectedTransaction();
+    public ImmutableTransaction getTransaction();
 
     /**
      * @return ImmutableCategory with specified name

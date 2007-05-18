@@ -35,6 +35,8 @@ public class EditMenu extends JScreenMenu {
 		final JScreenMenuItem editAutomaticTransactions = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS));
 		final JScreenMenuItem clearTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_CLEAR_NEW));
 		final JScreenMenuItem recordTransaction = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_RECORD_UPDATE));
+		final JScreenMenuItem unrollAll = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_UNROLL_ALL));
+		final JScreenMenuItem rollAll = new JScreenMenuItem(Translate.getInstance().get(TranslateKeys.MENU_EDIT_ROLL_ALL));
 		final PreferencesJMenuItem preferences = Application.getInstance().getPreferencesJMenuItem();
 		preferences.setText(Translate.getInstance().get(TranslateKeys.MENU_EDIT_PREFERENCES));
 
@@ -44,6 +46,8 @@ public class EditMenu extends JScreenMenu {
 		clearTransaction.setActionCommand(TranslateKeys.MENU_EDIT_CLEAR_NEW.toString());
 		recordTransaction.setActionCommand(TranslateKeys.MENU_EDIT_RECORD_UPDATE.toString());
 		preferences.setActionCommand(TranslateKeys.MENU_EDIT_PREFERENCES.toString());
+		unrollAll.setActionCommand(TranslateKeys.MENU_EDIT_UNROLL_ALL.toString());
+		rollAll.setActionCommand(TranslateKeys.MENU_EDIT_ROLL_ALL.toString());
 
 		toggleReconciled.addActionListener(controller);
 		toggleCleared.addActionListener(controller);
@@ -51,12 +55,14 @@ public class EditMenu extends JScreenMenu {
 		clearTransaction.addActionListener(controller);
 		recordTransaction.addActionListener(controller);
 		preferences.addActionListener(controller);
+		unrollAll.addActionListener(controller);
+		rollAll.addActionListener(controller);
 		
 		toggleReconciled.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		toggleCleared.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				KeyEvent.SHIFT_MASK + Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		clearTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
+		clearTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		recordTransaction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -65,17 +71,21 @@ public class EditMenu extends JScreenMenu {
 		if (frame instanceof TransactionsFrame){
 			this.add(recordTransaction);
 			this.add(clearTransaction);
-			this.addSeparator();
 			if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+				this.addSeparator();
 				this.add(toggleCleared);
 				this.add(toggleReconciled);
-				this.addSeparator();
 			}
 		}
 		if (frame instanceof MainFrame){
+			//TODO This was proving too difficult to fit in the 2.4 release; add it in 2.5.
+//			this.add(rollAll);
+//			this.add(unrollAll);			
+//			this.addSeparator();
 			this.add(editAutomaticTransactions);
 		}
 		if (!PreferencesJMenuItem.isAutomaticallyPresent()){
+			this.addSeparator();
 			this.add(preferences);
 		}
 	}

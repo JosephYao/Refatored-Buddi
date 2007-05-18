@@ -254,6 +254,7 @@ public class DataInstance {
 			//This generally means that the password was incorrect,
 			// although it could also be used for other errors.
 			// In any case, we cannot open the file.
+			if (Const.DEVEL) Log.debug("DataInstance.loadDataFile() failure");
 			
 			//We also have to return the data instance to the old
 			// state.
@@ -261,7 +262,12 @@ public class DataInstance {
 			this.dataModel = oldDataModel;
 			this.resourceSet = oldResourceSet;
 			
-			return ReturnCodes.ERROR;
+			//TODO Is there ever a time when we get to this stage
+			// without the user hitting cancel on the password
+			// box?  If so, we should check for it, and return
+			// an error code instead of a cancel code,
+			// so that we can display the correct error message.
+			return ReturnCodes.CANCEL;
 		}
 
 		//Backup the file, now that we know it is good...

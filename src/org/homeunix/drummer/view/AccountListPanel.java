@@ -90,7 +90,7 @@ public class AccountListPanel extends AbstractListPanel {
 					accountType.add(account);
 					nodes.add(account);
 				}
-				//Don't show categories
+				//Don't show account types
 				else {
 					DefaultMutableTreeNode account = new DefaultMutableTreeNode(a);
 					treeModel.getRoot().add(account);

@@ -50,7 +50,7 @@ public class ScheduleController {
 		return v;
 	}
 
-	
+
 	/**
 	 * Adds a new schedule to the model.  Since there are a number of fields
 	 * which MUST be set, we prompt for all of them, instead of relying on the
@@ -121,16 +121,19 @@ public class ScheduleController {
 		Vector<Schedule> v = getScheduledTransactions();
 		Vector<Schedule> newV = new Vector<Schedule>();
 
+		Date today = new Date();
+		
 		for (Schedule schedule : v) {
-			if (schedule.getStartDate().before(DateUtil.getStartOfDay(new Date()))
+			if ((DateUtil.daysBetween(schedule.getStartDate(), today) == 0
+					|| DateUtil.getStartOfDay(schedule.getStartDate()).before(DateUtil.getStartOfDay(today)))
 					&& (schedule.getLastDateCreated() == null 
-							|| schedule.getLastDateCreated().before(DateUtil.getStartOfDay(new Date()))))
+							|| DateUtil.getStartOfDay(schedule.getLastDateCreated()).before(DateUtil.getStartOfDay(today))))
 				newV.add(schedule);
 		}
 
 		return newV;
 	}
-	
+
 	/**
 	 * Runs through the list of scheduled transactions, and adds any which
 	 * show be executed to the apropriate transacactions list.
@@ -162,7 +165,7 @@ public class ScheduleController {
 				// See bug #1641937 for more details.
 				tempDate = DateUtil.getNextDay(tempDate);
 			}
-			
+
 			Date lastDayCreated = (Date) tempDate.clone();
 
 			tempDate = DateUtil.getStartOfDay(tempDate);
@@ -284,7 +287,7 @@ public class ScheduleController {
 					s.setLastDateCreated(DateUtil.getEndOfDay(tempDate));
 					if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDateCreated());
 
-					if (s.getMessage() != null && s.getMessage().length() > 0){
+					if (s.getMessage() != null && s.getMessage().trim().length() > 0){
 						String[] options = new String[1];
 						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -297,7 +300,7 @@ public class ScheduleController {
 								null,
 								options,
 								options[0]
-								);
+						);
 					}
 
 					if (tempDate != null

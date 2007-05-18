@@ -190,22 +190,23 @@ public class DocumentManager {
 				null,
 				options,
 				options[0]);
-		
+
 		return ReturnCodes.ERROR;
 	}
 
 	public ReturnCodes loadDataFile(File file){
+		DocumentController.saveFile();
+		
 		File f = showLoadFileDialog(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), fileFilter);
 
-		ReturnCodes returnCode = ReturnCodes.INITIAL;
-		if (f != null){
-			returnCode = DocumentController.loadFile(f);
-		}
-		else {
-			returnCode = ReturnCodes.ERROR;
+		if (f == null){
+			return ReturnCodes.CANCEL;
 		}
 
-		if (!returnCode.equals(ReturnCodes.SUCCESS)){
+		ReturnCodes returnCode = DocumentController.loadFile(f);
+
+		if (!returnCode.equals(ReturnCodes.SUCCESS) 
+				&& !returnCode.equals(ReturnCodes.CANCEL)){
 			String[] options = new String[1];
 			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -219,12 +220,16 @@ public class DocumentManager {
 					options,
 					options[0]);
 		}
-		
+
 		return returnCode;
 	}
 
 	public ReturnCodes loadBackupFile(File backupFile, File restoreTo){
 		backupFile = showLoadFileDialog(backupFile, Translate.getInstance().get(TranslateKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), backupFilter);
+
+		if (backupFile == null){
+			return ReturnCodes.CANCEL;
+		}
 
 		if (restoreTo == null){
 			restoreTo = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
@@ -268,7 +273,7 @@ public class DocumentManager {
 						options[0]);					
 			}
 		}
-		
+
 		String[] options = new String[1];
 		options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -343,9 +348,13 @@ public class DocumentManager {
 	public ReturnCodes saveDataFile(File file){
 		File f = showSaveFileDialog(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), fileFilter);
 
-		ReturnCodes returnCode = ReturnCodes.INITIAL;
-		if (f != null){
-			returnCode = DocumentController.saveFile(f);
+		if (f == null){
+			return ReturnCodes.CANCEL;
+		}
+
+		ReturnCodes returnCode = DocumentController.saveFile(f);
+
+		if (returnCode.equals(ReturnCodes.SUCCESS)){
 			String[] options = new String[1];
 			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -361,7 +370,6 @@ public class DocumentManager {
 					options[0]);
 		}
 		else {
-			returnCode = ReturnCodes.ERROR;
 			String[] options = new String[1];
 			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -379,22 +387,7 @@ public class DocumentManager {
 					options,
 					options[0]);
 		}
-		
-		if (returnCode.equals(ReturnCodes.SUCCESS)){
-			String[] options = new String[1];
-			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
-			JOptionPane.showOptionDialog(
-					MainFrame.getInstance(),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_SAVING_FILE),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					JOptionPane.DEFAULT_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					null,
-					options,
-					options[0]);
-		}
-		
 		return returnCode;
 	}
 
@@ -402,10 +395,15 @@ public class DocumentManager {
 	public ReturnCodes saveBackupFile(File file){
 		File f = showSaveFileDialog(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), backupFilter);
 
+		if (f == null){
+			return ReturnCodes.CANCEL;
+		}
+
+
 		ReturnCodes returnCode = ReturnCodes.INITIAL;
 		if (f != null){
 			returnCode = DocumentController.saveFile(f);
-			
+
 			if (returnCode.equals(ReturnCodes.SUCCESS)){
 				String[] options = new String[1];
 				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
@@ -443,7 +441,7 @@ public class DocumentManager {
 		else {
 			returnCode = ReturnCodes.ERROR;
 		}
-		
+
 		if (!returnCode.equals(ReturnCodes.SUCCESS)){
 			String[] options = new String[1];
 			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
@@ -458,7 +456,7 @@ public class DocumentManager {
 					options,
 					options[0]);
 		}
-			
+
 		return returnCode;
 	}
 
@@ -524,7 +522,7 @@ public class DocumentManager {
 
 		return file;
 	}
-	
+
 	/**
 	 * Pick a data file to use for initial startup.  This is based on 
 	 * a number of different variables: if the data file is set in
@@ -546,7 +544,7 @@ public class DocumentManager {
 		//Load the data model.  Depending on different options and 
 		// user choices, this may be a new one, or load an existing one.
 		File dataFile = null;
-		
+
 		ReturnCodes returnCode = ReturnCodes.INITIAL;
 		while (!returnCode.equals(ReturnCodes.SUCCESS)
 				&& !returnCode.equals(ReturnCodes.CANCEL)){
@@ -614,13 +612,13 @@ public class DocumentManager {
 			else {
 				returnCode = DocumentManager.getInstance().chooseFile();
 			}
-			
+
 			if (Const.DEVEL) Log.debug("Return Code for initial document choice is " + returnCode);
 		}
-		
+
 		return returnCode;
 	}
-	
+
 	/**
 	 * Simple test to see if a folder is writable.  File.canWrite()
 	 * does not work on all Windows folders, as the folder may
@@ -642,7 +640,7 @@ public class DocumentManager {
 			if (i == MAX_CHECKS)
 				return false; //Could not test file - all tests already existed
 		}
-		
+
 		try {
 			testFile.createNewFile();
 			if (testFile.exists()){
@@ -651,7 +649,7 @@ public class DocumentManager {
 			}
 		}
 		catch (IOException ioe){}
-		
+
 		return false;
 	}
 

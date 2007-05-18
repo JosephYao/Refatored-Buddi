@@ -74,7 +74,7 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		return categoryListPanel;
 	}
 	
-	protected JPanel getSelectedPanel(){
+	public JPanel getSelectedPanel(){
 		if (tabs.getSelectedComponent().equals(accountListPanel))
 			return accountListPanel;
 		else if (tabs.getSelectedComponent().equals(categoryListPanel))

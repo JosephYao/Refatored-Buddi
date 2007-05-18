@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.MainFrame;
@@ -26,23 +27,50 @@ public class DocumentController {
 					Translate.getInstance().get(TranslateKeys.MESSAGE_READING_FILE));
 			progress.openWindow(new Dimension(150, 50), null);
 			
-			ReturnCodes returnCode = 
-				DataInstance.getInstance().loadDataFile(f);
-
-			//If there was a problem loading file (bad file,
-			// password incorrect, etc), we return that
-			// error code.
-			if (returnCode != ReturnCodes.SUCCESS){
-				progress.closeWindow();
-				return returnCode;	
-			}
+			ReturnCodes returnCode = ReturnCodes.INITIAL;
 			
+			//We need to synchronize this because in some cases, 
+			// a saveFile() call would happen between the time 
+			// that we loaded the new data file and the time
+			// that we set the new file in the Prefs.  This
+			// would result in the old data being saved over the
+			// new file, which is a Bad Thing.
+			//
+			//We do not put the code to set the data file in the
+			// document loading code, as that would make problems
+			// trying to recover from a failed load, as well as
+			// make problems for using the loadDataFile() method
+			// for restoring backups, etc.
+			synchronized (new Object()) {
+				
+				//Save the existing location, in case the load
+				// fails for some reason.
+				String oldLocation = PrefsInstance.getInstance().getPrefs().getDataFile();
+				PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());
+				
+				returnCode = 
+					DataInstance.getInstance().loadDataFile(f);
+
+				//If there was a problem loading file (bad file,
+				// password incorrect, etc), we return that
+				// error code.  We also must be sure to reset the
+				// Prefs location to the last known good location.
+				if (returnCode != ReturnCodes.SUCCESS){
+					if (Const.DEVEL) Log.debug("DocumentController.loadFile() failure: return code == " + returnCode);
+					PrefsInstance.getInstance().getPrefs().setDataFile(oldLocation);
+					progress.closeWindow();
+					return returnCode;	
+				}
+
+							
+			}
+
 			SwingWorker<ReturnCodes, String> worker = new SwingWorker<ReturnCodes, String>(){
 
 				@Override
 				protected ReturnCodes doInBackground() throws Exception {
 					publish(Translate.getInstance().get(TranslateKeys.MESSAGE_LOADING_DATA));
-					PrefsInstance.getInstance().getPrefs().setDataFile(f.getAbsolutePath());					
+										
 					TransactionsFrame.reloadModel();
 					DataInstance.getInstance().saveDataFile();
 

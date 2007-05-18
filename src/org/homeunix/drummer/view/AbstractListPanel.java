@@ -19,12 +19,14 @@ import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Source;
+import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.components.DefaultTreeCellRenderer;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
@@ -182,6 +184,40 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		}
 		
 		AbstractListPanel.this.updateButtons();
+	}
+	
+	public void unrollAll(){
+		for (int i = 0; i < treeModel.getRoot().getChildCount(); i++) {
+			if (treeModel.getRoot().getChildAt(i) instanceof DefaultMutableTreeNode)
+				setRollStateOnAllChildren((DefaultMutableTreeNode) treeModel.getRoot().getChildAt(i), true);
+		}
+	}
+	
+	public void rollAll(){
+		for (int i = 0; i < treeModel.getRoot().getChildCount(); i++) {
+			if (treeModel.getRoot().getChildAt(i) instanceof DefaultMutableTreeNode)
+				setRollStateOnAllChildren((DefaultMutableTreeNode) treeModel.getRoot().getChildAt(i), false);
+		}
+	}
+	
+	private void setRollStateOnAllChildren(DefaultMutableTreeNode node, boolean unrolled){
+		if (node.getUserObject() != null){
+			ListAttributes l = PrefsInstance.getInstance().getListAttributes(node.getUserObject().toString());
+			if (l != null)
+				l.setUnrolled(unrolled);
+		}
+
+		if (unrolled){
+			tree.expandPath(new TreePath(node.getPath()));
+		}
+		else {
+			tree.collapsePath(new TreePath(node.getPath()));
+		}
+		
+		for (int i = 0; i < node.getChildCount(); i++) {
+			if (node.getChildAt(i) instanceof DefaultMutableTreeNode)
+				setRollStateOnAllChildren((DefaultMutableTreeNode) node.getChildAt(i), unrolled);
+		}
 	}
 	
 	public void treeCollapsed(TreeExpansionEvent arg0) {				

@@ -53,15 +53,15 @@ public class DataManagerImpl implements DataManager {
     		this.selectedImmutableTransaction = null;
     }
 
-    public ImmutableAccount getSelectedAccount() {
+    public ImmutableAccount getAccount() {
         return selectedImmutableAccount;
     }
 
-    public ImmutableCategory getSelectedCategory() {
+    public ImmutableCategory getCategory() {
         return selectedImmutableCategory;
     }
 
-    public ImmutableTransaction getSelectedTransaction() {
+    public ImmutableTransaction getTransaction() {
         return selectedImmutableTransaction;
     }
 

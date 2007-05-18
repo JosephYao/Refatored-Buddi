@@ -1,5 +1,11 @@
 2.3.13
 -Added flag on Debian buddi launch script to specify that the .deb is desired, instead of the default Linux .jar file.  I can do similar things for other special platforms as needed.
+-Fixed bug which did not allow some scheduled transactions to run, depending on the relationship between created date, current date, and frequency.  Testers: please check your scheduled transactions, and report and duplicate or missing transactions to me.
+-Renamed getSelected{Account|Category|Transaction} to get{Account|Category|Transaction} in the API, to clarify some confusion about the naming.
+-Added pretty toString() methods to plugins, to make for meaningful console output
+-Bolded the Description in transaction view, and italicized the to / from entry
+-Fixed very intermittent bug in the loading code which could potentially overwrite the newly loaded file with the already loaded file.
+-Changed versioning scheme to X.Y.F.B, where X and Y are still Major and Minor respectively, but F is Feature release and B is Bug Fix.  This allows more information about the release to be shown in the version number, as we differentiate between bug fixes and new feature additions.
 
 2.3.12 (May 14 2007)
 -Added translations for Yes / No / Cancel / OK buttons in JOptionPanes (bug #1697734)

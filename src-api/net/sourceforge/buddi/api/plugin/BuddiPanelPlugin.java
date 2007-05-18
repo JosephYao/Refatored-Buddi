@@ -30,4 +30,9 @@ public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin, Au
 	public int getRefreshInterval() {
 		return 2;
 	}
+	
+	@Override
+	public String toString() {
+		return "Buddi Panel Plugin: " + getDescription();
+	}
 }

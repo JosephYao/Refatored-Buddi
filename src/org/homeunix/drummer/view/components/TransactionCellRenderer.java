@@ -6,6 +6,7 @@ package org.homeunix.drummer.view.components;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -117,8 +118,11 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			g.drawString(BuddiInternalFormatter.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
 
 			//Description
+			Font f = g.getFont();
+			g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
 			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, height / 2 - 5);
-
+			g.setFont(f);
+			
 			//Cleared and Reconciled
 			if (showAdvanced){
 				g.setColor(GREEN);
@@ -130,7 +134,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			}
 
 			//To / From sources
+			g.setFont(new Font(f.getName(), Font.ITALIC, f.getSize()));
 			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + " " + Translate.getInstance().get(TranslateKeys.TO) + " " + transaction.getTo()), 50, height - 5);
+			g.setFont(f);
 
 			//Left column
 			if (account != null
@@ -150,6 +156,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			}
 
 			//Balance
+			g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
 			if (transaction != null){
 				long balanceValue;
 				if (account != null){
@@ -164,6 +171,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 					g.setColor(textColor);
 				}
 			}
+			g.setFont(f);
 		}
 	}
 

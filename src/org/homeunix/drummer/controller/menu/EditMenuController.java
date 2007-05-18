@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.view.AbstractListPanel;
+import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.PreferencesDialog;
 import org.homeunix.drummer.view.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
@@ -39,6 +41,16 @@ public class EditMenuController implements ActionListener {
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_PREFERENCES.toString())){
 			new PreferencesDialog().openWindow();
+		}
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_ROLL_ALL.toString())){
+			if (MainFrame.getInstance().getSelectedPanel() instanceof AbstractListPanel){
+				((AbstractListPanel) MainFrame.getInstance().getSelectedPanel()).rollAll();
+			}
+		}
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_UNROLL_ALL.toString())){
+			if (MainFrame.getInstance().getSelectedPanel() instanceof AbstractListPanel){
+				((AbstractListPanel) MainFrame.getInstance().getSelectedPanel()).unrollAll();
+			}			
 		}
 		else {
 			Log.debug("Clicked " + e.getActionCommand());

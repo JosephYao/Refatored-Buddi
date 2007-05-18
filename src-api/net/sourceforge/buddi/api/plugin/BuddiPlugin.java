@@ -34,5 +34,5 @@ public interface BuddiPlugin {
 	 * @param dataManager The data manager associated with this plugin
 	 * @return
 	 */
-	public boolean isPluginActive(DataManager dataManager);	
+	public boolean isPluginActive(DataManager dataManager);
 }
