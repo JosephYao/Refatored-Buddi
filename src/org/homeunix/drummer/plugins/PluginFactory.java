@@ -179,7 +179,8 @@ public class PluginFactory<T extends BuddiPlugin> {
 			t.schedule(new TimerTask(){
 				@Override
 				public void run() {
-					tempPlugin.setVisible(tempPlugin.isPluginActive(MainFrame.getInstance().getDataManager()));
+					if (tempPlugin != null && MainFrame.getInstance() != null)
+						tempPlugin.setVisible(tempPlugin.isPluginActive(MainFrame.getInstance().getDataManager()));
 				}	
 			}, 0, plugin.getRefreshInterval() * 1000);
 				
@@ -322,6 +323,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 				Plugin plugin = (Plugin) o1;
 
 				File jarFile = new File(plugin.getJarFile());
+				if (Const.DEVEL) Log.debug("Trying to load languages from " + plugin.getJarFile() + " (loaded as " + jarFile.getAbsolutePath() + ")");
 				Translate.getInstance().loadPluginLanguages(jarFile, PrefsInstance.getInstance().getPrefs().getLanguage());
 				String className = plugin.getClassName();
 				className = filesystemToClass(className);

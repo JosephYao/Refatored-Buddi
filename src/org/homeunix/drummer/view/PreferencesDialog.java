@@ -616,7 +616,9 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 				}
 				for (String className : classNames) {
 					Plugin plugin = PrefsFactory.eINSTANCE.createPlugin();
+					if (Const.DEVEL) Log.debug("Selected Plugin: " + jfc.getSelectedFile().getAbsolutePath());
 					plugin.setJarFile(jfc.getSelectedFile().getAbsolutePath());
+					if (Const.DEVEL) Log.debug("Saved Plugin: " + plugin.getJarFile());
 					plugin.setClassName(className);
 					if (plugin.getClassName().endsWith(".class"))
 						pluginListModel.addElement(plugin);

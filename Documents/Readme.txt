@@ -1,6 +1,6 @@
 ----------------------------------------
 Buddi - Personal budget software for the rest of us
-Copyright (C) 2006 Wyatt Olson
+Copyright (C) 2006, 2007 Wyatt Olson
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

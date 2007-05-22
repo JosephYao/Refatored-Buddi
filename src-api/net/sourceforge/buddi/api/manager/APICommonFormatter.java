@@ -16,6 +16,7 @@ import net.sourceforge.buddi.impl_2_4.model.ImmutableSourceImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableTypeImpl;
 
+import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -23,6 +24,15 @@ import org.homeunix.thecave.moss.util.Formatter;
 public class APICommonFormatter {
 	public static DateFormat getDateFormat(){
 		return Formatter.getDateFormat(PrefsInstance.getInstance().getPrefs().getDateFormat());
+	}
+	
+	/**
+	 * Return the translation for the given key.
+	 * @param key
+	 * @return
+	 */
+	public static String getTranslation(String key){
+		return Translate.getInstance().get(key);
 	}
 
 	/**

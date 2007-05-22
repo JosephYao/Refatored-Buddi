@@ -217,7 +217,7 @@ public class Buddi {
 		// USB drives, from remote shares (which would not always have
 		// the same path), etc.
 		if (System.getProperty("user.dir").length() > 0)
-			workingDir = new File(System.getProperty("user.dir")).getAbsolutePath();
+			workingDir = new File(System.getProperty("user.dir")).getAbsolutePath()  + File.separator;
 		
 		//If we did not set it via user.dir, we set it here.
 		if (workingDir.length() == 0)

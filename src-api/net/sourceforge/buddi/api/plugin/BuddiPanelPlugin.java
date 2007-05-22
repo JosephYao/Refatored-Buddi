@@ -13,8 +13,6 @@ public abstract class BuddiPanelPlugin extends JPanel implements BuddiPlugin, Au
 	
 	/**
 	 * Returns the type of date range to use in the combo box.
-	 * Only used for plugin types Report or Graph; not used in Import
-	 * or Export.
 	 * @return
 	 */
 	public abstract DateRangeType getDateRangeType();

@@ -376,7 +376,7 @@ public class PrefsInstance {
 			//If we are using relative directories, replace with the relative dirs.
 			String newDataFile = userPrefs.getPrefs().getDataFile();
 			//Java doesn't like non-escaped backslashes in regexes...
-			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\");
+			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\") + File.separator;
 			newDataFile.replaceAll("^" + workingDirectoryRegex, "");
 			userPrefs.getPrefs().setDataFile(newDataFile);
 

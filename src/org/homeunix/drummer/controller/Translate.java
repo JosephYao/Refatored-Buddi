@@ -142,14 +142,20 @@ public class Translate {
 			//Load English
 			if (JarLoader.getResourceAsStream(jarFile, englishResource) != null)
 				translations.load(JarLoader.getResourceAsStream(jarFile, englishResource));
+			else
+				if (Const.DEVEL) Log.info("Problem loading " + englishResource + " from " + jarFile.getAbsolutePath());
 			
 			//Load Base Language
 			if (JarLoader.getResourceAsStream(jarFile, baseResource) != null)
 				translations.load(JarLoader.getResourceAsStream(jarFile, baseResource));
+			else
+				if (Const.DEVEL) Log.info("Problem loading " + baseResource + " from " + jarFile.getAbsolutePath());
 
 			//Load Localized Language
 			if (JarLoader.getResourceAsStream(jarFile, localizedResource) != null)
 				translations.load(JarLoader.getResourceAsStream(jarFile, localizedResource));
+			else
+				if (Const.DEVEL) Log.info("Problem loading " + localizedResource + " from " + jarFile.getAbsolutePath());
 		}
 		catch(IOException ioe){
 			JOptionPane.showMessageDialog(

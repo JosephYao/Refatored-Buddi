@@ -6,6 +6,7 @@
 -Bolded the Description in transaction view, and italicized the to / from entry
 -Fixed very intermittent bug in the loading code which could potentially overwrite the newly loaded file with the already loaded file.
 -Changed versioning scheme to X.Y.F.B, where X and Y are still Major and Minor respectively, but F is Feature release and B is Bug Fix.  This allows more information about the release to be shown in the version number, as we differentiate between bug fixes and new feature additions.
+-Fixed bug which would not properly load plugin translations if the plugin directory was similar to the working directory.  For instance, if the plugin was at /home/wyatt/buddi_plugins, and the working directory was /home/wyatt/buddi, then the plugin directory would be saved as _plugins, which would not allow the language to be loaded.  Force the check of the trailing / when matching working directory regex.
 
 2.3.12 (May 14 2007)
 -Added translations for Yes / No / Cancel / OK buttons in JOptionPanes (bug #1697734)
