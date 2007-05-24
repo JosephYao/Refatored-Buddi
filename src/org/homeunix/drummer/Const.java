@@ -69,13 +69,14 @@ public class Const {
 		"English",
 		"Espanol",
 		"Espanol_(MX)",
+		"Greek",
 		"Italiano",
 		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",
 		"Norsk",
-		"Portugues_(BR)",
-		"Russian_(RU)"
+		"Portugues",
+		"Russian"
 	};
 	
 	public final static String[] BUNDLED_DOCUMENTS = {

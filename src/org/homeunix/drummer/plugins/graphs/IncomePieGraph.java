@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.buddi.api.manager.APICommonFormatter;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
@@ -64,7 +65,7 @@ public class IncomePieGraph extends BuddiGraphPlugin {
 				
 		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(
 				Translate.getInstance().get(TranslateKeys.GRAPH_TITLE_INCOME_PIE_GRAPH), 
-				null, 
+				APICommonFormatter.getFormattedCurrency(totalIncome), 
 				startDate, 
 				endDate);
 
