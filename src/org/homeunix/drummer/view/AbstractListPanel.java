@@ -10,17 +10,20 @@ import java.awt.FlowLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
@@ -83,8 +86,9 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree.getColumn(1).setCellRenderer(new SourceNameCellRenderer());
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
 //		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+//		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
+		tree.setSelectionModel(new SingleListSelectionModel());
 		
 		JScrollPane listScroller = new JScrollPane(tree);
 
@@ -250,5 +254,28 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		}
 		
 		tree.packAll();
+	}
+	
+	/**
+	 * @author wyatt
+	 * A simple class to override a bug in JXTreeTable which allows
+	 * multiple rows to be selected, regardless of the state of 
+	 * the ListSelectionMode attribute.
+	 */
+	private class SingleListSelectionModel extends DefaultListSelectionModel implements ListSelectionListener {
+		public static final long serialVersionUID = 0;
+		
+		public SingleListSelectionModel() {
+			this.addListSelectionListener(this);
+			this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		
+		public void valueChanged(ListSelectionEvent e) {
+			int correctIndex = tree.getSelectedRow();
+			if (!e.getValueIsAdjusting()
+					&& e.getFirstIndex() != e.getLastIndex()) {
+				this.setSelectionInterval(correctIndex, correctIndex);
+			}
+		}
 	}
 }

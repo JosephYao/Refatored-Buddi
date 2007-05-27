@@ -1,4 +1,7 @@
-2.3.13 (May 23 2007)
+2.3.14.0
+-Fixed bug #1721317 (Can select multiple rows in accounts / categories).  This was due to a bug in JXTreeTable, but I managed to fix it by overriding the list selection model class.
+
+2.3.13.0 (May 23 2007)
 -Added flag on Debian buddi launch script to specify that the .deb is desired, instead of the default Linux .jar file.  I can do similar things for other special platforms as needed.
 -Fixed bug which did not allow some scheduled transactions to run, depending on the relationship between created date, current date, and frequency.  Testers: please check your scheduled transactions, and report and duplicate or missing transactions to me.
 -Renamed getSelected{Account|Category|Transaction} to get{Account|Category|Transaction} in the API, to clarify some confusion about the naming.
