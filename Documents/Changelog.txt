@@ -1,4 +1,5 @@
-2.3.14.0
+2.3.14.0 (May 28 2007) - 2.4.0.0 RC1
+-There are no outstanding feature requests left which are due to be included in 2.4.0.0.  This means that this version is the first release candidate.  Please report all bugs to me ASAP to get fixed before 2.4.0.0.
 -Fixed bug #1721317 (Can select multiple rows in accounts / categories).  This was due to a bug in JXTreeTable, but I managed to fix it by overriding the list selection model class.
 -Implemented OS X LaunchD listener, to allow opeing Buddi data files by double clicking in Finder
 -Added icon for Buddi data files in OS X

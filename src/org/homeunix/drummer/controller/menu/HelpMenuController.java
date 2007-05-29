@@ -53,7 +53,7 @@ public class HelpMenuController implements ActionListener {
 			Buddi.startUpdateCheck(true);
 		}
 		else {
-			Log.debug("Clicked " + e.getActionCommand());
+			if (Const.DEVEL) Log.debug("Clicked " + e.getActionCommand());
 		}
 	}
 }

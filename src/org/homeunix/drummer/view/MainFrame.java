@@ -35,7 +35,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
-import org.homeunix.drummer.plugins.LoadedPlugins;
 import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
@@ -54,7 +53,6 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 	private final ReportPanel reportPanel;
 	private final GraphPanel graphPanel;
 	private final JTabbedPane tabs;
-	private final LoadedPlugins loadedPlugins;
 		
 	private MainFrame(){
 		tabs = new JTabbedPane();
@@ -63,7 +61,6 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		categoryListPanel = new CategoryListPanel();
 		reportPanel = new ReportPanel();
 		graphPanel = new GraphPanel();
-		loadedPlugins = new LoadedPlugins();
 	}
 	
 	public AccountListPanel getAccountListPanel(){
@@ -347,10 +344,6 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 		return APICommonHTMLHelper.createHTML("main", new HTMLWrapper(sb.toString(), null));
 	}
 	
-	public LoadedPlugins getLoadedPlugins(){
-		return loadedPlugins;
-	}
-
 	@Override
 	public DataManager getDataManager() {
 		return getImportManager();

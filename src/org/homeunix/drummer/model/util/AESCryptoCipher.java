@@ -117,7 +117,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			String password = jpid.askForPassword(
 					MainFrame.getInstance(),
 					true, 
-					true);
+					false);
 
 			if (password == null){
 				this.encrypted = false;

@@ -17,7 +17,6 @@ public class ReportPanel extends AbstractInfomationPanel {
 		
 		for (BuddiPanelPlugin panel : PluginFactory.getReportPanelLaunchers()) {
 			pluginsPanel.add(panel);
-			MainFrame.getInstance().getLoadedPlugins().addPlugin(panel);
 		}
 
 		return this;

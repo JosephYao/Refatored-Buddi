@@ -17,7 +17,6 @@ public class GraphPanel extends AbstractInfomationPanel {
 		
 		for (BuddiPanelPlugin panel : PluginFactory.getGraphPanelLaunchers()) {
 			pluginsPanel.add(panel);
-			MainFrame.getInstance().getLoadedPlugins().addPlugin(panel);
 		}
 		
 		return this;

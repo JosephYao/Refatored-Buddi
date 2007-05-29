@@ -55,7 +55,8 @@ public class DocumentationFactory {
 			final String string = getDocumentText(s);
 			item.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					new JDocumentDialog(string);
+					JDocumentDialog dialog = new JDocumentDialog(string);
+					dialog.openWindow(new Dimension(640, 480), null);
 				}
 			});
 			licensesMenu.add(item);

@@ -95,14 +95,10 @@ public class FileMenu extends JScreenMenu {
 		//Get all the export and import plugins
 		for (BuddiExportPlugin menuItem : PluginFactory.getExportMenuItems(frame)) {
 			exports.add(menuItem);
-			if (MainFrame.getInstance() != null)
-				MainFrame.getInstance().getLoadedPlugins().addPlugin(menuItem);
 		}
 
 		for (BuddiImportPlugin menuItem : PluginFactory.getImportMenuItems(frame)) {
 			imports.add(menuItem);
-			if (MainFrame.getInstance() != null)
-				MainFrame.getInstance().getLoadedPlugins().addPlugin(menuItem);
 		}
 
 		// Add the menus to the main menu.
