@@ -40,6 +40,9 @@ import org.homeunix.thecave.moss.util.Version;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
 
+import com.apple.eawt.Application;
+import com.apple.eawt.ApplicationAdapter;
+
 import edu.stanford.ejalbert.BrowserLauncher;
 
 /**
@@ -96,7 +99,6 @@ public class Buddi {
 		// be translated properly...
 		PrefsInstance.getInstance();
 
-		// TODO Remove this from stable versions after 2.x.0
 		//Temporary notice stating the data format has changed.
 		if (Const.BRANCH.equals(Const.UNSTABLE)
 				&& PrefsInstance.getInstance().getLastVersionRun().length() > 0 
@@ -132,16 +134,6 @@ public class Buddi {
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);
 		MRJAdapter.setFramelessJMenuBar(frameless);
-		
-//		Application.getApplication().addApplicationListener(new ApplicationAdapter(){
-//			@Override
-//			public void handleOpenFile(com.apple.eawt.ApplicationEvent arg0) {
-//				File file = new File(arg0.getFilename());
-//				System.out.println("Opening File: " + file);
-//				DocumentManager.getInstance().loadDataFile(file);
-//				super.handleOpenFile(arg0);
-//			}
-//		});
 
 		//Open the main window at the saved location
 		WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getMainWindow();
@@ -166,6 +158,17 @@ public class Buddi {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//Absolute first thing to do is to catch any open requests from Apple Launchd.
+		Application.getApplication().addApplicationListener(new ApplicationAdapter(){
+			@Override
+			public void handleOpenFile(com.apple.eawt.ApplicationEvent arg0) {
+				File file = new File(arg0.getFilename());
+				Log.notice("Buddi: Opening File: " + file);
+				fileToLoad = file.getAbsolutePath();
+				super.handleOpenFile(arg0);
+			}
+		});
+		
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
@@ -186,7 +189,11 @@ public class Buddi {
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
 		debian = results.getBoolean("--debian");
-		fileToLoad = (results.getCommands().size() > 0 ? results.getCommands().get(0) : null); 
+		if (fileToLoad == null
+				&& results.getCommands().size() > 0)
+			fileToLoad = results.getCommands().get(0);
+
+		Log.debug("File to Load == " + fileToLoad);
 		
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);

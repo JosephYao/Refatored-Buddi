@@ -85,20 +85,6 @@ public class CategoryListPanel extends AbstractListPanel {
 
 		}
 
-//		if (income < expenses)
-//			balanceLabel.setForeground(Color.RED);
-//		else
-//			balanceLabel.setForeground(Color.BLACK);
-
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("<html>")
-//		.append(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME))
-//		.append(" ")
-//		.append(Translate.getInstance().get(PrefsInstance.getInstance().getSelectedInterval().getName()))
-//		.append(": ")
-//		.append(FormatterWrapper.getFormattedCurrencyForCategory(income - expenses, true))
-//		.append("</html>");
-
 		balanceLabel.setForeground(APICommonFormatter.isRed(income - expenses) ? Color.RED : Color.BLACK);
 		balanceLabel.setText(Translate.getInstance().get(TranslateKeys.BUDGET_NET_INCOME)
 				+ " "
@@ -114,6 +100,8 @@ public class CategoryListPanel extends AbstractListPanel {
 			if (l != null && l.isUnrolled())
 				tree.expandPath(new TreePath(node.getPath()));
 		}
+		
+		updateButtons();
 
 		return super.updateContent();
 	}

@@ -21,13 +21,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -41,7 +42,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
 
-public abstract class AbstractListPanel extends AbstractBuddiPanel implements TreeExpansionListener, TreeSelectionListener {
+public abstract class AbstractListPanel extends AbstractBuddiPanel implements TreeExpansionListener { //, TreeSelectionListener {
 	public static final long serialVersionUID = 0;
 
 	protected final JXTreeTable tree;
@@ -76,8 +77,6 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		editButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		openButton.addActionListener(this);
-		tree.addTreeSelectionListener(this);
-		tree.addTreeExpansionListener(this);
 		
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
@@ -89,6 +88,8 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 //		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
 		tree.setSelectionModel(new SingleListSelectionModel());
+//		tree.addTreeSelectionListener(this);
+		tree.addTreeExpansionListener(this);
 		
 		JScrollPane listScroller = new JScrollPane(tree);
 
@@ -172,6 +173,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 	}
 	
 	public void valueChanged(TreeSelectionEvent arg0) {
+		System.out.println("Value changed");
 		if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
 
@@ -272,10 +274,23 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		
 		public void valueChanged(ListSelectionEvent e) {
 			int correctIndex = tree.getSelectedRow();
-			if (!e.getValueIsAdjusting()
-					&& e.getFirstIndex() != e.getLastIndex()) {
+			if (correctIndex != -1) {
 				this.setSelectionInterval(correctIndex, correctIndex);
+				tree.setRowSelectionInterval(correctIndex, correctIndex);
+				
+				Object o = ((DefaultMutableTreeNode) tree.getValueAt(correctIndex, 0)).getUserObject();
+				if (o instanceof Account)
+					selectedSource = (Account) o;
+				else if (o instanceof Category)
+					selectedSource = (Category) o;
+				else
+					selectedSource = null;
 			}
+			else {
+				selectedSource = null;
+			}
+			
+			updateButtons();
 		}
 	}
 }

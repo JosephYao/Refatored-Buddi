@@ -30,6 +30,12 @@ public class WindowMenuController implements ActionListener {
 			if (!MainFrame.getInstance().isVisible())
 				MainFrame.getInstance().setVisible(true);
 		}
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_WINDOW_RIGHT_TAB.toString())){
+			MainFrame.getInstance().selectRightTab();
+		}
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_WINDOW_LEFT_TAB.toString())){
+			MainFrame.getInstance().selectLeftTab();
+		}
 		else {
 			Log.debug("Clicked " + e.getActionCommand());
 		}

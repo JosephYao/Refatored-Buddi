@@ -42,7 +42,10 @@ public class ScheduleController {
 		Vector<Schedule> v = new Vector<Schedule>();
 		for (Object o : DataInstance.getInstance().getDataModel().getAllTransactions().getScheduledTransactions()) {
 			Schedule s = (Schedule) o;
-			if (s.getTo().equals(source) || s.getFrom().equals(source)){
+			if (s != null 
+					&& s.getTo() != null
+					&& s.getFrom() != null
+					&& (s.getTo().equals(source) || s.getFrom().equals(source))){
 				v.add(s);
 			}
 		}

@@ -369,4 +369,12 @@ public class MainFrame extends AbstractBuddiFrame implements HTMLExport {
 
 		return new ImportManagerImpl(null, null, null);
 	}
+	
+	public void selectRightTab(){
+		tabs.setSelectedIndex((tabs.getSelectedIndex() + 1) % tabs.getTabCount());
+	}
+	
+	public void selectLeftTab(){
+		tabs.setSelectedIndex(tabs.getSelectedIndex() <= 0 ? tabs.getTabCount() - 1 : tabs.getSelectedIndex() - 1);		
+	}
 }

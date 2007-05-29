@@ -103,17 +103,6 @@ public class AccountListPanel extends AbstractListPanel {
 			balance += a.getBalance();
 		}
 
-//		if (balance >= 0)
-//			balanceLabel.setForeground(Color.BLACK);
-//		else
-//			balanceLabel.setForeground(Color.RED);
-
-//		balanceLabel.setText("<html>"
-//				+ Translate.getInstance().get(TranslateKeys.NET_WORTH) 
-//				+ ": "  
-//				+ FormatterWrapper.getFormattedCurrencyForAccount(balance, false)
-//				+ "</html>");
-
 		treeModel.reload(treeModel.getRoot());
 
 		for (DefaultMutableTreeNode node : nodes) {
