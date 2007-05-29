@@ -27,6 +27,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
+import org.homeunix.drummer.util.AppleApplicationWrapper;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
@@ -39,9 +40,6 @@ import org.homeunix.thecave.moss.util.SwingWorker;
 import org.homeunix.thecave.moss.util.Version;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
-
-import com.apple.eawt.Application;
-import com.apple.eawt.ApplicationAdapter;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -159,15 +157,9 @@ public class Buddi {
 	 */
 	public static void main(String[] args) {
 		//Absolute first thing to do is to catch any open requests from Apple Launchd.
-		Application.getApplication().addApplicationListener(new ApplicationAdapter(){
-			@Override
-			public void handleOpenFile(com.apple.eawt.ApplicationEvent arg0) {
-				File file = new File(arg0.getFilename());
-				Log.notice("Buddi: Opening File: " + file);
-				fileToLoad = file.getAbsolutePath();
-				super.handleOpenFile(arg0);
-			}
-		});
+		if (OperatingSystemUtil.isMac()){
+			AppleApplicationWrapper.addApplicationListener();
+		}
 		
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
@@ -223,12 +215,19 @@ public class Buddi {
 		// us to use relative paths for such things as running from
 		// USB drives, from remote shares (which would not always have
 		// the same path), etc.
-		if (System.getProperty("user.dir").length() > 0)
-			workingDir = new File(System.getProperty("user.dir")).getAbsolutePath()  + File.separator;
+		try {
+			if (System.getProperty("user.dir").length() > 0)
+				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator; //  + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+
+			//If we did not set it via user.dir, we set it here.
+			if (workingDir.length() == 0)
+				workingDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+		}
+		catch (IOException ioe){
+			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
+			workingDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+		}
 		
-		//If we did not set it via user.dir, we set it here.
-		if (workingDir.length() == 0)
-			workingDir = new File("").getAbsolutePath() + File.separator;
 		Log.notice("Set working directory to " + workingDir);
 
 		//Load the correct Look and Feel
@@ -425,5 +424,9 @@ public class Buddi {
 			if (Const.DEVEL) Log.debug("Starting update checking...");
 			updateWorker.start();
 		}
+	}
+	
+	public static void setFileToLoad(String fileToLoad){
+		Buddi.fileToLoad = fileToLoad;
 	}
 }

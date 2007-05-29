@@ -55,15 +55,15 @@ public class Translate {
 	 */
 	public Translate loadLanguage(String language){
 		//English
-		String englishFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
+		String englishFileName = Buddi.getWorkingDir() + Const.LANGUAGE_FOLDER + File.separator + "English" + Const.LANGUAGE_EXTENSION;
 		String englishResource = "/" + "English" + Const.LANGUAGE_EXTENSION;
 		
 		//Base Language (e.g., Espanol)
-		String baseFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
+		String baseFileName = Buddi.getWorkingDir() + Const.LANGUAGE_FOLDER + File.separator + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
 		String baseResource = "/" + language.replaceAll("_\\(.*\\)$", "") + Const.LANGUAGE_EXTENSION;
 
 		//Localized Language (e.g., Espanol_(MX))
-		String localizedFileName = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
+		String localizedFileName = Buddi.getWorkingDir() + Const.LANGUAGE_FOLDER + File.separator + language + Const.LANGUAGE_EXTENSION;
 		String localizedResource = "/" + language + Const.LANGUAGE_EXTENSION;
 		
 		try{

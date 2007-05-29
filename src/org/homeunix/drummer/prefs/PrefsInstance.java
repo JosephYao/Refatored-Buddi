@@ -374,12 +374,10 @@ public class PrefsInstance {
 		String workingDirectoryRegex = "";
 		if (userPrefs.getPrefs().getDataFile() != null){
 			//If we are using relative directories, replace with the relative dirs.
-			String newDataFile = userPrefs.getPrefs().getDataFile();
 			//Java doesn't like non-escaped backslashes in regexes...
-			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\") + File.separator;
-			newDataFile.replaceAll("^" + workingDirectoryRegex, "");
-			userPrefs.getPrefs().setDataFile(newDataFile);
-
+			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\");
+			userPrefs.getPrefs().setDataFile(userPrefs.getPrefs().getDataFile().replaceAll("^" + workingDirectoryRegex, ""));
+			
 			for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
 				if (o instanceof Plugin){
 					Plugin plugin = (Plugin) o;

@@ -1,3 +1,9 @@
+2.3.14.2 (May 29 2007) - 2.4.0.0 RC1.2
+-Fixed another bug related to working directory which Windows systems did not like.
+
+2.3.14.1 (May 29 2007) - 2.4.0.0 RC1.1
+-Fixed bug which prevented Buddi from running on non-OSX systems
+
 2.3.14.0 (May 28 2007) - 2.4.0.0 RC1
 -There are no outstanding feature requests left which are due to be included in 2.4.0.0.  This means that this version is the first release candidate.  Please report all bugs to me ASAP to get fixed before 2.4.0.0.
 -Fixed bug #1721317 (Can select multiple rows in accounts / categories).  This was due to a bug in JXTreeTable, but I managed to fix it by overriding the list selection model class.
