@@ -280,8 +280,8 @@ user $USER $PASS
 cd /incoming
 lcd $DEST
 bin
-put Buddi-$VERSION.zip
-put Buddi-$VERSION.tgz
+put Buddi-$VERSION.exe
+put Buddi-$VERSION.jar
 put Buddi-$VERSION.dmg
 put Buddi-$VERSION.deb
 put Buddi-$VERSION.src.tgz
