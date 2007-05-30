@@ -381,15 +381,15 @@ public class Buddi {
 
 							//Link to the correct download by default.
 							if (OperatingSystemUtil.isMac())
-								fileLocation += Const.DOWNLOAD_URL_DMG;
+								fileLocation += Const.DOWNLOAD_TYPE_OSX;
 							else if (OperatingSystemUtil.isWindows())
-								fileLocation += Const.DOWNLOAD_URL_ZIP;
+								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
 							else {
 								//Check for any specific distributions here
 								if (Buddi.isDebian())
-									fileLocation += Const.DOWNLOAD_URL_DEB;
+									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
 								else
-									fileLocation += Const.DOWNLOAD_URL_TGZ;
+									fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
 							}
 
 							try{

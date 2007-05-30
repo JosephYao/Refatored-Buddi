@@ -74,11 +74,11 @@ function make_jar {
 #Create the platform independent directory
 function bundle_generic {
 	mkdir -p $GENERIC
-	cp Buddi.jar $GENERIC
+	cp Buddi.jar $DEST/Buddi-$VERSION.jar
 #	cp -R $DEST/$SOURCE/Documents $GENERIC
 #	cp -R $DEST/$SOURCE/Licenses $GENERIC
 
-	tar -C $GENERICROOT -czf $DEST/Buddi-$VERSION.tgz Buddi
+#	tar -C $GENERICROOT -czf $DEST/Buddi-$VERSION.tgz Buddi
 }
 
 
@@ -217,14 +217,14 @@ function bundle_windows {
 	rm $TEMP_LAUNCH*
 
 	# Create the Windows bundle
-	mkdir -p $WINDOWS
-	cp Buddi.exe $WINDOWS
+#	mkdir -p $WINDOWS
+	cp Buddi.exe $DEST/Buddi-$VERSION.exe
 #	cp -R $DEST/$SOURCE/Documents $WINDOWS
 #	cp -R $DEST/$SOURCE/Licenses $WINDOWS
 
-	cd $WINDOWSROOT
-	zip -r $DEST/Buddi-$VERSION.zip Buddi
-	cd $CURRDIR
+#	cd $WINDOWSROOT
+#	zip -r $DEST/Buddi-$VERSION.zip Buddi
+#	cd $CURRDIR
 }
 
 
