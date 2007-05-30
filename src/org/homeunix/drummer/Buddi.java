@@ -59,6 +59,8 @@ public class Buddi {
 	private static String workingDir;
 	private static String fileToLoad;
 	private static Boolean debian = false;
+	private static Boolean slackware = false;
+	private static Boolean redhat = false;
 
 	/**
 	 * Gets the current working directory.  This should be the same directory
@@ -75,6 +77,34 @@ public class Buddi {
 		return workingDir;
 	}
 
+	/** 
+	 * @return True if running on Slackware, false otherwise.  This is 
+	 * obtained through the startup flag --debian, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on Linux - if the flag is set, we will download
+	 * a .deb when a new version is released, otherwise we will
+	 * download a .jar.
+	 */
+	public static boolean isSlackware(){
+		if (slackware == null)
+			slackware = false;
+		return slackware;
+	}
+	
+	/** 
+	 * @return True if running on Redhat, false otherwise.  This is 
+	 * obtained through the startup flag --debian, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on Linux - if the flag is set, we will download
+	 * a .deb when a new version is released, otherwise we will
+	 * download a .jar.
+	 */
+	public static boolean isRedhat(){
+		if (redhat == null)
+			redhat = false;
+		return redhat;
+	}
+	
 	/** 
 	 * @return True if running on Debian, false otherwise.  This is 
 	 * obtained through the startup flag --debian, so it can be 
@@ -167,6 +197,8 @@ public class Buddi {
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n";
 		// Undocumented flag --debian will specify a .deb download for new versions.
+		// Undocumented flag --redhat will specify a .rpm download for new versions.
+		// Undocumented flag --slackware will specify a .tgz download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
 		variables.add(new ParseVariable("-p", String.class, false));
@@ -174,6 +206,8 @@ public class Buddi {
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
+		variables.add(new ParseVariable("--redhat", Boolean.class, false));
+		variables.add(new ParseVariable("--slackware", Boolean.class, false));
 				
 		ParseResults results = ParseCommands.parse(args, help, variables);
 		String prefsLocation = results.getString("-p");
@@ -181,6 +215,8 @@ public class Buddi {
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
 		debian = results.getBoolean("--debian");
+		redhat = results.getBoolean("--redhat");
+		slackware = results.getBoolean("--slackware");
 		if (fileToLoad == null
 				&& results.getCommands().size() > 0)
 			fileToLoad = results.getCommands().get(0);
@@ -388,6 +424,10 @@ public class Buddi {
 								//Check for any specific distributions here
 								if (Buddi.isDebian())
 									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
+								else if (Buddi.isSlackware())
+									fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+								else if (Buddi.isRedhat())
+									fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
 								else
 									fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
 							}

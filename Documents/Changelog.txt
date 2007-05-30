@@ -1,18 +1,23 @@
-2.3.15.0 (May 30 2007) - 2.4.0.0 RC 2
+2.3.16.0 - 2.4 RC 3
+-Added support for .rpm and .tgz (Slackware package) types at the download code.  I do not yet bundle these; the added support is in the launch time flags which determine which platform this is running on.  I plan for Slackware support early in 2.5 branch, and Redhat sometime later.
+-Fixed bug #1728346 (Arrow in transaction window not rendering properly on Windows).
+-Explicitly added antialiasing for transaction window.  This needs to be tested to ensure that it works - on the Mac, we use antialiasing by default, it looks like, so I don't see a difference.
+
+2.3.15.0 (May 30 2007) - 2.4 RC 2
 -Fixed bug #1728027 (Hitting enter once description is filled in instead of tab does not correctly fill in other fields).
 -Fixed bug #1727875 (German number formatting incorrect)
 -Eliminated package for certain platforms - namely, Windows is now distributed as .exe instead of .zip, and Generic is .jar instead of .tgz.  While this may take a little more space (and longer download), it gives more information about the platform, and allows for other platforms (such as Slackware, which uses .tgz).
 
-2.3.14.3 (May 29 2007) - 2.4.0.0 RC 1.3
+2.3.14.3 (May 29 2007) - 2.4 RC 1.3
 -Fixed another bug on the Mac which was re-introduced when fixing the last one.
 
-2.3.14.2 (May 29 2007) - 2.4.0.0 RC 1.2
+2.3.14.2 (May 29 2007) - 2.4 RC 1.2
 -Fixed another bug related to working directory which Windows systems did not like.
 
-2.3.14.1 (May 29 2007) - 2.4.0.0 RC 1.1
+2.3.14.1 (May 29 2007) - 2.4 RC 1.1
 -Fixed bug which prevented Buddi from running on non-OSX systems
 
-2.3.14.0 (May 28 2007) - 2.4.0.0 RC 1
+2.3.14.0 (May 28 2007) - 2.4 RC 1
 -There are no outstanding feature requests left which are due to be included in 2.4.0.0.  This means that this version is the first release candidate.  Please report all bugs to me ASAP to get fixed before 2.4.0.0.
 -Fixed bug #1721317 (Can select multiple rows in accounts / categories).  This was due to a bug in JXTreeTable, but I managed to fix it by overriding the list selection model class.
 -Implemented OS X LaunchD listener, to allow opeing Buddi data files by double clicking in Finder

@@ -9,7 +9,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
@@ -42,6 +44,10 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 	private int lastWidth;
 	private int descriptionLength = 50, toFromLength = 40;
 
+	private static Font f;
+	private static Font bold;
+	private static Font italic;
+	
 	private static final Color GREEN = new Color(0, 128, 0);
 
 	/**
@@ -82,12 +88,13 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			FontMetrics fm = this.getGraphics().getFontMetrics();
 			String test = "XXXXX";
 			for(; fm.stringWidth(test) < (list.getWidth() - 150); test += "X"){
-				descriptionLength = test.length();
+				descriptionLength = test.length() / 2;
 			}
 
 			//On the bottom line, we allocate 300px for all of the
 			// balances, and 50 for the C R; 
-			// We can take up to (width - 350)px for the toFrom field.  
+			// We can take up to (width - 350)px for the toFrom field.
+			//Since we use each of these separately, we divide by two first.
 			test = "XXX";
 			for(; fm.stringWidth(test) < (list.getWidth() - 350); test += "X"){
 				toFromLength = test.length();
@@ -111,6 +118,11 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		int height = this.getHeight();
 		int width = this.getWidth();
 
+		// Antialias text
+		// TODO Does this work on Windows?  We already have AA on Mac.
+		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
+
 		if (transaction != null){
 			Color textColor = g.getColor();			
 
@@ -118,8 +130,10 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			g.drawString(BuddiInternalFormatter.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
 
 			//Description
-			Font f = g.getFont();
-			g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
+			f = g.getFont();
+			bold = new Font(f.getName(), Font.BOLD, f.getSize());
+			italic = new Font(f.getName(), Font.ITALIC, f.getSize());
+			g.setFont(bold);
 			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, height / 2 - 5);
 			g.setFont(f);
 			
@@ -134,9 +148,12 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			}
 
 			//To / From sources
-			g.setFont(new Font(f.getName(), Font.ITALIC, f.getSize()));
-			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + " " + Translate.getInstance().get(TranslateKeys.TO) + " " + transaction.getTo()), 50, height - 5);
+			g.setFont(italic);
+			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + "      " + transaction.getTo()), 50, height - 5);
+			FontMetrics fm = this.getGraphics().getFontMetrics();
+			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom() + " ");
 			g.setFont(f);
+			g.drawString(Translate.getInstance().get(TranslateKeys.TO), arrowOffset, height - 5);
 
 			//Left column
 			if (account != null

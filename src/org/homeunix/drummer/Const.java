@@ -21,7 +21,7 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.3.15.0";
+	public static final String VERSION = "2.3.16.0";
 	public static final String BRANCH = UNSTABLE;
 	public static final boolean DEVEL = true;
 	public static final Version API_VERSION = new Version("2.4");
@@ -42,10 +42,13 @@ public class Const {
 	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.sourceforge.net/Buddi-development";
 	public final static String VERSION_FILE = "version.txt";
 	
+	//File Types
 	public final static String DOWNLOAD_TYPE_OSX = ".dmg";
 	public final static String DOWNLOAD_TYPE_WINDOWS = ".exe";
 	public final static String DOWNLOAD_TYPE_GENERIC = ".jar";
 	public final static String DOWNLOAD_TYPE_DEBIAN = ".deb";
+	public final static String DOWNLOAD_TYPE_REDHAT = ".rpm";
+	public final static String DOWNLOAD_TYPE_SLACKWARE = ".tgz";
 	
 	//Local help paths
 	public final static String HELP_FOLDER = "Help";
