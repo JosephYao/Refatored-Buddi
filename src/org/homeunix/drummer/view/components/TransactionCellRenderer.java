@@ -124,56 +124,65 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
 		if (transaction != null){
-			Color textColor = g.getColor();			
+			Color textColor = g.getColor();
+			FontMetrics fm;
+			int topRowYPos = height / 2 - 5;
+			int bottomRowYPos = height - 5;
 
 			//Date
-			g.drawString(BuddiInternalFormatter.getDateFormat().format(transaction.getDate()), 10, height / 2 - 5);
+			g.drawString(BuddiInternalFormatter.getDateFormat().format(transaction.getDate()), 10, topRowYPos);
 
 			//Description
 			f = g.getFont();
 			bold = new Font(f.getName(), Font.BOLD, f.getSize());
 			italic = new Font(f.getName(), Font.ITALIC, f.getSize());
 			g.setFont(bold);
-			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, height / 2 - 5);
+			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, topRowYPos);
 			g.setFont(f);
 			
 			//Cleared and Reconciled
 			if (showAdvanced){
 				g.setColor(GREEN);
 				if (transaction.isCleared())
-					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED), 20, height - 5);
+					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED), 20, bottomRowYPos);
 				if (transaction.isReconciled())
-					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED), 30, height - 5);
+					g.drawString(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED), 30, bottomRowYPos);
 				g.setColor(textColor);
 			}
 
 			//To / From sources
 			g.setFont(italic);
-			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + "      " + transaction.getTo()), 50, height - 5);
-			FontMetrics fm = this.getGraphics().getFontMetrics();
+			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom() + "       " + transaction.getTo()), 50, bottomRowYPos);
+			fm = this.getGraphics().getFontMetrics();
 			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom() + " ");
 			g.setFont(f);
-			g.drawString(Translate.getInstance().get(TranslateKeys.TO), arrowOffset, height - 5);
+			g.drawString(Translate.getInstance().get(TranslateKeys.TO), arrowOffset, bottomRowYPos);
 
+			//Get the font metrics for column alignment
+			fm = this.getGraphics().getFontMetrics();
+			
 			//Left column
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
+				int xPos = width - 220 - fm.stringWidth(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount())); 
 				g.setColor(BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), width - 300, height - 5);
+				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), xPos, bottomRowYPos);
 				g.setColor(textColor);
 			}
 			//Right Column
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
+				int xPos = width - 120 - fm.stringWidth(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()));
 				g.setColor(BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), width - 200, height - 5);
+				g.drawString(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()), xPos, bottomRowYPos);
 				g.setColor(textColor);
 			}
 
 			//Balance
 			g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
+			fm = this.getGraphics().getFontMetrics();
 			if (transaction != null){
 				long balanceValue;
 				if (account != null){
@@ -183,8 +192,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 					else
 						balanceValue = transaction.getBalanceTo();
 
+					int xPos = width - 20 - fm.stringWidth(BuddiInternalFormatter.getFormattedCurrency(balanceValue, account.isCredit()));
 					g.setColor(BuddiInternalFormatter.isRed(account, balanceValue) ? Color.RED : textColor);
-					g.drawString(BuddiInternalFormatter.getFormattedCurrency(balanceValue, account.isCredit()), width - 100, height - 5);
+					g.drawString(BuddiInternalFormatter.getFormattedCurrency(balanceValue, account.isCredit()), xPos, bottomRowYPos);
 					g.setColor(textColor);
 				}
 			}

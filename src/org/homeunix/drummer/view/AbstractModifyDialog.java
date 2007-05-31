@@ -77,6 +77,8 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 		
+		name.setPreferredSize(new Dimension(150, name.getPreferredSize().height));
+		
 		check = new JCheckBox(Translate.getInstance().get(TranslateKeys.INCOME));
 		
 		JPanel textPanel = new JPanel(new BorderLayout());
@@ -108,14 +110,14 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 			textPanelRight.add(check);
 		}
 		
-		JPanel textPanelSpacer = new JPanel();
+		JPanel textPanelSpacer = new JPanel(new BorderLayout());
 		textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
-		textPanelSpacer.add(textPanel);
+		textPanelSpacer.add(textPanel, BorderLayout.CENTER);
 		
-		JPanel mainBorderPanel = new JPanel();
+		JPanel mainBorderPanel = new JPanel(new BorderLayout());
 		mainBorderPanel.setLayout(new BorderLayout());
 		mainBorderPanel.setBorder(BorderFactory.createTitledBorder(""));
-		mainBorderPanel.add(textPanelSpacer);
+		mainBorderPanel.add(textPanelSpacer, BorderLayout.CENTER);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);

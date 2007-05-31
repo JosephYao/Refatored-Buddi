@@ -1,7 +1,11 @@
-2.3.16.0 - 2.4 RC 3
+2.3.17.0 (June 1 2007) - 2.4 RC 4
+-Fixed bug #1729178 (alignment of amounts)
+-Fixed bug #1729200 (HCI issues with Account Type Modification window)
+
+2.3.16.0 (May 31 2007) - 2.4 RC 3
 -Added support for .rpm and .tgz (Slackware package) types at the download code.  I do not yet bundle these; the added support is in the launch time flags which determine which platform this is running on.  I plan for Slackware support early in 2.5 branch, and Redhat sometime later.
 -Fixed bug #1728346 (Arrow in transaction window not rendering properly on Windows).
--Explicitly added antialiasing for transaction window.  This needs to be tested to ensure that it works - on the Mac, we use antialiasing by default, it looks like, so I don't see a difference.
+-Explicitly added antialiasing for transaction window.
 
 2.3.15.0 (May 30 2007) - 2.4 RC 2
 -Fixed bug #1728027 (Hitting enter once description is filled in instead of tab does not correctly fill in other fields).

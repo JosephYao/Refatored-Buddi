@@ -158,7 +158,7 @@ public class TypeListDialog extends AbstractBuddiDialog {
 			}
 		}
 	}
-
+	
 	public StandardWindow clear() {
 		// TODO Auto-generated method stub
 		return null;

@@ -31,13 +31,13 @@ public class TypeModifyDialog extends AbstractModifyDialog<Type> {
 			name.setText("");
 			check.setSelected(false);
 			check.setEnabled(true);
-			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_EDIT));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_NEW));
 		}
 		else{
 			name.setText(Translate.getInstance().get(source.getName()));
 			check.setSelected(source.isCredit());
 			check.setEnabled(false);
-			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_NEW));
+			this.setTitle(Translate.getInstance().get(TranslateKeys.TYPE_MODIFY_EDIT));
 		}
 
 		return this;
