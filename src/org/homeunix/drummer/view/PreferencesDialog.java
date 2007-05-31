@@ -501,6 +501,8 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 					|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
 					|| (prefs.isCurrencySymbolAfterAmount() != currencySymbolAfterAmount.isSelected())
 					|| (prefs.isEnableUpdateNotifications() != enableUpdateNotifications.isSelected())
+					|| (prefs.isShowDeletedAccounts() != showDeletedAccounts.isSelected())
+					|| (prefs.isShowDeletedCategories() != showDeletedCategories.isSelected())
 					|| pluginsChanged()){
 
 				Translate.getInstance().loadLanguage(language.getSelectedItem().toString());
