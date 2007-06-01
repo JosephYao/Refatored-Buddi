@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -207,19 +209,22 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		model = baseModel.getFilteredListModel(account, this);
 //		list.setModel(model);
 
-		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		searchPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-		searchPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TRANSACTION_FILTER)));
-		searchPanel.add(filterComboBox);
-		searchPanel.add(searchField);
+		JPanel topPanel = new JPanel();//new FlowLayout(FlowLayout.RIGHT));
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+		topPanel.add(creditRemaining);
+		topPanel.add(Box.createHorizontalGlue());
+		topPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TRANSACTION_FILTER)));
+		topPanel.add(filterComboBox);
+		topPanel.add(searchField);
 
-		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-		creditRemainingPanel.add(creditRemaining);
+//		JPanel creditRemainingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//		creditRemainingPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+//		creditRemainingPanel.add(creditRemaining);
 
-		JPanel topPanel = new JPanel(new BorderLayout());
-		topPanel.add(searchPanel, BorderLayout.EAST);
-		topPanel.add(creditRemainingPanel, BorderLayout.WEST);
+//		JPanel topPanel = new JPanel(new BorderLayout());
+//		topPanel.add(searchPanel, BorderLayout.EAST);
+//		topPanel.add(creditRemainingPanel, BorderLayout.WEST);
 
 		this.getRootPane().setDefaultButton(recordButton);
 
