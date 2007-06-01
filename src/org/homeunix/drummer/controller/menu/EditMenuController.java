@@ -33,7 +33,7 @@ public class EditMenuController implements ActionListener {
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_SCHEDULED_ACTIONS.toString())){
 			new ScheduledTransactionsListFrame().openWindow();
 		}
-		else if (e.getActionCommand().equals(TranslateKeys.CLEAR.toString())){
+		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_CLEAR_NEW.toString())){
 			((TransactionsFrame) frame).clickClear();
 		}
 		else if (e.getActionCommand().equals(TranslateKeys.MENU_EDIT_RECORD_UPDATE.toString())){

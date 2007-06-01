@@ -1,3 +1,8 @@
+2.3.18.0 (June 1 2007) - 2.4 RC 5
+-Fixed bug #1729658 (Plugins duplicated on Graphs and Reports when loaded from plugin .jar)
+-Fixed bug #1729635 (Clear menu item on transactions frame not working properly)
+-Fixed bug #1729531 (Correct selection of accounts after editing / creating new one)
+
 2.3.17.0 (June 1 2007) - 2.4 RC 4
 -Fixed bug #1729178 (alignment of amounts)
 -Fixed bug #1729200 (HCI issues with Account Type Modification window)

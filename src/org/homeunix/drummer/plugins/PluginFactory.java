@@ -338,8 +338,12 @@ public class PluginFactory<T extends BuddiPlugin> {
 							&& pluginObject instanceof BuddiImportPlugin){
 						pluginEntries.add((T) pluginObject);
 					}
-					else if (pluginType instanceof BuddiPanelPlugin
-							&& pluginObject instanceof BuddiPanelPlugin){
+					else if (pluginType instanceof BuddiGraphPlugin
+							&& pluginObject instanceof BuddiGraphPlugin){
+						pluginEntries.add((T) pluginObject);
+					}
+					else if (pluginType instanceof BuddiReportPlugin
+							&& pluginObject instanceof BuddiReportPlugin){
 						pluginEntries.add((T) pluginObject);
 					}
 				}

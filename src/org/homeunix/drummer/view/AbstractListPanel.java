@@ -20,15 +20,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -58,7 +55,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 //	protected static Color SELECTED = new Color(181, 213, 255);
 //	protected static Color WHITE = Color.WHITE;
 
-	protected Source selectedSource;
+//	protected Source selectedSource;
 
 	public AbstractListPanel(){
 		treeModel = new SourceTreeTableModel();
@@ -138,7 +135,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 	}
 	
 	public AbstractBuddiPanel updateButtons(){
-		if (selectedSource == null){
+		if (getSelectedSource() == null){
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			openButton.setEnabled(false);
@@ -149,7 +146,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 			deleteButton.setEnabled(true);
 			openButton.setEnabled(true);
 
-			if (selectedSource.isDeleted())
+			if (getSelectedSource().isDeleted())
 				deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_UNDELETE));
 			else
 				deleteButton.setText(Translate.getInstance().get(TranslateKeys.BUTTON_DELETE));
@@ -172,26 +169,26 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		return tree;
 	}
 	
-	public void valueChanged(TreeSelectionEvent arg0) {
-		System.out.println("Value changed");
-		if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
-
-			if (node == null)
-				return;
-
-			if (node.getUserObject() instanceof Source){ 
-				selectedSource = (Source) node.getUserObject();
-				if (Const.DEVEL) Log.debug(selectedSource);
-			}
-			else{
-				if (Const.DEVEL) Log.debug("Object not of type Source");
-				selectedSource = null;
-			}
-		}
-		
-		AbstractListPanel.this.updateButtons();
-	}
+//	public void valueChanged(TreeSelectionEvent arg0) {
+//		System.out.println("Value changed");
+//		if (arg0 != null && arg0.getNewLeadSelectionPath() != null){
+//			DefaultMutableTreeNode node = (DefaultMutableTreeNode) arg0.getNewLeadSelectionPath().getLastPathComponent();
+//
+//			if (node == null)
+//				return;
+//
+//			if (node.getUserObject() instanceof Source){ 
+//				selectedSource = (Source) node.getUserObject();
+//				if (Const.DEVEL) Log.debug(selectedSource);
+//			}
+//			else{
+//				if (Const.DEVEL) Log.debug("Object not of type Source");
+//				selectedSource = null;
+//			}
+//		}
+//		
+//		AbstractListPanel.this.updateButtons();
+//	}
 	
 	public void unrollAll(){
 		for (int i = 0; i < treeModel.getRoot().getChildCount(); i++) {
@@ -258,6 +255,17 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree.packAll();
 	}
 	
+	public Source getSelectedSource(){
+		int correctIndex = tree.getSelectedRow();
+		if (correctIndex != -1) {
+			Object o = ((DefaultMutableTreeNode) tree.getValueAt(correctIndex, 0)).getUserObject();
+			if (o instanceof Source)
+				return (Source) o;
+		}
+
+		return null;
+	}
+	
 	/**
 	 * @author wyatt
 	 * A simple class to override a bug in JXTreeTable which allows
@@ -277,18 +285,18 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 			if (correctIndex != -1) {
 				this.setSelectionInterval(correctIndex, correctIndex);
 				tree.setRowSelectionInterval(correctIndex, correctIndex);
-				
-				Object o = ((DefaultMutableTreeNode) tree.getValueAt(correctIndex, 0)).getUserObject();
-				if (o instanceof Account)
-					selectedSource = (Account) o;
-				else if (o instanceof Category)
-					selectedSource = (Category) o;
-				else
-					selectedSource = null;
+//				
+//				Object o = ((DefaultMutableTreeNode) tree.getValueAt(correctIndex, 0)).getUserObject();
+//				if (o instanceof Account)
+//					selectedSource = (Account) o;
+//				else if (o instanceof Category)
+//					selectedSource = (Category) o;
+//				else
+//					selectedSource = null;
 			}
-			else {
-				selectedSource = null;
-			}
+//			else {
+//				selectedSource = null;
+//			}
 			
 			updateButtons();
 		}

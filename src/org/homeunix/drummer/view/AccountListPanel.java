@@ -60,7 +60,7 @@ public class AccountListPanel extends AbstractListPanel {
 		long balance = 0;
 
 		treeModel.getRoot().removeAllChildren(); 
-		selectedSource = null;
+//		selectedSource = null;
 
 		Map<Type, DefaultMutableTreeNode> accountTypes = new HashMap<Type, DefaultMutableTreeNode>();
 		Vector<DefaultMutableTreeNode> nodes = new Vector<DefaultMutableTreeNode>();
@@ -142,10 +142,10 @@ public class AccountListPanel extends AbstractListPanel {
 	 */
 	public Account getSelectedAccount(){
 
-		if (selectedSource instanceof Account)
-			return (Account) selectedSource;
-		else
-			return null;
+		if (getSelectedSource() instanceof Account)
+			return (Account) getSelectedSource();
+
+		return null;
 	}
 
 	/**
@@ -187,8 +187,10 @@ public class AccountListPanel extends AbstractListPanel {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newButton)){
-			tree.clearSelection();
+//			tree.clearSelection();
+//			Source s = selectedSource;
 			new AccountModifyDialog(null).clear().openWindow();
+//			selectedSource = s;
 			AccountListPanel.this.updateButtons();
 		}
 		else if (e.getSource().equals(editButton)) {

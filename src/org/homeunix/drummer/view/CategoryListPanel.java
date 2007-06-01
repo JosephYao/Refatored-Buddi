@@ -58,7 +58,7 @@ public class CategoryListPanel extends AbstractListPanel {
 		long income = 0;
 
 		treeModel.getRoot().removeAllChildren();
-		selectedSource = null;
+//		selectedSource = null;
 
 		//Since the persistence layer knows of all the categories, and
 		// does not view them in a hierarchical fashion, we cannot
@@ -131,10 +131,10 @@ public class CategoryListPanel extends AbstractListPanel {
 	}
 
 	public Category getSelectedCategory(){
-		if (selectedSource instanceof Category)
-			return (Category) selectedSource;
-		else
-			return null;
+		if (getSelectedSource() instanceof Category)
+			return (Category) getSelectedSource();
+		
+		return null;
 	}
 
 //	@Override
