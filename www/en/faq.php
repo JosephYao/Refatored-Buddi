@@ -87,10 +87,13 @@ Of course, I will not implement features that distract from the main purpose of 
 
 <h2>What's up with your stupid version numbers?</h2>
 <p>
-I use a versioning scheme similar to the Linux kernels: X.Y.Z, where X is the major release, Y is the minor version, and Z is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered development code.  For instance the first stable version was 1.0.0; the first bugfix for the stable branch was 1.0.1, etc.
+I use a versioning scheme with four numbers, in the form X.Y.F.B, where X is the major release, Y is the minor version, F is the Feature number, and B is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered development code.  The Bugfix number is incremented if the new version only contains bug fixes, without any new features; the Feature number is incremented if there are new features, as well.
 </p>
 <p>
-Any particular stable branch will receive no new features, but will continue to benefit from bugfixes, while the development branch will continue with all the major development.  Once the development version is considered complete, it will become the next stable version; for instance, development version 1.1.6 became stable version 1.2.0.
+For instance the first stable version was 1.0.0.0; the first bugfix for the stable branch was 1.0.0.1.  The second feature release for the 2.4 branch is 2.4.2.0, and so forth.
+</p>
+<p>
+Any particular stable branch will receive no new major features, but will continue to benefit from bugfixes, while the development branch will continue with all the major development.  Once the development version is considered complete, it will become the next stable version; for instance, development version 1.1.6.0 became stable version 1.2.0.0.
 </p>
 <p>
 The terms 'Stable' and 'Development' may be misleading - any version which I release has passed at least rudimentary testing, and I consider it to be pretty good.  In fact, I regularly use the development versions for my own finances.  However, there may be file format changes, or minor bugs, which are introduced in the development versions, which would not be in the stable version.

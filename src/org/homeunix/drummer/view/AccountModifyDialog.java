@@ -75,7 +75,10 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 		}
 		else{
 			name.setText(source.getName());
-			amount.setValue(source.getStartingBalance() * -1);
+			if (source.isCredit())
+				amount.setValue(source.getStartingBalance() * -1);
+			else
+				amount.setValue(source.getStartingBalance());
 			creditLimit.setValue(source.getCreditLimit());
 			interestRate.setValue(source.getInterestRate());
 

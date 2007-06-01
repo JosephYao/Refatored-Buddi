@@ -5,6 +5,7 @@
  */
 package org.homeunix.drummer.view.components;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,13 +19,16 @@ import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneConstants;
 
 import org.homeunix.drummer.controller.SourceController;
@@ -435,6 +439,28 @@ public class EditableTransaction extends JPanel {
 				EditableTransaction.this.setChanged(true);
 			}
 		});
+		
+		ListCellRenderer renderer = new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				if (value instanceof Source){
+					if (((Source) value).isDeleted())
+						value = "<html><s>" + value + "</s></html>";
+				}
+				
+				return super.getListCellRendererComponent(
+						list, 
+						value, 
+						index, 
+						isSelected,
+						cellHasFocus);
+			}
+		};
+		
+		to.setRenderer(renderer);
+		from.setRenderer(renderer);
 	}
 
 	@Override

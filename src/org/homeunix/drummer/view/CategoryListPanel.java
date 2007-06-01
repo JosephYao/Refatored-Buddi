@@ -78,10 +78,12 @@ public class CategoryListPanel extends AbstractListPanel {
 				nodes.add(child);
 			}
 
-			if (c.isIncome())
-				income += c.getBudgetedAmount();
-			else
-				expenses += c.getBudgetedAmount();
+			if (!c.isDeleted()){
+				if (c.isIncome())
+					income += c.getBudgetedAmount();
+				else
+					expenses += c.getBudgetedAmount();
+			}
 
 		}
 

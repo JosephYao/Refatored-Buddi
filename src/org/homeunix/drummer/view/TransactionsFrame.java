@@ -204,7 +204,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
+		searchField.setMaximumSize(searchField.getPreferredSize());
 		filterComboBox.setPreferredSize(new Dimension(100, filterComboBox.getPreferredSize().height));
+		filterComboBox.setMaximumSize(filterComboBox.getPreferredSize());
 
 		model = baseModel.getFilteredListModel(account, this);
 //		list.setModel(model);
@@ -490,8 +492,15 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
 				&& account != null  
 				&& account.getCreditLimit() != 0){
-			long amountLeft = (account.getCreditLimit() + account.getBalance());
-			double percentLeft = ((double) (account.getCreditLimit() + account.getBalance())) / account.getCreditLimit() * 100.0;
+			long amountLeft;
+			//We need to use different logic for debit and credit accounts.  
+			// Remember that getBalance() returns a negative number for 
+			// credit accounts
+//			if (account.isCredit())
+				amountLeft = (account.getCreditLimit() + account.getBalance());
+//			else
+//				amountLeft = (account.getBalance() - account.getCreditLimit());
+			double percentLeft = ((double) amountLeft) / account.getCreditLimit() * 100.0;
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("<html>");

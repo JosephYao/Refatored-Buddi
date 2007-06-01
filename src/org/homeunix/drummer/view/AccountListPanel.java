@@ -125,7 +125,8 @@ public class AccountListPanel extends AbstractListPanel {
 		long balance = 0;
 		
 		for (Account a : SourceController.getAccounts()) {
-			balance += a.getBalance();
+			if (!a.isDeleted())
+				balance += a.getBalance();
 		}
 		
 		balanceLabel.setForeground(APICommonFormatter.isRed(balance) ? Color.RED : Color.BLACK);
