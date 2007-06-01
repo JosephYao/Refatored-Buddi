@@ -63,8 +63,8 @@ public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDial
 		name = new JTextField();
 		amountLabel = new JLabel();
 		amount = new JDecimalField();
-		creditLimit = new JDecimalField();
-		interestRate = new JDecimalField();
+		creditLimit = new JDecimalField(false);
+		interestRate = new JDecimalField(false);
 		
 		pulldownLabel = new JLabel();
 		pulldownModel = new DefaultComboBoxModel();

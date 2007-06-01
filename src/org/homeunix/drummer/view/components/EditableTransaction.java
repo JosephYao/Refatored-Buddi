@@ -110,6 +110,8 @@ public class EditableTransaction extends JPanel {
 		number.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_NUMBER));
 		description.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_DESC));
 		memo.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_MEMO));
+		cleared.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_CLEARED));
+		reconciled.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_RECONCILED));
 
 		JPanel topPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();

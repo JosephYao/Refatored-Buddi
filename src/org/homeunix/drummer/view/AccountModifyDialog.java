@@ -79,8 +79,8 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 				amount.setValue(source.getStartingBalance() * -1);
 			else
 				amount.setValue(source.getStartingBalance());
-			creditLimit.setValue(source.getCreditLimit());
-			interestRate.setValue(source.getInterestRate());
+			creditLimit.setValue(Math.abs(source.getCreditLimit()));
+			interestRate.setValue(Math.abs(source.getInterestRate()));
 
 			pulldown.setSelectedItem(source.getAccountType());
 			pulldown.setEnabled(false);

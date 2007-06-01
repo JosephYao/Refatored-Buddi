@@ -506,7 +506,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			sb.append("<html>");
 //			if (amountLeft < 0)
 //			sb.append("<html><font color='red'>");
-			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_OVERDRAFT)))
+			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_FUNDS)))
 			.append(": ")
 			.append(BuddiInternalFormatter.isRed(account, amountLeft) ? "<font color='red'>" : "")
 			.append(BuddiInternalFormatter.getFormattedCurrency(amountLeft))
@@ -518,9 +518,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				sb.append("</font></html>");
 
 			creditRemaining.setText(sb.toString());
+			if (!account.isCredit())
+				creditRemaining.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_AVAILABLE_FUNDS));
 		}
-		else
+		else {
 			creditRemaining.setText("");
+			creditRemaining.setToolTipText("");
+		}
 
 		return updateButtons();
 	}
