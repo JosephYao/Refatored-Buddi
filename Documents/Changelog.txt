@@ -1,3 +1,7 @@
+2.3.19.0 - 2.4 RC 6
+-Updated Spanish translation
+-Updated German translation
+
 2.3.18.0 (June 1 2007) - 2.4 RC 5
 -Fixed bug #1729658 (Plugins duplicated on Graphs and Reports when loaded from plugin .jar)
 -Fixed bug #1729635 (Clear menu item on transactions frame not working properly)
