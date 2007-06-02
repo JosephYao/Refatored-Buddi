@@ -1,6 +1,8 @@
 2.3.19.0 - 2.4 RC 6
 -Updated Spanish translation
 -Updated German translation
+-Moved log destination to <Working Dir>/buddi.log (for all OS's but OS X).  This allows easier troubleshooting, as people can just send me this file instead of having to download the .jar version and run using java -jar.  On OS X, Console.app gives easy access to log information, so we don't need to do it here.  You can still override the file name by using --log option.
+-Updated build structure to be more organized; <BuddiSource>/etc now has sub directories debian, osx, windows, and shared, depending on what platforms use the files.  This keeps me from needing the debian_* prefix to the debian files, etc.
 
 2.3.18.0 (June 1 2007) - 2.4 RC 5
 -Fixed bug #1729658 (Plugins duplicated on Graphs and Reports when loaded from plugin .jar)

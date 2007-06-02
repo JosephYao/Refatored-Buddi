@@ -54,6 +54,9 @@ public class Const {
 	public final static String HELP_FOLDER = "Help";
 	public final static String HELP_FILE = "index.html";
 	
+	//File names
+	public final static String LOG_FILE = "buddi.log";
+	
 	//Colors
 	public final static Color COLOR_SELECTED = new JList().getSelectionBackground(); // new Color(181, 213, 255);
 	public final static Color COLOR_SELECTED_TEXT = new JList().getSelectionForeground();

@@ -91,11 +91,11 @@ function bundle_debian {
 
 	mkdir -p $DEBIAN/usr/bin
 	cp Buddi.jar $DEBIAN/usr/bin
-	cp etc/debian_buddi $DEBIAN/usr/bin/buddi
+	cp etc/debian/buddi $DEBIAN/usr/bin/buddi
 	mkdir -p $DEBIAN/usr/share/applications
-	cp etc/buddi.desktop $DEBIAN/usr/share/applications/buddi.desktop
+	cp etc/shared/buddi.desktop $DEBIAN/usr/share/applications/buddi.desktop
 	mkdir -p $DEBIAN/usr/share/mime/packages
-	cp etc/debian_mime_package $DEBIAN/usr/share/mime/packages/buddi.xml
+	cp etc/shared/mime_package_buddi.xml $DEBIAN/usr/share/mime/packages/buddi.xml
 	for X in 16 22 24 32 36 48 64 72 96 128 192; do
 		mkdir -p $DEBIAN/usr/share/icons/hicolor/${X}x${X}/apps/
 		cp img/buddi-${X}x${X}.png $DEBIAN/usr/share/icons/hicolor/${X}x${X}/apps/buddi.png
@@ -103,11 +103,11 @@ function bundle_debian {
 	mkdir -p $DEBIAN/usr/share/pixmaps/
 	cp img/buddi-48x48.png $DEBIAN/usr/share/pixmaps/buddi.png
 	mkdir -p $DEBIAN/usr/share/doc/buddi
-	cp etc/debian_README $DEBIAN/usr/share/doc/buddi/README
-	cp etc/debian_control $DEBIAN/control
-	cp etc/debian_preinst $DEBIAN/preinst
-	cp etc/debian_preinst $DEBIAN/postinst
-	cp etc/debian_postrm $DEBIAN/postrm
+	cp etc/debian/README $DEBIAN/usr/share/doc/buddi/README
+	cp etc/debian/control $DEBIAN/control
+	cp etc/debian/preinst $DEBIAN/preinst
+	cp etc/debian/preinst $DEBIAN/postinst
+	cp etc/debian/postrm $DEBIAN/postrm
 
 	# Setting this environment variable fixes Apple's modified GNU tar so 
 	# that it won't make dot-underscore AppleDouble files. Google it 
@@ -174,10 +174,10 @@ function bundle_osx {
 	mkdir -p $OSX/Buddi.app/Contents/MacOS
 
 	# Needed to make this a real Mac .app bundle
-	cp etc/JavaApplicationStub $OSX/Buddi.app/Contents/MacOS
+	cp etc/osx/JavaApplicationStub $OSX/Buddi.app/Contents/MacOS
 
 	# Copy the .plist and .icns files
-	cp etc/Info.plist $OSX/Buddi.app/Contents/
+	cp etc/osx/Info.plist $OSX/Buddi.app/Contents/
 	cp img/*.icns $OSX/Buddi.app/Contents/Resources/
 
 	# Copy Buddi and associated files
@@ -203,7 +203,7 @@ function bundle_osx {
 # Change the launch4j config file to use correct version
 function bundle_windows {
 	TEMP_LAUNCH=temp.xml
-	cp etc/launch4j.xml $TEMP_LAUNCH
+	cp etc/windows/launch4j.xml $TEMP_LAUNCH
 	if [ "$VERSION" != "" ]; then
 		VERSION_NO_LETTERS=`echo $VERSION | sed -e "s/[a-z]//g"`
 		sed -i .bak  -e "s/VERSION/${VERSION_NO_LETTERS}/" $TEMP_LAUNCH

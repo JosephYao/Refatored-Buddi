@@ -6,7 +6,9 @@ package org.homeunix.drummer;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
@@ -185,17 +187,20 @@ public class Buddi {
 	 * in.  Use --help flag to see complete list.
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		//Absolute first thing to do is to catch any open requests from Apple Launchd.
 		if (OperatingSystemUtil.isMac()){
 			AppleApplicationWrapper.addApplicationListener();
 		}
 		
+		//Set up correct loggins style.
+		
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
-			+ "--font\tfontName\tFont to use by default\n";
+			+ "--font\tfontName\tFont to use by default\n"
+			+ "--log\tlogFile\tLocation to store logs (default varies by platform)\n";
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --slackware will specify a .tgz download for new versions.
@@ -205,11 +210,50 @@ public class Buddi {
 		variables.add(new ParseVariable("-v", Integer.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
+		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--slackware", Boolean.class, false));
 				
 		ParseResults results = ParseCommands.parse(args, help, variables);
+		
+		//Set the working path.  If we save files (plugins, data files) 
+		// within this path, we remove this parent path.  This allows
+		// us to use relative paths for such things as running from
+		// USB drives, from remote shares (which would not always have
+		// the same path), etc.
+		try {
+			if (System.getProperty("user.dir").length() > 0)
+				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator; //  + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+
+			//If we did not set it via user.dir, we set it here.
+			if (workingDir.length() == 0)
+				workingDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+		}
+		catch (IOException ioe){
+			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
+			workingDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+		}
+		
+		
+		//Set up the logging system.  If we have specified --log, we first
+		// try using that file.  If that is not specified, on the Mac
+		// we just use stderr (since Console.app provides an easy way
+		// to view that).  On all else, we default to buddi.log, in
+		// the working directory.
+		try {
+			if (results.getString("--log") != null)
+				Log.setPrintStream(new PrintStream(new File(results.getString("--log"))));
+			else if (!OperatingSystemUtil.isMac())
+				Log.setPrintStream(new PrintStream(new File(getWorkingDir() + Const.LOG_FILE)));
+			else
+				Log.setPrintStream(System.err);
+		}
+		catch (FileNotFoundException fnfe){
+			Log.setPrintStream(System.err);
+			Log.error(fnfe);
+		}
+		
 		String prefsLocation = results.getString("-p");
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
@@ -246,24 +290,9 @@ public class Buddi {
 			}  
 		}
 
-		//Set the working path.  If we save files (plugins, data files) 
-		// within this path, we remove this parent path.  This allows
-		// us to use relative paths for such things as running from
-		// USB drives, from remote shares (which would not always have
-		// the same path), etc.
-		try {
-			if (System.getProperty("user.dir").length() > 0)
-				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator; //  + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 
-			//If we did not set it via user.dir, we set it here.
-			if (workingDir.length() == 0)
-				workingDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-		}
-		catch (IOException ioe){
-			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
-			workingDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-		}
-		
+		//Let the user know where the working directory is, after
+		// we have set up logging properly.
 		Log.notice("Set working directory to " + workingDir);
 
 		//Load the correct Look and Feel
