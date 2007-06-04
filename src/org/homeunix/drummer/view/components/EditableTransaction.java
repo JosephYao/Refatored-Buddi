@@ -447,17 +447,18 @@ public class EditableTransaction extends JPanel {
 			
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				if (value instanceof Source){
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value == null)
+//					setText("\u2014");
+					this.setText(" ");
+				else if (value instanceof Source){
 					if (((Source) value).isDeleted())
-						value = "<html><s>" + value + "</s></html>";
+						this.setText("<html><s>" + value + "</s></html>");
+					else
+						this.setText(value.toString());
 				}
 				
-				return super.getListCellRendererComponent(
-						list, 
-						value, 
-						index, 
-						isSelected,
-						cellHasFocus);
+				return this;
 			}
 		};
 		

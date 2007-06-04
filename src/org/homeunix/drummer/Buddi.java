@@ -224,7 +224,7 @@ public class Buddi {
 		// the same path), etc.
 		try {
 			if (System.getProperty("user.dir").length() > 0)
-				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator; //  + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
 
 			//If we did not set it via user.dir, we set it here.
 			if (workingDir.length() == 0)
