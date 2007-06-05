@@ -1,3 +1,6 @@
+2.3.20.0 - 2.4 RC 7
+-Added beta quality Slackware package.  Upload is currently disabled for this, as I need everyone currently running 2.2 to upgrade to 2.4, where the .jar file is specified as a .jar extension, not .tgz as it was before.  If you wish to test the .tgz Slackware package (or have more information for me to make it better, such as desktop integration or something), email me.
+
 2.3.19.0 (June 4 2007) - 2.4 RC 6
 -Updated Spanish translation
 -Updated German translation

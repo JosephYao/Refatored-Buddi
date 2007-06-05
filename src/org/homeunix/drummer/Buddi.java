@@ -261,6 +261,7 @@ public class Buddi {
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		slackware = results.getBoolean("--slackware");
+		
 		if (fileToLoad == null
 				&& results.getCommands().size() > 0)
 			fileToLoad = results.getCommands().get(0);

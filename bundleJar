@@ -28,6 +28,8 @@ function init {
 	DEST=/Users/wyatt/Desktop/Buddi
 	DEBIANROOT=$DEST/Debian
 	DEBIAN=$DEBIANROOT/Buddi
+	SLACKROOT=$DEST/Slackware
+	SLACK=$SLACKROOT/Buddi
 	OSXROOT=$DEST/Buddi_OSX
 	OSX=$OSXROOT/Buddi
 	GENERICROOT=$DEST/Generic
@@ -166,6 +168,15 @@ function bundle_debian {
 
 
 
+function bundle_slackware {
+        mkdir -p $SLACK/usr/bin
+        cp Buddi.jar $SLACK/usr/bin
+        cp etc/slackware/buddi $SLACK/usr/bin/buddi
+
+	tar -C $SLACK -czf $DEST/Buddi-$VERSION.tgz usr
+}
+
+
 
 #Create the OSX directory
 function bundle_osx {
@@ -246,6 +257,7 @@ function clean {
 	rm -rf $WINDOWSROOT
 	rm -rf $OSXROOT
 	rm -rf $DEBIANROOT
+	rm -rf $SLACKROOT
 	rm -rf $GENERICROOT
 	
 	rm Buddi.exe
@@ -299,6 +311,7 @@ init $*
 make_jar $*
 #bundle_help $*
 bundle_debian $*
+bundle_slackware $*
 bundle_windows $*
 bundle_osx $*
 bundle_generic $*
