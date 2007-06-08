@@ -42,7 +42,7 @@
 		<pathelement location="lib/BrowserLauncher2-10.jar"/>
 		<pathelement location="lib/MRJAdapter-1.0.9.jar"/>
 		<pathelement location="lib/truefilter-1.2.jar"/>
-		<pathelement location="lib/moss-0.6.0.jar"/>
+		<pathelement location="lib/moss-0.6.1.0.jar"/>
 		<pathelement location="lib/swingx-2006_10_27.jar"/>
 	</path> 
 

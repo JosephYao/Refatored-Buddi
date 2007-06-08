@@ -1,4 +1,14 @@
-2.3.20.0 - 2.4 RC 7
+2.4.0.0 (June 7 2007)
+-2.4 Stable branch.  Includes many improvements over the 2.2 branch.
+-Complete rework of the GUI framework, allow a more consistent user interface, and greater speed when opening large data files
+-Moved report / graph output to HTML page, for better printing and easier view.
+-Support OS integration, to open data files directly.  (This works out of the box for OS X and Debian; for Windows and other OS's, you will need to associate .buddi files with Buddi for this to work properly.)
+-More logical dialog sequence for New / Open data files
+-Complete API for third party plugins, allowing Developers to use a more stable interface which will not change as much with future versions.
+-Rewrite of transactions list cell renderer, making this information more easy to read
+-Many other minor features.
+	
+2.3.20.0 (Not publicly released)
 -Added beta quality Slackware package.  Upload is currently disabled for this, as I need everyone currently running 2.2 to upgrade to 2.4, where the .jar file is specified as a .jar extension, not .tgz as it was before.  If you wish to test the .tgz Slackware package (or have more information for me to make it better, such as desktop integration or something), email me.
 
 2.3.19.0 (June 4 2007) - 2.4 RC 6
