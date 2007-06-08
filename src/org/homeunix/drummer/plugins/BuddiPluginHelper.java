@@ -48,7 +48,7 @@ public class BuddiPluginHelper {
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
-						if (Const.DEVEL) e.printStackTrace();
+						if (Const.DEVEL) e.printStackTrace(Log.getPrintStream());
 					}
 				}
 				else if (plugin instanceof BuddiGraphPlugin){
@@ -64,7 +64,7 @@ public class BuddiPluginHelper {
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
-						if (Const.DEVEL) e.printStackTrace();
+						if (Const.DEVEL) e.printStackTrace(Log.getPrintStream());
 					}
 				}
 				else {

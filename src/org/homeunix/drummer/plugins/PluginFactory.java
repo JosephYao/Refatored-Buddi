@@ -74,7 +74,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					File file = null;
 
 					if (finalPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().showSaveFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
+						file = DocumentManager.getInstance().showExportFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
 					}
 
 					if (!finalPlugin.isPromptForFile() || file != null){
@@ -134,7 +134,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					File file = null;
 
 					if (finalPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().showSaveFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
+						file = DocumentManager.getInstance().showImportFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
 					}
 
 					if (!finalPlugin.isPromptForFile() || file != null){
@@ -251,15 +251,15 @@ public class PluginFactory<T extends BuddiPlugin> {
 			catch (Exception e){
 				Log.warning("Exception when instantiating plugin " + entry.getName() + ": if Const.DEVEL is set, stack trace follows:");
 				if (Const.DEVEL)
-					e.printStackTrace();
+					e.printStackTrace(Log.getPrintStream());
 			}
 			catch (AbstractMethodError ame){				
 				Log.critical("Error when instantiating plugin " + entry.getName() + ".  This is probably due to loading a very old plugin in a new version of Buddi.  For debugging, stack trace follows:");
-				ame.printStackTrace();
+				ame.printStackTrace(Log.getPrintStream());
 			}
 			catch (Error e){
 				Log.critical("Error when instantiating plugin " + entry.getName() + ": stack trace follows:");
-				e.printStackTrace();
+				e.printStackTrace(Log.getPrintStream());
 			}
 		}
 

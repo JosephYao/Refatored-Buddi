@@ -344,6 +344,45 @@ public class DocumentManager {
 
 		return file;
 	}
+	
+	public File showImportFileDialog(File file, String title, FileFilter filter){
+		while (file == null){
+			final JFileChooser jfc = new JFileChooser();
+			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			jfc.setFileFilter(filter);
+			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
+				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			jfc.setDialogTitle(title);
+			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+				if (!jfc.getSelectedFile().exists()){
+					
+				}
+				else if (!jfc.getSelectedFile().canRead()){
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							null,
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
+				}
+				else {
+					file = jfc.getSelectedFile();
+				}
+			}
+			//The user hit cancel.  We return to the calling code with false. 
+			else {
+				return null;
+			}
+		}
+
+		return file;
+	}
 
 	public ReturnCodes saveDataFile(File file){
 		File f = showSaveFileDialog(file, Translate.getInstance().get(TranslateKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), fileFilter);
@@ -512,6 +551,44 @@ public class DocumentManager {
 						location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
 
 					file = new File(location);
+				}
+			}
+			//The user hit cancel.  We return to the calling code with false. 
+			else {
+				return null;
+			}
+		}
+
+		return file;
+	}
+	
+	public File showExportFileDialog(File file, String title, FileFilter filter){
+		while (file == null){
+			final JFileChooser jfc = new JFileChooser();
+			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			jfc.setFileFilter(filter);
+			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
+				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			jfc.setDialogTitle(title);
+			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+				//Check that we have write permission to the folder where this
+				// file was selected.
+				if (!isFolderWritable(jfc.getSelectedFile().getParentFile())){
+					String[] options = new String[1];
+					options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							null,
+							Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
+							Translate.getInstance().get(TranslateKeys.ERROR),
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
+				}
+				else {
+					file = jfc.getSelectedFile();
 				}
 			}
 			//The user hit cancel.  We return to the calling code with false. 

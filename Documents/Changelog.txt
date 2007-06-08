@@ -1,3 +1,10 @@
+2.5.0.1
+-Fixed bug #1733696 (Export plug-in issue with Save dialog)
+-Redirected Exception.printStackTrace()'s to Log's PrintStream (thus including them in the buddi.log file)
+
+2.5.0.0 (June 8 2007)
+-Development branch of 2.4.0.0.
+
 2.4.0.0 (June 7 2007)
 -2.4 Stable branch.  Includes many improvements over the 2.2 branch.
 -Complete rework of the GUI framework, allow a more consistent user interface, and greater speed when opening large data files
