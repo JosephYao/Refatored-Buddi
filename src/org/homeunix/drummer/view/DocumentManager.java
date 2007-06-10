@@ -545,10 +545,10 @@ public class DocumentManager {
 				// is correct, and use this file.
 				else {
 					final String location;
-					if (jfc.getSelectedFile().getName().endsWith(Const.DATA_FILE_EXTENSION))
+					if (jfc.getSelectedFile().getName().toLowerCase().endsWith(Const.DATA_FILE_EXTENSION.toLowerCase()))
 						location = jfc.getSelectedFile().getAbsolutePath();
 					else
-						location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION;
+						location = jfc.getSelectedFile().getAbsolutePath() + Const.DATA_FILE_EXTENSION.toLowerCase();
 
 					file = new File(location);
 				}
@@ -562,7 +562,7 @@ public class DocumentManager {
 		return file;
 	}
 	
-	public File showExportFileDialog(File file, String title, FileFilter filter){
+	public File showExportFileDialog(File file, String title, FileFilter filter, String extension){
 		while (file == null){
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -587,8 +587,16 @@ public class DocumentManager {
 							options,
 							options[0]);
 				}
+				//User has selected a new file name.  Make sure the extension
+				// is correct, and use this file.
 				else {
-					file = jfc.getSelectedFile();
+					final String location;
+					if (extension == null || jfc.getSelectedFile().getName().toLowerCase().endsWith(extension.toLowerCase()))
+						location = jfc.getSelectedFile().getAbsolutePath();
+					else
+						location = jfc.getSelectedFile().getAbsolutePath() + extension.toLowerCase();
+
+					file = new File(location);
 				}
 			}
 			//The user hit cancel.  We return to the calling code with false. 

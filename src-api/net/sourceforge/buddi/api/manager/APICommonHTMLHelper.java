@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -229,6 +230,20 @@ public class APICommonHTMLHelper {
 		File dataFolder = new File(PrefsInstance.getInstance().getPrefs().getDataFile()).getParentFile();
 		File htmlFolder = null;
 		int counter = 0;
+		
+		if (dataFolder == null) {
+			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
+			dataFolder = new File(Buddi.getWorkingDir());
+		}
+
+		//Do some sanity checks, logging results
+		if (dataFolder == null)
+			Log.error("Data folder is null (APICommonHTMLHelper.createHTML()).");
+		if (html == null)
+			Log.error("HTML is null (APICommonHTMLHelper.createHTML()).");
+		if (name == null)
+			Log.error("Name is null (APICommonHTMLHelper.createHTML()).");
+		
 		//Get a unique folder name which has not yet been used.
 		while (counter < countMax && (htmlFolder == null || htmlFolder.exists())){
 			htmlFolder = new File(dataFolder.getAbsolutePath() + File.separator + name + (counter > 0 ? "_" + counter : ""));

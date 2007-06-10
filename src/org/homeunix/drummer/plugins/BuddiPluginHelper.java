@@ -13,7 +13,6 @@ import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 
-import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.view.MainFrame;
@@ -48,7 +47,7 @@ public class BuddiPluginHelper {
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
-						if (Const.DEVEL) e.printStackTrace(Log.getPrintStream());
+						e.printStackTrace(Log.getPrintStream());
 					}
 				}
 				else if (plugin instanceof BuddiGraphPlugin){
@@ -64,7 +63,7 @@ public class BuddiPluginHelper {
 					}
 					catch (Exception e){
 						Log.error("Error making HTML: " + e);
-						if (Const.DEVEL) e.printStackTrace(Log.getPrintStream());
+						e.printStackTrace(Log.getPrintStream());
 					}
 				}
 				else {

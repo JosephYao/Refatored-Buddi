@@ -24,4 +24,17 @@ public abstract class BuddiExportPlugin extends BuddiMenuPlugin {
 	 */
 	public abstract void exportData(DataManager dataManager, File file);
 	
+	/**
+	 * Gets the extension for the data file, e.g., .csv, .xml, .qif, etc.
+	 * If the value is null (default), there is no extension appended.
+	 * Override to enable this.
+	 * 
+	 * Note: You should include the dot (.) in front of the extension;
+	 * for instance, return ".csv", not "csv".
+	 * 
+	 * @return The extension of the data file, including the period.
+	 */
+	public String getExtension(){
+		return null;
+	}
 }

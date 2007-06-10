@@ -74,7 +74,7 @@ public class PluginFactory<T extends BuddiPlugin> {
 					File file = null;
 
 					if (finalPlugin.isPromptForFile()){
-						file = DocumentManager.getInstance().showExportFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter());
+						file = DocumentManager.getInstance().showExportFileDialog(null, finalPlugin.getFileChooserTitle(), finalPlugin.getFileFilter(), finalPlugin.getExtension());
 					}
 
 					if (!finalPlugin.isPromptForFile() || file != null){
