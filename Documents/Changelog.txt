@@ -1,4 +1,4 @@
-2.5.1.0
+2.5.1.0 (June 10 2007)
 -Fixed bug #1733696 (Export plug-in issue with Save dialog)
 -Redirected Exception.printStackTrace()'s to Log's PrintStream (thus including them in the buddi.log file)
 -Added updated Russian translation

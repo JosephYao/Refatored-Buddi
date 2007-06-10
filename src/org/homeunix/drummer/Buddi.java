@@ -291,6 +291,8 @@ public class Buddi {
 			}  
 		}
 
+		//The version of Buddi.  Useful for diagnostics
+		Log.notice("Running Buddi version " + Const.VERSION);
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
