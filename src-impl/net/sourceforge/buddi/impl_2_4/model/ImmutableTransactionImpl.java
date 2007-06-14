@@ -22,9 +22,6 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
         this.transaction = transaction;
     }
     
-    public ImmutableTransactionImpl() {
-    }
-    
     public long getAmount() {
         return transaction.getAmount();
     }
@@ -67,7 +64,7 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
 
     private ImmutableSource immutableSourceFrom = null;
     public ImmutableSource getFrom() {
-        if (immutableSourceFrom == null){
+        if (transaction != null && immutableSourceFrom == null){
         	if (transaction.getFrom() instanceof Category)
         		immutableSourceFrom = new ImmutableCategoryImpl((Category) transaction.getFrom());
         	else if (transaction.getFrom() instanceof Account)
@@ -80,7 +77,7 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
 
     private ImmutableSource immutableSourceTo = null;
     public ImmutableSource getTo() {
-        if (immutableSourceTo == null){
+        if (transaction != null && immutableSourceTo == null){
         	if (transaction.getTo() instanceof Category)
         		immutableSourceTo = new ImmutableCategoryImpl((Category) transaction.getTo());
         	else if (transaction.getTo() instanceof Account)

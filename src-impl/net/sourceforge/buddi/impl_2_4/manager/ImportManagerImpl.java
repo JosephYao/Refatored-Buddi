@@ -22,6 +22,8 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.TransactionsFrame;
 
 public class ImportManagerImpl extends DataManagerImpl implements ImportManager {
 
@@ -66,6 +68,10 @@ public class ImportManagerImpl extends DataManagerImpl implements ImportManager 
             mutableTransactionImpl.validate();
             TransactionController.addTransaction(mutableTransactionImpl.getImpl());
         }
+        
+        MainFrame.getInstance().getAccountListPanel().updateContent();
+        MainFrame.getInstance().getCategoryListPanel().updateContent();
+        TransactionsFrame.updateAllTransactionWindows();
     }
 
     public void rollbackChanges() {

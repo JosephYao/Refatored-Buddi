@@ -10,6 +10,7 @@ import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
 
 public class MutableTransactionImpl extends ImmutableTransactionImpl implements MutableTransaction {
@@ -20,7 +21,12 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
         return transaction;
     }
 
+    public MutableTransactionImpl(){
+    	this(ModelFactory.eINSTANCE.createTransaction());
+    }
+    
     public MutableTransactionImpl(Transaction transaction) {
+    	super(transaction);
         this.transaction = transaction;
     }
     
@@ -138,18 +144,15 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
 
     private ImmutableSource immutableSourceFrom = null;
     public ImmutableSource getFrom() {
-        if (null == immutableSourceFrom)
+        if (transaction != null && immutableSourceFrom == null)
         {
-            if (transaction.getFrom() instanceof Category)
-            {
+            if (transaction.getFrom() instanceof Category){
                 immutableSourceFrom = new ImmutableCategoryImpl((Category)transaction.getFrom());
             }
-            else if (transaction.getFrom() instanceof Account)
-            {
+            else if (transaction.getFrom() instanceof Account){
                 immutableSourceFrom = new ImmutableAccountImpl((Account)transaction.getFrom());
             }
-            else
-            {
+            else{
                 throw new UnimplementedException("transaction.getFrom() implementation of unknown type: " + transaction.getFrom().getClass().getName());
             }
         }
@@ -158,18 +161,14 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
 
     private ImmutableSource immutableSourceTo = null;
     public ImmutableSource getTo() {
-        if (null == immutableSourceTo)
-        {
-            if (transaction.getTo() instanceof Category)
-            {
+        if (transaction != null && immutableSourceTo == null){
+            if (transaction.getTo() instanceof Category){
                 immutableSourceTo = new ImmutableCategoryImpl((Category)transaction.getTo());
             }
-            else if (transaction.getTo() instanceof Account)
-            {
+            else if (transaction.getTo() instanceof Account){
                 immutableSourceTo = new ImmutableAccountImpl((Account)transaction.getTo());
             }
-            else
-            {
+            else{
                 throw new UnimplementedException("transaction.getTo() implementation of unknown type: " + transaction.getTo().getClass().getName());
             }
         }

@@ -28,6 +28,9 @@ public class TestPlugin extends BuddiExportPlugin {
 	
 	public void exportData(DataManager dataManager, File file) {
 		System.out.println(Translate.getInstance().get("FOO"));
+		
+//		ImmutableTransaction transaction = new ImmutableTransactionImpl(null);
+//		ImmutableSource s = transaction.getTo();
 	}
 
 //	public Class[] getCorrectWindows() {
