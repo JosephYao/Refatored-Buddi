@@ -59,44 +59,34 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
     }
 
     public void setFrom(ImmutableSource newFrom) {
-        if (null == newFrom)
-        {
+        if (null == newFrom){
             transaction.setFrom(null);
         }
-        else
-        {
-            if (newFrom instanceof MutableSourceImpl)
-            {
+        else{
+            if (newFrom instanceof MutableSourceImpl){
                 transaction.setFrom(((MutableSourceImpl)newFrom).getImpl());
             }
-            else if (newFrom instanceof ImmutableSourceImpl)
-            {
+            else if (newFrom instanceof ImmutableSourceImpl){
                 transaction.setFrom(((ImmutableSourceImpl)newFrom).getImpl());
             }
-            else
-            {
+            else{
                 throw new UnimplementedException("ImmutableSource implementation of unknown type: " + newFrom.getClass().getName());
             }
         }
     }
 
     public void setTo(ImmutableSource newTo) {
-        if (null == newTo)
-        {
+        if (null == newTo){
             transaction.setTo(null);
         }
-        else
-        {
-            if (newTo instanceof MutableSourceImpl)
-            {
+        else{
+            if (newTo instanceof MutableSourceImpl){
                 transaction.setTo(((MutableSourceImpl)newTo).getImpl());
             }
-            else if (newTo instanceof ImmutableSourceImpl)
-            {
+            else if (newTo instanceof ImmutableSourceImpl){
                 transaction.setTo(((ImmutableSourceImpl)newTo).getImpl());
             }
-            else
-            {
+            else{
                 throw new UnimplementedException("ImmutableSource implementation of unknown type: " + newTo.getClass().getName());
             }
         }
