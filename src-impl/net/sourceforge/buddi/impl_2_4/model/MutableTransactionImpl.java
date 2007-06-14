@@ -142,7 +142,10 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
             else if (transaction.getFrom() instanceof Account){
                 immutableSourceFrom = new ImmutableAccountImpl((Account)transaction.getFrom());
             }
-            else{
+            else if (transaction.getFrom() == null){
+            	immutableSourceFrom = null;
+            }
+            else {
                 throw new UnimplementedException("transaction.getFrom() implementation of unknown type: " + transaction.getFrom().getClass().getName());
             }
         }
@@ -157,6 +160,9 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
             }
             else if (transaction.getTo() instanceof Account){
                 immutableSourceTo = new ImmutableAccountImpl((Account)transaction.getTo());
+            }
+            else if (transaction.getTo() == null){
+            	immutableSourceTo = null;
             }
             else{
                 throw new UnimplementedException("transaction.getTo() implementation of unknown type: " + transaction.getTo().getClass().getName());
