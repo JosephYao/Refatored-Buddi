@@ -22,6 +22,9 @@ import org.homeunix.thecave.moss.util.Log;
 
 public class DocumentManager {
 
+	private static File lastFileLocation = null;
+	
+	
 	/**
 	 * Get an instance of the DocumentManager.
 	 * @return DocumentManager
@@ -115,8 +118,12 @@ public class DocumentManager {
 			jfc.setFileFilter(fileFilter);
 			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			else
+				jfc.setCurrentDirectory(lastFileLocation);
 			jfc.setDialogTitle(Translate.getInstance().get(TranslateKeys.FILECHOOSER_NEW_DATA_FILE_TITLE));
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+				lastFileLocation = jfc.getSelectedFile().getParentFile();
+				
 				//We no longer allow overwriting existing files.  If
 				// the user selects an existing file, we show an
 				// error and prompt for another file.
@@ -299,6 +306,7 @@ public class DocumentManager {
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 			jfc.setDialogTitle(title);
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+				lastFileLocation = jfc.getSelectedFile().getParentFile();
 				if (!jfc.getSelectedFile().exists()){
 
 				}
@@ -350,10 +358,10 @@ public class DocumentManager {
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			jfc.setFileFilter(filter);
-			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
-				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			jfc.setCurrentDirectory(lastFileLocation);
 			jfc.setDialogTitle(title);
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+				lastFileLocation = jfc.getSelectedFile().getParentFile();
 				if (!jfc.getSelectedFile().exists()){
 					
 				}
@@ -508,6 +516,8 @@ public class DocumentManager {
 				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
 			jfc.setDialogTitle(title);
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+				lastFileLocation = jfc.getSelectedFile().getParentFile();
+				
 				//We no longer allow overwriting existing files.  If
 				// the user selects an existing file, we show an
 				// error and prompt for another file.
@@ -567,10 +577,11 @@ public class DocumentManager {
 			final JFileChooser jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			jfc.setFileFilter(filter);
-			if (PrefsInstance.getInstance().getPrefs().getDataFile() != null)
-				jfc.setCurrentDirectory(new File(PrefsInstance.getInstance().getPrefs().getDataFile()));
+			jfc.setCurrentDirectory(lastFileLocation);
 			jfc.setDialogTitle(title);
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+				lastFileLocation = jfc.getSelectedFile().getParentFile();
+
 				//Check that we have write permission to the folder where this
 				// file was selected.
 				if (!isFolderWritable(jfc.getSelectedFile().getParentFile())){

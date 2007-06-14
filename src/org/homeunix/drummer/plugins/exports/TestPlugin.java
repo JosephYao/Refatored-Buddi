@@ -17,7 +17,7 @@ import org.homeunix.thecave.moss.util.Version;
  * This is a simple test plugin which can help to test functionality.  
  * It should not be included in the main release (or at least, not loaded;
  * the class is small enough that I don't care if it is included in the
- * distribution or not).
+ * jar or not).
  * 
  * @author wyatt
  *
@@ -50,7 +50,7 @@ public class TestPlugin extends BuddiExportPlugin {
 
 	public boolean isPromptForFile() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public String getDescription() {
