@@ -81,7 +81,7 @@ public class ExpenseBudgetedVsActual extends BuddiGraphPlugin {
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 		images.put("graph.png", 
 				chart.createBufferedImage(
-						Toolkit.getDefaultToolkit().getScreenSize().width - 200, 
+						Math.min(Toolkit.getDefaultToolkit().getScreenSize().width - 200, 1000), 
 						cats.size() * 50));
 		
 		return new HTMLWrapper(sb.toString(), images);

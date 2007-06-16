@@ -75,7 +75,7 @@ public class ExpensesPieGraph extends BuddiGraphPlugin {
 		Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 		images.put("graph.png", 
 				chart.createBufferedImage(
-						Toolkit.getDefaultToolkit().getScreenSize().width - 200, 
+						Math.min(Toolkit.getDefaultToolkit().getScreenSize().width - 200, 1000), 
 						Toolkit.getDefaultToolkit().getScreenSize().height - 100));
 		
 		return new HTMLWrapper(sb.toString(), images);
