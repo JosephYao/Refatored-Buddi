@@ -1,5 +1,6 @@
 2.5.2.0
 -Remember the last directory, for import / export plugins (Request #1736868)
+-Fixed bug #1737834 (Would not allow IE to recognise the reports as UTF 8)
 
 2.5.1.0 (June 10 2007)
 -Fixed bug #1733696 (Export plug-in issue with Save dialog)

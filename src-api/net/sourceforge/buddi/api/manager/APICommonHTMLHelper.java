@@ -42,6 +42,7 @@ public class APICommonHTMLHelper {
 		sb.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"); 
 		sb.append("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
 		sb.append("<html>\n");
+		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
 		sb.append("<head>\n");
 		sb.append("<title>");
 		sb.append(Translate.getInstance().get(title));
@@ -254,11 +255,15 @@ public class APICommonHTMLHelper {
 			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.");
 			return null;
 		}
+		
+		if (!BuddiUtil.isFolderWritable(htmlFolder.getParentFile())){
+			Log.warning("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
+		}
 
-		//We could not create a folder, even though we found a file.  Exit.
+		//Try to create a folder.  If this doesn't work, we will try to just use the root of the data folder.
 		if (!htmlFolder.mkdir()){
-			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Cancelling HTML export.");
-			return null;
+			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Using root of data folder for report.  This may create problems if you run multiple reports.");
+			htmlFolder = dataFolder.getAbsoluteFile();
 		}
 
 		File htmlFile = new File(htmlFolder.getAbsolutePath() + File.separator + "index.html");
