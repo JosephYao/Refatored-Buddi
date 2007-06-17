@@ -252,18 +252,19 @@ public class APICommonHTMLHelper {
 		}
 		//We could not create a folder, after 1000 tries.  Exit.
 		if (counter == countMax){
-			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.");
+			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.  Please verify if you really have this many folders in your data drectory, and if so, clean up a bit.");
+			
 			return null;
 		}
 		
 		if (!BuddiUtil.isFolderWritable(htmlFolder.getParentFile())){
-			Log.warning("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
+			Log.error("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
 		}
 
-		//Try to create a folder.  If this doesn't work, we will try to just use the root of the data folder.
+		//Try to create a folder.  If this doesn't work, we return with an error.
 		if (!htmlFolder.mkdir()){
-			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Using root of data folder for report.  This may create problems if you run multiple reports.");
-			htmlFolder = dataFolder.getAbsoluteFile();
+			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Please check that you have write permission on this folder and its sub folders.");
+			return null;
 		}
 
 		File htmlFile = new File(htmlFolder.getAbsolutePath() + File.separator + "index.html");
