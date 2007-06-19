@@ -2,6 +2,7 @@ package net.sourceforge.buddi.impl_2_4.manager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.buddi.api.exception.ValidationException;
@@ -17,7 +18,6 @@ import net.sourceforge.buddi.impl_2_4.model.MutableCategoryImpl;
 import net.sourceforge.buddi.impl_2_4.model.MutableTransactionImpl;
 
 import org.homeunix.drummer.controller.SourceController;
-import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelFactory;
@@ -64,14 +64,18 @@ public class ImportManagerImpl extends DataManagerImpl implements ImportManager 
             SourceController.addCategory(mutableCategoryImpl.getImpl());
         }
         
+        Collection<Transaction> transactionsToCommit = new HashSet<Transaction>();
         for(MutableTransactionImpl mutableTransactionImpl: temporaryTransactionList) {
             mutableTransactionImpl.validate();
-            TransactionController.addTransaction(mutableTransactionImpl.getImpl());
+//            TransactionController.addTransaction(mutableTransactionImpl.getImpl());O
+            transactionsToCommit.add(mutableTransactionImpl.getImpl());
         }
+        
+        TransactionsFrame.addToTransactionListModel(transactionsToCommit);
         
         MainFrame.getInstance().getAccountListPanel().updateContent();
         MainFrame.getInstance().getCategoryListPanel().updateContent();
-        TransactionsFrame.updateAllTransactionWindows();
+//        TransactionsFrame.updateAllTransactionWindows();
     }
 
     public void rollbackChanges() {
