@@ -14,7 +14,7 @@ rm -rf $WWWDIR
 svn export www $WWWDIR
 
 rm -rf $HELPDIR/*
-cp -R $WWWDIR/* $HELPDIR
+cp -R ${WWWDIR}/* ${HELPDIR}
 
 #Remove the Languages link, as we're not connected to the Internet anyway
 sed -i .bak -e '/.*Languages.*/d' $ENGLISH/inc/header.php
@@ -52,7 +52,7 @@ rm -rf $HELPDIR/*/*/.svn
 if [ "$1" == "--release" ]; then
 	DATE=`date "+%Y.%m.%d"`
 	FILENAME="Help-$DATE.tgz"
-	tar -czvf FILENAME $HELPDIR
+	tar -czvf $FILENAME $HELPDIR
 
 	# Upload release files
 	USER=anonymous

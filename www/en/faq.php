@@ -7,6 +7,24 @@
 There is no need to install Buddi; it is a standalong executable.  Just copy it to where ever you want it to stay (I recommend C:\Program Files\Buddi\ if you are on Windows, or /Applications if you are on a Mac, but you can run it from anywhere).  On its first execution, it will create preference files (see 'How do I uninstall Buddi?' for the location of these files).  That's all!
 </p>
 
+<p>
+On Debian / Ubuntu, I have created a specal installer pakage which puts Buddi in the applications menu under the Office applications.  To use this, simply <a href='http://buddi.sourceforge.net/buddi.deb'>download the Debian package</a> from the web site.  You can then either open it with the GDebi Package Instaler, or run from the console 'dkpg -i Buddi-version.deb', where 'version' is the version number of the file.
+</p>
+
+<p>
+Note that in all cases, you need Sun's Java VM installed.  On Windows, Buddi will prompt you for this if you don't have it.  On Debian / Ubuntu, if you have the Multiverse / Universe repositories included in your Sources.list, GDebi will install Java and its associated programs automatically.  On other platforms, you will have to ensure that you have Java 1.5 yourself.
+</p>
+
+<h2>Will Buddi run on my Operating System?</h2>
+<p>
+Probably yes.  If you have a modern operating system with a copy of Sun's Java Virtual Machine (version 1.5 or higher), it should work fine.  This includes most recent versions of Windows, Macintosh OS X 10.4, most Linux distributions, Solaris, and possibly more.  Please consult the help files for your given operating system if you are unsure whether it supports Java 1.5 or not.
+</p>
+
+<h2>Will Buddi work on OS X 10.3 or earlier versions?</h2>
+<p>
+Unfortunately not.  Apple has decided not to release Java 1.5 for versions of OS X previous to Tiger.  I have looked into backporting Buddi, but because of some of the advanced features of Java 1.5 that I use, such as the encryption routines, I cannot run it on previous versions of Java.
+</p>
+
 <h2>How do I launch the program?</h2>
 <p>
 That depends on what operating system you are running.  If you are in Windows, simply double click on the Buddi.jar file.  If you are on a Macintosh, double click on the Buddi application bundle.  If you are on Linux or some other platform where the association of .jar to the Java VM has not been set up, type 'java -jar Buddi.jar' on the command line.
@@ -15,10 +33,13 @@ That depends on what operating system you are running.  If you are in Windows, s
 
 <h2>How do I uninstall Buddi?</h2>
 <p>
-Since I don't use an installer, I do not write anything to the registry, and thus you don't need an uninstaller program.  To uninstall, you can simply remove the Buddi executable (either .exe, .jar, or .app depending on your operating system).
+Since I don't use an installer for most distributions, and I do not write anything to the registry, you don't need an uninstaller program.  To uninstall, you can simply remove the Buddi executable (either .exe, .jar, or .app depending on your operating system).
 </p>
 <p>
 The only files which Buddi writes to the hard drive are your data files (Data.*.buddi), and the Preferences file (prefs.xml).  You chose the location of the data files; the preferences file is located differently depending on your operating system.  If you are running on Windows, it will be in C:\Documents and Settings\&lt;user name&gt;\Application Data\Buddi.  If you are running on a Mac, it will be in /Users/&lt;user name&gt;/Library/Application Support/Buddi.  If you are on a different operating system, it will be under ~/.buddi.  Regardless of where it is, you can remove the entire Buddi / .buddi folder if you desire.
+</p>
+<p>
+On Debian, you can use the command 'apt-get remove buddi' to remove it.
 </p>
 <p>
 If you choose to not use Buddi after trying it for a while, I would like to know why.  Please drop me an email, or leave a post on the forums, so that I can improve Buddi for future users.
@@ -26,7 +47,7 @@ If you choose to not use Buddi after trying it for a while, I would like to know
 
 <h2>How can I password protect / encrypt my data?</h2>
 <p>
-John Didion has graciously sent me a patch which performs this function (very elegantly, I may add) using an AES cipher.  As of now, it is included in both the Stable and Development branches.
+John Didion has graciously created the code which performs this function (very elegantly, I may add) using an AES cipher.  It is included in both the Stable and Development branches.
 </p>
 <p>
 When using encryption, MAKE SURE you don't forget your password.  You CANNOT read your data file without it.
@@ -101,17 +122,6 @@ The terms 'Stable' and 'Development' may be misleading - any version which I rel
 <p>
 If you don't like downloading new versions every few weeks, then use the stable version.  If you want to always keep up to date with current features, use the development version.
 </p>
-
-<h2>Export Reports to HTML doesn't work for me</h2>
-<p>
-If, from a Report window, you click on Export to HTML and it does not do anything, make sure that there are no spaces in the path to your data store (where Data.buddi is kept).  There seems to be a problem with the package that I use to open the web browser, which doesn't like spaces in the path name.  I am not aware of a solution at this time; as a workaround, you can manually open the .html file (is should be called report_XXX.html, in the same directory as the data store).  Note that this is a temporary file, and will be deleted when Buddi exits.
-</p>
-
-<h2>Why doesn't this stupid program work?</h2>
-<p>
-You need to have Java 1.5 installed for Buddi to work. If you are running OS X, you need to have Tiger installed and the <a href="http://www.apple.com/support/downloads/java2se50release1.html">Java 1.5 update installed</a>. If you are running on a different platform, please consult the documentation for that system.
-</p>
-
 
 <hr>
 

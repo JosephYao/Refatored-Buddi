@@ -27,8 +27,10 @@ Buddi - Personal budget software for the rest of us
 Downloads
 <li><ul>
 <li><a href='http://buddi.sourceforge.net/buddi.dmg' target='_top'>Macintosh</a></li>
-<li><a href='http://buddi.sourceforge.net/buddi.zip' target='_top'>Windows</a></li>
-<li><a href='http://buddi.sourceforge.net/buddi.tgz' target='_top'>Linux / Other</a></li>
+<li><a href='http://buddi.sourceforge.net/buddi.exe' target='_top'>Windows</a></li>
+<li><a href='http://buddi.sourceforge.net/buddi.deb' target='_top'>Debian / Ubuntu</a></li>
+<li><a href='http://buddi.sourceforge.net/buddi.deb' target='_top'>All Platforms (.jar)</a></li>
+<br>
 <li><a href='http://sourceforge.net/project/showfiles.php?group_id=167026&package_id=221034' target='top'>Plugins</a></li>
 </ul></li>
 <br>
