@@ -2,7 +2,7 @@
 #
 ############################
 
-DEST=/Users/wyatt/Desktop/
+DEST=/Users/Wyatt/Desktop/
 WWWDIR="${DEST}www"
 HELPDIR="Help"
 INCLUDE="${HELPDIR}/inc"
@@ -13,7 +13,8 @@ ENGLISH="${HELPDIR}/en"
 rm -rf $WWWDIR
 svn export www $WWWDIR
 
-rm -rf $HELPDIR/*
+rm -rf ${HELPDIR}
+mkdir ${HELPDIR}
 cp -R ${WWWDIR}/* ${HELPDIR}
 
 #Remove the Languages link, as we're not connected to the Internet anyway
