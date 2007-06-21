@@ -153,6 +153,8 @@ public class Const {
 //		"org.homeunix.drummer.plugins.exports.ExportHTML",
 //		"org.homeunix.drummer.plugins.exports.ExportCSV"
 //		"org.homeunix.drummer.plugins.exports.TestPlugin"
+//		"org.homeunix.thecave.plugins.graph.parentcategorypie.IncomePieGraph",
+//		"org.homeunix.thecave.plugins.report.selectcategories.IncomeExpenseReportBySelectedCategory",
 	};
 		
 	private Const(){}
