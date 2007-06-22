@@ -6,15 +6,10 @@
  */
 package org.homeunix.drummer.prefs.impl;
 
-import java.io.File;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.homeunix.drummer.prefs.Plugin;
 import org.homeunix.drummer.prefs.PrefsPackage;
 
@@ -203,13 +198,7 @@ public class PluginImpl extends EObjectImpl implements Plugin {
 	 */
 	public String toString() {
 		StringBuffer result = new StringBuffer();
-		String fileSeparator;
-		if (File.separator.equals("\\")){
-			fileSeparator = "\\\\";
-		}
-		else {
-			fileSeparator = File.separator;
-		}
+		String fileSeparator = "/";
 		result.append(className.replaceAll(".class$", "").replaceAll("^.*" + fileSeparator, ""));
 		result.append(" (");
 		result.append(jarFile.replaceAll("^.*" + fileSeparator, ""));

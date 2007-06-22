@@ -1,3 +1,7 @@
+2.5.2.1 
+-Fixed bug #1740710 (Restart after changing currency symbol)
+-Fixed bug #1740709 (Incorrect class name for plugins on Windows)
+
 2.5.2.0 (June 19 2007)
 -Remember the last directory, for import / export plugins (Request #1736868)
 -Set the maximum width of graphs to 1000px (to avoid massive graphs on widescreen displays)

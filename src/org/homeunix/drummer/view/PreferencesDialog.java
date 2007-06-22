@@ -498,6 +498,7 @@ public class PreferencesDialog extends AbstractBuddiDialog {
 			boolean needRestart = false;
 			if (forceRestart
 					|| !prefs.getLanguage().equals(language.getSelectedItem().toString())
+					|| !prefs.getCurrencySymbol().equals(currencyFormat.getSelectedItem())					
 					|| (prefs.isShowAdvanced() != showClearReconcile.isSelected())
 					|| (prefs.isCurrencySymbolAfterAmount() != currencySymbolAfterAmount.isSelected())
 					|| (prefs.isEnableUpdateNotifications() != enableUpdateNotifications.isSelected())
