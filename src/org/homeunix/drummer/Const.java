@@ -132,7 +132,7 @@ public class Const {
 		"Arg$",		//Argentinan Peso
 		"Kc"	//Something else; requested by a user
 	};
-
+	
 	//The plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_PLUGINS = {
 		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",

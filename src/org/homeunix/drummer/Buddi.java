@@ -62,7 +62,20 @@ public class Buddi {
 	private static Boolean debian = false;
 	private static Boolean slackware = false;
 	private static Boolean redhat = false;
+	private static Boolean simpleFont = false;
 
+	/**
+	 * Use simple fonts (i.e., no bold or italics) for transaction window.  This 
+	 * allows for better Unicode support on some platforms which do not include
+	 * good support for Unicode fonts, such as Windows.
+	 * @return
+	 */
+	public static Boolean isSimpleFont(){
+		if (simpleFont == null)
+			simpleFont = false;
+		return simpleFont;
+	}
+	
 	/**
 	 * Gets the current working directory.  This should be the same directory
 	 * that the Buddi.{exe|jar} is in or the Buddi.app/Contents/Resources/Java/ 
@@ -199,6 +212,7 @@ public class Buddi {
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n"
+			+ "--simpleFont\t\tDon't use bold or italic fonts (better Unicode support)\n"
 			+ "--log\tlogFile\tLocation to store logs (default varies by platform)\n";
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
@@ -209,6 +223,7 @@ public class Buddi {
 		variables.add(new ParseVariable("-v", Integer.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
+		variables.add(new ParseVariable("--simpleFont", Boolean.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
@@ -257,6 +272,7 @@ public class Buddi {
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
+		simpleFont = results.getBoolean("--simpleFont");
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		slackware = results.getBoolean("--slackware");

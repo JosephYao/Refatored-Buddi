@@ -1,6 +1,7 @@
-2.5.2.1 
+2.5.3.0 
 -Fixed bug #1740710 (Restart after changing currency symbol)
 -Fixed bug #1740709 (Incorrect class name for plugins on Windows)
+-Implemented workaround for bug #1740148.  If you need to use Unicode characters (such as Chinese), start Buddi with the --simpleFont option.  This will use a different cell renderer for the transactions window, without bold and italic fonts.  If there is enough demand for this, I may add it to the Language file, or perhaps the Preferences.  This will suffice for now.
 
 2.5.2.0 (June 19 2007)
 -Remember the last directory, for import / export plugins (Request #1736868)

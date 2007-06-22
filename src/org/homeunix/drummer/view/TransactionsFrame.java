@@ -41,6 +41,7 @@ import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
 import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
 
+import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.SourceController;
@@ -56,6 +57,7 @@ import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.BuddiInternalFormatter;
 import org.homeunix.drummer.view.components.EditableTransaction;
 import org.homeunix.drummer.view.components.TransactionCellRenderer;
+import org.homeunix.drummer.view.components.TransactionCellRendererSimple;
 import org.homeunix.drummer.view.model.TransactionListModel;
 import org.homeunix.thecave.moss.gui.JSearchField;
 import org.homeunix.thecave.moss.gui.JSearchField.SearchTextChangedEvent;
@@ -184,9 +186,14 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		};
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		TransactionCellRenderer renderer = new TransactionCellRenderer(account);
-//		renderer.setAccount(account);
-		list.setCellRenderer(renderer);
+		if (Buddi.isSimpleFont()){
+			TransactionCellRendererSimple renderer = new TransactionCellRendererSimple(account);
+			list.setCellRenderer(renderer);
+		}
+		else {
+			TransactionCellRenderer renderer = new TransactionCellRenderer(account);
+			list.setCellRenderer(renderer);			
+		}
 
 		listScroller = new JScrollPane(list);
 
