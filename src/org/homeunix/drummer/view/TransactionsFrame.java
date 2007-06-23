@@ -77,7 +77,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 	private static final int MIN_WIDTH = 600;
 	private static final int MIN_HEIGHT = 400;
-	
+
 	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
 //	private static TransactionsFramePreLoader preloader = null;
 
@@ -161,7 +161,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 							sb.append(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()));
 							if (BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.account)))
 								sb.append("</font>");
-							
+
 							sb.append("  ");
 							sb.append(transaction.getFrom())
 							.append(" ")
@@ -303,7 +303,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 		list.setModel(model);		
 		list.ensureIndexIsVisible(model.getSize() - 1);
-		
+
 		return super.initPostPack();
 	}
 
@@ -321,9 +321,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 					e.getComponent().setSize(e.getComponent().getWidth(), MIN_HEIGHT);
 			}
 		});
-		
+
 		list.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
-		
+
 		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_ALL);
 		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_TODAY);
 		availableFilters.add(TranslateKeys.TRANSACTION_FILTER_THIS_WEEK);
@@ -336,7 +336,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED);
 			availableFilters.add(TranslateKeys.TRANSACTION_FILTER_NOT_CLEARED);
 		}
-		
+
 		filterComboBox.setModel(new DefaultComboBoxModel(availableFilters));
 		filterComboBox.setRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
@@ -504,9 +504,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			// Remember that getBalance() returns a negative number for 
 			// credit accounts
 //			if (account.isCredit())
-				amountLeft = (account.getCreditLimit() + account.getBalance());
+			amountLeft = (account.getCreditLimit() + account.getBalance());
 //			else
-//				amountLeft = (account.getBalance() - account.getCreditLimit());
+//			amountLeft = (account.getBalance() - account.getCreditLimit());
 			double percentLeft = ((double) amountLeft) / account.getCreditLimit() * 100.0;
 
 			StringBuffer sb = new StringBuffer();
@@ -777,9 +777,23 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			editableTransaction.setTransaction(null, true);
 			list.clearSelection();
 			updateButtons();
-			
+
 			if (!isUpdate){
-				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
+				Date currentTransactionDate = t.getDate();
+
+				// Iterate backwards through the list of transacations, looking for a transaction
+				// with the most recently inserted date, and scroll to that transaction's index.
+				// For the common case of inserted new transactions near the current day, this
+				// will be almost as fast as just scrolling to the end of the list, but always correct.
+
+				for (int index = model.getSize() - 1; index >= 0; --index) {
+					Transaction transactionToCheck = (Transaction) model.getElementAt(index);
+					if (transactionToCheck.getDate().equals(currentTransactionDate)) {
+						list.ensureIndexIsVisible(index);
+						break;
+					}
+				}
+
 			}
 
 			disableListEvents = false;
@@ -848,7 +862,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				}
 
 				editableTransaction.setChanged(false);
-				
+
 				DocumentController.saveFileSoon();
 			}
 		}
@@ -863,12 +877,12 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //	preloader = new TransactionsFramePreLoader();
 //	return preloader;
 //	}
-	
+
 	@Override
 	public DataManager getDataManager() {
 		return getImportManager();
 	}
-	
+
 	@Override
 	public ImportManager getImportManager() {
 		return new ImportManagerImpl(getAccount(), null, (Transaction) list.getSelectedValue());
