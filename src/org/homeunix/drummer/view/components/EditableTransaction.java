@@ -145,7 +145,7 @@ public class EditableTransaction extends JPanel {
 		to.setPreferredSize(from.getPreferredSize());
 
 		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
-		
+
 		topPanel.add(date);
 		if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
 		topPanel.add(description);
@@ -176,7 +176,7 @@ public class EditableTransaction extends JPanel {
 		this.add(mainPanel);
 		if (!OperatingSystemUtil.isMac()) this.add(Box.createHorizontalStrut(3));
 		this.add(memoScroller);
-		
+
 		if (parent == null)
 			date.setVisible(false);
 
@@ -355,7 +355,7 @@ public class EditableTransaction extends JPanel {
 				fillInOtherFields();
 			}
 		});
-		
+
 		description.addKeyListener(new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -441,10 +441,10 @@ public class EditableTransaction extends JPanel {
 				EditableTransaction.this.setChanged(true);
 			}
 		});
-		
+
 		ListCellRenderer renderer = new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
-			
+
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -457,11 +457,11 @@ public class EditableTransaction extends JPanel {
 					else
 						this.setText(value.toString());
 				}
-				
+
 				return this;
 			}
 		};
-		
+
 		to.setRenderer(renderer);
 		from.setRenderer(renderer);
 	}
@@ -486,19 +486,21 @@ public class EditableTransaction extends JPanel {
 		cleared.setSelected(transaction.isCleared());
 		reconciled.setSelected(transaction.isReconciled());
 	}
-	
+
 	private void fillInOtherFields(){
-		//If we loose focus on the description field, we check if
+		//If we lose focus on the description field, we check if
 		// there is something there.  If so, we fill in others with
-		// the dictionary map.
+		// the dictionary map, but only if they haven't been modified from their default values!
 		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
 			if (description.getValue().length() > 0){
 				DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
 				if (dd != null){
-					if (dd.getNumber() != null)
+					if (dd.getNumber() != null && number.isHintShowing())
 						number.setValue(dd.getNumber());
-					amount.setValue(dd.getAmount());
-					if (dd.getMemo() != null)
+					if(amount.getValue() == 0)
+						amount.setValue(dd.getAmount());
+
+					if (dd.getMemo() != null && memo.isHintShowing())
 						memo.setValue(dd.getMemo());
 
 					//TODO This doesn't always work when you go to a different account...
