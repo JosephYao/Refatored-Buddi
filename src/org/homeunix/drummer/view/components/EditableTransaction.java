@@ -245,6 +245,19 @@ public class EditableTransaction extends JPanel {
 //		);
 	}
 
+	/**
+	 * @return a boolean value indicating whether it's likely that this transaction was
+	 *  inadvertently edited by the user when they were trying to create a new transaction instead.
+	 */
+	public boolean isDangerouslyChanged() {
+		if (transaction == null) 
+			return false;
+		boolean changedDesc = !(getDescription().equals(transaction.getDescription()));
+		boolean changedAmt  = !(getAmount() == transaction.getAmount());
+		boolean changedDate = !(getDate().equals(transaction.getDate()));
+		return changedDesc && changedAmt && changedDate;
+	}
+
 	public void setChanged(boolean changed){
 		this.changed = changed;
 	}

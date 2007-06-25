@@ -2,6 +2,7 @@
 -Fixed bug #1740710 (Restart after changing currency symbol)
 -Fixed bug #1740709 (Incorrect class name for plugins on Windows)
 -Fixed bug #1741944 (Do not overwrite values when autocompleting)
+-Fixed bug #1741945 (Warn before substantially changing an existing transaction - check to make sure user did not want to create a new one instead)
 -Implemented workaround for bug #1740148.  If you need to use Unicode characters (such as Chinese), start Buddi with the --simpleFont option.  This will use a different cell renderer for the transactions window, without bold and italic fonts.  If there is enough demand for this, I may add it to the Language file, or perhaps the Preferences.  This will suffice for now.
 -Implemented feature request #1741943 (Scroll to most recently added transaction)
 

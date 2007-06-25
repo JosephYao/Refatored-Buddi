@@ -720,25 +720,51 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			disableListEvents = true;
 
 			Transaction t;
-			boolean isUpdate = false;
-			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD))){
-				t = ModelFactory.eINSTANCE.createTransaction();
-			}
-			else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_UPDATE))){
-				t = editableTransaction.getTransaction();
+			
+			boolean isUpdate;
+			
+			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_UPDATE)))
 				isUpdate = true;
-			}
+			else if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD)))
+				isUpdate = false;
 			else {
 				Log.error("Unknown record button state: " + recordButton.getText());
 				return;
 			}
-
+			
+			if (isUpdate && editableTransaction.isDangerouslyChanged()) {
+				String[] options = new String[2];
+				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_CREATE_NEW_TRANSACTION);
+				options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_OVERWRITE_TRANSACTON);
+				
+				int ret = JOptionPane.showOptionDialog(
+						null, 
+						Translate.getInstance().get(TranslateKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION),
+						Translate.getInstance().get(TranslateKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION_TITLE),
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.WARNING_MESSAGE,
+						null,
+						options,
+						options[0]);
+				
+			    if (ret == JOptionPane.YES_OPTION){ // create new transaction
+					isUpdate = false;
+				} // else continue with update
+			}
+			
+			if(isUpdate) {
+				t = editableTransaction.getTransaction();
+			} else {
+				t = ModelFactory.eINSTANCE.createTransaction();
+			}
+			
 			if (editableTransaction.getFrom().getCreationDate() != null
-					&& editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
-				editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
+			 && editableTransaction.getFrom().getCreationDate().after(editableTransaction.getDate()))
+					editableTransaction.getFrom().setCreationDate(editableTransaction.getDate());
+			
 			if (editableTransaction.getTo().getCreationDate() != null
-					&& editableTransaction.getTo().getCreationDate().after(editableTransaction.getDate()))
-				editableTransaction.getTo().setCreationDate(editableTransaction.getDate());
+		 	 && editableTransaction.getTo().getCreationDate().after(editableTransaction.getDate()))
+					editableTransaction.getTo().setCreationDate(editableTransaction.getDate());
 
 			t.setDate(editableTransaction.getDate());
 			t.setDescription(editableTransaction.getDescription());
@@ -750,11 +776,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			t.setCleared(editableTransaction.isCleared());
 			t.setReconciled(editableTransaction.isReconciled());
 
-			if (recordButton.getText().equals(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD))) {
-				baseModel.add(t);
-			}
-			else {
+			if (isUpdate) {
 				baseModel.update(t, model);
+			} else {
+				baseModel.add(t);
 			}
 
 			//Update the autocomplete entries
@@ -778,6 +803,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			list.clearSelection();
 			updateButtons();
 
+			// Scroll the list view to make sure the newly-created transaction is visible.
 			if (!isUpdate){
 				Date currentTransactionDate = t.getDate();
 
