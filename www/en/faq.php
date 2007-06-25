@@ -106,7 +106,18 @@ That being said, I am quite busy with other things in my life (family, job, etc)
 Of course, I will not implement features that distract from the main purpose of the program - to provide a simple budgeting program for non-accountants.  If you want something that is geared more towards professional accountants, try something like GNUCash.
 </p>
 
-<h2>What's up with your stupid version numbers?</h2>
+<h2>Why are the plugins not translated into my language?</h2>
+<p>
+First, plugins do not necesarily follow the same translation standards as Buddi does.  If the plugin developer decided to hard code all text to English, there is no way to translate this.
+</p>
+<p>
+However, if the developer used the translation framework in Buddi, you can translate a plugin in a similar way that you translate Buddi itself.  Just add a file Language.lang (where Language is your desired language), with the correct translated strings, into the root of the .jar file.  When the plugin is loaded, Buddi will look for the language file here, and load any that it finds.
+</p>
+<p>
+Unfortunately, due to the modular nature of plugins, I have not created a user interface to aid in translation, as I have with Buddi itself (and have no plans to do so in the near future).  If you are unsure of how to translate a plugin, please feel free to contact me with the plugin you wish to translate, and I can give you more in-depth instructions.
+</p>
+
+<h2>How do I interpret your version numbers?</h2>
 <p>
 I use a versioning scheme with four numbers, in the form X.Y.F.B, where X is the major release, Y is the minor version, F is the Feature number, and B is the bugfix number.  Even minor versions (0, 2, 4...) are considered stable, while odd minor numbers are considered development code.  The Bugfix number is incremented if the new version only contains bug fixes, without any new features; the Feature number is incremented if there are new features, as well.
 </p>
@@ -121,6 +132,11 @@ The terms 'Stable' and 'Development' may be misleading - any version which I rel
 </p>
 <p>
 If you don't like downloading new versions every few weeks, then use the stable version.  If you want to always keep up to date with current features, use the development version.
+</p>
+
+<h2>What about the plugin version numbers?</h2>
+<p>
+The official plugins use a similar versioning scheme to Buddi itself, with one exception - the API version is prepended to the plugin version.  For instance, NetIncomeOverTime-2.4_1.0.1.0 is the plugin called "Net Income over Time", using API version 2.4, and the version of the plugin is 1.0.1.0.  While it does seem a little scary at first, it makes sense once you understand what each part is for.
 </p>
 
 <hr>
