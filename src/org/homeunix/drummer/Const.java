@@ -82,6 +82,7 @@ public class Const {
 		"Nederlands_(BE)",
 		"Norsk",
 		"Portugues",
+		"Serbian",
 		"Russian"
 	};
 	
