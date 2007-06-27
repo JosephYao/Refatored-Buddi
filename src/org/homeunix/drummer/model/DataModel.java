@@ -16,10 +16,11 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.DataModel#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.DataModel#getAllTransactions <em>All Transactions</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.DataModel#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.DataModel#getAllLists <em>All Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.DataModel#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.DataModel#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.DataModel#getAllAccounts <em>All Accounts</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,6 +112,34 @@ public interface DataModel extends EObject {
 	 * @generated
 	 */
 	void setAllTransactions(Transactions value);
+
+	/**
+	 * Returns the value of the '<em><b>All Lists</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.homeunix.drummer.model.Lists#getAllLists <em>All Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>All Lists</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>All Lists</em>' containment reference.
+	 * @see #setAllLists(Lists)
+	 * @see org.homeunix.drummer.model.ModelPackage#getDataModel_AllLists()
+	 * @see org.homeunix.drummer.model.Lists#getAllLists
+	 * @model opposite="allLists" containment="true"
+	 * @generated
+	 */
+	Lists getAllLists();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.model.DataModel#getAllLists <em>All Lists</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>All Lists</em>' containment reference.
+	 * @see #getAllLists()
+	 * @generated
+	 */
+	void setAllLists(Lists value);
 
 	/**
 	 * Returns the value of the '<em><b>All Accounts</b></em>' containment reference.

@@ -65,9 +65,11 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 		switch (eClass.getClassifierID()) {
 			case ModelPackage.ACCOUNT: return createAccount();
 			case ModelPackage.ACCOUNTS: return createAccounts();
+			case ModelPackage.AUTO_SAVE_INFO: return createAutoSaveInfo();
 			case ModelPackage.CATEGORIES: return createCategories();
 			case ModelPackage.CATEGORY: return createCategory();
 			case ModelPackage.DATA_MODEL: return createDataModel();
+			case ModelPackage.LISTS: return createLists();
 			case ModelPackage.SCHEDULE: return createSchedule();
 			case ModelPackage.TRANSACTION: return createTransaction();
 			case ModelPackage.TRANSACTIONS: return createTransactions();
@@ -131,6 +133,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public AutoSaveInfo createAutoSaveInfo() {
+		AutoSaveInfoImpl autoSaveInfo = new AutoSaveInfoImpl();
+		return autoSaveInfo;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Categories createCategories() {
 		CategoriesImpl categories = new CategoriesImpl();
 		return categories;
@@ -154,6 +166,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public DataModel createDataModel() {
 		DataModelImpl dataModel = new DataModelImpl();
 		return dataModel;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Lists createLists() {
+		ListsImpl lists = new ListsImpl();
+		return lists;
 	}
 
 	/**

@@ -35,10 +35,11 @@ import javax.swing.text.JTextComponent;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.AutoSaveInfo;
 import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.prefs.DictData;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
@@ -91,7 +92,7 @@ public class EditableTransaction extends JPanel {
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.HINT_NUMBER));
-		description = new JHintComboBox(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+		description = new JHintComboBox(DataInstance.getInstance().getAutoCompleteEntries(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MEMO));
 		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED));
@@ -535,30 +536,30 @@ public class EditableTransaction extends JPanel {
 		// the dictionary map, but only if they haven't been modified from their default values!
 		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
 			if (description.getSelectedItem().toString().length() > 0){
-				DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
-				if (dd != null){
-					if (dd.getNumber() != null && number.isHintShowing())
-						number.setValue(dd.getNumber());
+				AutoSaveInfo asi = DataInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
+				if (asi != null){
+					if (asi.getNumber() != null && number.isHintShowing())
+						number.setValue(asi.getNumber());
 					if(amount.getValue() == 0)
-						amount.setValue(dd.getAmount());
+						amount.setValue(asi.getAmount());
 
-					if (dd.getMemo() != null && memo.isHintShowing())
-						memo.setValue(dd.getMemo());
+					if (asi.getMemo() != null && memo.isHintShowing())
+						memo.setValue(asi.getMemo());
 
 					//TODO This doesn't always work when you go to a different account...
-					if (dd.getFrom() != null){
+					if (asi.getFrom() != null){
 						for (int i = 0; i < from.getModel().getSize(); i++){
 							if (from.getModel().getElementAt(i) != null
-									&& from.getModel().getElementAt(i).toString().equals(dd.getFrom())){
+									&& from.getModel().getElementAt(i).toString().equals(asi.getFrom())){
 								from.setSelectedIndex(i);
 								break;
 							}
 						}
 					}
-					if (dd.getTo() != null){
+					if (asi.getTo() != null){
 						for (int i = 0; i < to.getModel().getSize(); i++){
 							if (to.getModel().getElementAt(i) != null
-									&& to.getModel().getElementAt(i).toString().equals(dd.getTo())){
+									&& to.getModel().getElementAt(i).toString().equals(asi.getTo())){
 								to.setSelectedIndex(i);
 								break;
 							}

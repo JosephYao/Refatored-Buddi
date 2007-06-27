@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.common.util.EList;
@@ -37,6 +38,11 @@ import org.homeunix.thecave.moss.util.Log;
  */
 @SuppressWarnings("unchecked")
 public class DataInstance {
+	
+	//Provide temporary backing for the autocomplete text fields
+	private final DefaultComboBoxModel autocompleteEntries;
+	private final Map<String, AutoSaveInfo> defaultsMap;
+	
 	public static DataInstance getInstance() {
 		return SingletonHolder.instance;
 	}
@@ -67,6 +73,8 @@ public class DataInstance {
 	 * loadDataFile or newDataFile.
 	 */
 	private DataInstance(){
+		autocompleteEntries = new DefaultComboBoxModel();
+		defaultsMap = new HashMap<String, AutoSaveInfo>();
 	}
 
 	/**
@@ -102,6 +110,8 @@ public class DataInstance {
 		dataModel.setAllTransactions(transactions);
 		dataModel.setAllCategories(categories);
 		dataModel.setAllTypes(types);
+		dataModel.setAllLists(ModelFactory.eINSTANCE.createLists());
+
 
 		//Default starting categories
 		TranslateKeys[] expenseNames = {
@@ -377,6 +387,22 @@ public class DataInstance {
 			}
 		}
 
+		//Check for the auto complete entries - if they don't exist yet, we create it.
+		if (dataModel.getAllLists() == null)
+			dataModel.setAllLists(ModelFactory.eINSTANCE.createLists());
+				
+		//Load the auto complete entries into the dictionary
+		// and create the autocomplete map, between 
+		// description and other fields.
+		autocompleteEntries.addElement(null);
+		for (Object o : dataModel.getAllLists().getAllAutoSave()) {
+			if (o instanceof AutoSaveInfo) {
+				AutoSaveInfo entry = (AutoSaveInfo) o;
+				autocompleteEntries.addElement(entry.getDescription());
+				defaultsMap.put(entry.getDescription(), entry);
+			}
+		}
+		
 		//Check that there are no scheduled transactions which should be happening...
 		ScheduleController.checkForScheduledActions();		
 
@@ -409,6 +435,24 @@ public class DataInstance {
 	 */
 	synchronized public ReturnCodes saveDataFile(final String location) throws IOException {
 		if (getDataModel() != null){
+			
+//			//Translate between Set<String> (the dictionary) and the persistence model
+//			getDataModel().getAllLists().getAllAutoSave().retainAll(new Vector());
+//			for (int i = 0; i < autocompleteEntries.getSize(); i++) {
+//				if (autocompleteEntries.getElementAt(i) != null){
+//					String s = autocompleteEntries.getElementAt(i).toString();
+//					AutoSaveInfo asi = ModelFactory.eINSTANCE.createAutoSaveInfo();
+//					asi.setDescription(s);
+//					asi.setAmount(defaultsMap.get(s).getAmount());
+//					asi.setFrom(defaultsMap.get(s).getFrom());
+//					asi.setTo(defaultsMap.get(s).getTo());
+//					asi.setMemo(defaultsMap.get(s).getMemo());
+//					asi.setNumber(defaultsMap.get(s).getNumber());
+//					getDataModel().getAllLists().getAllAutoSave().add(asi);
+//				}
+//			}
+
+			
 			File saveLocation = new File(location);
 			File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 
@@ -457,5 +501,39 @@ public class DataInstance {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 		resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
+	}
+	
+	public DefaultComboBoxModel getAutoCompleteEntries() {
+		return autocompleteEntries;
+	}
+	
+	public void setAutoCompleteEntry(String description, 
+			String number, long amount, String from, String to, String memo){
+		AutoSaveInfo asi;
+		if (defaultsMap.get(description) == null){
+			asi = ModelFactory.eINSTANCE.createAutoSaveInfo();
+			asi.setDescription(description);
+			asi.setNumber(number);
+			asi.setAmount(amount);
+			asi.setFrom(from);
+			asi.setTo(to);
+			asi.setMemo(memo);
+			getDataModel().getAllLists().getAllAutoSave().add(asi);
+		}
+		else {
+			asi = defaultsMap.get(description);
+			asi.setDescription(description);
+			asi.setNumber(number);
+			asi.setAmount(amount);
+			asi.setFrom(from);
+			asi.setTo(to);
+			asi.setMemo(memo);			
+		}
+
+		defaultsMap.put(description, asi);
+	}
+
+	public AutoSaveInfo getAutoCompleteEntry(String description){
+		return defaultsMap.get(description);
 	}
 }

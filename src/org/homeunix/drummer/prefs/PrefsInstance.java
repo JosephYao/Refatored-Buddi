@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.common.util.EList;
@@ -42,17 +41,13 @@ public class PrefsInstance {
 
 	private UserPrefs userPrefs;
 
-	//Provide temporary backing for the autocomplete text fields
-	private final DefaultComboBoxModel descDict;
-	private final Map<String, DictData> defaultsMap;
 	private final Map<String, ListAttributes> listAttributesMap;
 
 	private ResourceSet resourceSet;
 	private static String location;
 
 	private PrefsInstance(){
-		descDict = new DefaultComboBoxModel();
-		defaultsMap = new HashMap<String, DictData>();
+
 		listAttributesMap = new HashMap<String, ListAttributes>();
 
 		if (location == null){
@@ -114,18 +109,6 @@ public class PrefsInstance {
 			EList contents = resource.getContents();
 			if (contents.size() > 0){
 				userPrefs = (UserPrefs) contents.get(0);
-			}
-
-			//Load the auto complete entries into the dictionary
-			// and create the autocomplete map, between 
-			// description and other fields.
-			descDict.addElement(null);
-			for (Object o : userPrefs.getPrefs().getLists().getDescDict()) {
-				if (o instanceof DictEntry) {
-					DictEntry entry = (DictEntry) o;
-					descDict.addElement(entry.getEntry());
-					defaultsMap.put(entry.getEntry(), entry.getData());
-				}
 			}
 
 			//Load the state for the list entries
@@ -352,18 +335,6 @@ public class PrefsInstance {
 		File saveLocation = new File(location);
 		File backupLocation = new File(saveLocation.getAbsolutePath() + "~");
 
-		//Translate between Set<String> (the dictionary) and the persistence model
-		userPrefs.getPrefs().getLists().getDescDict().retainAll(new Vector());
-		for (int i = 0; i < descDict.getSize(); i++) {
-			if (descDict.getElementAt(i) != null){
-				String s = descDict.getElementAt(i).toString();
-				DictEntry d = PrefsFactory.eINSTANCE.createDictEntry();
-				d.setEntry(s);
-				d.setData(defaultsMap.get(s));
-				userPrefs.getPrefs().getLists().getDescDict().add(d);
-			}
-		}
-
 		//Translate between Map<String, ListAttribute> (the list attributes) and the persistance model
 		userPrefs.getPrefs().getLists().getListEntries().retainAll(new Vector());
 		for (String s : listAttributesMap.keySet()){
@@ -418,9 +389,6 @@ public class PrefsInstance {
 //	savePrefs();
 //	}
 
-	public DefaultComboBoxModel getDescDict() {
-		return descDict;
-	}
 
 	public String getLastVersionRun(){
 		Version version = userPrefs.getPrefs().getLastVersionRun();
@@ -442,22 +410,6 @@ public class PrefsInstance {
 
 		version.setVersion(Const.VERSION);
 		savePrefs();
-	}
-
-	public void setAutoCompleteEntry(String description, 
-			String number, long amount, String from, String to, String memo){
-		DictData dd = PrefsFactory.eINSTANCE.createDictData();
-		dd.setNumber(number);
-		dd.setAmount(amount);
-		dd.setFrom(from);
-		dd.setTo(to);
-		dd.setMemo(memo);
-
-		defaultsMap.put(description, dd);
-	}
-
-	public DictData getAutoCompleteEntry(String description){
-		return defaultsMap.get(description);
 	}
 
 	public void setListAttributes(String entryName, boolean unrolled){

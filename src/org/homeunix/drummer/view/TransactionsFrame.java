@@ -783,9 +783,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			//Update the autocomplete entries
 			if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-				PrefsInstance.getInstance().getDescDict().addElement(editableTransaction.getDescription());
+				DataInstance.getInstance().getAutoCompleteEntries().addElement(editableTransaction.getDescription());
 				if (editableTransaction != null && editableTransaction.getFrom() != null && editableTransaction.getTo() != null)
-					PrefsInstance.getInstance().setAutoCompleteEntry(
+					DataInstance.getInstance().setAutoCompleteEntry(
 							editableTransaction.getDescription(),
 							editableTransaction.getNumber(),
 							editableTransaction.getAmount(),

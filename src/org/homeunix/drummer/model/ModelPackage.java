@@ -68,7 +68,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSource()
 	 * @generated
 	 */
-	int SOURCE = 6;
+	int SOURCE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -244,6 +244,79 @@ public interface ModelPackage extends EPackage {
 	int ACCOUNTS_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.AutoSaveInfoImpl <em>Auto Save Info</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.model.impl.AutoSaveInfoImpl
+	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getAutoSaveInfo()
+	 * @generated
+	 */
+	int AUTO_SAVE_INFO = 2;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__DESCRIPTION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Amount</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__AMOUNT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__NUMBER = 2;
+
+	/**
+	 * The feature id for the '<em><b>Memo</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__MEMO = 3;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__TO = 4;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO__FROM = 5;
+
+	/**
+	 * The number of structural features of the '<em>Auto Save Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AUTO_SAVE_INFO_FEATURE_COUNT = 6;
+
+	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.CategoriesImpl <em>Categories</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -251,7 +324,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getCategories()
 	 * @generated
 	 */
-	int CATEGORIES = 2;
+	int CATEGORIES = 3;
 
 	/**
 	 * The feature id for the '<em><b>Categories</b></em>' containment reference list.
@@ -288,7 +361,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 3;
+	int CATEGORY = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -370,16 +443,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDataModel()
 	 * @generated
 	 */
-	int DATA_MODEL = 4;
-
-	/**
-	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_MODEL__ALL_CATEGORIES = 0;
+	int DATA_MODEL = 5;
 
 	/**
 	 * The feature id for the '<em><b>All Transactions</b></em>' containment reference.
@@ -388,16 +452,25 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_TRANSACTIONS = 1;
+	int DATA_MODEL__ALL_TRANSACTIONS = 0;
 
 	/**
-	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
+	 * The feature id for the '<em><b>All Lists</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL__ALL_ACCOUNTS = 2;
+	int DATA_MODEL__ALL_LISTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>All Categories</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_CATEGORIES = 2;
 
 	/**
 	 * The feature id for the '<em><b>All Types</b></em>' containment reference.
@@ -409,13 +482,59 @@ public interface ModelPackage extends EPackage {
 	int DATA_MODEL__ALL_TYPES = 3;
 
 	/**
+	 * The feature id for the '<em><b>All Accounts</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MODEL__ALL_ACCOUNTS = 4;
+
+	/**
 	 * The number of structural features of the '<em>Data Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_MODEL_FEATURE_COUNT = 4;
+	int DATA_MODEL_FEATURE_COUNT = 5;
+
+	/**
+	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.ListsImpl <em>Lists</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.homeunix.drummer.model.impl.ListsImpl
+	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getLists()
+	 * @generated
+	 */
+	int LISTS = 6;
+
+	/**
+	 * The feature id for the '<em><b>All Lists</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS__ALL_LISTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>All Auto Save</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS__ALL_AUTO_SAVE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Lists</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.ScheduleImpl <em>Schedule</em>}' class.
@@ -425,7 +544,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getSchedule()
 	 * @generated
 	 */
-	int SCHEDULE = 5;
+	int SCHEDULE = 7;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.model.impl.TransactionImpl <em>Transaction</em>}' class.
@@ -435,7 +554,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransaction()
 	 * @generated
 	 */
-	int TRANSACTION = 7;
+	int TRANSACTION = 9;
 
 	/**
 	 * The feature id for the '<em><b>Amount</b></em>' attribute.
@@ -537,22 +656,22 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTION__UID = 10;
 
 	/**
-	 * The feature id for the '<em><b>To</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSACTION__TO = 11;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTION__FROM = 12;
+	int TRANSACTION__FROM = 11;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSACTION__TO = 12;
 
 	/**
 	 * The number of structural features of the '<em>Transaction</em>' class.
@@ -663,15 +782,6 @@ public interface ModelPackage extends EPackage {
 	int SCHEDULE__UID = TRANSACTION__UID;
 
 	/**
-	 * The feature id for the '<em><b>To</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCHEDULE__TO = TRANSACTION__TO;
-
-	/**
 	 * The feature id for the '<em><b>From</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -679,6 +789,15 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int SCHEDULE__FROM = TRANSACTION__FROM;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE__TO = TRANSACTION__TO;
 
 	/**
 	 * The feature id for the '<em><b>Start Date</b></em>' attribute.
@@ -778,16 +897,16 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTransactions()
 	 * @generated
 	 */
-	int TRANSACTIONS = 8;
+	int TRANSACTIONS = 10;
 
 	/**
-	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
+	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 0;
+	int TRANSACTIONS__ALL_TRANSACTIONS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Transactions</b></em>' containment reference list.
@@ -799,13 +918,13 @@ public interface ModelPackage extends EPackage {
 	int TRANSACTIONS__TRANSACTIONS = 1;
 
 	/**
-	 * The feature id for the '<em><b>All Transactions</b></em>' container reference.
+	 * The feature id for the '<em><b>Scheduled Transactions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSACTIONS__ALL_TRANSACTIONS = 2;
+	int TRANSACTIONS__SCHEDULED_TRANSACTIONS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Transactions</em>' class.
@@ -824,7 +943,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 9;
+	int TYPE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -861,16 +980,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getTypes()
 	 * @generated
 	 */
-	int TYPES = 10;
-
-	/**
-	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPES__TYPES = 0;
+	int TYPES = 12;
 
 	/**
 	 * The feature id for the '<em><b>All Types</b></em>' container reference.
@@ -879,7 +989,16 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPES__ALL_TYPES = 1;
+	int TYPES__ALL_TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPES__TYPES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Types</em>' class.
@@ -898,7 +1017,7 @@ public interface ModelPackage extends EPackage {
 	 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getDate()
 	 * @generated
 	 */
-	int DATE = 11;
+	int DATE = 13;
 
 
 	/**
@@ -1008,6 +1127,82 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAccounts_AllAccounts();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.model.AutoSaveInfo <em>Auto Save Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Auto Save Info</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo
+	 * @generated
+	 */
+	EClass getAutoSaveInfo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getDescription()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getAmount <em>Amount</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Amount</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getAmount()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_Amount();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getNumber <em>Number</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Number</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getNumber()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_Number();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getMemo <em>Memo</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Memo</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getMemo()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_Memo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>To</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getTo()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_To();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.model.AutoSaveInfo#getFrom <em>From</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>From</em>'.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo#getFrom()
+	 * @see #getAutoSaveInfo()
+	 * @generated
+	 */
+	EAttribute getAutoSaveInfo_From();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Categories <em>Categories</em>}'.
@@ -1248,6 +1443,17 @@ public interface ModelPackage extends EPackage {
 	EReference getDataModel_AllTransactions();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.DataModel#getAllLists <em>All Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>All Lists</em>'.
+	 * @see org.homeunix.drummer.model.DataModel#getAllLists()
+	 * @see #getDataModel()
+	 * @generated
+	 */
+	EReference getDataModel_AllLists();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.model.DataModel#getAllAccounts <em>All Accounts</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1257,6 +1463,38 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDataModel_AllAccounts();
+
+	/**
+	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Lists <em>Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lists</em>'.
+	 * @see org.homeunix.drummer.model.Lists
+	 * @generated
+	 */
+	EClass getLists();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.homeunix.drummer.model.Lists#getAllLists <em>All Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>All Lists</em>'.
+	 * @see org.homeunix.drummer.model.Lists#getAllLists()
+	 * @see #getLists()
+	 * @generated
+	 */
+	EReference getLists_AllLists();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.model.Lists#getAllAutoSave <em>All Auto Save</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>All Auto Save</em>'.
+	 * @see org.homeunix.drummer.model.Lists#getAllAutoSave()
+	 * @see #getLists()
+	 * @generated
+	 */
+	EReference getLists_AllAutoSave();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.model.Source <em>Source</em>}'.
@@ -1679,6 +1917,64 @@ public interface ModelPackage extends EPackage {
 		EReference ACCOUNTS__ALL_ACCOUNTS = eINSTANCE.getAccounts_AllAccounts();
 
 		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.AutoSaveInfoImpl <em>Auto Save Info</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.AutoSaveInfoImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getAutoSaveInfo()
+		 * @generated
+		 */
+		EClass AUTO_SAVE_INFO = eINSTANCE.getAutoSaveInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__DESCRIPTION = eINSTANCE.getAutoSaveInfo_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Amount</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__AMOUNT = eINSTANCE.getAutoSaveInfo_Amount();
+
+		/**
+		 * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__NUMBER = eINSTANCE.getAutoSaveInfo_Number();
+
+		/**
+		 * The meta object literal for the '<em><b>Memo</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__MEMO = eINSTANCE.getAutoSaveInfo_Memo();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__TO = eINSTANCE.getAutoSaveInfo_To();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute AUTO_SAVE_INFO__FROM = eINSTANCE.getAutoSaveInfo_From();
+
+		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.CategoriesImpl <em>Categories</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1781,12 +2077,46 @@ public interface ModelPackage extends EPackage {
 		EReference DATA_MODEL__ALL_TRANSACTIONS = eINSTANCE.getDataModel_AllTransactions();
 
 		/**
+		 * The meta object literal for the '<em><b>All Lists</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MODEL__ALL_LISTS = eINSTANCE.getDataModel_AllLists();
+
+		/**
 		 * The meta object literal for the '<em><b>All Accounts</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference DATA_MODEL__ALL_ACCOUNTS = eINSTANCE.getDataModel_AllAccounts();
+
+		/**
+		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.ListsImpl <em>Lists</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.homeunix.drummer.model.impl.ListsImpl
+		 * @see org.homeunix.drummer.model.impl.ModelPackageImpl#getLists()
+		 * @generated
+		 */
+		EClass LISTS = eINSTANCE.getLists();
+
+		/**
+		 * The meta object literal for the '<em><b>All Lists</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LISTS__ALL_LISTS = eINSTANCE.getLists_AllLists();
+
+		/**
+		 * The meta object literal for the '<em><b>All Auto Save</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LISTS__ALL_AUTO_SAVE = eINSTANCE.getLists_AllAutoSave();
 
 		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.model.impl.ScheduleImpl <em>Schedule</em>}' class.

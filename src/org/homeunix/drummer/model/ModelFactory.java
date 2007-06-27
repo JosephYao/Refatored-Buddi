@@ -44,6 +44,15 @@ public interface ModelFactory extends EFactory {
 	Accounts createAccounts();
 
 	/**
+	 * Returns a new object of class '<em>Auto Save Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Auto Save Info</em>'.
+	 * @generated
+	 */
+	AutoSaveInfo createAutoSaveInfo();
+
+	/**
 	 * Returns a new object of class '<em>Categories</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,6 +78,15 @@ public interface ModelFactory extends EFactory {
 	 * @generated
 	 */
 	DataModel createDataModel();
+
+	/**
+	 * Returns a new object of class '<em>Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Lists</em>'.
+	 * @generated
+	 */
+	Lists createLists();
 
 	/**
 	 * Returns a new object of class '<em>Schedule</em>'.

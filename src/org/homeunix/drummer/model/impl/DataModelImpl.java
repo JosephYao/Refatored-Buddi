@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.homeunix.drummer.model.Accounts;
 import org.homeunix.drummer.model.Categories;
 import org.homeunix.drummer.model.DataModel;
+import org.homeunix.drummer.model.Lists;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Transactions;
 import org.homeunix.drummer.model.Types;
@@ -26,26 +27,17 @@ import org.homeunix.drummer.model.Types;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTransactions <em>All Transactions</em>}</li>
- *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllAccounts <em>All Accounts</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllLists <em>All Lists</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllCategories <em>All Categories</em>}</li>
  *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllTypes <em>All Types</em>}</li>
+ *   <li>{@link org.homeunix.drummer.model.impl.DataModelImpl#getAllAccounts <em>All Accounts</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class DataModelImpl extends EObjectImpl implements DataModel {
-	/**
-	 * The cached value of the '{@link #getAllCategories() <em>All Categories</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAllCategories()
-	 * @generated
-	 * @ordered
-	 */
-	protected Categories allCategories = null;
-
 	/**
 	 * The cached value of the '{@link #getAllTransactions() <em>All Transactions</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -57,14 +49,24 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	protected Transactions allTransactions = null;
 
 	/**
-	 * The cached value of the '{@link #getAllAccounts() <em>All Accounts</em>}' containment reference.
+	 * The cached value of the '{@link #getAllLists() <em>All Lists</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAllAccounts()
+	 * @see #getAllLists()
 	 * @generated
 	 * @ordered
 	 */
-	protected Accounts allAccounts = null;
+	protected Lists allLists = null;
+
+	/**
+	 * The cached value of the '{@link #getAllCategories() <em>All Categories</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAllCategories()
+	 * @generated
+	 * @ordered
+	 */
+	protected Categories allCategories = null;
 
 	/**
 	 * The cached value of the '{@link #getAllTypes() <em>All Types</em>}' containment reference.
@@ -75,6 +77,16 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 * @ordered
 	 */
 	protected Types allTypes = null;
+
+	/**
+	 * The cached value of the '{@link #getAllAccounts() <em>All Accounts</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAllAccounts()
+	 * @generated
+	 * @ordered
+	 */
+	protected Accounts allAccounts = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -228,6 +240,49 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Lists getAllLists() {
+		return allLists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAllLists(Lists newAllLists, NotificationChain msgs) {
+		Lists oldAllLists = allLists;
+		allLists = newAllLists;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DATA_MODEL__ALL_LISTS, oldAllLists, newAllLists);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAllLists(Lists newAllLists) {
+		if (newAllLists != allLists) {
+			NotificationChain msgs = null;
+			if (allLists != null)
+				msgs = ((InternalEObject)allLists).eInverseRemove(this, ModelPackage.LISTS__ALL_LISTS, Lists.class, msgs);
+			if (newAllLists != null)
+				msgs = ((InternalEObject)newAllLists).eInverseAdd(this, ModelPackage.LISTS__ALL_LISTS, Lists.class, msgs);
+			msgs = basicSetAllLists(newAllLists, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DATA_MODEL__ALL_LISTS, newAllLists, newAllLists));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Accounts getAllAccounts() {
 		return allAccounts;
 	}
@@ -273,22 +328,26 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				if (allCategories != null)
-					msgs = ((InternalEObject)allCategories).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_CATEGORIES, null, msgs);
-				return basicSetAllCategories((Categories)otherEnd, msgs);
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				if (allTransactions != null)
 					msgs = ((InternalEObject)allTransactions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TRANSACTIONS, null, msgs);
 				return basicSetAllTransactions((Transactions)otherEnd, msgs);
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				if (allAccounts != null)
-					msgs = ((InternalEObject)allAccounts).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_ACCOUNTS, null, msgs);
-				return basicSetAllAccounts((Accounts)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				if (allLists != null)
+					msgs = ((InternalEObject)allLists).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_LISTS, null, msgs);
+				return basicSetAllLists((Lists)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				if (allCategories != null)
+					msgs = ((InternalEObject)allCategories).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_CATEGORIES, null, msgs);
+				return basicSetAllCategories((Categories)otherEnd, msgs);
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				if (allTypes != null)
 					msgs = ((InternalEObject)allTypes).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_TYPES, null, msgs);
 				return basicSetAllTypes((Types)otherEnd, msgs);
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				if (allAccounts != null)
+					msgs = ((InternalEObject)allAccounts).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DATA_MODEL__ALL_ACCOUNTS, null, msgs);
+				return basicSetAllAccounts((Accounts)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -300,14 +359,16 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				return basicSetAllCategories(null, msgs);
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				return basicSetAllTransactions(null, msgs);
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				return basicSetAllAccounts(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				return basicSetAllLists(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return basicSetAllCategories(null, msgs);
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				return basicSetAllTypes(null, msgs);
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return basicSetAllAccounts(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -319,14 +380,16 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				return getAllCategories();
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				return getAllTransactions();
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				return getAllAccounts();
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				return getAllLists();
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return getAllCategories();
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				return getAllTypes();
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return getAllAccounts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -338,17 +401,20 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				setAllCategories((Categories)newValue);
-				return;
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				setAllTransactions((Transactions)newValue);
 				return;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				setAllAccounts((Accounts)newValue);
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				setAllLists((Lists)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				setAllCategories((Categories)newValue);
 				return;
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				setAllTypes((Types)newValue);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				setAllAccounts((Accounts)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -361,17 +427,20 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				setAllCategories((Categories)null);
-				return;
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				setAllTransactions((Transactions)null);
 				return;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				setAllAccounts((Accounts)null);
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				setAllLists((Lists)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				setAllCategories((Categories)null);
 				return;
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				setAllTypes((Types)null);
+				return;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				setAllAccounts((Accounts)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -384,14 +453,16 @@ public class DataModelImpl extends EObjectImpl implements DataModel {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
-				return allCategories != null;
 			case ModelPackage.DATA_MODEL__ALL_TRANSACTIONS:
 				return allTransactions != null;
-			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
-				return allAccounts != null;
+			case ModelPackage.DATA_MODEL__ALL_LISTS:
+				return allLists != null;
+			case ModelPackage.DATA_MODEL__ALL_CATEGORIES:
+				return allCategories != null;
 			case ModelPackage.DATA_MODEL__ALL_TYPES:
 				return allTypes != null;
+			case ModelPackage.DATA_MODEL__ALL_ACCOUNTS:
+				return allAccounts != null;
 		}
 		return super.eIsSet(featureID);
 	}

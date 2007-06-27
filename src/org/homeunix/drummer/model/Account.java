@@ -31,7 +31,7 @@ import java.util.Date;
  * @model
  * @generated
  */
-public interface Account extends Source, Comparable<Source>{
+public interface Account extends Source {
 	/**
 	 * Returns the value of the '<em><b>Balance</b></em>' attribute.
 	 * <!-- begin-user-doc -->

@@ -76,6 +76,9 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			public Object caseAccounts(Accounts object) {
 				return createAccountsAdapter();
 			}
+			public Object caseAutoSaveInfo(AutoSaveInfo object) {
+				return createAutoSaveInfoAdapter();
+			}
 			public Object caseCategories(Categories object) {
 				return createCategoriesAdapter();
 			}
@@ -84,6 +87,9 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			}
 			public Object caseDataModel(DataModel object) {
 				return createDataModelAdapter();
+			}
+			public Object caseLists(Lists object) {
+				return createListsAdapter();
 			}
 			public Object caseSchedule(Schedule object) {
 				return createScheduleAdapter();
@@ -150,6 +156,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.model.AutoSaveInfo <em>Auto Save Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.model.AutoSaveInfo
+	 * @generated
+	 */
+	public Adapter createAutoSaveInfoAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.model.Categories <em>Categories</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -188,6 +208,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataModelAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.model.Lists <em>Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.homeunix.drummer.model.Lists
+	 * @generated
+	 */
+	public Adapter createListsAdapter() {
 		return null;
 	}
 

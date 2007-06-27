@@ -100,6 +100,12 @@ public class ModelSwitch {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ModelPackage.AUTO_SAVE_INFO: {
+				AutoSaveInfo autoSaveInfo = (AutoSaveInfo)theEObject;
+				Object result = caseAutoSaveInfo(autoSaveInfo);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ModelPackage.CATEGORIES: {
 				Categories categories = (Categories)theEObject;
 				Object result = caseCategories(categories);
@@ -116,6 +122,12 @@ public class ModelSwitch {
 			case ModelPackage.DATA_MODEL: {
 				DataModel dataModel = (DataModel)theEObject;
 				Object result = caseDataModel(dataModel);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.LISTS: {
+				Lists lists = (Lists)theEObject;
+				Object result = caseLists(lists);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -191,6 +203,21 @@ public class ModelSwitch {
 	}
 
 	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Auto Save Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Auto Save Info</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseAutoSaveInfo(AutoSaveInfo object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpretting the object as an instance of '<em>Categories</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -232,6 +259,21 @@ public class ModelSwitch {
 	 * @generated
 	 */
 	public Object caseDataModel(DataModel object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpretting the object as an instance of '<em>Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpretting the object as an instance of '<em>Lists</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public Object caseLists(Lists object) {
 		return null;
 	}
 
