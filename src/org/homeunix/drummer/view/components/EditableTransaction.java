@@ -370,14 +370,12 @@ public class EditableTransaction extends JPanel {
 		((JTextComponent) description.getEditor().getEditorComponent()).addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				System.out.println("Focus Lost");
 				fillInOtherFields();
 				description.setPopupVisible(false);
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				System.out.println("Focus Gained");
 				super.focusGained(e);
 			}
 		});
