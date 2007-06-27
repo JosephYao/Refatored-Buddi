@@ -42,11 +42,11 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
-import org.homeunix.thecave.moss.gui.hint.JHintAutoCompleteTextField;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -69,7 +69,7 @@ public class EditableTransaction extends JPanel {
 	private final JScrollingComboBox from;
 	private final JScrollingComboBox to;
 	private final JHintTextField number;
-	private final JHintAutoCompleteTextField description;
+	private final JScrollingComboBox description;
 	private final JHintTextArea memo;
 	private final JCheckBox cleared;
 	private final JCheckBox reconciled;
@@ -89,7 +89,7 @@ public class EditableTransaction extends JPanel {
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.HINT_NUMBER));
-		description = new JHintAutoCompleteTextField(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+		description = new JScrollingComboBox(PrefsInstance.getInstance().getDescDict());//, Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MEMO));
 		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED));
@@ -136,7 +136,7 @@ public class EditableTransaction extends JPanel {
 
 		int textHeight = date.getPreferredSize().height;
 		date.setPreferredSize(new Dimension(50, textHeight));
-		description.setPreferredSize(new Dimension(100, textHeight));
+		description.setPreferredSize(new Dimension(150, description.getPreferredSize().height));
 		number.setPreferredSize(new Dimension(40, textHeight));
 
 		amount.setMaximumSize(new Dimension(150, textHeight));
@@ -200,7 +200,7 @@ public class EditableTransaction extends JPanel {
 		if (transaction != null){
 			date.setDate(transaction.getDate());			
 			number.setValue(transaction.getNumber());
-			description.setValue(transaction.getDescription());
+			description.setSelectedItem(transaction.getDescription());
 			memo.setValue(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
@@ -217,7 +217,7 @@ public class EditableTransaction extends JPanel {
 			if (date.getDate() == null)
 				date.setDate(new Date());
 			number.setValue("");
-			description.setValue("");
+			description.setSelectedItem("");
 			amount.setValue(0);
 			to.setSelectedIndex(0);
 			from.setSelectedIndex(0);
@@ -271,7 +271,7 @@ public class EditableTransaction extends JPanel {
 	}
 
 	public String getDescription(){
-		return description.getValue();
+		return description.getSelectedItem().toString();
 	}
 
 	public Transaction getTransaction(){
@@ -342,6 +342,9 @@ public class EditableTransaction extends JPanel {
 	}
 
 	private void initActions(){
+		description.setEditable(true);
+		AutoCompleteDecorator.decorate(description);
+		
 		for (JComponent c : components) {
 			c.addKeyListener(new KeyAdapter(){
 				public void keyTyped(KeyEvent arg0) {
@@ -365,7 +368,9 @@ public class EditableTransaction extends JPanel {
 		description.addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				System.out.println("Test");
 				fillInOtherFields();
+				description.setPopupVisible(false);
 			}
 		});
 
@@ -505,8 +510,8 @@ public class EditableTransaction extends JPanel {
 		// there is something there.  If so, we fill in others with
 		// the dictionary map, but only if they haven't been modified from their default values!
 		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-			if (description.getValue().length() > 0){
-				DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getText());
+			if (description.getSelectedItem().toString().length() > 0){
+				DictData dd = PrefsInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
 				if (dd != null){
 					if (dd.getNumber() != null && number.isHintShowing())
 						number.setValue(dd.getNumber());

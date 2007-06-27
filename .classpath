@@ -5,11 +5,9 @@
 	<classpathentry kind="src" path="src-api"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/truefilter-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/quaqua-3.6.11.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter-1.0.9.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/swingx-2006_10_27.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/BrowserLauncher2-10.jar"/>
 	<classpathentry kind="lib" path="lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
@@ -17,5 +15,7 @@
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Buddi_Plugins"/>
+	<classpathentry kind="lib" path="lib/quaqua-3.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

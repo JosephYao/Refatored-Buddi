@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.common.util.EList;
@@ -24,7 +25,6 @@ import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.thecave.moss.gui.autocomplete.DefaultDictionary;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -43,7 +43,7 @@ public class PrefsInstance {
 	private UserPrefs userPrefs;
 
 	//Provide temporary backing for the autocomplete text fields
-	private final DefaultDictionary descDict;
+	private final DefaultComboBoxModel descDict;
 	private final Map<String, DictData> defaultsMap;
 	private final Map<String, ListAttributes> listAttributesMap;
 
@@ -51,7 +51,7 @@ public class PrefsInstance {
 	private static String location;
 
 	private PrefsInstance(){
-		descDict = new DefaultDictionary();
+		descDict = new DefaultComboBoxModel();
 		defaultsMap = new HashMap<String, DictData>();
 		listAttributesMap = new HashMap<String, ListAttributes>();
 
@@ -122,7 +122,7 @@ public class PrefsInstance {
 			for (Object o : userPrefs.getPrefs().getLists().getDescDict()) {
 				if (o instanceof DictEntry) {
 					DictEntry entry = (DictEntry) o;
-					descDict.add(entry.getEntry());
+					descDict.addElement(entry.getEntry());
 					defaultsMap.put(entry.getEntry(), entry.getData());
 				}
 			}
@@ -353,7 +353,8 @@ public class PrefsInstance {
 
 		//Translate between Set<String> (the dictionary) and the persistence model
 		userPrefs.getPrefs().getLists().getDescDict().retainAll(new Vector());
-		for (String s : descDict) {
+		for (int i = 0; i < descDict.getSize(); i++) {
+			String s = descDict.getElementAt(i).toString();
 			DictEntry d = PrefsFactory.eINSTANCE.createDictEntry();
 			d.setEntry(s);
 			d.setData(defaultsMap.get(s));
@@ -414,7 +415,7 @@ public class PrefsInstance {
 //	savePrefs();
 //	}
 
-	public DefaultDictionary getDescDict() {
+	public DefaultComboBoxModel getDescDict() {
 		return descDict;
 	}
 

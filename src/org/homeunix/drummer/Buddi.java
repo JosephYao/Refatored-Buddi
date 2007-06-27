@@ -33,6 +33,7 @@ import org.homeunix.drummer.util.AppleApplicationWrapper;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.Test;
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -192,6 +193,9 @@ public class Buddi {
 		//Start the initial checks
 		startVersionCheck();
 		startUpdateCheck(false);
+		
+		//Delete me
+		new Test();
 	}
 
 	/**
@@ -317,17 +321,17 @@ public class Buddi {
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 
 		//Set some Mac-specific GUI options
-		if (OperatingSystemUtil.isMac()){
-			System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
-			System.setProperty("Quaqua.selectionStyle", "bright");
-			System.setProperty("apple.laf.useScreenMenuBar", "true");
-			System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
-			System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
-			System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
-			System.setProperty("apple.awt.showGrowBox", "true");
-			System.setProperty("com.apple.mrj.application.growbox.intrudes","true");
-			System.setProperty("com.apple.mrj.application.apple.menu.about.name", Translate.getInstance().get(TranslateKeys.BUDDI));
-		}
+//		if (OperatingSystemUtil.isMac()){
+//			System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
+//			System.setProperty("Quaqua.selectionStyle", "bright");
+//			System.setProperty("apple.laf.useScreenMenuBar", "true");
+//			System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
+//			System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
+//			System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
+//			System.setProperty("apple.awt.showGrowBox", "true");
+//			System.setProperty("com.apple.mrj.application.growbox.intrudes","true");
+//			System.setProperty("com.apple.mrj.application.apple.menu.about.name", Translate.getInstance().get(TranslateKeys.BUDDI));
+//		}
 
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {

@@ -85,6 +85,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	private final JScrollPane listScroller;
 
 	private final EditableTransaction editableTransaction;
+	private final EditableTransaction editableTransaction2;
 	private final JButton recordButton;
 	private final JButton clearButton;
 	private final JButton deleteButton;
@@ -201,6 +202,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 		//Set up the editing portion
 		editableTransaction = new EditableTransaction(this);
+		editableTransaction2 = new EditableTransaction(null);
 
 		recordButton = new JButton(Translate.getInstance().get(TranslateKeys.BUTTON_RECORD));
 		clearButton = new JButton(Translate.getInstance().get(TranslateKeys.CLEAR));
@@ -255,6 +257,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 
+		mainPanel.add(editableTransaction2, BorderLayout.NORTH);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -784,7 +787,7 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 
 			//Update the autocomplete entries
 			if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-				PrefsInstance.getInstance().getDescDict().add(editableTransaction.getDescription());
+				PrefsInstance.getInstance().getDescDict().addElement(editableTransaction.getDescription());
 				if (editableTransaction != null && editableTransaction.getFrom() != null && editableTransaction.getTo() != null)
 					PrefsInstance.getInstance().setAutoCompleteEntry(
 							editableTransaction.getDescription(),
