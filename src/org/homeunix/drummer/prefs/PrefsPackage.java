@@ -61,107 +61,6 @@ public interface PrefsPackage extends EPackage {
 	PrefsPackage eINSTANCE = org.homeunix.drummer.prefs.impl.PrefsPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.DictDataImpl <em>Dict Data</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.homeunix.drummer.prefs.impl.DictDataImpl
-	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictData()
-	 * @generated
-	 */
-	int DICT_DATA = 0;
-
-	/**
-	 * The feature id for the '<em><b>Number</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA__NUMBER = 0;
-
-	/**
-	 * The feature id for the '<em><b>Memo</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA__MEMO = 1;
-
-	/**
-	 * The feature id for the '<em><b>Amount</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA__AMOUNT = 2;
-
-	/**
-	 * The feature id for the '<em><b>To</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA__TO = 3;
-
-	/**
-	 * The feature id for the '<em><b>From</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA__FROM = 4;
-
-	/**
-	 * The number of structural features of the '<em>Dict Data</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_DATA_FEATURE_COUNT = 5;
-
-	/**
-	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.DictEntryImpl <em>Dict Entry</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.homeunix.drummer.prefs.impl.DictEntryImpl
-	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictEntry()
-	 * @generated
-	 */
-	int DICT_ENTRY = 1;
-
-	/**
-	 * The feature id for the '<em><b>Entry</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_ENTRY__ENTRY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Data</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_ENTRY__DATA = 1;
-
-	/**
-	 * The number of structural features of the '<em>Dict Entry</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DICT_ENTRY_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.IntervalImpl <em>Interval</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -169,7 +68,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getInterval()
 	 * @generated
 	 */
-	int INTERVAL = 2;
+	int INTERVAL = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -215,7 +114,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getIntervals()
 	 * @generated
 	 */
-	int INTERVALS = 3;
+	int INTERVALS = 1;
 
 	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference list.
@@ -243,7 +142,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListAttributes()
 	 * @generated
 	 */
-	int LIST_ATTRIBUTES = 4;
+	int LIST_ATTRIBUTES = 2;
 
 	/**
 	 * The feature id for the '<em><b>Unrolled</b></em>' attribute.
@@ -271,7 +170,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getListEntry()
 	 * @generated
 	 */
-	int LIST_ENTRY = 5;
+	int LIST_ENTRY = 3;
 
 	/**
 	 * The feature id for the '<em><b>Entry</b></em>' attribute.
@@ -308,16 +207,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getLists()
 	 * @generated
 	 */
-	int LISTS = 6;
-
-	/**
-	 * The feature id for the '<em><b>Desc Dict</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LISTS__DESC_DICT = 0;
+	int LISTS = 4;
 
 	/**
 	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
@@ -326,7 +216,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LISTS__LIST_ENTRIES = 1;
+	int LISTS__LIST_ENTRIES = 0;
 
 	/**
 	 * The feature id for the '<em><b>Plugins</b></em>' containment reference list.
@@ -335,7 +225,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LISTS__PLUGINS = 2;
+	int LISTS__PLUGINS = 1;
 
 	/**
 	 * The number of structural features of the '<em>Lists</em>' class.
@@ -344,7 +234,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LISTS_FEATURE_COUNT = 3;
+	int LISTS_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.homeunix.drummer.prefs.impl.PluginImpl <em>Plugin</em>}' class.
@@ -354,7 +244,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPlugin()
 	 * @generated
 	 */
-	int PLUGIN = 7;
+	int PLUGIN = 5;
 
 	/**
 	 * The feature id for the '<em><b>Jar File</b></em>' attribute.
@@ -391,7 +281,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getPrefs()
 	 * @generated
 	 */
-	int PREFS = 8;
+	int PREFS = 6;
 
 	/**
 	 * The feature id for the '<em><b>Data File</b></em>' attribute.
@@ -556,13 +446,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT = 17;
 
 	/**
+	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__WINDOWS = 18;
+
+	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LAST_VERSION_RUN = 18;
+	int PREFS__LAST_VERSION_RUN = 19;
 
 	/**
 	 * The feature id for the '<em><b>Lists</b></em>' containment reference.
@@ -571,7 +470,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__LISTS = 19;
+	int PREFS__LISTS = 20;
 
 	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference.
@@ -580,16 +479,7 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__INTERVALS = 20;
-
-	/**
-	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PREFS__WINDOWS = 21;
+	int PREFS__INTERVALS = 21;
 
 	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
@@ -609,7 +499,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getUserPrefs()
 	 * @generated
 	 */
-	int USER_PREFS = 9;
+	int USER_PREFS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Prefs</b></em>' containment reference.
@@ -637,7 +527,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getVersion()
 	 * @generated
 	 */
-	int VERSION = 10;
+	int VERSION = 8;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -665,7 +555,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindowAttributes()
 	 * @generated
 	 */
-	int WINDOW_ATTRIBUTES = 11;
+	int WINDOW_ATTRIBUTES = 9;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -721,16 +611,7 @@ public interface PrefsPackage extends EPackage {
 	 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getWindows()
 	 * @generated
 	 */
-	int WINDOWS = 12;
-
-	/**
-	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WINDOWS__REPORTS_WINDOW = 0;
+	int WINDOWS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
@@ -739,16 +620,16 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__TRANSACTIONS_WINDOW = 1;
+	int WINDOWS__TRANSACTIONS_WINDOW = 0;
 
 	/**
-	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__MAIN_WINDOW = 2;
+	int WINDOWS__REPORTS_WINDOW = 1;
 
 	/**
 	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
@@ -757,7 +638,16 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__GRAPHS_WINDOW = 3;
+	int WINDOWS__GRAPHS_WINDOW = 2;
+
+	/**
+	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__MAIN_WINDOW = 3;
 
 	/**
 	 * The number of structural features of the '<em>Windows</em>' class.
@@ -768,103 +658,6 @@ public interface PrefsPackage extends EPackage {
 	 */
 	int WINDOWS_FEATURE_COUNT = 4;
 
-
-	/**
-	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.DictData <em>Dict Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Dict Data</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData
-	 * @generated
-	 */
-	EClass getDictData();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictData#getNumber <em>Number</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Number</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData#getNumber()
-	 * @see #getDictData()
-	 * @generated
-	 */
-	EAttribute getDictData_Number();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictData#getMemo <em>Memo</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Memo</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData#getMemo()
-	 * @see #getDictData()
-	 * @generated
-	 */
-	EAttribute getDictData_Memo();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictData#getAmount <em>Amount</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Amount</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData#getAmount()
-	 * @see #getDictData()
-	 * @generated
-	 */
-	EAttribute getDictData_Amount();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictData#getTo <em>To</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>To</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData#getTo()
-	 * @see #getDictData()
-	 * @generated
-	 */
-	EAttribute getDictData_To();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictData#getFrom <em>From</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>From</em>'.
-	 * @see org.homeunix.drummer.prefs.DictData#getFrom()
-	 * @see #getDictData()
-	 * @generated
-	 */
-	EAttribute getDictData_From();
-
-	/**
-	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.DictEntry <em>Dict Entry</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Dict Entry</em>'.
-	 * @see org.homeunix.drummer.prefs.DictEntry
-	 * @generated
-	 */
-	EClass getDictEntry();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.DictEntry#getEntry <em>Entry</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Entry</em>'.
-	 * @see org.homeunix.drummer.prefs.DictEntry#getEntry()
-	 * @see #getDictEntry()
-	 * @generated
-	 */
-	EAttribute getDictEntry_Entry();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.DictEntry#getData <em>Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Data</em>'.
-	 * @see org.homeunix.drummer.prefs.DictEntry#getData()
-	 * @see #getDictEntry()
-	 * @generated
-	 */
-	EReference getDictEntry_Data();
 
 	/**
 	 * Returns the meta object for class '{@link org.homeunix.drummer.prefs.Interval <em>Interval</em>}'.
@@ -992,17 +785,6 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getLists();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Lists#getDescDict <em>Desc Dict</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Desc Dict</em>'.
-	 * @see org.homeunix.drummer.prefs.Lists#getDescDict()
-	 * @see #getLists()
-	 * @generated
-	 */
-	EReference getLists_DescDict();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.homeunix.drummer.prefs.Lists#getListEntries <em>List Entries</em>}'.
@@ -1483,82 +1265,6 @@ public interface PrefsPackage extends EPackage {
 	 */
 	interface Literals  {
 		/**
-		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.DictDataImpl <em>Dict Data</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.homeunix.drummer.prefs.impl.DictDataImpl
-		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictData()
-		 * @generated
-		 */
-		EClass DICT_DATA = eINSTANCE.getDictData();
-
-		/**
-		 * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_DATA__NUMBER = eINSTANCE.getDictData_Number();
-
-		/**
-		 * The meta object literal for the '<em><b>Memo</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_DATA__MEMO = eINSTANCE.getDictData_Memo();
-
-		/**
-		 * The meta object literal for the '<em><b>Amount</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_DATA__AMOUNT = eINSTANCE.getDictData_Amount();
-
-		/**
-		 * The meta object literal for the '<em><b>To</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_DATA__TO = eINSTANCE.getDictData_To();
-
-		/**
-		 * The meta object literal for the '<em><b>From</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_DATA__FROM = eINSTANCE.getDictData_From();
-
-		/**
-		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.DictEntryImpl <em>Dict Entry</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.homeunix.drummer.prefs.impl.DictEntryImpl
-		 * @see org.homeunix.drummer.prefs.impl.PrefsPackageImpl#getDictEntry()
-		 * @generated
-		 */
-		EClass DICT_ENTRY = eINSTANCE.getDictEntry();
-
-		/**
-		 * The meta object literal for the '<em><b>Entry</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DICT_ENTRY__ENTRY = eINSTANCE.getDictEntry_Entry();
-
-		/**
-		 * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DICT_ENTRY__DATA = eINSTANCE.getDictEntry_Data();
-
-		/**
 		 * The meta object literal for the '{@link org.homeunix.drummer.prefs.impl.IntervalImpl <em>Interval</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1663,14 +1369,6 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LISTS = eINSTANCE.getLists();
-
-		/**
-		 * The meta object literal for the '<em><b>Desc Dict</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LISTS__DESC_DICT = eINSTANCE.getLists_DescDict();
 
 		/**
 		 * The meta object literal for the '<em><b>List Entries</b></em>' containment reference list feature.

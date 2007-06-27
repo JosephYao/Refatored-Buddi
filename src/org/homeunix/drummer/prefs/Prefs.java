@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isCurrencySymbolAfterAmount <em>Currency Symbol After Amount</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  * </ul>
  * </p>
  *

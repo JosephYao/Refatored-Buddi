@@ -70,12 +70,6 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected PrefsSwitch modelSwitch =
 		new PrefsSwitch() {
-			public Object caseDictData(DictData object) {
-				return createDictDataAdapter();
-			}
-			public Object caseDictEntry(DictEntry object) {
-				return createDictEntryAdapter();
-			}
 			public Object caseInterval(Interval object) {
 				return createIntervalAdapter();
 			}
@@ -126,34 +120,6 @@ public class PrefsAdapterFactory extends AdapterFactoryImpl {
 		return (Adapter)modelSwitch.doSwitch((EObject)target);
 	}
 
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.DictData <em>Dict Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.homeunix.drummer.prefs.DictData
-	 * @generated
-	 */
-	public Adapter createDictDataAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.DictEntry <em>Dict Entry</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.homeunix.drummer.prefs.DictEntry
-	 * @generated
-	 */
-	public Adapter createDictEntryAdapter() {
-		return null;
-	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.homeunix.drummer.prefs.Interval <em>Interval</em>}'.

@@ -16,10 +16,10 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.homeunix.drummer.prefs.Windows#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Windows#getTransactionsWindow <em>Transactions Window</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Windows#getMainWindow <em>Main Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Windows#getReportsWindow <em>Reports Window</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Windows#getGraphsWindow <em>Graphs Window</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Windows#getMainWindow <em>Main Window</em>}</li>
  * </ul>
  * </p>
  *

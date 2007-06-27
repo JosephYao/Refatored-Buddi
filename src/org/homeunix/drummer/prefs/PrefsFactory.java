@@ -26,24 +26,6 @@ public interface PrefsFactory extends EFactory {
 	PrefsFactory eINSTANCE = org.homeunix.drummer.prefs.impl.PrefsFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Dict Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dict Data</em>'.
-	 * @generated
-	 */
-	DictData createDictData();
-
-	/**
-	 * Returns a new object of class '<em>Dict Entry</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dict Entry</em>'.
-	 * @generated
-	 */
-	DictEntry createDictEntry();
-
-	/**
 	 * Returns a new object of class '<em>Interval</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

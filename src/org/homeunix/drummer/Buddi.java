@@ -34,6 +34,7 @@ import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.menu.MainMenu;
+import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
@@ -142,36 +143,36 @@ public class Buddi {
 		PrefsInstance.getInstance();
 
 		//Temporary notice stating the data format has changed.
-//		if (Const.BRANCH.equals(Const.UNSTABLE)
-//				&& PrefsInstance.getInstance().getLastVersionRun().length() > 0 
-//				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
-//
-//			String[] options = new String[2];
-//			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
-//			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
-//
-//			if (JOptionPane.showOptionDialog(null, 
-//					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
-//					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-//					JOptionPane.OK_CANCEL_OPTION,
-//					JOptionPane.WARNING_MESSAGE,
-//					null,
-//					options,
-//					options[0]
-//			) == JOptionPane.CANCEL_OPTION)
-//				System.exit(0);
-//
-//
-//			//Make a backup of the existing data file, just to be safe...
-//			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
-//			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + Const.BACKUP_FILE_EXTENSION);
-//			try {
-//				FileFunctions.copyFile(dataFile, backupDataFile);
-//			}
-//			catch (IOException ioe){
-//				Log.warning("Error backing up file: " + ioe);
-//			}			
-//		}
+		if (Const.BRANCH.equals(Const.UNSTABLE)
+				&& PrefsInstance.getInstance().getLastVersionRun().length() > 0 
+				&& !PrefsInstance.getInstance().getLastVersionRun().equals(Const.VERSION)){
+
+			String[] options = new String[2];
+			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
+
+			if (JOptionPane.showOptionDialog(null, 
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
+					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					options,
+					options[0]
+			) == JOptionPane.CANCEL_OPTION)
+				System.exit(0);
+
+
+			//Make a backup of the existing data file, just to be safe...
+			File dataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile());
+			File backupDataFile = new File(PrefsInstance.getInstance().getPrefs().getDataFile() + " backup before " + Const.VERSION + Const.BACKUP_FILE_EXTENSION);
+			try {
+				FileFunctions.copyFile(dataFile, backupDataFile);
+			}
+			catch (IOException ioe){
+				Log.warning("Error backing up file: " + ioe);
+			}			
+		}
 
 		//Create the frameless menu bar (for Mac)
 		JMenuBar frameless = new MainMenu(null);

@@ -16,7 +16,7 @@
 	<classpathentry kind="lib" path="lib/quaqua-3.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Buddi_Plugins"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

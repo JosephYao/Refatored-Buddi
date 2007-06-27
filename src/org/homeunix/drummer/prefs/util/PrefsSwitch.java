@@ -87,18 +87,6 @@ public class PrefsSwitch {
 	 */
 	protected Object doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case PrefsPackage.DICT_DATA: {
-				DictData dictData = (DictData)theEObject;
-				Object result = caseDictData(dictData);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case PrefsPackage.DICT_ENTRY: {
-				DictEntry dictEntry = (DictEntry)theEObject;
-				Object result = caseDictEntry(dictEntry);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case PrefsPackage.INTERVAL: {
 				Interval interval = (Interval)theEObject;
 				Object result = caseInterval(interval);
@@ -167,36 +155,6 @@ public class PrefsSwitch {
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpretting the object as an instance of '<em>Dict Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpretting the object as an instance of '<em>Dict Data</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public Object caseDictData(DictData object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpretting the object as an instance of '<em>Dict Entry</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpretting the object as an instance of '<em>Dict Entry</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public Object caseDictEntry(DictEntry object) {
-		return null;
 	}
 
 	/**

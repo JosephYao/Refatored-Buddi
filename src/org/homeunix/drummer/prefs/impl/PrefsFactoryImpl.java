@@ -60,8 +60,6 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 	 */
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case PrefsPackage.DICT_DATA: return createDictData();
-			case PrefsPackage.DICT_ENTRY: return createDictEntry();
 			case PrefsPackage.INTERVAL: return createInterval();
 			case PrefsPackage.INTERVALS: return createIntervals();
 			case PrefsPackage.LIST_ATTRIBUTES: return createListAttributes();
@@ -76,26 +74,6 @@ public class PrefsFactoryImpl extends EFactoryImpl implements PrefsFactory {
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DictData createDictData() {
-		DictDataImpl dictData = new DictDataImpl();
-		return dictData;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DictEntry createDictEntry() {
-		DictEntryImpl dictEntry = new DictEntryImpl();
-		return dictEntry;
 	}
 
 	/**
