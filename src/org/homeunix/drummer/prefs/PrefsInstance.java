@@ -119,6 +119,7 @@ public class PrefsInstance {
 			//Load the auto complete entries into the dictionary
 			// and create the autocomplete map, between 
 			// description and other fields.
+			descDict.addElement(null);
 			for (Object o : userPrefs.getPrefs().getLists().getDescDict()) {
 				if (o instanceof DictEntry) {
 					DictEntry entry = (DictEntry) o;
@@ -354,11 +355,13 @@ public class PrefsInstance {
 		//Translate between Set<String> (the dictionary) and the persistence model
 		userPrefs.getPrefs().getLists().getDescDict().retainAll(new Vector());
 		for (int i = 0; i < descDict.getSize(); i++) {
-			String s = descDict.getElementAt(i).toString();
-			DictEntry d = PrefsFactory.eINSTANCE.createDictEntry();
-			d.setEntry(s);
-			d.setData(defaultsMap.get(s));
-			userPrefs.getPrefs().getLists().getDescDict().add(d);
+			if (descDict.getElementAt(i) != null){
+				String s = descDict.getElementAt(i).toString();
+				DictEntry d = PrefsFactory.eINSTANCE.createDictEntry();
+				d.setEntry(s);
+				d.setData(defaultsMap.get(s));
+				userPrefs.getPrefs().getLists().getDescDict().add(d);
+			}
 		}
 
 		//Translate between Map<String, ListAttribute> (the list attributes) and the persistance model
@@ -378,7 +381,7 @@ public class PrefsInstance {
 			//Java doesn't like non-escaped backslashes in regexes...
 			workingDirectoryRegex = Buddi.getWorkingDir().replaceAll("\\\\", "\\\\\\\\");
 			userPrefs.getPrefs().setDataFile(userPrefs.getPrefs().getDataFile().replaceAll("^" + workingDirectoryRegex, ""));
-			
+
 			for (Object o : userPrefs.getPrefs().getLists().getPlugins()) {
 				if (o instanceof Plugin){
 					Plugin plugin = (Plugin) o;

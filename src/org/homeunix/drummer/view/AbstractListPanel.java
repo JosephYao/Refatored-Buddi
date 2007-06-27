@@ -4,7 +4,6 @@
 package org.homeunix.drummer.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -37,7 +36,7 @@ import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
-import org.jdesktop.swingx.decorator.AlternateRowHighlighter;
+import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 public abstract class AbstractListPanel extends AbstractBuddiPanel implements TreeExpansionListener { //, TreeSelectionListener {
 	public static final long serialVersionUID = 0;
@@ -83,7 +82,7 @@ public abstract class AbstractListPanel extends AbstractBuddiPanel implements Tr
 		tree.getColumn(2).setCellRenderer(new SourceAmountCellRenderer());
 //		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.addHighlighter(new AlternateRowHighlighter(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW, Color.BLACK));
+		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		tree.setSelectionModel(new SingleListSelectionModel());
 //		tree.addTreeSelectionListener(this);
 		tree.addTreeExpansionListener(this);

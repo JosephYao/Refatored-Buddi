@@ -554,7 +554,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 
 
 		//We must have filled in at least the name and the date.
-		if ((scheduleName.getValue().length() == 0)
+		if ((scheduleName.getValue().toString().length() == 0)
 				|| (startDateChooser.getDate() == null)){
 			return false;
 		}
@@ -571,7 +571,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		//If the message is filled in, we can let the action succeed
 		// without the transaction being filled out.  However, if any
 		// part of the transaction is filled in, it all must be.
-		if ((message.getValue().length() > 0)
+		if ((message.getValue().toString().length() > 0)
 				&& (editableTransaction.getAmount() == 0)
 				&& (editableTransaction.getDescription().length() == 0)
 				&& (editableTransaction.getTo() == null)
@@ -599,12 +599,12 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 				t.setReconciled(editableTransaction.isReconciled());
 			}
 			if (Const.DEVEL) Log.info("Freq type: "+getFrequencyType()+" sch day: "+getScheduleDay());
-			ScheduleController.addSchedule(scheduleName.getValue(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue(), t);
+			ScheduleController.addSchedule(scheduleName.getValue().toString(), startDateChooser.getDate(), null, getFrequencyType(), getScheduleDay(), getScheduleWeek(), getScheduleMonth(), message.getValue().toString(), t);
 
 		}
 		else{
-			schedule.setScheduleName(scheduleName.getValue());
-			schedule.setMessage(message.getValue());
+			schedule.setScheduleName(scheduleName.getValue().toString());
+			schedule.setMessage(message.getValue().toString());
 			schedule.setAmount(editableTransaction.getAmount());
 			schedule.setDescription(editableTransaction.getDescription());
 			schedule.setNumber(editableTransaction.getNumber());

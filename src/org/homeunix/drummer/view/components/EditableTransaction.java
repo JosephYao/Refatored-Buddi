@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.JTextComponent;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
@@ -42,6 +43,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
+import org.homeunix.thecave.moss.gui.hint.JHintComboBox;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
 import org.homeunix.thecave.moss.util.Log;
@@ -69,7 +71,7 @@ public class EditableTransaction extends JPanel {
 	private final JScrollingComboBox from;
 	private final JScrollingComboBox to;
 	private final JHintTextField number;
-	private final JScrollingComboBox description;
+	private final JHintComboBox description;
 	private final JHintTextArea memo;
 	private final JCheckBox cleared;
 	private final JCheckBox reconciled;
@@ -89,7 +91,7 @@ public class EditableTransaction extends JPanel {
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.HINT_NUMBER));
-		description = new JScrollingComboBox(PrefsInstance.getInstance().getDescDict());//, Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+		description = new JHintComboBox(PrefsInstance.getInstance().getDescDict(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MEMO));
 		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED));
@@ -135,9 +137,9 @@ public class EditableTransaction extends JPanel {
 		components.add(memoScroller);
 
 		int textHeight = date.getPreferredSize().height;
-		date.setPreferredSize(new Dimension(50, textHeight));
+		date.setPreferredSize(new Dimension(100, textHeight));
 		description.setPreferredSize(new Dimension(150, description.getPreferredSize().height));
-		number.setPreferredSize(new Dimension(40, textHeight));
+		number.setPreferredSize(new Dimension(100, textHeight));
 
 		amount.setMaximumSize(new Dimension(150, textHeight));
 		amount.setPreferredSize(new Dimension(150, textHeight));
@@ -267,7 +269,7 @@ public class EditableTransaction extends JPanel {
 	}
 
 	public String getNumber(){
-		return number.getValue();
+		return number.getValue().toString();
 	}
 
 	public String getDescription(){
@@ -306,7 +308,7 @@ public class EditableTransaction extends JPanel {
 
 
 	public String getMemo(){
-		return memo.getValue();
+		return memo.getValue().toString();
 	}
 
 	public boolean isCleared(){
@@ -341,10 +343,10 @@ public class EditableTransaction extends JPanel {
 		}
 	}
 
-	private void initActions(){
+	private void initActions(){				
 		description.setEditable(true);
 		AutoCompleteDecorator.decorate(description);
-		
+
 		for (JComponent c : components) {
 			c.addKeyListener(new KeyAdapter(){
 				public void keyTyped(KeyEvent arg0) {
@@ -365,16 +367,22 @@ public class EditableTransaction extends JPanel {
 		}
 
 		// Load the other information (amount, number, etc) from memory
-		description.addFocusListener(new FocusAdapter(){
+		((JTextComponent) description.getEditor().getEditorComponent()).addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				System.out.println("Test");
+				System.out.println("Focus Lost");
 				fillInOtherFields();
 				description.setPopupVisible(false);
 			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				System.out.println("Focus Gained");
+				super.focusGained(e);
+			}
 		});
 
-		description.addKeyListener(new KeyAdapter(){
+		((JTextComponent) description.getEditor().getEditorComponent()).addKeyListener(new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -482,6 +490,24 @@ public class EditableTransaction extends JPanel {
 
 		to.setRenderer(renderer);
 		from.setRenderer(renderer);
+
+//		ListCellRenderer descriptionRenderer = new DefaultListCellRenderer(){
+//			public static final long serialVersionUID = 0;
+//
+//			@Override
+//			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+//				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+//				if (value == null)
+//					this.setText(Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+//				else
+//					this.setText(value.toString());
+//
+//				return this;
+//			}
+//		};
+//
+//		description.setRenderer(descriptionRenderer);
+
 	}
 
 	@Override
