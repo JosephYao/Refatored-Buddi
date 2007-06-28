@@ -1,5 +1,6 @@
 2.5.4.0
 -Added Serbian translation (Thanks to Zeljko Jovanovic for this)
+-Fixed bug #1744440 (Added Type to the API)
 -Implemented feature request #1741972 (Dropdown for autocomplete transactions)
 -Moved auto complete entries from Preferences to Data file, for added security and portability of auto complete entries between systems.
 

@@ -5,7 +5,10 @@ package org.homeunix.drummer.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
@@ -394,7 +397,7 @@ public class DataInstance {
 		//Load the auto complete entries into the dictionary
 		// and create the autocomplete map, between 
 		// description and other fields.
-		autocompleteEntries.addElement(null);
+//		autocompleteEntries.addElement(null);
 		for (Object o : dataModel.getAllLists().getAllAutoSave()) {
 			if (o instanceof AutoSaveInfo) {
 				AutoSaveInfo entry = (AutoSaveInfo) o;
@@ -507,8 +510,7 @@ public class DataInstance {
 		return autocompleteEntries;
 	}
 	
-	public void setAutoCompleteEntry(String description, 
-			String number, long amount, String from, String to, String memo){
+	public void setAutoCompleteEntry(String description, String number, long amount, String from, String to, String memo){
 		AutoSaveInfo asi;
 		if (defaultsMap.get(description) == null){
 			asi = ModelFactory.eINSTANCE.createAutoSaveInfo();
@@ -519,6 +521,16 @@ public class DataInstance {
 			asi.setTo(to);
 			asi.setMemo(memo);
 			getDataModel().getAllLists().getAllAutoSave().add(asi);
+			defaultsMap.put(description, asi);
+			autocompleteEntries.addElement(description);
+			
+			//Sort the autocomplete entries
+			List<String> entries = new LinkedList<String>(defaultsMap.keySet());
+			Collections.sort(entries);
+			autocompleteEntries.removeAllElements();
+			for (String string : entries) {
+				autocompleteEntries.addElement(string);	
+			}
 		}
 		else {
 			asi = defaultsMap.get(description);
@@ -529,8 +541,6 @@ public class DataInstance {
 			asi.setTo(to);
 			asi.setMemo(memo);			
 		}
-
-		defaultsMap.put(description, asi);
 	}
 
 	public AutoSaveInfo getAutoCompleteEntry(String description){

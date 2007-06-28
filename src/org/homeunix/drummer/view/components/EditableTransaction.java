@@ -544,7 +544,9 @@ public class EditableTransaction extends JPanel {
 		// there is something there.  If so, we fill in others with
 		// the dictionary map, but only if they haven't been modified from their default values!
 		if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-			if (description.getSelectedItem().toString().length() > 0){
+			if (description != null 
+					&& description.getSelectedItem() != null 
+					&& description.getSelectedItem().toString().length() > 0){
 				AutoSaveInfo asi = DataInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
 				if (asi != null){
 					if (forceAll || (asi.getNumber() != null && number.isHintShowing()))
