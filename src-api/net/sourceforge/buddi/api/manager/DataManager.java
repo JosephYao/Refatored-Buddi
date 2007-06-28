@@ -26,7 +26,7 @@ public interface DataManager {
      * @return ImmutableTransaction currently selected in interface or null if no transaction selected.
      */
     public ImmutableTransaction getTransaction();
-
+    
     /**
      * @return ImmutableCategory with specified name
      */

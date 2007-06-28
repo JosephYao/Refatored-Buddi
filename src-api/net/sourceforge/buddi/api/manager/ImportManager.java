@@ -6,9 +6,11 @@ import net.sourceforge.buddi.api.exception.ValidationException;
 import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableCategory;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
+import net.sourceforge.buddi.api.model.ImmutableType;
 import net.sourceforge.buddi.api.model.MutableAccount;
 import net.sourceforge.buddi.api.model.MutableCategory;
 import net.sourceforge.buddi.api.model.MutableTransaction;
+import net.sourceforge.buddi.api.model.MutableType;
 
 public interface ImportManager extends DataManager {
 
@@ -19,6 +21,13 @@ public interface ImportManager extends DataManager {
      * @return new MutableTransaction
      */
     public MutableTransaction createTransaction();
+    
+    /**
+     * Create and add a new MutableType to the ImportManager.
+     * The type will be made permanent if saveChanges() succeeds.
+     * @return
+     */
+    public MutableType createType();
     
     /**
      * Create and add a new MutableCategory to the ImportManager.
@@ -73,7 +82,12 @@ public interface ImportManager extends DataManager {
     /**
      * @return ImmutableTransaction Collection of all transactions, including those waiting to be imported
      */
-    public Collection<ImmutableTransaction> getTransactions(); 
+    public Collection<ImmutableTransaction> getTransactions();
+    
+    /**
+     * @return ImmutableType Collection of all types, including those waiting to be imported
+     */
+    public Collection<ImmutableType> getTypes();
 
     /**
      * @return ImmutableTransaction Collection of all transactions for specified account, including those waiting to be imported

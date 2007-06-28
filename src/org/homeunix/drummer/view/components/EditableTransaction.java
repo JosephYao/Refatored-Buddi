@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
@@ -203,7 +205,7 @@ public class EditableTransaction extends JPanel {
 		if (transaction != null){
 			date.setDate(transaction.getDate());			
 			number.setValue(transaction.getNumber());
-			description.setSelectedItem(transaction.getDescription());
+			description.setValue(transaction.getDescription());
 			memo.setValue(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
@@ -220,7 +222,7 @@ public class EditableTransaction extends JPanel {
 			if (date.getDate() == null)
 				date.setDate(new Date());
 			number.setValue("");
-			description.setSelectedItem("");
+			description.setValue(null);
 			amount.setValue(0);
 			to.setSelectedIndex(0);
 			from.setSelectedIndex(0);
@@ -366,12 +368,19 @@ public class EditableTransaction extends JPanel {
 				}
 			});
 		}
+		
+		description.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent arg0) {
+				fillInOtherFields(true);
+//				description.setPopupVisible(false);
+			}
+		});
 
 		// Load the other information (amount, number, etc) from memory
 		((JTextComponent) description.getEditor().getEditorComponent()).addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				fillInOtherFields();
+				fillInOtherFields(false);
 				description.setPopupVisible(false);
 			}
 			
@@ -385,7 +394,7 @@ public class EditableTransaction extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER){
-					fillInOtherFields();
+					fillInOtherFields(true);
 				}
 				super.keyPressed(e);
 			}
@@ -530,7 +539,7 @@ public class EditableTransaction extends JPanel {
 		reconciled.setSelected(transaction.isReconciled());
 	}
 
-	private void fillInOtherFields(){
+	private void fillInOtherFields(boolean forceAll){
 		//If we lose focus on the description field, we check if
 		// there is something there.  If so, we fill in others with
 		// the dictionary map, but only if they haven't been modified from their default values!
@@ -538,12 +547,12 @@ public class EditableTransaction extends JPanel {
 			if (description.getSelectedItem().toString().length() > 0){
 				AutoSaveInfo asi = DataInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
 				if (asi != null){
-					if (asi.getNumber() != null && number.isHintShowing())
+					if (forceAll || (asi.getNumber() != null && number.isHintShowing()))
 						number.setValue(asi.getNumber());
-					if(amount.getValue() == 0)
+					if (forceAll || amount.getValue() == 0)
 						amount.setValue(asi.getAmount());
 
-					if (asi.getMemo() != null && memo.isHintShowing())
+					if (forceAll || (asi.getMemo() != null && memo.isHintShowing()))
 						memo.setValue(asi.getMemo());
 
 					//TODO This doesn't always work when you go to a different account...

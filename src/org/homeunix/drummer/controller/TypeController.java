@@ -28,6 +28,16 @@ public class TypeController {
 	}
 	
 	/**
+	 * Adds a new type to the data model.  This type is what will show
+	 * up in the New Account window.
+	 * @param type The user-readable name (or the translation key, if it is a translated term) 
+	 */
+	@SuppressWarnings("unchecked")
+	public static void addType(Type type){
+		DataInstance.getInstance().getDataModel().getAllTypes().getTypes().add(type);
+	}
+	
+	/**
 	 * Returns all types in the model, sorted according to the Type comparator
 	 * @return All types in the currently loaded data model
 	 */

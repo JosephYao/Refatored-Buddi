@@ -12,16 +12,20 @@ import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableCategory;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
+import net.sourceforge.buddi.api.model.ImmutableType;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableAccountImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableCategoryImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableSourceImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_4.model.ImmutableTypeImpl;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
+import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.util.Version;
 
 public class DataManagerImpl implements DataManager {
@@ -97,6 +101,24 @@ public class DataManagerImpl implements DataManager {
         
         return immutableCategoryList;
     }
+    
+    public Collection<ImmutableType> getTypes() {
+        Vector<Type> typeVector = TypeController.getTypes();
+        if (null == typeVector)
+        {
+            return Collections.emptyList();
+        }
+
+        List<ImmutableType> immutableTypeList = new ArrayList<ImmutableType>();
+        
+        for (Type type: typeVector) {
+            ImmutableTypeImpl immutableType = new ImmutableTypeImpl(type);
+            immutableTypeList.add(immutableType);
+        }
+        
+        return immutableTypeList;
+    }
+
 
     public Collection<ImmutableAccount> getAccounts() {
         Vector<Account> accountVector = SourceController.getAccounts();
