@@ -314,9 +314,6 @@ public class Buddi {
 		// we have set up logging properly.
 		Log.notice("Set working directory to " + workingDir);
 
-		//Load the correct Look and Feel
-		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
-
 		//Set some Mac-specific GUI options
 		if (OperatingSystemUtil.isMac()){
 			System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
@@ -330,6 +327,9 @@ public class Buddi {
 			System.setProperty("com.apple.mrj.application.apple.menu.about.name", Translate.getInstance().get(TranslateKeys.BUDDI));
 		}
 
+		//Load the correct Look and Feel
+		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
+		
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
