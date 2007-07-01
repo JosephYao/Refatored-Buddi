@@ -237,7 +237,8 @@ public class PluginFactory<T extends BuddiPlugin> {
 
 					BuddiPlugin plugin = (BuddiPlugin) o;
 					Version pluginAPIVersion = plugin.getAPIVersion(); 
-					if (Const.API_VERSION.isGreaterMinor(pluginAPIVersion)
+					if (pluginAPIVersion == null 
+							|| Const.API_VERSION.isGreaterMinor(pluginAPIVersion)
 							|| Const.API_VERSION.isSameMinor(pluginAPIVersion)){
 						classNames.add(entry.getName());
 					}

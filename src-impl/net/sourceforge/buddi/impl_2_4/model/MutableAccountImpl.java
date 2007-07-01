@@ -82,8 +82,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 //            throw new ValidationException("No DueDate specified for MutableAccount " + this);
 //        }
 
-        if (null == account.getAccountType())
-        {
+        if (account.getAccountType() == null){
             throw new ValidationException("No AccountType specified for MutableAccount " + this);
         }
     }

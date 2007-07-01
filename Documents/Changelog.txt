@@ -1,8 +1,10 @@
 2.5.4.0
 -Added Serbian translation (Thanks to Zeljko Jovanovic for this)
--Fixed bug #1744440 (Added Type to the API)
 -Implemented feature request #1741972 (Dropdown for autocomplete transactions)
+-Added Feature Request #1745624 (Allow for rollback of single Transaction / Type / Account / Category; use rollbackX() method)
 -Moved auto complete entries from Preferences to Data file, for added security and portability of auto complete entries between systems.
+-Fixed bug #1744440 (Added Type to the API)
+-Fixed bug #1745199 (Allow null for minimum API version in plugins)
 
 2.5.3.0 (June 25 2007)
 -Fixed bug #1740710 (Restart after changing currency symbol)

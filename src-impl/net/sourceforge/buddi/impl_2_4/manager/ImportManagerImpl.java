@@ -98,6 +98,23 @@ public class ImportManagerImpl extends DataManagerImpl implements ImportManager 
         temporaryTransactionList.clear();
         temporaryCategoryList.clear();
         temporaryAccountList.clear();
+        temporaryTypeList.clear();
+    }
+    
+    public void rollbackTransaction(ImmutableTransaction t){
+    	temporaryTransactionList.remove(t);
+    }
+    
+    public void rollbackAccount(ImmutableAccount a){
+    	temporaryAccountList.remove(a);
+    }
+    
+    public void rollbackCategory(ImmutableCategory c){
+    	temporaryCategoryList.remove(c);
+    }
+    
+    public void rollbackType(ImmutableType t){
+    	temporaryTypeList.remove(t);
     }
 
     public ImmutableCategory findCategoryByName(String name) {
