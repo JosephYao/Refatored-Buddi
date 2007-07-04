@@ -214,7 +214,7 @@ public class Buddi {
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n"
 			+ "--simpleFont\t\tDon't use bold or italic fonts (better Unicode support)\n"
-			+ "--log\tlogFile\tLocation to store logs (default varies by platform)\n";
+			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --slackware will specify a .tgz download for new versions.
@@ -257,12 +257,18 @@ public class Buddi {
 		// to view that).  On all else, we default to buddi.log, in
 		// the working directory.
 		try {
-			if (results.getString("--log") != null)
-				Log.setPrintStream(new PrintStream(new File(results.getString("--log"))));
+			if (results.getString("--log") != null){
+				if (results.getString("--log").equals("stdout"))
+					Log.setPrintStream(System.out);
+				else if (results.getString("--log").equals("stderr"))
+					Log.setPrintStream(System.err);
+				else
+					Log.setPrintStream(new PrintStream(new File(results.getString("--log"))));
+			}
 			else if (!OperatingSystemUtil.isMac())
 				Log.setPrintStream(new PrintStream(new File(getWorkingDir() + Const.LOG_FILE)));
-			else
-				Log.setPrintStream(System.err);
+			else if (OperatingSystemUtil.isMac() && System.getProperty("user.home").length() > 0)
+				Log.setPrintStream(new PrintStream(new File(System.getProperty("user.home") + "/Library/Logs/" + Const.LOG_FILE)));
 		}
 		catch (FileNotFoundException fnfe){
 			Log.setPrintStream(System.err);
@@ -290,6 +296,9 @@ public class Buddi {
 
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
+		}
+		else if (Const.DEVEL){
+			Log.setLogLevel(Log.DEBUG);
 		}
 
 		//If we specify a different font, replace all font instances with it.

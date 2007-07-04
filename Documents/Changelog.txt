@@ -1,5 +1,8 @@
 2.5.4.0
--Added Serbian translation (Thanks to Zeljko Jovanovic for this)
+-Added Serbian translation (Thanks to Zeljko Jovanovic)
+-Updated Spanish translation (Thanks to Rafael Rodriguez and Ignacio Baca)
+-Set defaut log location on OS X to ~/Library/Logs/buddi.log
+-Set default log level on development builds to 'debug'
 -Implemented feature request #1741972 (Dropdown for autocomplete transactions)
 -Added Feature Request #1745624 (Allow for rollback of single Transaction / Type / Account / Category; use rollbackX() method)
 -Moved auto complete entries from Preferences to Data file, for added security and portability of auto complete entries between systems.
