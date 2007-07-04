@@ -5,13 +5,9 @@ package org.homeunix.drummer.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.common.util.EList;
@@ -31,6 +27,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.moss.gui.hint.JHintComboBox.DefaultJHintComboBoxModel;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -43,7 +40,7 @@ import org.homeunix.thecave.moss.util.Log;
 public class DataInstance {
 	
 	//Provide temporary backing for the autocomplete text fields
-	private final DefaultComboBoxModel autocompleteEntries;
+	private final DefaultJHintComboBoxModel autocompleteEntries;
 	private final Map<String, AutoSaveInfo> defaultsMap;
 	
 	public static DataInstance getInstance() {
@@ -76,7 +73,7 @@ public class DataInstance {
 	 * loadDataFile or newDataFile.
 	 */
 	private DataInstance(){
-		autocompleteEntries = new DefaultComboBoxModel();
+		autocompleteEntries = new DefaultJHintComboBoxModel();
 		defaultsMap = new HashMap<String, AutoSaveInfo>();
 	}
 
@@ -506,7 +503,7 @@ public class DataInstance {
 		resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
 	}
 	
-	public DefaultComboBoxModel getAutoCompleteEntries() {
+	public DefaultJHintComboBoxModel getAutoCompleteEntries() {
 		return autocompleteEntries;
 	}
 	
@@ -525,12 +522,12 @@ public class DataInstance {
 			autocompleteEntries.addElement(description);
 			
 			//Sort the autocomplete entries
-			List<String> entries = new LinkedList<String>(defaultsMap.keySet());
-			Collections.sort(entries);
-			autocompleteEntries.removeAllElements();
-			for (String string : entries) {
-				autocompleteEntries.addElement(string);	
-			}
+//			List<String> entries = new LinkedList<String>(defaultsMap.keySet());
+//			Collections.sort(entries);
+//			autocompleteEntries.removeAllElements();
+//			for (String string : entries) {
+//				autocompleteEntries.addElement(string);	
+//			}
 		}
 		else {
 			asi = defaultsMap.get(description);
