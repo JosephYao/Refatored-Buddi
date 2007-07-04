@@ -71,6 +71,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
     }
     public void setAccountType(ImmutableType accountType) {
         this.immutableTypeAccountType = accountType;
+        account.setAccountType(((ImmutableTypeImpl) accountType).getImpl());
     }
 
 

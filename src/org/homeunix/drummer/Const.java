@@ -150,6 +150,7 @@ public class Const {
 		
 //		"org.homeunix.thecave.plugins.graph.incomeovertime.IncomeAndExpenseOverTime",
 //		"org.homeunix.thecave.plugins.export.qif.ExportQIF"
+//		"org.homeunix.drummer.plugins.imports.SimpleImport"
 		
 //		"org.homeunix.drummer.plugins.exports.ExportHTML",
 //		"org.homeunix.drummer.plugins.exports.ExportCSV"

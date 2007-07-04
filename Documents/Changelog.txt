@@ -1,4 +1,7 @@
-2.5.4.0
+2.5.5.0
+-Fixed bug #1745205 (Failure to set account type on MutableAccount creation).  Modified the setType method in MutableAccountImpl.
+
+2.5.4.0 (July 3 2007)
 -Added Serbian translation (Thanks to Zeljko Jovanovic)
 -Updated Spanish translation (Thanks to Rafael Rodriguez and Ignacio Baca)
 -Set defaut log location on OS X to ~/Library/Logs/buddi.log
