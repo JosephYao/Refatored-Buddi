@@ -27,7 +27,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.hint.JHintComboBox.DefaultJHintComboBoxModel;
+import org.homeunix.thecave.moss.gui.model.DefaultSortedSetComboBoxModel;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -40,7 +40,7 @@ import org.homeunix.thecave.moss.util.Log;
 public class DataInstance {
 	
 	//Provide temporary backing for the autocomplete text fields
-	private final DefaultJHintComboBoxModel autocompleteEntries;
+	private final DefaultSortedSetComboBoxModel autocompleteEntries;
 	private final Map<String, AutoSaveInfo> defaultsMap;
 	
 	public static DataInstance getInstance() {
@@ -73,7 +73,7 @@ public class DataInstance {
 	 * loadDataFile or newDataFile.
 	 */
 	private DataInstance(){
-		autocompleteEntries = new DefaultJHintComboBoxModel();
+		autocompleteEntries = new DefaultSortedSetComboBoxModel();
 		defaultsMap = new HashMap<String, AutoSaveInfo>();
 	}
 
@@ -503,7 +503,7 @@ public class DataInstance {
 		resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
 	}
 	
-	public DefaultJHintComboBoxModel getAutoCompleteEntries() {
+	public DefaultSortedSetComboBoxModel getAutoCompleteEntries() {
 		return autocompleteEntries;
 	}
 	
