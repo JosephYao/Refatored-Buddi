@@ -151,7 +151,8 @@ public class Buddi {
 			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL);
 
-			if (JOptionPane.showOptionDialog(null, 
+			if (JOptionPane.showOptionDialog(
+					null, 
 					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE),
 					Translate.getInstance().get(TranslateKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
 					JOptionPane.OK_CANCEL_OPTION,
@@ -159,7 +160,7 @@ public class Buddi {
 					null,
 					options,
 					options[0]
-			) == JOptionPane.CANCEL_OPTION)
+			 ) == 1)  //The index of the Cancel button.
 				System.exit(0);
 
 

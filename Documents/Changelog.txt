@@ -1,3 +1,6 @@
+2.5.6.0
+-Fixed bug #1754527 (Cancel button on New Data Format warning message doesn't exit program)
+
 2.5.5.0 (July 15 2007)
 -Added request #1754141 (Factor debit / credit when sorting transactions)
 -Fixed bug #1745205 (Failure to set account type on MutableAccount creation).  Modified the setType method in MutableAccountImpl.
