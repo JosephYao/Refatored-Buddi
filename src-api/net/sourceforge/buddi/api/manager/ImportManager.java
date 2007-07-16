@@ -58,6 +58,29 @@ public interface ImportManager extends DataManager {
      */
     public void rollbackChanges();
 
+    /**
+     * Remove the object specified, and avoid it from being imported on saveChanges().
+     * @param t
+     */
+    public void rollbackTransaction(ImmutableTransaction t);
+
+    /**
+     * Remove the object specified, and avoid it from being imported on saveChanges().
+     * @param a
+     */
+    public void rollbackAccount(ImmutableAccount a);
+    
+    /**
+     * Remove the object specified, and avoid it from being imported on saveChanges().
+     * @param c
+     */
+    public void rollbackCategory(ImmutableCategory c);
+    
+    /**
+     * Remove the object specified, and avoid it from being imported on saveChanges().
+     * @param t
+     */
+    public void rollbackType(ImmutableType t);
 
     /**
      * @return ImmutableCategory with specified name, including those waiting to be imported
