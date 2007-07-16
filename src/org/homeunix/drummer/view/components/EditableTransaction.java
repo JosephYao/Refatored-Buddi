@@ -557,7 +557,9 @@ public class EditableTransaction extends JPanel {
 					if (forceAll || (asi.getMemo() != null && memo.isHintShowing()))
 						memo.setValue(asi.getMemo());
 
-					//TODO This doesn't always work when you go to a different account...
+					//This doesn't always work when you go to a different account; it should
+					// be good enough for the vast majorty of cases, though, and does a pretty
+					// good job at guessing which account is the correct one...
 					if (asi.getFrom() != null){
 						for (int i = 0; i < from.getModel().getSize(); i++){
 							if (from.getModel().getElementAt(i) != null
@@ -576,6 +578,13 @@ public class EditableTransaction extends JPanel {
 							}
 						}
 					}
+				}
+				else {
+					number.setValue("");
+					amount.setValue(0);
+					memo.setValue("");
+					from.setSelectedItem(null);
+					to.setSelectedItem(null);
 				}
 			}
 		}

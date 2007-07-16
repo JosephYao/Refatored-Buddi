@@ -13,4 +13,5 @@ public interface MutableTransaction extends ImmutableTransaction {
     public void setReconciled(boolean newReconciled);
     public void setFrom(ImmutableSource newFrom);
     public void setTo(ImmutableSource newTo);
+    public void setUID(String uid);
 }

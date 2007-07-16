@@ -61,6 +61,10 @@ public class ImmutableTransactionImpl implements ImmutableTransaction {
     public boolean isReconciled() {
         return transaction.isReconciled();
     }
+    
+    public String getUID(){
+    	return transaction.getUID();
+    }
 
     private ImmutableSource immutableSourceFrom = null;
     public ImmutableSource getFrom() {

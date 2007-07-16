@@ -18,6 +18,8 @@ import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.util.BuddiInternalFormatter;
+import org.homeunix.thecave.moss.util.DateUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -788,9 +790,21 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 	}
 
 	public int compareTo(Transaction arg0) {
+		//We want to sort schedued transactions by name, for the list
 		if (this instanceof Schedule && arg0 instanceof Schedule)
 			return ((Schedule) this).getScheduleName().compareTo(((Schedule) arg0).getScheduleName());
-		return this.getDate().compareTo(arg0.getDate());
+		//For regular transactions, first we sort by date 
+		else if (DateUtil.daysBetween(this.getDate(), arg0.getDate()) != 0)
+			return this.getDate().compareTo(arg0.getDate());
+		//Next we sort by debit / credit.  This is a nebulous beast, because of negative 
+		// amounts, credit accounts, etc.  Basically, if the transaction would turn up
+		// as red in the reports, we list is as 'credit', and it should appear first.
+		else if (BuddiInternalFormatter.isRed(this) != BuddiInternalFormatter.isRed(arg0)){
+			return new Boolean(BuddiInternalFormatter.isRed(this)).compareTo(BuddiInternalFormatter.isRed(arg0));
+		}
+		//If everything else is the same, we sort on description.
+		else 
+			return this.getDescription().compareTo(arg0.getDescription());
 	}
 	
 	public void calculateBalance(){

@@ -1,5 +1,10 @@
-2.5.5.0
+2.5.5.0 (July 15 2007)
+-Added request #1754141 (Factor debit / credit when sorting transactions)
 -Fixed bug #1745205 (Failure to set account type on MutableAccount creation).  Modified the setType method in MutableAccountImpl.
+-Fixed bug #1747932 (No UID getters / setters in API)
+-Fixed bug #1754401 (Autocomplete usability issues)
+-Fixed bug #1754394 (Don't delete value when hitting + / -, even when value is selected)
+-Fixed bug #1754391 (Negative sign not cleared for new transaction if last transaction had it set)
 
 2.5.4.0 (July 3 2007)
 -Added Serbian translation (Thanks to Zeljko Jovanovic)

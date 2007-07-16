@@ -57,6 +57,10 @@ public class MutableTransactionImpl extends ImmutableTransactionImpl implements 
     public void setReconciled(boolean newReconciled) {
         transaction.setReconciled(newReconciled);
     }
+    
+    public void setUID(String uid){
+    	transaction.setUID(uid);
+    }
 
     public void setFrom(ImmutableSource newFrom) {
         if (null == newFrom){

@@ -15,4 +15,5 @@ public interface ImmutableTransaction extends Comparable<ImmutableTransaction>{
     public boolean isReconciled();
     public ImmutableSource getFrom();
     public ImmutableSource getTo();
+    public String getUID();
 }
