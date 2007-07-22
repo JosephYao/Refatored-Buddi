@@ -139,6 +139,27 @@ If you don't like downloading new versions every few weeks, then use the stable 
 The official plugins use a similar versioning scheme to Buddi itself, with one exception - the API version is prepended to the plugin version.  For instance, NetIncomeOverTime-2.4_1.0.1.0 is the plugin called "Net Income over Time", using API version 2.4, and the version of the plugin is 1.0.1.0.  While it does seem a little scary at first, it makes sense once you understand what each part is for.
 </p>
 
+<h2>I think that the default Windows theme is ugly.  How can I change the look and feel of Buddi?</h2>
+<p>
+By default, I use the native theme for the operating system which Buddi is being run on.  You can override this, however, by using the --lnf option.  Note that you must have the specified look and feel in your classpath; this generally means that on Windows you cannot use the .exe file, and must use the .jar.  The launch command would be something like this: "java -cp Buddi.jar custom_lnf.jar org.homeunix.drummer.Buddi -lnf com.example.lnf.customlnf", replacing custom_lnf.jar and com.example.lnf.customlnf with the correct values.
+</p>
+
+<p>
+As an example of this, using Substance (a Macintosh-looking theme which can be run on Windows), follows.  From the command line, type:
+</p>
+
+<p class='code'>
+java -cp Buddi.jar;substance.jar org.homeunix.drummer.Buddi --lnf org.jvnet.substance.SubstanceLookAndFeel
+</p>
+
+<p>
+For operating systems other than Windows, use the colon instead of the semi-colon for separating the classpath entries.
+</p>
+
+<p>
+Make sure that you are in the same directory as Buddi.jar and substance.jar (get it from <a href='https://substance.dev.java.net/files/documents/3294/49105/substance.jar'>here</a>).  If all goes well, you should see fancy looking blue buttons.  You can use this same approach to using any number of look and feels. 
+</p>
+
 <hr>
 
 <p>

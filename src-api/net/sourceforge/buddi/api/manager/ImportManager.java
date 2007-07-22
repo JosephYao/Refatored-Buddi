@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sourceforge.buddi.api.exception.ValidationException;
 import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableCategory;
+import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 import net.sourceforge.buddi.api.model.ImmutableType;
 import net.sourceforge.buddi.api.model.MutableAccount;
@@ -12,8 +13,83 @@ import net.sourceforge.buddi.api.model.MutableCategory;
 import net.sourceforge.buddi.api.model.MutableTransaction;
 import net.sourceforge.buddi.api.model.MutableType;
 
+/**
+ * @author wyatt
+ * This implementation of this class allows plugin authors to modify data in the 
+ * data model.  Perhaps ImportManager is not the best term; possibly 
+ * "MutableDataManager" or something would have made more sense.
+ */
 public interface ImportManager extends DataManager {
 
+	/**
+	 * Returns a list of all transactions currently in the data model, excluding those
+	 * pending a commit.
+	 * @return
+	 */
+	public Collection<MutableTransaction> getModelTransactions();
+	
+	/**
+	 * Returns a list of all transactions currently in the data model which are
+	 * associated with the given source, excluding those pending a commit.
+	 * @return
+	 */
+	public Collection<MutableTransaction> getModelTransactions(ImmutableSource s);
+	
+	/**
+	 * Returns the single (first, if there are multiple) transaction which matches the 
+	 * specified UID, or null if it does not exist. 
+	 * @param uid
+	 * @return
+	 */
+	public MutableTransaction getModelTransaction(String uid);
+	
+	/**
+	 * Returns a list of all accounts currently in the data model, excluding those
+	 * pending a commit.
+	 * @return
+	 */
+	public Collection<MutableAccount> getModelAccounts();
+	
+	/**
+	 * Returns a list of all categories currently in the data model, excluding those
+	 * pending a commit.
+	 * @return
+	 */
+	public Collection<MutableCategory> getModelCategories();
+	
+	/**
+	 * Returns a list of all types currently in the data model, excluding those
+	 * pending a commit.
+	 * @return
+	 */
+	public Collection<MutableType> getModelTypes();
+	
+	/**
+	 * Remove the given transaction.  Must call saveChanges() to commit changes before it will be applied.
+	 * @param t
+	 */
+	public void removeTransaction(MutableTransaction t);
+	
+	/**
+	 * Remove the given account.  Must call saveChanges() to commit changes before it will be applied.
+	 * @param a
+	 */	
+	public void removeAccount(MutableAccount a);
+	
+	/**
+	 * Remove the given category.  Must call saveChanges() to commit changes before it will be applied.
+	 * @param c
+	 */
+	public void removeCategory(MutableCategory c);
+	
+	
+	/**
+	 * Remove the given type.  Must call saveChanges() to commit changes before it will be applied.
+	 * @param t
+	 */
+	public void removeType(MutableType t);
+	
+	
     /**
      * Create and add a new MutableTransaction to the ImportManager.
      * The transaction will be made permanent if saveChanges() succeeds.

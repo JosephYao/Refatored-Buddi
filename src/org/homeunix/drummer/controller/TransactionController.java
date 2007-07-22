@@ -212,4 +212,18 @@ public class TransactionController {
 		Collections.sort(v);
 		return v;
 	}
+	
+	/**
+	 * Returns the single transaction with the associated UID, or null if it does not exist.
+	 * @param uid
+	 * @return
+	 */
+	public static Transaction getTransaction(String uid){
+		for (Transaction t : getTransactions()) {
+			if (t.getUID().equals(uid))
+				return t;
+		}
+		
+		return null;
+	}
 }
