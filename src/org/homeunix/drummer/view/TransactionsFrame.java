@@ -74,8 +74,8 @@ import de.schlichtherle.swing.filter.FilteredDynamicListModel;
 public class TransactionsFrame extends AbstractBuddiFrame {
 	public static final long serialVersionUID = 0;	
 
-	private static final int MIN_WIDTH = 600;
-	private static final int MIN_HEIGHT = 400;
+	private static final int MIN_WIDTH = 400;
+	private static final int MIN_HEIGHT = 200;
 
 	private static final Map<Account, TransactionsFrame> transactionInstances = new HashMap<Account, TransactionsFrame>();
 //	private static TransactionsFramePreLoader preloader = null;
