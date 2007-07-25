@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/quaqua-3.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/SwingWorker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

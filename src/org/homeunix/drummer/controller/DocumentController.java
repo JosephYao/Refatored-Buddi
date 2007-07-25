@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import net.java.dev.swingworker.SwingWorker;
+
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -15,7 +17,6 @@ import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.thecave.moss.gui.JStatusDialog;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.swingworker.SwingWorker;
 
 public class DocumentController {
 

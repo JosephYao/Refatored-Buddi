@@ -24,7 +24,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
@@ -45,11 +45,11 @@ public class NetWorthOverTime extends BuddiGraphPlugin {
 		Vector<Date> dates = new Vector<Date>();
 		Date date = startDate;
 		
-		int numberOfDaysBetween = DateUtil.daysBetween(startDate, new Date());
+		int numberOfDaysBetween = DateFunctions.getDaysBetween(startDate, new Date(), false);
 		int daysBetweenReport = numberOfDaysBetween / NUM_SAMPLES;
 		
 		for (int i = 0; i < NUM_SAMPLES; i++){
-			date = DateUtil.getNextNDay(startDate, i * daysBetweenReport);
+			date = DateFunctions.addDays(startDate, i * daysBetweenReport);
 			if (date.before(new Date()))
 				dates.add(date);
 			Log.debug("Added date: " + date);			

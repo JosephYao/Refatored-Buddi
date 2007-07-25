@@ -18,7 +18,7 @@ import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
 public class ScheduleController {
@@ -127,10 +127,10 @@ public class ScheduleController {
 		Date today = new Date();
 		
 		for (Schedule schedule : v) {
-			if ((DateUtil.daysBetween(schedule.getStartDate(), today) == 0
-					|| DateUtil.getStartOfDay(schedule.getStartDate()).before(DateUtil.getStartOfDay(today)))
+			if ((DateFunctions.getDaysBetween(schedule.getStartDate(), today, false) == 0
+					|| DateFunctions.getStartOfDay(schedule.getStartDate()).before(DateFunctions.getStartOfDay(today)))
 					&& (schedule.getLastDateCreated() == null 
-							|| DateUtil.getStartOfDay(schedule.getLastDateCreated()).before(DateUtil.getStartOfDay(today))))
+							|| DateFunctions.getStartOfDay(schedule.getLastDateCreated()).before(DateFunctions.getStartOfDay(today))))
 				newV.add(schedule);
 		}
 
@@ -145,7 +145,7 @@ public class ScheduleController {
 	 */
 	public static void checkForScheduledActions(){
 		//Update any scheduled transactions
-		final Date today = DateUtil.getEndOfDay(new Date());
+		final Date today = DateFunctions.getEndOfDay(new Date());
 		//We specify a GregorianCalendar because we make some assumptions
 		// about numbering of months, etc that may break if we 
 		// use the default calendar for the locale.  It's not the
@@ -166,12 +166,12 @@ public class ScheduleController {
 			else {
 				//We start one day after the last day, to avoid repeats.  
 				// See bug #1641937 for more details.
-				tempDate = DateUtil.getNextDay(tempDate);
+				tempDate = DateFunctions.addDays(tempDate, 1);
 			}
 
 			Date lastDayCreated = (Date) tempDate.clone();
 
-			tempDate = DateUtil.getStartOfDay(tempDate);
+			tempDate = DateFunctions.getStartOfDay(tempDate);
 
 			if (Const.DEVEL){
 				Log.debug("tempDate = " + tempDate);
@@ -225,7 +225,7 @@ public class ScheduleController {
 				// we add 1 to our stored day before comparing it.
 				else if (s.getFrequencyType().equals(TranslateKeys.SCHEDULE_FREQUENCY_BIWEEKLY.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
-						&& (DateUtil.daysBetween(lastDayCreated, tempDate) > 13)){
+						&& (DateFunctions.getDaysBetween(lastDayCreated, tempDate, false) > 13)){
 					todayIsTheDay = true;
 					lastDayCreated = (Date) tempDate.clone();
 				}
@@ -287,7 +287,7 @@ public class ScheduleController {
 				// at the given day.
 				if (todayIsTheDay){
 					if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
-					s.setLastDateCreated(DateUtil.getEndOfDay(tempDate));
+					s.setLastDateCreated(DateFunctions.getEndOfDay(tempDate));
 					if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDateCreated());
 
 					if (s.getMessage() != null && s.getMessage().trim().length() > 0){
@@ -334,7 +334,7 @@ public class ScheduleController {
 					DataInstance.getInstance().saveDataFile();
 				}
 
-				tempDate = DateUtil.getNextDay(tempDate);
+				tempDate = DateFunctions.addDays(tempDate, 1);
 			}
 		}
 	}

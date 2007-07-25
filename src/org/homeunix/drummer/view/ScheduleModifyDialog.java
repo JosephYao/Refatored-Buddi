@@ -38,7 +38,7 @@ import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -222,7 +222,7 @@ public class ScheduleModifyDialog extends AbstractBuddiDialog {
 		//We already have a vector defined with First, Second, ... Thirty First
 		multipleMonthsDateChooser = new JScrollingComboBox(monthlyDateChooserChoices);
 
-		startDateChooser = new JDateChooser(DateUtil.getNextDay(new Date()), PrefsInstance.getInstance().getPrefs().getDateFormat());
+		startDateChooser = new JDateChooser(DateFunctions.addDays(new Date(), 1), PrefsInstance.getInstance().getPrefs().getDateFormat());
 
 		Dimension buttonSize = new Dimension(Math.max(100, cancelButton.getPreferredSize().width), cancelButton.getPreferredSize().height);
 		okButton.setPreferredSize(buttonSize);

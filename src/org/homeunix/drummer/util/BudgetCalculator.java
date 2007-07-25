@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.prefs.Interval;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
 public class BudgetCalculator {
@@ -33,7 +33,7 @@ public class BudgetCalculator {
 		long daysInInterval = getDaysInInterval(interval, startDate, endDate);
 		
 		double numberOfBudgetPeriods = 
-			(DateUtil.daysBetween(startDate, endDate) + 1) / daysInInterval;
+			(DateFunctions.getDaysBetween(startDate, endDate, true)) / daysInInterval;
 		return (long) (value * numberOfBudgetPeriods);
 	}
 	
@@ -58,7 +58,7 @@ public class BudgetCalculator {
 		long daysInInterval = getDaysInInterval(interval, startDate, endDate);		
 		
 		long daysBetweenDates =
-			DateUtil.daysBetweenInclusive(startDate, endDate);
+			DateFunctions.getDaysBetween(startDate, endDate, true);
 		
 		double average = (value * daysInInterval) / (double) daysBetweenDates;
 		

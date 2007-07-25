@@ -18,7 +18,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -185,23 +185,23 @@ public class TransactionListModel extends AbstractListModel {
 				Date today = new Date();
 
 				if (TranslateKeys.TRANSACTION_FILTER_TODAY == filterPulldown) {
-					return DateUtil.getEndOfDay(today).equals(DateUtil.getEndOfDay(t.getDate()));
+					return DateFunctions.getEndOfDay(today).equals(DateFunctions.getEndOfDay(t.getDate()));
 				}
 				else if (TranslateKeys.TRANSACTION_FILTER_THIS_WEEK == filterPulldown) {
-					return DateUtil.getStartOfDay(DateUtil.getNextNDay(today, -7)).before(t.getDate());
+					return DateFunctions.getStartOfDay(DateFunctions.addDays(today, -7)).before(t.getDate());
 				}
 				else if (TranslateKeys.TRANSACTION_FILTER_THIS_MONTH == filterPulldown) {
-					return DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(today, 0)).before(t.getDate());
+					return DateFunctions.getStartOfMonth(today).before(t.getDate());
 				}
 				else if (TranslateKeys.TRANSACTION_FILTER_THIS_QUARTER == filterPulldown) {
-					return DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(today, 0)).before(t.getDate());
+					return DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(today, 0)).before(t.getDate());
 				} 
 				else if (TranslateKeys.TRANSACTION_FILTER_THIS_YEAR == filterPulldown) {
-					return DateUtil.getStartOfDay(DateUtil.getBeginOfYear(today)).before(t.getDate());				
+					return DateFunctions.getStartOfYear(today).before(t.getDate());				
 				}
 				else if (TranslateKeys.TRANSACTION_FILTER_LAST_YEAR == filterPulldown) {
-					Date startOfLastYear = DateUtil.getStartOfDay(DateUtil.getStartOfYear(DateUtil.getNextNDay(today, -365)));
-					Date endOfLastYear = DateUtil.getEndOfYear(startOfLastYear);
+					Date startOfLastYear = DateFunctions.getStartOfYear(DateFunctions.addYears(today, -1));
+					Date endOfLastYear = DateFunctions.getEndOfYear(startOfLastYear);
 					return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
 				}
 				else if (TranslateKeys.TRANSACTION_FILTER_NOT_RECONCILED == filterPulldown) {

@@ -1,3 +1,6 @@
+2.5.7.0
+-Updated Date function class in Moss to use my own code (in preparation of new Moss license).  There may be bugs in this class - please check scheduled transactions and reports for accuracy!
+
 2.5.6.0 (July 22 2007)
 -Added edit and delete capabilities to the API (requests #1758125 and #1745625)
 -Added feature request #1758617 (Smaller minimum size for transaction windows)

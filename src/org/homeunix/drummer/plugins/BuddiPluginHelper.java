@@ -4,10 +4,10 @@
 package org.homeunix.drummer.plugins;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 
+import net.java.dev.SwingWorker;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
 import net.sourceforge.buddi.api.plugin.BuddiGraphPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
@@ -17,9 +17,8 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.thecave.moss.gui.JStatusDialog;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.SwingWorker;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -88,44 +87,44 @@ public class BuddiPluginHelper {
 
 		intervals.add(null);
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getNextNDay(new Date(), -7)),
-				DateUtil.getEndOfDay(new Date()),
+				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), -7)),
+				DateFunctions.getEndOfDay(new Date()),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_PAST_WEEK)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getNextNDay(new Date(), -14)),
-				DateUtil.getStartOfDay(DateUtil.getNextNDay(new Date(), 0)),
+				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), -14)),
+				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), 0)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_PAST_FORTNIGHT)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(new Date(), 0)),
-				DateUtil.getEndOfDay(DateUtil.getEndOfMonth(new Date(), 0)),
+				DateFunctions.getStartOfDay(DateFunctions.getStartOfMonth(new Date())),
+				DateFunctions.getEndOfDay(DateFunctions.getEndOfMonth(new Date())),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_THIS_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfMonth(new Date(), -1)),
-				DateUtil.getEndOfDay(DateUtil.getEndOfMonth(new Date(), -1)),
+				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -1),
+				DateFunctions.addMonths(DateFunctions.getEndOfMonth(new Date()), -1),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(new Date(), 0)),
-				DateUtil.getStartOfDay(DateUtil.getEndOfQuarter(new Date(), 0)),
+				DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(new Date(), 0)),
+				DateFunctions.getStartOfDay(DateFunctions.getEndOfQuarter(new Date(), 0)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_THIS_QUARTER)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfQuarter(new Date(), -1)),
-				DateUtil.getStartOfDay(DateUtil.getEndOfQuarter(new Date(), -1)),
+				DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(new Date(), -1)),
+				DateFunctions.getStartOfDay(DateFunctions.getEndOfQuarter(new Date(), -1)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_QUARTER)
 		));
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR))),
-				DateUtil.getEndOfDay(DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR))),
+				DateFunctions.getStartOfDay(DateFunctions.getStartOfYear(new Date())),
+				DateFunctions.getEndOfDay(DateFunctions.getEndOfYear(new Date())),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_THIS_YEAR)
 		));
 
 		intervals.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getBeginOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1)),
-				DateUtil.getEndOfDay(DateUtil.getEndOfYear(Calendar.getInstance().get(Calendar.YEAR) - 1)),
+				DateFunctions.addYears(DateFunctions.getStartOfYear(new Date()), -1),
+				DateFunctions.addYears(DateFunctions.getEndOfYear(new Date()), -1),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_YEAR)
 		));
 		intervals.add(new DateChoice(
@@ -141,27 +140,27 @@ public class BuddiPluginHelper {
 		endDates.add(null);
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getEndOfDay(new Date()),
+				DateFunctions.getEndOfDay(new Date()),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_TODAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getEndOfDay(DateUtil.getNextNDay(new Date(), -1)),
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -1)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_YESTERDAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getEndOfDay(DateUtil.getNextNDay(new Date(), -8)),
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -8)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_WEEK)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getEndOfDay(DateUtil.getNextNDay(new Date(), -30)),
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -30)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_MONTH)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateUtil.getEndOfDay(DateUtil.getNextNDay(new Date(), -365)),
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -365)),
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_LAST_YEAR)
 		));
 		endDates.add(new DateChoice(
@@ -178,23 +177,23 @@ public class BuddiPluginHelper {
 
 		startDates.add(null);
 		startDates.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getNextNDay(new Date(), -30)),
+				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -1),
 				null,
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_ONE_MONTH)
 		));
 		startDates.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getNextNDay(new Date(), -60)),
+				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -2),
 				null,
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_TWO_MONTHS)
 		));
 		startDates.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getEndOfMonth(DateUtil.getStartOfDay(new Date()), -6)),
+				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -6),
 				null,
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_SIX_MONTHS)
 		));
 
 		startDates.add(new DateChoice(
-				DateUtil.getStartOfDay(DateUtil.getEndOfMonth(DateUtil.getStartOfDay(new Date()), -12)),
+				DateFunctions.getStartOfYear(new Date()),
 				null,
 				Translate.getInstance().get(TranslateKeys.PLUGIN_FILTER_YEAR)
 		));

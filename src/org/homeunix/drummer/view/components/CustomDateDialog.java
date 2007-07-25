@@ -30,7 +30,7 @@ import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBuddiDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
 import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
 import com.toedter.calendar.JDateChooser;
@@ -135,11 +135,11 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 		Interval i = PrefsInstance.getInstance().getSelectedInterval();
 		if (i.isDays()){
 			startDateChooser.setDate(
-					DateUtil.getNextNDay(new Date(), (int) i.getLength() * -1));
+					DateFunctions.addDays(new Date(), (int) i.getLength() * -1));
 		}
 		else {
 			startDateChooser.setDate(
-					DateUtil.getBeginOfMonth(new Date(), (int) i.getLength() * -1));								
+					DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), (int) i.getLength() * -1));								
 		}			
 
 		
@@ -178,8 +178,8 @@ public class CustomDateDialog extends AbstractBuddiDialog {
 				Date startDate, endDate;
 
 //				if (plugin.getDateRangeType().equals(DateRangeType.INTERVAL)){
-				startDate = DateUtil.getStartOfDay(startDateChooser.getDate());
-				endDate = DateUtil.getEndOfDay(endDateChooser.getDate());
+				startDate = DateFunctions.getStartOfDay(startDateChooser.getDate());
+				endDate = DateFunctions.getEndOfDay(endDateChooser.getDate());
 //				}
 //				else if (plugin.getDateRangeType().equals(DateRangeType.START_ONLY)){
 //				startDate = DateUtil.getStartOfDay(startDateChooser.getDate());

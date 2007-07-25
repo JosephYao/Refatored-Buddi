@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import net.java.dev.SwingWorker;
 import net.roydesign.mac.MRJAdapter;
 
 import org.homeunix.drummer.controller.ReturnCodes;
@@ -38,7 +39,6 @@ import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
-import org.homeunix.thecave.moss.util.SwingWorker;
 import org.homeunix.thecave.moss.util.Version;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;

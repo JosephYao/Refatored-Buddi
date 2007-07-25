@@ -19,7 +19,7 @@ import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.util.BuddiInternalFormatter;
-import org.homeunix.thecave.moss.util.DateUtil;
+import org.homeunix.thecave.moss.util.DateFunctions;
 
 /**
  * <!-- begin-user-doc -->
@@ -794,7 +794,7 @@ public class TransactionImpl extends EObjectImpl implements Transaction, Compara
 		if (this instanceof Schedule && arg0 instanceof Schedule)
 			return ((Schedule) this).getScheduleName().compareTo(((Schedule) arg0).getScheduleName());
 		//For regular transactions, first we sort by date 
-		else if (DateUtil.daysBetween(this.getDate(), arg0.getDate()) != 0)
+		else if (DateFunctions.getDaysBetween(this.getDate(), arg0.getDate(), false) != 0)
 			return this.getDate().compareTo(arg0.getDate());
 		//Next we sort by debit / credit.  This is a nebulous beast, because of negative 
 		// amounts, credit accounts, etc.  Basically, if the transaction would turn up
