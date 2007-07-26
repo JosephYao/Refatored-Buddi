@@ -210,22 +210,22 @@ public interface PrefsPackage extends EPackage {
 	int LISTS = 4;
 
 	/**
-	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LISTS__LIST_ENTRIES = 0;
-
-	/**
 	 * The feature id for the '<em><b>Plugins</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LISTS__PLUGINS = 1;
+	int LISTS__PLUGINS = 0;
+
+	/**
+	 * The feature id for the '<em><b>List Entries</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LISTS__LIST_ENTRIES = 1;
 
 	/**
 	 * The number of structural features of the '<em>Lists</em>' class.
@@ -446,13 +446,13 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT = 17;
 
 	/**
-	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
+	 * The feature id for the '<em><b>Selected Filter</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS__WINDOWS = 18;
+	int PREFS__SELECTED_FILTER = 18;
 
 	/**
 	 * The feature id for the '<em><b>Last Version Run</b></em>' containment reference.
@@ -482,13 +482,22 @@ public interface PrefsPackage extends EPackage {
 	int PREFS__INTERVALS = 21;
 
 	/**
+	 * The feature id for the '<em><b>Windows</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREFS__WINDOWS = 22;
+
+	/**
 	 * The number of structural features of the '<em>Prefs</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREFS_FEATURE_COUNT = 22;
+	int PREFS_FEATURE_COUNT = 23;
 
 
 	/**
@@ -614,22 +623,13 @@ public interface PrefsPackage extends EPackage {
 	int WINDOWS = 10;
 
 	/**
-	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WINDOWS__TRANSACTIONS_WINDOW = 0;
-
-	/**
 	 * The feature id for the '<em><b>Reports Window</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__REPORTS_WINDOW = 1;
+	int WINDOWS__REPORTS_WINDOW = 0;
 
 	/**
 	 * The feature id for the '<em><b>Graphs Window</b></em>' containment reference.
@@ -638,7 +638,16 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WINDOWS__GRAPHS_WINDOW = 2;
+	int WINDOWS__GRAPHS_WINDOW = 1;
+
+	/**
+	 * The feature id for the '<em><b>Transactions Window</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WINDOWS__TRANSACTIONS_WINDOW = 2;
 
 	/**
 	 * The feature id for the '<em><b>Main Window</b></em>' containment reference.
@@ -1069,6 +1078,17 @@ public interface PrefsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPrefs_CurrencySymbolAfterAmount();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.homeunix.drummer.prefs.Prefs#getSelectedFilter <em>Selected Filter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Selected Filter</em>'.
+	 * @see org.homeunix.drummer.prefs.Prefs#getSelectedFilter()
+	 * @see #getPrefs()
+	 * @generated
+	 */
+	EAttribute getPrefs_SelectedFilter();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}'.
@@ -1565,6 +1585,14 @@ public interface PrefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT = eINSTANCE.getPrefs_CurrencySymbolAfterAmount();
+
+		/**
+		 * The meta object literal for the '<em><b>Selected Filter</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREFS__SELECTED_FILTER = eINSTANCE.getPrefs_SelectedFilter();
 
 		/**
 		 * The meta object literal for the '<em><b>Lists</b></em>' containment reference feature.

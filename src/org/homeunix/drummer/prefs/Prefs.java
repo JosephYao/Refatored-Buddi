@@ -34,10 +34,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#isCurrencySymbolAfterAmount <em>Currency Symbol After Amount</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getSelectedFilter <em>Selected Filter</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLastVersionRun <em>Last Version Run</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getLists <em>Lists</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.Prefs#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.Prefs#getWindows <em>Windows</em>}</li>
  * </ul>
  * </p>
  *
@@ -565,6 +566,32 @@ public interface Prefs extends EObject {
 	 * @generated
 	 */
 	void setCurrencySymbolAfterAmount(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Selected Filter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Selected Filter</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Selected Filter</em>' attribute.
+	 * @see #setSelectedFilter(String)
+	 * @see org.homeunix.drummer.prefs.PrefsPackage#getPrefs_SelectedFilter()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getSelectedFilter();
+
+	/**
+	 * Sets the value of the '{@link org.homeunix.drummer.prefs.Prefs#getSelectedFilter <em>Selected Filter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Selected Filter</em>' attribute.
+	 * @see #getSelectedFilter()
+	 * @generated
+	 */
+	void setSelectedFilter(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Lists</b></em>' containment reference.

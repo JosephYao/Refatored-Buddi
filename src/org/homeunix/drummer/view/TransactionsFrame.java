@@ -369,6 +369,20 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 				}
 			}			
 		});
+		
+		//Once we have the listeners all set up, we will load the saved filter.
+		// Since it is saved a string, and the model contains enum's, we have
+		// to check manually.  Yes, it's ugly.  Please let me know if I am 
+		// stupid and have missed a completely obvious alternative.
+		String savedFilter = PrefsInstance.getInstance().getPrefs().getSelectedFilter();
+		for (int i = 0; i < availableFilters.size(); i++){
+			if (availableFilters.get(i) != null 
+					&& availableFilters.get(i).toString().equals(savedFilter)){
+				filterComboBox.setSelectedIndex(i);
+				break;
+			}
+		}
+		
 
 		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
@@ -484,6 +498,9 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		wa.setHeight(this.getHeight());
 		wa.setWidth(this.getWidth());
 
+		//Save the filter state
+		PrefsInstance.getInstance().getPrefs().setSelectedFilter(filterComboBox.getSelectedItem().toString());
+		
 		PrefsInstance.getInstance().savePrefs();
 
 		transactionInstances.put(account, null);

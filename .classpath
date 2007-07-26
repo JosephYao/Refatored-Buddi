@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-impl"/>
 	<classpathentry kind="src" path="src-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/truefilter-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter-1.0.9.jar"/>
@@ -18,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="lib/SwingWorker.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

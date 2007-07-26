@@ -44,10 +44,11 @@ import org.homeunix.drummer.prefs.Windows;
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLookAndFeelClass <em>Look And Feel Class</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isPromptForFileAtStartup <em>Prompt For File At Startup</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#isCurrencySymbolAfterAmount <em>Currency Symbol After Amount</em>}</li>
- *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getSelectedFilter <em>Selected Filter</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLastVersionRun <em>Last Version Run</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getLists <em>Lists</em>}</li>
  *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link org.homeunix.drummer.prefs.impl.PrefsImpl#getWindows <em>Windows</em>}</li>
  * </ul>
  * </p>
  *
@@ -415,14 +416,24 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	protected boolean currencySymbolAfterAmount = CURRENCY_SYMBOL_AFTER_AMOUNT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getWindows() <em>Windows</em>}' containment reference.
+	 * The default value of the '{@link #getSelectedFilter() <em>Selected Filter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getWindows()
+	 * @see #getSelectedFilter()
 	 * @generated
 	 * @ordered
 	 */
-	protected Windows windows = null;
+	protected static final String SELECTED_FILTER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSelectedFilter() <em>Selected Filter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSelectedFilter()
+	 * @generated
+	 * @ordered
+	 */
+	protected String selectedFilter = SELECTED_FILTER_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getLastVersionRun() <em>Last Version Run</em>}' containment reference.
@@ -453,6 +464,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * @ordered
 	 */
 	protected Intervals intervals = null;
+
+	/**
+	 * The cached value of the '{@link #getWindows() <em>Windows</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWindows()
+	 * @generated
+	 * @ordered
+	 */
+	protected Windows windows = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -733,14 +754,14 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PrefsPackage.PREFS__WINDOWS:
-				return basicSetWindows(null, msgs);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return basicSetLastVersionRun(null, msgs);
 			case PrefsPackage.PREFS__LISTS:
 				return basicSetLists(null, msgs);
 			case PrefsPackage.PREFS__INTERVALS:
 				return basicSetIntervals(null, msgs);
+			case PrefsPackage.PREFS__WINDOWS:
+				return basicSetWindows(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -788,14 +809,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return isPromptForFileAtStartup() ? Boolean.TRUE : Boolean.FALSE;
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT:
 				return isCurrencySymbolAfterAmount() ? Boolean.TRUE : Boolean.FALSE;
-			case PrefsPackage.PREFS__WINDOWS:
-				return getWindows();
+			case PrefsPackage.PREFS__SELECTED_FILTER:
+				return getSelectedFilter();
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return getLastVersionRun();
 			case PrefsPackage.PREFS__LISTS:
 				return getLists();
 			case PrefsPackage.PREFS__INTERVALS:
 				return getIntervals();
+			case PrefsPackage.PREFS__WINDOWS:
+				return getWindows();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -862,8 +885,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT:
 				setCurrencySymbolAfterAmount(((Boolean)newValue).booleanValue());
 				return;
-			case PrefsPackage.PREFS__WINDOWS:
-				setWindows((Windows)newValue);
+			case PrefsPackage.PREFS__SELECTED_FILTER:
+				setSelectedFilter((String)newValue);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)newValue);
@@ -873,6 +896,9 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)newValue);
+				return;
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -939,8 +965,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT:
 				setCurrencySymbolAfterAmount(CURRENCY_SYMBOL_AFTER_AMOUNT_EDEFAULT);
 				return;
-			case PrefsPackage.PREFS__WINDOWS:
-				setWindows((Windows)null);
+			case PrefsPackage.PREFS__SELECTED_FILTER:
+				setSelectedFilter(SELECTED_FILTER_EDEFAULT);
 				return;
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				setLastVersionRun((Version)null);
@@ -950,6 +976,9 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return;
 			case PrefsPackage.PREFS__INTERVALS:
 				setIntervals((Intervals)null);
+				return;
+			case PrefsPackage.PREFS__WINDOWS:
+				setWindows((Windows)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -998,14 +1027,16 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 				return promptForFileAtStartup != PROMPT_FOR_FILE_AT_STARTUP_EDEFAULT;
 			case PrefsPackage.PREFS__CURRENCY_SYMBOL_AFTER_AMOUNT:
 				return currencySymbolAfterAmount != CURRENCY_SYMBOL_AFTER_AMOUNT_EDEFAULT;
-			case PrefsPackage.PREFS__WINDOWS:
-				return windows != null;
+			case PrefsPackage.PREFS__SELECTED_FILTER:
+				return SELECTED_FILTER_EDEFAULT == null ? selectedFilter != null : !SELECTED_FILTER_EDEFAULT.equals(selectedFilter);
 			case PrefsPackage.PREFS__LAST_VERSION_RUN:
 				return lastVersionRun != null;
 			case PrefsPackage.PREFS__LISTS:
 				return lists != null;
 			case PrefsPackage.PREFS__INTERVALS:
 				return intervals != null;
+			case PrefsPackage.PREFS__WINDOWS:
+				return windows != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1225,6 +1256,27 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSelectedFilter() {
+		return selectedFilter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSelectedFilter(String newSelectedFilter) {
+		String oldSelectedFilter = selectedFilter;
+		selectedFilter = newSelectedFilter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PrefsPackage.PREFS__SELECTED_FILTER, oldSelectedFilter, selectedFilter));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Lists getLists() {
 		return lists;
 	}
@@ -1351,6 +1403,8 @@ public class PrefsImpl extends EObjectImpl implements Prefs {
 		result.append(promptForFileAtStartup);
 		result.append(", currencySymbolAfterAmount: ");
 		result.append(currencySymbolAfterAmount);
+		result.append(", selectedFilter: ");
+		result.append(selectedFilter);
 		result.append(')');
 		return result.toString();
 	}
