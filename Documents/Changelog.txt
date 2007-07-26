@@ -3,6 +3,7 @@
 -Added Feature Request #1760045.  Removed the separate list of auto complete transactions.  This is now generated on the fly by using existing transactions.  This will make it much more flexible and less likely to cause problems (and the data files are smaller, too).
 -Added Feature Request #1751361 (Save last used date filter in Preferences)
 -Added Feature Request #1749295 (Show error message if user is behind proxy, not connected, or otherwise not able to check for updates)
+-Made some usability enhancements in the autocomplete code (no strange backspace behaviour now, IMHO)
 
 2.5.6.0 (July 22 2007)
 -Added edit and delete capabilities to the API (requests #1758125 and #1745625)
