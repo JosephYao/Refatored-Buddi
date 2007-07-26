@@ -27,7 +27,6 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.model.DefaultSortedSetComboBoxModel;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -38,10 +37,6 @@ import org.homeunix.thecave.moss.util.Log;
  */
 @SuppressWarnings("unchecked")
 public class DataInstance {
-	
-	//Provide temporary backing for the autocomplete text fields
-	private final DefaultSortedSetComboBoxModel autocompleteEntries;
-	private final Map<String, AutoSaveInfo> defaultsMap;
 	
 	public static DataInstance getInstance() {
 		return SingletonHolder.instance;
@@ -73,8 +68,6 @@ public class DataInstance {
 	 * loadDataFile or newDataFile.
 	 */
 	private DataInstance(){
-		autocompleteEntries = new DefaultSortedSetComboBoxModel();
-		defaultsMap = new HashMap<String, AutoSaveInfo>();
 	}
 
 	/**
@@ -387,21 +380,13 @@ public class DataInstance {
 			}
 		}
 
-		//Check for the auto complete entries - if they don't exist yet, we create it.
-		if (dataModel.getAllLists() == null)
-			dataModel.setAllLists(ModelFactory.eINSTANCE.createLists());
-				
-		//Load the auto complete entries into the dictionary
-		// and create the autocomplete map, between 
-		// description and other fields.
-//		autocompleteEntries.addElement(null);
-		for (Object o : dataModel.getAllLists().getAllAutoSave()) {
-			if (o instanceof AutoSaveInfo) {
-				AutoSaveInfo entry = (AutoSaveInfo) o;
-				autocompleteEntries.addElement(entry.getDescription());
-				defaultsMap.put(entry.getDescription(), entry);
-			}
-		}
+		//We added the auto complete entries here in a 2.5 Development release.  We then 
+		// removed them, preferring to create the list on the fly by analyzing existing
+		// transactions.  We thus need to set allLists to null, in preparation for 
+		// removal from the data model.  We should remove this from the model and
+		// from here some time around 2.7 or so.
+		if (dataModel.getAllLists() != null)
+			dataModel.setAllLists(null);
 		
 		//Check that there are no scheduled transactions which should be happening...
 		ScheduleController.checkForScheduledActions();		
@@ -501,46 +486,5 @@ public class DataInstance {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
 				Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
 		resourceSet.getLoadOptions().put(Resource.OPTION_CIPHER, this.cipher);
-	}
-	
-	public DefaultSortedSetComboBoxModel getAutoCompleteEntries() {
-		return autocompleteEntries;
-	}
-	
-	public void setAutoCompleteEntry(String description, String number, long amount, String from, String to, String memo){
-		AutoSaveInfo asi;
-		if (defaultsMap.get(description) == null){
-			asi = ModelFactory.eINSTANCE.createAutoSaveInfo();
-			asi.setDescription(description);
-			asi.setNumber(number);
-			asi.setAmount(amount);
-			asi.setFrom(from);
-			asi.setTo(to);
-			asi.setMemo(memo);
-			getDataModel().getAllLists().getAllAutoSave().add(asi);
-			defaultsMap.put(description, asi);
-			autocompleteEntries.addElement(description);
-			
-			//Sort the autocomplete entries
-//			List<String> entries = new LinkedList<String>(defaultsMap.keySet());
-//			Collections.sort(entries);
-//			autocompleteEntries.removeAllElements();
-//			for (String string : entries) {
-//				autocompleteEntries.addElement(string);	
-//			}
-		}
-		else {
-			asi = defaultsMap.get(description);
-			asi.setDescription(description);
-			asi.setNumber(number);
-			asi.setAmount(amount);
-			asi.setFrom(from);
-			asi.setTo(to);
-			asi.setMemo(memo);			
-		}
-	}
-
-	public AutoSaveInfo getAutoCompleteEntry(String description){
-		return defaultsMap.get(description);
 	}
 }

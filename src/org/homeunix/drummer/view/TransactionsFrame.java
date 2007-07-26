@@ -42,6 +42,7 @@ import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;
+import org.homeunix.drummer.controller.AutoCompleteController;
 import org.homeunix.drummer.controller.DocumentController;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
@@ -782,16 +783,8 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 			}
 
 			//Update the autocomplete entries
-			if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete()){
-				if (editableTransaction != null && editableTransaction.getFrom() != null && editableTransaction.getTo() != null)
-					DataInstance.getInstance().setAutoCompleteEntry(
-							editableTransaction.getDescription(),
-							editableTransaction.getNumber(),
-							editableTransaction.getAmount(),
-							editableTransaction.getFrom().toString(),
-							editableTransaction.getTo().toString(),
-							editableTransaction.getMemo());
-			}
+			if (PrefsInstance.getInstance().getPrefs().isShowAutoComplete())
+				AutoCompleteController.setAutoCompleteEntry(t);
 
 			SourceController.calculateAllBalances();
 			updateAllTransactionWindows();
@@ -895,12 +888,6 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public StandardWindow clear() {
 		return this;
 	}
-
-//	public static TransactionsFramePreLoader getPreloader(){
-//	if (preloader == null) 
-//	preloader = new TransactionsFramePreLoader();
-//	return preloader;
-//	}
 
 	@Override
 	public DataManager getDataManager() {

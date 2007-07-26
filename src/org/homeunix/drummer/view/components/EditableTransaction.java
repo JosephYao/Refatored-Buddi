@@ -34,16 +34,16 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 
+import org.homeunix.drummer.controller.AutoCompleteController;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.AutoSaveInfo;
 import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.TransactionsFrame;
+import org.homeunix.drummer.view.model.AutoCompleteEntry;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
 import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
 import org.homeunix.thecave.moss.gui.hint.JHintComboBox;
@@ -94,7 +94,7 @@ public class EditableTransaction extends JPanel {
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(Translate.getInstance().get(TranslateKeys.HINT_NUMBER));
-		description = new JHintComboBox(DataInstance.getInstance().getAutoCompleteEntries(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+		description = new JHintComboBox(AutoCompleteController.getAutoCompleteEntries(), Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
 		memo = new JHintTextArea(Translate.getInstance().get(TranslateKeys.HINT_MEMO));
 		cleared = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(Translate.getInstance().get(TranslateKeys.SHORT_RECONCILED));
@@ -547,32 +547,33 @@ public class EditableTransaction extends JPanel {
 			if (description != null 
 					&& description.getSelectedItem() != null 
 					&& description.getSelectedItem().toString().length() > 0){
-				AutoSaveInfo asi = DataInstance.getInstance().getAutoCompleteEntry(description.getSelectedItem().toString());
-				if (asi != null){
-					if (forceAll || (asi.getNumber() != null && number.isHintShowing()))
-						number.setValue(asi.getNumber());
+				AutoCompleteEntry ace = AutoCompleteController.getAutoCompleteEntry(description.getSelectedItem().toString());
+				if (ace != null){
+					if (forceAll || (ace.getNumber() != null && number.isHintShowing()))
+						number.setValue(ace.getNumber());
 					if (forceAll || amount.getValue() == 0)
-						amount.setValue(asi.getAmount());
+						amount.setValue(ace.getAmount());
 
-					if (forceAll || (asi.getMemo() != null && memo.isHintShowing()))
-						memo.setValue(asi.getMemo());
+					//We don't do the memos any more, as this tends to be unique to one transaction.
+//					if (forceAll || (asi.getMemo() != null && memo.isHintShowing()))
+//						memo.setValue(asi.getMemo());
 
 					//This doesn't always work when you go to a different account; it should
 					// be good enough for the vast majorty of cases, though, and does a pretty
 					// good job at guessing which account is the correct one...
-					if (asi.getFrom() != null){
+					if (ace.getFrom() != null){
 						for (int i = 0; i < from.getModel().getSize(); i++){
 							if (from.getModel().getElementAt(i) != null
-									&& from.getModel().getElementAt(i).toString().equals(asi.getFrom())){
+									&& from.getModel().getElementAt(i).toString().equals(ace.getFrom())){
 								from.setSelectedIndex(i);
 								break;
 							}
 						}
 					}
-					if (asi.getTo() != null){
+					if (ace.getTo() != null){
 						for (int i = 0; i < to.getModel().getSize(); i++){
 							if (to.getModel().getElementAt(i) != null
-									&& to.getModel().getElementAt(i).toString().equals(asi.getTo())){
+									&& to.getModel().getElementAt(i).toString().equals(ace.getTo())){
 								to.setSelectedIndex(i);
 								break;
 							}
