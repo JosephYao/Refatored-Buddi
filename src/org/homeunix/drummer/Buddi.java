@@ -411,25 +411,8 @@ public class Buddi {
 
 						versions.load(mostRecentVersion.openStream());
 
-//						int majorAvailable = 0, minorAvailable = 0, bugfixAvailable = 0;
-//						int majorThis = 0, minorThis = 0, bugfixThis = 0;
-
 						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
 						Version thisVersion = new Version(Const.VERSION);
-//						String[] available = versions.get(Const.BRANCH).toString().split("\\.");
-//						String[] thisVersion = Const.VERSION.split("\\.");
-//
-//						if (available.length > 2){
-//							majorAvailable = Integer.parseInt(available[0]);
-//							minorAvailable = Integer.parseInt(available[1]);
-//							bugfixAvailable = Integer.parseInt(available[2]);
-//						}
-//
-//						if (thisVersion.length > 2){
-//							majorThis = Integer.parseInt(thisVersion[0]);
-//							minorThis = Integer.parseInt(thisVersion[1]);
-//							bugfixThis = Integer.parseInt(thisVersion[2]);
-//						}
 
 						Log.debug("This version: " + thisVersion);
 						Log.debug("Available version: " + availableVersion);
@@ -442,6 +425,19 @@ public class Buddi {
 					}
 					catch (IOException ioe){
 						Log.error(ioe);
+						
+						String[] options = new String[1];
+						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
+								MainFrame.getInstance(), 
+								Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
+								Translate.getInstance().get(TranslateKeys.ERROR), 
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE,
+								null,
+								options,
+								options[0]);
 					}
 
 					return null;

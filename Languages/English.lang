@@ -211,6 +211,7 @@ MESSAGE_ERROR_CANNOT_READ_DATA_FILE=Cannot read the data file!\nPlease check the
 MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE=Cannot write to the data file!\nPlease check the file permissions.\n\nYou can now select a different file.
 MESSAGE_ERROR_CANNOT_WRITE_OVER_FILE=You cannot overwrite an existing file.\n\nPlease choose another file.
 MESSAGE_ERROR_CANNOT_WRITE_PREFS_FILE=Cannot write to the preferences file!\nPlease check the file permissions.\nExiting.
+MESSAGE_ERROR_CHECKING_FOR_UPDATES=An error occurred while checking for updates.\nPlease ensure that you are connected to the\nInternet, and are not behind a proxy server.\nYou can check for updates manually by visiting\nthe Buddi web site.\n\nIf you don't want to check for updates in the\nfuture, you can disable automatic update checks\nin Preferences.
 MESSAGE_ERROR_CREATING_FILE=There was a problem creating the file
 MESSAGE_ERROR_INCORRECT_FORMAT=You have entered an incorrect date format
 MESSAGE_ERROR_NO_PASSWORD_ENTERED=No Password Entered

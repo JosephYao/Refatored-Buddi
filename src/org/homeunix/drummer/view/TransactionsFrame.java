@@ -375,11 +375,13 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 		// to check manually.  Yes, it's ugly.  Please let me know if I am 
 		// stupid and have missed a completely obvious alternative.
 		String savedFilter = PrefsInstance.getInstance().getPrefs().getSelectedFilter();
-		for (int i = 0; i < availableFilters.size(); i++){
-			if (availableFilters.get(i) != null 
-					&& availableFilters.get(i).toString().equals(savedFilter)){
-				filterComboBox.setSelectedIndex(i);
-				break;
+		if (savedFilter != null){
+			for (int i = 0; i < availableFilters.size(); i++){
+				if (availableFilters.get(i) != null 
+						&& availableFilters.get(i).toString().equals(savedFilter)){
+					filterComboBox.setSelectedIndex(i);
+					break;
+				}
 			}
 		}
 		
