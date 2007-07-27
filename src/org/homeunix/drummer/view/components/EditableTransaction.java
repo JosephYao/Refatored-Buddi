@@ -140,9 +140,11 @@ public class EditableTransaction extends JPanel {
 		components.add(memoScroller);
 
 		int textHeight = date.getPreferredSize().height;
-		date.setPreferredSize(new Dimension(100, textHeight));
-		description.setPreferredSize(new Dimension(150, description.getPreferredSize().height));
-		number.setPreferredSize(new Dimension(100, textHeight));
+//		date.setPreferredSize(new Dimension(250, textHeight));
+		date.setMaximumSize(new Dimension(300, textHeight));
+//		description.setPreferredSize(new Dimension(250, description.getPreferredSize().height));
+		description.setMinimumSize(new Dimension(150, description.getPreferredSize().height));
+//		number.setPreferredSize(new Dimension(100, textHeight));
 
 		amount.setMaximumSize(new Dimension(150, textHeight));
 		amount.setPreferredSize(new Dimension(150, textHeight));

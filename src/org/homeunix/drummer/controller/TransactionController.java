@@ -76,9 +76,12 @@ public class TransactionController {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Vector<Transaction> getTransactions(){
-		Vector<Transaction> transactions = new Vector<Transaction>(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
-		Collections.sort(transactions);
-		return transactions;
+		if (DataInstance.getInstance().getDataModel() != null){
+			Vector<Transaction> transactions = new Vector<Transaction>(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+			Collections.sort(transactions);
+			return transactions;
+		}
+		return new Vector<Transaction>();
 	}
 
 	/**
