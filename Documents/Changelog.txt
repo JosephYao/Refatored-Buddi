@@ -1,9 +1,10 @@
-2.5.7.0
+2.5.7.0 (July 26 2007)
 -Updated Date function class in Moss to use my own code (in preparation of new Moss license).  There may be bugs in this class - please check scheduled transactions and reports for accuracy!
 -Added Feature Request #1760045.  Removed the separate list of auto complete transactions.  This is now generated on the fly by using existing transactions.  This will make it much more flexible and less likely to cause problems (and the data files are smaller, too).
 -Added Feature Request #1751361 (Save last used date filter in Preferences)
 -Added Feature Request #1749295 (Show error message if user is behind proxy, not connected, or otherwise not able to check for updates)
 -Made some usability enhancements in the autocomplete code (no strange backspace behaviour now, IMHO)
+-Changed the API version from 2.4 to 2.6.  If you compile plugins against this release, please set the version to 2.6 as well.  I will keep 2.4 compatibility for a while, until all the plugins can be updated.  (Note: I have kept the old API in for backwards compatibility, but it will not be receiving updates and bug fixes).
 
 2.5.6.0 (July 22 2007)
 -Added edit and delete capabilities to the API (requests #1758125 and #1745625)
