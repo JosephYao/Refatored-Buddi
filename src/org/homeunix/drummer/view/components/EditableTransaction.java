@@ -5,8 +5,11 @@
  */
 package org.homeunix.drummer.view.components;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -118,11 +121,6 @@ public class EditableTransaction extends JPanel {
 		cleared.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_CLEARED));
 		reconciled.setToolTipText(Translate.getInstance().get(TranslateKeys.TOOLTIP_RECONCILED));
 
-		JPanel topPanel = new JPanel();
-		JPanel bottomPanel = new JPanel();
-		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-
 		JScrollPane memoScroller = new JScrollPane(memo);
 		memo.setWrapStyleWord(true);
 		memo.setLineWrap(true);
@@ -139,50 +137,65 @@ public class EditableTransaction extends JPanel {
 		components.add(memo);
 		components.add(memoScroller);
 
-		int textHeight = date.getPreferredSize().height;
-//		date.setPreferredSize(new Dimension(250, textHeight));
-		date.setMaximumSize(new Dimension(300, textHeight));
-//		description.setPreferredSize(new Dimension(250, description.getPreferredSize().height));
-		description.setMinimumSize(new Dimension(150, description.getPreferredSize().height));
-//		number.setPreferredSize(new Dimension(100, textHeight));
+		memoScroller.setPreferredSize(new Dimension(130, memo.getPreferredSize().height));		
+		
+		JPanel topPanel = new JPanel(new GridBagLayout());
+		JPanel bottomPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.weighty = 0;
+		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		c.weightx = 0.2;
+		c.gridx = 0;
+		topPanel.add(date, c);
+		
+		c.weightx = 0.5;
+		c.gridx = 1;
+		topPanel.add(description, c);
 
-		amount.setMaximumSize(new Dimension(150, textHeight));
-		amount.setPreferredSize(new Dimension(150, textHeight));
-		from.setPreferredSize(new Dimension(100, from.getPreferredSize().height));
-		to.setPreferredSize(from.getPreferredSize());
-
-		memoScroller.setPreferredSize(new Dimension(100, memo.getPreferredSize().height));		
-
-		topPanel.add(date);
-		if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
-		topPanel.add(description);
-		if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
-		topPanel.add(number);
+		c.weightx = 0.4;
+		c.gridx = 2;
+		topPanel.add(number, c);
+		
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
-			if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
-			topPanel.add(cleared);
-			if (!OperatingSystemUtil.isMac()) topPanel.add(Box.createHorizontalStrut(3));
-			topPanel.add(reconciled);
+			c.weightx = 0.0;
+			c.gridx = 3;
+			topPanel.add(cleared, c);
+
+			c.weightx = 0.0;
+			c.gridx = 4;
+			topPanel.add(reconciled, c);
 		}
 
-		bottomPanel.add(amount);
-		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
-		bottomPanel.add(from);
-		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
-		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)));
-		if (!OperatingSystemUtil.isMac()) bottomPanel.add(Box.createHorizontalStrut(3));
-		bottomPanel.add(to);
 
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(topPanel);
-		if (!OperatingSystemUtil.isMac()) mainPanel.add(Box.createVerticalStrut(3));
-		mainPanel.add(bottomPanel);
+		c.weightx = 0.8;
+		c.gridx = 0;
+		bottomPanel.add(amount, c);
 
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		this.add(mainPanel);
-		if (!OperatingSystemUtil.isMac()) this.add(Box.createHorizontalStrut(3));
-		this.add(memoScroller);
+		c.weightx = 0.5;
+		c.gridx = 1;
+		bottomPanel.add(from, c);
+		
+		c.weightx = 0.0;
+		c.gridx = 2;
+		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)), c);
+
+		c.weightx = 0.5;
+		c.gridx = 3;
+		bottomPanel.add(to, c);
+
+		
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+		centerPanel.add(topPanel);
+		if (!OperatingSystemUtil.isMac()) centerPanel.add(Box.createVerticalStrut(3));
+		centerPanel.add(bottomPanel);
+
+		this.setLayout(new BorderLayout());
+		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(memoScroller, BorderLayout.EAST);
 
 		if (parent == null)
 			date.setVisible(false);
