@@ -54,6 +54,18 @@ public class Const {
 	public final static String HELP_FOLDER = "Help";
 	public final static String HELP_FILE = "index.html";
 	
+	//Local listener configuration
+	public final static int LISTEN_PORT = 4331;
+	public final static String SEPARATOR = "&";
+	public final static String ACCOUNT = "acct";
+	public final static String DESCRIPTION = "desc";
+	public final static String DATE = "date";
+	public final static String NUMBER = "num";
+	public final static String AMOUNT = "amt";
+	public final static String MEMO = "memo";
+	public final static String TO = "to";
+	public final static String FROM = "from";
+	
 	//File names
 	public final static String LOG_FILE = "buddi.log";
 	

@@ -5,15 +5,24 @@ package org.homeunix.drummer;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JMenuBar;
@@ -26,14 +35,19 @@ import net.java.dev.SwingWorker;
 import net.roydesign.mac.MRJAdapter;
 
 import org.homeunix.drummer.controller.ReturnCodes;
+import org.homeunix.drummer.controller.SourceController;
+import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.AppleApplicationWrapper;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
+import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -76,7 +90,7 @@ public class Buddi {
 			simpleFont = false;
 		return simpleFont;
 	}
-	
+
 	/**
 	 * Gets the current working directory.  This should be the same directory
 	 * that the Buddi.{exe|jar} is in or the Buddi.app/Contents/Resources/Java/ 
@@ -88,7 +102,7 @@ public class Buddi {
 		if (workingDir == null){
 			workingDir = "";
 		}
-		
+
 		return workingDir;
 	}
 
@@ -105,7 +119,7 @@ public class Buddi {
 			slackware = false;
 		return slackware;
 	}
-	
+
 	/** 
 	 * @return True if running on Redhat, false otherwise.  This is 
 	 * obtained through the startup flag --debian, so it can be 
@@ -119,7 +133,7 @@ public class Buddi {
 			redhat = false;
 		return redhat;
 	}
-	
+
 	/** 
 	 * @return True if running on Debian, false otherwise.  This is 
 	 * obtained through the startup flag --debian, so it can be 
@@ -133,7 +147,7 @@ public class Buddi {
 			debian = false;
 		return debian;
 	}
-	
+
 	/**
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
@@ -160,7 +174,7 @@ public class Buddi {
 					null,
 					options,
 					options[0]
-			 ) == 1)  //The index of the Cancel button.
+			) == 1)  //The index of the Cancel button.
 				System.exit(0);
 
 
@@ -190,7 +204,7 @@ public class Buddi {
 		if (returnCode.equals(ReturnCodes.CANCEL)){
 			System.exit(1);
 		}
-		
+
 		//Start the initial checks
 		startVersionCheck();
 		startUpdateCheck(false);
@@ -206,9 +220,9 @@ public class Buddi {
 		if (OperatingSystemUtil.isMac()){
 			AppleApplicationWrapper.addApplicationListener();
 		}
-		
+
 		//Set up correct loggins style.
-		
+
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
@@ -230,9 +244,9 @@ public class Buddi {
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--slackware", Boolean.class, false));
-				
+
 		ParseResults results = ParseCommands.parse(args, help, variables);
-		
+
 		//Set the working path.  If we save files (plugins, data files) 
 		// within this path, we remove this parent path.  This allows
 		// us to use relative paths for such things as running from
@@ -250,8 +264,8 @@ public class Buddi {
 			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
 			workingDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 		}
-		
-		
+
+
 		//Set up the logging system.  If we have specified --log, we first
 		// try using that file.  If that is not specified, on the Mac
 		// we just use stderr (since Console.app provides an easy way
@@ -275,7 +289,7 @@ public class Buddi {
 			Log.setPrintStream(System.err);
 			Log.error(fnfe);
 		}
-		
+
 		String prefsLocation = results.getString("-p");
 		Integer verbosity = results.getInteger("-v");
 		String lnf = results.getString("--lnf");
@@ -284,13 +298,13 @@ public class Buddi {
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		slackware = results.getBoolean("--slackware");
-		
+
 		if (fileToLoad == null
 				&& results.getCommands().size() > 0)
 			fileToLoad = results.getCommands().get(0);
 
 		Log.debug("File to Load == " + fileToLoad);
-		
+
 		if (prefsLocation != null){
 			PrefsInstance.setLocation(prefsLocation);
 		}
@@ -339,7 +353,10 @@ public class Buddi {
 
 		//Load the correct Look and Feel
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
-		
+
+		//Start the server listener going, for incoming transaction requests
+		startHTTPTransactionListener();
+
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -425,7 +442,7 @@ public class Buddi {
 					}
 					catch (IOException ioe){
 						Log.error(ioe);
-						
+
 						String[] options = new String[1];
 						options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
 
@@ -519,8 +536,113 @@ public class Buddi {
 			updateWorker.start();
 		}
 	}
-	
+
 	public static void setFileToLoad(String fileToLoad){
 		Buddi.fileToLoad = fileToLoad;
+	}
+
+	/**
+	 * This is a simple HTTP server which listens for incoming connections, and displays transactions 
+	 * accordingly.  It should only listen to localhost. 
+	 */
+	private static void startHTTPTransactionListener(){
+		Runnable serverTask = new Runnable() {
+			public void run() {
+				try {
+					ServerSocket server = new ServerSocket(Const.LISTEN_PORT);//, 1, InetAddress.getLocalHost());
+					while (true){
+						final Socket request = server.accept();
+						Thread networkReaderThread = new Thread(new Runnable() {
+							public void run(){
+								String url = null;
+								try {
+									BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
+									PrintWriter output = new PrintWriter(new OutputStreamWriter(request.getOutputStream()));
+
+									String temp;
+									while ((temp = input.readLine()) != null && temp.length() > 0) {
+										if (Const.DEVEL) Log.debug(temp);
+										if (temp.contains("GET")) {
+											//Clean up the URL
+											url = URLDecoder.decode(temp.replaceFirst("GET", "").replaceAll("HTTP/1.1", "").replaceFirst("/", "").trim(), "UTF-8");
+										}
+									}
+
+									output.println("<html>");
+									output.println("<head>");
+									output.println("<SCRIPT LANGUAGE=\"JavaScript\">");
+									output.println("<!--");
+									output.println("window.close();");
+									output.println("//-->");
+									output.println("</SCRIPT>");
+									output.println("</head>");
+									output.println("<body />");
+									output.println("</html>");
+
+									output.flush();
+									output.close();
+									input.close();
+									request.close();
+								}
+								catch (IOException ioe){
+									Log.error(ioe);
+								}
+								finally {
+									//Now that we have a (hopefully) valid account and transaction,
+									// we will try to jump to it.
+
+									//The URL format should be as follows:
+									// /description='desc'&date='date'&...
+									// The keys are found as constants in Const.
+									Map<String, String> arguments = new HashMap<String, String>();
+
+									if (Const.DEVEL) Log.info("Transaction window listener recieved URL: " + url);
+
+									for (String s : url.split(Const.SEPARATOR)) {
+										if (s.matches(".*=.*")){
+											String[] split = s.split("=");
+											if (split.length == 2) {
+												arguments.put(split[0], split[1]);
+												if (Const.DEVEL) Log.debug("Setting " + split[0] + " to " + split[1]);
+											}
+										}
+									}
+
+									Account a = SourceController.getAccount(
+											arguments.get(Const.ACCOUNT));
+									Transaction t = TransactionController.getTransaction(
+											arguments.get(Const.DATE), 
+											arguments.get(Const.DESCRIPTION), 
+											arguments.get(Const.NUMBER), 
+											arguments.get(Const.AMOUNT), 
+											arguments.get(Const.TO), 
+											arguments.get(Const.FROM), 
+											arguments.get(Const.MEMO));
+
+									if (a != null && t != null) {
+										WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
+										Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+										Point point = new Point(wa.getX(), wa.getY());
+
+										new TransactionsFrame(a, t).openWindow(dimension, point);
+									}
+									else
+										if (Const.DEVEL) Log.warning("Could not open transaction window: Account = " + a + ", Transaction = " + t);
+								}
+							}
+						});
+
+						networkReaderThread.run();
+					}
+				}
+				catch (IOException ioe){
+					Log.error(ioe);
+				}
+			}
+		};
+
+		Thread serverThread = new Thread(serverTask);
+
+		serverThread.start();
 	}
 }

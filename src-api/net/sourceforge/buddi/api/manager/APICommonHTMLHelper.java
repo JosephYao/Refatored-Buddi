@@ -14,10 +14,12 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 
 import org.homeunix.drummer.Buddi;
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -56,15 +58,15 @@ public class APICommonHTMLHelper {
 		sb.append(".separator { height: 0.4em; background-color: black; color: black; }\n");
 		sb.append(".empty { font-size-adjust: 0; height: 0em; }\n");
 
-			
+
 		sb.append(".red { color: red; }\n");
-		
+
 		sb.append(".right { text-align: right; }\n");
 		sb.append(".center { text-align: center; }\n");
 		sb.append(".left { text-align: left; }\n");
-		
+
 		sb.append(".center_img { display: block; margin-left: auto; margin-right: auto; }\n");
-		
+
 		sb.append("h1 { font-size: x-large; }\n");
 		sb.append("h2 { font-size: large; }\n");
 		sb.append("h3 { font-size: medium; }\n");
@@ -72,13 +74,13 @@ public class APICommonHTMLHelper {
 		sb.append("h5 { font-size: x-small; }\n");
 
 		sb.append("hr { color: black; background-color: black; height: 0.3em; border: 0em; }\n");
-		
+
 		sb.append("table.main { background-color: black; width: 100%; }\n");
 		sb.append("table.main tr { padding-bottom: 1em; }\n");
 		sb.append("table.main th { background-color: #DDE}\n");
 		sb.append("table.main td { background-color: #EEF}\n");
 		sb.append("</style>\n");
-		
+
 		//Printing CSS
 		sb.append("<style type='text/css' media='print'>\n");
 		sb.append("body { background-color: white; color: black; }\n");
@@ -88,13 +90,13 @@ public class APICommonHTMLHelper {
 		sb.append(".empty { font-size-adjust: 0; height: 0em; }\n");
 
 //		sb.append(".red { color: red; }\n");
-		
+
 		sb.append(".right { text-align: right; }\n");
 		sb.append(".center { text-align: center; }\n");
 		sb.append(".left { text-align: left; }\n");
-		
+
 		sb.append(".center_img { display: block; margin-left: auto; margin-right: auto; }\n");
-		
+
 		sb.append("h1 { font-size: x-large; }\n");
 		sb.append("h2 { font-size: large; }\n");
 		sb.append("h3 { font-size: medium; }\n");
@@ -102,13 +104,21 @@ public class APICommonHTMLHelper {
 		sb.append("h5 { font-size: x-small; }\n");
 
 		sb.append("hr { color: black; background-color: black; height: 0.3em; border: 0em; }\n");
-		
+
 		sb.append("table.main { border: 0.01cm solid black; width: 100%; }\n");
 		sb.append("table.main tr { padding-bottom: 1em; }\n");
 		sb.append("table.main th { border-bottom: 0.01cm solid black; border-right: 0.01cm solid black; background-color: #DDE}\n");
 		sb.append("table.main td { border-bottom: 0.01cm solid black; border-right: 0.01cm solid black; background-color: #EEF}\n");
 		sb.append("</style>\n");
-		
+
+		sb.append("<SCRIPT LANGUAGE=\"JavaScript\">\n");
+		sb.append("<!--\n");
+		sb.append("function launchTransactions(link) {\n");
+		sb.append("window.open(link, \"\", \"height=1,width=1\");\n");
+		sb.append("return false;\n");
+		sb.append("}\n");
+		sb.append("//-->\n");
+		sb.append("</SCRIPT>\n");
 
 		sb.append("</head>\n");
 		sb.append("<body>\n<div class='separator'></div>\n");
@@ -139,22 +149,22 @@ public class APICommonHTMLHelper {
 		}
 
 		sb.append("</div>\n<div class='separator'></div>\n<div class='content'>\n\n");
-		
+
 		return sb;
 	}
-	
+
 	/**
 	 * Get the HTML footer, matched to the header supplied from getHtmlHeader()
 	 * @return
 	 */
 	public static StringBuilder getHtmlFooter(){
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("</div>\n</body>\n</html>");
-		
+
 		return sb;
 	}
-	
+
 	/**
 	 * Returns an HTML table row consisting of information from the given transaction. 
 	 * @param t Transaction to display.
@@ -165,13 +175,21 @@ public class APICommonHTMLHelper {
 	 */
 	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSource associatedSource){
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("<tr><td width='20%'>");
 		sb.append(BuddiInternalFormatter.getDateFormat().format(t.getDate()));
-		
+
 		sb.append("</td><td width='30%'>");
-		sb.append(Translate.getInstance().get(t.getDescription()));
+		ImmutableAccount accountToUse = null;
+		if (associatedSource instanceof ImmutableAccount)
+			accountToUse = (ImmutableAccount) associatedSource;
+		else if (t.getTo() instanceof ImmutableAccount)
+			accountToUse = (ImmutableAccount) t.getTo();
+		else if (t.getFrom() instanceof ImmutableAccount)
+			accountToUse = (ImmutableAccount) t.getFrom();
 		
+		sb.append(getLinkToTransactionsFrame(Translate.getInstance().get(t.getDescription()), accountToUse, t));
+
 		sb.append("</td><td width='35%'>");
 		sb.append(Translate.getInstance().get(t.getFrom().toString()));
 		sb.append(Translate.getInstance().get(TranslateKeys.HTML_TO));
@@ -182,11 +200,11 @@ public class APICommonHTMLHelper {
 			red = APICommonFormatter.isRed(t, t.getFrom().equals(associatedSource));
 		else 
 			red = APICommonFormatter.isRed(t);
-		
+
 		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
 		sb.append(APICommonFormatter.getFormattedCurrency(t.getAmount()));
 		sb.append("</td></tr>\n");
-		
+
 		return sb;		
 	}
 
@@ -197,7 +215,7 @@ public class APICommonHTMLHelper {
 	 */
 	public static StringBuilder getHtmlTransactionHeader(){
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("<table class='main'>\n");
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.DATE));
@@ -211,7 +229,7 @@ public class APICommonHTMLHelper {
 
 		return sb;
 	}
-	
+
 	/**
 	 * Returns the end of a table for displaying transactions.
 	 * @return
@@ -219,7 +237,7 @@ public class APICommonHTMLHelper {
 	public static StringBuilder getHtmlTransactionFooter(){
 		return new StringBuilder("</table>\n\n");
 	}
-	
+
 	/**
 	 * Saves the HTML and associated images to disk.  Returns the
 	 * file object of the associated HTML index on success, or null
@@ -231,7 +249,7 @@ public class APICommonHTMLHelper {
 		File dataFolder = new File(PrefsInstance.getInstance().getPrefs().getDataFile()).getParentFile();
 		File htmlFolder = null;
 		int counter = 0;
-		
+
 		if (dataFolder == null) {
 			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
 			dataFolder = new File(Buddi.getWorkingDir());
@@ -244,7 +262,7 @@ public class APICommonHTMLHelper {
 			Log.error("HTML is null (APICommonHTMLHelper.createHTML()).");
 		if (name == null)
 			Log.error("Name is null (APICommonHTMLHelper.createHTML()).");
-		
+
 		//Get a unique folder name which has not yet been used.
 		while (counter < countMax && (htmlFolder == null || htmlFolder.exists())){
 			htmlFolder = new File(dataFolder.getAbsolutePath() + File.separator + name + (counter > 0 ? "_" + counter : ""));
@@ -253,10 +271,10 @@ public class APICommonHTMLHelper {
 		//We could not create a folder, after 1000 tries.  Exit.
 		if (counter == countMax){
 			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.  Please verify if you really have this many folders in your data drectory, and if so, clean up a bit.");
-			
+
 			return null;
 		}
-		
+
 		if (!BuddiUtil.isFolderWritable(htmlFolder.getParentFile())){
 			Log.error("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
 		}
@@ -277,7 +295,7 @@ public class APICommonHTMLHelper {
 			out.write(html.getHtml());
 			out.close();
 //			BufferedWriter bw = new BufferedWriter(
-//					new FileWriter(htmlFile));
+//			new FileWriter(htmlFile));
 //			bw.write(html.getHtml());
 //			bw.close();
 		}
@@ -303,7 +321,34 @@ public class APICommonHTMLHelper {
 
 		return htmlFile;
 	}
-	
+
+	public static StringBuilder getLinkToTransactionsFrame(String linkText, ImmutableAccount account, ImmutableTransaction transaction){
+		StringBuilder sb = new StringBuilder();
+		StringBuilder link = new StringBuilder();
+
+		if (account == null || transaction == null){
+			sb.append(linkText);
+			return sb; 
+		}
+		
+		link.append("http://localhost:");
+		link.append(Const.LISTEN_PORT);
+		link.append("/");		
+		link.append(Const.ACCOUNT).append("=").append(account.getName()).append(Const.SEPARATOR);		
+		link.append(Const.DESCRIPTION).append("=").append(transaction.getDescription()).append(Const.SEPARATOR);
+		link.append(Const.NUMBER).append("=").append(transaction.getNumber()).append(Const.SEPARATOR);
+		link.append(Const.AMOUNT).append("=").append(Long.toString(transaction.getAmount())).append(Const.SEPARATOR);
+		link.append(Const.TO).append("=").append(transaction.getTo().toString()).append(Const.SEPARATOR);
+		link.append(Const.FROM).append("=").append(transaction.getFrom().toString()).append(Const.SEPARATOR);
+		link.append(Const.MEMO).append("=").append(transaction.getMemo());
+
+		sb.append("<a href='null' onClick=\"return launchTransactions('" + link.toString() + "')\">");
+		sb.append(linkText);
+		sb.append("</a>");
+		
+		return sb;
+	}
+
 	public static class HTMLWrapper {
 		private String html;
 		private Map<String, BufferedImage> images;

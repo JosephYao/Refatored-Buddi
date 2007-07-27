@@ -286,7 +286,19 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	public TransactionsFrame(Account account, Transaction transaction) {
 		this(account);
 
-		list.setSelectedValue(transaction, true);
+		// Iterate backwards through the list of transacations, looking for the transaction
+		// which was just passed in.
+
+		for (int index = model.getSize() - 1; index >= 0; --index) {
+			Transaction transactionToCheck = (Transaction) model.getElementAt(index);
+			if (transactionToCheck.equals(transaction)) {
+				list.ensureIndexIsVisible(index);
+				list.setSelectedIndex(index);
+				break;
+			}
+		}
+		
+		this.requestFocusInWindow();
 	}
 
 	@Override

@@ -234,4 +234,32 @@ public class SourceController {
 			a.calculateBalance();
 		}
 	}
+	
+	/**
+	 * Returns the account which matches name.
+	 * @param name
+	 * @return
+	 */
+	public static Account getAccount(String name){
+		for (Account a : getAccounts()) {
+			if (a.getName().equals(name))
+				return a;
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the category which matches name.
+	 * @param name
+	 * @return
+	 */
+	public static Category getCategory(String name){
+		for (Category c : getCategories()) {
+			if (c.getName().equals(name))
+				return c;
+		}
+		
+		return null;
+	}
 }
