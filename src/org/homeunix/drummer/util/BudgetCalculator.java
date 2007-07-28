@@ -31,9 +31,11 @@ public class BudgetCalculator {
 	public static long getEquivalentByInterval(long value, Interval interval, Date startDate, Date endDate){
 		//Find out how many days are in this interval.
 		long daysInInterval = getDaysInInterval(interval, startDate, endDate);
+		System.out.println(daysInInterval + ", " + DateFunctions.getDaysBetween(startDate, endDate, true));
 		
 		double numberOfBudgetPeriods = 
-			(DateFunctions.getDaysBetween(startDate, endDate, true)) / daysInInterval;
+			((double) DateFunctions.getDaysBetween(startDate, endDate, true)) / daysInInterval;
+		System.out.println(numberOfBudgetPeriods);
 		return (long) (value * numberOfBudgetPeriods);
 	}
 	
@@ -60,7 +62,7 @@ public class BudgetCalculator {
 		long daysBetweenDates =
 			DateFunctions.getDaysBetween(startDate, endDate, true);
 		
-		double average = (value * daysInInterval) / (double) daysBetweenDates;
+		double average = ((double) (value * daysInInterval)) / (double) daysBetweenDates;
 		
 		return (long) average;
 	}

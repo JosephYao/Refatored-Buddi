@@ -17,6 +17,7 @@ import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableCategoryImpl;
 import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
 
+import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
@@ -25,6 +26,7 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.BudgetCalculator;
+import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -87,9 +89,13 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				else if (transaction.getFrom() instanceof Category){
 					totalActual += transaction.getAmount();
 				}
+				else {
+					if (Const.DEVEL) Log.debug("For transaction " + transaction + ", neither " + transaction.getTo() + " nor " + transaction.getFrom() + " are of type Category.");
+				}
 			}
-
+			
 			long budgeted = BudgetCalculator.getEquivalentByInterval(c.getBudgetedAmount(), PrefsInstance.getInstance().getSelectedInterval(), startDate, endDate);
+			if (Const.DEVEL) Log.debug("Return of BudgetCalculator.getEquivalentByInterval(c.getBudgetedAmount() == " + c.getBudgetedAmount() + ", PrefsInstance.getInstance().getSelectedInterval() == " + PrefsInstance.getInstance().getSelectedInterval() + ", startDate == " + startDate + ", endDate == " + endDate + ") == " + budgeted);
 			if (c.isIncome()){
 				totalBudgeted += budgeted;
 			}
