@@ -28,6 +28,10 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.thecave.moss.util.Version;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class DataManagerImpl implements DataManager {
 
     private final ImmutableAccount selectedImmutableAccount;

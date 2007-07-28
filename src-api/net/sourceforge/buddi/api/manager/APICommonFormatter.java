@@ -10,11 +10,11 @@ import net.sourceforge.buddi.api.model.ImmutableCategory;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 import net.sourceforge.buddi.api.model.ImmutableType;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableAccountImpl;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableCategoryImpl;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableSourceImpl;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableTypeImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableAccountImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableCategoryImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableSourceImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableTypeImpl;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.prefs.PrefsInstance;

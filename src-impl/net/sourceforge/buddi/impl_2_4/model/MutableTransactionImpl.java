@@ -13,6 +13,10 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Transaction;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class MutableTransactionImpl extends ImmutableTransactionImpl implements MutableTransaction {
 
     private Transaction transaction;

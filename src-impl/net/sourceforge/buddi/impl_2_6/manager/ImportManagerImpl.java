@@ -17,11 +17,11 @@ import net.sourceforge.buddi.api.model.MutableAccount;
 import net.sourceforge.buddi.api.model.MutableCategory;
 import net.sourceforge.buddi.api.model.MutableTransaction;
 import net.sourceforge.buddi.api.model.MutableType;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableSourceImpl;
-import net.sourceforge.buddi.impl_2_4.model.MutableAccountImpl;
-import net.sourceforge.buddi.impl_2_4.model.MutableCategoryImpl;
-import net.sourceforge.buddi.impl_2_4.model.MutableTransactionImpl;
-import net.sourceforge.buddi.impl_2_4.model.MutableTypeImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableSourceImpl;
+import net.sourceforge.buddi.impl_2_6.model.MutableAccountImpl;
+import net.sourceforge.buddi.impl_2_6.model.MutableCategoryImpl;
+import net.sourceforge.buddi.impl_2_6.model.MutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_6.model.MutableTypeImpl;
 
 import org.homeunix.drummer.controller.SourceController;
 import org.homeunix.drummer.controller.TransactionController;

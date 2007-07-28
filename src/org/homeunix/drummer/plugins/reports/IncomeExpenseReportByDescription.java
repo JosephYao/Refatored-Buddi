@@ -17,7 +17,7 @@ import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
 import net.sourceforge.buddi.api.manager.DateRangeType;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
-import net.sourceforge.buddi.impl_2_4.model.ImmutableTransactionImpl;
+import net.sourceforge.buddi.impl_2_6.model.ImmutableTransactionImpl;
 
 import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;

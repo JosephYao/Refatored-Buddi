@@ -4,6 +4,10 @@ import net.sourceforge.buddi.api.model.ImmutableType;
 
 import org.homeunix.drummer.model.Type;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class ImmutableTypeImpl implements ImmutableType {
 
     private Type type;

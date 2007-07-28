@@ -10,6 +10,10 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.thecave.moss.util.Log;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class ImmutableTransactionImpl implements ImmutableTransaction {
 
     private Transaction transaction;

@@ -34,6 +34,10 @@ import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class ImportManagerImpl extends DataManagerImpl implements ImportManager {
 
     public ImportManagerImpl(Account selectedAccount, Category selectedCategory, Transaction selectedTransaction) {

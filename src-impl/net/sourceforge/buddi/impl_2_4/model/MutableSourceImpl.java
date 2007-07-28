@@ -9,6 +9,10 @@ import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Source;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class MutableSourceImpl implements MutableSource {
 
     private Source source;

@@ -14,6 +14,10 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.Source;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class MutableCategoryImpl extends MutableSourceImpl implements MutableCategory, ImmutableCategory {
 
     private Category category;

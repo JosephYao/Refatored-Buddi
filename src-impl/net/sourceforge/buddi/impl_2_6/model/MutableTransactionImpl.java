@@ -6,7 +6,7 @@ import net.sourceforge.buddi.api.exception.ValidationException;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 import net.sourceforge.buddi.api.model.MutableTransaction;
-import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
+import net.sourceforge.buddi.impl_2_6.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;

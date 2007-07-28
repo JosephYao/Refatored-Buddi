@@ -6,6 +6,10 @@ import net.sourceforge.buddi.api.model.ImmutableSource;
 
 import org.homeunix.drummer.model.Source;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class ImmutableSourceImpl implements ImmutableSource {
 
     private Source source;

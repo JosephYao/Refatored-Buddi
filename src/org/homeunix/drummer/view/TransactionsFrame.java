@@ -38,7 +38,7 @@ import javax.swing.event.ListSelectionListener;
 
 import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
-import net.sourceforge.buddi.impl_2_4.manager.ImportManagerImpl;
+import net.sourceforge.buddi.impl_2_6.manager.ImportManagerImpl;
 
 import org.homeunix.drummer.Buddi;
 import org.homeunix.drummer.Const;

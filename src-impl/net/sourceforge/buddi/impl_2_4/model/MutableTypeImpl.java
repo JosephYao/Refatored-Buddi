@@ -7,6 +7,10 @@ import net.sourceforge.buddi.api.model.MutableType;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Type;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class MutableTypeImpl extends ImmutableTypeImpl implements MutableType {
 
 	private Type type;

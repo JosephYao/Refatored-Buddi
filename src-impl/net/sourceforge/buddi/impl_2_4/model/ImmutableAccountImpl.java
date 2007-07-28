@@ -8,6 +8,10 @@ import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Account;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class ImmutableAccountImpl extends ImmutableSourceImpl implements ImmutableAccount {
 
     private Account account;

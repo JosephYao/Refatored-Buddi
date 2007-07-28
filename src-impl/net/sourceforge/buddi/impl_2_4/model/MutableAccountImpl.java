@@ -9,6 +9,10 @@ import net.sourceforge.buddi.impl_2_4.exception.UnimplementedException;
 
 import org.homeunix.drummer.model.Account;
 
+/**
+ * @author wyatt
+ * @deprecated
+ */
 public class MutableAccountImpl extends MutableSourceImpl implements MutableAccount {
 
     private Account account;
