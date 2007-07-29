@@ -16,7 +16,7 @@ It has been pointed out to me that sometimes Eclipse and associated programs are
 Check out the newest source from SVN:
 </p>
 <p class="code">
-svn co https://svn.sf.net/svnroot/buddi/trunk 
+svn co https://buddi.svn.sf.net/svnroot/buddi/trunk 
 </p>
 </li>
 

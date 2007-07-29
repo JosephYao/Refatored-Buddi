@@ -170,7 +170,11 @@ public class TransactionListModel extends AbstractListModel {
 			public boolean accept(Object arg0) {
 				Transaction t = (Transaction) arg0;
 				
-				if (t.getTo().equals(a) || t.getFrom().equals(a)){
+				if (t == null || t.getTo() == null | t.getFrom() == null){
+					//Check for nulls...
+					return false;
+				}
+				else if (t.getTo().equals(a) || t.getFrom().equals(a)){
 					return acceptDate(t, frame.getFilterComboBox()) && acceptText(t, frame.getFilterText());
 				}
 				

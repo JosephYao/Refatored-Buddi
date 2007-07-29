@@ -14,12 +14,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import net.sourceforge.buddi.api.model.ImmutableAccount;
 import net.sourceforge.buddi.api.model.ImmutableSource;
 import net.sourceforge.buddi.api.model.ImmutableTransaction;
 
 import org.homeunix.drummer.Buddi;
-import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
@@ -180,15 +178,17 @@ public class APICommonHTMLHelper {
 		sb.append(BuddiInternalFormatter.getDateFormat().format(t.getDate()));
 
 		sb.append("</td><td width='30%'>");
-		ImmutableAccount accountToUse = null;
-		if (associatedSource instanceof ImmutableAccount)
-			accountToUse = (ImmutableAccount) associatedSource;
-		else if (t.getTo() instanceof ImmutableAccount)
-			accountToUse = (ImmutableAccount) t.getTo();
-		else if (t.getFrom() instanceof ImmutableAccount)
-			accountToUse = (ImmutableAccount) t.getFrom();
-		
-		sb.append(getLinkToTransactionsFrame(Translate.getInstance().get(t.getDescription()), accountToUse, t));
+		//Set up the variables needed for the link to work.
+//		ImmutableAccount accountToUse = null;
+//		if (associatedSource instanceof ImmutableAccount)
+//			accountToUse = (ImmutableAccount) associatedSource;
+//		else if (t.getTo() instanceof ImmutableAccount)
+//			accountToUse = (ImmutableAccount) t.getTo();
+//		else if (t.getFrom() instanceof ImmutableAccount)
+//			accountToUse = (ImmutableAccount) t.getFrom();
+//		
+//		sb.append(getLinkToTransactionsFrame(Translate.getInstance().get(t.getDescription()), accountToUse, t));
+		sb.append(Translate.getInstance().get(t.getDescription()));
 
 		sb.append("</td><td width='35%'>");
 		sb.append(Translate.getInstance().get(t.getFrom().toString()));
@@ -322,32 +322,32 @@ public class APICommonHTMLHelper {
 		return htmlFile;
 	}
 
-	public static StringBuilder getLinkToTransactionsFrame(String linkText, ImmutableAccount account, ImmutableTransaction transaction){
-		StringBuilder sb = new StringBuilder();
-		StringBuilder link = new StringBuilder();
-
-		if (account == null || transaction == null){
-			sb.append(linkText);
-			return sb; 
-		}
-		
-		link.append("http://localhost:");
-		link.append(Const.LISTEN_PORT);
-		link.append("/");		
-		link.append(Const.ACCOUNT).append("=").append(account.getName()).append(Const.SEPARATOR);		
-		link.append(Const.DESCRIPTION).append("=").append(transaction.getDescription()).append(Const.SEPARATOR);
-		link.append(Const.NUMBER).append("=").append(transaction.getNumber()).append(Const.SEPARATOR);
-		link.append(Const.AMOUNT).append("=").append(Long.toString(transaction.getAmount())).append(Const.SEPARATOR);
-		link.append(Const.TO).append("=").append(transaction.getTo().toString()).append(Const.SEPARATOR);
-		link.append(Const.FROM).append("=").append(transaction.getFrom().toString()).append(Const.SEPARATOR);
-		link.append(Const.MEMO).append("=").append(transaction.getMemo());
-
-		sb.append("<a href='null' onClick=\"return launchTransactions('" + link.toString() + "')\">");
-		sb.append(linkText);
-		sb.append("</a>");
-		
-		return sb;
-	}
+//	public static StringBuilder getLinkToTransactionsFrame(String linkText, ImmutableAccount account, ImmutableTransaction transaction){
+//		StringBuilder sb = new StringBuilder();
+//		StringBuilder link = new StringBuilder();
+//
+//		if (account == null || transaction == null){
+//			sb.append(linkText);
+//			return sb; 
+//		}
+//		
+//		link.append("http://localhost:");
+//		link.append(Const.LISTEN_PORT);
+//		link.append("/");		
+//		link.append(Const.ACCOUNT).append("=").append(account.getName()).append(Const.SEPARATOR);		
+//		link.append(Const.DESCRIPTION).append("=").append(transaction.getDescription()).append(Const.SEPARATOR);
+//		link.append(Const.NUMBER).append("=").append(transaction.getNumber()).append(Const.SEPARATOR);
+//		link.append(Const.AMOUNT).append("=").append(Long.toString(transaction.getAmount())).append(Const.SEPARATOR);
+//		link.append(Const.TO).append("=").append(transaction.getTo().toString()).append(Const.SEPARATOR);
+//		link.append(Const.FROM).append("=").append(transaction.getFrom().toString()).append(Const.SEPARATOR);
+//		link.append(Const.MEMO).append("=").append(transaction.getMemo());
+//
+//		sb.append("<a href='null' onClick=\"return launchTransactions('" + link.toString() + "')\">");
+//		sb.append(linkText);
+//		sb.append("</a>");
+//		
+//		return sb;
+//	}
 
 	public static class HTMLWrapper {
 		private String html;

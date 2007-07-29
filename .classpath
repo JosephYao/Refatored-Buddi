@@ -15,7 +15,6 @@
 	<classpathentry kind="lib" path="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
 	<classpathentry kind="lib" path="lib/quaqua-3.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx.jar"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="lib/SwingWorker.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry kind="output" path="bin"/>

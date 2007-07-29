@@ -48,8 +48,14 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 	private static Font bold;
 	private static Font italic;
 	
+	private static int currentDescriptionLength; //Used by EditableTransaction to format description width.
+	
 	private static final Color GREEN = new Color(0, 128, 0);
 
+	public static int getCurrentDescriptionLength(){
+		return currentDescriptionLength;
+	}
+	
 	/**
 	 * Creates a new TransactionCellRenderer object
 	 */
@@ -89,6 +95,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			String test = "XXXXX";
 			for(; fm.stringWidth(test) < (list.getWidth() - 150); test += "X"){
 				descriptionLength = test.length() / 2;
+				currentDescriptionLength = descriptionLength;
 			}
 
 			//On the bottom line, we allocate 300px for all of the
@@ -119,7 +126,6 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		int width = this.getWidth();
 
 		// Antialias text
-		// TODO Does this work on Windows?  We already have AA on Mac.
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 

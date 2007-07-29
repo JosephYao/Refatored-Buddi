@@ -176,6 +176,7 @@ public class CategoryListPanel extends AbstractListPanel {
 				//We always want to update everything.  It's the cool thing to do.
 				this.updateContent();
 				this.updateButtons();
+				TransactionsFrame.updateAllTransactionWindows();
 			}
 		}
 	}

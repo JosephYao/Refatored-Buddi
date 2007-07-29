@@ -168,6 +168,7 @@ public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 			AccountModifyDialog.this.closeWindow();				
 			MainFrame.getInstance().getAccountListPanel().updateContent();
 			TransactionsFrame.updateAllTransactionWindows();
+			
 		}
 		else if (e.getSource().equals(cancelButton)){
 			AccountModifyDialog.this.closeWindow();

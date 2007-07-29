@@ -526,24 +526,20 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 //		return this;
 	}
 
+	public void updateToFromComboBox(){
+		editableTransaction.updateContent();
+	}
+	
 	public AbstractFrame updateContent(){
 		if (PrefsInstance.getInstance().getPrefs().isShowCreditLimit() 
 				&& account != null  
 				&& account.getCreditLimit() != 0){
 			long amountLeft;
-			//We need to use different logic for debit and credit accounts.  
-			// Remember that getBalance() returns a negative number for 
-			// credit accounts
-//			if (account.isCredit())
 			amountLeft = (account.getCreditLimit() + account.getBalance());
-//			else
-//			amountLeft = (account.getBalance() - account.getCreditLimit());
 			double percentLeft = ((double) amountLeft) / account.getCreditLimit() * 100.0;
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("<html>");
-//			if (amountLeft < 0)
-//			sb.append("<html><font color='red'>");
 			sb.append(Translate.getInstance().get((account.isCredit() ? TranslateKeys.AVAILABLE_CREDIT : TranslateKeys.AVAILABLE_FUNDS)))
 			.append(": ")
 			.append(BuddiInternalFormatter.isRed(account, amountLeft) ? "<font color='red'>" : "")
@@ -609,8 +605,10 @@ public class TransactionsFrame extends AbstractBuddiFrame {
 	 */
 	public static void updateAllTransactionWindows(){
 		for (TransactionsFrame tf : transactionInstances.values()) {
-			if (tf != null)
+			if (tf != null){
 				tf.updateContent();
+				tf.updateToFromComboBox();
+			}
 		}
 	}
 

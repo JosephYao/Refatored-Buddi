@@ -52,6 +52,7 @@ import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
 import org.homeunix.thecave.moss.gui.hint.JHintComboBox;
 import org.homeunix.thecave.moss.gui.hint.JHintTextArea;
 import org.homeunix.thecave.moss.gui.hint.JHintTextField;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -104,8 +105,8 @@ public class EditableTransaction extends JPanel {
 
 		components = new Vector<JComponent>();
 
-		toModel = new DefaultComboBoxModel();
-		fromModel = new DefaultComboBoxModel();
+		toModel = new DefaultComboBoxModel(); //DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts(), DataInstance.getInstance().getDataModel().getAllCategories().getCategories());
+		fromModel = new DefaultComboBoxModel(); //(DataInstance.getInstance().getDataModel().getAllAccounts().getAccounts(), DataInstance.getInstance().getDataModel().getAllCategories().getCategories());
 
 		to.setModel(toModel);
 		from.setModel(fromModel);
@@ -138,19 +139,19 @@ public class EditableTransaction extends JPanel {
 		components.add(memoScroller);
 
 		memoScroller.setPreferredSize(new Dimension(130, memo.getPreferredSize().height));		
-		
+
 		JPanel topPanel = new JPanel(new GridBagLayout());
 		JPanel bottomPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.weighty = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		c.weightx = 0.2;
 		c.gridx = 0;
 		topPanel.add(date, c);
-		
+
 		c.weightx = 0.5;
 		c.gridx = 1;
 		topPanel.add(description, c);
@@ -158,7 +159,7 @@ public class EditableTransaction extends JPanel {
 		c.weightx = 0.4;
 		c.gridx = 2;
 		topPanel.add(number, c);
-		
+
 		if (PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
 			c.weightx = 0.0;
 			c.gridx = 3;
@@ -177,7 +178,7 @@ public class EditableTransaction extends JPanel {
 		c.weightx = 0.5;
 		c.gridx = 1;
 		bottomPanel.add(from, c);
-		
+
 		c.weightx = 0.0;
 		c.gridx = 2;
 		bottomPanel.add(new JLabel(Translate.getInstance().get(TranslateKeys.TO)), c);
@@ -186,7 +187,7 @@ public class EditableTransaction extends JPanel {
 		c.gridx = 3;
 		bottomPanel.add(to, c);
 
-		
+
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(topPanel);
@@ -227,11 +228,6 @@ public class EditableTransaction extends JPanel {
 			to.setSelectedItem(transaction.getTo());
 			cleared.setSelected(transaction.isCleared());
 			reconciled.setSelected(transaction.isReconciled());
-//			TODO Remove commented section
-//			if (Const.DEVEL) Log.debug("Set to: " + transaction.getTo());
-//			if (Const.DEVEL) Log.debug("Set from: " + transaction.getFrom());
-//			if (Const.DEVEL) Log.debug("Selected to: " + to.getSelectedItem());
-//			if (Const.DEVEL) Log.debug("Selected from: " + from.getSelectedItem());
 		}
 		else{
 			if (date.getDate() == null)
@@ -255,14 +251,6 @@ public class EditableTransaction extends JPanel {
 
 	public boolean isChanged(){
 		return changed;
-//		|| transaction == null
-//		|| (!transaction.getDescription().equals(getDescription()))
-//		|| (!transaction.getNumber().equals(getNumber()))
-//		|| (transaction.getAmount() != (getAmount()))
-//		|| (!transaction.getFrom().equals(getTransferFrom()))
-//		|| (!transaction.getTo().equals(getTransferTo()))
-//		|| (!transaction.getDate().equals(getDate()))
-//		);
 	}
 
 	/**
@@ -341,6 +329,9 @@ public class EditableTransaction extends JPanel {
 		//Update the dropdown lists
 		setEnabled(true);
 
+		Object to = toModel.getSelectedItem();
+		Object from = fromModel.getSelectedItem();
+		
 		toModel.removeAllElements();
 		fromModel.removeAllElements();
 		toModel.addElement(null);
@@ -359,6 +350,9 @@ public class EditableTransaction extends JPanel {
 			else
 				toModel.addElement(c);	
 		}
+		
+		toModel.setSelectedItem(to);
+		fromModel.setSelectedItem(from);
 	}
 
 	private void initActions(){				
@@ -383,7 +377,7 @@ public class EditableTransaction extends JPanel {
 				}
 			});
 		}
-		
+
 		description.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent arg0) {
 				fillInOtherFields(true);
@@ -398,7 +392,7 @@ public class EditableTransaction extends JPanel {
 				fillInOtherFields(false);
 				description.setPopupVisible(false);
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				super.focusGained(e);
@@ -491,6 +485,24 @@ public class EditableTransaction extends JPanel {
 			}
 		});
 
+		description.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				
+				if (value != null){
+					String s = value.toString();
+					int maxLength = TransactionCellRenderer.getCurrentDescriptionLength(); 
+					if (s.length() > maxLength)
+						this.setText(Formatter.getLengthFormat(maxLength).format(s));
+				}
+				
+				return this;
+			}
+		});
+
 		ListCellRenderer renderer = new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
 
@@ -515,20 +527,20 @@ public class EditableTransaction extends JPanel {
 		from.setRenderer(renderer);
 
 //		ListCellRenderer descriptionRenderer = new DefaultListCellRenderer(){
-//			public static final long serialVersionUID = 0;
-//
-//			@Override
-//			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-//				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-//				if (value == null)
-//					this.setText(Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
-//				else
-//					this.setText(value.toString());
-//
-//				return this;
-//			}
+//		public static final long serialVersionUID = 0;
+
+//		@Override
+//		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+//		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+//		if (value == null)
+//		this.setText(Translate.getInstance().get(TranslateKeys.HINT_DESCRIPTION));
+//		else
+//		this.setText(value.toString());
+
+//		return this;
+//		}
 //		};
-//
+
 //		description.setRenderer(descriptionRenderer);
 
 	}
@@ -571,7 +583,7 @@ public class EditableTransaction extends JPanel {
 
 					//We don't do the memos any more, as this tends to be unique to one transaction.
 //					if (forceAll || (asi.getMemo() != null && memo.isHintShowing()))
-//						memo.setValue(asi.getMemo());
+//					memo.setValue(asi.getMemo());
 
 					//This doesn't always work when you go to a different account; it should
 					// be good enough for the vast majorty of cases, though, and does a pretty

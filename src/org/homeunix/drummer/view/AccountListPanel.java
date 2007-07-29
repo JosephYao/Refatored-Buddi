@@ -212,6 +212,7 @@ public class AccountListPanel extends AbstractListPanel {
 				//We always want to update everything.  It's the cool thing to do.
 				AccountListPanel.this.updateContent();
 				AccountListPanel.this.updateButtons();
+				TransactionsFrame.updateAllTransactionWindows();
 			}
 		}
 		else if (e.getSource().equals(openButton)){

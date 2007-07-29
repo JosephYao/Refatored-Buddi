@@ -5,24 +5,15 @@ package org.homeunix.drummer;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JMenuBar;
@@ -35,19 +26,14 @@ import net.java.dev.SwingWorker;
 import net.roydesign.mac.MRJAdapter;
 
 import org.homeunix.drummer.controller.ReturnCodes;
-import org.homeunix.drummer.controller.SourceController;
-import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Account;
-import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.AppleApplicationWrapper;
 import org.homeunix.drummer.util.LookAndFeelManager;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.drummer.view.TransactionsFrame;
 import org.homeunix.drummer.view.menu.MainMenu;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -355,7 +341,7 @@ public class Buddi {
 		LookAndFeelManager.getInstance().setLookAndFeel(lnf);
 
 		//Start the server listener going, for incoming transaction requests
-		startHTTPTransactionListener();
+//		startHTTPTransactionListener();
 
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
@@ -541,108 +527,108 @@ public class Buddi {
 		Buddi.fileToLoad = fileToLoad;
 	}
 
-	/**
-	 * This is a simple HTTP server which listens for incoming connections, and displays transactions 
-	 * accordingly.  It should only listen to localhost. 
-	 */
-	private static void startHTTPTransactionListener(){
-		Runnable serverTask = new Runnable() {
-			public void run() {
-				try {
-					ServerSocket server = new ServerSocket(Const.LISTEN_PORT);//, 1, InetAddress.getLocalHost());
-					while (true){
-						final Socket request = server.accept();
-						Thread networkReaderThread = new Thread(new Runnable() {
-							public void run(){
-								String url = null;
-								try {
-									BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
-									PrintWriter output = new PrintWriter(new OutputStreamWriter(request.getOutputStream()));
-
-									String temp;
-									while ((temp = input.readLine()) != null && temp.length() > 0) {
-										if (Const.DEVEL) Log.debug(temp);
-										if (temp.contains("GET")) {
-											//Clean up the URL
-											url = URLDecoder.decode(temp.replaceFirst("GET", "").replaceAll("HTTP/1.1", "").replaceFirst("/", "").trim(), "UTF-8");
-										}
-									}
-
-									output.println("<html>");
-									output.println("<head>");
-									output.println("<SCRIPT LANGUAGE=\"JavaScript\">");
-									output.println("<!--");
-									output.println("window.close();");
-									output.println("//-->");
-									output.println("</SCRIPT>");
-									output.println("</head>");
-									output.println("<body />");
-									output.println("</html>");
-
-									output.flush();
-									output.close();
-									input.close();
-									request.close();
-								}
-								catch (IOException ioe){
-									Log.error(ioe);
-								}
-								finally {
-									//Now that we have a (hopefully) valid account and transaction,
-									// we will try to jump to it.
-
-									//The URL format should be as follows:
-									// /description='desc'&date='date'&...
-									// The keys are found as constants in Const.
-									Map<String, String> arguments = new HashMap<String, String>();
-
-									if (Const.DEVEL) Log.info("Transaction window listener recieved URL: " + url);
-
-									for (String s : url.split(Const.SEPARATOR)) {
-										if (s.matches(".*=.*")){
-											String[] split = s.split("=");
-											if (split.length == 2) {
-												arguments.put(split[0], split[1]);
-												if (Const.DEVEL) Log.debug("Setting " + split[0] + " to " + split[1]);
-											}
-										}
-									}
-
-									Account a = SourceController.getAccount(
-											arguments.get(Const.ACCOUNT));
-									Transaction t = TransactionController.getTransaction(
-											arguments.get(Const.DATE), 
-											arguments.get(Const.DESCRIPTION), 
-											arguments.get(Const.NUMBER), 
-											arguments.get(Const.AMOUNT), 
-											arguments.get(Const.TO), 
-											arguments.get(Const.FROM), 
-											arguments.get(Const.MEMO));
-
-									if (a != null && t != null) {
-										WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
-										Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
-										Point point = new Point(wa.getX(), wa.getY());
-
-										new TransactionsFrame(a, t).openWindow(dimension, point);
-									}
-									else
-										if (Const.DEVEL) Log.warning("Could not open transaction window: Account = " + a + ", Transaction = " + t);
-								}
-							}
-						});
-
-						networkReaderThread.run();
-					}
-				}
-				catch (IOException ioe){
-					Log.error(ioe);
-				}
-			}
-		};
-
-		Thread serverThread = new Thread(serverTask);
-
-		serverThread.start();
-	}
+//	/**
+//	 * This is a simple HTTP server which listens for incoming connections, and displays transactions 
+//	 * accordingly.  It should only listen to localhost. 
+//	 */
+//	private static void startHTTPTransactionListener(){
+//		Runnable serverTask = new Runnable() {
+//			public void run() {
+//				try {
+//					ServerSocket server = new ServerSocket(Const.LISTEN_PORT);//, 1, InetAddress.getLocalHost());
+//					while (true){
+//						final Socket request = server.accept();
+//						Thread networkReaderThread = new Thread(new Runnable() {
+//							public void run(){
+//								String url = null;
+//								try {
+//									BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
+//									PrintWriter output = new PrintWriter(new OutputStreamWriter(request.getOutputStream()));
+//
+//									String temp;
+//									while ((temp = input.readLine()) != null && temp.length() > 0) {
+//										if (Const.DEVEL) Log.debug(temp);
+//										if (temp.contains("GET")) {
+//											//Clean up the URL
+//											url = URLDecoder.decode(temp.replaceFirst("GET", "").replaceAll("HTTP/1.1", "").replaceFirst("/", "").trim(), "UTF-8");
+//										}
+//									}
+//
+//									output.println("<html>");
+//									output.println("<head>");
+//									output.println("<SCRIPT LANGUAGE=\"JavaScript\">");
+//									output.println("<!--");
+//									output.println("window.close();");
+//									output.println("//-->");
+//									output.println("</SCRIPT>");
+//									output.println("</head>");
+//									output.println("<body />");
+//									output.println("</html>");
+//
+//									output.flush();
+//									output.close();
+//									input.close();
+//									request.close();
+//								}
+//								catch (IOException ioe){
+//									Log.error(ioe);
+//								}
+//								finally {
+//									//Now that we have a (hopefully) valid account and transaction,
+//									// we will try to jump to it.
+//
+//									//The URL format should be as follows:
+//									// /description='desc'&date='date'&...
+//									// The keys are found as constants in Const.
+//									Map<String, String> arguments = new HashMap<String, String>();
+//
+//									if (Const.DEVEL) Log.info("Transaction window listener recieved URL: " + url);
+//
+//									for (String s : url.split(Const.SEPARATOR)) {
+//										if (s.matches(".*=.*")){
+//											String[] split = s.split("=");
+//											if (split.length == 2) {
+//												arguments.put(split[0], split[1]);
+//												if (Const.DEVEL) Log.debug("Setting " + split[0] + " to " + split[1]);
+//											}
+//										}
+//									}
+//
+//									Account a = SourceController.getAccount(
+//											arguments.get(Const.ACCOUNT));
+//									Transaction t = TransactionController.getTransaction(
+//											arguments.get(Const.DATE), 
+//											arguments.get(Const.DESCRIPTION), 
+//											arguments.get(Const.NUMBER), 
+//											arguments.get(Const.AMOUNT), 
+//											arguments.get(Const.TO), 
+//											arguments.get(Const.FROM), 
+//											arguments.get(Const.MEMO));
+//
+//									if (a != null && t != null) {
+//										WindowAttributes wa = PrefsInstance.getInstance().getPrefs().getWindows().getTransactionsWindow();
+//										Dimension dimension = new Dimension(wa.getWidth(), wa.getHeight());
+//										Point point = new Point(wa.getX(), wa.getY());
+//
+//										new TransactionsFrame(a, t).openWindow(dimension, point);
+//									}
+//									else
+//										if (Const.DEVEL) Log.warning("Could not open transaction window: Account = " + a + ", Transaction = " + t);
+//								}
+//							}
+//						});
+//
+//						networkReaderThread.run();
+//					}
+//				}
+//				catch (IOException ioe){
+//					Log.error(ioe);
+//				}
+//			}
+//		};
+//
+//		Thread serverThread = new Thread(serverTask);
+//
+//		serverThread.start();
+//	}
 }
