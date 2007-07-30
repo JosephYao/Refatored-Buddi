@@ -390,7 +390,6 @@ public class EditableTransaction extends JPanel {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				fillInOtherFields(false);
-				description.setPopupVisible(false);
 			}
 
 			@Override
