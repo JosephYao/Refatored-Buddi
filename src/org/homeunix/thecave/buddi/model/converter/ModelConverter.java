@@ -19,6 +19,7 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriod;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.beans.Source;
 import org.homeunix.thecave.buddi.model.beans.Transaction;
+import org.homeunix.thecave.buddi.model.beans.TransactionSplit;
 import org.homeunix.thecave.buddi.model.beans.Type;
 import org.homeunix.thecave.buddi.model.beans.UniqueID;
 
@@ -34,6 +35,7 @@ public class ModelConverter {
 		DataModel newModel = new DataModel();
 
 		Map<org.homeunix.drummer.model.Type, Type> typeMap = new HashMap<org.homeunix.drummer.model.Type, Type>();
+		Map<Type, List<Account>> typeAccountMap = new HashMap<Type, List<Account>>();
 		Map<Category, BudgetCategory> categoryMap = new HashMap<Category, BudgetCategory>();
 		Map<org.homeunix.drummer.model.Source, Source> sourceMap = new HashMap<org.homeunix.drummer.model.Source, Source>();
 		
@@ -52,13 +54,14 @@ public class ModelConverter {
 			newType.setSystemUid(UniqueID.getNextUID());
 			
 			typeMap.put(oldType, newType);
+			typeAccountMap.put(newType, new LinkedList<Account>());
 			
 			newTypes.add(newType);
 		}
 		newModel.setTypes(newTypes);
 		
 		//Now we can convert Accounts
-		List<Account> newAccounts = new LinkedList<Account>();
+//		List<Account> newAccounts = new LinkedList<Account>();
 		for (Object oldAccountObject : oldModel.getAllAccounts().getAccounts()) {
 			org.homeunix.drummer.model.Account oldAccount = (org.homeunix.drummer.model.Account) oldAccountObject;
 			
@@ -66,20 +69,21 @@ public class ModelConverter {
 			
 			newAccount.setBalance(oldAccount.getBalance());
 			newAccount.setCreatedDate(oldAccount.getCreationDate());
-			newAccount.setCreditLimit(oldAccount.getCreditLimit());
+//			newAccount.setCreditLimit(oldAccount.getCreditLimit());
 			newAccount.setDeleted(oldAccount.isDeleted());
-			newAccount.setInterestRate(oldAccount.getInterestRate());
+//			newAccount.setInterestRate(oldAccount.getInterestRate());
 			newAccount.setModifiedDate(new Date());
 			newAccount.setName(oldAccount.getName());
 			newAccount.setStartingBalance(oldAccount.getStartingBalance());
 			newAccount.setSystemUid(UniqueID.getNextUID());
-			newAccount.setType(typeMap.get(oldAccount.getAccountType()));
+//			newAccount.setType(typeMap.get(oldAccount.getAccountType()));
 			
 			sourceMap.put(oldAccount, newAccount);
 			
-			newAccounts.add(newAccount);
+			typeAccountMap.get(typeMap.get(oldAccount.getAccountType())).add(newAccount);
+//			newAccounts.add(newAccount);
 		}
-		newModel.setAccounts(newAccounts);
+//		newModel.setAccounts(newAccounts);
 		
 		//Categories next...
 		List<BudgetCategory> newBudgetCategories = new LinkedList<BudgetCategory>();
@@ -132,18 +136,22 @@ public class ModelConverter {
 			org.homeunix.drummer.model.Transaction oldTransaction = (org.homeunix.drummer.model.Transaction) oldTransactionObject;
 
 			Transaction newTransaction = new Transaction();
-			newTransaction.setAmount(oldTransaction.getAmount());
 			newTransaction.setCleared(oldTransaction.isCleared());
 			newTransaction.setDate(oldTransaction.getDate());
 			newTransaction.setDescription(oldTransaction.getDescription());
-			newTransaction.setFrom(sourceMap.get(oldTransaction.getFrom()));
 			newTransaction.setMemo(oldTransaction.getMemo());
 			newTransaction.setModifiedDate(new Date());
 			newTransaction.setNumber(oldTransaction.getNumber());
 			newTransaction.setReconciled(oldTransaction.isReconciled());
 			newTransaction.setScheduled(oldTransaction.isScheduled());
 			newTransaction.setSystemUid(UniqueID.getNextUID());
-			newTransaction.setTo(sourceMap.get(oldTransaction.getTo()));
+
+			TransactionSplit newTs = new TransactionSplit();
+			newTs.setAmount(oldTransaction.getAmount());
+			newTs.setFrom(sourceMap.get(oldTransaction.getFrom()));
+			newTs.setTo(sourceMap.get(oldTransaction.getTo()));
+			
+			newTransaction.getSplits().add(newTs);
 			
 			newTransactions.add(newTransaction);
 		}
@@ -157,35 +165,31 @@ public class ModelConverter {
 			Schedule oldScheduledTransaction = (Schedule) oldScheduledTransactionObject;
 
 			ScheduledTransaction newScheduledTransaction = new ScheduledTransaction();
-			newScheduledTransaction.setAmount(oldScheduledTransaction.getAmount());
 			newScheduledTransaction.setCleared(oldScheduledTransaction.isCleared());
 			newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
 			newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());
-			
 			newScheduledTransaction.setEndDate(oldScheduledTransaction.getEndDate());
 			newScheduledTransaction.setFrequencyType(oldScheduledTransaction.getFrequencyType());
-			
-			newScheduledTransaction.setFrom(sourceMap.get(oldScheduledTransaction.getFrom()));
-			
 			newScheduledTransaction.setLastDayCreated(oldScheduledTransaction.getLastDateCreated());
-			
 			newScheduledTransaction.setMemo(oldScheduledTransaction.getMemo());
-			
 			newScheduledTransaction.setMessage(oldScheduledTransaction.getMessage());
-			
 			newScheduledTransaction.setModifiedDate(new Date());
 			newScheduledTransaction.setNumber(oldScheduledTransaction.getNumber());
 			newScheduledTransaction.setReconciled(oldScheduledTransaction.isReconciled());
 			newScheduledTransaction.setScheduled(oldScheduledTransaction.isScheduled());
-			
 			newScheduledTransaction.setScheduleDay(oldScheduledTransaction.getScheduleDay());
 			newScheduledTransaction.setScheduleWeek(oldScheduledTransaction.getScheduleWeek());
 			newScheduledTransaction.setScheduleMonth(oldScheduledTransaction.getScheduleMonth());
 			newScheduledTransaction.setScheduleName(oldScheduledTransaction.getScheduleName());
 			newScheduledTransaction.setStartDate(oldScheduledTransaction.getStartDate());
-			
 			newScheduledTransaction.setSystemUid(UniqueID.getNextUID());
-			newScheduledTransaction.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
+			
+			TransactionSplit newTs = new TransactionSplit();
+			newTs.setAmount(oldScheduledTransaction.getAmount());
+			newTs.setFrom(sourceMap.get(oldScheduledTransaction.getFrom()));
+			newTs.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
+			newScheduledTransaction.getSplits().add(newTs);
+
 			
 			newScheduledTransactions.add(newScheduledTransaction);
 		}

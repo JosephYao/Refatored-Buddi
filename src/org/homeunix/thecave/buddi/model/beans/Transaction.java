@@ -4,17 +4,17 @@
 package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Transaction implements ModelFields {
+public class Transaction implements StandardFields {
 	private Date date;
 	private String description;
 	private String number;
-	private Long amount;
-	private Source from;
-	private Source to;
 	private String memo;
 	private Boolean cleared;
 	private Boolean reconciled;
+	private List<TransactionSplit> splits = new LinkedList<TransactionSplit>();
 	
 	private Boolean scheduled;
 	
@@ -34,91 +34,87 @@ public class Transaction implements ModelFields {
 		return systemUid;
 	}
 	public void setSystemUid(UniqueID systemUid) {
+		this.setModifiedDate(new Date());
 		this.systemUid = systemUid;
 	}
 	public String getUserUid() {
 		return userUid;
 	}
 	public void setUserUid(String userUid) {
+		this.setModifiedDate(new Date());
 		this.userUid = userUid;
 	}
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-
 	public Boolean getCleared() {
 		return cleared;
 	}
-
 	public void setCleared(Boolean cleared) {
+		this.setModifiedDate(new Date());
 		this.cleared = cleared;
 	}
-
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
+		this.setModifiedDate(new Date());
 		this.date = date;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
+		this.setModifiedDate(new Date());
 		this.description = description;
 	}
-
-	public Source getFrom() {
-		return from;
-	}
-
-	public void setFrom(Source from) {
-		this.from = from;
-	}
-
 	public String getMemo() {
 		return memo;
 	}
-
 	public void setMemo(String memo) {
+		this.setModifiedDate(new Date());
 		this.memo = memo;
 	}
-
 	public String getNumber() {
 		return number;
 	}
-
 	public void setNumber(String number) {
+		this.setModifiedDate(new Date());
 		this.number = number;
 	}
-
 	public Boolean getReconciled() {
 		return reconciled;
 	}
-
 	public void setReconciled(Boolean reconciled) {
+		this.setModifiedDate(new Date());
 		this.reconciled = reconciled;
 	}
-
 	public Boolean getScheduled() {
 		return scheduled;
 	}
-
 	public void setScheduled(Boolean scheduled) {
+		this.setModifiedDate(new Date());
 		this.scheduled = scheduled;
 	}
-
-	public Source getTo() {
-		return to;
+	public List<TransactionSplit> getSplits() {
+		return splits;
+	}
+	public void setSplits(List<TransactionSplit> splits) {
+		this.setModifiedDate(new Date());
+		this.splits = splits;
+	}
+	
+	public void addSplit(TransactionSplit split){
+		this.checkLists();
+		this.setModifiedDate(new Date());
+		this.splits.add(split);
+	}
+	public boolean removeSplit(TransactionSplit split){
+		this.checkLists();
+		this.setModifiedDate(new Date());
+		return this.splits.remove(split);
+	}
+	
+	private void checkLists(){
+		if (this.splits == null)
+			this.splits = new LinkedList<TransactionSplit>();
 	}
 
-	public void setTo(Source to) {
-		this.to = to;
-	}
 }

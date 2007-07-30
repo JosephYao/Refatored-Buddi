@@ -5,7 +5,8 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-public interface ModelFields {
+public interface StandardFields {
+	
 	public Date getModifiedDate();
 	public void setModifiedDate(Date lastModified);
 	public UniqueID getSystemUid();
