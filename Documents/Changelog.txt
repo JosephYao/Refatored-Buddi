@@ -1,4 +1,4 @@
-2.5.9.0
+2.5.9.0 (July 30 2007)
 -Fixed bug which made the description pulldown grow too large for the window, if a long description was entered.  Now in the pulldown, I chop off the text at the same point as I do in the TransactionCellRenderer.
 -Added feature request #1761758 (Update To / From lists when adding / removing new accounts or categories)
 -Removed feature request #1717577 (see 2.5.8.0).  While this could be useful, I don't feel that it is simple enough to work properly.  The main problem is that of inter process communication.  In order for the browser to be able to signal Buddi to do something, I need to open a server on the local host.  This presents security as well as usabiliy problems.  Windows gives warnings, etc.  Furthermore, even if the server listens properly, it will not switch to Buddi when the new transaction window pops up.  The user still has to switch manually.  Unless someone can overcome these issues, I think this is better left un-implmented.
