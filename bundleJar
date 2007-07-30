@@ -20,12 +20,12 @@
 ############################
 
 function init {
-	BUDDI_HOME=/Users/wyatt/Documents/Programming/Workplace/Buddi
+	BUDDI_HOME=/Users/wyatt/Documents/Programming/Workplace/Buddi_Development
 	FATJAR_PATH=/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar
 	export BUDDI_HOME
 	export FATJAR_PATH
 
-	DEST=/Users/wyatt/Desktop/Buddi
+	DEST=/Users/wyatt/Desktop/Buddi_Development
 	DEBIANROOT=$DEST/Debian
 	DEBIAN=$DEBIANROOT/Buddi
 	SLACKROOT=$DEST/Slackware
