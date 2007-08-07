@@ -1,3 +1,6 @@
+2.5.10.1 (August 7 2007) - 2.6.RC 2
+-Fixed bug in Russian translation which would result in program crash
+
 2.5.10.0 (August 7 2007) - 2.6 RC 1
 -First release candidate - please submit all bugs, to help keep the Stable version stable!
 -Added Czech translation (thanks to Martin Hlozek for this translation)
