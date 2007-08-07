@@ -1,3 +1,7 @@
+2.5.10.0 () - 2.6 RC 1
+-First release candidate - please submit all bugs, to help keep the Stable version stable!
+-Added Czech translation (thanks to Martin Hlozek for this translation)
+
 2.5.9.0 (July 30 2007)
 -Fixed bug which made the description pulldown grow too large for the window, if a long description was entered.  Now in the pulldown, I chop off the text at the same point as I do in the TransactionCellRenderer.
 -Added feature request #1761758 (Update To / From lists when adding / removing new accounts or categories)
