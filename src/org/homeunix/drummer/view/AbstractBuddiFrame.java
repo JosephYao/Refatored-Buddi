@@ -11,7 +11,7 @@ import net.sourceforge.buddi.api.manager.DataManager;
 import net.sourceforge.buddi.api.manager.ImportManager;
 
 import org.homeunix.drummer.view.menu.MainMenu;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 
 /**
  * @author wyatt

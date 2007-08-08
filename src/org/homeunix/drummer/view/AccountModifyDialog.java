@@ -18,7 +18,7 @@ import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.ModelFactory;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
 
 public class AccountModifyDialog extends AbstractModifyDialog<Account> {
 	public static final long serialVersionUID = 0;

@@ -6,7 +6,7 @@ package org.homeunix.drummer.view;
 import net.sourceforge.buddi.api.plugin.BuddiPanelPlugin;
 
 import org.homeunix.drummer.plugins.PluginFactory;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardContainer;
 
 public class ReportPanel extends AbstractInfomationPanel {
 	public static final long serialVersionUID = 0;

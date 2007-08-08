@@ -9,8 +9,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 
 /**
  * @author wyatt

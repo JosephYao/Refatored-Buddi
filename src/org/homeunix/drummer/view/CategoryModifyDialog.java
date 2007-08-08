@@ -13,7 +13,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelFactory;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
 import org.homeunix.thecave.moss.util.Log;
 
 public class CategoryModifyDialog extends AbstractModifyDialog<Category> {

@@ -21,7 +21,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardWindow;
 import org.homeunix.thecave.moss.gui.formatted.JDecimalField;
 
 public abstract class AbstractModifyDialog<SourceType> extends AbstractBuddiDialog {

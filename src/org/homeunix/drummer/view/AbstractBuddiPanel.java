@@ -5,7 +5,7 @@ package org.homeunix.drummer.view;
 
 import java.awt.event.ActionListener;
 
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractPanel;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractPanel;
 
 public abstract class AbstractBuddiPanel extends AbstractPanel implements ActionListener {
 

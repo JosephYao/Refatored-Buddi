@@ -32,7 +32,7 @@ import org.homeunix.drummer.view.components.DefaultTreeCellRenderer;
 import org.homeunix.drummer.view.components.SourceAmountCellRenderer;
 import org.homeunix.drummer.view.components.SourceNameCellRenderer;
 import org.homeunix.drummer.view.model.SourceTreeTableModel;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;

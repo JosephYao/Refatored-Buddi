@@ -18,7 +18,7 @@ import net.sourceforge.buddi.api.plugin.BuddiImportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
 import net.sourceforge.buddi.api.plugin.BuddiRunnablePlugin;
 
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 import org.homeunix.thecave.moss.util.Version;
 
 /**

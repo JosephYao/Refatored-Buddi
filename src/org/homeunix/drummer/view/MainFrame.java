@@ -39,8 +39,8 @@ import org.homeunix.drummer.plugins.PluginFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.prefs.WindowAttributes;
 import org.homeunix.drummer.util.BuddiInternalFormatter;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 

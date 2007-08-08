@@ -18,7 +18,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.menu.HelpMenuController;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.DocumentationFactory;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 
 public class HelpMenu extends JScreenMenu {
 	public static final long serialVersionUID = 0;

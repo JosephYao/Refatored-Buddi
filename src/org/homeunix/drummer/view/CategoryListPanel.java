@@ -23,7 +23,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.prefs.ListAttributes;
 import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardContainer;
 import org.homeunix.thecave.moss.util.Log;
 
 public class CategoryListPanel extends AbstractListPanel {

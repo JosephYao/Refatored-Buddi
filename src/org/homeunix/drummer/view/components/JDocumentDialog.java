@@ -17,8 +17,8 @@ import javax.swing.JTextArea;
 
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardContainer;
 
 public class JDocumentDialog extends AbstractDialog {
 	public static final long serialVersionUID = 0;

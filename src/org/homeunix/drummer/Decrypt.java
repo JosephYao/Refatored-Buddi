@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.drummer.view.components.JDocumentDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardContainer;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardContainer;
 
 public class Decrypt {
 

@@ -11,7 +11,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.TypeController;
 import org.homeunix.drummer.model.Type;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
 
 public class TypeModifyDialog extends AbstractModifyDialog<Type> {
 	public static final long serialVersionUID = 0;

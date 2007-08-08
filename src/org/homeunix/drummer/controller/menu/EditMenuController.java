@@ -12,7 +12,7 @@ import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.PreferencesDialog;
 import org.homeunix.drummer.view.ScheduledTransactionsListFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 import org.homeunix.thecave.moss.util.Log;
 
 public class EditMenuController implements ActionListener {

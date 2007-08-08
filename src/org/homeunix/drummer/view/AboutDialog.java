@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 import org.homeunix.drummer.Const;
 import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 

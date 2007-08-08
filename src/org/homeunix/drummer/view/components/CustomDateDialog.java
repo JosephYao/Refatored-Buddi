@@ -28,8 +28,8 @@ import org.homeunix.drummer.plugins.BuddiPluginHelper;
 import org.homeunix.drummer.prefs.Interval;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.AbstractBuddiDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardWindow;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 

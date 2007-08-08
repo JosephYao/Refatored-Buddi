@@ -15,7 +15,7 @@ import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.controller.menu.WindowMenuController;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class WindowMenu extends JScreenMenu {

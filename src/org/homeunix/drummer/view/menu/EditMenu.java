@@ -19,7 +19,7 @@ import org.homeunix.drummer.controller.menu.EditMenuController;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.view.MainFrame;
 import org.homeunix.drummer.view.TransactionsFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 
 public class EditMenu extends JScreenMenu {
 	public static final long serialVersionUID = 0;

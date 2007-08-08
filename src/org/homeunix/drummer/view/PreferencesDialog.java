@@ -51,8 +51,8 @@ import org.homeunix.drummer.prefs.PrefsFactory;
 import org.homeunix.drummer.prefs.PrefsInstance;
 import org.homeunix.drummer.util.LanguageEditor;
 import org.homeunix.thecave.moss.gui.JScrollingComboBox;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractDialog;
-import org.homeunix.thecave.moss.gui.abstractwindows.StandardWindow;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractDialog;
+import org.homeunix.thecave.moss.gui.abstracts.window.StandardWindow;
 import org.homeunix.thecave.moss.util.Log;
 
 public class PreferencesDialog extends AbstractBuddiDialog {

@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 import org.homeunix.thecave.moss.util.Log;
 
 public class WindowMenuController implements ActionListener {

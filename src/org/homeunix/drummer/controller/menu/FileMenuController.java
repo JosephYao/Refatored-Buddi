@@ -15,7 +15,7 @@ import org.homeunix.drummer.model.DataInstance;
 import org.homeunix.drummer.view.DocumentManager;
 import org.homeunix.drummer.view.HTMLExport;
 import org.homeunix.drummer.view.MainFrame;
-import org.homeunix.thecave.moss.gui.abstractwindows.AbstractFrame;
+import org.homeunix.thecave.moss.gui.abstracts.window.AbstractFrame;
 import org.homeunix.thecave.moss.util.Log;
 
 import edu.stanford.ejalbert.BrowserLauncher;
