@@ -16,6 +16,6 @@
 	<classpathentry kind="lib" path="lib/quaqua-3.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="lib" path="lib/SwingWorker.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
+	<classpathentry kind="lib" path="lib/moss-1.0.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
