@@ -1,3 +1,5 @@
+-Updated Czech translation
+
 2.5.10.1 (August 7 2007) - 2.6.RC 2
 -Fixed bug in Russian translation which would result in program crash
 
