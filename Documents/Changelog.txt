@@ -1,3 +1,6 @@
+2.6.0.0 (August 13 2007)
+-2.6 Stable release.  This release focused on usability, and features several additions which should make this easier.
+-Released 2.6 versions of all stable plugins in Buddi Plugins SVN repository.  For updates to plugins by third party authors, please contact the plugin creator.
 -Updated Czech translation
 
 2.5.10.1 (August 7 2007) - 2.6.RC 2

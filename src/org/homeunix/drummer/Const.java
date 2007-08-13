@@ -21,9 +21,9 @@ public class Const {
 	public static final String UNSTABLE = "UNSTABLE";
 	
 	//Version variables
-	public static final String VERSION = "2.5.10.1";
-	public static final String BRANCH = UNSTABLE;
-	public static final boolean DEVEL = true;
+	public static final String VERSION = "2.6.0.0";
+	public static final String BRANCH = STABLE;
+	public static final boolean DEVEL = false;
 	public static final Version API_VERSION = new Version("2.6");
 	
 	//Language constants
