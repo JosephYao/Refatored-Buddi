@@ -225,12 +225,12 @@ public class Buddi {
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
-				arg1.printStackTrace(Log.getPrintStream());
-				
 				if (arg1 instanceof DataModelProblemException)
 					sendBugReport(((DataModelProblemException) arg1).getDataModel());
 				else
 					sendBugReport();
+				
+				arg1.printStackTrace(Log.getPrintStream());
 			}
 		});
 

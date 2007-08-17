@@ -8,24 +8,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
-import net.sourceforge.buddi.api.manager.APICommonFormatter;
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
-import net.sourceforge.buddi.api.manager.DataManager;
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
-import net.sourceforge.buddi.api.manager.DateRangeType;
-import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
-import net.sourceforge.buddi.impl_2_6.model.ImmutableCategoryImpl;
-import net.sourceforge.buddi.impl_2_6.model.ImmutableTransactionImpl;
-
-import org.homeunix.drummer.Const;
-import org.homeunix.drummer.controller.SourceController;
-import org.homeunix.drummer.controller.TransactionController;
-import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.prefs.PrefsInstance;
-import org.homeunix.drummer.util.BudgetCalculator;
+import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 

@@ -47,7 +47,7 @@ import org.homeunix.thecave.moss.util.Log;
 public class DataModel extends AbstractDocument {
 
 	private DataModelBean dataModel;
-	private Map<String, ModelObjectBean> uidMap;
+	private final Map<String, ModelObjectBean> uidMap = new HashMap<String, ModelObjectBean>();
 
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 and legacy formats (although
@@ -465,15 +465,15 @@ public class DataModel extends AbstractDocument {
 
 			if (object instanceof Account){
 				for (Account a : getAccounts()) {
-					if (a.getName().equalsIgnoreCase(a.getName()))
+					if (a.getName().equalsIgnoreCase(((Account) object).getName()))
 						throw new DataModelProblemException("Cannot have multiple accounts with the same name.", this);
 				}
 			}
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
-					if (bc.getFullName().equalsIgnoreCase(bc.getFullName()))
-						throw new DataModelProblemException("Cannot have multiple accounts with the same name.", this);
+					if (bc.getFullName().equalsIgnoreCase(((BudgetCategory) object).getFullName()))
+						throw new DataModelProblemException("Cannot have multiple budget categories with the same name.", this);
 				}
 			}
 		}
@@ -516,7 +516,7 @@ public class DataModel extends AbstractDocument {
 	}
 
 	public void refreshUidMap(){
-		uidMap = new HashMap<String, ModelObjectBean>();
+		uidMap.clear();
 
 		for (Account a : getAccounts()) {
 			checkValid(a, false, true);

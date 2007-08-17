@@ -188,11 +188,12 @@ public class Const {
 	
 	//The plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_PLUGINS = {
-		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
-		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
-		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
+//		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
+//		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
+//		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotCleared",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotReconciled",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.NullReport",
 
 		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph",

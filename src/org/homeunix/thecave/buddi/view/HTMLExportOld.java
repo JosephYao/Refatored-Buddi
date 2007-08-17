@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.view;
 import java.io.File;
 import java.io.IOException;
 
-public interface HTMLExport {
+public interface HTMLExportOld {
 	
 	/**
 	 * The implementing method should write an HTML Export to disk,
