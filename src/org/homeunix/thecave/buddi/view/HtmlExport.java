@@ -3,10 +3,11 @@
  */
 package org.homeunix.thecave.buddi.view;
 
-import java.io.File;
 import java.io.IOException;
 
-public interface HTMLExportOld {
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
+
+public interface HtmlExport {
 	
 	/**
 	 * The implementing method should write an HTML Export to disk,
@@ -26,5 +27,5 @@ public interface HTMLExportOld {
 	 * be in the same folder as this one is.
 	 * @throws IOException If the file(s) cannot be created.
 	 */
-	public File exportToHTML() throws IOException;
+	public HtmlPage export() throws IOException;
 }

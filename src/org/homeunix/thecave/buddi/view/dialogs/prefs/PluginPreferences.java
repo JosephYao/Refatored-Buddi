@@ -28,7 +28,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PluginInfo;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.model.DefaultGenericListModel;
 import org.homeunix.thecave.moss.swing.window.MossPanel;

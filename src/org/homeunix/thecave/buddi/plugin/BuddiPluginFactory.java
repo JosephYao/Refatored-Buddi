@@ -1,7 +1,7 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.util;
+package org.homeunix.thecave.buddi.plugin;
 
 import java.io.File;
 import java.util.LinkedList;

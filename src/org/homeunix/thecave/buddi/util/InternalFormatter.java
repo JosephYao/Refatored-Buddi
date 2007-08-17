@@ -177,7 +177,7 @@ public class InternalFormatter {
 	}
 
 	public static Dimension getComboBoxSize(JComboBox comboBox){
-		return getComponentSize(comboBox, 100);
+		return getComponentSize(comboBox, 150);
 	}
 
 	public static Dimension getButtonSize(JButton button){
