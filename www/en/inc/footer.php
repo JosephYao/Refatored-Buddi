@@ -10,13 +10,15 @@ Copyright &copy; 2006 Wyatt Olson
 <br>
 <br>
 
+
 <script type="text/javascript"><!--
 google_ad_client = "pub-2914502371484466";
 google_ad_width = 728;
 google_ad_height = 90;
 google_ad_format = "728x90_as";
 google_ad_type = "text";
-google_ad_channel = "";
+//2007-08-13: Bottom Center
+google_ad_channel = "2804203700";
 google_color_border = "6699CC";
 google_color_bg = "003366";
 google_color_link = "FFFFFF";
@@ -28,6 +30,8 @@ google_ui_features = "rc:6";
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+
+
 
 </div>
 </div>
