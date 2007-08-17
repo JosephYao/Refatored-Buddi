@@ -188,17 +188,17 @@ public class Const {
 	
 	//The plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_PLUGINS = {
-		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByCategory",
-		"org.homeunix.drummer.plugins.reports.IncomeExpenseReportByDescription",
-		"org.homeunix.drummer.plugins.reports.AverageIncomeExpenseByCategory",
-		"org.homeunix.drummer.plugins.reports.TransactionsNotCleared",
-		"org.homeunix.drummer.plugins.reports.TransactionsNotReconciled",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotCleared",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotReconciled",
 
-		"org.homeunix.drummer.plugins.graphs.IncomePieGraph",
-		"org.homeunix.drummer.plugins.graphs.ExpensesPieGraph",
-		"org.homeunix.drummer.plugins.graphs.ExpenseBudgetedVsActual",
-		"org.homeunix.drummer.plugins.graphs.NetWorthBreakdown",
-		"org.homeunix.drummer.plugins.graphs.NetWorthOverTime",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.ExpenseBudgetedVsActual",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthBreakdown",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime",
 		
 //		"org.homeunix.thecave.plugins.graph.incomeovertime.IncomeAndExpenseOverTime",
 //		"org.homeunix.thecave.plugins.export.qif.ExportQIF"

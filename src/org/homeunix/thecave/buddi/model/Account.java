@@ -26,7 +26,7 @@ public class Account extends Source{
 		return getAccount().getBalance();
 	}
 	public void updateBalance(){
-		List<Transaction> transactions = new FilteredLists.FilteredTransactionList(getModel(), this);
+		List<Transaction> transactions = new FilteredLists.TransactionListFilteredBySource(getModel(), getModel().getTransactions(), this);
 		
 		long balance = getStartingBalance();
 

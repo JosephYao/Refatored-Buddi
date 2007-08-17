@@ -8,7 +8,7 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 
-public abstract class ModelObject {
+public abstract class ModelObject implements Comparable<ModelObject> {
 	private final DataModel model;
 	private final ModelObjectBean bean;
 	
@@ -41,6 +41,10 @@ public abstract class ModelObject {
 	
 	ModelObjectBean getBean(){
 		return bean;
+	}
+	
+	public int compareTo(ModelObject o) {
+		return this.toString().compareTo(o.toString());
 	}
 	
 	public boolean equals(Object obj) {

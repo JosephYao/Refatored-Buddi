@@ -13,10 +13,10 @@ import org.homeunix.thecave.buddi.model.FilteredLists;
 public class TransactionListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;
 	
-	private final FilteredLists.FilteredTransactionList transactions;
+	private final FilteredLists.TransactionListFilteredBySearch transactions;
 	
 	public TransactionListModel(DataModel model, Account selectedAccount) {
-		this.transactions = new FilteredLists.FilteredTransactionList(model, selectedAccount);
+		this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedAccount));
 	}
 	
 	public Object getElementAt(int index) {

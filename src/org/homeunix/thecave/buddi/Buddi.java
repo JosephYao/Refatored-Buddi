@@ -37,6 +37,7 @@ import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.window.MossFrame;
+import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.LookAndFeelUtil;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -144,6 +145,38 @@ public class Buddi {
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
 	private static void launchGUI(){
+		
+		if (PrefsModel.getInstance().getLastVersion() == null || Const.VERSION.isGreaterPatch(PrefsModel.getInstance().getLastVersion())){
+			String[] options = new String[2];
+			options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+			options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL);
+
+			if (JOptionPane.showOptionDialog(
+					null, 
+					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE),
+					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					options,
+					options[0]
+			) == 1)  //The index of the Cancel button.
+				System.exit(0);
+
+
+			//Make a backup of the last data file, just to be safe...
+			if (PrefsModel.getInstance().getLastDataFile() != null){
+				File dataFile = PrefsModel.getInstance().getLastDataFile();
+				File backupDataFile = new File(PrefsModel.getInstance().getLastDataFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + "_" + Const.VERSION + "_" + Const.BACKUP_FILE_EXTENSION);
+				try {
+					FileFunctions.copyFile(dataFile, backupDataFile);
+				}
+				catch (IOException ioe){
+					Log.warning("Error backing up file: " + ioe);
+				}
+			}
+		}
+		
 		//Open the data file
 		try {
 			DataModel model;

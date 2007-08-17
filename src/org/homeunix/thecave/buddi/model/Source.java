@@ -9,7 +9,7 @@ import org.homeunix.thecave.buddi.model.beans.SourceBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
-public abstract class Source extends ModelObject implements Comparable<Source> {
+public abstract class Source extends ModelObject {
 	Source(DataModel model, SourceBean source) {
 		super(model, source);
 	}
@@ -52,8 +52,10 @@ public abstract class Source extends ModelObject implements Comparable<Source> {
 	}
 	
 	
-	public int compareTo(Source arg0) {
-		return this.toString().compareTo(arg0.toString());
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof Source)
+			return this.getFullName().compareTo(((Source) arg0).getFullName());
+		return super.compareTo(arg0);
 	}
 	
 	public Date getCreatedDate() {
@@ -66,7 +68,7 @@ public abstract class Source extends ModelObject implements Comparable<Source> {
 
 	@Override
 	public String toString() {
-		return getName() + " (0x" + getSourceBean().getUid() + ")";
+		return getName() + " (" + getSourceBean().getUid() + ")";
 	}
 	
 	public abstract String getFullName();

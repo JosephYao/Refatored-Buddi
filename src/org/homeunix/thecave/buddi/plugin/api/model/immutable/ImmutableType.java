@@ -10,4 +10,8 @@ public class ImmutableType extends ImmutableModelObject {
 	public ImmutableType(Type type) {
 		super(type);
 	}
+	
+	public Type getType(){
+		return (Type) getRaw();
+	}
 }

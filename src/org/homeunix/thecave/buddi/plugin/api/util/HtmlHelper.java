@@ -16,14 +16,13 @@ import javax.imageio.ImageIO;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableSource;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
-public class APICommonHTMLHelper {
+public class HtmlHelper {
 
 
 	/**
@@ -129,19 +128,19 @@ public class APICommonHTMLHelper {
 
 		if (startDate != null && endDate != null){
 			sb.append("<h2>"); 
-			sb.append(BuddiInternalFormatter.getDateFormat().format(startDate));
+			sb.append(TextFormatter.getDateFormat().format(startDate));
 			sb.append(" - ");
-			sb.append(BuddiInternalFormatter.getDateFormat().format(endDate));
+			sb.append(TextFormatter.getDateFormat().format(endDate));
 			sb.append("</h2>\n");
 		}
 		else if (startDate != null){
 			sb.append("<h2>"); 
-			sb.append(BuddiInternalFormatter.getDateFormat().format(startDate));
+			sb.append(TextFormatter.getDateFormat().format(startDate));
 			sb.append("</h2>\n");			
 		}
 		else if (endDate != null){
 			sb.append("<h2>"); 
-			sb.append(BuddiInternalFormatter.getDateFormat().format(endDate));
+			sb.append(TextFormatter.getDateFormat().format(endDate));
 			sb.append("</h2>\n");	
 		}
 
@@ -165,16 +164,16 @@ public class APICommonHTMLHelper {
 	/**
 	 * Returns an HTML table row consisting of information from the given transaction. 
 	 * @param t Transaction to display.
-	 * @param associatedSource Associated source.  This would be the account which 
+	 * @param source Associated source.  This would be the account which 
 	 * the transaction frame is associated with, for instace.  This can be null
 	 * if there is none.
 	 * @return
 	 */
-	public static StringBuilder getHtmlTransactionRow(Transaction t, ImmutableSource associatedSource){
+	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSource source){
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<tr><td width='20%'>");
-		sb.append(BuddiInternalFormatter.getDateFormat().format(t.getDate()));
+		sb.append(TextFormatter.getDateFormat().format(t.getDate()));
 
 		sb.append("</td><td width='30%'>");
 		//Set up the variables needed for the link to work.
@@ -195,13 +194,13 @@ public class APICommonHTMLHelper {
 		sb.append(PrefsModel.getInstance().getTranslator().get(t.getTo().toString()));
 
 		boolean red;
-		if (associatedSource != null)
-			red = BuddiInternalFormatter.isRed(t, t.getFrom().equals(associatedSource));
+		if (source != null)
+			red = TextFormatter.isRed(t, t.getFrom().equals(source));
 		else 
-			red = BuddiInternalFormatter.isRed(t);
+			red = TextFormatter.isRed(t);
 
 		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
-		sb.append(APICommonFormatter.getFormattedCurrency(t.getAmount()));
+		sb.append(TextFormatter.getFormattedCurrency(t.getAmount()));
 		sb.append("</td></tr>\n");
 
 		return sb;		
@@ -242,7 +241,7 @@ public class APICommonHTMLHelper {
 	 * file object of the associated HTML index on success, or null
 	 * on failure. 
 	 */
-	public static File createHTML(String name, HTMLWrapper html){
+	public static File createHTML(String name, HtmlPage html){
 		final int countMax = 1000;
 
 		File dataFolder = PrefsModel.getInstance().getLastDataFile().getParentFile();
@@ -348,11 +347,11 @@ public class APICommonHTMLHelper {
 //		return sb;
 //	}
 
-	public static class HTMLWrapper {
+	public static class HtmlPage {
 		private String html;
 		private Map<String, BufferedImage> images;
 
-		public HTMLWrapper(String html, Map<String, BufferedImage> images) {
+		public HtmlPage(String html, Map<String, BufferedImage> images) {
 			this.html = html;
 			this.images = images;
 		}

@@ -13,6 +13,7 @@ import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableBudgetPeriod;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableType;
@@ -176,6 +177,8 @@ public class WrapperLists {
 				return (T) new ImmutableAccount((Account) object);
 			if (object instanceof BudgetCategory)
 				return (T) new ImmutableBudgetCategory((BudgetCategory) object);
+			if (object instanceof BudgetPeriod)
+				return (T) new ImmutableBudgetPeriod((BudgetPeriod) object);
 			if (object instanceof Transaction)
 				return (T) new ImmutableTransaction((Transaction) object);
 			if (object instanceof Type)

@@ -34,8 +34,8 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
-		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+	public HtmlPage getReport(DataManager dataManager, Date startDate, Date endDate) {
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
 		
@@ -68,21 +68,21 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 				
 				sb.append(total < 0 ? "<h2 class='red'>" : "<h2>");
 				sb.append(s).append(": ");
-				sb.append(APICommonFormatter.getFormattedCurrency(total, total < 0));
+				sb.append(TextFormatter.getFormattedCurrency(total, total < 0));
 				sb.append("</h2>\n");
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
+				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : descriptions.get(s)) {
-					sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));
+					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));
 				}
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
+				sb.append(HtmlHelper.getHtmlTransactionFooter());
 			}
 		}
 		
 		
-		return new HTMLWrapper(sb.toString(), null);
+		return new HtmlPage(sb.toString(), null);
 	}
 	
 	public DateRangeType getDateRangeType() {

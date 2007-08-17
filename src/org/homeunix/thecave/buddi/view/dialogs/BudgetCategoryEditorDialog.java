@@ -33,7 +33,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.BudgetFrame;
 import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
@@ -102,8 +102,8 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		group.add(income);
 		group.add(expense);
 
-		ok.setPreferredSize(BuddiInternalFormatter.getButtonSize(ok));
-		cancel.setPreferredSize(BuddiInternalFormatter.getButtonSize(cancel));
+		ok.setPreferredSize(InternalFormatter.getButtonSize(ok));
+		cancel.setPreferredSize(InternalFormatter.getButtonSize(cancel));
 
 		ok.addActionListener(this);
 		cancel.addActionListener(this);

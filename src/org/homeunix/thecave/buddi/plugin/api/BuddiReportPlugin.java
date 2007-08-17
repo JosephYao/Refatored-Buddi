@@ -8,7 +8,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
-import org.homeunix.thecave.buddi.plugin.api.util.APICommonHTMLHelper.HTMLWrapper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 
@@ -24,5 +24,5 @@ public abstract class BuddiReportPlugin implements MossPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public abstract HTMLWrapper getReport(ImmutableModel model, Date startDate, Date endDate);
+	public abstract HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate);
 }

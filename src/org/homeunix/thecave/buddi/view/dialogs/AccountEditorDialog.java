@@ -31,7 +31,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.AccountFrame;
 import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
@@ -93,8 +93,8 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		textPanelRight.add(startingBalance);
 		textPanelRight.add(new JScrollPane(notes));
 
-		ok.setPreferredSize(BuddiInternalFormatter.getButtonSize(ok));
-		cancel.setPreferredSize(BuddiInternalFormatter.getButtonSize(cancel));
+		ok.setPreferredSize(InternalFormatter.getButtonSize(ok));
+		cancel.setPreferredSize(InternalFormatter.getButtonSize(cancel));
 
 		ok.addActionListener(this);
 		cancel.addActionListener(this);

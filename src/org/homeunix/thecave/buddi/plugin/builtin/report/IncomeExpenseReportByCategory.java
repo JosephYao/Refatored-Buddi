@@ -41,8 +41,8 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
-		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+	public HtmlPage getReport(DataManager dataManager, Date startDate, Date endDate) {
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		Vector<Category> categories = SourceController.getCategories();
 		Collections.sort(categories, new Comparator<Category>(){
@@ -108,13 +108,13 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(Translate.getInstance().get(c.toString()));
-				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'>" : "'>"));
-				sb.append(APICommonFormatter.getFormattedCurrency(actual));
-				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), budgeted) ? " red'>" : "'>"));
-				sb.append(APICommonFormatter.getFormattedCurrency(budgeted));				
+				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'>" : "'>"));
+				sb.append(TextFormatter.getFormattedCurrency(actual));
+				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), budgeted) ? " red'>" : "'>"));
+				sb.append(TextFormatter.getFormattedCurrency(budgeted));				
 				long difference = actual - budgeted;
 				sb.append("</td><td class='right" + (difference > 0 ^ c.isIncome() ? " red'>" : "'>"));
-				sb.append(APICommonFormatter.getFormattedCurrency(difference, difference < 0));				
+				sb.append(TextFormatter.getFormattedCurrency(difference, difference < 0));				
 				sb.append("</td></tr>\n");
 			}
 		}
@@ -122,12 +122,12 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		sb.append("<tr><th>");
 		sb.append(Translate.getInstance().get(TranslateKeys.TOTAL));
 		sb.append("</th><th class='right" + (totalActual < 0 ? " red'>" : "'>"));
-		sb.append(APICommonFormatter.getFormattedCurrency(totalActual));
+		sb.append(TextFormatter.getFormattedCurrency(totalActual));
 		sb.append("</th><th class='right" + (totalBudgeted < 0 ? " red'>" : "'>"));
-		sb.append(APICommonFormatter.getFormattedCurrency(totalBudgeted));
+		sb.append(TextFormatter.getFormattedCurrency(totalBudgeted));
 		long totalDifference = totalActual - totalBudgeted; 
 		sb.append("</th><th class='right" + (totalDifference < 0 ? " red'>" : "'>"));
-		sb.append(APICommonFormatter.getFormattedCurrency(totalDifference));				
+		sb.append(TextFormatter.getFormattedCurrency(totalDifference));				
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
@@ -145,19 +145,19 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append(Translate.getInstance().get(c.toString()));
 				sb.append("</h2>\n");
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
+				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : transactions) {
-					sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), new ImmutableCategoryImpl(c)));
+					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), new ImmutableCategoryImpl(c)));
 				}
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
+				sb.append(HtmlHelper.getHtmlTransactionFooter());
 			}
 		}
 		
-		sb.append(APICommonHTMLHelper.getHtmlFooter());
+		sb.append(HtmlHelper.getHtmlFooter());
 	
-		return new HTMLWrapper(sb.toString(), null);
+		return new HtmlPage(sb.toString(), null);
 	}
 	
 	public DateRangeType getDateRangeType() {

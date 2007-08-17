@@ -38,6 +38,6 @@ public abstract class SourceBean extends ModelObjectBean {
 	}
 	@Override
 	public String toString() {
-		return getName() + ":0x" + getUid();
+		return getName() + ": " + getUid();
 	}
 }

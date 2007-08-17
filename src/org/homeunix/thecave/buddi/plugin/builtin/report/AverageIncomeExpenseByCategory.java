@@ -15,9 +15,11 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
-import org.homeunix.thecave.buddi.plugin.api.util.APICommonFormatter;
-import org.homeunix.thecave.buddi.plugin.api.util.APICommonHTMLHelper;
-import org.homeunix.thecave.buddi.plugin.api.util.APICommonHTMLHelper.HTMLWrapper;
+import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -44,8 +46,8 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 	}
 
 	@Override
-	public HTMLWrapper getReport(ImmutableModel model, Date startDate, Date endDate) {
-		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getName(), null, startDate, endDate);
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
 		List<ImmutableBudgetCategory> categories = model.getBudgetCategories();
 		Collections.sort(categories, new Comparator<ImmutableBudgetCategory>(){
@@ -81,20 +83,22 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		long totalActual = 0, totalAverage = 0;
 		
 		for (ImmutableBudgetCategory c : categories){
-			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
+			
+			
+			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
 			long actual = 0;
-			for (Transaction transaction : transactions) {
+			for (ImmutableTransaction transaction : transactions) {
 				actual += transaction.getAmount();
 				
-				if (transaction.getTo() instanceof Category){
+				if (transaction.getTo() instanceof ImmutableBudgetCategory){
 					totalActual -= transaction.getAmount();
 				}
-				else if (transaction.getFrom() instanceof Category){
+				else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 					totalActual += transaction.getAmount();
 				}
 			}
 
-			long average = BudgetCalculator.getAverageByInterval(actual, PrefsInstance.getInstance().getSelectedInterval(), startDate, endDate);
+			long average = BudgetCalculator.getAverageByInterval(actual, model.getPeriodType(), startDate, endDate);
 			if (c.isIncome()){
 				totalAverage += average;
 			}
@@ -107,20 +111,20 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(PrefsModel.getInstance().getTranslator().get(c.toString()));
-				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'" : "'") + ">");
-				sb.append(APICommonFormatter.getFormattedCurrency(actual));
-				sb.append("</td><td class='right" + (APICommonFormatter.isRed(new ImmutableCategoryImpl(c), average) ? " red'" : "'") + "'>");
-				sb.append(APICommonFormatter.getFormattedCurrency(average));				
+				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'" : "'") + ">");
+				sb.append(TextFormatter.getFormattedCurrency(actual));
+				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), average) ? " red'" : "'") + "'>");
+				sb.append(TextFormatter.getFormattedCurrency(average));				
 				sb.append("</td></tr>\n");
 			}
 		}
 		
 		sb.append("<tr><th>");
 		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOTAL));
-		sb.append("</th><th class='right" + (APICommonFormatter.isRed(totalActual) ? " red'" : "'") + "'>");
-		sb.append(APICommonFormatter.getFormattedCurrency(totalActual));
-		sb.append("</th><th class='right" + (APICommonFormatter.isRed(totalAverage) ? " red'" : "'") + "'>");
-		sb.append(APICommonFormatter.getFormattedCurrency(totalAverage));
+		sb.append("</th><th class='right" + (TextFormatter.isRed(totalActual) ? " red'" : "'") + "'>");
+		sb.append(TextFormatter.getFormattedCurrency(totalActual));
+		sb.append("</th><th class='right" + (TextFormatter.isRed(totalAverage) ? " red'" : "'") + "'>");
+		sb.append(TextFormatter.getFormattedCurrency(totalAverage));
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
@@ -129,35 +133,31 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		
 		sb.append("<h1>").append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
-		for (Category c : categories){
-			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
+		for (ImmutableBudgetCategory bc : categories){
+			List<ImmutableTransaction> transactions = model.getTransactions(bc, startDate, endDate);
 			
 			
 			if (transactions.size() > 0){
-				sb.append(c.isIncome() ? "<h2>" : "<h2 class='red'>");
-				sb.append(PrefsModel.getInstance().getTranslator().get(c.toString()));
+				sb.append(bc.isIncome() ? "<h2>" : "<h2 class='red'>");
+				sb.append(PrefsModel.getInstance().getTranslator().get(bc.toString()));
 				sb.append("</h2>\n");
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
+				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 
-				for (Transaction t : transactions) {
-					sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), new ImmutableCategoryImpl(c)));
+				for (ImmutableTransaction t : transactions) {
+					sb.append(HtmlHelper.getHtmlTransactionRow(t, bc));
 				}
 
-				sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
+				sb.append(HtmlHelper.getHtmlTransactionFooter());
 			}
 		}
 		
-		sb.append(APICommonHTMLHelper.getHtmlFooter());
+		sb.append(HtmlHelper.getHtmlFooter());
 	
-		return new HTMLWrapper(sb.toString(), null);
+		return new HtmlPage(sb.toString(), null);
 	}
 	
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
-	}
-
 	public String getName() {
 		return PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_TITLE_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY);
 	}

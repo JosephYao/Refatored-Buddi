@@ -3,11 +3,13 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.immutable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetPeriod;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
@@ -43,7 +45,19 @@ public class ImmutableModel {
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions());
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource associatedSource){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions((Source) associatedSource.getRaw()));
+	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions((Source) source.getRaw()));
+	}
+	
+	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions(startDate, endDate));
+	}
+	
+	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions((Source) source.getRaw(), startDate, endDate));
+	}
+	
+	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetPeriod, BudgetPeriod>(model, model.getBudgetPeriodsInRange(startDate, endDate));
 	}
 }

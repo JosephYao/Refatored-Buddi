@@ -9,10 +9,10 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
-import org.homeunix.thecave.buddi.model.FilteredLists.FilteredAccountList;
-import org.homeunix.thecave.buddi.model.FilteredLists.FilteredTypeList;
+import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
+import org.homeunix.thecave.buddi.model.FilteredLists.TypeListFilteredByAccounts;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class AccountTreeTableModel extends AbstractTreeTableModel {
@@ -47,20 +47,20 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 		if (node.getClass().equals(Account.class)){
 			Account a = (Account) node;
 			if (column == 1)
-				return BuddiInternalFormatter.getFormattedNameForAccount(a).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
+				return InternalFormatter.getFormattedNameForAccount(a).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
 			if (column == 2)
-				return BuddiInternalFormatter.getFormattedCurrency(a.getBalance(), a.getType().isCredit());
+				return InternalFormatter.getFormattedCurrency(a.getBalance(), a.getType().isCredit());
 		}
 		if (node.getClass().equals(Type.class)){
 			Type t = (Type) node;
 			if (column == 1)
-				return BuddiInternalFormatter.getFormattedNameForType(t);
+				return InternalFormatter.getFormattedNameForType(t);
 			if (column == 2) {
 				int amount = 0;
-				for (Account a : new FilteredAccountList(model, t)) {
+				for (Account a : new AccountListFilteredByType(model, t)) {
 					amount += a.getBalance();
 				}
-				return BuddiInternalFormatter.getFormattedCurrency(amount, t.isCredit());
+				return InternalFormatter.getFormattedCurrency(amount, t.isCredit());
 			}
 		}
 		return null;
@@ -68,12 +68,12 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
-			List<Type> types = new FilteredTypeList(model);
+			List<Type> types = new TypeListFilteredByAccounts(model);
 			if (childIndex < types.size())
 				return types.get(childIndex);
 		}
 		if (parent instanceof Type){
-			List<Account> accounts = new FilteredAccountList(model, (Type) parent);
+			List<Account> accounts = new AccountListFilteredByType(model, (Type) parent);
 			if (childIndex < accounts.size())
 				return accounts.get(childIndex);
 		}
@@ -82,11 +82,11 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
-			List<Type> types = new FilteredTypeList(model);
+			List<Type> types = new TypeListFilteredByAccounts(model);
 			return types.size();
 		}
 		if (parent instanceof Type){
-			List<Account> accounts = new FilteredAccountList(model, (Type) parent);
+			List<Account> accounts = new AccountListFilteredByType(model, (Type) parent);
 			return accounts.size();
 		}
 		
@@ -98,12 +98,12 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			return -1;
 		
 		if (parent.equals(root) && child instanceof Type){
-			List<Type> types = new FilteredTypeList(model);
+			List<Type> types = new TypeListFilteredByAccounts(model);
 			return types.indexOf(child);
 		}
 		
 		if (parent instanceof Type && child instanceof Account){
-			List<Account> accounts = new FilteredAccountList(model, (Type) parent);
+			List<Account> accounts = new AccountListFilteredByType(model, (Type) parent);
 			return accounts.indexOf(child);
 		}
 		return -1;

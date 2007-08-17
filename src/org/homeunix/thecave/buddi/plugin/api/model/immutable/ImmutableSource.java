@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.Source;
 
-public class ImmutableSource extends ImmutableModelObject {
+public abstract class ImmutableSource extends ImmutableModelObject {
 	
 	public ImmutableSource(Source source) {
 		super(source);

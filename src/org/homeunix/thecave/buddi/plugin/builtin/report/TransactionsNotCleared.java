@@ -5,32 +5,37 @@ package org.homeunix.thecave.buddi.plugin.builtin.report;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.Vector;
+import java.util.LinkedList;
+import java.util.List;
 
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
-import net.sourceforge.buddi.api.manager.DataManager;
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
-import net.sourceforge.buddi.api.manager.DateRangeType;
-import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
-import net.sourceforge.buddi.impl_2_6.model.ImmutableTransactionImpl;
-
-import org.homeunix.drummer.controller.TransactionController;
-import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Transaction;
-import org.homeunix.drummer.prefs.PrefsInstance;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotCleared extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HTMLWrapper getReport(DataManager dataManager, Date startDate, Date endDate) {
+	public Version getMaximumVersion() {
+		return null;
+	}
+	
+	public Version getMinimumVersion() {
+		return null;
+	}
+	
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
-		Vector<Transaction> temp = TransactionController.getTransactions(startDate, endDate);
-		Vector<Transaction> transactions = new Vector<Transaction>();
+		List<ImmutableTransaction> temp = model.getTransactions(startDate, endDate);
+		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();
 		
-		for (Transaction transaction : temp) {
+		for (ImmutableTransaction transaction : temp) {
 			if (!transaction.isCleared()){
 				transactions.add(transaction);
 			}
@@ -39,54 +44,46 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 		Collections.sort(transactions);
 
 		//Output transactions to HTML in StringBuilder
-		StringBuilder sb = APICommonHTMLHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
-		if (!PrefsInstance.getInstance().getPrefs().isShowAdvanced()){
+		if (!PrefsModel.getInstance().isShowCleared()){
 			sb.append("<h1>")
-			.append(Translate.getInstance().get(TranslateKeys.ERROR))
+			.append(TextFormatter.getTranslation(BuddiKeys.ERROR))
 			.append("</h1>");
 			
 			sb.append("<p>")
-			.append(Translate.getInstance().get(TranslateKeys.REPORT_ERROR_ADVANCED_DISPLAY_NOT_ENABLED))
+			.append(TextFormatter.getTranslation(BuddiKeys.REPORT_ERROR_ADVANCED_DISPLAY_NOT_ENABLED))
 			.append("</p>");
 		}
 		else {
 			sb.append("<h1>")
-			.append(Translate.getInstance().get(TranslateKeys.REPORT_TRANSACTIONS_NOT_CLEARED))
+			.append(TextFormatter.getTranslation(BuddiKeys.REPORT_TRANSACTIONS_NOT_CLEARED))
 			.append("</h1>");
 
-			sb.append(APICommonHTMLHelper.getHtmlTransactionHeader());
+			sb.append(HtmlHelper.getHtmlTransactionHeader());
 			
-			for (Transaction t : transactions) {
-				sb.append(APICommonHTMLHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));	
+			for (ImmutableTransaction t : transactions) {
+				sb.append(HtmlHelper.getHtmlTransactionRow(t, null));	
 			}
 		
-			sb.append(APICommonHTMLHelper.getHtmlTransactionFooter());
+			sb.append(HtmlHelper.getHtmlTransactionFooter());
 		}
 		
-		sb.append(APICommonHTMLHelper.getHtmlFooter());
+		sb.append(HtmlHelper.getHtmlFooter());
 		
 		//Wrap in HTMLWrapper for return
-		return new HTMLWrapper(sb.toString(), null);
-	}
-	
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
+		return new HtmlPage(sb.toString(), null);
 	}
 	
 	public String getDescription() {
-		return TranslateKeys.REPORT_DESCRIPTION_TRANSACTIONS_NOT_CLEARED.toString();
+		return TextFormatter.getTranslation(BuddiKeys.REPORT_DESCRIPTION_TRANSACTIONS_NOT_CLEARED);
 	}
 	
-	public String getTitle() {
-		return TranslateKeys.REPORT_TITLE_TRANSACTIONS_NOT_CLEARED.toString();
+	public String getName() {
+		return TextFormatter.getTranslation(BuddiKeys.REPORT_TITLE_TRANSACTIONS_NOT_CLEARED);
 	}
 	
-	public boolean isPluginActive(DataManager dataManager) {
-		return PrefsInstance.getInstance().getPrefs().isShowAdvanced();
-	}
-	public Version getAPIVersion() {
-//		return new Version("2.3.4");
-		return null;
+	public boolean isPluginActive() {
+		return PrefsModel.getInstance().isShowCleared();
 	}
 }

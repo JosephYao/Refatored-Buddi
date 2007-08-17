@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
-public class Transaction extends ModelObject implements Comparable<Transaction>{	
+public class Transaction extends ModelObject {	
 	public Transaction(DataModel model, Date date, String description, long amount, Source from, Source to) {
 		this(model, new TransactionBean());
 
@@ -165,31 +165,35 @@ public class Transaction extends ModelObject implements Comparable<Transaction>{
 		getTransactionBean().volatileSetBalanceTo(balanceTo);
 	}
 
-	public int compareTo(Transaction arg0) {
-		if (this.equals(arg0))
-			return 0;
-		
-		//We want to sort schedued transactions by name, for the list
-		if (getTransactionBean() instanceof ScheduledTransactionBean && arg0.getTransactionBean() instanceof ScheduledTransactionBean)
-			return ((ScheduledTransactionBean) getTransactionBean()).getScheduleName().compareTo(((ScheduledTransactionBean) arg0.getTransactionBean()).getScheduleName());
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof Transaction){
+			Transaction t = (Transaction) arg0;
+			if (this.equals(t))
+				return 0;
 
-		//For regular transactions, first we sort by date 
-		if (!DateFunctions.isSameDay(this.getDate(), arg0.getDate()))
-			return this.getDate().compareTo(arg0.getDate());
+			//We want to sort schedued transactions by name, for the list
+			if (getTransactionBean() instanceof ScheduledTransactionBean && t.getTransactionBean() instanceof ScheduledTransactionBean)
+				return ((ScheduledTransactionBean) getTransactionBean()).getScheduleName().compareTo(((ScheduledTransactionBean) t.getTransactionBean()).getScheduleName());
 
-		//Next we sort by debit / credit.  This is a nebulous beast, because of negative 
-		// amounts, credit accounts, splits, etc.
-		// We check the transaction source, and use some logic to determine if this means it
-		// is inflow or outflow. 
-		if (this.isInflow() != arg0.isInflow()){
-			if (this.isInflow())
-				return -1;
-			return 1;
+			//For regular transactions, first we sort by date 
+			if (!DateFunctions.isSameDay(this.getDate(), t.getDate()))
+				return this.getDate().compareTo(t.getDate());
+
+			//Next we sort by debit / credit.  This is a nebulous beast, because of negative 
+			// amounts, credit accounts, splits, etc.
+			// We check the transaction source, and use some logic to determine if this means it
+			// is inflow or outflow. 
+			if (this.isInflow() != t.isInflow()){
+				if (this.isInflow())
+					return -1;
+				return 1;
+			}
+
+			//If everything else is the same, we sort on description.
+			else 
+				return this.getDescription().compareTo(t.getDescription());
 		}
-		
-		//If everything else is the same, we sort on description.
-		else 
-			return this.getDescription().compareTo(arg0.getDescription());
+		return super.compareTo(arg0);
 	}
 
 	public boolean isInflow(){

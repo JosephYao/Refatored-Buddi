@@ -52,49 +52,25 @@ public class PrefsModel {
 			XMLDecoder prefsDecoder = new XMLDecoder(new FileInputStream(prefsFile));
 			prefsModel = (PrefsModelBean) prefsDecoder.readObject();
 		}
-		catch (FileNotFoundException fnfe){
-			//There was a problem loading the file; create a new one.
-			prefsModel = new PrefsModelBean();
-			prefsModel.setCurrencySign("$");
-			prefsModel.setLanguage("English"); //TODO Prompt for language
-			prefsModel.setNumberOfBackups(10);
-			prefsModel.setShowAutoComplete(true);
-			prefsModel.setShowDeleted(true);
-
-			if (getLastVersion() == null || Const.VERSION.isGreaterPatch(getLastVersion())){
-				String[] options = new String[2];
-				options[0] = getTranslator().get(ButtonKeys.BUTTON_OK);
-				options[1] = getTranslator().get(ButtonKeys.BUTTON_CANCEL);
-
-				if (JOptionPane.showOptionDialog(
-						null, 
-						getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE),
-						getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.WARNING_MESSAGE,
-						null,
-						options,
-						options[0]
-				) == 1)  //The index of the Cancel button.
-					System.exit(0);
-
-
-				//Make a backup of the last data file, just to be safe...
-				if (getLastDataFile() != null){
-					File dataFile = getLastDataFile();
-					File backupDataFile = new File(getLastDataFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + "_" + Const.VERSION + "_" + Const.BACKUP_FILE_EXTENSION);
-					try {
-						FileFunctions.copyFile(dataFile, backupDataFile);
-					}
-					catch (IOException ioe){
-						Log.warning("Error backing up file: " + ioe);
-					}
-				}
-			}
-
-			//Save the file
-			save();
+		catch (RuntimeException re){
+			newPrefsFile();
 		}
+		catch (Exception e){
+			newPrefsFile();
+		}
+	}
+	
+	private void newPrefsFile(){
+		//There was a problem loading the file; create a new one.
+		prefsModel = new PrefsModelBean();
+		prefsModel.setCurrencySign("$");
+		prefsModel.setLanguage("English"); //TODO Prompt for language
+		prefsModel.setNumberOfBackups(10);
+		prefsModel.setShowAutoComplete(true);
+		prefsModel.setShowDeleted(true);
+
+		//Save the file
+		save();
 	}
 
 	public void save() {

@@ -31,7 +31,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AccountTreeTableModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.AccountFrameMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
@@ -196,7 +196,7 @@ public class AccountFrame extends MossDocumentFrame {
 			netWorth += a.getBalance();
 		}
 		
-		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + BuddiInternalFormatter.getFormattedCurrency(netWorth));
+		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + InternalFormatter.getFormattedCurrency(netWorth));
 	}
 	
 	@Override

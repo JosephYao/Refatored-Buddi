@@ -40,7 +40,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.TransactionsFrameMenuBar;
 import org.homeunix.thecave.buddi.view.swing.TransactionCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
@@ -112,10 +112,10 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 							}
 
 							sb.append("<br>");
-							if (BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
+							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
 								sb.append("<font color='red'>");
-							sb.append(BuddiInternalFormatter.getFormattedCurrency(transaction.getAmount()));
-							if (BuddiInternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
+							sb.append(InternalFormatter.getFormattedCurrency(transaction.getAmount()));
+							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
 								sb.append("</font>");
 
 							sb.append("  ");
@@ -204,7 +204,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
 		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
 		searchField.setMaximumSize(searchField.getPreferredSize());
-		dateFilterComboBox.setPreferredSize(BuddiInternalFormatter.getComboBoxSize(dateFilterComboBox));
+		dateFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(dateFilterComboBox));
 //		dateFilterComboBox.setMaximumSize(dateFilterComboBox.getPreferredSize());
 
 

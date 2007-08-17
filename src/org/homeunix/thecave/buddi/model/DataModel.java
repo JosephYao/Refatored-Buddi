@@ -24,8 +24,8 @@ import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
-import org.homeunix.thecave.buddi.model.FilteredLists.FilteredAccountList;
-import org.homeunix.thecave.buddi.model.FilteredLists.FilteredBudgetCategoryList;
+import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
+import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperAccountList;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperBudgetCategoryList;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperScheduledTransactionList;
@@ -39,9 +39,9 @@ import org.homeunix.thecave.buddi.model.converter.ModelConverter;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
-import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
 public class DataModel extends AbstractDocument {
@@ -198,24 +198,7 @@ public class DataModel extends AbstractDocument {
 	 * @return
 	 */
 	public Date getStartOfBudgetPeriod(Date date){
-		if (getPeriodType().equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
-			throw new DataModelProblemException("Weekly period not implemented!", this);
-		}
-		if (getPeriodType().equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!", this);
-		}
-		if (getPeriodType().equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
-			return DateFunctions.getStartOfMonth(date);
-		}
-		if (getPeriodType().equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
-			throw new DataModelProblemException("Quarterly period not implemented!", this);
-		}
-
-		if (getPeriodType().equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
-			throw new DataModelProblemException("Yearly period not implemented!", this);
-		}
-
-		throw new DataModelProblemException("Period " + getPeriodType() + " period not implemented!", this);
+		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
 	}
 
 	public BudgetPeriodKeys getPeriodType() {
@@ -271,6 +254,26 @@ public class DataModel extends AbstractDocument {
 	public BudgetPeriod getBudgetPeriod(Date periodDate){
 		return getBudgetPeriod(getPeriodKey(periodDate));
 	}
+	
+	/**
+	 * Returns a list of BudgetPeriods, covering the entire range of periods
+	 * occupied by startDate to endDate.
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<BudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
+		List<BudgetPeriod> budgetPeriods = new LinkedList<BudgetPeriod>();
+		
+		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), startDate);
+		
+		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), endDate))){
+			budgetPeriods.add(getBudgetPeriod(temp));
+			temp = BudgetPeriodUtil.getNextBudgetPeriod(getPeriodType(), temp);
+		}
+		
+		return budgetPeriods;
+	}
 
 	public BudgetPeriod getBudgetPeriod(String periodKey){
 		if (dataModel.getBudgetPeriods().get(periodKey) == null) {
@@ -296,18 +299,27 @@ public class DataModel extends AbstractDocument {
 	}
 
 	/**
-	 * Returns transactions which are associated with the given source.  The implemented
-	 * list filter also checks the value of the search box and various pulldowns
-	 * via setSearch() etc methods.
-	 * @param associatedSource
+	 * Returns transactions which are associated with the given source.  This list will update
+	 * with changes to the data model.
+	 * @param source
 	 * @return
 	 */
-	public List<Transaction> getTransactions(Source associatedSource){
-		return new FilteredLists.FilteredTransactionList(this, associatedSource);
+	public List<Transaction> getTransactions(Source source){
+		return new FilteredLists.TransactionListFilteredBySource(this, this.getTransactions(), source);
 	}
 	
-	public List<Transaction> getTransactions(Source associatedSource, Date startDate, Date endDate){
-		return new FilteredLists.FilteredTransactionList(this, associatedSource);
+	public List<Transaction> getTransactions(Date startDate, Date endDate){
+		return new FilteredLists.TransactionListFilteredByDate(this,
+				this.getTransactions(),
+				startDate,
+				endDate);
+	}
+	
+	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate){
+		return new FilteredLists.TransactionListFilteredByDate(this,
+				this.getTransactions(source),
+				startDate,
+				endDate);
 	}
 
 	public List<Type> getTypes() {
@@ -377,7 +389,7 @@ public class DataModel extends AbstractDocument {
 	public void removeBudgetCategory(BudgetCategory budgetCategory){
 		checkValid(budgetCategory, false, false);
 
-		List<BudgetCategory> catsToDelete = new FilteredLists.FilteredBudgetCategoryChildrenList(this, budgetCategory);
+		List<BudgetCategory> catsToDelete = new FilteredLists.BudgetCategoryListFilteredByChildren(this, budgetCategory);
 
 		//We either delete all the categories permanently, or none.
 		// We run through each one and test to see if we can delete
@@ -467,6 +479,8 @@ public class DataModel extends AbstractDocument {
 		}
 		
 		if (isAddOperation || isUidRefresh){
+			System.out.println(object.getBean());
+			System.out.println(object.getBean().getUid());
 			if (uidMap.get(object.getBean().getUid()) != null)
 				//TODO Do something drastic here... perhaps save an emergency data file, prompt, and quit.
 				throw new DataModelProblemException("Identical UID already in model!  Model is probably corrupt!", this); 
@@ -538,7 +552,7 @@ public class DataModel extends AbstractDocument {
 		for (Type t : getTypes()) {
 			sb.append(t).append("\n");
 
-			for (Account a : new FilteredAccountList(this, t)) {
+			for (Account a : new AccountListFilteredByType(this, t)) {
 				sb.append("\t").append(a).append("\n");
 			}
 		}
@@ -547,11 +561,11 @@ public class DataModel extends AbstractDocument {
 
 		//We only show 3 levels here; if there are more, we figure that it is not needed to
 		// output them in the toString method, as it is just for troubleshooting.
-		for (BudgetCategory bc : new FilteredBudgetCategoryList(this, null)) {
+		for (BudgetCategory bc : new BudgetCategoryListFilteredByParent(this, null)) {
 			sb.append(bc).append("\n");
-			for (BudgetCategory child1 : new FilteredBudgetCategoryList(this, bc)) {
+			for (BudgetCategory child1 : new BudgetCategoryListFilteredByParent(this, bc)) {
 				sb.append("\t").append(child1).append("\n");
-				for (BudgetCategory child2 : new FilteredBudgetCategoryList(this, child1)) {
+				for (BudgetCategory child2 : new BudgetCategoryListFilteredByParent(this, child1)) {
 					sb.append("\t\t").append(child2).append("\n");	
 				}				
 			}

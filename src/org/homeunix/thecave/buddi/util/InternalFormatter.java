@@ -18,7 +18,7 @@ import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.util.Formatter;
 
-public class BuddiInternalFormatter {
+public class InternalFormatter {
 	public static DateFormat getDateFormat(){
 		return Formatter.getDateFormat(PrefsModel.getInstance().getDateFormat());
 	}

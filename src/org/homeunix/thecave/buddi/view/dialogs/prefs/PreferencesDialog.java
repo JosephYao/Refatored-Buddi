@@ -15,7 +15,7 @@ import javax.swing.JTabbedPane;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiInternalFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.swing.window.MossFrame;
 
 public class PreferencesDialog extends MossFrame implements ActionListener {
@@ -67,8 +67,8 @@ public class PreferencesDialog extends MossFrame implements ActionListener {
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(okButton);
 
-		okButton.setPreferredSize(BuddiInternalFormatter.getButtonSize(okButton));
-		cancelButton.setPreferredSize(BuddiInternalFormatter.getButtonSize(cancelButton));
+		okButton.setPreferredSize(InternalFormatter.getButtonSize(okButton));
+		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));
 		
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);

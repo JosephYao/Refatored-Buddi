@@ -10,7 +10,7 @@ import java.util.List;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.FilteredLists.FilteredBudgetCategoryList;
+import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
@@ -97,12 +97,12 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new FilteredBudgetCategoryList(model, null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, null);
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new FilteredBudgetCategoryList(model, (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent);
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
@@ -111,11 +111,11 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new FilteredBudgetCategoryList(model, null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, null);
 			return budgetCategories.size();
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new FilteredBudgetCategoryList(model, (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent);
 			return budgetCategories.size();
 		}
 		
@@ -127,10 +127,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			return -1;
 		
 		if (parent.equals(root) && child instanceof BudgetCategory){
-			return new FilteredBudgetCategoryList(model, null).indexOf(child);
+			return new BudgetCategoryListFilteredByParent(model, null).indexOf(child);
 		}
 		if (parent instanceof BudgetCategory && child instanceof BudgetCategory){
-			return new FilteredBudgetCategoryList(model, (BudgetCategory) parent).indexOf(child);
+			return new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent).indexOf(child);
 		}
 		return -1;
 	}
