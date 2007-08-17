@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
@@ -44,8 +46,8 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 		
 		JPanel pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
+		pluginsPanel.setBorder(BorderFactory.createTitledBorder(""));
 						
-		//TODO Create the correct pulldowns
 		for (BuddiReportPlugin report : BuddiPluginFactory.getReportPlugins()) {
 			//Select the correct options for the dropdown, based on the plugin
 			Vector<DateChoice> dateChoices;
@@ -79,13 +81,8 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 
 						//As long as the choice is not custom, our job is easy
 						if (!choice.isCustom()){
-							//Launch a new reports window with given parameters
-							
-//							BuddiPluginHelper.openNewPanelPluginWindow(
-//									report, 
-//									choice.getStartDate(), 
-//									choice.getEndDate()
-//							);
+							//Launch a new reports window with given parameters							
+							BuddiPluginHelper.openReport(ReportFrame.this, finalReport, choice.getStartDate(), choice.getEndDate());
 						}
 						//If they want a custom window, it's a little 
 						// harder... we need to open the custom date
@@ -107,7 +104,7 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 		
 		
 		this.setLayout(new BorderLayout());
-		this.add(pluginsPanel, BorderLayout.CENTER);
+		this.add(pluginsPanel, BorderLayout.NORTH);
 		this.setJMenuBar(new ReportFrameMenuBar(this));
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_REPORTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));

@@ -175,7 +175,7 @@ public class PrefsModel {
 	public Dimension getReportWindowSize() {
 		return (prefsModel.getReportsPlacement().getSize() != null
 				? prefsModel.getReportsPlacement().getSize() 
-						: new Dimension(500, 600));
+						: new Dimension(800, 400));
 	}
 
 	public Dimension getPreferencesWindowSize() {

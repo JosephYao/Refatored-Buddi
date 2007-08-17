@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
@@ -85,5 +86,10 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 	
 	public boolean isPluginActive() {
 		return PrefsModel.getInstance().isShowCleared();
+	}
+	
+	@Override
+	public PluginReportDateRangeChoices getDateRangeChoice() {
+		return PluginReportDateRangeChoices.INTERVAL;
 	}
 }
