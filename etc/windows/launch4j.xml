@@ -1,0 +1,32 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>0</headerType>
+  <jar>Buddi.jar</jar>
+  <outfile>Buddi.exe</outfile>
+  <errTitle>Buddi</errTitle>
+  <jarArgs></jarArgs>
+  <chdir>.</chdir>
+  <customProcName>false</customProcName>
+  <stayAlive>true</stayAlive>
+  <icon>img/buddi.ico</icon>
+  <jre>
+    <path>java/</path>
+    <minVersion>1.5.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>2</initialHeapSize>
+    <maxHeapSize>128</maxHeapSize>
+    <args></args>
+  </jre>
+  <versionInfo>
+    <fileVersion>VERSION</fileVersion>
+    <txtFileVersion>VERSION_LONG</txtFileVersion>
+    <fileDescription>Personal finance and budget software</fileDescription>
+    <copyright>Wyatt Olson</copyright>
+    <productVersion>VERSION</productVersion>
+    <txtProductVersion>VERSION_LONG</txtProductVersion>
+    <productName>Buddi</productName>
+    <companyName>Wyatt Olson</companyName>
+    <internalName>Buddi</internalName>
+    <originalFilename>Buddi.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

@@ -1,0 +1,30 @@
+/*
+ * Created on Aug 8, 2007 by wyatt
+ */
+package org.homeunix.thecave.buddi.i18n.keys;
+
+public enum ButtonKeys {
+    BUTTON_ADD,
+    BUTTON_CANCEL,
+    BUTTON_CLEAR,
+    BUTTON_CREATE_NEW_TRANSACTION,
+    BUTTON_DELETE,
+    BUTTON_DONATE,
+    BUTTON_DONE,
+    BUTTON_DOWNLOAD,
+    BUTTON_EDIT,
+    BUTTON_NEW,
+    BUTTON_NEW_DATA_FILE,
+    BUTTON_NO,
+    BUTTON_NOT_NOW,
+    BUTTON_OK,
+    BUTTON_OPEN_DATA_FILE,
+    BUTTON_OTHER,
+    BUTTON_OVERWRITE_TRANSACTON,
+    BUTTON_RECORD,
+    BUTTON_REPLACE,
+    BUTTON_REMOVE,
+    BUTTON_UNDELETE,
+    BUTTON_UPDATE,
+    BUTTON_YES,
+}

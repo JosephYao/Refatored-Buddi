@@ -1,0 +1,63 @@
+Suggested Standard Formatting:
+
+Accounts:
+//Note: Account balances reflect net worth.  If a credit account it negative, the net worth is positive.
+//Credit account / TypeTotal Names should show up Red; Debit should show as Black, regardless of totals
+//Account / TypeTotal Balance Amounts should display based on the following table:
+Debit >= 0: Black
+Debit < 0: Red, Negative
+
+Credit <= 0: Red
+Credit > 0: Black, Negative
+
+Categories:
+//Categories are all shown as positive, regardless of income.  We therefore have to use special logic for the expense ones.
+//Expense Category names should show up Red; Income as Black, regardless of totals
+//Category Budgeted Amounts should show up based on the table below:
+Income >= 0: Black
+Income < 0: Red, Negative 
+
+Expense >= 0: Red
+Expense < 0: Black, Negative 
+
+Transactions:
+//All transaction text (non-numerical) should be black
+//Balances should show according to the rules for accounts above, based on which account the given transaction window is open for.
+//Transfer Amounts should display as follows:
+Amount+ <= This Account: Red, Positive, Left Column
+Amount- <= This Account: Black, Negative, Left Column
+Amount+ => This Account: Black, Positive, Right Column 
+Amount- => This Account: Red, Negative, Right Column
+
+//If there is no associated account (i.e., for some reports), Transaction values should display as follows:
+//From	To	+/-	Color
+A	A	+	Black
+A	A	-	Red
+A	C	+	Red
+A	C	-	Black
+C	A	+	Black
+C	A	-	Red
+
+Simplified, this is equivalent to If "To == Category && Value >= 0" or "To == Account && Value < 0" then value is Red.
+
+
+Totals:
+//Generic account totals should always be expressed as a Debit account.  The only exception to this is TypeTotal when the type is credit; in this case, they should be shown as a Credit account 
+
+Standard Report / Graph Format:
+<h1>Report Title</h1>
+<h2>Report Date</h2>
+<hr>
+<h1>Section</h1>
+<h2>Subsection</h2> 
+Content
+<h2>Subsection</h2>
+Content
+....
+<hr>
+<h1>Section</h1>
+<h2>Subsection</h2>
+Content
+<h2>Subsection</h2>
+Content
+....

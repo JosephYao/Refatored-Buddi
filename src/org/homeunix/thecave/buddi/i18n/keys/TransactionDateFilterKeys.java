@@ -1,0 +1,14 @@
+/*
+ * Created on Aug 10, 2007 by wyatt
+ */
+package org.homeunix.thecave.buddi.i18n.keys;
+
+public enum TransactionDateFilterKeys {
+    TRANSACTION_FILTER_ALL,
+    TRANSACTION_FILTER_THIS_YEAR,
+    TRANSACTION_FILTER_THIS_QUARTER,
+    TRANSACTION_FILTER_THIS_MONTH,
+    TRANSACTION_FILTER_THIS_WEEK,
+    TRANSACTION_FILTER_TODAY,
+    TRANSACTION_FILTER_LAST_YEAR,
+}
