@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.view.menu.bars;
 
-import org.homeunix.thecave.buddi.view.TransactionsFrame;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.buddi.view.menu.menus.FileMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.HelpMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.TransactionsFrameEditMenu;
@@ -13,7 +13,7 @@ import org.homeunix.thecave.moss.swing.menu.MossMenuBar;
 public class TransactionsFrameMenuBar extends MossMenuBar {
 	public static final long serialVersionUID = 0;
 	
-	public TransactionsFrameMenuBar(TransactionsFrame frame) {
+	public TransactionsFrameMenuBar(TransactionFrame frame) {
 		super(frame);
 		
 		this.add(new FileMenu(frame));

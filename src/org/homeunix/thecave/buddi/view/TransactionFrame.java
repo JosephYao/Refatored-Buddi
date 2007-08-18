@@ -55,7 +55,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class TransactionsFrame extends MossAssociatedDocumentFrame implements ActionListener {
+public class TransactionFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;	
 
 	private static final int MIN_WIDTH = 400;
@@ -76,7 +76,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 
 	private boolean disableListEvents = false;
 
-	public TransactionsFrame(DataModel model, AccountFrame parent, Account account){
+	public TransactionFrame(DataModel model, AccountFrame parent, Account account){
 		super(parent, "Transactions" + model.getUid() + account.getFullName());
 		this.associatedAccount = account;
 		this.listModel = new TransactionListModel(model, account);
@@ -112,10 +112,10 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 							}
 
 							sb.append("<br>");
-							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
+							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
 								sb.append("<font color='red'>");
 							sb.append(InternalFormatter.getFormattedCurrency(transaction.getAmount()));
-							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionsFrame.this.associatedAccount)))
+							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
 								sb.append("</font>");
 
 							sb.append("  ");
@@ -144,7 +144,6 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 
 		//Set up the editing portion
 		transactionEditor = new TransactionEditor(model, associatedAccount, false);
-		transactionEditor.open();
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
@@ -157,7 +156,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 	 * @param account
 	 * @param transaction
 	 */
-	public TransactionsFrame(AccountFrame parent, DataModel model, Account account, Transaction transaction) {
+	public TransactionFrame(AccountFrame parent, DataModel model, Account account, Transaction transaction) {
 		this(model, parent, account);
 
 		// Iterate backwards through the list of transacations, looking for the transaction
@@ -332,13 +331,13 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent arg0) {
-				if (!arg0.getValueIsAdjusting() && !TransactionsFrame.this.disableListEvents){
+				if (!arg0.getValueIsAdjusting() && !TransactionFrame.this.disableListEvents){
 					//Check if the user has changed the selected transaction
 					if (transactionEditor.isChanged() 
 							&& transactionEditor.getTransaction() != (Transaction) list.getSelectedValue()){
 						int ret;
 
-						if (transactionEditor.isTransactionValid(TransactionsFrame.this.associatedAccount)){
+						if (transactionEditor.isTransactionValid(TransactionFrame.this.associatedAccount)){
 							String[] options = new String[2];
 							options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_YES);
 							options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
@@ -620,7 +619,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 				options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 				JOptionPane.showOptionDialog(
-						TransactionsFrame.this,
+						TransactionFrame.this,
 						PrefsModel.getInstance().getTranslator().get(BuddiKeys.RECORD_BUTTON_ERROR),
 						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
 						JOptionPane.DEFAULT_OPTION,
@@ -718,7 +717,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 
 			if (!transactionEditor.isChanged()
 					|| JOptionPane.showOptionDialog(
-							TransactionsFrame.this,
+							TransactionFrame.this,
 							PrefsModel.getInstance().getTranslator().get(BuddiKeys.CLEAR_TRANSACTION_LOSE_CHANGES),
 							PrefsModel.getInstance().getTranslator().get(BuddiKeys.CLEAR_TRANSACTION),
 							JOptionPane.YES_NO_OPTION,
@@ -741,7 +740,7 @@ public class TransactionsFrame extends MossAssociatedDocumentFrame implements Ac
 			options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
 
 			if (JOptionPane.showOptionDialog(
-					TransactionsFrame.this, 
+					TransactionFrame.this, 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION_LOSE_CHANGES),
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION),
 					JOptionPane.YES_NO_OPTION,

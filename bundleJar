@@ -20,12 +20,12 @@
 ############################
 
 function init {
-	BUDDI_HOME=/Users/wyatt/Documents/Programming/Workplace/Buddi_Alpha
+	BUDDI_HOME=/Users/wyatt/Documents/Programming/Workplace/Buddi_Development
 	FATJAR_PATH=/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar
 	export BUDDI_HOME
 	export FATJAR_PATH
 
-	DEST=/Users/wyatt/Desktop/Buddi_Alpha
+	DEST=/Users/wyatt/Desktop/Buddi_Development
 	DEBIANROOT=$DEST/Debian
 	DEBIAN=$DEBIANROOT/Buddi
 	SLACKROOT=$DEST/Slackware
@@ -37,7 +37,9 @@ function init {
 	WINDOWSROOT=$DEST/Windows
 	WINDOWS=$WINDOWSROOT/Buddi
 	SOURCE=source
-	VERSION=`grep 'String VERSION = ' src/org/homeunix/drummer/Const.java | cut -f 7 -d ' ' | sed -e 's/";//' | sed -e 's/"//'`
+	VERSION=` grep 'Version VERSION = ' src/org/homeunix/thecave/buddi/Const.java | cut -f 8 -d ' ' | sed -e 's/");//' | sed -e 's/Version("//'`
+
+	echo "Bundling Buddi version $VERSION"
 
 	# Ensure that the changelog is updated, if this is a public release.
 	if [ "$1" == "--release" ]; then

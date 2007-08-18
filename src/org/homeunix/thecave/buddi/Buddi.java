@@ -146,6 +146,16 @@ public class Buddi {
 	 */
 	private static void launchGUI(){
 		
+		if (JOptionPane.showConfirmDialog(
+				null, 
+				"WARNING:\n\nThis version of Buddi is currently under active development,\nand sould be considered Alpha quality code.  There are many\nfeatures which are not completely implemented, and many\nothers which contain bugs.\n\nFurthermore, the data model currently in place will likely\nchange before this is publicly released.\n\nYou should *NOT* use this version of software for any data\nthat matters - it is only a development preview of\nthe upcoming version.\n\nIf you are looking for stable budgeting software,\nplease use Buddi 2.6, available for free at http://buddi.sourceforge.net.\n\nIf you understand the risk, and still want to run this\nversion, hit OK.  Hit Cancel to exit.",
+				"Warning",
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE
+		) == JOptionPane.CANCEL_OPTION)  //The index of the Cancel button.
+			System.exit(0);
+		
+		
 		if (PrefsModel.getInstance().getLastVersion() == null || Const.VERSION.isGreaterPatch(PrefsModel.getInstance().getLastVersion())){
 			String[] options = new String[2];
 			options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
@@ -225,6 +235,7 @@ public class Buddi {
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
+				arg1.printStackTrace(Log.getPrintStream());
 				if (arg1 instanceof DataModelProblemException)
 					sendBugReport(((DataModelProblemException) arg1).getDataModel());
 				else

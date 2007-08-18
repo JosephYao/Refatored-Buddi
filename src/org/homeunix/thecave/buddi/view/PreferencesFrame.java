@@ -1,7 +1,7 @@
 /*
  * Created on May 6, 2006 by wyatt
  */
-package org.homeunix.thecave.buddi.view.dialogs.prefs;
+package org.homeunix.thecave.buddi.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,9 +16,14 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.AdvancedPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.LocalePreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.NetworkPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.PluginPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.ViewPreferences;
 import org.homeunix.thecave.moss.swing.window.MossFrame;
 
-public class PreferencesDialog extends MossFrame implements ActionListener {
+public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
 	
 	private final JTabbedPane tabs;
@@ -32,7 +37,7 @@ public class PreferencesDialog extends MossFrame implements ActionListener {
 	private final JButton okButton;
 	private final JButton cancelButton;
 	
-	public PreferencesDialog(MossFrame frame) {
+	public PreferencesFrame(MossFrame frame) {
 		super(frame);
 		
 		tabs = new JTabbedPane();
@@ -51,12 +56,6 @@ public class PreferencesDialog extends MossFrame implements ActionListener {
 	public void init() {
 		super.init();
 
-		view.open();
-		plugin.open();
-		locale.open();
-		network.open();
-		advanced.open();
-		
 		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.VIEW), view);
 		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.PLUGINS), plugin);
 		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.LOCALE), locale);

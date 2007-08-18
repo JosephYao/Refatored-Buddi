@@ -63,6 +63,7 @@ public class PrefsModel {
 		prefsModel.setNumberOfBackups(10);
 		prefsModel.setShowAutoComplete(true);
 		prefsModel.setShowDeleted(true);
+		prefsModel.setSendCrashReports(true);
 
 		//Save the file
 		save();
@@ -71,6 +72,8 @@ public class PrefsModel {
 	public void save() {
 		if (prefsFile != null){
 			try {
+				if (!prefsFile.getParentFile().exists())
+					prefsFile.getParentFile().mkdirs();
 				XMLEncoder encoder = new XMLEncoder(new FileOutputStream(prefsFile));
 				encoder.writeObject(prefsModel);
 				encoder.flush();
@@ -172,6 +175,12 @@ public class PrefsModel {
 						: new Dimension(600, 400));
 	}
 
+	public Dimension getScheduledTransactionWindowSize() {
+		return (prefsModel.getScheduledPlacement().getSize() != null
+				? prefsModel.getScheduledPlacement().getSize() 
+						: new Dimension(600, 400));
+	}
+	
 	public Dimension getReportWindowSize() {
 		return (prefsModel.getReportsPlacement().getSize() != null
 				? prefsModel.getReportsPlacement().getSize() 
@@ -202,6 +211,12 @@ public class PrefsModel {
 						: new Point(100, 100));
 	}
 
+	public Point getScheduledTransactionWindowLocation() {
+		return (prefsModel.getScheduledPlacement().getLocation() != null
+				? prefsModel.getScheduledPlacement().getLocation() 
+						: new Point(100, 100));
+	}
+
 	public Point getReportWindowLocation() {
 		return (prefsModel.getReportsPlacement().getLocation() != null
 				? prefsModel.getReportsPlacement().getLocation() 
@@ -228,6 +243,11 @@ public class PrefsModel {
 		if (size != null)
 			prefsModel.getTransactionsPlacement().setSize(size);
 	}
+	
+	public void setScheduledTransactionWindowSize(Dimension size){
+		if (size != null)
+			prefsModel.getScheduledPlacement().setSize(size);
+	}
 
 	public void setReportWindowSize(Dimension size){
 		if (size != null)
@@ -253,6 +273,11 @@ public class PrefsModel {
 	public void setTransactionWindowLocation(Point location){
 		if (location != null)
 			prefsModel.getTransactionsPlacement().setLocation(location);
+	}
+
+	public void setScheduledTransactionWindowLocation(Point location){
+		if (location != null)
+			prefsModel.getScheduledPlacement().setLocation(location);
 	}
 
 	public void setReportWindowLocation(Point location){

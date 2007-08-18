@@ -9,9 +9,10 @@ Special thanks go out to the people who helped in the creation of Buddi.  These 
 
 <ul>
 <li>My wife, Monica, for putting up with me during the long coding sessions</li>
-<li>John Didion for adding encrypted data files, and other various patches</li>
-<li>Too many people to list for various translations</li>
+<li>A long list of people for submitting the various translations</li>
+<li>Even more people who submitted patches, suggested feature requests, tested new Development releases, bounced ideas around with me, and helped out in making Buddi the simplest and best budgeting software on the web!</li>
 <li><a href='http://www.randelshofer.ch/quaqua/download.html'>Quaqua</a>: Native Macintosh look and feel for Java applications</li>
+<li><a href='http://swinglabs.org/'>SwingX</a>: Large collection of extenstions to Java</li> 
 <li><a href='http://www.jfree.org/jfreechart/'>JFreeChart</a>: Charting library for Java</li>
 <li><a href='http://homepage.mac.com/sroy/mrjadapter/'>MRJAdapter</a>: Library which helps in the creation of native-feeling cross platform Java applications</li>
 <li><a href='http://www.toedter.com/en/jcalendar/'>JCalendar</a>: Swing date chooser widgets</li>
@@ -25,7 +26,7 @@ Special thanks go out to the people who helped in the creation of Buddi.  These 
 </ul>
 
 <p>
-Of course, I give a special thank you to all of the project donors:
+Of course, I give a special thank you to all of the project donors.  The most recent ones are listed here:
 </p>
 
 <? include "../inc/donors.php" ?>

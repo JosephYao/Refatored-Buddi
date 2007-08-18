@@ -168,7 +168,7 @@ public class AccountFrame extends MossDocumentFrame {
 		updateButtons();
 		
 		this.setJMenuBar(new AccountFrameMenuBar(this));
-		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
+		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
 		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);

@@ -8,11 +8,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,8 +34,7 @@ import org.homeunix.thecave.buddi.view.ReportFrame;
 import org.homeunix.thecave.moss.swing.window.MossDialog;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
-
-import com.toedter.calendar.JDateChooser;
+import org.jdesktop.swingx.JXDatePicker;
 
 /**
  * The dialog which allows users to choose a custom date range, or
@@ -52,8 +53,8 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 	protected final JLabel mainLabel;
 	protected final JLabel middleLabel;
 
-	protected final JDateChooser startDateChooser;
-	protected final JDateChooser endDateChooser;
+	protected final JXDatePicker startDateChooser;
+	protected final JXDatePicker endDateChooser;
 
 	protected final BuddiReportPlugin report;
 	private final ReportFrame reportFrame;
@@ -71,11 +72,13 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 		okButton.setPreferredSize(buttonSize);
 		cancelButton.setPreferredSize(buttonSize);
 
-		startDateChooser = new JDateChooser();
-		endDateChooser = new JDateChooser();
+		startDateChooser = new JXDatePicker();
+		endDateChooser = new JXDatePicker();
 
-		startDateChooser.setDateFormatString(PrefsModel.getInstance().getDateFormat());
-		endDateChooser.setDateFormatString(PrefsModel.getInstance().getDateFormat());
+		startDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
+		startDateChooser.setDate(new Date());
+		endDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
+		endDateChooser.setDate(new Date());
 
 		Dimension textFieldSize = new Dimension(180, startDateChooser.getPreferredSize().height);
 

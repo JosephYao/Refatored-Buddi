@@ -14,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
@@ -38,7 +37,7 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 	public static final long serialVersionUID = 0;
 	
 	public ReportFrame(MossDocumentFrame parentFrame){
-		super(parentFrame, "BudgetFrame" + ((DataModel) parentFrame.getDocument()).getUid());	
+		super(parentFrame, "ReportFrame" + ((DataModel) parentFrame.getDocument()).getUid());	
 	}
 	
 	public void init() {
@@ -99,7 +98,8 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 				}
 			});
 			
-			pluginsPanel.add(panel);
+			if (report.isPluginActive())
+				pluginsPanel.add(panel);
 		}
 		
 		

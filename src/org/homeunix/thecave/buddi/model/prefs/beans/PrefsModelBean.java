@@ -12,6 +12,7 @@ public class PrefsModelBean {
 	private WindowPlacementBean accountsPlacement;
 	private WindowPlacementBean budgetPlacement;
 	private WindowPlacementBean transactionsPlacement;
+	private WindowPlacementBean scheduledPlacement;
 	private WindowPlacementBean reportsPlacement;
 	private WindowPlacementBean prefsPlacement;
 	
@@ -248,5 +249,13 @@ public class PrefsModelBean {
 
 	public void setPlugins(List<PluginInfoBean> plugins) {
 		this.plugins = plugins;
+	}
+
+	public WindowPlacementBean getScheduledPlacement() {
+		return scheduledPlacement == null ? new WindowPlacementBean() : scheduledPlacement;
+	}
+
+	public void setScheduledPlacement(WindowPlacementBean scheduledPlacement) {
+		this.scheduledPlacement = scheduledPlacement;
 	}
 }

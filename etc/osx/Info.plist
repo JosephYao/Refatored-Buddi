@@ -57,7 +57,7 @@
 		<key>JVMVersion</key>
 		<string>1.5*</string>
 		<key>MainClass</key>
-		<string>org.homeunix.drummer.Buddi</string>
+		<string>org.homeunix.thecave.buddi.Buddi</string>
 		<key>Properties</key>
 		<dict>
 			<key>apple.laf.useScreenMenuBar</key>

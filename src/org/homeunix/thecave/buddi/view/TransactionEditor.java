@@ -90,6 +90,7 @@ public class TransactionEditor extends MossPanel {
 	private boolean changed;
 
 	public TransactionEditor(DataModel model, Account associatedAccount, boolean scheduledTransactionPane){
+		super(true);
 		this.model = model;
 		this.associatedAccount = associatedAccount;
 		
@@ -109,6 +110,7 @@ public class TransactionEditor extends MossPanel {
 		
 		date.setVisible(!scheduledTransactionPane);
 
+		open();
 	}
 
 	@Override

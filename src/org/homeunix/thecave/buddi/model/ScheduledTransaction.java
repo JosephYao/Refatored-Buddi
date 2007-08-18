@@ -13,6 +13,12 @@ public class ScheduledTransaction extends Transaction {
 		super(model, scheduledTransaction);
 	}
 	
+	public ScheduledTransaction(DataModel model, String scheduleName) {
+		this(model, new ScheduledTransactionBean());
+
+		getScheduledTranasactionBean().setScheduleName(scheduleName);
+	}
+	
 	public Date getEndDate() {
 		return getScheduledTransaction().getEndDate();
 	}

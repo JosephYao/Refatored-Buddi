@@ -13,7 +13,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.AccountFrame;
-import org.homeunix.thecave.buddi.view.TransactionsFrame;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
 
@@ -35,18 +35,14 @@ public class EditViewTransactions extends MossMenuItem{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		((AccountFrame) getFrame()).getDocument().startBatchChange();
-		
 		for (Account a : ((AccountFrame) getFrame()).getSelectedAccounts()) {
 			try {
-				TransactionsFrame transactionsFrame = new TransactionsFrame(((AccountFrame) getFrame()).getDataModel(), (AccountFrame) getFrame(), a);
+				TransactionFrame transactionsFrame = new TransactionFrame(((AccountFrame) getFrame()).getDataModel(), (AccountFrame) getFrame(), a);
 				transactionsFrame.openWindow(PrefsModel.getInstance().getTransactionWindowSize(), PrefsModel.getInstance().getTransactionWindowLocation());
 			}
 			catch (WindowOpenException foe){
 				foe.printStackTrace();
 			}
 		}
-		
-		((AccountFrame) getFrame()).getDataModel().finishBatchChange();
 	}
 }

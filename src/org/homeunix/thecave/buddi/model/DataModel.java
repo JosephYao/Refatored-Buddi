@@ -60,7 +60,11 @@ public class DataModel extends AbstractDocument {
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
 		//This wil let us know where to save the file to.
-		setFile(file);
+		Log.debug("Data file: " + this.getFile());
+
+		this.setFile(file);
+
+		Log.debug("Data file: " + this.getFile());
 
 		//Try to load the data model
 		try {
@@ -151,31 +155,31 @@ public class DataModel extends AbstractDocument {
 	}
 
 	private void saveInternal(File file, boolean resetUid) throws DocumentSaveException {
-		if (file != null){
-			try {
-				XMLEncoder encoder = new XMLEncoder(new FileOutputStream(file));
+		if (file == null)
+			throw new DocumentSaveException("Error saving data file: specified file is null!");
+		try {
+			XMLEncoder encoder = new XMLEncoder(new FileOutputStream(file));
 
-				//TODO Test to make sure this is reset at the right time.
-				if (resetUid)
-					dataModel.setUid(getGeneratedUid(dataModel));
+			//TODO Test to make sure this is reset at the right time.
+			if (resetUid)
+				dataModel.setUid(getGeneratedUid(dataModel));
 
-				encoder.writeObject(dataModel);
-				encoder.flush();
-				encoder.close();
+			encoder.writeObject(dataModel);
+			encoder.flush();
+			encoder.close();
 
-				//Save where we last saved this file.
-				setFile(file);
-				PrefsModel.getInstance().setLastOpenedDataFile(file);
+			//Save where we last saved this file.
+			setFile(file);
+			PrefsModel.getInstance().setLastOpenedDataFile(file);
 
 
-				resetChanged();
-			}
-			catch (FileNotFoundException fnfe){
-				throw new DocumentSaveException("Error saving data file", fnfe);
-			}
+			resetChanged();
+		}
+		catch (FileNotFoundException fnfe){
+			throw new DocumentSaveException("Error saving data file", fnfe);
 		}
 	}
-	
+
 	/**
 	 * Streams the current Data Model object as an XML encoded string.  This is primarily meant
 	 * for troubleshooting crashes. 
@@ -187,7 +191,7 @@ public class DataModel extends AbstractDocument {
 		encoder.writeObject(dataModel);
 		encoder.flush();
 		encoder.close();
-		
+
 		return baos.toString();
 	}
 
@@ -254,7 +258,7 @@ public class DataModel extends AbstractDocument {
 	public BudgetPeriod getBudgetPeriod(Date periodDate){
 		return getBudgetPeriod(getPeriodKey(periodDate));
 	}
-	
+
 	/**
 	 * Returns a list of BudgetPeriods, covering the entire range of periods
 	 * occupied by startDate to endDate.
@@ -264,14 +268,14 @@ public class DataModel extends AbstractDocument {
 	 */
 	public List<BudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
 		List<BudgetPeriod> budgetPeriods = new LinkedList<BudgetPeriod>();
-		
+
 		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), startDate);
-		
+
 		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), endDate))){
 			budgetPeriods.add(getBudgetPeriod(temp));
 			temp = BudgetPeriodUtil.getNextBudgetPeriod(getPeriodType(), temp);
 		}
-		
+
 		return budgetPeriods;
 	}
 
@@ -307,14 +311,14 @@ public class DataModel extends AbstractDocument {
 	public List<Transaction> getTransactions(Source source){
 		return new FilteredLists.TransactionListFilteredBySource(this, this.getTransactions(), source);
 	}
-	
+
 	public List<Transaction> getTransactions(Date startDate, Date endDate){
 		return new FilteredLists.TransactionListFilteredByDate(this,
 				this.getTransactions(),
 				startDate,
 				endDate);
 	}
-	
+
 	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate){
 		return new FilteredLists.TransactionListFilteredByDate(this,
 				this.getTransactions(source),
@@ -337,6 +341,13 @@ public class DataModel extends AbstractDocument {
 		checkValid(transaction, false, false);
 
 		dataModel.getTransactions().remove(transaction.getTransactionBean());
+		setChanged();		
+	}
+
+	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction){
+		checkValid(scheduledTransaction, false, false);
+
+		dataModel.getScheduledTransactions().remove(scheduledTransaction.getScheduledTranasactionBean());
 		setChanged();		
 	}
 
@@ -461,7 +472,7 @@ public class DataModel extends AbstractDocument {
 
 		if (isAddOperation){
 //			if (this.getUid(object.getBean()) != null)
-//				throw new DataModelProblemException("Cannot have the same UID for multiple objects in the model.", this);
+//			throw new DataModelProblemException("Cannot have the same UID for multiple objects in the model.", this);
 
 			if (object instanceof Account){
 				for (Account a : getAccounts()) {
@@ -477,7 +488,7 @@ public class DataModel extends AbstractDocument {
 				}
 			}
 		}
-		
+
 		if (isAddOperation || isUidRefresh){
 			System.out.println(object.getBean());
 			System.out.println(object.getBean().getUid());

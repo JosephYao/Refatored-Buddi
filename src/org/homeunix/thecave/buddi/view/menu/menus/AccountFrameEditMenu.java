@@ -12,6 +12,7 @@ import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewBudget;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewReports;
+import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.swing.menu.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -30,6 +31,7 @@ public class AccountFrameEditMenu extends MossMenu {
 		this.addSeparator();
 		this.add(new EditViewBudget(frame));
 		this.add(new EditViewReports(frame));
+		this.add(new EditViewScheduledTransactions(frame));
 		if (!OperatingSystemUtil.isMac()){
 			this.addSeparator();
 			this.add(new EditPreferences(frame));
