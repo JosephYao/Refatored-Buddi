@@ -27,7 +27,6 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.TransactionEditor;
@@ -258,7 +257,7 @@ public class ScheduleEditor extends MossPanel {
 		return false;
 	}
 
-	public ScheduledTransaction getUpdatedSchedule(){
+	public void saveScheduledTransaction(){
 		//TODO Save schedule
 
 		if (ScheduleEditor.this.ensureInfoCorrect()){
@@ -276,7 +275,6 @@ public class ScheduleEditor extends MossPanel {
 							null,
 							options,
 							options[0]) == JOptionPane.OK_OPTION){
-//				schedule.set
 
 				schedule.setScheduleName(scheduleName.getValue().toString());
 				schedule.setMessage(message.getValue().toString());
@@ -289,21 +287,12 @@ public class ScheduleEditor extends MossPanel {
 				schedule.setCleared(transactionEditor.isCleared());
 				schedule.setReconciled(transactionEditor.isReconciled());
 
-				// We should not have to save this, as it cannot be modified.
+				//TODO We should not have to save this, as it cannot be modified.
 				schedule.setStartDate(startDateChooser.getDate());
 				schedule.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
 				schedule.setScheduleDay(getSelectedCard().getScheduleDay());
 				schedule.setScheduleWeek(getSelectedCard().getScheduleWeek());
 				schedule.setScheduleMonth(getSelectedCard().getScheduleMonth());
-//				DataInstance.getInstance().saveDataModel();
-
-//				ScheduleEditor.this.saveSchedule();
-//				ScheduleController.checkForScheduledActions();  //TODO
-//				MainFrame.getInstance().updateContent();
-//				TransactionsFrame.updateAllTransactionWindows();
-//				ScheduleModifyDialog.this.closeWindow();
-				
-				return schedule;
 			}
 			else
 				if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
@@ -321,8 +310,6 @@ public class ScheduleEditor extends MossPanel {
 					options,
 					options[0]);
 		}
-
-		return null;
 	}
 	
 	private ScheduleCard getSelectedCard(){
@@ -338,19 +325,8 @@ public class ScheduleEditor extends MossPanel {
 
 			//Load the changeable fields, including Transaction
 			scheduleName.setValue(s.getScheduleName());
-			if (s.getMessage() != null)
-				message.setValue(s.getMessage());
-
-			Transaction t = (Transaction) s;
-
-			if (s.getDescription() != null
-					&& s.getTo() != null
-					&& s.getFrom() != null){
-				transactionEditor.setTransaction(t, true);
-			}
-			else {
-				transactionEditor.setVisible(false);
-			}
+			message.setValue(s.getMessage());
+			transactionEditor.setTransaction(s, true);
 
 			//Load the schedule pulldowns, based on which type of 
 			// schedule we're following.

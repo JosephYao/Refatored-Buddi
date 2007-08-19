@@ -336,6 +336,13 @@ public class DataModel extends AbstractDocument {
 		dataModel.getTransactions().add(transaction.getTransactionBean());
 		setChanged();		
 	}
+	
+	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction){
+		checkValid(scheduledTransaction, true, false);
+
+		dataModel.getScheduledTransactions().add(scheduledTransaction.getScheduledTranasactionBean());
+		setChanged();		
+	}
 
 	public void removeTransaction(Transaction transaction){
 		checkValid(transaction, false, false);
