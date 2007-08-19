@@ -494,11 +494,16 @@ public class DataModel extends AbstractDocument {
 						throw new DataModelProblemException("Cannot have multiple budget categories with the same name.", this);
 				}
 			}
+			
+			if (object instanceof ScheduledTransaction){
+				for (ScheduledTransaction s : getScheduledTransactions()) {
+					if (s.getScheduleName().equalsIgnoreCase(((ScheduledTransaction) object).getScheduleName()))
+						throw new DataModelProblemException("Cannot have multiple scheduled transactions with the same name.", this);
+				}				
+			}
 		}
 
 		if (isAddOperation || isUidRefresh){
-			System.out.println(object.getBean());
-			System.out.println(object.getBean().getUid());
 			if (uidMap.get(object.getBean().getUid()) != null)
 				//TODO Do something drastic here... perhaps save an emergency data file, prompt, and quit.
 				throw new DataModelProblemException("Identical UID already in model!  Model is probably corrupt!", this); 

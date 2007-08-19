@@ -17,6 +17,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -72,6 +74,7 @@ public class TransactionEditor extends MossPanel {
 	private final Vector<JComponent> components;
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
+	
 
 	private final JXDatePicker date;
 	private final JHintComboBox description;
@@ -83,6 +86,8 @@ public class TransactionEditor extends MossPanel {
 	private final JCheckBox reconciled;
 	private final JHintTextArea memo;
 
+	
+	
 	private final DataModel model;
 	private final Account associatedAccount;
 	
@@ -110,7 +115,7 @@ public class TransactionEditor extends MossPanel {
 		components = new Vector<JComponent>();
 		
 		date.setVisible(!scheduledTransactionPane);
-
+		
 		open();
 	}
 
@@ -215,8 +220,7 @@ public class TransactionEditor extends MossPanel {
 		cBottom.ipadx = 0;
 		cBottom.gridx = 3;
 		bottomPanel.add(to, cBottom);
-
-
+		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(topPanel);
@@ -354,7 +358,13 @@ public class TransactionEditor extends MossPanel {
 			}
 		});
 
-		description.setRenderer(new MaxLengthListCellRenderer());
+		final MaxLengthListCellRenderer renderer = new MaxLengthListCellRenderer(description);
+		description.setRenderer(renderer);
+		description.addPropertyChangeListener(new PropertyChangeListener(){
+			public void propertyChange(PropertyChangeEvent evt) {
+				renderer.computeLength();
+			}
+		});
 	}
 
 	public void setTransaction(Transaction transaction, boolean force){

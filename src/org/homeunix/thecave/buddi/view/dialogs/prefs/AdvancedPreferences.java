@@ -26,9 +26,13 @@ public class AdvancedPreferences extends MossPanel implements PrefsPanel {
 
 	
 	public AdvancedPreferences() {
+		super(true);
+		
 		budgetInterval = new JComboBox(BudgetPeriodKeys.values());//TODOPrefsInstance.getInstance().getIntervals());
 		numberOfBackups = new JComboBox(new Integer[]{5, 10, 15, 20, 50});
 		promptForDataFile = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
+		
+		open();
 	}
 
 	@Override

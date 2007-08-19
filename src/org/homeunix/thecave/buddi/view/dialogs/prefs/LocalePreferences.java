@@ -29,21 +29,11 @@ import javax.swing.JPanel;
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.i18n.keys.AboutFrameKeys;
-import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MonthKeys;
-import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
-import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.moss.i18n.LanguageEditor;
+import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
 import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.Log;
@@ -64,6 +54,8 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 
 
 	public LocalePreferences() {
+		super(true);
+		
 		languageModel = new DefaultComboBoxModel();
 		language = new JScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
@@ -74,6 +66,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 		otherCurrencyButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OTHER));
 		otherDateFormatButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OTHER));
 
+		open();
 	}
 
 	public void init() {
@@ -229,37 +222,14 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 		JButton editLanguages = new JButton(PrefsModel.getInstance().getTranslator().get(BuddiKeys.EDIT_LANGUAGES));
 		editLanguages.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				try {
-					LanguageEditor le = new LanguageEditor(Const.LANGUAGE_EXTENSION, language.getSelectedItem().toString());
+					System.out.println("Opening Language Editor");
+					BuddiLanguageEditor ble = new BuddiLanguageEditor(language.getSelectedItem().toString());
+					try {
+						ble.openWindow();
+					}
+					catch (WindowOpenException woe){}
 
-					//TODO Make sure all translation keys are loaded here.  It's annoying that this is
-					// not automated, but the convenience of having multiple smaler key files
-					// makes up for it.
-					le.loadKeys((Enum[]) BuddiKeys.values());
-					le.loadKeys((Enum[]) AboutFrameKeys.values());
-					le.loadKeys((Enum[]) AccountFrameKeys.values());
-					le.loadKeys((Enum[]) BudgetExpenseDefaultKeys.values());
-					le.loadKeys((Enum[]) BudgetFrameKeys.values());
-					le.loadKeys((Enum[]) BudgetIncomeDefaultKeys.values());
-					le.loadKeys((Enum[]) BudgetPeriodKeys.values());
-					le.loadKeys((Enum[]) ButtonKeys.values());
-					le.loadKeys((Enum[]) MenuKeys.values());
-					le.loadKeys((Enum[]) MessageKeys.values());
-					le.loadKeys((Enum[]) MonthKeys.values());
-					le.loadKeys((Enum[]) TransactionDateFilterKeys.values());
-					le.loadKeys((Enum[]) TypeCreditDefaultKeys.values());
-					le.loadKeys((Enum[]) TypeDebitDefaultKeys.values());
-
-					le.loadLanguages(Const.LANGUAGE_RESOURCE_PATH, PrefsModel.getInstance().getTranslator().getLanguageList(language.getSelectedItem().toString()).toArray(new String[1]));
-					le.loadLanguages(new File(Const.LANGUAGE_FOLDER), PrefsModel.getInstance().getTranslator().getLanguageList(language.getSelectedItem().toString()).toArray(new String[1]));
-
-					le.openWindow();
-
-					updateContent();
-//					language.setSelectedItem(lang);
-//					forceRestart = true; //We need to restart for language to take effect.
-				}
-				catch (Exception ex){}
+//					updateContent();
 			}
 		});
 

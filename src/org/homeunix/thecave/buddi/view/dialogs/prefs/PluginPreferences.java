@@ -42,11 +42,14 @@ public class PluginPreferences extends MossPanel implements PrefsPanel, ActionLi
 	private final DefaultGenericListModel<PluginInfo> pluginListModel;
 
 	public PluginPreferences() {
+		super(true);
+		
 		addButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_ADD));
 		removeButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_REMOVE));
 		pluginListModel = new DefaultGenericListModel<PluginInfo>();
 		pluginList = new JList(pluginListModel);
 
+		open();
 	}
 
 	@Override

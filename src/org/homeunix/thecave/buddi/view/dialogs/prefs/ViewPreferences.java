@@ -26,6 +26,8 @@ public class ViewPreferences extends MossPanel implements PrefsPanel {
 	private final JCheckBox showReconcile;
 
 	public ViewPreferences() {
+		super(true);
+		
 		showDeleted = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_DELETED));
 //		showAccountTypes = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_ACCOUNT_TYPES));
 		showAutoComplete = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
@@ -33,6 +35,8 @@ public class ViewPreferences extends MossPanel implements PrefsPanel {
 //		showInterestRate = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_INTEREST_RATE));
 		showClear = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_CLEAR));
 		showReconcile = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_RECONCILE));
+		
+		open();
 	}
 	
 	@Override

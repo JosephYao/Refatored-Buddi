@@ -7,16 +7,23 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 
+/**
+ * @author wyatt
+ *
+ */
 public class ScheduledTransaction extends Transaction {
 	
 	ScheduledTransaction(DataModel model, ScheduledTransactionBean scheduledTransaction) {
 		super(model, scheduledTransaction);
 	}
 	
-	public ScheduledTransaction(DataModel model, String scheduleName) {
+	/**
+	 * Creates a new scheduled transaction with no fields set.  You need to add fields 
+	 * beore you can put it into the data model. 
+	 * @param model
+	 */
+	public ScheduledTransaction(DataModel model) {
 		this(model, new ScheduledTransactionBean());
-
-		getScheduledTranasactionBean().setScheduleName(scheduleName);
 	}
 	
 	public Date getEndDate() {

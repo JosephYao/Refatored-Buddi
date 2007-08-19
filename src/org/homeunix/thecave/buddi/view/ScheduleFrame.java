@@ -7,8 +7,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -22,15 +20,16 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.buddi.model.swing.ScheduledTransactionTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.schedule.ScheduleEditor;
-import org.homeunix.thecave.buddi.view.swing.ScheduledTransactionTableCellRenderer;
+import org.homeunix.thecave.buddi.view.dialogs.ScheduleEditorDialog;
+import org.homeunix.thecave.buddi.view.swing.ScheduledTransactionListCellRenderer;
+import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.swing.model.BackedListModel;
 import org.homeunix.thecave.moss.swing.window.MossAssociatedDocumentFrame;
 import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 public class ScheduleFrame extends MossAssociatedDocumentFrame implements ActionListener {
@@ -39,51 +38,58 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	private final JButton doneButton;
 //	private final JButton cancelButton;
 	private final JButton newButton;
+	private final JButton editButton;
 	private final JButton deleteButton;
 
-	private final ScheduleEditor scheduleEditor;
+//	private final ScheduleEditorDialog scheduleEditor;
 
-	private final JXTable list;
-	private final ScheduledTransactionTableModel listModel;
+	private final JXList list;
+	private final BackedListModel<ScheduledTransaction> listModel;
+	private final DataModel model;
 
 	public ScheduleFrame(DataModel model, MossDocumentFrame frame){
 		super(frame, "ScheduledTransactionFrame" + ((DataModel) frame.getDocument()).getUid());
 
-		scheduleEditor = new ScheduleEditor(frame);
+		this.model = model;
+		
+//		scheduleEditor = new ScheduleEditorDialog(frame);
 
 		doneButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DONE));
 //		cancelButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL));
 		newButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_NEW));
+		editButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_EDIT));
 		deleteButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DELETE));
 
-		listModel = new ScheduledTransactionTableModel(model);
-		list = new JXTable();
+		listModel = new BackedListModel<ScheduledTransaction>(model.getScheduledTransactions());
+		list = new JXList();
 	}
 
 	@Override
 	public void updateButtons() {		
 		super.updateButtons();
 
-		deleteButton.setEnabled(list.getSelectedRows().length > 0);
+		editButton.setEnabled(list.getSelectedIndices().length > 0);
+		deleteButton.setEnabled(list.getSelectedIndices().length > 0);
 	}
 
 	@Override
 	public void updateContent() {
-		listModel.fireTableChanged();
+		listModel.fireListChanged();
 
 		super.updateContent();
 	}
 
 	public void init() {
-		scheduleEditor.loadSchedule(null);
+//		scheduleEditor.loadSchedule(null);
 
 		doneButton.setPreferredSize(InternalFormatter.getButtonSize(doneButton));
-//		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));
 		newButton.setPreferredSize(InternalFormatter.getButtonSize(newButton));
+		editButton.setPreferredSize(InternalFormatter.getButtonSize(editButton));
 		deleteButton.setPreferredSize(InternalFormatter.getButtonSize(deleteButton));
 
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		editTransactionsButtonPanel.add(newButton);
+		editTransactionsButtonPanel.add(editButton);
 		editTransactionsButtonPanel.add(deleteButton);
 
 		JScrollPane listScroller = new JScrollPane(list);		
@@ -101,34 +107,44 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 		}
 
 		newButton.addActionListener(this);
+		editButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		doneButton.addActionListener(this);
 
 		list.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setModel(listModel);
-		list.getColumn(0).setCellRenderer(new ScheduledTransactionTableCellRenderer());
-		list.getColumn(0).setCellEditor(new JXTable.GenericEditor());
+		list.setCellRenderer(new ScheduledTransactionListCellRenderer());
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		list.getColumn(0).setCellRenderer(new ScheduledTransactionTableCellRenderer());
+//		list.getColumn(0).setCellEditor(new JXTable.GenericEditor());
+		list.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()){
+					updateButtons();
+				}
+			}
+		});
 
 		list.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 			private boolean allowMessage = true;
-			
+
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()){
 					//Save existing scheduled transactions.  If the save failed, force
 					// selection back to the poorly edited transaction.
-					if (allowMessage && !scheduleEditor.saveScheduledTransaction()){
-						allowMessage = false;
-						list.setRowSelectionInterval(listModel.getSelectedIndex(), listModel.getSelectedIndex());
-						return;
-					}
+//					if (allowMessage && !scheduleEditor.saveScheduledTransaction()){
+//					allowMessage = false;
+//					list.setRowSelectionInterval(listModel.getSelectedIndex(), listModel.getSelectedIndex());
+//					return;
+//					}
 
-					if (allowMessage) {
-						listModel.setSelectedScheduedTransaction(list.getSelectedRow());
-						ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
-						scheduleEditor.loadSchedule(s);
-					}
-					allowMessage = true;
+//					if (allowMessage) {
+//					listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+//					ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
+//					scheduleEditor.loadSchedule(s);
+//					}
+//					allowMessage = true;
 //					listModel.setSelectedScheduedTransaction(list.getSelectedRow());
 				}
 			}
@@ -148,24 +164,42 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 
 		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_SCHEDULED_ACTIONS));
 		this.setLayout(new BorderLayout());
-		this.add(scrollPanel, BorderLayout.WEST);
-		this.add(scheduleEditor, BorderLayout.CENTER);
+		this.add(scrollPanel, BorderLayout.CENTER);
+//		this.add(scheduleEditor, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.getRootPane().setDefaultButton(doneButton);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newButton)){
-			ScheduledTransaction s = new ScheduledTransaction((DataModel) getDocument(), "New");
-			listModel.add(s);
+			ScheduleEditorDialog editor = new ScheduleEditorDialog(this, null);
+			try {
+				editor.openWindow();
+			}
+			catch (WindowOpenException woe){}
+			
+			list.setSelectedIndex(-1);
+			listModel.fireListChanged();
+		}
+		else if (e.getSource().equals(editButton)){
+			Object o = list.getSelectedValue();
+
+			if (o instanceof ScheduledTransaction) {
+				ScheduleEditorDialog editor = new ScheduleEditorDialog(this, (ScheduledTransaction) o);
+				try {
+					editor.openWindow();
+				}
+				catch (WindowOpenException woe){}
+			}
 		}
 		else if (e.getSource().equals(deleteButton)){
-			Object o = list.getSelectedRow();
+			Object o = list.getSelectedValue();
 
 			if (o instanceof ScheduledTransaction)
-				listModel.remove((ScheduledTransaction) o);
-
-			deleteButton.setEnabled(false);
+				model.removeScheduledTransaction((ScheduledTransaction) o);
+			
+			list.setSelectedIndex(-1);
+			listModel.fireListChanged();
 		}
 		else if (e.getSource().equals(doneButton)){
 //			listModel.save();
