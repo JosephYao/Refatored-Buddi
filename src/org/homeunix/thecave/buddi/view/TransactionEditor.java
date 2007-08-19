@@ -45,6 +45,7 @@ import org.homeunix.thecave.buddi.model.swing.AutoCompleteComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
 import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoCompleteEntry;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
 import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
@@ -158,53 +159,62 @@ public class TransactionEditor extends MossPanel {
 
 		memoScroller.setPreferredSize(new Dimension(130, memo.getPreferredSize().height));		
 
+		
 		JPanel topPanel = new JPanel(new GridBagLayout());
 		JPanel bottomPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints cTop = new GridBagConstraints();
+		GridBagConstraints cBottom = new GridBagConstraints();
 
-		c.weighty = 0;
-		c.gridy = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		cTop.weighty = 0;
+		cTop.gridy = 0;
+		cTop.fill = GridBagConstraints.HORIZONTAL;
 
-		c.weightx = 0.2;
-		c.gridx = 0;
-		topPanel.add(date, c);
+		cTop.weightx = 0.2;
+		cTop.gridx = 0;
+		topPanel.add(date, cTop);
 
-		c.weightx = 0.5;
-		c.gridx = 1;
-		topPanel.add(description, c);
+		cTop.weightx = 0.5;
+		cTop.gridx = 1;
+		topPanel.add(description, cTop);
 
-		c.weightx = 0.4;
-		c.gridx = 2;
-		topPanel.add(number, c);
+		cTop.weightx = 0.4;
+		cTop.gridx = 2;
+		topPanel.add(number, cTop);
 
 		if (PrefsModel.getInstance().isShowCleared()){
-			c.weightx = 0.0;
-			c.gridx = 3;
-			topPanel.add(cleared, c);
+			cTop.weightx = 0.0;
+			cTop.gridx = 3;
+			topPanel.add(cleared, cTop);
 		}
 		if (PrefsModel.getInstance().isShowReconciled()){	
-			c.weightx = 0.0;
-			c.gridx = 4;
-			topPanel.add(reconciled, c);
+			cTop.weightx = 0.0;
+			cTop.gridx = 4;
+			topPanel.add(reconciled, cTop);
 		}
+		
+		cBottom.weighty = 0;
+		cBottom.gridy = 0;
+		cBottom.fill = GridBagConstraints.HORIZONTAL;
 
+		cBottom.weightx = 0.2;
+		cBottom.ipadx = 150;
+		cBottom.gridx = 0;
+		bottomPanel.add(amount, cBottom);
 
-		c.weightx = 0.8;
-		c.gridx = 0;
-		bottomPanel.add(amount, c);
+		cBottom.weightx = 0.5;
+		cBottom.ipadx = 0;
+		cBottom.gridx = 1;
+		bottomPanel.add(from, cBottom);
 
-		c.weightx = 0.5;
-		c.gridx = 1;
-		bottomPanel.add(from, c);
+		cBottom.weightx = 0.0;
+		cBottom.ipadx = 0;
+		cBottom.gridx = 2;
+		bottomPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.TO)), cBottom);
 
-		c.weightx = 0.0;
-		c.gridx = 2;
-		bottomPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TO)), c);
-
-		c.weightx = 0.5;
-		c.gridx = 3;
-		bottomPanel.add(to, c);
+		cBottom.weightx = 0.5;
+		cBottom.ipadx = 0;
+		cBottom.gridx = 3;
+		bottomPanel.add(to, cBottom);
 
 
 		JPanel centerPanel = new JPanel();

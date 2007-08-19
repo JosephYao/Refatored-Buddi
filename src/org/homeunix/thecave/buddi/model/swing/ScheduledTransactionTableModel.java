@@ -20,18 +20,18 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 	private int selectedIndex = -1;
 
 	//We modify this list in memory.  When we hit Done, we save the changes.  Cancel will discard.
-	private final List<ScheduledTransaction> unsavedScheduledTransactions;
-	private final CompositeList<ScheduledTransaction> allSchedules;
+//	private final List<ScheduledTransaction> unsavedScheduledTransactions;
+//	private final CompositeList<ScheduledTransaction> allSchedules;
 	
 	@SuppressWarnings("unchecked")
 	public ScheduledTransactionTableModel(DataModel model) {
 		this.model = model;
 		
-		unsavedScheduledTransactions = new LinkedList<ScheduledTransaction>();
-		allSchedules = new CompositeList<ScheduledTransaction>(
-				true, 
-				model.getScheduledTransactions(), 
-				unsavedScheduledTransactions);
+//		unsavedScheduledTransactions = new LinkedList<ScheduledTransaction>();
+//		allSchedules = new CompositeList<ScheduledTransaction>(
+//				true, 
+//				model.getScheduledTransactions(), 
+//				unsavedScheduledTransactions);
 	}
 
 	public int getColumnCount() {
@@ -40,22 +40,22 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 	
 	@Override
 	public String getColumnName(int column) {
-		return "Name";
+		return null;
 	}
 	
 	public int getRowCount() {
-		return allSchedules.size();
+		return getScheduledTransactios().size();
 	}
 	
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == -1)
-			return allSchedules.get(rowIndex);
-		return allSchedules.get(rowIndex).getScheduleName();
+			return getScheduledTransactios().get(rowIndex);
+		return getScheduledTransactios().get(rowIndex).getScheduleName();
 	}
 	
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		ScheduledTransaction s = allSchedules.get(rowIndex);
+		ScheduledTransaction s = getScheduledTransactios().get(rowIndex);
 		s.setScheduleName(aValue.toString());
 	}
 
@@ -65,25 +65,27 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 	}
 	
 	public void add(ScheduledTransaction s){
-		unsavedScheduledTransactions.add(s);
+		model.addScheduledTransaction(s);
 		
 		fireTableChanged();
-		
-		Log.debug(getRowCount());
 	}
 	
 	public void remove(ScheduledTransaction s){
-		if (unsavedScheduledTransactions.contains(s))
-			unsavedScheduledTransactions.remove(s);
-		else 
+//		if (unsavedScheduledTransactions.contains(s))
+//			unsavedScheduledTransactions.remove(s);
+//		else 
 			model.removeScheduledTransaction(s);
 
 	}
 	
-	public void save(){
-		for (ScheduledTransaction s : unsavedScheduledTransactions) {
-			model.addScheduledTransaction(s);
-		}
+//	public void save(){
+//		for (ScheduledTransaction s : unsavedScheduledTransactions) {
+//			model.addScheduledTransaction(s);
+//		}
+//	}
+	
+	public List<ScheduledTransaction> getScheduledTransactios(){
+		return model.getScheduledTransactions();
 	}
 	
 	public void fireTableChanged(){

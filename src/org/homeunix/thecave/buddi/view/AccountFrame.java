@@ -93,6 +93,7 @@ public class AccountFrame extends MossDocumentFrame {
 		tree.setClosedIcon(null);
 		tree.setOpenIcon(null);
 		tree.setLeafIcon(null);
+//		tree.setColumnSelectionAllowed(false);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));

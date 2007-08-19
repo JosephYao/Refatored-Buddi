@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
@@ -33,27 +35,27 @@ import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 public class ScheduleFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
-	
+
 	private final JButton doneButton;
 //	private final JButton cancelButton;
 	private final JButton newButton;
 	private final JButton deleteButton;
-		
-	private final ScheduleEditor modify;
-	
+
+	private final ScheduleEditor scheduleEditor;
+
 	private final JXTable list;
 	private final ScheduledTransactionTableModel listModel;
-		
+
 	public ScheduleFrame(DataModel model, MossDocumentFrame frame){
 		super(frame, "ScheduledTransactionFrame" + ((DataModel) frame.getDocument()).getUid());
-		
-		modify = new ScheduleEditor(frame);
-		
+
+		scheduleEditor = new ScheduleEditor(frame);
+
 		doneButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DONE));
 //		cancelButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL));
 		newButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_NEW));
 		deleteButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DELETE));
-		
+
 		listModel = new ScheduledTransactionTableModel(model);
 		list = new JXTable();
 	}
@@ -61,56 +63,43 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	@Override
 	public void updateButtons() {		
 		super.updateButtons();
-		
+
 		deleteButton.setEnabled(list.getSelectedRows().length > 0);
 	}
-	
+
 	@Override
 	public void updateContent() {
 		listModel.fireTableChanged();
-		
+
 		super.updateContent();
 	}
-	
+
 	public void init() {
-		modify.loadSchedule(null);
-	
-//		Dimension buttonSize = new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height);
+		scheduleEditor.loadSchedule(null);
+
 		doneButton.setPreferredSize(InternalFormatter.getButtonSize(doneButton));
 //		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));
 		newButton.setPreferredSize(InternalFormatter.getButtonSize(newButton));
 		deleteButton.setPreferredSize(InternalFormatter.getButtonSize(deleteButton));
-		
-		JScrollPane listScroller = new JScrollPane(list);
-		
-//		JPanel scrollBorderPanel = new JPanel(new BorderLayout());
-//		scrollBorderPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-//		scrollBorderPanel.add(listScroller, BorderLayout.CENTER);
-//		
-		
+
 		JPanel editTransactionsButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		editTransactionsButtonPanel.add(newButton);
 		editTransactionsButtonPanel.add(deleteButton);
-		
+
+		JScrollPane listScroller = new JScrollPane(list);		
+
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-//		scrollPanel.setBorder(BorderFactory.createTitledBorder(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTIONS)));
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(editTransactionsButtonPanel, BorderLayout.SOUTH);
-		
-//		JPanel mainPanel = new JPanel(); 
-//		mainPanel.setLayout(new BorderLayout());
-		
+
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 //		buttonPanel.add(cancelButton);
 		buttonPanel.add(doneButton);
-		
-//		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-				
+
 		if (OperatingSystemUtil.isMac()){
-//			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
-		
+
 		newButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		doneButton.addActionListener(this);
@@ -120,23 +109,47 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 		list.setModel(listModel);
 		list.getColumn(0).setCellRenderer(new ScheduledTransactionTableCellRenderer());
 		list.getColumn(0).setCellEditor(new JXTable.GenericEditor());
-		list.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				//Save existing scheduled transactions
-				modify.saveScheduledTransaction();
-				
-				ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
-				modify.loadSchedule(s);
-				listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+
+		list.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+			private boolean allowMessage = true;
+			
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()){
+					//Save existing scheduled transactions.  If the save failed, force
+					// selection back to the poorly edited transaction.
+					if (allowMessage && !scheduleEditor.saveScheduledTransaction()){
+						allowMessage = false;
+						list.setRowSelectionInterval(listModel.getSelectedIndex(), listModel.getSelectedIndex());
+						return;
+					}
+
+					if (allowMessage) {
+						listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+						ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
+						scheduleEditor.loadSchedule(s);
+					}
+					allowMessage = true;
+//					listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+				}
 			}
 		});
-		
+//		list.addMouseListener(new MouseAdapter(){
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//		super.mouseClicked(e);
+//		//Save existing scheduled transactions
+//		modify.saveScheduledTransaction();
+
+//		ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
+//		modify.loadSchedule(s);
+//		listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+//		}
+//		});
+
 		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_SCHEDULED_ACTIONS));
 		this.setLayout(new BorderLayout());
 		this.add(scrollPanel, BorderLayout.WEST);
-		this.add(modify, BorderLayout.CENTER);
+		this.add(scheduleEditor, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.getRootPane().setDefaultButton(doneButton);
 	}
@@ -148,18 +161,18 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 		}
 		else if (e.getSource().equals(deleteButton)){
 			Object o = list.getSelectedRow();
-			
+
 			if (o instanceof ScheduledTransaction)
 				listModel.remove((ScheduledTransaction) o);
-			
+
 			deleteButton.setEnabled(false);
 		}
 		else if (e.getSource().equals(doneButton)){
-			listModel.save();
+//			listModel.save();
 			this.closeWindow();
 		}
 //		else if (e.getSource().equals(cancelButton)){
-//			this.closeWindow();
+//		this.closeWindow();
 //		}
 	}
 }
