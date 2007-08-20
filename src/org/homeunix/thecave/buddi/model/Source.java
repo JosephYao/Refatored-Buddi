@@ -68,7 +68,7 @@ public abstract class Source extends ModelObject {
 
 	@Override
 	public String toString() {
-		return getName() + " (" + getSourceBean().getUid() + ")";
+		return getFullName();
 	}
 	
 	public abstract String getFullName();

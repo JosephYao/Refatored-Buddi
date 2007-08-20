@@ -56,9 +56,8 @@ public class BudgetCategory extends Source {
 	public int compareTo(Source arg0) {
 		if (arg0 instanceof BudgetCategory){
 			BudgetCategory c = (BudgetCategory) arg0;
-			if (this.isIncome() != c.isIncome()){
+			if (this.isIncome() != c.isIncome())
 				return -1 * new Boolean(this.isIncome()).compareTo(new Boolean(c.isIncome()));
-			}
 		}
 		return super.compareTo(arg0);
 	}
