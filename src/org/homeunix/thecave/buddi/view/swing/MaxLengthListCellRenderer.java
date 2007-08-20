@@ -41,6 +41,11 @@ public class MaxLengthListCellRenderer extends DefaultListCellRenderer {
 			String s = value.toString();
 			if (s.length() > computedLength)
 				this.setText(Formatter.getLengthFormat(computedLength).format(s));
+			else
+				this.setText(s);
+		}
+		else {
+			this.setText(" ");
 		}
 
 		return this;

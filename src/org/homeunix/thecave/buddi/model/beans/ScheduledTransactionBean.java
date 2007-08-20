@@ -14,9 +14,9 @@ public class ScheduledTransactionBean extends TransactionBean {
 
 	//Frequency and timing
 	private String frequencyType;
-	private Integer scheduleDay;
-	private Integer scheduleWeek;
-	private Integer scheduleMonth;
+	private int scheduleDay;
+	private int scheduleWeek;
+	private int scheduleMonth;
 	
 	//User information
 	private String scheduleName;
@@ -49,16 +49,16 @@ public class ScheduledTransactionBean extends TransactionBean {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Integer getScheduleDay() {
+	public int getScheduleDay() {
 		return scheduleDay;
 	}
-	public void setScheduleDay(Integer scheduleDay) {
+	public void setScheduleDay(int scheduleDay) {
 		this.scheduleDay = scheduleDay;
 	}
-	public Integer getScheduleMonth() {
+	public int getScheduleMonth() {
 		return scheduleMonth;
 	}
-	public void setScheduleMonth(Integer scheduleMonth) {
+	public void setScheduleMonth(int scheduleMonth) {
 		this.scheduleMonth = scheduleMonth;
 	}
 	public String getScheduleName() {
@@ -67,10 +67,10 @@ public class ScheduledTransactionBean extends TransactionBean {
 	public void setScheduleName(String scheduleName) {
 		this.scheduleName = scheduleName;
 	}
-	public Integer getScheduleWeek() {
+	public int getScheduleWeek() {
 		return scheduleWeek;
 	}
-	public void setScheduleWeek(Integer scheduleWeek) {
+	public void setScheduleWeek(int scheduleWeek) {
 		this.scheduleWeek = scheduleWeek;
 	}
 	public Date getStartDate() {

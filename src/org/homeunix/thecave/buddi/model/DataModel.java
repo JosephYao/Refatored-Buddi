@@ -5,11 +5,15 @@ package org.homeunix.thecave.buddi.model;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +21,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.NullCipher;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
@@ -35,7 +44,6 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
-import org.homeunix.thecave.buddi.model.converter.ModelConverter;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -48,6 +56,8 @@ public class DataModel extends AbstractDocument {
 
 	private DataModelBean dataModel;
 	private final Map<String, ModelObjectBean> uidMap = new HashMap<String, ModelObjectBean>();
+	private boolean encrypted;
+	private Cipher cipher;
 
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 and legacy formats (although
@@ -59,17 +69,35 @@ public class DataModel extends AbstractDocument {
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
+		Log.debug("Trying to load file " + file);
+		
 		//This wil let us know where to save the file to.
-		Log.debug("Data file: " + this.getFile());
-
 		this.setFile(file);
-
-		Log.debug("Data file: " + this.getFile());
 
 		//Try to load the data model
 		try {
-			XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
+//			InputStream in = new FileInputStream(file);
+//			while (!canDecrypt(in)){
+//
+//				//Check if this file is encrypted
+//				encrypted = !canDecrypt(new FileInputStream(file));
+//				if (encrypted) {
+//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+//					char[] password = passwordDialog.askForPassword(false, false);
+//					cipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
+//				}
+//				else
+					cipher = new NullCipher();
+//
+//				in = new CipherInputStream(new FileInputStream(file), cipher);
+//			}
 
+			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), cipher));
+
+//			byte[] start = new byte[255];
+//			in.read(start);
+//			System.out.println(new String(start));
+//			
 			Object temp = decoder.readObject();
 			if (temp instanceof DataModelBean){
 				dataModel = (DataModelBean) temp;
@@ -92,12 +120,28 @@ public class DataModel extends AbstractDocument {
 			//This is probably an old version of the data file.  Try to convert it...
 			Log.warning("Unable to load Buddi 3 format data model.  Trying Buddi 2 format...");
 
-			dataModel = ModelConverter.convert(file);
+			try {
+				throw new Exception("Legacy data files not currently supported");
+//				dataModel = ModelConverter.convert(file);
+//
+//				//We do not save this by default
+//				setChanged();
+//
+//				setFile(null);
 
-			//We do not save this by default
-			setChanged();
-
-			setFile(null);
+			}
+			catch (Exception e){
+				throw new DocumentLoadException("Exception loading model: " + e, e);	
+			}
+			catch (Error e){
+				throw new DocumentLoadException("Error loading model: " + e, e);
+			}
+		}
+		catch (Exception e){
+			throw new DocumentLoadException("Exception loading model: " + e, e);
+		}
+		catch (Error e){
+			throw new DocumentLoadException("Error loading model: " + e, e);
 		}
 
 		//Refresh the UID Map...
@@ -158,7 +202,20 @@ public class DataModel extends AbstractDocument {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
-			XMLEncoder encoder = new XMLEncoder(new FileOutputStream(file));
+
+//			if (cipher == null){
+//				if (encrypted) {
+//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+//					char[] password = passwordDialog.askForPassword(true, false);
+//					cipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
+//				}
+//				else
+					cipher = new NullCipher();
+//			}
+
+			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), cipher);
+
+			XMLEncoder encoder = new XMLEncoder(encryptedData);
 
 			//TODO Test to make sure this is reset at the right time.
 			if (resetUid)
@@ -172,11 +229,13 @@ public class DataModel extends AbstractDocument {
 			setFile(file);
 			PrefsModel.getInstance().setLastOpenedDataFile(file);
 
-
 			resetChanged();
 		}
 		catch (FileNotFoundException fnfe){
-			throw new DocumentSaveException("Error saving data file", fnfe);
+			throw new DocumentSaveException("Error saving data file - File " + file + " not found.", fnfe);
+		}
+		catch (Exception e){
+			throw new DocumentSaveException("Error saving data file: " + e, e);
 		}
 	}
 
@@ -336,7 +395,7 @@ public class DataModel extends AbstractDocument {
 		dataModel.getTransactions().add(transaction.getTransactionBean());
 		setChanged();		
 	}
-	
+
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction){
 		checkValid(scheduledTransaction, true, false);
 
@@ -494,7 +553,7 @@ public class DataModel extends AbstractDocument {
 						throw new DataModelProblemException("Cannot have multiple budget categories with the same name.", this);
 				}
 			}
-			
+
 			if (object instanceof ScheduledTransaction){
 				for (ScheduledTransaction s : getScheduledTransactions()) {
 					if (s.getScheduleName().equalsIgnoreCase(((ScheduledTransaction) object).getScheduleName()))
@@ -623,4 +682,42 @@ public class DataModel extends AbstractDocument {
 
 		return new Transaction(this, tb);
 	}
+
+	private boolean canDecrypt(InputStream in) throws DocumentLoadException {
+		BufferedInputStream buffered = new BufferedInputStream(in);
+
+		// Test if the input stream is encrypted. This is rudimentary -
+		// it just checks if the stream starts with <?xml
+		final int prologueLength = Const.XML_PROLOGUE.length();
+
+		buffered.mark(0);
+		
+		try {
+			byte[] test = new byte[prologueLength];
+			int read = buffered.read(test);
+			
+			//File is too small, and cannot be a valid data file.
+			if (read < prologueLength) {
+				throw new DocumentLoadException("File is incomplete.");
+			}
+
+			String testStr = new String(test);
+		
+			buffered.reset();
+			
+			return Const.XML_PROLOGUE.equals(testStr);
+		}
+		catch (IOException ioe){
+			throw new DocumentLoadException(ioe);
+		}
+	}
+
+	/**
+	 * Set the file to be encrypted on the next save.
+	 * @param encrypted
+	 */
+	public void setEncrypted(boolean encrypted){
+		this.encrypted = encrypted;
+	}
+
 }

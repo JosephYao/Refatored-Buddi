@@ -233,9 +233,8 @@ public class TransactionEditor extends MossPanel {
 		if (OperatingSystemUtil.isMac())
 			this.setBorder(BorderFactory.createTitledBorder((String) null));
 
-		
-		description.setEditable(true);
-		AutoCompleteDecorator.decorate(description);
+
+//		AutoCompleteDecorator.decorate(description);
 
 		for (JComponent component : components) {
 			component.addKeyListener(new KeyAdapter(){
@@ -381,6 +380,7 @@ public class TransactionEditor extends MossPanel {
 		if (!force && this.transaction != null && this.transaction.equals(transaction))
 			return;
 		if (transaction != null){
+			System.out.println(transaction.getDescription());
 			date.setDate(transaction.getDate());			
 			number.setValue(transaction.getNumber());
 			description.setValue(transaction.getDescription());
@@ -441,6 +441,7 @@ public class TransactionEditor extends MossPanel {
 	}
 
 	public String getDescription(){
+		System.out.println("Description: " + description.getSelectedItem());
 		if (description.getSelectedItem() != null)
 			return description.getSelectedItem().toString();
 		return null;

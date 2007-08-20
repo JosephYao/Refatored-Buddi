@@ -54,17 +54,17 @@ public class ScheduledTransaction extends Transaction {
 		getScheduledTransaction().setMessage(message);
 		getModel().setChanged();
 	}
-	public Integer getScheduleDay() {
+	public int getScheduleDay() {
 		return getScheduledTransaction().getScheduleDay();
 	}
-	public void setScheduleDay(Integer scheduleDay) {
+	public void setScheduleDay(int scheduleDay) {
 		getScheduledTransaction().setScheduleDay(scheduleDay);
 		getModel().setChanged();
 	}
-	public Integer getScheduleMonth() {
+	public int getScheduleMonth() {
 		return getScheduledTransaction().getScheduleMonth();
 	}
-	public void setScheduleMonth(Integer scheduleMonth) {
+	public void setScheduleMonth(int scheduleMonth) {
 		getScheduledTransaction().setScheduleMonth(scheduleMonth);
 		getModel().setChanged();
 	}
@@ -75,10 +75,10 @@ public class ScheduledTransaction extends Transaction {
 		getScheduledTransaction().setScheduleName(scheduleName);
 		getModel().setChanged();
 	}
-	public Integer getScheduleWeek() {
+	public int getScheduleWeek() {
 		return getScheduledTransaction().getScheduleWeek();
 	}
-	public void setScheduleWeek(Integer scheduleWeek) {
+	public void setScheduleWeek(int scheduleWeek) {
 		getScheduledTransaction().setScheduleWeek(scheduleWeek);
 		getModel().setChanged();
 	}

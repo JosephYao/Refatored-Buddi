@@ -169,13 +169,15 @@ public class AccountFrame extends MossDocumentFrame {
 		updateButtons();
 		
 		this.setJMenuBar(new AccountFrameMenuBar(this));
-		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
 	public void updateContent() {
+		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
+		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+
+		//We need to set the title first. 
 		super.updateContent();
 		
 		//Fire a change event on the table model.
@@ -198,6 +200,7 @@ public class AccountFrame extends MossDocumentFrame {
 		}
 		
 		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + InternalFormatter.getFormattedCurrency(netWorth));
+		
 	}
 	
 	@Override

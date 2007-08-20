@@ -13,6 +13,7 @@ package org.homeunix.thecave.buddi.i18n;
 public enum BuddiKeys {
 	MY_REPORTS,
     NETWORK,
+    SCHEDULE_NAME,
 	ACCOUNT,
     ACCOUNT_AND_CATEGORY_SUMMARY,
     ACCOUNT_MODIFY_EDIT,

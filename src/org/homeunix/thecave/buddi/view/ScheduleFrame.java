@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -116,8 +118,6 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 		list.setModel(listModel);
 		list.setCellRenderer(new ScheduledTransactionListCellRenderer());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		list.getColumn(0).setCellRenderer(new ScheduledTransactionTableCellRenderer());
-//		list.getColumn(0).setCellEditor(new JXTable.GenericEditor());
 		list.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()){
@@ -125,47 +125,20 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 				}
 			}
 		});
-
-		list.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-			private boolean allowMessage = true;
-
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()){
-					//Save existing scheduled transactions.  If the save failed, force
-					// selection back to the poorly edited transaction.
-//					if (allowMessage && !scheduleEditor.saveScheduledTransaction()){
-//					allowMessage = false;
-//					list.setRowSelectionInterval(listModel.getSelectedIndex(), listModel.getSelectedIndex());
-//					return;
-//					}
-
-//					if (allowMessage) {
-//					listModel.setSelectedScheduedTransaction(list.getSelectedRow());
-//					ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
-//					scheduleEditor.loadSchedule(s);
-//					}
-//					allowMessage = true;
-//					listModel.setSelectedScheduedTransaction(list.getSelectedRow());
+		list.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				
+				if (e.getClickCount() >= 2){
+					editButton.doClick();
 				}
 			}
 		});
-//		list.addMouseListener(new MouseAdapter(){
-//		@Override
-//		public void mouseClicked(MouseEvent e) {
-//		super.mouseClicked(e);
-//		//Save existing scheduled transactions
-//		modify.saveScheduledTransaction();
-
-//		ScheduledTransaction s = (ScheduledTransaction) listModel.getValueAt(list.getSelectedRow(), -1);
-//		modify.loadSchedule(s);
-//		listModel.setSelectedScheduedTransaction(list.getSelectedRow());
-//		}
-//		});
 
 		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_SCHEDULED_ACTIONS));
 		this.setLayout(new BorderLayout());
 		this.add(scrollPanel, BorderLayout.CENTER);
-//		this.add(scheduleEditor, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		this.getRootPane().setDefaultButton(doneButton);
 	}
@@ -200,6 +173,8 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 			
 			list.setSelectedIndex(-1);
 			listModel.fireListChanged();
+			editButton.setEnabled(false);
+			deleteButton.setEnabled(false);
 		}
 		else if (e.getSource().equals(doneButton)){
 //			listModel.save();

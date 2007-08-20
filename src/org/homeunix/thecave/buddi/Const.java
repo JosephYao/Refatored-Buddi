@@ -40,6 +40,12 @@ public class Const {
 	public final static String BACKUP_FILE_EXTENSION = ".buddi3.bak";
 	public final static String DATA_FILE_EXTENSION_OLD = ".buddi";
 	public final static String BACKUP_FILE_EXTENSION_OLD = ".buddi.bak";
+	
+	//Data file encryption constants
+//	public final static String DATA_FILE_ENCRYPTION = "AES/CBC/PKCS5Padding";
+//	public final static String KEY_ALGORITHM = "AES";
+//	public final static int SALT_LENGTH = 16;
+	public final static String XML_PROLOGUE = "<?xml"; //Tests if the file is encrypted
 //	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
 	public static final FileFilter FILE_FILTER_DATA = new FileFilter(){
