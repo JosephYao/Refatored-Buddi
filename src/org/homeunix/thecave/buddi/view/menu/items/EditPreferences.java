@@ -23,7 +23,7 @@ public class EditPreferences extends MossMenuItem{
 	public void actionPerformed(ActionEvent e) {
 		PreferencesFrame prefs = new PreferencesFrame(getFrame());
 		try {
-			prefs.openWindow(PrefsModel.getInstance().getPreferencesWindowSize(), PrefsModel.getInstance().getPreferencesWindowLocation());
+			prefs.openWindow(null, PrefsModel.getInstance().getPreferencesWindowLocation());
 		}
 		catch (WindowOpenException woe){}
 	}

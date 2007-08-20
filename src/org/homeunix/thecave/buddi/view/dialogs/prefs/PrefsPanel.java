@@ -9,4 +9,9 @@ public interface PrefsPanel {
 	 * Saves the preferences which this panel is responsible for.
 	 */
 	public void save();
+	
+	/**
+	 * Loads the preferences which this panel is responsible for.
+	 */
+	public void load();
 }

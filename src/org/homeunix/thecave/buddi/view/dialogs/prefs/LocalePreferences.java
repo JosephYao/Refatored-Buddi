@@ -31,14 +31,16 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
+import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
 import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.Log;
 
-public class LocalePreferences extends MossPanel implements PrefsPanel {
+public class LocalePreferences extends MossPanel implements PrefsPanel, ActionListener {
 	public static final long serialVersionUID = 0; 
 
 	private final JScrollingComboBox language;
@@ -47,6 +49,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 	private final JCheckBox currencySymbolAfterAmount;
 	private final JButton otherCurrencyButton;
 	private final JButton otherDateFormatButton;
+	private final JButton editLanguagesButton;
 
 	private final DefaultComboBoxModel languageModel;
 	private final DefaultComboBoxModel currencyModel;
@@ -55,16 +58,17 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 
 	public LocalePreferences() {
 		super(true);
-		
+
 		languageModel = new DefaultComboBoxModel();
 		language = new JScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
 		currencyFormat = new JScrollingComboBox(currencyModel);
-		currencySymbolAfterAmount = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
+		currencySymbolAfterAmount = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
 		dateFormatModel = new DefaultComboBoxModel();
 		dateFormat = new JScrollingComboBox(dateFormatModel);
-		otherCurrencyButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OTHER));
-		otherDateFormatButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OTHER));
+		otherCurrencyButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
+		otherDateFormatButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
+		editLanguagesButton = new JButton(TextFormatter.getTranslation(PreferencesKeys.EDIT_LANGUAGES));
 
 		open();
 	}
@@ -76,32 +80,9 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		JLabel dateFormatLabel = new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.DATE_FORMAT));
-		JLabel currencyFormatLabel = new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.CURRENCY));
-		JLabel languageLabel = new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.LANGUAGE));
-
-		//Set up currency lists
-		boolean customCurrency = true; //Assume custom until proved otherwise, below
-		String currency = PrefsModel.getInstance().getCurrencySign();
-		for (String s : Const.CURRENCY_FORMATS) {
-			currencyModel.addElement(s);
-			if (s.equals(currency))
-				customCurrency = false;
-		}
-		if (customCurrency){
-			currencyModel.addElement(currency);
-		}
-
-		//Set up Date Format list
-		boolean customDateFormat = true; //Assume custom until proved otherwise, below
-		for (String s : Const.DATE_FORMATS) {
-			dateFormatModel.addElement(s);
-			if (s.equals(PrefsModel.getInstance().getDateFormat()))
-				customDateFormat = false;
-		}
-		if (customDateFormat){
-			dateFormatModel.addElement(PrefsModel.getInstance().getDateFormat());
-		}
+		JLabel dateFormatLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.DATE_FORMAT));
+		JLabel currencyFormatLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.CURRENCY));
+		JLabel languageLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.LANGUAGE));
 
 		//Set up the language pulldown
 		language.setRenderer(new DefaultListCellRenderer(){
@@ -130,161 +111,22 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 			}
 		});
 
-
-		otherCurrencyButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				String newCurrency = JOptionPane.showInputDialog(
-						LocalePreferences.this, 
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ENTER_CURRENCY_SYMBOL), 
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ENTER_CURRENCY_SYMBOL_TITLE), 
-						JOptionPane.PLAIN_MESSAGE);
-
-				if (newCurrency != null && newCurrency.length() > 0){
-					currencyModel.removeAllElements();
-
-					//Set up currency lists
-					boolean customCurrency = true; //Assume custom until proved otherwise, below
-					for (String s : Const.CURRENCY_FORMATS) {
-						currencyModel.addElement(s);
-						if (s.equals(newCurrency)){
-							customCurrency = false;
-							Log.debug("Currency " + newCurrency + " already in list...");
-						}
-					}
-					if (customCurrency){
-						currencyModel.addElement(newCurrency);
-					}
-
-					currencyFormat.setSelectedItem(newCurrency);
-				}
-				else {
-					Log.debug("Invalid currency: '" + newCurrency + "'");
-				}	
-			}
-		});
-
-		otherDateFormatButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				String newDateFormat = JOptionPane.showInputDialog(
-						LocalePreferences.this, 
-						PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ENTER_DATE_FORMAT), 
-						PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ENTER_DATE_FORMAT_TITLE), 
-						JOptionPane.PLAIN_MESSAGE);
-
-				if (newDateFormat != null 
-						&& newDateFormat.length() > 0){
-
-					//Test out the new format, to see if it complies with
-					// the format rules.
-					try {
-						new SimpleDateFormat(newDateFormat);
-					}
-					catch (IllegalArgumentException iae){
-						String[] options = new String[1];
-						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
-
-						JOptionPane.showOptionDialog(
-								LocalePreferences.this, 
-								PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ERROR_INCORRECT_FORMAT), 
-								PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.ERROR_MESSAGE,
-								null,
-								options,
-								options[0]);
-						return;
-					}
-
-
-					dateFormatModel.removeAllElements();
-
-					//Set up currency lists
-					boolean customDateFormat = true; //Assume custom until proved otherwise, below
-					for (String s : Const.DATE_FORMATS) {
-						dateFormatModel.addElement(s);
-						if (s.equals(newDateFormat)){
-							customDateFormat = false;
-							Log.debug("Date Format " + newDateFormat + " already in list...");
-						}
-					}
-					if (customDateFormat){
-						dateFormatModel.addElement(newDateFormat);
-					}
-
-					dateFormatModel.setSelectedItem(newDateFormat);
-				}
-				else {
-					Log.debug("Invalid Date Format: '" + newDateFormat + "'");
-				}
-			}
-		});
-
-		JButton editLanguages = new JButton(PrefsModel.getInstance().getTranslator().get(BuddiKeys.EDIT_LANGUAGES));
-		editLanguages.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-					System.out.println("Opening Language Editor");
-					BuddiLanguageEditor ble = new BuddiLanguageEditor(language.getSelectedItem().toString());
-					try {
-						ble.openWindow();
-					}
-					catch (WindowOpenException woe){}
-
-//					updateContent();
-			}
-		});
-
-//		dateFormat.addItemListener(new ItemListener() {
-//		public void itemStateChanged(ItemEvent e) {
-//		if (dateFormat.getSelectedItem() == null){
-//		if (e.getItem().equals(dateFormat.getItemAt(0))){
-//		dateFormat.setSelectedIndex(1);
-//		}
-//		Log.debug("null; e.getItem == " + e.getItem());
-//		dateFormat.setSelectedIndex(0);
-//		}
-//		}			
-//		});
-
-		//Set up language model
-		languageModel.removeAllElements();
-
-		Set<String> languages = new HashSet<String>();
-
-		// Load all available languages into Prefs.  Start with 
-		// the bundled languages, and if there are more, load them too.
-		for (String language : Const.BUNDLED_LANGUAGES) {
-			languages.add(language);			
-		}
-
-		File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
-		if (languageLocation.exists() && languageLocation.isDirectory()){
-			for (File f: languageLocation.listFiles())
-				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
-					languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
-		}
-		else{
-			Log.critical("Cannot find language directory");
-		}
-
-		Vector<String> languagesVector = new Vector<String>(languages);
-		Collections.sort(languagesVector);
-		for (String string : languagesVector) {
-			languageModel.addElement(string);
-		}
-
-		dateFormat.setSelectedItem(PrefsModel.getInstance().getDateFormat());
-		currencyFormat.setSelectedItem(PrefsModel.getInstance().getCurrencySign());
-		currencySymbolAfterAmount.setSelected(PrefsModel.getInstance().isShowCurrencyAfterAmount());
-		language.setSelectedItem(PrefsModel.getInstance().getLanguage());
-
+		otherCurrencyButton.setPreferredSize(InternalFormatter.getButtonSize(otherCurrencyButton));
+		otherDateFormatButton.setPreferredSize(InternalFormatter.getButtonSize(otherDateFormatButton));
+		editLanguagesButton.setPreferredSize(InternalFormatter.getButtonSize(editLanguagesButton));
+		
+		otherCurrencyButton.addActionListener(this);
+		otherDateFormatButton.addActionListener(this);
+		editLanguagesButton.addActionListener(this);
 
 		languagePanel.add(languageLabel);
 		languagePanel.add(language);
-		languagePanel.add(editLanguages);
+		languagePanel.add(editLanguagesButton);
 
 		dateFormatPanel.add(dateFormatLabel);
 		dateFormatPanel.add(dateFormat);
 		dateFormatPanel.add(otherDateFormatButton);
+		
 		currencyFormatPanel.add(currencyFormatLabel);
 		currencyFormatPanel.add(currencyFormat);
 		currencyFormatPanel.add(otherCurrencyButton);
@@ -294,8 +136,61 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 		this.add(currencyFormatPanel);
 		this.add(currencySymbolAfterAmount);
 		this.add(Box.createVerticalGlue());
+	}
 
-//		return getPanelHolder(localePanel);
+	public void load() {
+		
+		//Set up currency model
+		boolean customCurrency = true; //Assume custom until proved otherwise, below
+		String currency = PrefsModel.getInstance().getCurrencySign();
+		for (String s : Const.CURRENCY_FORMATS) {
+			currencyModel.addElement(s);
+			if (s.equals(currency))
+				customCurrency = false;
+		}
+		if (customCurrency){
+			currencyModel.addElement(currency);
+		}
+
+		//Set up Date Format model
+		boolean customDateFormat = true; //Assume custom until proved otherwise, below
+		for (String s : Const.DATE_FORMATS) {
+			dateFormatModel.addElement(s);
+			if (s.equals(PrefsModel.getInstance().getDateFormat()))
+				customDateFormat = false;
+		}
+		if (customDateFormat){
+			dateFormatModel.addElement(PrefsModel.getInstance().getDateFormat());
+		}
+		
+		
+		//Set up language model.  Look for all built in ones, and any extras.
+		languageModel.removeAllElements();
+		Set<String> languages = new HashSet<String>();
+		//Load all built in languages
+		for (String language : Const.BUNDLED_LANGUAGES) {
+			languages.add(language);			
+		}
+		//Load all languages in the Languages folder
+		File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
+		if (languageLocation.exists() && languageLocation.isDirectory()){
+			for (File f: languageLocation.listFiles())
+				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
+					languages.add(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+		}
+		//Load all found languages into language model
+		Vector<String> languagesVector = new Vector<String>(languages);
+		Collections.sort(languagesVector);
+		for (String string : languagesVector) {
+			languageModel.addElement(string);
+		}
+		
+		
+		//Select from Preferencs
+		dateFormat.setSelectedItem(PrefsModel.getInstance().getDateFormat());
+		currencyFormat.setSelectedItem(PrefsModel.getInstance().getCurrencySign());
+		currencySymbolAfterAmount.setSelected(PrefsModel.getInstance().isShowCurrencyAfterAmount());
+		language.setSelectedItem(PrefsModel.getInstance().getLanguage());
 	}
 
 	public void save() {
@@ -303,7 +198,101 @@ public class LocalePreferences extends MossPanel implements PrefsPanel {
 		PrefsModel.getInstance().setCurrencySign(currencyFormat.getSelectedItem().toString());
 		PrefsModel.getInstance().setShowCurrencyAfterAmount(currencySymbolAfterAmount.isSelected());
 		PrefsModel.getInstance().setLanguage(language.getSelectedItem().toString());
-		
+
 		PrefsModel.getInstance().getTranslator().reloadLanguages();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(otherCurrencyButton)){
+			String newCurrency = JOptionPane.showInputDialog(
+					LocalePreferences.this, 
+					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL), 
+					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL_TITLE), 
+					JOptionPane.PLAIN_MESSAGE);
+
+			if (newCurrency != null && newCurrency.length() > 0){
+				currencyModel.removeAllElements();
+
+				//Set up currency lists
+				boolean customCurrency = true; //Assume custom until proved otherwise, below
+				for (String s : Const.CURRENCY_FORMATS) {
+					currencyModel.addElement(s);
+					if (s.equals(newCurrency)){
+						customCurrency = false;
+						Log.debug("Currency " + newCurrency + " already in list...");
+					}
+				}
+				if (customCurrency){
+					currencyModel.addElement(newCurrency);
+				}
+
+				currencyFormat.setSelectedItem(newCurrency);
+			}
+			else {
+				Log.debug("Invalid currency: '" + newCurrency + "'");
+			}	
+		}
+		else if (e.getSource().equals(otherDateFormatButton)){
+			String newDateFormat = JOptionPane.showInputDialog(
+					LocalePreferences.this, 
+					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT), 
+					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT_TITLE), 
+					JOptionPane.PLAIN_MESSAGE);
+
+			if (newDateFormat != null 
+					&& newDateFormat.length() > 0){
+
+				//Test out the new format, to see if it complies with
+				// the format rules.
+				try {
+					new SimpleDateFormat(newDateFormat);
+				}
+				catch (IllegalArgumentException iae){
+					String[] options = new String[1];
+					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							LocalePreferences.this, 
+							TextFormatter.getTranslation(PreferencesKeys.ERROR_INCORRECT_FORMAT), 
+							TextFormatter.getTranslation(BuddiKeys.ERROR),
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
+					return;
+				}
+
+
+				dateFormatModel.removeAllElements();
+
+				//Set up currency lists
+				boolean customDateFormat = true; //Assume custom until proved otherwise, below
+				for (String s : Const.DATE_FORMATS) {
+					dateFormatModel.addElement(s);
+					if (s.equals(newDateFormat)){
+						customDateFormat = false;
+						Log.debug("Date Format " + newDateFormat + " already in list...");
+					}
+				}
+				if (customDateFormat){
+					dateFormatModel.addElement(newDateFormat);
+				}
+
+				dateFormatModel.setSelectedItem(newDateFormat);
+			}
+			else {
+				Log.debug("Invalid Date Format: '" + newDateFormat + "'");
+			}
+		}
+		else if (e.getSource().equals(editLanguagesButton)){
+			System.out.println("Opening Language Editor");
+			BuddiLanguageEditor ble = new BuddiLanguageEditor(language.getSelectedItem().toString());
+			try {
+				ble.openWindow();
+			}
+			catch (WindowOpenException woe){}
+		}
+
 	}
 }

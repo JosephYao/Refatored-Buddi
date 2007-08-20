@@ -56,11 +56,11 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	public void init() {
 		super.init();
 
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.VIEW), view);
+		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.VIEW), getWrapperPanel(view));
 		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.PLUGINS), plugin);
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.LOCALE), locale);
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NETWORK), network);
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ADVANCED), advanced);
+		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.LOCALE), getWrapperPanel(locale));
+		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NETWORK), getWrapperPanel(network));
+		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ADVANCED), getWrapperPanel(advanced));
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);
@@ -71,6 +71,12 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
+		
+		view.load();
+		plugin.load();
+		locale.load();
+		network.load();
+		advanced.load();
 		
 		this.getRootPane().setDefaultButton(okButton);
 		this.setLayout(new BorderLayout());
@@ -83,7 +89,6 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		PrefsModel.getInstance().setPreferencesWindowSize(this.getSize());
 		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
-
 		
 		return super.closeWindow();
 	}
@@ -103,5 +108,11 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		else if (e.getSource().equals(cancelButton)){
 			this.closeWindow();
 		}
+	}
+	
+	private JPanel getWrapperPanel(JPanel panel){
+		JPanel wrapper = new JPanel(new BorderLayout());
+		wrapper.add(panel, BorderLayout.NORTH);
+		return wrapper;
 	}
 }

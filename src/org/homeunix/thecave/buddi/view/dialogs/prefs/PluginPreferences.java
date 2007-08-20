@@ -72,12 +72,6 @@ public class PluginPreferences extends MossPanel implements PrefsPanel, ActionLi
 
 		JScrollPane pluginListScroller = new JScrollPane(pluginList);
 
-		pluginListModel.clear();
-		for (PluginInfo info : PrefsModel.getInstance().getPluginInfo()) {
-			pluginListModel.addElement(info);
-			pluginList.setSelectedValue(info, false);
-		}
-
 		pluginList.addListSelectionListener(new ListSelectionListener(){
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()){
@@ -106,7 +100,14 @@ public class PluginPreferences extends MossPanel implements PrefsPanel, ActionLi
 
 		this.add(pluginListScroller, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
-
+	}
+	
+	public void load() {
+		pluginListModel.clear();
+		for (PluginInfo info : PrefsModel.getInstance().getPluginInfo()) {
+			pluginListModel.addElement(info);
+			pluginList.setSelectedValue(info, false);
+		}		
 	}
 
 	public void save() {

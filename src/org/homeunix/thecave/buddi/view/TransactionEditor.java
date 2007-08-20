@@ -59,7 +59,6 @@ import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  * The transaction editing pane, which includes text fields to enter
