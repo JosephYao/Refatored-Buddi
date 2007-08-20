@@ -30,6 +30,7 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor;
+import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor.BuddiLanguageEditorException;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -54,7 +55,6 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 	private final DefaultComboBoxModel languageModel;
 	private final DefaultComboBoxModel currencyModel;
 	private final DefaultComboBoxModel dateFormatModel;
-
 
 	public LocalePreferences() {
 		super(true);
@@ -287,11 +287,12 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		}
 		else if (e.getSource().equals(editLanguagesButton)){
 			System.out.println("Opening Language Editor");
-			BuddiLanguageEditor ble = new BuddiLanguageEditor(language.getSelectedItem().toString());
 			try {
+				BuddiLanguageEditor ble = BuddiLanguageEditor.getInstance(language.getSelectedItem().toString());
 				ble.openWindow();
 			}
 			catch (WindowOpenException woe){}
+			catch (BuddiLanguageEditorException blee){}
 		}
 
 	}
