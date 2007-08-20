@@ -32,7 +32,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.AccountFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
 import org.homeunix.thecave.moss.swing.hint.JHintTextField;
@@ -58,7 +58,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	
 	private final DataModel model;
 
-	public AccountEditorDialog(AccountFrame frame, DataModel model, Account selected) {
+	public AccountEditorDialog(MainFrame frame, DataModel model, Account selected) {
 		super(frame);
 
 		this.selected = selected;

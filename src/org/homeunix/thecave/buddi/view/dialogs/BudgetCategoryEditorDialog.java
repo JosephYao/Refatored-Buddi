@@ -34,7 +34,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.BudgetFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
 import org.homeunix.thecave.moss.swing.hint.JHintTextField;
@@ -61,7 +61,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	
 	private final DataModel model;
 
-	public BudgetCategoryEditorDialog(BudgetFrame frame, DataModel model, BudgetCategory selected) {
+	public BudgetCategoryEditorDialog(MainFrame frame, DataModel model, BudgetCategory selected) {
 		super(frame);
 
 		this.selected = selected;

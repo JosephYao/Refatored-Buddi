@@ -30,7 +30,7 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
-import org.homeunix.thecave.buddi.view.ReportFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.window.MossDialog;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -57,9 +57,9 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 	protected final JXDatePicker endDateChooser;
 
 	protected final BuddiReportPlugin report;
-	private final ReportFrame reportFrame;
+	private final MainFrame reportFrame;
 
-	public CustomDateDialog(ReportFrame reportFrame, BuddiReportPlugin plugin){
+	public CustomDateDialog(MainFrame reportFrame, BuddiReportPlugin plugin){
 		super(reportFrame);
 		
 		this.reportFrame = reportFrame;

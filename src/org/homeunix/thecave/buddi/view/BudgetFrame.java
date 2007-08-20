@@ -26,23 +26,19 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
-import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
-import org.homeunix.thecave.buddi.view.menu.bars.BudgetFrameMenuBar;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
-import org.homeunix.thecave.moss.swing.window.MossAssociatedDocumentFrame;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class BudgetFrame extends MossAssociatedDocumentFrame {
+public class BudgetFrame extends MossPanel {
 	public static final long serialVersionUID = 0;
 
 	private final JXTreeTable tree;
@@ -53,17 +49,19 @@ public class BudgetFrame extends MossAssociatedDocumentFrame {
 
 	private final BudgetTreeTableModel treeTableModel;
 	
-	private final DataModel model;
+	private final MainFrame parent;
 	
-	public BudgetFrame(MossDocumentFrame parentFrame) {
-		super(parentFrame, "BudgetFrame" + ((DataModel) parentFrame.getDocument()).getUid());
-		this.model = (DataModel) parentFrame.getDocument();
-		this.treeTableModel = new BudgetTreeTableModel(model);
+	public BudgetFrame(MainFrame parent) {
+		super(true);
+		this.parent = parent;
+		this.treeTableModel = new BudgetTreeTableModel((DataModel) parent.getDocument());
 		tree = new JXTreeTable(treeTableModel);
 
 		balanceLabel = new JLabel();
 		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
+		
+		open();
 	}
 
 	public List<BudgetCategory> getSelectedBudgetCategories(){
@@ -159,9 +157,9 @@ public class BudgetFrame extends MossAssociatedDocumentFrame {
 
 		updateButtons();
 
-		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_BUDGET) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
-		this.setJMenuBar(new BudgetFrameMenuBar(this));
+//		String dataFile = model.getFile() == null ? "" : " - " + model.getFile();
+//		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_BUDGET) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+//		this.setJMenuBar(new BudgetFrameMenuBar(this));
 
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -180,55 +178,12 @@ public class BudgetFrame extends MossAssociatedDocumentFrame {
 		treeTableModel.fireStructureChanged();
 		
 		//Restore the state of the expanded / unrolled nodes.
-		for (BudgetCategory bc : getDataModel().getBudgetCategories()) {
+		for (BudgetCategory bc : ((DataModel) parent.getDocument()).getBudgetCategories()) {
 			TreePath path = new TreePath(new Object[]{treeTableModel.getRoot(), bc});
 			if (bc.isExpanded())
 				tree.expandPath(path);
 			else
 				tree.collapsePath(path);
 		}
-	}
-	
-	@Override
-	public boolean canClose() {
-		return true;
-	}
-	
-	//This is needed to adjust for the BorderLayout used on the Mac.
-//	@Override
-//	public StandardWindow openWindow() throws WindowOpenException {
-//		super.openWindow();
-//		if (OperatingSystemUtil.isMac()){
-//			this.getRootPane().setBorder(BorderFactory.createEmptyBorder(12, 15, 5, 15));
-//		}
-//		return this;
-//	}
-	
-	//This is needed to adjust for the BorderLayout used on the Mac.
-//	@Override
-//	public void openWindow(Dimension dimension, Point position) throws WindowOpenException {
-//		super.openWindow(dimension, position);
-//		
-//		if (OperatingSystemUtil.isMac()){
-//			this.getRootPane().setBorder(BorderFactory.createEmptyBorder(12, 15, 5, 15));
-//		}
-//	}
-	
-	@Override
-	public Object closeWindow() {
-		PrefsModel.getInstance().setBudgetWindowSize(this.getSize());
-		PrefsModel.getInstance().setBudgetWindowLocation(this.getLocation());
-		PrefsModel.getInstance().save();
-		
-		return super.closeWindow();
-	}
-	
-	public DataModel getDataModel(){
-		return model;
-	}
-	
-	@Override
-	public boolean isDocumentSaved() {
-		return !model.isChanged();
 	}
 }

@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
@@ -24,25 +23,21 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AccountTreeTableModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.menu.bars.AccountFrameMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
-import org.homeunix.thecave.buddi.view.menu.items.FileSave;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class AccountFrame extends MossDocumentFrame {
+public class AccountFrame extends MossPanel {
 	public static final long serialVersionUID = 0;
 
 	private final JXTreeTable tree;
@@ -50,12 +45,18 @@ public class AccountFrame extends MossDocumentFrame {
 
 	private final AccountTreeTableModel treeTableModel;
 	
-	public AccountFrame(DataModel model) {
-		super(model, "AccountFrame" + model.getUid());
-		this.treeTableModel = new AccountTreeTableModel(model);
+	private final MainFrame parent;
+	
+	public AccountFrame(MainFrame parent) {
+		super(true);
+//		this.model = model;
+		this.parent = parent;
+		this.treeTableModel = new AccountTreeTableModel((DataModel) parent.getDocument());
 		
 		tree = new JXTreeTable(treeTableModel);
 		balanceLabel = new JLabel("Change Me");
+		
+		open();
 	}
 	
 	public List<Account> getSelectedAccounts(){
@@ -103,7 +104,7 @@ public class AccountFrame extends MossDocumentFrame {
 		tree.getColumn(0).setMinWidth(treeColumnWidth);
 		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
 
-		getDocument().addDocumentChangeListener(new DocumentChangeListener(){
+		parent.getDocument().addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				updateContent();
 			}
@@ -144,7 +145,7 @@ public class AccountFrame extends MossDocumentFrame {
 		tree.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getClickCount() >= 2)
-					new EditViewTransactions(AccountFrame.this).doClick();
+					new EditViewTransactions(parent).doClick();
 				super.mouseClicked(arg0);
 			}
 		});
@@ -168,14 +169,14 @@ public class AccountFrame extends MossDocumentFrame {
 		
 		updateButtons();
 		
-		this.setJMenuBar(new AccountFrameMenuBar(this));
+//		this.setJMenuBar(new AccountFrameMenuBar(this));
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
 	public void updateContent() {
-		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+//		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
+//		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 
 		//We need to set the title first. 
 		super.updateContent();
@@ -184,7 +185,7 @@ public class AccountFrame extends MossDocumentFrame {
 		treeTableModel.fireStructureChanged();
 		
 		//Restore the state of the expanded / unrolled nodes.
-		for (Type t : getDataModel().getTypes()) {
+		for (Type t : ((DataModel) parent.getDocument()).getTypes()) {
 			TreePath path = new TreePath(new Object[]{treeTableModel.getRoot(), t});
 			if (t.isExpanded())
 				tree.expandPath(path);
@@ -192,65 +193,14 @@ public class AccountFrame extends MossDocumentFrame {
 				tree.collapsePath(path);
 		}
 		
-		getDataModel().updateAllBalances();
+		((DataModel) parent.getDocument()).updateAllBalances();
 		
 		long netWorth = 0;
-		for (Account a : getDataModel().getAccounts()) {
+		for (Account a : ((DataModel) parent.getDocument()).getAccounts()) {
 			netWorth += a.getBalance();
 		}
 		
 		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + InternalFormatter.getFormattedCurrency(netWorth));
 		
-	}
-	
-	@Override
-	public boolean canClose() {
-		if (getDataModel().isChanged()){
-			String[] buttons = new String[3];
-			buttons[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_YES);
-			buttons[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
-			buttons[2] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL);
-
-			int reply = JOptionPane.showOptionDialog(
-					this, 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_FOR_SAVE),
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_FOR_SAVE_TITLE),
-					JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					buttons,
-					buttons[0]);
-
-			if (reply == JOptionPane.YES_OPTION){
-				//We want to exit, but save first.
-				new FileSave(this).doClick();
-			}
-			else if (reply == JOptionPane.CANCEL_OPTION){
-				//We don't want to exit.
-				return false;
-			}
-		}
-		return true;
-	}
-	
-//	void addAssociatedFrame(AbstractFrame frame){
-//		associatedFrames.add(frame);
-//	}
-//	
-//	void removeAssociatedFrame(AbstractBuddiFrame frame){
-//		associatedFrames.remove(frame);
-//	}
-	
-	@Override
-	public Object closeWindow() {
-		PrefsModel.getInstance().setAccountWindowSize(this.getSize());
-		PrefsModel.getInstance().setAccountWindowLocation(this.getLocation());
-		PrefsModel.getInstance().save();
-				
-		return super.closeWindow();
-	}
-	
-	public DataModel getDataModel(){
-		return (DataModel) getDocument();
 	}
 }

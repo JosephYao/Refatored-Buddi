@@ -49,10 +49,10 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	private final BackedListModel<ScheduledTransaction> listModel;
 	private final DataModel model;
 
-	public ScheduleFrame(DataModel model, MossDocumentFrame frame){
+	public ScheduleFrame(MossDocumentFrame frame){
 		super(frame, "ScheduledTransactionFrame" + ((DataModel) frame.getDocument()).getUid());
 
-		this.model = model;
+		this.model = (DataModel) frame.getDocument();
 		
 //		scheduleEditor = new ScheduleEditorDialog(frame);
 

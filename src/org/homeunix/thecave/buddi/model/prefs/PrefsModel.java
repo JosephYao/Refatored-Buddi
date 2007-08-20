@@ -157,18 +157,18 @@ public class PrefsModel {
 		prefsModel.setLastDataFile(lastOpenedDataFile.getAbsolutePath());
 	}
 
-	public Dimension getAccountWindowSize() {
-		return (prefsModel.getAccountsPlacement().getSize() != null
-				? prefsModel.getAccountsPlacement().getSize() 
+	public Dimension getMainWindowSize() {
+		return (prefsModel.getMainWindowPlacement().getSize() != null
+				? prefsModel.getMainWindowPlacement().getSize() 
 						: new Dimension(500, 300));
 	}
 
-	public Dimension getBudgetWindowSize() {
-		return (prefsModel.getBudgetPlacement().getSize() != null
-				? prefsModel.getBudgetPlacement().getSize() 
-						: new Dimension(900, 500));
-	}
-
+//	public Dimension getBudgetWindowSize() {
+//		return (prefsModel.getBudgetPlacement().getSize() != null
+//				? prefsModel.getBudgetPlacement().getSize() 
+//						: new Dimension(900, 500));
+//	}
+//
 	public Dimension getTransactionWindowSize() {
 		return (prefsModel.getTransactionsPlacement().getSize() != null
 				? prefsModel.getTransactionsPlacement().getSize() 
@@ -181,11 +181,11 @@ public class PrefsModel {
 						: new Dimension(600, 400));
 	}
 	
-	public Dimension getReportWindowSize() {
-		return (prefsModel.getReportsPlacement().getSize() != null
-				? prefsModel.getReportsPlacement().getSize() 
-						: new Dimension(800, 400));
-	}
+//	public Dimension getReportWindowSize() {
+//		return (prefsModel.getReportsPlacement().getSize() != null
+//				? prefsModel.getReportsPlacement().getSize() 
+//						: new Dimension(800, 400));
+//	}
 
 	public Dimension getPreferencesWindowSize() {
 		return (prefsModel.getPrefsPlacement().getSize() != null
@@ -193,17 +193,17 @@ public class PrefsModel {
 						: new Dimension(400, 300));
 	}
 
-	public Point getAccountWindowLocation() {
-		return (prefsModel.getAccountsPlacement().getLocation() != null
-				? prefsModel.getAccountsPlacement().getLocation() 
+	public Point getMainWindowLocation() {
+		return (prefsModel.getMainWindowPlacement().getLocation() != null
+				? prefsModel.getMainWindowPlacement().getLocation() 
 						: new Point(100, 100));
 	}
 
-	public Point getBudgetWindowLocation() {
-		return (prefsModel.getBudgetPlacement().getLocation() != null
-				? prefsModel.getBudgetPlacement().getLocation() 
-						: new Point(100, 100));
-	}
+//	public Point getBudgetWindowLocation() {
+//		return (prefsModel.getBudgetPlacement().getLocation() != null
+//				? prefsModel.getBudgetPlacement().getLocation() 
+//						: new Point(100, 100));
+//	}
 
 	public Point getTransactionWindowLocation() {
 		return (prefsModel.getTransactionsPlacement().getLocation() != null
@@ -217,11 +217,11 @@ public class PrefsModel {
 						: new Point(100, 100));
 	}
 
-	public Point getReportWindowLocation() {
-		return (prefsModel.getReportsPlacement().getLocation() != null
-				? prefsModel.getReportsPlacement().getLocation() 
-						: new Point(100, 100));
-	}
+//	public Point getReportWindowLocation() {
+//		return (prefsModel.getReportsPlacement().getLocation() != null
+//				? prefsModel.getReportsPlacement().getLocation() 
+//						: new Point(100, 100));
+//	}
 	
 	public Point getPreferencesWindowLocation() {
 		return (prefsModel.getPrefsPlacement().getLocation() != null
@@ -229,15 +229,15 @@ public class PrefsModel {
 						: new Point(100, 100));
 	}
 
-	public void setAccountWindowSize(Dimension size){
+	public void setMainWindowSize(Dimension size){
 		if (size != null)
-			prefsModel.getAccountsPlacement().setSize(size);
+			prefsModel.getMainWindowPlacement().setSize(size);
 	}
 
-	public void setBudgetWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.getBudgetPlacement().setSize(size);
-	}
+//	public void setBudgetWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.getBudgetPlacement().setSize(size);
+//	}
 
 	public void setTransactionWindowSize(Dimension size){
 		if (size != null)
@@ -249,10 +249,10 @@ public class PrefsModel {
 			prefsModel.getScheduledPlacement().setSize(size);
 	}
 
-	public void setReportWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.getReportsPlacement().setSize(size);
-	}
+//	public void setReportWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.getReportsPlacement().setSize(size);
+//	}
 	
 	public void setPreferencesWindowSize(Dimension size){
 		if (size != null)
@@ -260,15 +260,15 @@ public class PrefsModel {
 	}
 
 
-	public void setAccountWindowLocation(Point location){
+	public void setMainWindowLocation(Point location){
 		if (location != null)
-			prefsModel.getAccountsPlacement().setLocation(location);
+			prefsModel.getMainWindowPlacement().setLocation(location);
 	}
 
-	public void setBudgetWindowLocation(Point location){
-		if (location != null)
-			prefsModel.getBudgetPlacement().setLocation(location);
-	}
+//	public void setBudgetWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.getBudgetPlacement().setLocation(location);
+//	}
 
 	public void setTransactionWindowLocation(Point location){
 		if (location != null)
@@ -280,10 +280,10 @@ public class PrefsModel {
 			prefsModel.getScheduledPlacement().setLocation(location);
 	}
 
-	public void setReportWindowLocation(Point location){
-		if (location != null)
-			prefsModel.getReportsPlacement().setLocation(location);
-	}
+//	public void setReportWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.getReportsPlacement().setLocation(location);
+//	}
 	
 	public void setPreferencesWindowLocation(Point location){
 		if (location != null)

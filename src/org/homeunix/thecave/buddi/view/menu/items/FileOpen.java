@@ -18,16 +18,16 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.view.AccountFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.file.SmartFileChooser;
 import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossFrame;
+import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
 
 public class FileOpen extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileOpen(MossFrame frame) {
+	public FileOpen(MossDocumentFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_OPEN),
 				KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 	}
@@ -48,8 +48,8 @@ public class FileOpen extends MossMenuItem {
 			return;
 		
 		try {
-			AccountFrame accountFrame = new AccountFrame(new DataModel(f));
-			accountFrame.openWindow(PrefsModel.getInstance().getAccountWindowSize(), null);
+			MainFrame mainFrame = new MainFrame(new DataModel(f));
+			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (DocumentLoadException lme){
 			throw new RuntimeException("Error loading model: " + lme);

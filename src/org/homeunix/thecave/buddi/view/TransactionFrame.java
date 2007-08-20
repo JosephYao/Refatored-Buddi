@@ -76,10 +76,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	private boolean disableListEvents = false;
 
-	public TransactionFrame(DataModel model, AccountFrame parent, Account account){
-		super(parent, "Transactions" + model.getUid() + account.getFullName());
+	public TransactionFrame(MainFrame parent, Account account){
+		super(parent, "Transactions" + ((DataModel) parent.getDocument()).getUid() + account.getFullName());
 		this.associatedAccount = account;
-		this.listModel = new TransactionListModel(model, account);
+		this.listModel = new TransactionListModel((DataModel) parent.getDocument(), account);
 		
 		dateFilterComboBox = new JComboBox();
 
@@ -143,7 +143,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 
 		//Set up the editing portion
-		transactionEditor = new TransactionEditor(model, associatedAccount, false);
+		transactionEditor = new TransactionEditor((DataModel) parent.getDocument(), associatedAccount, false);
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
@@ -156,8 +156,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	 * @param account
 	 * @param transaction
 	 */
-	public TransactionFrame(AccountFrame parent, DataModel model, Account account, Transaction transaction) {
-		this(model, parent, account);
+	public TransactionFrame(MainFrame parent, Account account, Transaction transaction) {
+		this(parent, account);
 
 		// Iterate backwards through the list of transacations, looking for the transaction
 		// which was just passed in.

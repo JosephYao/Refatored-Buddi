@@ -31,7 +31,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.view.AccountFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
@@ -204,13 +204,12 @@ public class Buddi {
 				model = new DataModel(PrefsModel.getInstance().getLastDataFile());
 			}
 
-			AccountFrame accountFrame = new AccountFrame(model);
-
-			accountFrame.openWindow(PrefsModel.getInstance().getAccountWindowSize(), PrefsModel.getInstance().getAccountWindowLocation());
+			MainFrame mainWndow= new MainFrame(model);
+			mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
 
 			//Start the background startup tasks... 
-			startVersionCheck(accountFrame);
-			startUpdateCheck(accountFrame, false);
+			startVersionCheck(mainWndow);
+			startUpdateCheck(mainWndow, false);
 
 		}
 		catch (WindowOpenException foe){

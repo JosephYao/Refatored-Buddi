@@ -15,9 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
-import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
@@ -25,19 +23,24 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper.DateChoice;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.CustomDateDialog;
-import org.homeunix.thecave.buddi.view.menu.bars.ReportFrameMenuBar;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.window.MossAssociatedDocumentFrame;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.window.MossPanel;
 
 /**
  * @author wyatt
  */
-public class ReportFrame extends MossAssociatedDocumentFrame {
+public class ReportFrame extends MossPanel {
 	public static final long serialVersionUID = 0;
 	
-	public ReportFrame(MossDocumentFrame parentFrame){
-		super(parentFrame, "ReportFrame" + ((DataModel) parentFrame.getDocument()).getUid());	
+//	private final DataModel model;
+	private final MainFrame parent;
+	
+	public ReportFrame(MainFrame parent){
+		super(true);
+		this.parent = parent;
+//		this.model = model;
+		
+		open();
 	}
 	
 	public void init() {
@@ -81,14 +84,14 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 						//As long as the choice is not custom, our job is easy
 						if (!choice.isCustom()){
 							//Launch a new reports window with given parameters							
-							BuddiPluginHelper.openReport(ReportFrame.this, finalReport, choice.getStartDate(), choice.getEndDate());
+							BuddiPluginHelper.openReport(parent, finalReport, choice.getStartDate(), choice.getEndDate());
 						}
 						//If they want a custom window, it's a little 
 						// harder... we need to open the custom date
 						// window, which then launches the plugin.
 						else{
 							try {
-								new CustomDateDialog(ReportFrame.this, finalReport).openWindow();
+								new CustomDateDialog(parent, finalReport).openWindow();
 							}
 							catch (WindowOpenException woe){}
 						}
@@ -105,19 +108,8 @@ public class ReportFrame extends MossAssociatedDocumentFrame {
 		
 		this.setLayout(new BorderLayout());
 		this.add(pluginsPanel, BorderLayout.NORTH);
-		this.setJMenuBar(new ReportFrameMenuBar(this));
-		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_REPORTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+//		this.setJMenuBar(new ReportFrameMenuBar(this));
+//		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
+//		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_REPORTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 	}
-	
-	@Override
-	public Object closeWindow() {
-		PrefsModel.getInstance().setReportWindowSize(this.getSize());
-		PrefsModel.getInstance().setReportWindowLocation(this.getLocation());
-		PrefsModel.getInstance().save();
-				
-		return super.closeWindow();
-	}
-	
-	public void actionPerformed(ActionEvent e) {}	
 }

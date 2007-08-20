@@ -9,11 +9,9 @@ import java.util.List;
 
 public class PrefsModelBean {
 	//Window location, size
-	private WindowPlacementBean accountsPlacement;
-	private WindowPlacementBean budgetPlacement;
+	private WindowPlacementBean mainWindowPlacement;
 	private WindowPlacementBean transactionsPlacement;
 	private WindowPlacementBean scheduledPlacement;
-	private WindowPlacementBean reportsPlacement;
 	private WindowPlacementBean prefsPlacement;
 	
 	private List<PluginInfoBean> plugins;
@@ -99,22 +97,14 @@ public class PrefsModelBean {
 		this.lastDataFile = lastOpenedDataFile;
 	}
 
-	public WindowPlacementBean getAccountsPlacement() {
-		return accountsPlacement == null ? new WindowPlacementBean() : accountsPlacement;
+	public WindowPlacementBean getMainWindowPlacement() {
+		return mainWindowPlacement == null ? new WindowPlacementBean() : mainWindowPlacement;
 	}
 
-	public void setAccountsPlacement(WindowPlacementBean accounts) {
-		this.accountsPlacement = accounts;
+	public void setMainWindowPlacement(WindowPlacementBean accounts) {
+		this.mainWindowPlacement = accounts;
 	}
 
-	public WindowPlacementBean getBudgetPlacement() {
-		return budgetPlacement == null ? new WindowPlacementBean() : budgetPlacement;
-	}
-
-	public void setBudgetPlacement(WindowPlacementBean budget) {
-		this.budgetPlacement = budget;
-	}
-	
 	public WindowPlacementBean getTransactionsPlacement() {
 		return transactionsPlacement == null ? new WindowPlacementBean() : transactionsPlacement;
 	}
@@ -123,14 +113,6 @@ public class PrefsModelBean {
 		this.transactionsPlacement = transactions;
 	}
 	
-	public WindowPlacementBean getReportsPlacement() {
-		return reportsPlacement == null ? new WindowPlacementBean() : reportsPlacement;
-	}
-
-	public void setReportsPlacement(WindowPlacementBean reportsPlacement) {
-		this.reportsPlacement = reportsPlacement;
-	}
-
 	public WindowPlacementBean getPrefsPlacement() {
 		return prefsPlacement == null ? new WindowPlacementBean() : prefsPlacement;
 	}

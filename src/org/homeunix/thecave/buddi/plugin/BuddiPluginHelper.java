@@ -16,7 +16,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.view.ReportFrame;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.dialog.JStatusDialog;
 import org.homeunix.thecave.moss.util.DateFunctions;
@@ -25,7 +25,7 @@ import org.homeunix.thecave.moss.util.Log;
 import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {
-	public static void openReport(final ReportFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
+	public static void openReport(final MainFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
 		final JStatusDialog status = new JStatusDialog(
 				frame,
 				TextFormatter.getTranslation(MessageKeys.MESSAGE_GENERATING_REPORT));
