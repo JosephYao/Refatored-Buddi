@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.model;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Date;
@@ -49,9 +51,11 @@ import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
+import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.crypto.CipherHelper;
 
 public class DataModel extends AbstractDocument {
 
@@ -77,35 +81,39 @@ public class DataModel extends AbstractDocument {
 
 		//Try to load the data model
 		try {
-//			InputStream in = new FileInputStream(file);
-//			while (!canDecrypt(in)){
-//
-//				//Check if this file is encrypted
-//				encrypted = !canDecrypt(new FileInputStream(file));
-//				if (encrypted) {
-//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-//					char[] password = passwordDialog.askForPassword(false, false);
-//					cipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
-//				}
-//				else
-					cipher = new NullCipher();
-//
-//				in = new CipherInputStream(new FileInputStream(file), cipher);
+			cipher = new NullCipher(); //We start with plain text.
+			boolean correctPassword = false;
+			while (!correctPassword){
+				InputStream testIn = new CipherInputStream(new FileInputStream(file), cipher);
+				
+				//Check if this file is encrypted.  Be sure to close the stream
+				// after use, or it will mess the next attempt up!
+				correctPassword = canDecrypt(testIn);
+				
+				if (correctPassword)
+					break;
+
+				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+				char[] password = passwordDialog.askForPassword(false, false);
+				cipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
+			}
+
+			System.out.println("Starting to read file...\n\n");
+			
+			String temp;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), cipher)));
+			while ((temp = reader.readLine()) != null){
+				System.out.println(temp);
+			}
+			
+//			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), cipher));
+//			Object temp = decoder.readObject();
+//			if (temp instanceof DataModelBean){
+//				dataModel = (DataModelBean) temp;
 //			}
-
-			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), cipher));
-
-//			byte[] start = new byte[255];
-//			in.read(start);
-//			System.out.println(new String(start));
-//			
-			Object temp = decoder.readObject();
-			if (temp instanceof DataModelBean){
-				dataModel = (DataModelBean) temp;
-			}
-			else {
-				throw new DocumentLoadException("Loaded data file not of type DataModelBean");
-			}
+//			else {
+//				throw new DocumentLoadException("Loaded data file not of type DataModelBean");
+//			}
 
 			//Save this as the last data model.
 			PrefsModel.getInstance().setLastOpenedDataFile(file);
@@ -203,16 +211,18 @@ public class DataModel extends AbstractDocument {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
-
-//			if (cipher == null){
-//				if (encrypted) {
-//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-//					char[] password = passwordDialog.askForPassword(true, false);
-//					cipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
-//				}
-//				else
+			//If we have not yet saved this file, the cipher will be null.
+			if (cipher == null){
+				//TODO Change this.  I don't like the use of a class variable for something
+				// like this.  We should pass this in to the saveAs() method when it is called.
+				if (encrypted) {
+					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+					char[] password = passwordDialog.askForPassword(true, false);
+					cipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
+				}
+				else
 					cipher = new NullCipher();
-//			}
+			}
 
 			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), cipher);
 
@@ -684,40 +694,38 @@ public class DataModel extends AbstractDocument {
 		return new Transaction(this, tb);
 	}
 
-	private boolean canDecrypt(InputStream in) throws DocumentLoadException {
-		BufferedInputStream buffered = new BufferedInputStream(in);
-
-		// Test if the input stream is encrypted. This is rudimentary -
-		// it just checks if the stream starts with <?xml
-		final int prologueLength = Const.XML_PROLOGUE.length();
-
-		buffered.mark(0);
-		
+	private boolean canDecrypt(InputStream tempInputStream) throws DocumentLoadException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(tempInputStream));
+		String testString;
+	
 		try {
-			byte[] test = new byte[prologueLength];
-			int read = buffered.read(test);
-			
-			//File is too small, and cannot be a valid data file.
-			if (read < prologueLength) {
-				throw new DocumentLoadException("File is incomplete.");
-			}
-
-			String testStr = new String(test);
-		
-			buffered.reset();
-			
-			return Const.XML_PROLOGUE.equals(testStr);
+			testString = reader.readLine();			
+			System.out.println(testString);			
 		}
 		catch (IOException ioe){
-			throw new DocumentLoadException(ioe);
+			testString = null;
 		}
+		finally {
+			try {
+				reader.close();
+				System.out.println("Closed Reader");
+			}
+			catch (IOException ioe){
+				System.out.println("Could not close Reader!");
+			}
+		}
+		
+		return testString != null && testString.startsWith(Const.XML_PROLOGUE);
 	}
 
 	/**
-	 * Set the file to be encrypted on the next save.
+	 * Set the file to be encrypted on the next save.  Note that this nullifies the
+	 * existing Cipher - this will require the user to enter their password the next 
+	 * time.
 	 * @param encrypted
 	 */
 	public void setEncrypted(boolean encrypted){
+		this.cipher = null;
 		this.encrypted = encrypted;
 	}
 
