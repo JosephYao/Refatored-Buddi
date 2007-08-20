@@ -196,7 +196,7 @@ public class Const {
 	public final static String[] BUILT_IN_PLUGINS = {
 //		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
 //		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotCleared",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotReconciled",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.NullReport",

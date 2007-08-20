@@ -44,6 +44,7 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
+import org.homeunix.thecave.buddi.model.converter.ModelConverter;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -121,13 +122,13 @@ public class DataModel extends AbstractDocument {
 			Log.warning("Unable to load Buddi 3 format data model.  Trying Buddi 2 format...");
 
 			try {
-				throw new Exception("Legacy data files not currently supported");
-//				dataModel = ModelConverter.convert(file);
-//
-//				//We do not save this by default
-//				setChanged();
-//
-//				setFile(null);
+//				throw new Exception("Legacy data files not currently supported");
+				dataModel = ModelConverter.convert(file);
+
+				//We do not save this by default
+				setChanged();
+
+				setFile(null);
 
 			}
 			catch (Exception e){

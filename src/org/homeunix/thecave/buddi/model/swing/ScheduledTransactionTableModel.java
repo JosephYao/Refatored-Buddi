@@ -3,15 +3,12 @@
  */
 package org.homeunix.thecave.buddi.model.swing;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.moss.data.list.CompositeList;
-import org.homeunix.thecave.moss.util.Log;
 
 public class ScheduledTransactionTableModel extends AbstractTableModel {
 	public static final long serialVersionUID = 0;

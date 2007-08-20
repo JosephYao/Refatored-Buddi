@@ -52,7 +52,7 @@ public class FileOpen extends MossMenuItem {
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (DocumentLoadException lme){
-			throw new RuntimeException("Error loading model: " + lme);
+			throw new RuntimeException("Error loading model: " + lme, lme);
 		}
 		catch (WindowOpenException foe){}
 	}

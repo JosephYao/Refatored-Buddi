@@ -7,18 +7,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -107,13 +106,13 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			}
 			
 
-			if (c.getBudgetedAmount() != 0 || transactions.size() > 0){				
+			if (transactions.size() > 0){				
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(PrefsModel.getInstance().getTranslator().get(c.toString()));
-				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'" : "'") + ">");
+				sb.append("</td><td class='right" + (TextFormatter.isRed(c, actual) ? " red'" : "'") + ">");
 				sb.append(TextFormatter.getFormattedCurrency(actual));
-				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), average) ? " red'" : "'") + "'>");
+				sb.append("</td><td class='right" + (TextFormatter.isRed(c, average) ? " red'" : "'") + "'>");
 				sb.append(TextFormatter.getFormattedCurrency(average));				
 				sb.append("</td></tr>\n");
 			}
@@ -164,5 +163,10 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 
 	public String getDescription() {
 		return BuddiKeys.REPORT_DESCRIPTION_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY.toString();
+	}
+	
+	@Override
+	public PluginReportDateRangeChoices getDateRangeChoice() {
+		return PluginReportDateRangeChoices.INTERVAL;
 	}
 }

@@ -9,5 +9,8 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Moss"/>
 	<classpathentry exported="true" kind="lib" path="lib/quaqua-3.9.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/swingx-2007_08_12.jar"/>
+	<classpathentry kind="lib" path="lib/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
+	<classpathentry kind="lib" path="lib/emf.ecore_2.2.2.v200702010000.jar"/>
+	<classpathentry kind="lib" path="lib/emf.common_2.2.1.v200702010000.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
