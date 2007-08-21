@@ -38,7 +38,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class BudgetFrame extends MossPanel {
+public class MyBudgetPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
 
 	private final JXTreeTable tree;
@@ -51,7 +51,7 @@ public class BudgetFrame extends MossPanel {
 	
 	private final MainFrame parent;
 	
-	public BudgetFrame(MainFrame parent) {
+	public MyBudgetPanel(MainFrame parent) {
 		super(true);
 		this.parent = parent;
 		this.treeTableModel = new BudgetTreeTableModel((DataModel) parent.getDocument());

@@ -33,7 +33,9 @@ public class FileQuit extends MossMenuItem {
 		}
 		
 		while (ApplicationTracker.getInstance().getOpenFrames().size() > 0) {
-			ApplicationTracker.getInstance().getOpenFrames().get(0).closeWindowWithoutPrompting();
+			ApplicationTracker.getInstance().getOpenFrames().get(0).closeWindow();
 		}
+		
+		System.exit(0);
 	}
 }

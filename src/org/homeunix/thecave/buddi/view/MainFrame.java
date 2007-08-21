@@ -27,18 +27,18 @@ import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;
 
-	private final AccountFrame myAccounts;
-	private final BudgetFrame myBudget;
-	private final ReportFrame myReports;
+	private final MyAccountsPanel myAccounts;
+	private final MyBudgetPanel myBudget;
+	private final MyReportsPanel myReports;
 	
 	private final JTabbedPane tabs;
 	
 	public MainFrame(DataModel model) {
 		super(model, "MainWindow" + model.getUid());
 		
-		myAccounts = new AccountFrame(this);
-		myBudget = new BudgetFrame(this);
-		myReports = new ReportFrame(this);
+		myAccounts = new MyAccountsPanel(this);
+		myBudget = new MyBudgetPanel(this);
+		myReports = new MyReportsPanel(this);
 		
 		tabs = new JTabbedPane();
 	}

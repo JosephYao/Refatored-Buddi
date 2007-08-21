@@ -29,13 +29,13 @@ import org.homeunix.thecave.moss.swing.window.MossPanel;
 /**
  * @author wyatt
  */
-public class ReportFrame extends MossPanel {
+public class MyReportsPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
 	
 //	private final DataModel model;
 	private final MainFrame parent;
 	
-	public ReportFrame(MainFrame parent){
+	public MyReportsPanel(MainFrame parent){
 		super(true);
 		this.parent = parent;
 //		this.model = model;

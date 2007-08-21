@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.prefs.AdvancedPreferences;
 import org.homeunix.thecave.buddi.view.dialogs.prefs.LocalePreferences;
@@ -78,6 +79,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		network.load();
 		advanced.load();
 		
+		this.setTitle(TextFormatter.getTranslation(BuddiKeys.PREFERENCES));
 		this.getRootPane().setDefaultButton(okButton);
 		this.setLayout(new BorderLayout());
 		this.add(tabs, BorderLayout.CENTER);

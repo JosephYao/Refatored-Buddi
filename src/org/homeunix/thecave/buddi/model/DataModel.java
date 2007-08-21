@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.model;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Collections;
@@ -62,7 +60,8 @@ public class DataModel extends AbstractDocument {
 	private DataModelBean dataModel;
 	private final Map<String, ModelObjectBean> uidMap = new HashMap<String, ModelObjectBean>();
 	private boolean encrypted;
-	private Cipher cipher;
+	private Cipher inputCipher;
+	private Cipher outputCipher;
 
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 and legacy formats (although
@@ -75,45 +74,50 @@ public class DataModel extends AbstractDocument {
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
 		Log.debug("Trying to load file " + file);
-		
+
 		//This wil let us know where to save the file to.
 		this.setFile(file);
 
 		//Try to load the data model
 		try {
-			cipher = new NullCipher(); //We start with plain text.
+			Cipher tempCipher = new NullCipher(); //We start with plain text.
 			boolean correctPassword = false;
 			while (!correctPassword){
-				InputStream testIn = new CipherInputStream(new FileInputStream(file), cipher);
-				
+				BufferedReader testReader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), tempCipher)));
+
 				//Check if this file is encrypted.  Be sure to close the stream
 				// after use, or it will mess the next attempt up!
-				correctPassword = canDecrypt(testIn);
-				
+				correctPassword = canDecrypt(testReader);
+				testReader.close();
+
 				if (correctPassword)
 					break;
 
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 				char[] password = passwordDialog.askForPassword(false, false);
-				cipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
+//				char[] password = "test".toCharArray();
+				tempCipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
+				inputCipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
+				outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
 			}
 
 			System.out.println("Starting to read file...\n\n");
-			
-			String temp;
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), cipher)));
-			while ((temp = reader.readLine()) != null){
-				System.out.println(temp);
+
+//			String temp;
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), CipherHelper.getInstance(Cipher.DECRYPT_MODE, "test".toCharArray()))));
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), inputCipher)));
+//			while ((temp = reader.readLine()) != null){
+//			System.out.println(temp);
+//			}
+
+			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), inputCipher));
+			Object temp = decoder.readObject();
+			if (temp instanceof DataModelBean){
+				dataModel = (DataModelBean) temp;
 			}
-			
-//			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), cipher));
-//			Object temp = decoder.readObject();
-//			if (temp instanceof DataModelBean){
-//				dataModel = (DataModelBean) temp;
-//			}
-//			else {
-//				throw new DocumentLoadException("Loaded data file not of type DataModelBean");
-//			}
+			else {
+				throw new DocumentLoadException("Loaded data file not of type DataModelBean");
+			}
 
 			//Save this as the last data model.
 			PrefsModel.getInstance().setLastOpenedDataFile(file);
@@ -212,19 +216,19 @@ public class DataModel extends AbstractDocument {
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
 			//If we have not yet saved this file, the cipher will be null.
-			if (cipher == null){
+			if (outputCipher == null){
 				//TODO Change this.  I don't like the use of a class variable for something
 				// like this.  We should pass this in to the saveAs() method when it is called.
 				if (encrypted) {
 					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 					char[] password = passwordDialog.askForPassword(true, false);
-					cipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
+					outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
 				}
 				else
-					cipher = new NullCipher();
+					outputCipher = new NullCipher();
 			}
 
-			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), cipher);
+			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), outputCipher);
 
 			XMLEncoder encoder = new XMLEncoder(encryptedData);
 
@@ -694,10 +698,23 @@ public class DataModel extends AbstractDocument {
 		return new Transaction(this, tb);
 	}
 
-	private boolean canDecrypt(InputStream tempInputStream) throws DocumentLoadException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(tempInputStream));
+	private boolean canDecrypt(BufferedReader reader) throws DocumentLoadException {
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(tempInputStream));
 		String testString;
-	
+
+//		try {
+//		for(int i = 0; i < Const.XML_PROLOGUE.length(); i++){
+//		char c = (char) tempInputStream.read();
+//		System.out.println(c + ", " + Const.XML_PROLOGUE.charAt(i));
+//		if (Const.XML_PROLOGUE.charAt(i) != c);
+//		return false;
+//		}
+
+//		return true;
+//		}
+//		catch (IOException ioe){}
+
+//		return false;
 		try {
 			testString = reader.readLine();			
 			System.out.println(testString);			
@@ -705,16 +722,7 @@ public class DataModel extends AbstractDocument {
 		catch (IOException ioe){
 			testString = null;
 		}
-		finally {
-			try {
-				reader.close();
-				System.out.println("Closed Reader");
-			}
-			catch (IOException ioe){
-				System.out.println("Could not close Reader!");
-			}
-		}
-		
+
 		return testString != null && testString.startsWith(Const.XML_PROLOGUE);
 	}
 
@@ -725,8 +733,7 @@ public class DataModel extends AbstractDocument {
 	 * @param encrypted
 	 */
 	public void setEncrypted(boolean encrypted){
-		this.cipher = null;
+		this.outputCipher = null;
 		this.encrypted = encrypted;
 	}
-
 }

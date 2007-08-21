@@ -37,7 +37,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class AccountFrame extends MossPanel {
+public class MyAccountsPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
 
 	private final JXTreeTable tree;
@@ -47,7 +47,7 @@ public class AccountFrame extends MossPanel {
 	
 	private final MainFrame parent;
 	
-	public AccountFrame(MainFrame parent) {
+	public MyAccountsPanel(MainFrame parent) {
 		super(true);
 //		this.model = model;
 		this.parent = parent;
