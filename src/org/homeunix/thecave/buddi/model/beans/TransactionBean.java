@@ -69,7 +69,7 @@ public class TransactionBean extends ModelObjectBean {
 	public void setTo(SourceBean to) {
 		this.to = to;
 	}
-	public boolean getScheduled() {
+	public boolean isScheduled() {
 		return scheduled;
 	}
 	public void setScheduled(boolean scheduled) {

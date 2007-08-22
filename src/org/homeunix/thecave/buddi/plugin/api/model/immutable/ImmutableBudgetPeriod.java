@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.immutable;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.BudgetPeriod;
 
 public class ImmutableBudgetPeriod extends ImmutableModelObject {
@@ -13,5 +15,13 @@ public class ImmutableBudgetPeriod extends ImmutableModelObject {
 	
 	public BudgetPeriod getBudgetPeriod(){
 		return (BudgetPeriod) getRaw();
+	}
+	
+	public Date getPeriodDate(){
+		return getBudgetPeriod().getPeriodDate();
+	}
+	
+	public long getAmount(ImmutableBudgetCategory budgetCategory){
+		return getBudgetPeriod().getAmount(budgetCategory.getBudgetCategory());
 	}
 }

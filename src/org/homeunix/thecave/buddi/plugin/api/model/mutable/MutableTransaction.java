@@ -1,7 +1,7 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.plugin.api.model.immutable;
+package org.homeunix.thecave.buddi.plugin.api.model.mutable;
 
 import java.util.Date;
 
@@ -9,9 +9,9 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
 
-public class ImmutableTransaction extends ImmutableModelObject {
+public class MutableTransaction extends MutableModelObject {
 	
-	public ImmutableTransaction(Transaction transaction) {
+	public MutableTransaction(Transaction transaction) {
 		super(transaction);
 	}
 	
@@ -40,18 +40,18 @@ public class ImmutableTransaction extends ImmutableModelObject {
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public ImmutableSource getFrom(){
+	public MutableSource getFrom(){
 		if (getTransaction().getFrom() instanceof Account)
-			return new ImmutableAccount((Account) getTransaction().getFrom());
+			return new MutableAccount((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
-			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getFrom());
+			return new MutableBudgetCategory((BudgetCategory) getTransaction().getFrom());
 		return null;
 	}
-	public ImmutableSource getTo(){
+	public MutableSource getTo(){
 		if (getTransaction().getTo() instanceof Account)
-			return new ImmutableAccount((Account) getTransaction().getTo());
+			return new MutableAccount((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
-			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getTo());
+			return new MutableBudgetCategory((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
 	public long getBalanceFrom() {
@@ -69,7 +69,7 @@ public class ImmutableTransaction extends ImmutableModelObject {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ImmutableTransaction);
+		if (obj instanceof MutableTransaction);
 		
 		return false;
 	}

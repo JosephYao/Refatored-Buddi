@@ -25,6 +25,10 @@ public abstract class ModelObject implements Comparable<ModelObject> {
 		return model;
 	}
 	
+	ModelObjectBean getBean(){
+		return bean;
+	}
+	
 	/**
 	 * Call this from the model absraction layer after all operations which
 	 * change a value. 
@@ -38,11 +42,7 @@ public abstract class ModelObject implements Comparable<ModelObject> {
 	public int hashCode() {
 		return bean.getUid().hashCode();
 	}
-	
-	ModelObjectBean getBean(){
-		return bean;
-	}
-	
+		
 	public int compareTo(ModelObject o) {
 		return this.toString().compareTo(o.toString());
 	}
@@ -52,5 +52,13 @@ public abstract class ModelObject implements Comparable<ModelObject> {
 			return getBean().equals(((ModelObject) obj).getBean());
 		
 		return false;
+	}
+	
+	/**
+	 * Returns the UID string for this object.
+	 * @return
+	 */
+	public String getUid(){
+		return getBean().getUid();
 	}
 }

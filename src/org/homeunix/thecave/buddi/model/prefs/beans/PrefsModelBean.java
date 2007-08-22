@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model.prefs.beans;
 
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -14,7 +15,16 @@ public class PrefsModelBean {
 	private WindowPlacementBean scheduledPlacement;
 	private WindowPlacementBean prefsPlacement;
 	
+	//Plugins
 	private List<PluginInfoBean> plugins;
+	
+	//Plugin-saved information.  The plugin author will access this
+	// via a string key.  The current implementation of
+	// PluginPreferenceBean contains a single string; you can
+	// extend this class to get more data if you wish.  Be sure
+	// to create standard getters and setters for all data you wish
+	// to save.
+	private Map<String, PluginPreferenceBean> pluginPreferences;
 	
 	//Data file information
 	private String lastDataFile;

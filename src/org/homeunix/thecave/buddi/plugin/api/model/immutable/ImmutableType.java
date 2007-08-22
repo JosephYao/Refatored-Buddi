@@ -14,4 +14,12 @@ public class ImmutableType extends ImmutableModelObject {
 	public Type getType(){
 		return (Type) getRaw();
 	}
+	
+	public String getName(){
+		return getType().getName();
+	}
+	
+	public boolean isCredit(){
+		return getType().isCredit();
+	}
 }

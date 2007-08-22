@@ -74,10 +74,10 @@ public class Transaction extends ModelObject {
 		getTransactionBean().setReconciled(reconciled);
 		getModel().setChanged();
 	}
-	public Boolean getScheduled() {
-		return getTransactionBean().getScheduled();
+	public boolean isScheduled() {
+		return getTransactionBean().isScheduled();
 	}
-	public void setScheduled(Boolean scheduled) {
+	public void setScheduled(boolean scheduled) {
 		getTransactionBean().setScheduled(scheduled);
 		getModel().setChanged();
 	}

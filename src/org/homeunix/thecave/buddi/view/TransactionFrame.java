@@ -184,7 +184,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //		prototype.setNumber("Number");
 //		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 //		list.setPrototypeCellValue(prototype);
-		list.setPrototypeCellValue(getDataModel().getTransactionPrototype());
+		list.setPrototypeCellValue(new Transaction((DataModel) getDocument(), new Date(), "Relatively long description", 12345678, null, null));
 
 		list.setModel(listModel);		
 		list.ensureIndexIsVisible(listModel.getSize() - 1);

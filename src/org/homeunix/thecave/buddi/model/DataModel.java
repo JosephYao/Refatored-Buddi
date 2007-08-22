@@ -35,7 +35,6 @@ import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTypeList;
 import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
-import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -57,7 +56,7 @@ public class DataModel extends AbstractDocument {
 	public static final int ENCRYPT_DATA_FILE = 1;
 	
 	private DataModelBean dataModel;
-	private final Map<String, ModelObjectBean> uidMap = new HashMap<String, ModelObjectBean>();
+	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
 	
 	private char[] password; //Store the password on load.  This is not the best practice 
 							 // from a security point of view, but I suppose it will work...
@@ -184,23 +183,7 @@ public class DataModel extends AbstractDocument {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
-			//If we have not yet saved this file, the cipher will be null.
-//			if (outputCipher == null){
-//				//TODO Change this.  I don't like the use of a class variable for something
-//				// like this.  We should pass this in to the saveAs() method when it is called.
-//				if (encrypted) {
-//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-//					byte[] password = passwordDialog.askForPassword(true, false).getBytes("UTF-8");
-//					outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
-//				}
-//				else
-//					outputCipher = new NullCipher();
-//			}
-//
-//			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), outputCipher);
-
-			char[] password = null;
-
+			password = null;
 			if ((flags & ENCRYPT_DATA_FILE) != 0){
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 				password = passwordDialog.askForPassword(true, false);
@@ -285,7 +268,7 @@ public class DataModel extends AbstractDocument {
 	/**
 	 * Convenience class, to return all sources (Accounts and BudgetCategories).
 	 * This method generates a list on the fly.  It is not automatically
-	 * updated, so don't rely on it for model updates.
+	 * updated, so don't rely on it to report model updates.
 	 * @return
 	 */
 	public List<Source> getSources() {
@@ -394,6 +377,10 @@ public class DataModel extends AbstractDocument {
 		return new WrapperTypeList(this, dataModel.getTypes());
 	}
 
+	/**
+	 * Adds the given transaction to the data model.
+	 * @param transaction
+	 */
 	public void addTransaction(Transaction transaction){
 		checkValid(transaction, true, false);
 
@@ -401,6 +388,10 @@ public class DataModel extends AbstractDocument {
 		setChanged();		
 	}
 
+	/**
+	 * Adds the given scheduled transaction to the data model. 
+	 * @param scheduledTransaction
+	 */
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction){
 		checkValid(scheduledTransaction, true, false);
 
@@ -408,20 +399,36 @@ public class DataModel extends AbstractDocument {
 		setChanged();		
 	}
 
-	public void removeTransaction(Transaction transaction){
+	/**
+	 * Removes the given transaction from the data model.
+	 * @param transaction
+	 */
+	public boolean removeTransaction(Transaction transaction){
 		checkValid(transaction, false, false);
 
 		dataModel.getTransactions().remove(transaction.getTransactionBean());
-		setChanged();		
+		setChanged();	
+		
+		return true;
 	}
 
-	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction){
+	/**
+	 * Removes the given scheduled transaction from the data model.
+	 * @param scheduledTransaction
+	 */
+	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction){
 		checkValid(scheduledTransaction, false, false);
 
 		dataModel.getScheduledTransactions().remove(scheduledTransaction.getScheduledTranasactionBean());
-		setChanged();		
+		setChanged();
+		
+		return true;
 	}
 
+	/**
+	 * Adds the given account to the data model.  
+	 * @param account
+	 */
 	public void addAccount(Account account){
 		checkValid(account, true, false);
 
@@ -429,30 +436,46 @@ public class DataModel extends AbstractDocument {
 		setChanged();
 	}
 
-	public void removeAccount(Account account){
+	/**
+	 * Deletes the given account.  If possible, it will be removed from the data
+	 * model.  If there are references to the account, it will only be marked 
+	 * as deleted. 
+	 * @param account
+	 * @return <code>true</code> if the account has been removed from 
+	 * the data model, <code>false</code> otherwise.
+	 */
+	public boolean removeAccount(Account account){
 		checkValid(account, false, false);
 
 		//Check if this is being used somewhere.  If so, 
 		// we do the 'delete flag' deletion.
-		boolean notPermanent = false;
+		boolean permanent = true;
 
 		if (this.getTransactions(account).size() > 0)
-			notPermanent = true;
+			permanent = false;
 		for (ScheduledTransaction st : this.getScheduledTransactions()) {
 			if (st.getFrom().equals(account) || st.getTo().equals(account))
-				notPermanent = true;
+				permanent = false;
 		}
 
 
 		//Actually remove or set the delete flag as needed.
-		if (notPermanent)
+		if (!permanent)
 			account.setDeleted(true);
 		else 
 			dataModel.getAccounts().remove(account.getAccountBean());
 
 		setChanged();
+		
+		return permanent;
 	}
 
+	/**
+	 * If a previous call to removeAccount() returned false (i.e., the account 
+	 * was not permanently deleted, but only flagged as such), it is possible
+	 * to undelete it.
+	 * @param account
+	 */
 	public void undeleteAccount(Account account){
 		checkValid(account, false, false);
 
@@ -461,6 +484,10 @@ public class DataModel extends AbstractDocument {
 		setChanged();
 	}
 
+	/**
+	 * Adds the given budget category to the data model.
+	 * @param budgetCategory
+	 */
 	public void addBudgetCategory(BudgetCategory budgetCategory){
 		checkValid(budgetCategory, true, false);
 
@@ -468,7 +495,15 @@ public class DataModel extends AbstractDocument {
 		setChanged();
 	}
 
-	public void removeBudgetCategory(BudgetCategory budgetCategory){
+	/**
+	 * Deletes the given budget category.  If possible, it will be removed from the data
+	 * model.  If there are references to the budget category, it will only be marked 
+	 * as deleted. 
+	 * @param budgetCategory
+	 * @return <code>true</code> if the account has been removed from 
+	 * the data model, <code>false</code> otherwise.
+	 */
+	public boolean removeBudgetCategory(BudgetCategory budgetCategory){
 		checkValid(budgetCategory, false, false);
 
 		List<BudgetCategory> catsToDelete = new FilteredLists.BudgetCategoryListFilteredByChildren(this, budgetCategory);
@@ -480,20 +515,20 @@ public class DataModel extends AbstractDocument {
 		//
 		// Check if this is being used somewhere.  If so, 
 		// we do the 'delete flag' deletion.
-		boolean notPermanent = false;
+		boolean permanent = true;
 
 		for (BudgetCategory bc : catsToDelete) {
 			if (this.getTransactions(bc).size() > 0)
-				notPermanent = true;
+				permanent = false;
 			for (ScheduledTransaction st : this.getScheduledTransactions()) {
 				if (st.getFrom().equals(bc) || st.getTo().equals(bc))
-					notPermanent = true;
+					permanent = false;
 			}
 		}
 
 		//We now execute the deletion.
 		for (BudgetCategory bc : catsToDelete) {
-			if (notPermanent){
+			if (!permanent){
 				bc.setDeleted(true);
 			}
 			else {
@@ -502,8 +537,16 @@ public class DataModel extends AbstractDocument {
 		}
 
 		setChanged();
+		
+		return permanent;
 	}
 
+	/**
+	 * If a previous call to removeBudgetCategory() returned false (i.e., the budgetCategory 
+	 * was not permanently deleted, but only flagged as such), it is possible
+	 * to undelete it.
+	 * @param budgetCategory
+	 */
 	public void undeleteBudgetCategory(BudgetCategory budgetCategory){
 		checkValid(budgetCategory, false, false);
 
@@ -512,6 +555,10 @@ public class DataModel extends AbstractDocument {
 		}
 	}
 
+	/**
+	 * Adds the given type to the data model
+	 * @param type
+	 */
 	public void addType(Type type){
 		checkValid(type, true, false);
 
@@ -519,13 +566,34 @@ public class DataModel extends AbstractDocument {
 		setChanged();
 	}
 
-	public void removeType(Type type){
+	/**
+	 * Removes the given type from the data model if possible.  If it is referenced by 
+	 * any account, we return 
+	 * @param type
+	 */
+	public boolean removeType(Type type){
 		checkValid(type, false, false);
+		
+		for (Account a : getAccounts()) {
+			if (a.getType().equals(type)) {
+				//We cannot delete this type, as it is referenced by an account.
+				Log.debug("We cannot delete type " + type + ", as it is referenced by account " + a.getFullName());
+				return false;
+			}
+		}
 
 		dataModel.getTypes().remove(type.getTypeBean());
 		setChanged();
+		
+		return true;
 	}
 
+	/**
+	 * Returns the UID associated with this object.  Equivalent to
+	 * calling object.getUid().
+	 * @param object
+	 * @return
+	 */
 	public String getUid(ModelObjectBean object){
 		return object.getUid();
 	}
@@ -575,26 +643,44 @@ public class DataModel extends AbstractDocument {
 
 	}
 
-	public ModelObjectBean getObjectByUid(String uid){
+	/**
+	 * Returns the object with the given UID, or null if it does not exist.
+	 * @param uid Unique ID string for the desired object.
+	 * @return
+	 */
+	public ModelObject getObjectByUid(String uid){
 		return uidMap.get(uid);
 	}
 
+	/**
+	 * Generate a UID string for a particular object.  This is guaranteed to be unique
+	 * for each call to this method, even if the object is the same.  It is generated 
+	 * by concatinating the following information, separated by the dash (-):
+	 * 
+	 * 1) The canonical name of the object (e.g. org.homeunix.thecave.buddi.model3.Account).
+	 * 2) A hexadecimal representation of the current system time in milliseconds
+	 * 3) A hexadecimal representation of a 16 bit random number
+	 * 4) A hexadecimal representation of the 16 least significant bits of this object's hash code (object.hashCode()).
+	 * @param object
+	 * @return
+	 */
 	public static String getGeneratedUid(ModelObjectBean object){
 		long time = System.currentTimeMillis();
 		int random = (int) (Math.random() * 0xFFFF);
 		int hash = object.hashCode() & 0xFFFF;
 
-		String uid = object.getClass().getCanonicalName() + Long.toHexString(time) + "," + Integer.toHexString(random) + "," + Integer.toHexString(hash);
+		String uid = object.getClass().getCanonicalName() + "-" + Long.toHexString(time) + "-" + Integer.toHexString(random) + "-" + Integer.toHexString(hash);
 
 		return uid;
 	}
 
-	public void registerUid(String uid, ModelObjectBean object){
-		uidMap.put(uid, object);
+	public void registerObjectInUidMap(ModelObject object){
+		uidMap.put(object.getBean().getUid(), object);
 	}
 
 	/**
-	 * Updates the balances of all accounts 
+	 * Updates the balances of all accounts.  Iterates through all accounts, and
+	 * calls the updateBalance() method for each. 
 	 */
 	public void updateAllBalances(){
 		for (Account a : getAccounts()) {
@@ -602,33 +688,46 @@ public class DataModel extends AbstractDocument {
 		}
 	}
 
+	/**
+	 * Refreshes the UID map.  This is a relatively expensive operation, and as such is 
+	 * generally only done at file load time.
+	 * 
+	 * We iterate through all objects for each data type, and add them to the UID map.
+	 * This will associate the object with their UID as the key in the Map.
+	 */
 	public void refreshUidMap(){
 		uidMap.clear();
 
 		for (Account a : getAccounts()) {
 			checkValid(a, false, true);
-			uidMap.put(a.getAccountBean().getUid(), a.getAccountBean());
+			registerObjectInUidMap(a);
 		}
 
 		for (BudgetCategory bc : getBudgetCategories()) {
 			checkValid(bc, false, true);
-			uidMap.put(bc.getBudgetCategoryBean().getUid(), bc.getBudgetCategoryBean());
+			registerObjectInUidMap(bc);
 		}
 
-		for (BudgetPeriodBean bp : dataModel.getBudgetPeriods().values()) {
-			checkValid(new BudgetPeriod(this, bp), false, true);
-			uidMap.put(bp.getUid(), bp);			
+		for (BudgetPeriodBean bpb : dataModel.getBudgetPeriods().values()) {
+			BudgetPeriod bp = new BudgetPeriod(this, bpb);
+			checkValid(bp, false, true);
+			registerObjectInUidMap(bp);			
 		}
 
 		for (Type t : getTypes()) {
 			checkValid(t, false, true);
-			uidMap.put(t.getTypeBean().getUid(), t.getTypeBean());	
+			registerObjectInUidMap(t);	
 		}
 
 		for (Transaction t : getTransactions()) {
 			checkValid(t, false, true);
-			uidMap.put(t.getTransactionBean().getUid(), t.getTransactionBean());	
-		}	
+			registerObjectInUidMap(t);	
+		}
+		
+		for (ScheduledTransaction s : getScheduledTransactions()) {
+			checkValid(s, false, true);
+			registerObjectInUidMap(s);	
+		}
 	}
 
 	@Override
@@ -673,18 +772,12 @@ public class DataModel extends AbstractDocument {
 
 		return sb.toString();
 	}
-
+	
+	/**
+	 * Returns the UID string for this object.
+	 * @return
+	 */
 	public String getUid(){
 		return dataModel.getUid();
-	}
-
-	public Transaction getTransactionPrototype(){
-		TransactionBean tb = new TransactionBean();
-		tb.setDate(new Date());
-		tb.setDescription("This is a semi long description");
-		tb.setNumber("1234567890-1234567890");
-		tb.setAmount(1234567890);
-
-		return new Transaction(this, tb);
 	}
 }

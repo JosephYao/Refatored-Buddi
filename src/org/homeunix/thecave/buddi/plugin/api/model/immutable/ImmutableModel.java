@@ -25,39 +25,42 @@ public class ImmutableModel {
 	
 	
 	public BudgetPeriodKeys getPeriodType(){
-		return model.getPeriodType();
+		return getModel().getPeriodType();
 	}
 	
+	protected DataModel getModel(){
+		return model;
+	}
 	
 	public List<ImmutableAccount> getAccounts(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccount, Account>(model, model.getAccounts());
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccount, Account>(getModel(), getModel().getAccounts());
 	}
 	
 	public List<ImmutableBudgetCategory> getBudgetCategories(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(model, model.getBudgetCategories());
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getModel(), getModel().getBudgetCategories());
 	}
 	
 	public List<ImmutableType> getTypes(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableType, Type>(model, model.getTypes());		
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableType, Type>(getModel(), getModel().getTypes());		
 	}
 	
 	public List<ImmutableTransaction> getTransactions(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions());
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions());
 	}
 	
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions((Source) source.getRaw()));
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
 	}
 	
 	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions(startDate, endDate));
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
 	}
 	
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(model, model.getTransactions((Source) source.getRaw(), startDate, endDate));
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	
 	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetPeriod, BudgetPeriod>(model, model.getBudgetPeriodsInRange(startDate, endDate));
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetPeriod, BudgetPeriod>(getModel(), getModel().getBudgetPeriodsInRange(startDate, endDate));
 	}
 }

@@ -19,4 +19,12 @@ public abstract class ImmutableModelObject implements Comparable<ImmutableModelO
 	public int compareTo(ImmutableModelObject o) {
 		return this.getRaw().compareTo(o.getRaw());
 	}
+	
+	/**
+	 * Returns the UID string for this object.
+	 * @return
+	 */
+	public String getUid(){
+		return getRaw().getUid();
+	}
 }
