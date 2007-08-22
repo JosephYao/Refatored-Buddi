@@ -18,6 +18,7 @@ import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.moss.swing.dialog.JPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
 public class AESCryptoCipher implements URIConverter.Cipher {
 	private static final String ALGORITHM = "AES/CFB8/PKCS5Padding";
@@ -224,7 +225,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 						options[0]
 				);
 
-				throw new BadPasswordException(Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
+				throw new IncorrectPasswordException(Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
 			}
 			//If the password is empty, it is not correct.
 			else if (!password.equals("")){
@@ -277,37 +278,5 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 	public void finish(InputStream in) throws Exception {
 		// TODO Auto-generated method stub		
-	}
-
-	public class CipherException extends Exception {
-		public final static long serialVersionUID = 0;
-
-		public CipherException(){
-			super();
-		}
-
-		public CipherException(String message){
-			super(message);
-		}
-	}
-
-	public class BadPasswordException extends Exception {
-		public final static long serialVersionUID = 0;
-		private String message;
-
-		public BadPasswordException(String message) {
-			super(message);
-			this.message = message;
-		}
-
-		@Override
-		public String getMessage() {
-			return message;
-		}
-
-		@Override
-		public String toString() {
-			return getMessage();
-		}
 	}
 }

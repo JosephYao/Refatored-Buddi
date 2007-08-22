@@ -187,24 +187,20 @@ public class Buddi {
 			}
 		}
 		
-		//Open the data file
+		
+		//Choose which data file to open, or create a new one.
 		try {
 			DataModel model;
-			if (PrefsModel.getInstance().getLastDataFile() == null){
-				Log.debug("Creating new data model");
-				model = new DataModel();
-			}
-			else if (!PrefsModel.getInstance().getLastDataFile().exists()){
-				//TODO Prompt for open other data file, or create new one.
-				Log.debug("Cannot find old data file.  Creating new data model");
-				model = new DataModel();				
+			//TODO check for launch arguments as well
+			if (PrefsModel.getInstance().getLastDataFile() != null) {
+				model = new DataModel(PrefsModel.getInstance().getLastDataFile());
 			}
 			else {
 				Log.debug("Loading data model " + PrefsModel.getInstance().getLastDataFile());
 				model = new DataModel(PrefsModel.getInstance().getLastDataFile());
 			}
 
-			MainFrame mainWndow= new MainFrame(model);
+			MainFrame mainWndow = new MainFrame(model);
 			mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
 
 			//Start the background startup tasks... 

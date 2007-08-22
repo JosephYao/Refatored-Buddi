@@ -83,12 +83,12 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		);
 
 		String localeName;
-		if (tempLocaleName == null)
+		if (tempLocaleName == null || tempLocaleName.equals(""))
 			localeName = "";
 		else
-			localeName = tempLocaleName;
+			localeName = "_(" + tempLocaleName + ")";
 		
-		return new BuddiLanguageEditor(tempLanguage + "_(" + localeName + ")");
+		return new BuddiLanguageEditor(tempLanguage + localeName);
 	}
 	
 	private BuddiLanguageEditor(String selectedLanguage) {

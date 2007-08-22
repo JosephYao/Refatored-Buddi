@@ -5,14 +5,12 @@ package org.homeunix.thecave.buddi.model;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Date;
@@ -20,12 +18,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
-import javax.crypto.NullCipher;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
@@ -44,25 +36,32 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
-import org.homeunix.thecave.buddi.model.converter.ModelConverter;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.util.BuddiCipherStreamFactory;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.crypto.CipherHelper;
+import org.homeunix.thecave.moss.util.crypto.CipherException;
+import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
+import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
 public class DataModel extends AbstractDocument {
 
+	/**
+	 * Set this flag in the saveAs() method to specify that we should encrypt the data file.
+	 */
+	public static final int ENCRYPT_DATA_FILE = 1;
+	
 	private DataModelBean dataModel;
 	private final Map<String, ModelObjectBean> uidMap = new HashMap<String, ModelObjectBean>();
-	private boolean encrypted;
-	private Cipher inputCipher;
-	private Cipher outputCipher;
-
+	
+	private char[] password; //Store the password on load.  This is not the best practice 
+							 // from a security point of view, but I suppose it will work...
+	
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 and legacy formats (although
 	 * of course Buddi 3 is preferred). 
@@ -78,87 +77,60 @@ public class DataModel extends AbstractDocument {
 		//This wil let us know where to save the file to.
 		this.setFile(file);
 
-		//Try to load the data model
 		try {
-			Cipher tempCipher = new NullCipher(); //We start with plain text.
-			boolean correctPassword = false;
-			while (!correctPassword){
-				BufferedReader testReader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), tempCipher)));
+			InputStream is;
+			BuddiCipherStreamFactory factory = new BuddiCipherStreamFactory();
+			password = null;
+			
+			//Loop until the user gets the password correct, hits cancel, 
+			// or some other error occurs.
+			while (true) {
+				try {
+					is = factory.getCipherInputStream(new FileInputStream(file), password);
 
-				//Check if this file is encrypted.  Be sure to close the stream
-				// after use, or it will mess the next attempt up!
-				correctPassword = canDecrypt(testReader);
-				testReader.close();
-
-				if (correctPassword)
+					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
+					XMLDecoder decoder = new XMLDecoder(is);
+					Object o = decoder.readObject();
+					if (o instanceof DataModelBean){
+						dataModel = (DataModelBean) o;
+					}
+					else {
+						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
+					}
+					is.close();
+					
+					//Refresh the UID Map...
+					this.refreshUidMap();
+					
+					//Return to calling code... the model is correctly loaded.
+					return;
+				}
+				catch (IncorrectPasswordException ipe){
+					//The password was not correct.  Prompt for a new one.
+					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+					password = passwordDialog.askForPassword(false, false);
+					
+					//User hit cancel (or entered an empty password).  Cancel loading, and 
+					// possibly prompt for a new file.
+					if (password == null)
+						throw new DocumentLoadException("User cancelled file load.");
+				}
+				catch (IncorrectDocumentFormatException ife){
+					//The document we are trying to load does not have the proper header.
+					// This is not a valid Buddi3 data file.  Break from the password loop
+					// and TODO either create a new file, or load a different one.
 					break;
-
-				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-				char[] password = passwordDialog.askForPassword(false, false);
-//				char[] password = "test".toCharArray();
-				tempCipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
-				inputCipher = CipherHelper.getInstance(Cipher.DECRYPT_MODE, password);
-				outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
-			}
-
-			System.out.println("Starting to read file...\n\n");
-
-//			String temp;
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), CipherHelper.getInstance(Cipher.DECRYPT_MODE, "test".toCharArray()))));
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(new CipherInputStream(new FileInputStream(file), inputCipher)));
-//			while ((temp = reader.readLine()) != null){
-//			System.out.println(temp);
-//			}
-
-			XMLDecoder decoder = new XMLDecoder(new CipherInputStream(new FileInputStream(file), inputCipher));
-			Object temp = decoder.readObject();
-			if (temp instanceof DataModelBean){
-				dataModel = (DataModelBean) temp;
-			}
-			else {
-				throw new DocumentLoadException("Loaded data file not of type DataModelBean");
-			}
-
-			//Save this as the last data model.
-			PrefsModel.getInstance().setLastOpenedDataFile(file);
-
-			//Specify that we did not change this data model.
-			resetChanged();
-		}
-		catch (FileNotFoundException fnfe){
-			//TODO Throw normal exception.  Calling code should catch it, and create new data file.
-			throw new DocumentLoadException("Error loading model: File " + file.getAbsolutePath() + " not found.");			
-		}
-		catch (NoSuchElementException nsee){
-			//This is probably an old version of the data file.  Try to convert it...
-			Log.warning("Unable to load Buddi 3 format data model.  Trying Buddi 2 format...");
-
-			try {
-//				throw new Exception("Legacy data files not currently supported");
-				dataModel = ModelConverter.convert(file);
-
-				//We do not save this by default
-				setChanged();
-
-				setFile(null);
-
-			}
-			catch (Exception e){
-				throw new DocumentLoadException("Exception loading model: " + e, e);	
-			}
-			catch (Error e){
-				throw new DocumentLoadException("Error loading model: " + e, e);
+				}
 			}
 		}
-		catch (Exception e){
-			throw new DocumentLoadException("Exception loading model: " + e, e);
+		catch (CipherException ce){
+			//If we get here, something is very wrong.  Perhaps the platform does not support
+			// the encryption we have chosen, or something else is wrong.
 		}
-		catch (Error e){
-			throw new DocumentLoadException("Error loading model: " + e, e);
+		catch (IOException ioe){
+			//If we get here, chances are good that the file is not valid.  We will display
+			// an error message, and open a new file by default.
 		}
-
-		//Refresh the UID Map...
-		refreshUidMap();
 	}
 
 	/**
@@ -188,54 +160,61 @@ public class DataModel extends AbstractDocument {
 		setChanged();
 	}
 
-//	public void loadDataModel(File file) throws ModelLoadingException {
-
-//	}
-
 	/**
 	 * Saves the data file to the current file.  If the file has not yet been set,
 	 * this method silently returns.
 	 * @throws SaveModelException
 	 */
 	public void save() throws DocumentSaveException {
-		saveInternal(getFile(), false);
+		saveInternal(getFile(), 0, false);
 	}
 
 	/**
 	 * Saves the data file to the specified file.  If the specified file is 
 	 * null, silently return without error and without saving.
 	 * @param file
+	 * @param flags.  Flags to set for saving.  AND together for multiple flags.
 	 * @throws SaveModelException
 	 */
-	public void saveAs(File file) throws DocumentSaveException {
-		saveInternal(file, true);
+	public void saveAs(File file, int flags) throws DocumentSaveException {
+		saveInternal(file, flags, true);
 	}
 
-	private void saveInternal(File file, boolean resetUid) throws DocumentSaveException {
+	private void saveInternal(File file, int flags, boolean resetUid) throws DocumentSaveException {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
 			//If we have not yet saved this file, the cipher will be null.
-			if (outputCipher == null){
-				//TODO Change this.  I don't like the use of a class variable for something
-				// like this.  We should pass this in to the saveAs() method when it is called.
-				if (encrypted) {
-					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-					char[] password = passwordDialog.askForPassword(true, false);
-					outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
-				}
-				else
-					outputCipher = new NullCipher();
+//			if (outputCipher == null){
+//				//TODO Change this.  I don't like the use of a class variable for something
+//				// like this.  We should pass this in to the saveAs() method when it is called.
+//				if (encrypted) {
+//					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+//					byte[] password = passwordDialog.askForPassword(true, false).getBytes("UTF-8");
+//					outputCipher = CipherHelper.getInstance(Cipher.ENCRYPT_MODE, password);
+//				}
+//				else
+//					outputCipher = new NullCipher();
+//			}
+//
+//			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), outputCipher);
+
+			char[] password = null;
+
+			if ((flags & ENCRYPT_DATA_FILE) != 0){
+				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+				password = passwordDialog.askForPassword(true, false);
 			}
-
-			OutputStream encryptedData = new CipherOutputStream(new FileOutputStream(file), outputCipher);
-
-			XMLEncoder encoder = new XMLEncoder(encryptedData);
+			
+			BuddiCipherStreamFactory factory = new BuddiCipherStreamFactory();
+			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+			
 
 			//TODO Test to make sure this is reset at the right time.
 			if (resetUid)
 				dataModel.setUid(getGeneratedUid(dataModel));
 
+			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.writeObject(dataModel);
 			encoder.flush();
 			encoder.close();
@@ -246,12 +225,23 @@ public class DataModel extends AbstractDocument {
 
 			resetChanged();
 		}
-		catch (FileNotFoundException fnfe){
-			throw new DocumentSaveException("Error saving data file - File " + file + " not found.", fnfe);
+		catch (CipherException ce){
+			//This means that there is something seriously wrong with the encryption methods.
+			// Perhaps the user's platform does not support the given methods.
+			// Notify the user, and cancel the save.
+			//TODO Notify user
+			
+			throw new DocumentSaveException(ce);
 		}
-		catch (Exception e){
-			throw new DocumentSaveException("Error saving data file: " + e, e);
+		catch (IOException ioe){
+			//This means taht there was something wrong with the given file, or writing to
+			// it.  Perhaps the user does not have write access, the folder does not exist,
+			// or something similar.  Notify the user, and cancel the save.
+			//TODO Notify user
+			
+			throw new DocumentSaveException(ioe);
 		}
+
 	}
 
 	/**
@@ -696,44 +686,5 @@ public class DataModel extends AbstractDocument {
 		tb.setAmount(1234567890);
 
 		return new Transaction(this, tb);
-	}
-
-	private boolean canDecrypt(BufferedReader reader) throws DocumentLoadException {
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(tempInputStream));
-		String testString;
-
-//		try {
-//		for(int i = 0; i < Const.XML_PROLOGUE.length(); i++){
-//		char c = (char) tempInputStream.read();
-//		System.out.println(c + ", " + Const.XML_PROLOGUE.charAt(i));
-//		if (Const.XML_PROLOGUE.charAt(i) != c);
-//		return false;
-//		}
-
-//		return true;
-//		}
-//		catch (IOException ioe){}
-
-//		return false;
-		try {
-			testString = reader.readLine();			
-			System.out.println(testString);			
-		}
-		catch (IOException ioe){
-			testString = null;
-		}
-
-		return testString != null && testString.startsWith(Const.XML_PROLOGUE);
-	}
-
-	/**
-	 * Set the file to be encrypted on the next save.  Note that this nullifies the
-	 * existing Cipher - this will require the user to enter their password the next 
-	 * time.
-	 * @param encrypted
-	 */
-	public void setEncrypted(boolean encrypted){
-		this.outputCipher = null;
-		this.encrypted = encrypted;
 	}
 }
