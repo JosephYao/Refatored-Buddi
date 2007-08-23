@@ -17,9 +17,8 @@ import javax.imageio.ImageIO;
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableSourceImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -170,7 +169,7 @@ public class HtmlHelper {
 	 * if there is none.
 	 * @return
 	 */
-	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSourceImpl source){
+	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSource source){
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<tr><td width='20%'>");

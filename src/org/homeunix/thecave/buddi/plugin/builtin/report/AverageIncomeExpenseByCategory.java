@@ -12,9 +12,9 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -45,12 +45,12 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 	}
 
 	@Override
-	public HtmlPage getReport(ImmutableModelImpl model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
 		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
-		List<ImmutableBudgetCategoryImpl> categories = model.getBudgetCategories();
-		Collections.sort(categories, new Comparator<ImmutableBudgetCategoryImpl>(){
-			public int compare(ImmutableBudgetCategoryImpl o1, ImmutableBudgetCategoryImpl o2) {
+		List<ImmutableBudgetCategory> categories = model.getBudgetCategories();
+		Collections.sort(categories, new Comparator<ImmutableBudgetCategory>(){
+			public int compare(ImmutableBudgetCategory o1, ImmutableBudgetCategory o2) {
 				//First we sort by income
 				if (o1.isIncome() != o2.isIncome()){
 					if (o1.isIncome()){
@@ -81,18 +81,18 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		
 		long totalActual = 0, totalAverage = 0;
 		
-		for (ImmutableBudgetCategoryImpl c : categories){
+		for (ImmutableBudgetCategory c : categories){
 			
 			
-			List<ImmutableTransactionImpl> transactions = model.getTransactions(c, startDate, endDate);
+			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
 			long actual = 0;
-			for (ImmutableTransactionImpl transaction : transactions) {
+			for (ImmutableTransaction transaction : transactions) {
 				actual += transaction.getAmount();
 				
-				if (transaction.getTo() instanceof ImmutableBudgetCategoryImpl){
+				if (transaction.getTo() instanceof ImmutableBudgetCategory){
 					totalActual -= transaction.getAmount();
 				}
-				else if (transaction.getFrom() instanceof ImmutableBudgetCategoryImpl){
+				else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 					totalActual += transaction.getAmount();
 				}
 			}
@@ -132,8 +132,8 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		
 		sb.append("<h1>").append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
-		for (ImmutableBudgetCategoryImpl bc : categories){
-			List<ImmutableTransactionImpl> transactions = model.getTransactions(bc, startDate, endDate);
+		for (ImmutableBudgetCategory bc : categories){
+			List<ImmutableTransaction> transactions = model.getTransactions(bc, startDate, endDate);
 			
 			
 			if (transactions.size() > 0){
@@ -144,7 +144,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 
-				for (ImmutableTransactionImpl t : transactions) {
+				for (ImmutableTransaction t : transactions) {
 					sb.append(HtmlHelper.getHtmlTransactionRow(t, bc));
 				}
 
