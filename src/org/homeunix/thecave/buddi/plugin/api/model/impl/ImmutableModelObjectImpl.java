@@ -4,11 +4,12 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 
-public abstract class ImmutableModelObject implements Comparable<ImmutableModelObject> {
+public abstract class ImmutableModelObjectImpl implements Comparable<ImmutableModelObject> {
 	private ModelObject raw;
 	
-	public ImmutableModelObject(ModelObject raw) {
+	public ImmutableModelObjectImpl(ModelObject raw) {
 		this.raw = raw;
 	}
 	

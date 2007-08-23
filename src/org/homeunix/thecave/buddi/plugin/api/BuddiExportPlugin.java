@@ -7,7 +7,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 
 import java.io.File;
 
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
 import org.homeunix.thecave.moss.plugin.MossActionPlugin;
 
 public abstract class BuddiExportPlugin implements MossActionPlugin {
@@ -23,7 +23,7 @@ public abstract class BuddiExportPlugin implements MossActionPlugin {
 	 * If you specify isPromptForFile() == false, this
 	 * string will be null.
 	 */
-	public abstract void exportData(ImmutableModel model, File file);
+	public abstract void exportData(ImmutableModelImpl model, File file);
 	
 	/**
 	 * Gets the extension for the data file, e.g., .csv, .xml, .qif, etc.

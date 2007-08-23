@@ -8,10 +8,11 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 
-public class ImmutableTransaction extends ImmutableModelObject {
+public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implements ImmutableTransaction {
 	
-	public ImmutableTransaction(Transaction transaction) {
+	public ImmutableTransactionImpl(Transaction transaction) {
 		super(transaction);
 	}
 	
@@ -40,18 +41,18 @@ public class ImmutableTransaction extends ImmutableModelObject {
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public ImmutableSource getFrom(){
+	public ImmutableSourceImpl getFrom(){
 		if (getTransaction().getFrom() instanceof Account)
-			return new ImmutableAccount((Account) getTransaction().getFrom());
+			return new ImmutableAccountImpl((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
-			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getFrom());
+			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
 		return null;
 	}
-	public ImmutableSource getTo(){
+	public ImmutableSourceImpl getTo(){
 		if (getTransaction().getTo() instanceof Account)
-			return new ImmutableAccount((Account) getTransaction().getTo());
+			return new ImmutableAccountImpl((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
-			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getTo());
+			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
 	public long getBalanceFrom() {
@@ -69,7 +70,7 @@ public class ImmutableTransaction extends ImmutableModelObject {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ImmutableTransaction);
+		if (obj instanceof ImmutableTransactionImpl);
 		
 		return false;
 	}

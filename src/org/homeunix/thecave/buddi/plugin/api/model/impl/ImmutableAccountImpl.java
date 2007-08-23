@@ -4,10 +4,12 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
 
-public class ImmutableAccount extends ImmutableSource {
+public class ImmutableAccountImpl extends ImmutableSourceImpl implements ImmutableAccount {
 	
-	public ImmutableAccount(Account account) {
+	public ImmutableAccountImpl(Account account) {
 		super(account);
 	}
 	
@@ -18,7 +20,7 @@ public class ImmutableAccount extends ImmutableSource {
 		return getAccount().getBalance();
 	}
 	public ImmutableType getType() {
-		return new ImmutableType(getAccount().getType());
+		return new ImmutableTypeImpl(getAccount().getType());
 	}
 	public Account getAccount(){
 		return (Account) getRaw(); 

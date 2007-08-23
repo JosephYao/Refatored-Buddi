@@ -15,11 +15,18 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.WrapperLists;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetPeriod;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
 
-public class ImmutableModel {
+public class ImmutableModelImpl extends ImmutableModelObjectImpl implements ImmutableModel {
 	private final DataModel model;
 	
-	public ImmutableModel(DataModel model) {
+	public ImmutableModelImpl(DataModel model) {
+		super(model);
 		this.model = model;
 	}
 	
@@ -28,7 +35,7 @@ public class ImmutableModel {
 		return getModel().getPeriodType();
 	}
 	
-	protected DataModel getModel(){
+	public DataModel getModel(){
 		return model;
 	}
 	
@@ -48,7 +55,7 @@ public class ImmutableModel {
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions());
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
+	public List<ImmutableTransaction> getTransactions(ImmutableSourceImpl source){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
 	}
 	
@@ -56,7 +63,7 @@ public class ImmutableModel {
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate){
+	public List<ImmutableTransaction> getTransactions(ImmutableSourceImpl source, Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	

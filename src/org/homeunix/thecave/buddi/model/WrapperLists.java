@@ -11,12 +11,13 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccount;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetPeriod;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelObject;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetPeriodImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTypeImpl;
 import org.homeunix.thecave.moss.data.list.WrapperList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -155,7 +156,7 @@ public class WrapperLists {
 		
 		@Override
 		public ImmutableAccount getWrapperObject(Account object) {
-			return new ImmutableAccount(object);
+			return new ImmutableAccountImpl(object);
 		}
 	}
 	
@@ -174,15 +175,15 @@ public class WrapperLists {
 		@Override
 		public T getWrapperObject(W object) {
 			if (object instanceof Account)
-				return (T) new ImmutableAccount((Account) object);
+				return (T) new ImmutableAccountImpl((Account) object);
 			if (object instanceof BudgetCategory)
-				return (T) new ImmutableBudgetCategory((BudgetCategory) object);
+				return (T) new ImmutableBudgetCategoryImpl((BudgetCategory) object);
 			if (object instanceof BudgetPeriod)
-				return (T) new ImmutableBudgetPeriod((BudgetPeriod) object);
+				return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
 			if (object instanceof Transaction)
-				return (T) new ImmutableTransaction((Transaction) object);
+				return (T) new ImmutableTransactionImpl((Transaction) object);
 			if (object instanceof Type)
-				return (T) new ImmutableType((Type) object);
+				return (T) new ImmutableTypeImpl((Type) object);
 			
 			//Catch all
 			return null;

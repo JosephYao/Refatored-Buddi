@@ -4,10 +4,11 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
 
-public class ImmutableType extends ImmutableModelObject {
+public class ImmutableTypeImpl extends ImmutableModelObjectImpl implements ImmutableType {
 	
-	public ImmutableType(Type type) {
+	public ImmutableTypeImpl(Type type) {
 		super(type);
 	}
 	

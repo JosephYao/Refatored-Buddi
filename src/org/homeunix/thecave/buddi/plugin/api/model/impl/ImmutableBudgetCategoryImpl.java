@@ -4,10 +4,11 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 
-public class ImmutableBudgetCategory extends ImmutableSource {
+public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements ImmutableBudgetCategory {
 	
-	public ImmutableBudgetCategory(BudgetCategory budgetCategory) {
+	public ImmutableBudgetCategoryImpl(BudgetCategory budgetCategory) {
 		super(budgetCategory);
 	}
 	
@@ -16,7 +17,7 @@ public class ImmutableBudgetCategory extends ImmutableSource {
 	}
 	public ImmutableBudgetCategory getParent() {
 		if (getBudgetCategory().getParent() != null)
-			return new ImmutableBudgetCategory(getBudgetCategory().getParent());
+			return new ImmutableBudgetCategoryImpl(getBudgetCategory().getParent());
 		return null;
 	}
 	

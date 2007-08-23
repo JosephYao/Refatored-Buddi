@@ -6,10 +6,12 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetPeriod;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetPeriod;
 
-public class ImmutableBudgetPeriod extends ImmutableModelObject {
+public class ImmutableBudgetPeriodImpl extends ImmutableModelObjectImpl implements ImmutableBudgetPeriod {
 	
-	public ImmutableBudgetPeriod(BudgetPeriod budgetPeriod) {
+	public ImmutableBudgetPeriodImpl(BudgetPeriod budgetPeriod) {
 		super(budgetPeriod);
 	}
 	

@@ -13,7 +13,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -42,7 +42,7 @@ public class BuddiPluginHelper {
 					File index = HtmlHelper.createHTML(
 							"report", 
 							((BuddiReportPlugin) report).getReport(
-									new ImmutableModel((DataModel) frame.getDocument()),
+									new ImmutableModelImpl((DataModel) frame.getDocument()),
 									startDate, 
 									endDate));
 					BrowserLauncher bl = new BrowserLauncher(null);
