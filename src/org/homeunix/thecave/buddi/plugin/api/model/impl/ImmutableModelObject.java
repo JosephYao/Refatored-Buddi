@@ -1,7 +1,7 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.plugin.api.model.immutable;
+package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.ModelObject;
 

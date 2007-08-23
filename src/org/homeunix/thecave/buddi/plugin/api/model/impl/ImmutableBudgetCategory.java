@@ -1,22 +1,22 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.plugin.api.model.mutable;
+package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 
-public class MutableBudgetCategory extends MutableSource {
+public class ImmutableBudgetCategory extends ImmutableSource {
 	
-	public MutableBudgetCategory(BudgetCategory budgetCategory) {
+	public ImmutableBudgetCategory(BudgetCategory budgetCategory) {
 		super(budgetCategory);
 	}
 	
 	public boolean isIncome() {
 		return getBudgetCategory().isIncome();
 	}
-	public MutableBudgetCategory getParent() {
+	public ImmutableBudgetCategory getParent() {
 		if (getBudgetCategory().getParent() != null)
-			return new MutableBudgetCategory(getBudgetCategory().getParent());
+			return new ImmutableBudgetCategory(getBudgetCategory().getParent());
 		return null;
 	}
 	

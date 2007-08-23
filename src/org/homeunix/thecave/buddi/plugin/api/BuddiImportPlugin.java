@@ -7,7 +7,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 
 import java.io.File;
 
-import org.homeunix.thecave.buddi.plugin.api.model.mutable.MutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.moss.plugin.MossActionPlugin;
 
 

@@ -17,8 +17,8 @@ import javax.imageio.ImageIO;
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableSource;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableSource;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransaction;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 

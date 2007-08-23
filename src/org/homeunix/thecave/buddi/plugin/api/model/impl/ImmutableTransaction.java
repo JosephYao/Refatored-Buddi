@@ -1,7 +1,7 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.plugin.api.model.mutable;
+package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import java.util.Date;
 
@@ -9,9 +9,9 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
 
-public class MutableTransaction extends MutableModelObject {
+public class ImmutableTransaction extends ImmutableModelObject {
 	
-	public MutableTransaction(Transaction transaction) {
+	public ImmutableTransaction(Transaction transaction) {
 		super(transaction);
 	}
 	
@@ -40,18 +40,18 @@ public class MutableTransaction extends MutableModelObject {
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public MutableSource getFrom(){
+	public ImmutableSource getFrom(){
 		if (getTransaction().getFrom() instanceof Account)
-			return new MutableAccount((Account) getTransaction().getFrom());
+			return new ImmutableAccount((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
-			return new MutableBudgetCategory((BudgetCategory) getTransaction().getFrom());
+			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getFrom());
 		return null;
 	}
-	public MutableSource getTo(){
+	public ImmutableSource getTo(){
 		if (getTransaction().getTo() instanceof Account)
-			return new MutableAccount((Account) getTransaction().getTo());
+			return new ImmutableAccount((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
-			return new MutableBudgetCategory((BudgetCategory) getTransaction().getTo());
+			return new ImmutableBudgetCategory((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
 	public long getBalanceFrom() {
@@ -69,7 +69,7 @@ public class MutableTransaction extends MutableModelObject {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof MutableTransaction);
+		if (obj instanceof ImmutableTransaction);
 		
 		return false;
 	}

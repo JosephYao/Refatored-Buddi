@@ -7,7 +7,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 
 import java.io.File;
 
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModel;
 import org.homeunix.thecave.moss.plugin.MossActionPlugin;
 
 public abstract class BuddiExportPlugin implements MossActionPlugin {

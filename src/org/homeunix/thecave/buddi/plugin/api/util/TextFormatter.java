@@ -9,11 +9,11 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableAccount;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableSource;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.immutable.ImmutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableSource;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableType;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
 
