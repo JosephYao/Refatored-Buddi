@@ -8,11 +8,11 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 
-public abstract class ModelObject implements Comparable<ModelObject> {
+public abstract class ModelObjectImpl implements ModelObject {
 	private final DataModel model;
 	private final ModelObjectBean bean;
 	
-	public ModelObject(DataModel model, ModelObjectBean bean) {
+	public ModelObjectImpl(DataModel model, ModelObjectBean bean) {
 		if (model == null)
 			throw new DataModelProblemException("Model cannot be null", getModel());
 		if (bean == null)
@@ -21,11 +21,11 @@ public abstract class ModelObject implements Comparable<ModelObject> {
 		this.bean = bean;
 	}
 	
-	DataModel getModel(){
+	public DataModel getModel(){
 		return model;
 	}
 	
-	ModelObjectBean getBean(){
+	public ModelObjectBean getBean(){
 		return bean;
 	}
 	

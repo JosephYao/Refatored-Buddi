@@ -7,7 +7,7 @@ import org.homeunix.thecave.buddi.model.beans.TypeBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
-public class Type extends ModelObject {
+public class Type extends ModelObjectImpl {
 	Type(DataModel model, TypeBean type) {
 		super(model, type);
 	}

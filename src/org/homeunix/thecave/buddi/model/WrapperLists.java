@@ -160,7 +160,7 @@ public class WrapperLists {
 		}
 	}
 	
-	public static class ImmutableObjectWrapperList<T extends ImmutableModelObject, W extends ModelObject> extends BuddiWrapperList<T, W> {
+	public static class ImmutableObjectWrapperList<T extends ImmutableModelObject, W extends ModelObjectImpl> extends BuddiWrapperList<T, W> {
 		public ImmutableObjectWrapperList(DataModel model, List<W> wrappedList) {
 			super(model, wrappedList, true);
 		}

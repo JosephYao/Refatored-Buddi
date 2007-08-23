@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 
-public class BudgetPeriod extends ModelObject {
+public class BudgetPeriod extends ModelObjectImpl {
 //	private BudgetPeriodBean getBudgetPeriodBean();
 
 	BudgetPeriod(DataModel model, BudgetPeriodBean budgetPeriod) {
@@ -37,7 +37,7 @@ public class BudgetPeriod extends ModelObject {
 		return (BudgetPeriodBean) getBean();
 	}
 
-	public int compareTo(ModelObject arg0) {
+	public int compareTo(ModelObjectImpl arg0) {
 		if (arg0 instanceof BudgetPeriod){
 			BudgetPeriod bp = (BudgetPeriod) arg0;
 			if (bp == null)

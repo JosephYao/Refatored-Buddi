@@ -9,7 +9,7 @@ import org.homeunix.thecave.buddi.model.beans.SourceBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
-public abstract class Source extends ModelObject {
+public abstract class Source extends ModelObjectImpl {
 	Source(DataModel model, SourceBean source) {
 		super(model, source);
 	}

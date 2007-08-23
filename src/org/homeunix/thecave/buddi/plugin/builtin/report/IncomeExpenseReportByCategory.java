@@ -15,9 +15,9 @@ import org.homeunix.drummer.model.Category;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -39,7 +39,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	
 	
 	@Override
-	public HtmlPage getReport(ImmutableModelImpl model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
 		StringBuilder sb = HtmlHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
 
 		List<ImmutableBudgetCategoryImpl> categories = model.getBudgetCategories();
@@ -76,7 +76,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		long totalActual = 0, totalBudgeted = 0;
 		
 		for (ImmutableBudgetCategoryImpl c : categories){
-			List<ImmutableTransactionImpl> transactions = model.getTransactions(c, startDate, endDate);
+			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
 			long actual = 0;
 			for (Transaction transaction : transactions) {
 				actual += transaction.getAmount();
@@ -146,7 +146,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 				for (Transaction t : transactions) {
-					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), new ImmutableCategoryImpl(c)));
+					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransaction(t), new ImmutableCategoryImpl(c)));
 				}
 
 				sb.append(HtmlHelper.getHtmlTransactionFooter());

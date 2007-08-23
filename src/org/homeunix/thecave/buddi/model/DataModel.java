@@ -49,7 +49,7 @@ import org.homeunix.thecave.moss.util.crypto.CipherException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
-public class DataModel extends AbstractDocument {
+public class DataModel extends AbstractDocument implements ModelObject {
 
 	/**
 	 * Set this flag in the saveAs() method to specify that we should encrypt the data file.
@@ -57,7 +57,7 @@ public class DataModel extends AbstractDocument {
 	public static final int ENCRYPT_DATA_FILE = 1;
 	
 	private DataModelBean dataModel;
-	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
+	private final Map<String, ModelObjectImpl> uidMap = new HashMap<String, ModelObjectImpl>();
 	
 	private char[] password; //Store the password on load.  This is not the best practice 
 							 // from a security point of view, but I suppose it will work...
@@ -612,7 +612,7 @@ public class DataModel extends AbstractDocument {
 	 * such as if the UID is already entered into the model).
 	 * @param isUidRefresh Is this being called from the refreshUid method?
 	 */
-	private void checkValid(ModelObject object, boolean isAddOperation, boolean isUidRefresh){
+	private void checkValid(ModelObjectImpl object, boolean isAddOperation, boolean isUidRefresh){
 		if (!object.getModel().equals(this))
 			throw new DataModelProblemException("Cannot modify an object not in this model.", this);
 
@@ -655,7 +655,7 @@ public class DataModel extends AbstractDocument {
 	 * @param uid Unique ID string for the desired object.
 	 * @return
 	 */
-	public ModelObject getObjectByUid(String uid){
+	public ModelObjectImpl getObjectByUid(String uid){
 		return uidMap.get(uid);
 	}
 
@@ -681,7 +681,7 @@ public class DataModel extends AbstractDocument {
 		return uid;
 	}
 
-	public void registerObjectInUidMap(ModelObject object){
+	public void registerObjectInUidMap(ModelObjectImpl object){
 		uidMap.put(object.getBean().getUid(), object);
 	}
 
@@ -780,11 +780,35 @@ public class DataModel extends AbstractDocument {
 		return sb.toString();
 	}
 	
-	/**
-	 * Returns the UID string for this object.
-	 * @return
-	 */
 	public String getUid(){
 		return dataModel.getUid();
+	}
+	
+	public int compareTo(ModelObject o) {
+		return getUid().compareTo(o.getUid());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof DataModel)
+			return getUid().equals(((DataModel) obj).getUid());
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return getUid().hashCode();
+	}
+	
+	public void modify() {
+		dataModel.setModifiedDate(new Date());
+	}
+	
+	public ModelObjectBean getBean() {
+		return dataModel;
+	}
+	
+	public DataModel getModel() {
+		return this;
 	}
 }

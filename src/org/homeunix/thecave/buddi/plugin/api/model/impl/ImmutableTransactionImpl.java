@@ -70,8 +70,8 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ImmutableTransactionImpl);
-		
+		if (obj instanceof ImmutableTransaction)
+			return getUid().equals(((ImmutableTransaction) obj).getUid());
 		return false;
 	}
 }

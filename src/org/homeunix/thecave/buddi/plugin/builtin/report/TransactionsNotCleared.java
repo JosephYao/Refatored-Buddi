@@ -12,8 +12,8 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
@@ -31,12 +31,12 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 		return null;
 	}
 	
-	public HtmlPage getReport(ImmutableModelImpl model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
-		List<ImmutableTransactionImpl> temp = model.getTransactions(startDate, endDate);
-		List<ImmutableTransactionImpl> transactions = new LinkedList<ImmutableTransactionImpl>();
+		List<ImmutableTransaction> temp = model.getTransactions(startDate, endDate);
+		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();
 		
-		for (ImmutableTransactionImpl transaction : temp) {
+		for (ImmutableTransaction transaction : temp) {
 			if (!transaction.isCleared()){
 				transactions.add(transaction);
 			}
@@ -63,7 +63,7 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 
 			sb.append(HtmlHelper.getHtmlTransactionHeader());
 			
-			for (ImmutableTransactionImpl t : transactions) {
+			for (ImmutableTransaction t : transactions) {
 				sb.append(HtmlHelper.getHtmlTransactionRow(t, null));	
 			}
 		

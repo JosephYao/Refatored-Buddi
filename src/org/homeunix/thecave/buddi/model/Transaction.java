@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
-public class Transaction extends ModelObject {	
+public class Transaction extends ModelObjectImpl {	
 	public Transaction(DataModel model, Date date, String description, long amount, Source from, Source to) {
 		this(model, new TransactionBean());
 
@@ -165,7 +165,7 @@ public class Transaction extends ModelObject {
 		getTransactionBean().volatileSetBalanceTo(balanceTo);
 	}
 
-	public int compareTo(ModelObject arg0) {
+	public int compareTo(ModelObjectImpl arg0) {
 		if (arg0 instanceof Transaction){
 			Transaction t = (Transaction) arg0;
 			if (this.equals(t))

@@ -9,11 +9,11 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableSourceImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTypeImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
 
@@ -132,7 +132,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableSourceImpl s){
+	public static boolean isRed(ImmutableSource s){
 		return InternalFormatter.isRed(s.getSource());
 	}
 
@@ -141,7 +141,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableAccountImpl a, long value){
+	public static boolean isRed(ImmutableAccount a, long value){
 		return InternalFormatter.isRed(a.getAccount(), value);
 	}
 	
@@ -150,7 +150,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableBudgetCategoryImpl c, long value){
+	public static boolean isRed(ImmutableBudgetCategory c, long value){
 		return InternalFormatter.isRed(c.getBudgetCategory(), value);
 	}
 
@@ -159,7 +159,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableTypeImpl t){
+	public static boolean isRed(ImmutableType t){
 		return InternalFormatter.isRed(t.getType());
 	}
 
@@ -168,7 +168,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableTypeImpl t, long value){
+	public static boolean isRed(ImmutableType t, long value){
 		return InternalFormatter.isRed(t.getType(), value);
 	}
 	
@@ -177,7 +177,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableTransactionImpl t){
+	public static boolean isRed(ImmutableTransaction t){
 		return InternalFormatter.isRed(t.getTransaction());
 	}
 	
@@ -186,7 +186,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableTransactionImpl t, boolean toSelectedAccount){
+	public static boolean isRed(ImmutableTransaction t, boolean toSelectedAccount){
 		return InternalFormatter.isRed(t.getTransaction(), toSelectedAccount);
 	}
 
