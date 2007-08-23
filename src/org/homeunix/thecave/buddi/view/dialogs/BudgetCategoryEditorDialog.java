@@ -245,7 +245,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			List<List<BudgetCategory>> allLists = new LinkedList<List<BudgetCategory>>();
 			allLists.add(blank);
 			allLists.add(model.getBudgetCategories());
-			availableParents = new CompositeList<BudgetCategory>(allLists, true);
+			availableParents = new CompositeList<BudgetCategory>(true, true, allLists);
 		}
 
 		public Object getSelectedItem() {

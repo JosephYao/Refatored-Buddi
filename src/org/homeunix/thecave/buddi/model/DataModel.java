@@ -36,12 +36,13 @@ import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
-import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.BuddiCipherStreamFactory;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
+import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
+import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
@@ -67,9 +68,15 @@ public class DataModel extends AbstractDocument {
 	 * @param file File to load
 	 * @throws DocumentLoadException
 	 */
-	public DataModel(File file) throws DocumentLoadException {
+	public DataModel(File file) throws DocumentLoadException, OperationCancelledException {
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
+		
+		if (!file.exists())
+			throw new DocumentLoadException("File " + file + " does not exist.");
+		
+		if (!file.canRead())
+			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
 		Log.debug("Trying to load file " + file);
 
@@ -107,12 +114,12 @@ public class DataModel extends AbstractDocument {
 				catch (IncorrectPasswordException ipe){
 					//The password was not correct.  Prompt for a new one.
 					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-					password = passwordDialog.askForPassword(false, false);
+					password = passwordDialog.askForPassword(false, true);
 					
-					//User hit cancel (or entered an empty password).  Cancel loading, and 
-					// possibly prompt for a new file.
+					//User hit cancel.  Cancel loading, and pass control to calling code. 
+					// Calling code will possibly prompt for a new file.
 					if (password == null)
-						throw new DocumentLoadException("User cancelled file load.");
+						throw new OperationCancelledException("User cancelled file load.");
 				}
 				catch (IncorrectDocumentFormatException ife){
 					//The document we are trying to load does not have the proper header.

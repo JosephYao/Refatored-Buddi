@@ -29,12 +29,14 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
-import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
+import org.homeunix.thecave.moss.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.window.MossFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
@@ -142,13 +144,13 @@ public class Buddi {
 			debian = false;
 		return debian;
 	}
-	
+
 	public static File getPluginsFolder(){
 		if (pluginsFolder == null)
 			pluginsFolder = Buddi.getWorkingDir() + File.separator + Const.PLUGIN_FOLDER;
 		return new File(pluginsFolder);
 	}
-	
+
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
 			languagesFolder = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER;
@@ -159,7 +161,7 @@ public class Buddi {
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
 	private static void launchGUI(){
-		
+
 		if (JOptionPane.showConfirmDialog(
 				null, 
 				"WARNING:\n\nThis version of Buddi is currently under active development,\nand sould be considered Alpha quality code.  There are many\nfeatures which are not completely implemented, and many\nothers which contain bugs.\n\nFurthermore, the data model currently in place will likely\nchange before this is publicly released.\n\nYou should *NOT* use this version of software for any data\nthat matters - it is only a development preview of\nthe upcoming version.\n\nIf you are looking for stable budgeting software,\nplease use Buddi 2.6, available for free at http://buddi.sourceforge.net.\n\nIf you understand the risk, and still want to run this\nversion, hit OK.  Hit Cancel to exit.",
@@ -168,17 +170,17 @@ public class Buddi {
 				JOptionPane.WARNING_MESSAGE
 		) == JOptionPane.CANCEL_OPTION)  //The index of the Cancel button.
 			System.exit(0);
-		
-		
-		if (PrefsModel.getInstance().getLastVersion() == null || Const.VERSION.isGreaterPatch(PrefsModel.getInstance().getLastVersion())){
+
+
+		if (PrefsModel.getInstance().getLastVersion() != null && Const.VERSION.isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
 			String[] options = new String[2];
-			options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
-			options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL);
+			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
 			if (JOptionPane.showOptionDialog(
 					null, 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE),
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
 					JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.WARNING_MESSAGE,
 					null,
@@ -200,37 +202,84 @@ public class Buddi {
 				}
 			}
 		}
-		
-		
+
+
 		//Choose which data file to open, or create a new one.
 		try {
-			DataModel model;
-			//TODO check for launch arguments as well
-			if (PrefsModel.getInstance().getLastDataFile() != null) {
-				model = new DataModel(PrefsModel.getInstance().getLastDataFile());
+			boolean openedFile = false; //Set to true once we opened a file, to avoid trying to open more.
+			
+			MainFrame frameToDisplay = null;
+			
+			//Handle opening files from command line.
+			if (!openedFile && filesToLoad.size() > 0){
+				for (File f : filesToLoad) {
+					try {
+						DataModel model;
+						model = new DataModel(f);
+						
+						MainFrame mainWndow = new MainFrame(model);
+						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+						frameToDisplay = mainWndow;
+						
+						openedFile = true;
+					}
+					catch (DocumentLoadException lme){}
+					catch (OperationCancelledException oce){}  //Do nothing
+				}
 			}
-			else {
-				Log.debug("Loading data model " + PrefsModel.getInstance().getLastDataFile());
-				model = new DataModel(PrefsModel.getInstance().getLastDataFile());
+			
+			//Handle opening the last user file, if available.
+			if (!openedFile && PrefsModel.getInstance().getLastDataFile() != null){
+					try {
+						DataModel model;
+						model = new DataModel(PrefsModel.getInstance().getLastDataFile());
+						
+						MainFrame mainWndow = new MainFrame(model);
+						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+						frameToDisplay = mainWndow;
+						
+						openedFile = true;
+					}
+					catch (DocumentLoadException lme){}
+					catch (OperationCancelledException oce){}  //Do nothing
+			}
+			
+			//If no files are available, just create a new one.
+			if (!openedFile){
+				DataModel model = new DataModel();
+				MainFrame mainWndow = new MainFrame(model);
+				mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+				frameToDisplay = mainWndow;
+				
+				openedFile = true;
 			}
 
-			MainFrame mainWndow = new MainFrame(model);
-			mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-
+			if (frameToDisplay == null)
+				throw new WindowOpenException("Buddi main window did not open!");
+				
 			//Start the background startup tasks... 
-			startVersionCheck(mainWndow);
-			startUpdateCheck(mainWndow, false);
+			startVersionCheck(frameToDisplay);
+			startUpdateCheck(frameToDisplay, false);
 
 		}
-		catch (WindowOpenException foe){
-			//TODO Do something nicer here.  We throw a runtime exception during 
-			// development to be sure that we catch problems with this.
-			throw new RuntimeException(foe);
-		}
-		catch (DocumentLoadException lme){
-			//TODO Do something nicer here.  We throw a runtime exception during 
-			// development to be sure that we catch problems with this.
-			throw new RuntimeException(lme);
+		catch (WindowOpenException woe){
+			String[] options = new String[1];
+			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(
+					null, 
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+					JOptionPane.OK_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					options,
+					options[0]
+			);
+			
+			woe.printStackTrace(Log.getPrintStream());
+			
+			System.exit(1);
 		}
 
 	}
@@ -249,7 +298,7 @@ public class Buddi {
 					sendBugReport(((DataModelProblemException) arg1).getDataModel());
 				else
 					sendBugReport();
-				
+
 				arg1.printStackTrace(Log.getPrintStream());
 			}
 		});
@@ -271,8 +320,9 @@ public class Buddi {
 
 				@Override
 				public void handleOpenFile(ApplicationEvent arg0) {
-					// TODO Auto-generated method stub
-					super.handleOpenFile(arg0);
+					arg0.setHandled(true);
+					
+					filesToLoad.add(new File(arg0.getFilename()));
 				}
 
 				@Override
@@ -449,13 +499,13 @@ public class Buddi {
 			PrefsModel.getInstance().updateVersion();
 
 			String[] buttons = new String[2];
-			buttons[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DONATE);
-			buttons[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NOT_NOW);
+			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);
+			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NOT_NOW);
 
 			int reply = JOptionPane.showOptionDialog(
 					frame, 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ASK_FOR_DONATION),
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DONATION),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE,
 					null,
@@ -504,12 +554,12 @@ public class Buddi {
 						Log.error(ioe);
 
 						String[] options = new String[1];
-						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
 								frame, 
-								PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
-								PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR), 
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
+								TextFormatter.getTranslation(BuddiKeys.ERROR), 
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.ERROR_MESSAGE,
 								null,
@@ -524,15 +574,15 @@ public class Buddi {
 				public void finished() {
 					if (get() != null){
 						String[] buttons = new String[2];
-						buttons[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DOWNLOAD);
-						buttons[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL);
+						buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+						buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
 						int reply = JOptionPane.showOptionDialog(
 								frame, 
-								PrefsModel.getInstance().getTranslator().get(BuddiKeys.NEW_VERSION_MESSAGE)
+								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
 								+ " " + get() + "\n"
-								+ PrefsModel.getInstance().getTranslator().get(BuddiKeys.NEW_VERSION_MESSAGE_2),
-								PrefsModel.getInstance().getTranslator().get(BuddiKeys.NEW_VERSION),
+								+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
+								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.INFORMATION_MESSAGE,
 								null,
@@ -575,12 +625,12 @@ public class Buddi {
 					//There was no updates - if we want a confirmation, show it
 					else if (confirm){
 						String[] options = new String[1];
-						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
 								frame, 
-								PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_NO_NEW_VERSION), 
-								PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_NO_NEW_VERSION), 
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.INFORMATION_MESSAGE,
 								null,

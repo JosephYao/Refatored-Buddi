@@ -16,9 +16,10 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.exception.DocumentLoadException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.moss.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.file.SmartFileChooser;
 import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
@@ -51,8 +52,9 @@ public class FileOpen extends MossMenuItem {
 			MainFrame mainFrame = new MainFrame(new DataModel(f));
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
-		catch (DocumentLoadException lme){
-			throw new RuntimeException("Error loading model: " + lme, lme);
+		catch (OperationCancelledException oce){}  //Do nothing
+		catch (DocumentLoadException dle){
+			throw new RuntimeException("Error loading model: " + dle, dle);
 		}
 		catch (WindowOpenException foe){}
 	}
