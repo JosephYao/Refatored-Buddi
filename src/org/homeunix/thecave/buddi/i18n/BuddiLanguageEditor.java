@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -44,8 +43,6 @@ import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
 
 public class BuddiLanguageEditor extends LanguageEditor {
 	public static final long serialVersionUID = 0;
-	
-	private final File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
 	
 	public static BuddiLanguageEditor getInstance(String language) throws BuddiLanguageEditorException {
 		String tempLanguage = JOptionPane.showInputDialog( 
@@ -120,10 +117,8 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		this.loadKeys((Enum[]) TypeCreditDefaultKeys.values());
 		this.loadKeys((Enum[]) TypeDebitDefaultKeys.values());
 		
-		//TODO Before we load the language, we should prompt (so that the user
-		// can enter a new one if desired).
 		this.loadLanguages(Const.LANGUAGE_RESOURCE_PATH, PrefsModel.getInstance().getTranslator().getLanguageList(selectedLanguage).toArray(new String[1]));
-		this.loadLanguages(new File(Const.LANGUAGE_FOLDER), PrefsModel.getInstance().getTranslator().getLanguageList(selectedLanguage).toArray(new String[1]));
+		this.loadLanguages(Buddi.getLanguagesFolder(), PrefsModel.getInstance().getTranslator().getLanguageList(selectedLanguage).toArray(new String[1]));
 	}
 	
 	@Override
@@ -135,7 +130,7 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		MossMenuItem save = new MossMenuItem(this, "Save Translation", KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				BuddiLanguageEditor.this.saveLanguages(languageLocation);
+				BuddiLanguageEditor.this.saveLanguages(Buddi.getLanguagesFolder());
 			}
 		});
 		

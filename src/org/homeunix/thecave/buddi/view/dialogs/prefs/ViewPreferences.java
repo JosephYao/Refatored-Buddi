@@ -10,12 +10,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.util.Version;
 
-public class ViewPreferences extends MossPanel implements PrefsPanel {
+public class ViewPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
 	
 	private final JCheckBox showDeleted;
@@ -24,21 +26,16 @@ public class ViewPreferences extends MossPanel implements PrefsPanel {
 	private final JCheckBox showReconcile;
 
 	public ViewPreferences() {
-		super(true);
-		
 		showDeleted = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_DELETED));
 		showAutoComplete = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
 		showClear = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_CLEAR));
 		showReconcile = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_RECONCILE));
-		
-		open();
 	}
-	
-	@Override
-	public void init() {
-		super.init();
 
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	@Override
+	public JPanel getPreferencesPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JPanel deletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel autoCompletePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -50,11 +47,13 @@ public class ViewPreferences extends MossPanel implements PrefsPanel {
 		clearPanel.add(showClear);
 		reconcilePanel.add(showReconcile);
 		
-		this.add(deletePanel);
-		this.add(clearPanel);
-		this.add(reconcilePanel);
-		this.add(autoCompletePanel);
-		this.add(Box.createVerticalGlue());
+		panel.add(deletePanel);
+		panel.add(clearPanel);
+		panel.add(reconcilePanel);
+		panel.add(autoCompletePanel);
+		panel.add(Box.createVerticalGlue());
+		
+		return panel;
 	}
 	
 	public void load() {
@@ -69,5 +68,17 @@ public class ViewPreferences extends MossPanel implements PrefsPanel {
 		PrefsModel.getInstance().setShowAutoComplete(showAutoComplete.isSelected());
 		PrefsModel.getInstance().setShowCleared(showClear.isSelected());
 		PrefsModel.getInstance().setShowReconciled(showReconcile.isSelected());
+	}
+	
+	public String getName() {
+		return BuddiKeys.VIEW.toString();
+	}
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+	
+	public Version getMinimumVersion() {
+		return null;
 	}
 }

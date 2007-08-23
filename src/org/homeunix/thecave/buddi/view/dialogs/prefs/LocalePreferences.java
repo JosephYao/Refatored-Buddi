@@ -34,14 +34,15 @@ import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor.BuddiLanguageEditorEx
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.Version;
 
-public class LocalePreferences extends MossPanel implements PrefsPanel, ActionListener {
+public class LocalePreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0; 
 
 	private final JScrollingComboBox language;
@@ -57,8 +58,6 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 	private final DefaultComboBoxModel dateFormatModel;
 
 	public LocalePreferences() {
-		super(true);
-
 		languageModel = new DefaultComboBoxModel();
 		language = new JScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
@@ -69,12 +68,12 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		otherCurrencyButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
 		otherDateFormatButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
 		editLanguagesButton = new JButton(TextFormatter.getTranslation(PreferencesKeys.EDIT_LANGUAGES));
-
-		open();
 	}
 
-	public void init() {
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	@Override
+	public JPanel getPreferencesPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -114,7 +113,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		otherCurrencyButton.setPreferredSize(InternalFormatter.getButtonSize(otherCurrencyButton));
 		otherDateFormatButton.setPreferredSize(InternalFormatter.getButtonSize(otherDateFormatButton));
 		editLanguagesButton.setPreferredSize(InternalFormatter.getButtonSize(editLanguagesButton));
-		
+
 		otherCurrencyButton.addActionListener(this);
 		otherDateFormatButton.addActionListener(this);
 		editLanguagesButton.addActionListener(this);
@@ -126,20 +125,22 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		dateFormatPanel.add(dateFormatLabel);
 		dateFormatPanel.add(dateFormat);
 		dateFormatPanel.add(otherDateFormatButton);
-		
+
 		currencyFormatPanel.add(currencyFormatLabel);
 		currencyFormatPanel.add(currencyFormat);
 		currencyFormatPanel.add(otherCurrencyButton);
 
-		this.add(languagePanel);		
-		this.add(dateFormatPanel);
-		this.add(currencyFormatPanel);
-		this.add(currencySymbolAfterAmount);
-		this.add(Box.createVerticalGlue());
+		panel.add(languagePanel);		
+		panel.add(dateFormatPanel);
+		panel.add(currencyFormatPanel);
+		panel.add(currencySymbolAfterAmount);
+		panel.add(Box.createVerticalGlue());
+
+		return panel;
 	}
 
 	public void load() {
-		
+
 		//Set up currency model
 		boolean customCurrency = true; //Assume custom until proved otherwise, below
 		String currency = PrefsModel.getInstance().getCurrencySign();
@@ -162,8 +163,8 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		if (customDateFormat){
 			dateFormatModel.addElement(PrefsModel.getInstance().getDateFormat());
 		}
-		
-		
+
+
 		//Set up language model.  Look for all built in ones, and any extras.
 		languageModel.removeAllElements();
 		Set<String> languages = new HashSet<String>();
@@ -172,7 +173,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 			languages.add(language);			
 		}
 		//Load all languages in the Languages folder
-		File languageLocation = new File(Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER);
+		File languageLocation = Buddi.getLanguagesFolder();
 		if (languageLocation.exists() && languageLocation.isDirectory()){
 			for (File f: languageLocation.listFiles())
 				if (f.getName().endsWith(Const.LANGUAGE_EXTENSION))
@@ -184,8 +185,8 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		for (String string : languagesVector) {
 			languageModel.addElement(string);
 		}
-		
-		
+
+
 		//Select from Preferencs
 		dateFormat.setSelectedItem(PrefsModel.getInstance().getDateFormat());
 		currencyFormat.setSelectedItem(PrefsModel.getInstance().getCurrencySign());
@@ -205,7 +206,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(otherCurrencyButton)){
 			String newCurrency = JOptionPane.showInputDialog(
-					LocalePreferences.this, 
+					null, 
 					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL), 
 					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL_TITLE), 
 					JOptionPane.PLAIN_MESSAGE);
@@ -234,7 +235,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 		}
 		else if (e.getSource().equals(otherDateFormatButton)){
 			String newDateFormat = JOptionPane.showInputDialog(
-					LocalePreferences.this, 
+					null, 
 					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT), 
 					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT_TITLE), 
 					JOptionPane.PLAIN_MESSAGE);
@@ -252,7 +253,7 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
 					JOptionPane.showOptionDialog(
-							LocalePreferences.this, 
+							null, 
 							TextFormatter.getTranslation(PreferencesKeys.ERROR_INCORRECT_FORMAT), 
 							TextFormatter.getTranslation(BuddiKeys.ERROR),
 							JOptionPane.DEFAULT_OPTION,
@@ -295,5 +296,16 @@ public class LocalePreferences extends MossPanel implements PrefsPanel, ActionLi
 			catch (BuddiLanguageEditorException blee){}
 		}
 
+	}
+
+	public String getName() {
+		return BuddiKeys.LOCALE.toString();
+	}
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+	public Version getMinimumVersion() {
+		return null;
 	}
 }

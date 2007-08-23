@@ -5,33 +5,43 @@
  */
 package org.homeunix.thecave.buddi.plugin.api;
 
+import javax.swing.JPanel;
+
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
 
 /**
  * @author wyatt
  * 
  * A Buddi plugin which will be loaded into the Preferences screen.  You can 
  * use this plugin to store user preferences about the plugin.
- * 
- * This plugin extends MossPanel.  Please see the current Javadocs for MossPanel
- * for a more in depth idea of how to use it.  At a high level, you want to do
- * the following, in order:
- * 
- * 1) Instantiate any final variables in the constructor.  Try to avoid
- * doing anything more than that in the constructor.
- * 2) Set up the GUI, create non-final objects, etc in the init() method.
- * This method is called automatically at open() time.
- * 3) Anything which relates to window state (status labels, etc) you can
- * put in the updateContent() method.  The contract for this method specifies
- * that it is to avoid any time consuming actions.
- * 
- * If you need to reference a final variable in the init() method, you may need to call
- * the super constructor super(true).  This will make the pael not automatically 
- * call open().  However, you should call this at the end of the constructor; otherwise,
- * there will be no content shown in the panel. 
  */
-public abstract class BuddiPreferencePlugin extends MossPanel implements MossPlugin {
+public abstract class BuddiPreferencePlugin implements MossPlugin {
+	
+	/**
+	 * Loads the value which is associated with the given key.
+	 * @param key The key to read.
+	 * @return The value associated with the given key, or null if there was no 
+	 * such value set.
+	 */
+	public String getPreference(String key){
+		return PrefsModel.getInstance().getPluginPreference(key);
+	}
+	
+	/**
+	 * @param key The key to save.  In order to ensure that you do not
+	 * overwrite the preferences for another plugin, you must use
+	 * the key format as follows:
+	 * 
+	 * "package.Plugin.property"
+	 * 
+	 * For instance, use the key "com.example.buddi.ImportFoo.LAST_EXECUTE_DAY" 
+	 * instead of the key "LAST_EXECUTE_DAY".
+	 * @param value The value to store.  Can be any valid String.
+	 */
+	public void putPreference(String key, String value){
+		PrefsModel.getInstance().putPluginPreference(key, value);
+	}
 	
 	/**
 	 * Saves the preferences which this panel is responsible for.
@@ -42,4 +52,39 @@ public abstract class BuddiPreferencePlugin extends MossPanel implements MossPlu
 	 * Loads the preferences which this panel is responsible for.
 	 */
 	public abstract void load();
+
+	/**
+	 * If true, we put a JPanel wrapper around this JPanel, so that it keeps 
+	 * all the components at the top of the window, even if there is extra
+	 * room.  This is correct behaviour for most preference panes, especially
+	 * if they contain multiple small widgets (buttons, check boxes, etc).
+	 * 
+	 * If the panel is to contain a large widget which is to take up the entire
+	 * frame (such as seen in the built in Plugins preference pane), override this
+	 * and set to false.
+	 * @return
+	 */
+	public boolean isUseWrapper(){
+		return true;
+	}
+	
+	/**
+	 * Create the JPanel to show in the Preferences.
+	 * @return A JPanel object which can be put into the Preferences panel
+	 */
+	public abstract JPanel getPreferencesPanel();
+	
+	/**
+	 * Not used in PreferencePlugin
+	 */
+	public boolean isPluginActive() {
+		return true;
+	}
+	
+	/**
+	 * Not used in PreferencePlugin
+	 */
+	public String getDescription() {
+		return null;
+	}
 }

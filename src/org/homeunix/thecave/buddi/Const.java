@@ -41,11 +41,15 @@ public class Const {
 	public final static String DATA_FILE_EXTENSION_OLD = ".buddi";
 	public final static String BACKUP_FILE_EXTENSION_OLD = ".buddi.bak";
 	
-	//Data file encryption constants
+	//Plugin Constants
+	public static final String PLUGIN_FOLDER = "Plugins";
+	public static final String PLUGIN_EXTENSION = ".buddi3plugin";
+	
+	//Data file encryption constants (This is now taken care of in the CipherStreamFactory -- Wyatt)
 //	public final static String DATA_FILE_ENCRYPTION = "AES/CBC/PKCS5Padding";
 //	public final static String KEY_ALGORITHM = "AES";
 //	public final static int SALT_LENGTH = 16;
-	public final static String XML_PROLOGUE = "<?xml"; //Tests if the file is encrypted
+//	public final static String XML_PROLOGUE = "<?xml"; //Tests if the file is encrypted
 //	public final static String DATA_DEFAULT_FILENAME = "Data";
 	
 	public static final FileFilter FILE_FILTER_DATA = new FileFilter(){
@@ -61,7 +65,7 @@ public class Const {
 
 		@Override
 		public String getDescription() {
-			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILE_DESCRIPTION_BUDDI);
+			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILE_DESCRIPTION_BUDDI_DATA_FILES);
 		}
 	};
 	public static final FileFilter FILE_FILTER_BACKUP = new FileFilter(){
@@ -77,7 +81,7 @@ public class Const {
 
 		@Override
 		public String getDescription() {
-			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILE_DESCRIPTION_BUDDI);
+			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILE_DESCRIPTION_BUDDI_DATA_FILES);
 		}
 	};
 	
@@ -100,17 +104,17 @@ public class Const {
 	public final static String HELP_FOLDER = "Help";
 	public final static String HELP_FILE = "index.html";
 	
-	//Local listener configuration
-	public final static int LISTEN_PORT = 4331;
-	public final static String SEPARATOR = "&";
-	public final static String ACCOUNT = "acct";
-	public final static String DESCRIPTION = "desc";
-	public final static String DATE = "date";
-	public final static String NUMBER = "num";
-	public final static String AMOUNT = "amt";
-	public final static String MEMO = "memo";
-	public final static String TO = "to";
-	public final static String FROM = "from";
+	//Local listener configuration -- Removed in 2.5.9.0
+//	public final static int LISTEN_PORT = 4331;
+//	public final static String SEPARATOR = "&";
+//	public final static String ACCOUNT = "acct";
+//	public final static String DESCRIPTION = "desc";
+//	public final static String DATE = "date";
+//	public final static String NUMBER = "num";
+//	public final static String AMOUNT = "amt";
+//	public final static String MEMO = "memo";
+//	public final static String TO = "to";
+//	public final static String FROM = "from";
 	
 	//File names
 	public final static String LOG_FILE = "buddi.log";
@@ -128,20 +132,21 @@ public class Const {
 	// is no good method of reading the main jar file by itself (since
 	// it may be wrapped in a .exe, etc).
 	public final static String[] BUNDLED_LANGUAGES = {
+		"Czech",
 		"Deutsch",
 		"English_(US)",
 		"English",
 		"Espanol",
 		"Espanol_(MX)",
+		"Francais",
 		"Greek",
 		"Italiano",
-		"Francais",
 		"Nederlands",
 		"Nederlands_(BE)",
 		"Norsk",
 		"Portugues",
+		"Russian",
 		"Serbian",
-		"Russian"
 	};
 	
 	public final static String[] BUNDLED_DOCUMENTS = {

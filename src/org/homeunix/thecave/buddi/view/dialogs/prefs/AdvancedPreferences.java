@@ -14,10 +14,11 @@ import javax.swing.JPanel;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.util.Version;
 
-public class AdvancedPreferences extends MossPanel implements PrefsPanel {
+public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
 
 	private final JCheckBox promptForDataFile;
@@ -26,20 +27,15 @@ public class AdvancedPreferences extends MossPanel implements PrefsPanel {
 
 	
 	public AdvancedPreferences() {
-		super(true);
-		
 		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
 		promptForDataFile = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
 		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SEND_CRASH_REPORTS));
-		
-		open();
 	}
 
 	@Override
-	public void init() {
-		super.init();
-		
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	public JPanel getPreferencesPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JPanel budgetIntervalPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel numberOfBackupsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -58,13 +54,15 @@ public class AdvancedPreferences extends MossPanel implements PrefsPanel {
 		promptForDataFilePanel.add(promptForDataFile);
 		sendCrashReportPanel.add(sendCrashReport);
 				
-		this.add(budgetIntervalPanel);
-		this.add(numberOfBackupsPanel);
-		this.add(editLanguagesPanel);
-		this.add(editTypesPanel);
-		this.add(updatePanel);
-		this.add(promptForDataFilePanel);
-		this.add(sendCrashReportPanel);
+		panel.add(budgetIntervalPanel);
+		panel.add(numberOfBackupsPanel);
+		panel.add(editLanguagesPanel);
+		panel.add(editTypesPanel);
+		panel.add(updatePanel);
+		panel.add(promptForDataFilePanel);
+		panel.add(sendCrashReportPanel);
+		
+		return panel;
 	}
 	
 	public void load() {
@@ -78,4 +76,17 @@ public class AdvancedPreferences extends MossPanel implements PrefsPanel {
 		PrefsModel.getInstance().setShowPromptAtStartup(promptForDataFile.isSelected());
 		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
 	}
+	
+	public String getName() {
+		return BuddiKeys.ADVANCED.toString();
+	}
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+	
+	public Version getMinimumVersion() {
+		return null;
+	}
+	
 }

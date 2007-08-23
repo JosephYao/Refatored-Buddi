@@ -24,7 +24,7 @@ public class EditViewScheduledTransactions extends MossMenuItem{
 	public void actionPerformed(ActionEvent e) {
 		try {
 			ScheduleFrame scheduledTransactionsFrame = new ScheduleFrame((MainFrame) getFrame());
-			scheduledTransactionsFrame.openWindow(PrefsModel.getInstance().getScheduledTransactionWindowSize(), PrefsModel.getInstance().getScheduledTransactionWindowLocation());
+			scheduledTransactionsFrame.openWindow(null, PrefsModel.getInstance().getScheduledTransactionWindowLocation());
 		}
 		catch (WindowOpenException foe){
 			foe.printStackTrace();

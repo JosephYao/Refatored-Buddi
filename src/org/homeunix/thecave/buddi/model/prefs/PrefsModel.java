@@ -12,14 +12,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
-import org.homeunix.thecave.buddi.model.prefs.beans.PluginInfoBean;
 import org.homeunix.thecave.buddi.model.prefs.beans.PrefsModelBean;
-import org.homeunix.thecave.moss.data.list.WrapperList;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -158,28 +154,22 @@ public class PrefsModel {
 	}
 
 	public Dimension getMainWindowSize() {
-		return (prefsModel.getMainWindowPlacement().getSize() != null
-				? prefsModel.getMainWindowPlacement().getSize() 
+		return (prefsModel.getMainWindowSize() != null
+				? prefsModel.getMainWindowSize() 
 						: new Dimension(500, 300));
 	}
 
-//	public Dimension getBudgetWindowSize() {
-//		return (prefsModel.getBudgetPlacement().getSize() != null
-//				? prefsModel.getBudgetPlacement().getSize() 
-//						: new Dimension(900, 500));
-//	}
-//
 	public Dimension getTransactionWindowSize() {
-		return (prefsModel.getTransactionsPlacement().getSize() != null
-				? prefsModel.getTransactionsPlacement().getSize() 
+		return (prefsModel.getTransactionWindowSize() != null
+				? prefsModel.getTransactionWindowSize() 
 						: new Dimension(600, 400));
 	}
 
-	public Dimension getScheduledTransactionWindowSize() {
-		return (prefsModel.getScheduledPlacement().getSize() != null
-				? prefsModel.getScheduledPlacement().getSize() 
-						: new Dimension(600, 400));
-	}
+//	public Dimension getScheduledTransactionWindowSize() {
+//		return (prefsModel.getScheduledPlacement().getSize() != null
+//				? prefsModel.getScheduledPlacement().getSize() 
+//						: new Dimension(600, 400));
+//	}
 	
 //	public Dimension getReportWindowSize() {
 //		return (prefsModel.getReportsPlacement().getSize() != null
@@ -187,15 +177,15 @@ public class PrefsModel {
 //						: new Dimension(800, 400));
 //	}
 
-	public Dimension getPreferencesWindowSize() {
-		return (prefsModel.getPrefsPlacement().getSize() != null
-				? prefsModel.getPrefsPlacement().getSize() 
-						: new Dimension(400, 300));
-	}
+//	public Dimension getPreferencesWindowSize() {
+//		return (prefsModel.getPrefsPlacement().getSize() != null
+//				? prefsModel.getPrefsPlacement().getSize() 
+//						: new Dimension(400, 300));
+//	}
 
 	public Point getMainWindowLocation() {
-		return (prefsModel.getMainWindowPlacement().getLocation() != null
-				? prefsModel.getMainWindowPlacement().getLocation() 
+		return (prefsModel.getMainWindowLocation() != null
+				? prefsModel.getMainWindowLocation() 
 						: new Point(100, 100));
 	}
 
@@ -206,14 +196,14 @@ public class PrefsModel {
 //	}
 
 	public Point getTransactionWindowLocation() {
-		return (prefsModel.getTransactionsPlacement().getLocation() != null
-				? prefsModel.getTransactionsPlacement().getLocation() 
+		return (prefsModel.getTransactionWindowLocation() != null
+				? prefsModel.getTransactionWindowLocation() 
 						: new Point(100, 100));
 	}
 
 	public Point getScheduledTransactionWindowLocation() {
-		return (prefsModel.getScheduledPlacement().getLocation() != null
-				? prefsModel.getScheduledPlacement().getLocation() 
+		return (prefsModel.getScheduledWindowLocation() != null
+				? prefsModel.getScheduledWindowLocation() 
 						: new Point(100, 100));
 	}
 
@@ -224,14 +214,14 @@ public class PrefsModel {
 //	}
 	
 	public Point getPreferencesWindowLocation() {
-		return (prefsModel.getPrefsPlacement().getLocation() != null
-				? prefsModel.getPrefsPlacement().getLocation() 
+		return (prefsModel.getPreferencesWindowLocation() != null
+				? prefsModel.getPreferencesWindowLocation() 
 						: new Point(100, 100));
 	}
 
 	public void setMainWindowSize(Dimension size){
 		if (size != null)
-			prefsModel.getMainWindowPlacement().setSize(size);
+			prefsModel.setMainWindowSize(size);
 	}
 
 //	public void setBudgetWindowSize(Dimension size){
@@ -241,28 +231,28 @@ public class PrefsModel {
 
 	public void setTransactionWindowSize(Dimension size){
 		if (size != null)
-			prefsModel.getTransactionsPlacement().setSize(size);
+			prefsModel.setTransactionWindowSize(size);
 	}
 	
-	public void setScheduledTransactionWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.getScheduledPlacement().setSize(size);
-	}
+//	public void setScheduledTransactionWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.getScheduledPlacement().setSize(size);
+//	}
 
 //	public void setReportWindowSize(Dimension size){
 //		if (size != null)
 //			prefsModel.getReportsPlacement().setSize(size);
 //	}
 	
-	public void setPreferencesWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.getPrefsPlacement().setSize(size);
-	}
+//	public void setPreferencesWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.getPrefsPlacement().setSize(size);
+//	}
 
 
 	public void setMainWindowLocation(Point location){
 		if (location != null)
-			prefsModel.getMainWindowPlacement().setLocation(location);
+			prefsModel.setMainWindowLocation(location);
 	}
 
 //	public void setBudgetWindowLocation(Point location){
@@ -272,12 +262,12 @@ public class PrefsModel {
 
 	public void setTransactionWindowLocation(Point location){
 		if (location != null)
-			prefsModel.getTransactionsPlacement().setLocation(location);
+			prefsModel.setTransactionWindowLocation(location);
 	}
 
 	public void setScheduledTransactionWindowLocation(Point location){
 		if (location != null)
-			prefsModel.getScheduledPlacement().setLocation(location);
+			prefsModel.setScheduledWindowLocation(location);
 	}
 
 //	public void setReportWindowLocation(Point location){
@@ -287,7 +277,7 @@ public class PrefsModel {
 	
 	public void setPreferencesWindowLocation(Point location){
 		if (location != null)
-			prefsModel.getPrefsPlacement().setLocation(location);
+			prefsModel.setPreferencesWindowLocation(location);
 	}
 
 	public int getNumberOfBackups() {
@@ -393,39 +383,11 @@ public class PrefsModel {
 		prefsModel.setSendCrashReports(sendCrashReports);
 	}
 	
-	public void addPluginInfo(PluginInfo info){
-		prefsModel.getPlugins().add(info.getBean());
+	public String getPluginPreference(String key){
+		return prefsModel.getPluginPreferences().get(key);
 	}
 	
-	public void removePluginInfo(PluginInfo info){
-		prefsModel.getPlugins().remove(info.getBean());
-	}
-	
-	public void clearPluginInfo(){
-		prefsModel.getPlugins().clear();
-	}
-	
-	public List<PluginInfo> getPluginInfo(){
-		if (prefsModel.getPlugins() == null)
-			prefsModel.setPlugins(new LinkedList<PluginInfoBean>());
-		return new PluginInfoWrapperList(prefsModel.getPlugins());
-	}
-	
-	private class PluginInfoWrapperList extends WrapperList<PluginInfo, PluginInfoBean> {
-		public PluginInfoWrapperList(List<PluginInfoBean> beans) {
-			super(beans, false);
-		}
-		
-		@Override
-		public PluginInfoBean getWrappedObject(PluginInfo object) {
-			return object.getBean();
-		}
-		
-		@Override
-		public PluginInfo getWrapperObject(PluginInfoBean object) {
-			return new PluginInfo(object);
-		}
-		
-		
+	public void putPluginPreference(String key, String value){
+		prefsModel.getPluginPreferences().put(key, value);
 	}
 }

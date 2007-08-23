@@ -3,20 +3,21 @@
  */
 package org.homeunix.thecave.buddi.model.prefs.beans;
 
-import java.util.List;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.HashMap;
 import java.util.Map;
 
 
 
 public class PrefsModelBean {
 	//Window location, size
-	private WindowPlacementBean mainWindowPlacement;
-	private WindowPlacementBean transactionsPlacement;
-	private WindowPlacementBean scheduledPlacement;
-	private WindowPlacementBean prefsPlacement;
-	
-	//Plugins
-	private List<PluginInfoBean> plugins;
+	private Dimension mainWindowSize;
+	private Point mainWindowLocation;
+	private Dimension transactionWindowSize;
+	private Point transactionWindowLocation;
+	private Point scheduledWindowLocation;
+	private Point preferencesWindowLocation;
 	
 	//Plugin-saved information.  The plugin author will access this
 	// via a string key.  The current implementation of
@@ -24,7 +25,7 @@ public class PrefsModelBean {
 	// extend this class to get more data if you wish.  Be sure
 	// to create standard getters and setters for all data you wish
 	// to save.
-	private Map<String, PluginPreferenceBean> pluginPreferences;
+	private Map<String, String> pluginPreferences;
 	
 	//Data file information
 	private String lastDataFile;
@@ -40,7 +41,6 @@ public class PrefsModelBean {
 	
 	//View Options
 	private boolean showDeleted;
-//	private boolean showTypes; //You cannot turn this off now.
 	private boolean showAutoComplete;
 	private boolean showCleared;
 	private boolean showReconciled;
@@ -58,8 +58,10 @@ public class PrefsModelBean {
 	private boolean sendCrashReports;
 	
 	
+	//Define the max / min number of budget columns visible.
 	private int MIN_BUDGET_COLUMNS = 2;
 	private int MAX_BUDGET_COLUMNS = 13;
+	
 	public int getNumberOfBudgetColumns() {
 		if (numberOfBudgetColumns < MIN_BUDGET_COLUMNS || numberOfBudgetColumns > MAX_BUDGET_COLUMNS)
 			numberOfBudgetColumns = 4;
@@ -105,30 +107,6 @@ public class PrefsModelBean {
 
 	public void setLastDataFile(String lastOpenedDataFile) {
 		this.lastDataFile = lastOpenedDataFile;
-	}
-
-	public WindowPlacementBean getMainWindowPlacement() {
-		return mainWindowPlacement == null ? new WindowPlacementBean() : mainWindowPlacement;
-	}
-
-	public void setMainWindowPlacement(WindowPlacementBean accounts) {
-		this.mainWindowPlacement = accounts;
-	}
-
-	public WindowPlacementBean getTransactionsPlacement() {
-		return transactionsPlacement == null ? new WindowPlacementBean() : transactionsPlacement;
-	}
-
-	public void setTransactionsPlacement(WindowPlacementBean transactions) {
-		this.transactionsPlacement = transactions;
-	}
-	
-	public WindowPlacementBean getPrefsPlacement() {
-		return prefsPlacement == null ? new WindowPlacementBean() : prefsPlacement;
-	}
-
-	public void setPrefsPlacement(WindowPlacementBean prefsPlacement) {
-		this.prefsPlacement = prefsPlacement;
 	}
 
 	public int getNumberOfBackups() {
@@ -235,19 +213,61 @@ public class PrefsModelBean {
 		this.sendCrashReports = sendCrashReports;
 	}
 
-	public List<PluginInfoBean> getPlugins() {
-		return plugins;
+	public Point getMainWindowLocation() {
+		return mainWindowLocation;
 	}
 
-	public void setPlugins(List<PluginInfoBean> plugins) {
-		this.plugins = plugins;
+	public void setMainWindowLocation(Point mainWindowLocation) {
+		this.mainWindowLocation = mainWindowLocation;
 	}
 
-	public WindowPlacementBean getScheduledPlacement() {
-		return scheduledPlacement == null ? new WindowPlacementBean() : scheduledPlacement;
+	public Dimension getMainWindowSize() {
+		return mainWindowSize;
 	}
 
-	public void setScheduledPlacement(WindowPlacementBean scheduledPlacement) {
-		this.scheduledPlacement = scheduledPlacement;
+	public void setMainWindowSize(Dimension mainWindowSize) {
+		this.mainWindowSize = mainWindowSize;
+	}
+
+	public Map<String, String> getPluginPreferences() {
+		if (pluginPreferences == null)
+			pluginPreferences = new HashMap<String, String>();
+		return pluginPreferences;
+	}
+
+	public void setPluginPreferences(Map<String, String> pluginPreferences) {
+		this.pluginPreferences = pluginPreferences;
+	}
+
+	public Point getPreferencesWindowLocation() {
+		return preferencesWindowLocation;
+	}
+
+	public void setPreferencesWindowLocation(Point prefsWindowLocation) {
+		this.preferencesWindowLocation = prefsWindowLocation;
+	}
+
+	public Point getScheduledWindowLocation() {
+		return scheduledWindowLocation;
+	}
+
+	public void setScheduledWindowLocation(Point scheduledWindowLocation) {
+		this.scheduledWindowLocation = scheduledWindowLocation;
+	}
+
+	public Point getTransactionWindowLocation() {
+		return transactionWindowLocation;
+	}
+
+	public void setTransactionWindowLocation(Point transactionWindowLocation) {
+		this.transactionWindowLocation = transactionWindowLocation;
+	}
+
+	public Dimension getTransactionWindowSize() {
+		return transactionWindowSize;
+	}
+
+	public void setTransactionWindowSize(Dimension transactionWindowSize) {
+		this.transactionWindowSize = transactionWindowSize;
 	}
 }

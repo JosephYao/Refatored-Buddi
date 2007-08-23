@@ -3,9 +3,13 @@
  */
 package org.homeunix.thecave.buddi.view.dialogs.prefs;
 
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import javax.swing.JPanel;
 
-public class NetworkPreferences extends MossPanel implements PrefsPanel {
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
+import org.homeunix.thecave.moss.util.Version;
+
+public class NetworkPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
 	
 	public void load() {
@@ -14,5 +18,21 @@ public class NetworkPreferences extends MossPanel implements PrefsPanel {
 	
 	public void save() {
 		
+	}
+	public Version getMaximumVersion() {
+		return null;
+	}
+	
+	public Version getMinimumVersion() {
+		return null;
+	}
+	
+	@Override
+	public JPanel getPreferencesPanel() {
+		return new JPanel();
+	}
+	
+	public String getName() {
+		return BuddiKeys.NETWORK.toString();
 	}
 }

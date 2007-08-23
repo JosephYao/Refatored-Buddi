@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -15,13 +16,10 @@ import javax.swing.JTabbedPane;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.AdvancedPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.LocalePreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.NetworkPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.PluginPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.ViewPreferences;
 import org.homeunix.thecave.moss.swing.window.MossFrame;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
@@ -29,11 +27,13 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	private final JTabbedPane tabs;
 	
-	private final ViewPreferences view;
-	private final PluginPreferences plugin;
-	private final LocalePreferences locale;
-	private final NetworkPreferences network;
-	private final AdvancedPreferences advanced;
+//	private final ViewPreferences view;
+//	private final PluginPreferences plugin;
+//	private final LocalePreferences locale;
+//	private final NetworkPreferences network;
+//	private final AdvancedPreferences advanced;
+	
+	private final List<BuddiPreferencePlugin> preferencePanels;
 	
 	private final JButton okButton;
 	private final JButton cancelButton;
@@ -43,12 +43,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		
 		tabs = new JTabbedPane();
 		
-		view = new ViewPreferences();
-		plugin = new PluginPreferences();
-		locale = new LocalePreferences();
-		network = new NetworkPreferences();
-		advanced = new AdvancedPreferences();
-		
+		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		
 		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		cancelButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL));
 	}
@@ -57,11 +52,11 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	public void init() {
 		super.init();
 
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.VIEW), getWrapperPanel(view));
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.PLUGINS), plugin);
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.LOCALE), getWrapperPanel(locale));
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NETWORK), getWrapperPanel(network));
-		tabs.addTab(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ADVANCED), getWrapperPanel(advanced));
+		//Load each plugin into the Preferences panel
+		for (BuddiPreferencePlugin panel : preferencePanels) {
+			tabs.addTab(PrefsModel.getInstance().getTranslator().get(panel.getName()), getWrapperPanel(panel.getPreferencesPanel()));
+			
+		}
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);
@@ -73,11 +68,9 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		
-		view.load();
-		plugin.load();
-		locale.load();
-		network.load();
-		advanced.load();
+		for (BuddiPreferencePlugin panel : preferencePanels) {
+			panel.load();
+		}
 		
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.PREFERENCES));
 		this.getRootPane().setDefaultButton(okButton);
@@ -88,7 +81,6 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	@Override
 	public Object closeWindow() {
-		PrefsModel.getInstance().setPreferencesWindowSize(this.getSize());
 		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
 		
@@ -97,11 +89,9 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
-			view.save();
-			plugin.save();
-			locale.save();
-			network.save();
-			advanced.save();
+			for (BuddiPreferencePlugin panel : preferencePanels) {
+				panel.save();
+			}
 			
 			PrefsModel.getInstance().save();
 			

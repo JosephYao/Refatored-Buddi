@@ -65,6 +65,8 @@ import edu.stanford.ejalbert.BrowserLauncher;
 public class Buddi {
 
 	private static String workingDir;
+	private static String pluginsFolder;
+	private static String languagesFolder;
 	private static List<File> filesToLoad;
 	private static Boolean debian = false;
 	private static Boolean slackware = false;
@@ -140,6 +142,18 @@ public class Buddi {
 			debian = false;
 		return debian;
 	}
+	
+	public static File getPluginsFolder(){
+		if (pluginsFolder == null)
+			pluginsFolder = Buddi.getWorkingDir() + File.separator + Const.PLUGIN_FOLDER;
+		return new File(pluginsFolder);
+	}
+	
+	public static File getLanguagesFolder(){
+		if (languagesFolder == null)
+			languagesFolder = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER;
+		return new File(languagesFolder);
+	}	
 
 	/**
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
@@ -278,6 +292,8 @@ public class Buddi {
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "-p\tFilename\tPath and name of Preference File\n"
 			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
+			+ "--plugins\tFolder\tFolder to store plugins (should be writable if you wish to add plugins)"
+			+ "--languages\tFolder\tFolder to store custom languages (must be writable)"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--font\tfontName\tFont to use by default\n"
 			+ "--simpleFont\t\tDon't use bold or italic fonts (better Unicode support)\n"
@@ -289,6 +305,8 @@ public class Buddi {
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
 		variables.add(new ParseVariable("-p", String.class, false));
 		variables.add(new ParseVariable("-v", Integer.class, false));
+		variables.add(new ParseVariable("--plugins", String.class, false));
+		variables.add(new ParseVariable("--languages", String.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
 		variables.add(new ParseVariable("--simpleFont", Boolean.class, false));
@@ -365,6 +383,8 @@ public class Buddi {
 		String prefsLocation = results.getString("-p");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
+		languagesFolder = results.getString("--languages");
+		pluginsFolder = results.getString("--plugins");
 		simpleFont = results.getBoolean("--simpleFont");
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
@@ -408,20 +428,7 @@ public class Buddi {
 		// we have set up logging properly.
 		Log.notice("Set working directory to " + workingDir);
 
-		//Set some Mac-specific GUI options
-//		if (OperatingSystemUtil.isMac()){
-//			System.setProperty("Quaqua.tabLayoutPolicy", "scroll");
-//			System.setProperty("Quaqua.selectionStyle", "bright");
-//			System.setProperty("apple.laf.useScreenMenuBar", "true");
-//			System.setProperty("apple.awt.graphics.EnableQ2DX", "true");
-//			System.setProperty("apple.awt.rendering", "VALUE_RENDER_SPEED"); // VALUE_RENDER_SPEED or VALUE_RENDER_QUALITY
-//			System.setProperty("apple.awt.interpolation", "VALUE_INTERPOLATION_NEAREST_NEIGHBOR"); // VALUE_INTERPOLATION_NEAREST_NEIGHBOR, VALUE_INTERPOLATION_BILINEAR, or VALUE_INTERPOLATION_BICUBIC
-//			System.setProperty("apple.awt.showGrowBox", "false");
-//			System.setProperty("com.apple.mrj.application.growbox.intrudes","true");
-//			System.setProperty("com.apple.mrj.application.apple.menu.about.name", PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
-//		}
-
-		//Load the correct Look and Feel
+		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
 
 		//Start the GUI in the proper thread
