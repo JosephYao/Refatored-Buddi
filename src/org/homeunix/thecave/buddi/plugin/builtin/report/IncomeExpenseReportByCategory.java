@@ -7,17 +7,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
-import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Category;
 import org.homeunix.thecave.buddi.Const;
-import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -40,11 +37,11 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	
 	@Override
 	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
-		StringBuilder sb = HtmlHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
-		List<ImmutableBudgetCategoryImpl> categories = model.getBudgetCategories();
-		Collections.sort(categories, new Comparator<ImmutableBudgetCategoryImpl>(){
-			public int compare(ImmutableBudgetCategoryImpl o1, ImmutableBudgetCategoryImpl o2) {
+		List<ImmutableBudgetCategory> categories = model.getBudgetCategories();
+		Collections.sort(categories, new Comparator<ImmutableBudgetCategory>(){
+			public int compare(ImmutableBudgetCategory o1, ImmutableBudgetCategory o2) {
 				//First we sort by income
 				if (o1.isIncome() != o2.isIncome()){
 					if (o1.isIncome()){
@@ -75,16 +72,16 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		
 		long totalActual = 0, totalBudgeted = 0;
 		
-		for (ImmutableBudgetCategoryImpl c : categories){
+		for (ImmutableBudgetCategory c : categories){
 			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
 			long actual = 0;
-			for (Transaction transaction : transactions) {
+			for (ImmutableTransaction transaction : transactions) {
 				actual += transaction.getAmount();
 				
-				if (transaction.getTo() instanceof Category){
+				if (transaction.getTo() instanceof ImmutableBudgetCategory){
 					totalActual -= transaction.getAmount();
 				}
-				else if (transaction.getFrom() instanceof Category){
+				else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 					totalActual += transaction.getAmount();
 				}
 				else {
@@ -92,8 +89,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				}
 			}
 			
-			long budgeted = BudgetCalculator.getEquivalentByInterval(c.getBudgetedAmount(), PrefsInstance.getInstance().getSelectedInterval(), startDate, endDate);
-			if (Const.DEVEL) Log.debug("Return of BudgetCalculator.getEquivalentByInterval(c.getBudgetedAmount() == " + c.getBudgetedAmount() + ", PrefsInstance.getInstance().getSelectedInterval() == " + PrefsInstance.getInstance().getSelectedInterval() + ", startDate == " + startDate + ", endDate == " + endDate + ") == " + budgeted);
+			long budgeted = BudgetCalculator.getBudgetedAmountByInterval(c, startDate, endDate);
 			if (c.isIncome()){
 				totalBudgeted += budgeted;
 			}
@@ -102,13 +98,13 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 			}
 			
 
-			if (c.getBudgetedAmount() != 0 || transactions.size() > 0){				
+			if (budgeted != 0 || transactions.size() > 0){				
 				sb.append("<tr>");
 				sb.append("<td>");
 				sb.append(TextFormatter.getTranslation(c.toString()));
-				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), actual) ? " red'>" : "'>"));
+				sb.append("</td><td class='right" + (TextFormatter.isRed(c, actual) ? " red'>" : "'>"));
 				sb.append(TextFormatter.getFormattedCurrency(actual));
-				sb.append("</td><td class='right" + (TextFormatter.isRed(new ImmutableCategoryImpl(c), budgeted) ? " red'>" : "'>"));
+				sb.append("</td><td class='right" + (TextFormatter.isRed(c, budgeted) ? " red'>" : "'>"));
 				sb.append(TextFormatter.getFormattedCurrency(budgeted));				
 				long difference = actual - budgeted;
 				sb.append("</td><td class='right" + (difference > 0 ^ c.isIncome() ? " red'>" : "'>"));
@@ -134,8 +130,8 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		
 		sb.append("<h1>").append(TextFormatter.getTranslation(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
 		
-		for (Category c : categories){
-			Vector<Transaction> transactions = TransactionController.getTransactions(c, startDate, endDate);
+		for (ImmutableBudgetCategory c : categories){
+			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
 			
 			
 			if (transactions.size() > 0){
@@ -145,8 +141,8 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
-				for (Transaction t : transactions) {
-					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransaction(t), new ImmutableCategoryImpl(c)));
+				for (ImmutableTransaction t : transactions) {
+					sb.append(HtmlHelper.getHtmlTransactionRow(t, c));
 				}
 
 				sb.append(HtmlHelper.getHtmlTransactionFooter());
@@ -157,24 +153,28 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	
 		return new HtmlPage(sb.toString(), null);
 	}
-	
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
-	}
 
-	public String getTitle() {
+	public String getName() {
 		return TextFormatter.getTranslation(TranslateKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_CATEGORY);
 	}
 
 	public String getDescription() {
 		return TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
 	}
-	
-	public boolean isPluginActive(DataManager dataManager) {
-		return true;
+	@Override
+	public PluginReportDateRangeChoices getDateRangeChoice() {
+		return PluginReportDateRangeChoices.INTERVAL;
 	}
-	public Version getAPIVersion() {
-//		return new Version("2.3.4");
+	
+	public Version getMaximumVersion() {
 		return null;
+	}
+	
+	public Version getMinimumVersion() {
+		return null;
+	}
+	
+	public boolean isPluginActive() {
+		return true;
 	}
 }

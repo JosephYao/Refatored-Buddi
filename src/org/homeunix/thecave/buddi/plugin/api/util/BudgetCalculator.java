@@ -6,7 +6,9 @@ package org.homeunix.thecave.buddi.plugin.api.util;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.model.BudgetPeriod;
 import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
@@ -26,15 +28,16 @@ public class BudgetCalculator {
 	 * @param endDate
 	 * @return
 	 */
-	public static long getEquivalentByInterval(long value, BudgetPeriodKeys period, Date startDate, Date endDate){
-		//Find out how many days are in this interval.
-		long daysInInterval = BudgetPeriodUtil.getDaysInInterval(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));
-		
-		double numberOfBudgetPeriods = 
-			((double) DateFunctions.getDaysBetween(startDate, endDate, true)) / daysInInterval;
-		System.out.println(numberOfBudgetPeriods);
-		return (long) (value * numberOfBudgetPeriods);
-	}
+//	//TODO I have no idea if this works properly, or even if this makes sense with the new model.
+//	public static long getEquivalentByInterval(long value, BudgetPeriodKeys period, Date startDate, Date endDate){
+//		//Find out how many days are in this interval.
+//		long daysInInterval = BudgetPeriodUtil.getDaysInInterval(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));
+//		
+//		double numberOfBudgetPeriods = 
+//			((double) DateFunctions.getDaysBetween(startDate, endDate, true)) / daysInInterval;
+//		System.out.println(numberOfBudgetPeriods);
+//		return (long) (value * numberOfBudgetPeriods);
+//	}
 	
 	/**
 	 * Returns the average amount spread across the given interval.  For
@@ -53,6 +56,7 @@ public class BudgetCalculator {
 	 * @param endDate
 	 * @return
 	 */
+	//TODO I have no idea if this works properly, or even if this makes sense with the new model.
 	public static long getAverageByInterval(long value, BudgetPeriodKeys period, Date startDate, Date endDate){
 		long daysInInterval = BudgetPeriodUtil.getDaysInInterval(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));		
 		
@@ -62,5 +66,15 @@ public class BudgetCalculator {
 		double average = ((double) (value * daysInInterval)) / (double) daysBetweenDates;
 		
 		return (long) average;
+	}
+	
+	public static long getBudgetedAmountByInterval(ImmutableBudgetCategory c, Date startDate, Date endDate){
+		long amount = 0;
+		
+		for (BudgetPeriod bp : c.getBudgetCategory().getModel().getBudgetPeriodsInRange(startDate, endDate)) {
+			
+		}
+		
+		return amount;
 	}
 }

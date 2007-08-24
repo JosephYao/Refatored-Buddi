@@ -258,40 +258,57 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public Date getStartOfBudgetPeriod(Date date){
 		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
 	}
+	
+	/**
+	 * Returns a date that is the end of the budget period which contains
+	 * the given date.  This depends on the value of getPeriodType.
+	 * @param date
+	 * @return
+	 */
+	public Date getEndOfBudgetPeriod(Date date){
+		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
+	}
 
+	/**
+	 * Returns the Budget Period type.  One of the values in Enum BudgePeriodKeys.
+	 * @return
+	 */
 	public BudgetPeriodKeys getPeriodType() {
 		if (dataModel.getPeriodType() == null)
 			setPeriodType(BudgetPeriodKeys.BUDGET_PERIOD_MONTH);
 		return BudgetPeriodKeys.valueOf(dataModel.getPeriodType());
 	}
+	
+	/**
+	 * Sets the Budget Period type. 
+	 * @param periodType
+	 */
 	public void setPeriodType(BudgetPeriodKeys periodType) {
 		dataModel.setPeriodType(periodType.toString());
 	}
-
-	public List<Account> getAccounts() {
-		return new WrapperAccountList(this, dataModel.getAccounts());
-	}
-
+	
 	/**
-	 * Convenience class, to return all sources (Accounts and BudgetCategories).
-	 * This method generates a list on the fly.  It is not automatically
-	 * updated, so don't rely on it to report model updates.
+	 * Returns the key which is associated with the date contained within the
+	 * current budget period.  The string is constructed as follows:
+	 * 
+	 * <code>String periodKey = getPeriodType() + ":" + getStartOfBudgetPeriod(periodDate).getTime();</code>
+	 * 
+	 * @param periodDate
 	 * @return
 	 */
-	public List<Source> getSources() {
-		List<Source> sources = new LinkedList<Source>();
-		for (Account a : getAccounts()) {
-			sources.add(a);
-		}
-		for (BudgetCategory bc : getBudgetCategories()) {
-			sources.add(bc);
-		}
-
-		return sources;
-	}
-
 	public String getPeriodKey(Date periodDate){
 		return getPeriodType() + ":" + getStartOfBudgetPeriod(periodDate).getTime();
+	}
+	
+	/**
+	 * Returns the budgeted amount associated with the given budget category, for 
+	 * the date in which the given period date exists.
+	 * @param budgetCategory
+	 * @param periodDate
+	 * @return
+	 */
+	public long getBudgetedAmount(BudgetCategory budgetCategory, Date periodDate){
+		return getBudgetPeriod(periodDate).getAmount(budgetCategory);
 	}
 
 	/**
@@ -309,6 +326,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this);
 	}
 
+	/**
+	 * Returns the budget period object which contains the given date.
+	 * @param periodDate
+	 * @return
+	 */
 	public BudgetPeriod getBudgetPeriod(Date periodDate){
 		return getBudgetPeriod(getPeriodKey(periodDate));
 	}
@@ -346,6 +368,32 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 	public List<BudgetCategory> getBudgetCategories(){
 		return new WrapperBudgetCategoryList(this, dataModel.getBudgetCategories());
+	}
+	
+	/**
+	 * Returns a list of all accounts in the model.
+	 * @return
+	 */
+	public List<Account> getAccounts() {
+		return new WrapperAccountList(this, dataModel.getAccounts());
+	}
+
+	/**
+	 * Convenience class, to return all sources (Accounts and BudgetCategories).
+	 * This method generates a list on the fly.  It is not automatically
+	 * updated, so don't rely on it to report model updates.
+	 * @return
+	 */
+	public List<Source> getSources() {
+		List<Source> sources = new LinkedList<Source>();
+		for (Account a : getAccounts()) {
+			sources.add(a);
+		}
+		for (BudgetCategory bc : getBudgetCategories()) {
+			sources.add(bc);
+		}
+
+		return sources;
 	}
 
 	public List<ScheduledTransaction> getScheduledTransactions() {

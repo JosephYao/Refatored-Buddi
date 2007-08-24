@@ -1,7 +1,7 @@
 /*
  * Created on Jul 30, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.prefs.beans;
+package org.homeunix.thecave.buddi.model.prefs;
 
 import java.awt.Dimension;
 import java.awt.Point;

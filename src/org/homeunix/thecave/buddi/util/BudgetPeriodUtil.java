@@ -19,7 +19,6 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  */
 public class BudgetPeriodUtil {
 	
-	
 	public static Date getStartOfBudgetPeriod(BudgetPeriodKeys period, Date date){
 		//TODO
 		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){

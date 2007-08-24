@@ -15,7 +15,6 @@ import java.io.FileOutputStream;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
-import org.homeunix.thecave.buddi.model.prefs.beans.PrefsModelBean;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;

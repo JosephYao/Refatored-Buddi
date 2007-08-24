@@ -9,11 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -48,7 +48,7 @@ public class MyReportsPanel extends MossPanel {
 		
 		JPanel pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
-		pluginsPanel.setBorder(BorderFactory.createTitledBorder(""));
+//		pluginsPanel.setBorder(BorderFactory.createTitledBorder(""));
 						
 		for (BuddiReportPlugin report : BuddiPluginFactory.getReportPlugins()) {
 			//Select the correct options for the dropdown, based on the plugin
@@ -105,9 +105,15 @@ public class MyReportsPanel extends MossPanel {
 				pluginsPanel.add(panel);
 		}
 		
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(pluginsPanel, BorderLayout.NORTH);
+		
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setBorder(null);
+		scrollPane.setOpaque(false);
 		
 		this.setLayout(new BorderLayout());
-		this.add(pluginsPanel, BorderLayout.NORTH);
+		this.add(scrollPane, BorderLayout.CENTER);
 //		this.setJMenuBar(new ReportFrameMenuBar(this));
 //		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 //		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_REPORTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
