@@ -22,6 +22,13 @@ public abstract class ImmutableModelObjectImpl implements ImmutableModelObject {
 	}
 	
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ImmutableModelObject)
+			return getRaw().equals(((ImmutableModelObject) obj).getRaw());
+		return false;
+	}
+	
+	@Override
 	public int hashCode() {
 		return getRaw().hashCode();
 	}

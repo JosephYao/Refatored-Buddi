@@ -168,9 +168,7 @@ public class Transaction extends ModelObjectImpl {
 	public int compareTo(ModelObjectImpl arg0) {
 		if (arg0 instanceof Transaction){
 			Transaction t = (Transaction) arg0;
-			if (this.equals(t))
-				return 0;
-
+			
 			//We want to sort schedued transactions by name, for the list
 			if (getTransactionBean() instanceof ScheduledTransactionBean && t.getTransactionBean() instanceof ScheduledTransactionBean)
 				return ((ScheduledTransactionBean) getTransactionBean()).getScheduleName().compareTo(((ScheduledTransactionBean) t.getTransactionBean()).getScheduleName());

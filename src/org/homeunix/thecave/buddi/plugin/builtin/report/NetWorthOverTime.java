@@ -130,6 +130,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 				//We are moving money *from* this account
 				if (transaction.getFrom() instanceof ImmutableAccount){
 					ImmutableAccount a = (ImmutableAccount) transaction.getFrom();
+					System.out.println(map.get(a));
 					map.put(a, map.get(a) - transaction.getAmount());
 				}
 			}
