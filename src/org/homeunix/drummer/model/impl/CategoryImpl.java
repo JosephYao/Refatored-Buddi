@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 /**
  * <!-- begin-user-doc -->
@@ -301,10 +301,10 @@ public class CategoryImpl extends SourceImpl implements Category {
 	 */
 	public String toString() {
 		if (getParent() == null) {
-			return Translate.getInstance().get(getName());
+			return TextFormatter.getTranslation(getName());
 		}
 		else {
-			return getParent().toString() + " " + Translate.getInstance().get(getName());
+			return getParent().toString() + " " + TextFormatter.getTranslation(getName());
 		}
 	}
 	

@@ -13,9 +13,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.swing.JOptionPane;
 
 import org.eclipse.emf.ecore.resource.URIConverter;
-import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.dialog.JPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
@@ -82,13 +84,13 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		if (this.encrypted == null) {
 			// ask the user if the stream should be encrypted
 			String[] options = new String[2];
-			options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_YES);
-			options[1] = Translate.getInstance().get(TranslateKeys.BUTTON_NO);
+			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
+			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
 
 			int choice = JOptionPane.showOptionDialog(
 					null, 
-					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_YES_NO),
-					Translate.getInstance().get(TranslateKeys.ENCRYPT_DATA_FILE_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.ENCRYPT_DATA_FILE_YES_NO),
+					TextFormatter.getTranslation(BuddiKeys.ENCRYPT_DATA_FILE_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,
@@ -103,16 +105,16 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 		if (this.key == null) {
 			JPasswordInputDialog jpid = new JPasswordInputDialog(
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD_TITLE),
-					Translate.getInstance().get(TranslateKeys.HINT_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.HINT_CONFIRM_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
-					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),
+					TextFormatter.getTranslation(BuddiKeys.HINT_CONFIRM_PASSWORD),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
+					TextFormatter.getTranslation(BuddiKeys.ERROR),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
+					TextFormatter.getTranslation(BuddiKeys.ERROR),
+					TextFormatter.getTranslation(ButtonKeys.BUTTON_OK),
+					TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL)
 			);
 			String password = new String(jpid.askForPassword(
 					null,
@@ -194,16 +196,16 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		do {
 			// ask for the password, which we use to generate the AES key
 			JPasswordInputDialog jpid = new JPasswordInputDialog(
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ENTER_PASSWORD_TITLE),
-					Translate.getInstance().get(TranslateKeys.HINT_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.HINT_CONFIRM_PASSWORD),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
-					Translate.getInstance().get(TranslateKeys.ERROR),
-					Translate.getInstance().get(TranslateKeys.BUTTON_OK),
-					Translate.getInstance().get(TranslateKeys.BUTTON_CANCEL)
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),
+					TextFormatter.getTranslation(BuddiKeys.HINT_CONFIRM_PASSWORD),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
+					TextFormatter.getTranslation(BuddiKeys.ERROR),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
+					TextFormatter.getTranslation(BuddiKeys.ERROR),
+					TextFormatter.getTranslation(ButtonKeys.BUTTON_OK),
+					TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL)
 			);
 			String password = new String(jpid.askForPassword(
 					null,
@@ -212,12 +214,12 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 			if (password == null){
 				String[] options = new String[1];
-				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
 				JOptionPane.showOptionDialog(
 						null, 
-						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD), 
-						Translate.getInstance().get(TranslateKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_EMPTY_PASSWORD), 
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
 						null,
@@ -225,7 +227,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 						options[0]
 				);
 
-				throw new IncorrectPasswordException(Translate.getInstance().get(TranslateKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
+				throw new IncorrectPasswordException(TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
 			}
 			//If the password is empty, it is not correct.
 			else if (!password.equals("")){
@@ -257,12 +259,12 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			}
 			if (!correctPassword){
 				String[] options = new String[1];
-				options[0] = Translate.getInstance().get(TranslateKeys.BUTTON_OK);
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
 				JOptionPane.showOptionDialog(
 						null,
-						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD),
-						Translate.getInstance().get(TranslateKeys.INCORRECT_PASSWORD_TITLE),
+						TextFormatter.getTranslation(BuddiKeys.INCORRECT_PASSWORD),
+						TextFormatter.getTranslation(BuddiKeys.INCORRECT_PASSWORD_TITLE),
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.ERROR_MESSAGE,
 						null,

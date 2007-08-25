@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.view;
 
 import java.io.IOException;
 
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 
 public interface HtmlExport {
 	

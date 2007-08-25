@@ -16,8 +16,8 @@ public abstract class ImmutableSourceImpl extends ImmutableModelObjectImpl imple
 	public Source getSource(){
 		return (Source) getRaw(); 
 	}
-	public Date getCreatedDate() {
-		return getSource().getCreatedDate();
+	public Date getEarliestDate() {
+		return getSource().getEarliestDate();
 	}
 	public boolean isDeleted() {
 		return getSource().isDeleted();

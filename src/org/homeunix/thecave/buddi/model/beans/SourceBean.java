@@ -3,21 +3,12 @@
  */
 package org.homeunix.thecave.buddi.model.beans;
 
-import java.util.Date;
-
 public abstract class SourceBean extends ModelObjectBean {
 	//Source Attributes
 	private String name;
 	private boolean deleted;
-	private Date createdDate;
 	private String notes;
 	
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
 	public boolean isDeleted() {
 		return deleted;
 	}

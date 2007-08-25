@@ -68,7 +68,7 @@ public class MainFrame extends MossDocumentFrame {
 	
 	@Override
 	public void updateContent() {
-		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
+		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile().getAbsolutePath();
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.BUDDI) + dataFile);
 
 		super.updateContent();
@@ -105,12 +105,12 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	@Override
-	public Object closeWindow() {
+	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setMainWindowSize(this.getSize());
 		PrefsModel.getInstance().setMainWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
-				
-		return super.closeWindow();
+		
+		super.closeWindowWithoutPrompting();
 	}
 	
 	public List<BudgetCategory> getSelectedBudgetCategories(){

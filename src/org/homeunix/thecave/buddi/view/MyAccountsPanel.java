@@ -138,7 +138,7 @@ public class MyAccountsPanel extends MossPanel {
 		
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
-				updateButtons();
+				parent.updateContent();
 			}
 		});
 		
@@ -175,10 +175,6 @@ public class MyAccountsPanel extends MossPanel {
 	}
 
 	public void updateContent() {
-//		String dataFile = getDocument().getFile() == null ? " - Unsaved " : " - " + getDocument().getFile().getAbsolutePath();
-//		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_ACCOUNTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
-
-		//We need to set the title first. 
 		super.updateContent();
 		
 		//Fire a change event on the table model.

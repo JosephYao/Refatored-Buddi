@@ -26,6 +26,7 @@ import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.SourceBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
+import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 
@@ -37,7 +38,7 @@ import org.homeunix.thecave.moss.util.DateFunctions;
 public class ModelConverter {
 	
 	
-	public static DataModelBean convert(File oldFile){
+	public static DataModelBean convert(File oldFile) throws DocumentLoadException {
 		
 		DataModel newModel = new DataModel(); //TODO We only use this for getPeriodKey; we may want to change this...
 		DataModelBean newModelBean = new DataModelBean(); 
@@ -78,7 +79,7 @@ public class ModelConverter {
 			AccountBean newAccount = new AccountBean();
 			
 //			newAccount.setBalance(oldAccount.getBalance());
-			newAccount.setCreatedDate(oldAccount.getCreationDate());
+//			newAccount.setCreatedDate(oldAccount.getCreationDate());
 //			newAccount.setCreditLimit(oldAccount.getCreditLimit());
 			newAccount.setDeleted(oldAccount.isDeleted());
 //			newAccount.setInterestRate(oldAccount.getInterestRate());
@@ -109,7 +110,7 @@ public class ModelConverter {
 			
 			
 			BudgetCategoryBean newBudgetCategory = new BudgetCategoryBean();
-			newBudgetCategory.setCreatedDate(oldCategory.getCreationDate());
+//			newBudgetCategory.setCreatedDate(oldCategory.getCreationDate());
 			newBudgetCategory.setDeleted(oldCategory.isDeleted());
 			newBudgetCategory.setExpanded(true);
 			newBudgetCategory.setIncome(oldCategory.isIncome());

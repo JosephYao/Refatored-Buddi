@@ -151,7 +151,7 @@ public class MyBudgetPanel extends MossPanel {
 
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
-				updateButtons();
+				parent.updateContent();
 			}
 		});
 

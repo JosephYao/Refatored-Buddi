@@ -15,8 +15,8 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotCleared extends BuddiReportPlugin {
@@ -77,11 +77,11 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 	}
 	
 	public String getDescription() {
-		return TextFormatter.getTranslation(BuddiKeys.REPORT_DESCRIPTION_TRANSACTIONS_NOT_CLEARED);
+		return BuddiKeys.REPORT_DESCRIPTION_TRANSACTIONS_NOT_CLEARED.toString();
 	}
 	
 	public String getName() {
-		return TextFormatter.getTranslation(BuddiKeys.REPORT_TITLE_TRANSACTIONS_NOT_CLEARED);
+		return BuddiKeys.REPORT_TITLE_TRANSACTIONS_NOT_CLEARED.toString();
 	}
 	
 	public boolean isPluginActive() {

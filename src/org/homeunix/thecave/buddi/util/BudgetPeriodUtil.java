@@ -64,6 +64,8 @@ public class BudgetPeriodUtil {
 	}
 	
 	public static Date getNextBudgetPeriod(BudgetPeriodKeys period, Date date){
+		date = getStartOfBudgetPeriod(period, date);
+		
 		//TODO
 		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
 			throw new DataModelProblemException("Weekly period not implemented!");
@@ -72,7 +74,7 @@ public class BudgetPeriodUtil {
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
 		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
-			return DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1);
+			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1));
 		}
 		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
@@ -85,7 +87,39 @@ public class BudgetPeriodUtil {
 		throw new DataModelProblemException("Period " + period + " period not implemented!");
 	}
 	
-	public static long getDaysInInterval(BudgetPeriodKeys period, Date startOfBudgetPeriod){
+	public static Date getPreviousBudgetPeriod(BudgetPeriodKeys period, Date date){
+		//TODO
+		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+			throw new DataModelProblemException("Weekly period not implemented!");
+		}
+		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
+			throw new DataModelProblemException("Weekly period not implemented!");
+		}
+		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
+			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), -1));
+		}
+		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+			throw new DataModelProblemException("Quarterly period not implemented!");
+		}
+
+		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+			throw new DataModelProblemException("Yearly period not implemented!");
+		}
+
+		throw new DataModelProblemException("Period " + period + " period not implemented!");
+	}
+	
+	/**
+	 * Returns the number of days in the given period.  Depending on the period, this may
+	 * be a constant number (BUDGET_PERIOD_WEEK == 7), or a variable number (BUDGET_PERIOD_MONTH
+	 * depends on which month).
+	 * @param period The butget period type to use
+	 * @param startOfBudgetPeriod The date to get the budget period from.
+	 * @return
+	 */
+	public static long getDaysInPeriod(BudgetPeriodKeys period, Date startOfBudgetPeriod){
+		startOfBudgetPeriod = getStartOfBudgetPeriod(period, startOfBudgetPeriod);
+		
 		//TODO
 		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
 			throw new DataModelProblemException("Weekly period not implemented!");

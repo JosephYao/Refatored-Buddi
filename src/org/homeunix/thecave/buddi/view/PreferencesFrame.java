@@ -79,12 +79,13 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
+	
 	@Override
-	public Object closeWindow() {
+	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
 		
-		return super.closeWindow();
+		super.closeWindowWithoutPrompting();
 	}
 	
 	public void actionPerformed(ActionEvent e) {

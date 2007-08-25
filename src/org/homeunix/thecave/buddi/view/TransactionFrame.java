@@ -148,7 +148,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
 		deleteButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DELETE));
-		searchField = new MossSearchField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.DEFAULT_SEARCH));
+		searchField = new MossSearchField(OperatingSystemUtil.isMac() ? "" : PrefsModel.getInstance().getTranslator().get(BuddiKeys.DEFAULT_SEARCH));
 	}
 
 	/**
@@ -184,7 +184,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //		prototype.setNumber("Number");
 //		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 //		list.setPrototypeCellValue(prototype);
-		list.setPrototypeCellValue(new Transaction((DataModel) getDocument(), new Date(), "Relatively long description", 12345678, null, null));
+		if (((DataModel) getDocument()).getBudgetCategories().size() > 0)
+			list.setPrototypeCellValue(new Transaction((DataModel) getDocument(), new Date(), "Relatively long description", 12345678, ((DataModel) getDocument()).getBudgetCategories().get(0), ((DataModel) getDocument()).getBudgetCategories().get(0)));
 
 		list.setModel(listModel);		
 		list.ensureIndexIsVisible(listModel.getSize() - 1);
@@ -425,33 +426,16 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getFullName() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setJMenuBar(new TransactionsFrameMenuBar(this));
-		
-//		list.setListData(DataInstance.getInstance().getTransactions(account));
-//		editableTransaction.setTransaction(null, true);
-
-//		list.ensureIndexIsVisible(list.getModel().getSize() - 1);
-
-//		return this;
 	}
-
+	
 	@Override
-	public Object closeWindow() {
+	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setTransactionWindowSize(this.getSize());
 		PrefsModel.getInstance().setTransactionWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
 
-		//TODO Save the filter state
-//		PrefsInstance.getInstance().getPrefs().setSelectedFilter(filterComboBox.getSelectedItem().toString());
-//		
-//		PrefsInstance.getInstance().savePrefs();
-
-
-		return super.closeWindow();
+		super.closeWindowWithoutPrompting();
 	}
-
-//	public void updateToFromComboBox(){
-//		editableTransaction.updateContent();
-//	}
 
 	public void updateButtons(){
 		super.updateButtons();

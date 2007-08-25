@@ -8,17 +8,16 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.drummer.controller.TranslateKeys;
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -57,17 +56,17 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 			}
 		});
 		
-		sb.append("<h1>").append(TextFormatter.getTranslation(TranslateKeys.REPORT_SUMMARY)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_SUMMARY)).append("</h1>\n");
 		sb.append("<table class='main'>\n");
 		
 		sb.append("<tr><th>");
-		sb.append(TextFormatter.getTranslation(TranslateKeys.NAME));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.NAME));
 		sb.append("</th><th>");
-		sb.append(TextFormatter.getTranslation(TranslateKeys.ACTUAL));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.ACTUAL));
 		sb.append("</th><th>");
-		sb.append(TextFormatter.getTranslation(TranslateKeys.BUDGETED));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.BUDGETED));
 		sb.append("</th><th>");
-		sb.append(TextFormatter.getTranslation(TranslateKeys.DIFFERENCE));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.DIFFERENCE));
 		sb.append("</th></tr>\n");
 		
 		long totalActual = 0, totalBudgeted = 0;
@@ -89,7 +88,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				}
 			}
 			
-			long budgeted = BudgetCalculator.getBudgetedAmountByInterval(c, startDate, endDate);
+			long budgeted = c.getBudgetedAmount(startDate, endDate);
 			if (c.isIncome()){
 				totalBudgeted += budgeted;
 			}
@@ -114,7 +113,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		}
 		
 		sb.append("<tr><th>");
-		sb.append(TextFormatter.getTranslation(TranslateKeys.TOTAL));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.TOTAL));
 		sb.append("</th><th class='right" + (totalActual < 0 ? " red'>" : "'>"));
 		sb.append(TextFormatter.getFormattedCurrency(totalActual));
 		sb.append("</th><th class='right" + (totalBudgeted < 0 ? " red'>" : "'>"));
@@ -128,7 +127,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		
 		sb.append("<hr>\n");
 		
-		sb.append("<h1>").append(TextFormatter.getTranslation(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
 		for (ImmutableBudgetCategory c : categories){
 			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
@@ -155,11 +154,11 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	}
 
 	public String getName() {
-		return TextFormatter.getTranslation(TranslateKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_CATEGORY);
+		return TextFormatter.getTranslation(BuddiKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_CATEGORY);
 	}
 
 	public String getDescription() {
-		return TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
+		return BuddiKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_CATEGORY.toString();
 	}
 	@Override
 	public PluginReportDateRangeChoices getDateRangeChoice() {

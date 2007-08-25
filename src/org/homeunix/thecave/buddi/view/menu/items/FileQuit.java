@@ -32,8 +32,9 @@ public class FileQuit extends MossMenuItem {
 			}
 		}
 		
+		//We have already checked the windows; if none of them cancelled the request, we can just close.
 		while (ApplicationTracker.getInstance().getOpenFrames().size() > 0) {
-			ApplicationTracker.getInstance().getOpenFrames().get(0).closeWindow();
+			ApplicationTracker.getInstance().getOpenFrames().get(0).closeWindowWithoutPrompting();
 		}
 		
 		System.exit(0);

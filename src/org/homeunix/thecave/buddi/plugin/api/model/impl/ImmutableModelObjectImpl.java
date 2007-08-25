@@ -28,4 +28,9 @@ public abstract class ImmutableModelObjectImpl implements ImmutableModelObject {
 	public String getUid(){
 		return getRaw().getUid();
 	}
+	
+	@Override
+	public String toString() {
+		return getRaw().toString();
+	}
 }

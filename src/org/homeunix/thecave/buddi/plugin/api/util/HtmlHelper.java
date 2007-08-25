@@ -3,24 +3,12 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.util;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Date;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
-
-import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Log;
 
 public class HtmlHelper {
 
@@ -84,8 +72,6 @@ public class HtmlHelper {
 		sb.append(".header { height: 8em; margin: 0em; top: -1em; font-variant: small-caps; font-weight: bold; font-size-adjust: 0.6; }\n");
 		sb.append(".separator { height: 0.4em; background-color: black; color: black; }\n");
 		sb.append(".empty { font-size-adjust: 0; height: 0em; }\n");
-
-//		sb.append(".red { color: red; }\n");
 
 		sb.append(".right { text-align: right; }\n");
 		sb.append(".center { text-align: center; }\n");
@@ -234,132 +220,5 @@ public class HtmlHelper {
 	 */
 	public static StringBuilder getHtmlTransactionFooter(){
 		return new StringBuilder("</table>\n\n");
-	}
-
-	/**
-	 * Saves the HTML and associated images to disk.  Returns the
-	 * file object of the associated HTML index on success, or null
-	 * on failure. 
-	 */
-	public static File createHTML(String name, HtmlPage html){
-		final int countMax = 1000;
-
-		File dataFolder = PrefsModel.getInstance().getLastDataFile().getParentFile();
-		File htmlFolder = null;
-		int counter = 0;
-
-		if (dataFolder == null) {
-			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
-			dataFolder = new File(Buddi.getWorkingDir());
-		}
-
-		//Do some sanity checks, logging results
-		if (dataFolder == null)
-			Log.error("Data folder is null (APICommonHTMLHelper.createHTML()).");
-		if (html == null)
-			Log.error("HTML is null (APICommonHTMLHelper.createHTML()).");
-		if (name == null)
-			Log.error("Name is null (APICommonHTMLHelper.createHTML()).");
-
-		//Get a unique folder name which has not yet been used.
-		while (counter < countMax && (htmlFolder == null || htmlFolder.exists())){
-			htmlFolder = new File(dataFolder.getAbsolutePath() + File.separator + name + (counter > 0 ? "_" + counter : ""));
-			counter++;
-		}
-		//We could not create a folder, after 1000 tries.  Exit.
-		if (counter == countMax){
-			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.  Please verify if you really have this many folders in your data drectory, and if so, clean up a bit.");
-
-			return null;
-		}
-
-		if (!FileFunctions.isFolderWritable(htmlFolder.getParentFile())){
-			Log.error("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
-		}
-
-		//Try to create a folder.  If this doesn't work, we return with an error.
-		if (!htmlFolder.mkdir()){
-			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Please check that you have write permission on this folder and its sub folders.");
-			return null;
-		}
-
-		File htmlFile = new File(htmlFolder.getAbsolutePath() + File.separator + "index.html");
-		htmlFolder.deleteOnExit();
-		htmlFile.deleteOnExit();
-		try{
-			OutputStreamWriter out = new OutputStreamWriter(
-					new BufferedOutputStream(
-							new FileOutputStream(htmlFile)), "UTF-8");
-			out.write(html.getHtml());
-			out.close();
-//			BufferedWriter bw = new BufferedWriter(
-//			new FileWriter(htmlFile));
-//			bw.write(html.getHtml());
-//			bw.close();
-		}
-		catch (IOException ioe){
-			Log.error("Could not write HTML file.");
-			return null;
-		}
-
-		if (html.getImages() != null){
-			for (String imgName : html.getImages().keySet()) {
-				if (imgName != null && html.getImages().get(imgName) != null){
-					File f = new File(htmlFolder.getAbsolutePath() + File.separator + imgName);
-					try {
-						ImageIO.write(html.getImages().get(imgName), "png", f);
-						f.deleteOnExit();
-					}
-					catch (IOException ioe){
-						Log.warning("Error writing file " + f.getAbsolutePath());
-					}
-				}
-			}
-		}
-
-		return htmlFile;
-	}
-
-//	public static StringBuilder getLinkToTransactionsFrame(String linkText, ImmutableAccount account, ImmutableTransaction transaction){
-//		StringBuilder sb = new StringBuilder();
-//		StringBuilder link = new StringBuilder();
-//
-//		if (account == null || transaction == null){
-//			sb.append(linkText);
-//			return sb; 
-//		}
-//		
-//		link.append("http://localhost:");
-//		link.append(Const.LISTEN_PORT);
-//		link.append("/");		
-//		link.append(Const.ACCOUNT).append("=").append(account.getName()).append(Const.SEPARATOR);		
-//		link.append(Const.DESCRIPTION).append("=").append(transaction.getDescription()).append(Const.SEPARATOR);
-//		link.append(Const.NUMBER).append("=").append(transaction.getNumber()).append(Const.SEPARATOR);
-//		link.append(Const.AMOUNT).append("=").append(Long.toString(transaction.getAmount())).append(Const.SEPARATOR);
-//		link.append(Const.TO).append("=").append(transaction.getTo().toString()).append(Const.SEPARATOR);
-//		link.append(Const.FROM).append("=").append(transaction.getFrom().toString()).append(Const.SEPARATOR);
-//		link.append(Const.MEMO).append("=").append(transaction.getMemo());
-//
-//		sb.append("<a href='null' onClick=\"return launchTransactions('" + link.toString() + "')\">");
-//		sb.append(linkText);
-//		sb.append("</a>");
-//		
-//		return sb;
-//	}
-
-	public static class HtmlPage {
-		private String html;
-		private Map<String, BufferedImage> images;
-
-		public HtmlPage(String html, Map<String, BufferedImage> images) {
-			this.html = html;
-			this.images = images;
-		}
-		public String getHtml() {
-			return html;
-		}
-		public Map<String, BufferedImage> getImages() {
-			return images;
-		}
 	}
 }

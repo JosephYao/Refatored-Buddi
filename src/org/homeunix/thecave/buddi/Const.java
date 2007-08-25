@@ -197,10 +197,10 @@ public class Const {
 		"Kc"	//Something else; requested by a user
 	};
 	
-	//The plugins which are included in the main Buddi jar.
-	public final static String[] BUILT_IN_PLUGINS = {
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
+	//The report plugins which are included in the main Buddi jar.
+	public final static String[] BUILT_IN_REPORTS = {
+		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
+		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotCleared",
 		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotReconciled",

@@ -43,7 +43,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		List<BuddiReportPlugin> reports = new LinkedList<BuddiReportPlugin>();
 
 		//Load built in plugins
-		for (String className : Const.BUILT_IN_PLUGINS){
+		for (String className : Const.BUILT_IN_REPORTS){
 			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
 			if (plugin instanceof BuddiReportPlugin){
 				reports.add((BuddiReportPlugin) plugin);

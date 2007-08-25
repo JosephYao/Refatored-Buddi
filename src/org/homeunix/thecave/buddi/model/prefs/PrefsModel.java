@@ -41,6 +41,8 @@ public class PrefsModel {
 		try {
 			XMLDecoder prefsDecoder = new XMLDecoder(new FileInputStream(prefsFile));
 			prefsModel = (PrefsModelBean) prefsDecoder.readObject();
+			if (prefsModel == null)
+				throw new Exception("Error loading preferences - creating new file.");
 		}
 		catch (RuntimeException re){
 			newPrefsFile();

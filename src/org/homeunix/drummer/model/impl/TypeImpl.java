@@ -10,9 +10,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.homeunix.drummer.controller.Translate;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Type;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 /**
  * <!-- begin-user-doc -->
@@ -208,7 +208,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 //		result.append(')');
 //		return result.toString();
 		
-		return Translate.getInstance().get(name);
+		return TextFormatter.getTranslation(name);
 	}
 	
 	public int compareTo(Type arg0) {

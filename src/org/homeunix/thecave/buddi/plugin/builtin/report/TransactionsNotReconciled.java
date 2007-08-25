@@ -15,8 +15,8 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotReconciled extends BuddiReportPlugin {

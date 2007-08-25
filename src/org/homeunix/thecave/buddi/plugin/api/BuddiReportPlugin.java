@@ -9,7 +9,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 

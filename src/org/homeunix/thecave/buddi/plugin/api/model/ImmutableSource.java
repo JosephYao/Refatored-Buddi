@@ -11,7 +11,7 @@ public interface ImmutableSource extends ImmutableModelObject {
 	
 	public Source getSource();
 	
-	public Date getCreatedDate();
+	public Date getEarliestDate();
 	
 	public boolean isDeleted();
 	

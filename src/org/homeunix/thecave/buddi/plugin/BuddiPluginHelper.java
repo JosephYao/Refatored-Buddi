@@ -14,7 +14,6 @@ import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableModelImpl;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
@@ -39,12 +38,10 @@ public class BuddiPluginHelper {
 			@Override
 			public Object construct() {
 				try {
-					File index = HtmlHelper.createHTML(
-							"report", 
-							((BuddiReportPlugin) report).getReport(
+					File index = report.getReport(
 									new ImmutableModelImpl((DataModel) frame.getDocument()),
 									startDate, 
-									endDate));
+									endDate).createHTML("report");
 					BrowserLauncher bl = new BrowserLauncher(null);
 					bl.openURLinBrowser(index.toURI().toURL().toString());
 				}

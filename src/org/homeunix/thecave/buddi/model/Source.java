@@ -10,10 +10,11 @@ import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
 public abstract class Source extends ModelObjectImpl {
+
 	Source(DataModel model, SourceBean source) {
 		super(model, source);
 	}
-		
+
 	public boolean isDeleted() {
 		return getSourceBean().isDeleted();
 	}
@@ -50,18 +51,35 @@ public abstract class Source extends ModelObjectImpl {
 		getSourceBean().setNotes(notes);
 		getModel().setChanged();
 	}
-	
-	
+
+
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Source)
 			return this.getFullName().compareTo(((Source) arg0).getFullName());
 		return super.compareTo(arg0);
 	}
-	
-	public Date getCreatedDate() {
-		return getSourceBean().getCreatedDate();
+
+	/**
+	 * Returns the earliest date associated with this source.  This is generated
+	 * on the fly by iterating through all transactions and scheduled transactions.
+	 * Thus, this is an O(n) operation based on transactions.  Try to avoid
+	 * using this repeatedly for time-sensitive algorithms (or run it once and 
+	 * cache the result).  
+	 * @return
+	 */
+	public Date getEarliestDate() {
+		Date earliestDate = new Date();
+		for (Transaction t : getModel().getTransactions(this)) {
+			if (t.getDate().before(earliestDate))
+				earliestDate = t.getDate();
+		}
+		for (ScheduledTransaction s : getModel().getScheduledTransactions()) {
+			if (s.getStartDate().before(earliestDate))
+				earliestDate = s.getStartDate();
+		}
+		return earliestDate;
 	}
-	
+
 	SourceBean getSourceBean(){
 		return (SourceBean) getBean();
 	}
@@ -70,6 +88,6 @@ public abstract class Source extends ModelObjectImpl {
 	public String toString() {
 		return getFullName();
 	}
-	
+
 	public abstract String getFullName();
 }

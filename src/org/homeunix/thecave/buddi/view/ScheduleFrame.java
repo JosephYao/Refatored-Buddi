@@ -22,6 +22,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.ScheduleEditorDialog;
@@ -183,5 +184,13 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 //		else if (e.getSource().equals(cancelButton)){
 //		this.closeWindow();
 //		}
+	}
+	
+	@Override
+	public void closeWindowWithoutPrompting() {
+		PrefsModel.getInstance().setScheduledTransactionWindowLocation(this.getLocation());
+		PrefsModel.getInstance().save();
+		
+		super.closeWindowWithoutPrompting();
 	}
 }

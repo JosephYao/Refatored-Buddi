@@ -10,15 +10,14 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper.HtmlPage;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -66,17 +65,17 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			}
 		});
 		
-		sb.append("<h1>").append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_SUMMARY)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_SUMMARY)).append("</h1>\n");
 		sb.append("<table class='main'>\n");
 		
 		sb.append("<tr><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NAME));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.NAME));
 		sb.append("</th><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACTUAL));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.ACTUAL));
 		sb.append("</th><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.AVERAGE));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.AVERAGE));
 		sb.append(" / ");
-		sb.append(PrefsModel.getInstance().getTranslator().get(model.getPeriodType()));
+		sb.append(TextFormatter.getTranslation(model.getPeriodType()));
 		sb.append("</th></tr>\n");
 		
 		long totalActual = 0, totalAverage = 0;
@@ -109,7 +108,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			if (transactions.size() > 0){				
 				sb.append("<tr>");
 				sb.append("<td>");
-				sb.append(PrefsModel.getInstance().getTranslator().get(c.toString()));
+				sb.append(TextFormatter.getTranslation(c.toString()));
 				sb.append("</td><td class='right" + (TextFormatter.isRed(c, actual) ? " red'" : "'") + ">");
 				sb.append(TextFormatter.getFormattedCurrency(actual));
 				sb.append("</td><td class='right" + (TextFormatter.isRed(c, average) ? " red'" : "'") + "'>");
@@ -119,7 +118,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		}
 		
 		sb.append("<tr><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOTAL));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.TOTAL));
 		sb.append("</th><th class='right" + (TextFormatter.isRed(totalActual) ? " red'" : "'") + "'>");
 		sb.append(TextFormatter.getFormattedCurrency(totalActual));
 		sb.append("</th><th class='right" + (TextFormatter.isRed(totalAverage) ? " red'" : "'") + "'>");
@@ -130,7 +129,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		
 		sb.append("<hr>\n");
 		
-		sb.append("<h1>").append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
 		for (ImmutableBudgetCategory bc : categories){
 			List<ImmutableTransaction> transactions = model.getTransactions(bc, startDate, endDate);
@@ -138,7 +137,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			
 			if (transactions.size() > 0){
 				sb.append(bc.isIncome() ? "<h2>" : "<h2 class='red'>");
-				sb.append(PrefsModel.getInstance().getTranslator().get(bc.toString()));
+				sb.append(TextFormatter.getTranslation(bc.toString()));
 				sb.append("</h2>\n");
 
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
@@ -158,7 +157,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 	}
 	
 	public String getName() {
-		return PrefsModel.getInstance().getTranslator().get(BuddiKeys.REPORT_TITLE_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY);
+		return TextFormatter.getTranslation(BuddiKeys.REPORT_TITLE_AVERAGE_INCOME_AND_EXPENSES_BY_CATEGORY);
 	}
 
 	public String getDescription() {

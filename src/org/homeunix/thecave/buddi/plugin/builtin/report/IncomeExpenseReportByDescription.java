@@ -9,21 +9,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
-import net.sourceforge.buddi.api.manager.APICommonFormatter;
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper;
-import net.sourceforge.buddi.api.manager.DataManager;
-import net.sourceforge.buddi.api.manager.APICommonHTMLHelper.HTMLWrapper;
-import net.sourceforge.buddi.api.manager.DateRangeType;
-import net.sourceforge.buddi.api.plugin.BuddiReportPlugin;
-import net.sourceforge.buddi.impl_2_6.model.ImmutableTransactionImpl;
-
-import org.homeunix.drummer.controller.TransactionController;
-import org.homeunix.drummer.controller.Translate;
-import org.homeunix.drummer.controller.TranslateKeys;
-import org.homeunix.drummer.model.Category;
-import org.homeunix.drummer.model.Transaction;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
+import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
+import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -34,19 +29,20 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 	
 	public static final long serialVersionUID = 0;
 	
-	public HtmlPage getReport(DataManager dataManager, Date startDate, Date endDate) {
-		StringBuilder sb = HtmlHelper.getHtmlHeader(getTitle(), null, startDate, endDate);
+	@Override
+	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
-		sb.append("<h1>").append(Translate.getInstance().get(TranslateKeys.REPORT_DETAILS)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
-		Vector<Transaction> transactions = TransactionController.getTransactions(startDate, endDate);
-		Map<String, Vector<Transaction>> descriptions = new HashMap<String, Vector<Transaction>>();
+		List<ImmutableTransaction> transactions = model.getTransactions(startDate, endDate);
+		Map<String, List<ImmutableTransaction>> descriptions = new HashMap<String, List<ImmutableTransaction>>();
 		
-		for (Transaction transaction : transactions) {
+		for (ImmutableTransaction transaction : transactions) {
 			if (descriptions.get(transaction.getDescription()) == null)
-				descriptions.put(transaction.getDescription(), new Vector<Transaction>());
+				descriptions.put(transaction.getDescription(), new LinkedList<ImmutableTransaction>());
 			
-			if (transaction.getTo() instanceof Category || transaction.getFrom() instanceof Category)
+			if (transaction.getTo() instanceof ImmutableBudgetCategory || transaction.getFrom() instanceof ImmutableBudgetCategory)
 				descriptions.get(transaction.getDescription()).add(transaction);			
 		}
 		
@@ -56,11 +52,11 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 		for (String s : descriptionList){			
 			if (descriptions.get(s).size() > 0){
 				long total = 0;
-				for (Transaction t : descriptions.get(s)) {
-					if (t.getTo() instanceof Category){
+				for (ImmutableTransaction t : descriptions.get(s)) {
+					if (t.getTo() instanceof ImmutableBudgetCategory){
 						total -= t.getAmount();
 					}
-					else if (t.getFrom() instanceof Category){
+					else if (t.getFrom() instanceof ImmutableBudgetCategory){
 						total += t.getAmount();
 					}
 				}
@@ -73,8 +69,8 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
-				for (Transaction t : descriptions.get(s)) {
-					sb.append(HtmlHelper.getHtmlTransactionRow(new ImmutableTransactionImpl(t), null));
+				for (ImmutableTransaction t : descriptions.get(s)) {
+					sb.append(HtmlHelper.getHtmlTransactionRow(t, null));
 				}
 
 				sb.append(HtmlHelper.getHtmlTransactionFooter());
@@ -84,24 +80,29 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 		
 		return new HtmlPage(sb.toString(), null);
 	}
-	
-	public DateRangeType getDateRangeType() {
-		return DateRangeType.INTERVAL;
+
+	@Override
+	public PluginReportDateRangeChoices getDateRangeChoice() {
+		return PluginReportDateRangeChoices.INTERVAL;
 	}
 
-	public String getTitle() {
-		return Translate.getInstance().get(TranslateKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_DESCRIPTION);
+	public String getName() {
+		return BuddiKeys.REPORT_TITLE_INCOME_AND_EXPENSES_BY_DESCRIPTION.toString();
 	}
 
 	public String getDescription() {
-		return Translate.getInstance().get(TranslateKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_DESCRIPTION);
+		return BuddiKeys.REPORT_DESCRIPTION_INCOME_EXPENSES_BY_DESCRIPTION.toString();
 	}
 	
-	public boolean isPluginActive(DataManager dataManager) {
+	public boolean isPluginActive() {
 		return true;
 	}
-	public Version getAPIVersion() {
-//		return new Version("2.3.4");
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+	
+	public Version getMinimumVersion() {
 		return null;
 	}
 }
