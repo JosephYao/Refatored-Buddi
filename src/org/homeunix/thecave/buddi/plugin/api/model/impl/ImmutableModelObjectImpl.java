@@ -21,6 +21,11 @@ public abstract class ImmutableModelObjectImpl implements ImmutableModelObject {
 		return this.getRaw().compareTo(o.getRaw());
 	}
 	
+	@Override
+	public int hashCode() {
+		return getRaw().hashCode();
+	}
+	
 	/**
 	 * Returns the UID string for this object.
 	 * @return

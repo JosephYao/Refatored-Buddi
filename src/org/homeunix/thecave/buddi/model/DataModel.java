@@ -61,10 +61,27 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	
 	private char[] password; //Store the password on load.  This is not the best practice 
 							 // from a security point of view, but I suppose it will work...
+							 // The alternative is to create a Cipher object from the password,
+							 // and store that instead...
 	
 	/**
-	 * Attempts to load a data model from file.  Works with Buddi 3 and legacy formats (although
-	 * of course Buddi 3 is preferred). 
+	 * Creates a new DataModel, given the backing bean.
+	 * @param bean
+	 * @throws DocumentLoadException
+	 */
+	public DataModel(DataModelBean bean) throws DocumentLoadException {
+		if (bean == null)
+			throw new DocumentLoadException("DataModelBean cannot be null!");
+		
+		this.dataModel = bean;
+		this.refreshUidMap();
+		this.setChanged();
+	}
+	
+	/**
+	 * Attempts to load a data model from file.  Works with Buddi 3 format.  To load a
+	 * legacy format, use ModelConverter to get a Bean object, and call the constructor which
+	 * takes a DataModelBean.
 	 * @param file File to load
 	 * @throws DocumentLoadException
 	 */
@@ -123,9 +140,8 @@ public class DataModel extends AbstractDocument implements ModelObject {
 				}
 				catch (IncorrectDocumentFormatException ife){
 					//The document we are trying to load does not have the proper header.
-					// This is not a valid Buddi3 data file.  Break from the password loop
-					// and TODO either create a new file, or load a different one.
-					break;
+					// This is not a valid Buddi3 data file.
+					throw new DocumentLoadException("Incorrect document format", ife);
 				}
 			}
 		}
@@ -248,7 +264,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		return baos.toString();
 	}
-
+	
 	/**
 	 * Returns a date that is the beginning of the budget period which contains
 	 * the given date.  This depends on the value of getPeriodType.

@@ -8,10 +8,10 @@ package org.homeunix.thecave.buddi.plugin.api;
 import java.io.File;
 
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
-import org.homeunix.thecave.moss.plugin.MossActionPlugin;
+import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 
-public abstract class BuddiImportPlugin implements MossActionPlugin {
+public abstract class BuddiImportPlugin implements MossPlugin {
 	
 	/**
 	 * Imports data as required.  The implementor chooses where to send
@@ -19,4 +19,12 @@ public abstract class BuddiImportPlugin implements MossActionPlugin {
 	 * this is up to the implementor to decide).
 	 */
 	public abstract void importData(MutableModel model, File file);
+	
+	/**
+	 * This is not used in BuddiImportPlugin.
+	 * @see org.homeunix.thecave.moss.plugin.MossPlugin#getDescription()
+	 */
+	public String getDescription() {
+		return null;
+	}
 }

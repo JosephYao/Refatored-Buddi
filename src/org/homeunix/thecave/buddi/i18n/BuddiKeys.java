@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	IMPORT_LEGACY_BUDDI_FORMAT,
 	FILE_DESCRIPTION_BUDDI_PLUGINS,
 	MY_REPORTS,
     NETWORK,

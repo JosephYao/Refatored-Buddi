@@ -35,7 +35,7 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  * 
  * Class to convert from the old (Buddi 2) model to new (Buddi 3) model.
  */
-public class ModelConverter {
+public class LegacyModelConverter {
 	
 	
 	public static DataModelBean convert(File oldFile) throws DocumentLoadException {
