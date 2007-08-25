@@ -165,7 +165,8 @@ public class Transaction extends ModelObjectImpl {
 		getTransactionBean().volatileSetBalanceTo(balanceTo);
 	}
 
-	public int compareTo(ModelObjectImpl arg0) {
+	@Override
+	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Transaction){
 			Transaction t = (Transaction) arg0;
 			

@@ -189,14 +189,11 @@ public class MyAccountsPanel extends MossPanel {
 				tree.collapsePath(path);
 		}
 		
-		((DataModel) parent.getDocument()).updateAllBalances();
-		
 		long netWorth = 0;
 		for (Account a : ((DataModel) parent.getDocument()).getAccounts()) {
 			netWorth += a.getBalance();
 		}
 		
 		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + InternalFormatter.getFormattedCurrency(netWorth));
-		
 	}
 }

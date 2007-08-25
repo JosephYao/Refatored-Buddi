@@ -75,6 +75,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		
 		this.dataModel = bean;
 		this.refreshUidMap();
+		this.updateAllBalances();
 		this.setChanged();
 	}
 	
@@ -125,6 +126,9 @@ public class DataModel extends AbstractDocument implements ModelObject {
 					//Refresh the UID Map...
 					this.refreshUidMap();
 					
+					//Update all balances...
+					this.updateAllBalances();
+					
 					//Return to calling code... the model is correctly loaded.
 					return;
 				}
@@ -163,23 +167,24 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			addBudgetCategory(new BudgetCategory(this, s.toString(), false));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), false));
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			addBudgetCategory(new BudgetCategory(this, s.toString(), true));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), true));
 		}
 
 		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
-			addType(new Type(this, s.toString(), false));
+			this.addType(new Type(this, s.toString(), false));
 		}
 
 		for (TypeCreditDefaultKeys s : TypeCreditDefaultKeys.values()){
-			addType(new Type(this, s.toString(), true));
+			this.addType(new Type(this, s.toString(), true));
 		}	
 
-		refreshUidMap();
+		this.refreshUidMap();
+		this.updateAllBalances();
 
-		setChanged();
+		this.setChanged();
 	}
 
 	/**
@@ -754,9 +759,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * calls the updateBalance() method for each. 
 	 */
 	public void updateAllBalances(){
+		this.startBatchChange();
 		for (Account a : getAccounts()) {
 			a.updateBalance();
 		}
+		this.finishBatchChange();
 	}
 
 	/**

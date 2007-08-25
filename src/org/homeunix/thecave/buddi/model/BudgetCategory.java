@@ -53,7 +53,8 @@ public class BudgetCategory extends Source {
 		return this.getName();
 	}
 	
-	public int compareTo(Source arg0) {
+	@Override
+	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof BudgetCategory){
 			BudgetCategory c = (BudgetCategory) arg0;
 			if (this.isIncome() != c.isIncome())

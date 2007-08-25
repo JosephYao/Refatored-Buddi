@@ -26,28 +26,29 @@ public class Account extends Source{
 		return getAccount().getBalance();
 	}
 	public void updateBalance(){
-		List<Transaction> transactions = new FilteredLists.TransactionListFilteredBySource(getModel(), getModel().getTransactions(), this);
+		getModel().startBatchChange();
 		
-		long balance = getStartingBalance();
-
+		
+		long balance = this.getStartingBalance();
+		
+		List<Transaction> transactions = getModel().getTransactions(this);
+		
 		for (Transaction transaction : transactions) {
-			if (transaction.isInflow())
-				balance += transaction.getAmount();
-			else
-				balance -= transaction.getAmount();
-			
-			if (transaction.getFrom().equals(this))
-				transaction.setBalanceFrom(balance);
-			else if (transaction.getTo().equals(this))
+			//We are moving money *to* this account
+			if (transaction.getTo().equals(this)){
+				balance = balance + transaction.getAmount();
 				transaction.setBalanceTo(balance);
-			else {
-				//TODO Get better checks here...
-				System.out.println(getModel());
-				throw new RuntimeException("Neither To nor From are this account.  Something is wrong!");
+			}
+			
+			//We are moving money *from* this account
+			else{
+				balance = balance - transaction.getAmount();
+				transaction.setBalanceFrom(balance);
 			}
 		}
-
+		
 		getAccount().setBalance(balance);
+		getModel().finishBatchChange();
 	}
 	public long getStartingBalance() {
 		return getAccount().getStartingBalance();
@@ -66,15 +67,17 @@ public class Account extends Source{
 			throw new DataModelProblemException("Type must be entered in model", getModel());
 
 		getAccount().setType(type.getTypeBean());
-		getModel().setChanged();
+//		getModel().setChanged();
 	}
 	
-	
-	public int compareTo(Source arg0) {
+	@Override
+	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Account){
 			Account a = (Account) arg0;
 			if (this.getType().isCredit() != a.getType().isCredit()){
-				return new Boolean(this.getType().isCredit()).compareTo(new Boolean(a.getType().isCredit()));
+				if (this.getType().isCredit())
+					return -1;
+				return 1;
 			}
 		}
 		return super.compareTo(arg0);

@@ -196,6 +196,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	public void init(){
 		super.init();
 		
+		((DataModel) getDocument()).updateAllBalances();
+		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new TransactionCellRenderer(associatedAccount, Buddi.isSimpleFont()));
 

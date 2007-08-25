@@ -35,6 +35,7 @@ public class EditViewTransactions extends MossMenuItem{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		((MainFrame) getFrame()).getDocument().startBatchChange();
 		for (Account a : ((MainFrame) getFrame()).getSelectedAccounts()) {
 			try {
 				TransactionFrame transactionsFrame = new TransactionFrame((MainFrame) getFrame(), a);
@@ -44,5 +45,6 @@ public class EditViewTransactions extends MossMenuItem{
 				foe.printStackTrace();
 			}
 		}
+		((MainFrame) getFrame()).getDocument().finishBatchChange();
 	}
 }

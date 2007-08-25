@@ -49,6 +49,19 @@ public class Type extends ModelObjectImpl {
 	TypeBean getTypeBean(){
 		return (TypeBean) getBean();
 	}
+	
+	@Override
+	public int compareTo(ModelObject o) {
+		if (o instanceof Type){
+			Type t = (Type) o;
+			if (this.isCredit() != t.isCredit()){
+				if (t.isCredit())
+					return -1;
+				return 1;
+			}
+		}
+		return super.compareTo(o);
+	}
 
 	@Override
 	public String toString() {

@@ -53,6 +53,7 @@ public abstract class Source extends ModelObjectImpl {
 	}
 
 
+	@Override
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Source)
 			return this.getFullName().compareTo(((Source) arg0).getFullName());

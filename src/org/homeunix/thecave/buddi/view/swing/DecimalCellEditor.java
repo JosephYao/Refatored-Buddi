@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.swing;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.EventObject;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
@@ -31,5 +32,10 @@ public class DecimalCellEditor extends AbstractCellEditor implements TableCellEd
 
 	public Object getCellEditorValue() {
 		return editor.getValue();
+	}
+	
+	@Override
+	public boolean isCellEditable(EventObject arg0) {
+		return true;
 	}
 }
