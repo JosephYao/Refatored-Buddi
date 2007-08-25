@@ -70,6 +70,15 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 		return PrefsModel.getInstance().getNumberOfBudgetColumns();
 	}
 	
+//	@Override
+//	public Class<?> getColumnClass(int column) {
+//		if (column == 0)
+//			return String.class;
+//		if (column >= 1 && column < getColumnCount())
+//			return Long.class;
+//		return super.getColumnClass(column);
+//	}
+//	
 	@Override
 	public String getColumnName(int column) {
 		if (column == 0)

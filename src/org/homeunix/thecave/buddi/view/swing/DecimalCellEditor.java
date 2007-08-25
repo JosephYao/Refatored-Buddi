@@ -16,24 +16,40 @@ import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
 
 public class DecimalCellEditor extends AbstractCellEditor implements TableCellEditor {
 	public static final long serialVersionUID = 0;
-	
-	private JDecimalField editor = new JDecimalField(0, true, 2);
-	
-	public DecimalCellEditor() {
-        editor.setBorder(new LineBorder(Color.black));
+
+//	private final JTable table;
+	private final JDecimalField editor;// = new JDecimalField(0, true, 2);//{
+//		@Override
+//		public void keyPressed(KeyEvent e) {
+//			if (e.getKeyCode() == KeyEvent.VK_UP
+//					|| e.getKeyCode() == KeyEvent.VK_DOWN
+//					|| e.getKeyCode() == KeyEvent.VK_RIGHT
+//					|| e.getKeyCode() == KeyEvent.VK_LEFT){
+//				System.out.println("Arrows");
+//				return;
+//			}
+//
+//			super.keyPressed(e);
+//		}
+//	};
+
+	public DecimalCellEditor(JDecimalField editor) {
+//		this.table = table;
+		this.editor = editor;
+		this.editor.setBorder(new LineBorder(Color.black));
 	}
-	
+
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		if (value instanceof Long)
-		editor.setValue((Long) value);
-		
+		if (value instanceof Long) {
+			editor.setValue((Long) value);
+		}
 		return editor;
 	}
 
 	public Object getCellEditorValue() {
 		return editor.getValue();
 	}
-	
+
 	@Override
 	public boolean isCellEditable(EventObject arg0) {
 		return true;

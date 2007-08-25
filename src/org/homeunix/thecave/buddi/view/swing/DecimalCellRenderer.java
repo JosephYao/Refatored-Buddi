@@ -16,12 +16,17 @@ public class DecimalCellRenderer extends DefaultTableCellRenderer {
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		
+
 		if (value instanceof Long)
 			this.setText(InternalFormatter.getFormattedCurrency((Long) value));
 		else
 			this.setText(InternalFormatter.getFormattedCurrency(0));
-		
+
+		if (hasFocus && isSelected) {
+			table.editCellAt(row,column);
+			table.getCellEditor(row, column).getTableCellEditorComponent(table, value, isSelected, row, column).requestFocus();
+		}
+
 		return this;
 	}
 }

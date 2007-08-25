@@ -5,7 +5,10 @@ package org.homeunix.thecave.buddi.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -32,6 +35,7 @@ import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
+import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
 import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -90,10 +94,26 @@ public class MyBudgetPanel extends MossPanel {
 		tree.setOpenIcon(null);
 		tree.setLeafIcon(null);
 		tree.setTreeCellRenderer(new BudgetCategoryNameCellRenderer());
+		
+		
 
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
+			JDecimalField editor = new JDecimalField(0, true, 2);
+			final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+			manager.addKeyEventDispatcher(new KeyEventDispatcher(){
+				public boolean dispatchKeyEvent(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_UP
+							|| e.getKeyCode() == KeyEvent.VK_DOWN
+							|| e.getKeyCode() == KeyEvent.VK_RIGHT
+							|| e.getKeyCode() == KeyEvent.VK_LEFT){
+						manager.redispatchEvent(tree, e);
+						return true;
+					}
+					return false;
+				}
+			});
 			tree.getColumn(i).setCellRenderer(new DecimalCellRenderer());
-			tree.getColumn(i).setCellEditor(new DecimalCellEditor());
+			tree.getColumn(i).setCellEditor(new DecimalCellEditor(editor));
 		}
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -152,9 +172,10 @@ public class MyBudgetPanel extends MossPanel {
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				parent.updateContent();
+//				tree.editCellAt(tree.getSelectedRow(), tree.getSelectedColumn());
 			}
 		});
-
+		
 		updateButtons();
 
 //		String dataFile = model.getFile() == null ? "" : " - " + model.getFile();
