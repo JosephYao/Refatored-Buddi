@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetPeriod;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
@@ -22,9 +23,9 @@ public class MutableBudgetPeriodImpl extends MutableModelObjectImpl implements M
 		getBudgetPeriod().setAmount(budgetCategory.getBudgetCategory(), amount);
 	}
 
-	public void setPeriodDate(Date date) {
+	public void setPeriodDate(BudgetPeriodType period, Date date) {
 		if (date != null)
-			getBudgetPeriod().setPeriodDate(date);
+			getBudgetPeriod().setPeriodDate(period, date);
 	}
 	public BudgetPeriod getBudgetPeriod(){
 		return (BudgetPeriod) getRaw();

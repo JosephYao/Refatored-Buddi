@@ -17,7 +17,7 @@ import org.homeunix.drummer.model.Schedule;
 import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.beans.AccountBean;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
@@ -40,7 +40,6 @@ public class LegacyModelConverter {
 	
 	public static DataModelBean convert(File oldFile) throws DocumentLoadException {
 		
-		DataModel newModel = new DataModel(); //TODO We only use this for getPeriodKey; we may want to change this...
 		DataModelBean newModelBean = new DataModelBean(); 
 		DataInstance.getInstance().loadDataFile(oldFile);
 		DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();
@@ -101,7 +100,7 @@ public class LegacyModelConverter {
 		BudgetPeriodBean newBudgetPeriod = new BudgetPeriodBean();
 		newBudgetPeriod.setPeriodDate(DateFunctions.getStartOfMonth(new Date()));
 		newBudgetPeriod.setModifiedDate(new Date());
-		newModelBean.getBudgetPeriods().put(newModel.getPeriodKey(newBudgetPeriod.getPeriodDate()), newBudgetPeriod);
+//		newModelBean.getBudgetPeriods().put(newModel.getPeriodKey(newBudgetPeriod.getPeriodDate()), newBudgetPeriod);
 
 		List<BudgetCategoryBean> newBudgetCategories = new LinkedList<BudgetCategoryBean>();
 		for (Object oldCategoryObject : oldModel.getAllCategories().getCategories()){
@@ -112,6 +111,7 @@ public class LegacyModelConverter {
 			BudgetCategoryBean newBudgetCategory = new BudgetCategoryBean();
 //			newBudgetCategory.setCreatedDate(oldCategory.getCreationDate());
 			newBudgetCategory.setDeleted(oldCategory.isDeleted());
+			newBudgetCategory.setPeriodType(BudgetPeriodType.BUDGET_PERIOD_MONTH.toString());
 			newBudgetCategory.setExpanded(true);
 			newBudgetCategory.setIncome(oldCategory.isIncome());
 			newBudgetCategory.setModifiedDate(new Date());

@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 
@@ -31,8 +30,8 @@ public class BudgetPeriod extends ModelObjectImpl {
 		return getBudgetPeriodBean().getPeriodDate();
 	}
 
-	public void setPeriodDate(BudgetPeriodType period, Date periodDate){
-		getBudgetPeriodBean().setPeriodDate(BudgetPeriodUtil.getStartOfBudgetPeriod(period, periodDate));
+	public void setPeriodDate(BudgetCategory budgetCategory, Date periodDate){
+		getBudgetPeriodBean().setPeriodDate(BudgetPeriodUtil.getStartOfBudgetPeriod(budgetCategory.getBudgetPeriodType(), periodDate));
 	}
 
 	BudgetPeriodBean getBudgetPeriodBean(){

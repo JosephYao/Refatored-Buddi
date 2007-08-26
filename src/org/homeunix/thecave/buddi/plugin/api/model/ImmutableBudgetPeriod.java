@@ -17,7 +17,7 @@ public interface ImmutableBudgetPeriod extends ImmutableModelObject {
 	 * @return
 	 */
 	public BudgetPeriod getBudgetPeriod();
-	
+		
 	/**
 	 * Returns the date associated with this period.  This is the starting date
 	 * of the budget period

@@ -32,10 +32,6 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	}
 	
 	
-	public BudgetPeriodType getPeriodType(){
-		return getModel().getBudgetPeriodType();
-	}
-	
 	public DataModel getModel(){
 		return model;
 	}
@@ -68,7 +64,7 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	
-	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetPeriod, BudgetPeriod>(getModel(), getModel().getBudgetPeriodsInRange(startDate, endDate));
+	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(BudgetPeriodType period, Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetPeriod, BudgetPeriod>(getModel(), getModel().getBudgetPeriodsInRange(period, startDate, endDate));
 	}
 }

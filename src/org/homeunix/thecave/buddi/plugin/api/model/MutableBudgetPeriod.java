@@ -5,9 +5,11 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
+
 public interface MutableBudgetPeriod extends ImmutableBudgetPeriod {
 
 	public void setAmount(MutableBudgetCategory budgetCategory, long amount);
 	
-	public void setPeriodDate(Date date);
+	public void setPeriodDate(BudgetPeriodType type, Date date);
 }

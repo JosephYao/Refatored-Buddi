@@ -20,12 +20,6 @@ public interface ImmutableModel extends ImmutableModelObject {
 	 * @return
 	 */
 	public DataModel getModel();
-
-	/**
-	 * Returns the period type associated with this 
-	 * @return
-	 */
-	public BudgetPeriodType getPeriodType();
 	
 	public List<ImmutableAccount> getAccounts();
 	
@@ -41,5 +35,5 @@ public interface ImmutableModel extends ImmutableModelObject {
 	
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate);
 	
-	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate);
+	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(BudgetPeriodType period, Date startDate, Date endDate);
 }
