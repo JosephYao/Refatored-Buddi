@@ -44,9 +44,9 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 		Collections.sort(cats);
 		
 		for (ImmutableBudgetCategory c : cats) {
-			if (categories.get(c) > 0 || c.getBudgetedAmount(startDate, endDate) > 0){
+			if (categories.get(c) > 0 || c.getAmount(startDate, endDate) > 0){
 				barData.addValue((Number) new Double(categories.get(c) / 100.0), TextFormatter.getTranslation(BuddiKeys.ACTUAL), TextFormatter.getTranslation(c.toString()));
-				barData.addValue((Number) new Double(c.getBudgetedAmount(startDate, endDate) / 100), TextFormatter.getTranslation(BuddiKeys.BUDGETED), TextFormatter.getTranslation(c.toString()));
+				barData.addValue((Number) new Double(c.getAmount(startDate, endDate) / 100), TextFormatter.getTranslation(BuddiKeys.BUDGETED), TextFormatter.getTranslation(c.toString()));
 			}
 		}
 		

@@ -54,16 +54,16 @@ public class BudgetCalculator {
 	 * @return
 	 */
 	//TODO I have no idea if this works properly, or even if this makes sense with the new model.
-	public static long getAverageByInterval(long value, BudgetPeriodType period, Date startDate, Date endDate){
-		long daysInInterval = BudgetPeriodUtil.getDaysInPeriod(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));		
-		
-		long daysBetweenDates =
-			DateFunctions.getDaysBetween(startDate, endDate, true);
-		
-		double average = ((double) (value * daysInInterval)) / (double) daysBetweenDates;
-		
-		return (long) average;
-	}
+//	public static long getAverageByInterval(long value, BudgetPeriodType period, Date startDate, Date endDate){
+//		long daysInInterval = BudgetPeriodUtil.getDaysInPeriod(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));		
+//		
+//		long daysBetweenDates =
+//			DateFunctions.getDaysBetween(startDate, endDate, true);
+//		
+//		double average = ((double) (value * daysInInterval)) / (double) daysBetweenDates;
+//		
+//		return (long) average;
+//	}
 	
 
 }

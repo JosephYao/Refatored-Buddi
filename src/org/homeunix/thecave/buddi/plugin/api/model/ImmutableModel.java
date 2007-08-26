@@ -6,7 +6,6 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.DataModel;
 
 public interface ImmutableModel extends ImmutableModelObject {
@@ -34,6 +33,4 @@ public interface ImmutableModel extends ImmutableModelObject {
 	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate);
 	
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate);
-	
-	public List<ImmutableBudgetPeriod> getBudgetPeriodsInRange(BudgetPeriodType period, Date startDate, Date endDate);
 }

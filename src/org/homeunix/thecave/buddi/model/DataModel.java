@@ -12,17 +12,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
@@ -32,13 +29,11 @@ import org.homeunix.thecave.buddi.model.WrapperLists.WrapperBudgetCategoryList;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperScheduledTransactionList;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTransactionList;
 import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTypeList;
-import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.BuddiCipherStreamFactory;
-import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
@@ -290,74 +285,18 @@ public class DataModel extends AbstractDocument implements ModelObject {
 //		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
 //	}
 
-	
-	/**
-	 * Returns the key which is associated with the date contained within the
-	 * current budget period.  The string is constructed as follows:
-	 * 
-	 * <code>String periodKey = getPeriodType() + ":" + getStartOfBudgetPeriod(periodDate).getTime();</code>
-	 * 
-	 * @param periodDate
-	 * @return
-	 */
-	public String getPeriodKey(BudgetPeriodType period, Date periodDate){
-		return period + ":" + BudgetPeriodUtil.getStartOfBudgetPeriod(period, periodDate).getTime();
-	}
-	
-	/**
-	 * Reverses getPeriodKey
-	 * @param periodKey
-	 * @return
-	 */
-	public Date getPeriodDate(String periodKey){
-		String[] splitKey = periodKey.split(":");
-		if (splitKey.length > 1){
-			long l = Long.parseLong(splitKey[1]);
-			return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(periodKey), new Date(l));
-		}
 
-		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this.getModel());
-	}
-	
-	public BudgetPeriodType getPeriodType(String periodKey){
-		String[] splitKey = periodKey.split(":");
-		if (splitKey.length > 0){
-			return BudgetPeriodType.valueOf(splitKey[0]);
-		}
 
-		throw new DataModelProblemException("Cannot parse BudgetPeriodType from key " + periodKey, this.getModel());		
-	}
-
-	/**
-	 * Returns a list of BudgetPeriods, covering the entire range of periods
-	 * occupied by startDate to endDate.
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<BudgetPeriod> getBudgetPeriodsInRange(BudgetPeriodType period, Date startDate, Date endDate){
-		List<BudgetPeriod> budgetPeriods = new LinkedList<BudgetPeriod>();
-
-		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate);
-
-		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(period, endDate))){
-			budgetPeriods.add(getBudgetPeriod(getPeriodKey(period, temp)));
-			temp = BudgetPeriodUtil.addBudgetPeriod(period, temp, 1);
-		}
-
-		return budgetPeriods;
-	}
-
-	public BudgetPeriod getBudgetPeriod(String periodKey){
-		if (dataModel.getBudgetPeriods().get(periodKey) == null) {
-			dataModel.getBudgetPeriods().put(periodKey, new BudgetPeriodBean());
-			dataModel.getBudgetPeriods().get(periodKey).setPeriodDate(getPeriodDate(periodKey));
-			if (Const.DEVEL) Log.debug("Added new budget period for date " + periodKey);
-
-			getModel().setChanged();
-		}
-		return new BudgetPeriod(this, dataModel.getBudgetPeriods().get(periodKey));		
-	}
+//	public BudgetPeriod getBudgetPeriod(String periodKey){
+//		if (dataModel.getBudgetPeriods().get(periodKey) == null) {
+//			dataModel.getBudgetPeriods().put(periodKey, new BudgetPeriodBean());
+//			dataModel.getBudgetPeriods().get(periodKey).setPeriodDate(getPeriodDate(periodKey));
+//			if (Const.DEVEL) Log.debug("Added new budget period for date " + periodKey);
+//
+//			getModel().setChanged();
+//		}
+//		return new BudgetPeriod(this, dataModel.getBudgetPeriods().get(periodKey));		
+//	}
 
 	public List<BudgetCategory> getBudgetCategories(){
 		return new WrapperBudgetCategoryList(this, dataModel.getBudgetCategories());
@@ -758,12 +697,12 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			registerObjectInUidMap(bc);
 		}
 
-		for (BudgetPeriodBean bpb : dataModel.getBudgetPeriods().values()) {
-			BudgetPeriod bp = new BudgetPeriod(this, bpb);
-			checkValid(bp, false, true);
-			registerObjectInUidMap(bp);			
-		}
-
+//		for (BudgetPeriodBean bpb : dataModel.getBudgetPeriods().values()) {
+//			BudgetPeriod bp = new BudgetPeriod(this, bpb);
+//			checkValid(bp, false, true);
+//			registerObjectInUidMap(bp);			
+//		}
+//
 		for (Type t : getTypes()) {
 			checkValid(t, false, true);
 			registerObjectInUidMap(t);	
@@ -807,12 +746,12 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			}
 		}
 
-		sb.append("\n--Budget Periods--\n");
-		List<String> periodDates = new LinkedList<String>(dataModel.getBudgetPeriods().keySet());
-		Collections.sort(periodDates);
-		for (String d : periodDates) {
-			sb.append(d).append(getBudgetPeriod(d));
-		}
+//		sb.append("\n--Budget Periods--\n");
+//		List<String> periodDates = new LinkedList<String>(dataModel.getBudgetPeriods().keySet());
+//		Collections.sort(periodDates);
+//		for (String d : periodDates) {
+//			sb.append(d).append(getBudgetPeriod(d));
+//		}
 		sb.append("\n--Transactions--\n");
 		sb.append("Total transactions: ").append(getTransactions().size()).append("\n");
 		for (Transaction t : getTransactions()) {

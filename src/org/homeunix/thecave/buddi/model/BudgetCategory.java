@@ -4,6 +4,8 @@
 package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
@@ -77,27 +79,91 @@ public class BudgetCategory extends Source {
 	}
 	
 	/**
-	 * Returns the budget period object which contains the given date.
-	 * @param periodDate
-	 * @return
-	 */
-	public BudgetPeriod getBudgetPeriod(Date periodDate){
-		return getModel().getBudgetPeriod(getModel().getPeriodKey(getBudgetPeriodType(), periodDate));
-	}
-
-	
-	/**
 	 * Returns the budgeted amount associated with the given budget category, for 
 	 * the date in which the given period date exists.
-	 * @param budgetCategory
 	 * @param periodDate
 	 * @return
 	 */
-	public long getBudgetedAmount(Date periodDate){
-		return getModel().getBudgetPeriod(getModel().getPeriodKey(getBudgetPeriodType(), periodDate)).getAmount(this);
+	public long getAmount(Date periodDate){
+		Long l = getBudgetCategory().getAmounts().get(getPeriodKey(periodDate));
+		if (l == null)
+			return 0;
+		return l;
 	}
 	
-	public long getBudgetedAmount(Date startDate, Date endDate){
+	/**
+	 * Sets the budgeted amount for the given time period.
+	 * @param periodDate
+	 * @param amount
+	 */
+	public void setAmount(Date periodDate, long amount){
+		getBudgetCategory().getAmounts().put(getPeriodKey(periodDate), amount);
+		getModel().setChanged();
+	}
+	
+	/**
+	 * Returns the key which is associated with the date contained within the
+	 * current budget period.  The string is constructed as follows:
+	 * 
+	 * <code>String periodKey = getPeriodType() + ":" + getStartOfBudgetPeriod(periodDate).getTime();</code>
+	 * 
+	 * @param periodDate
+	 * @return
+	 */
+	private String getPeriodKey(Date periodDate){
+		return getBudgetPeriodType() + ":" + BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), periodDate).getTime();
+	}
+	
+	/**
+	 * Parses a periodKey to get the date 
+	 * @param periodKey
+	 * @return
+	 */
+	private Date getPeriodDate(String periodKey){
+		String[] splitKey = periodKey.split(":");
+		if (splitKey.length > 1){
+			long l = Long.parseLong(splitKey[1]);
+			return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(periodKey), new Date(l));
+		}
+
+		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this.getModel());
+	}
+	
+	/**
+	 * Parses a periodKey to get the period type
+	 * @param periodKey
+	 * @return
+	 */
+	private BudgetPeriodType getPeriodType(String periodKey){
+		String[] splitKey = periodKey.split(":");
+		if (splitKey.length > 0){
+			return BudgetPeriodType.valueOf(splitKey[0]);
+		}
+
+		throw new DataModelProblemException("Cannot parse BudgetPeriodType from key " + periodKey, this.getModel());		
+	}
+	
+	/**
+	 * Returns a list of BudgetPeriods, covering the entire range of periods
+	 * occupied by startDate to endDate.
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<String> getBudgetPeriods(Date startDate, Date endDate){
+		List<String> budgetPeriodKeys = new LinkedList<String>();
+
+		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), startDate);
+
+		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), endDate))){
+			budgetPeriodKeys.add(getPeriodKey(temp));
+			temp = BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), temp, 1);
+		}
+
+		return budgetPeriodKeys;
+	}
+	
+	public long getAmount(Date startDate, Date endDate){
 		if (startDate.after(endDate))
 			throw new RuntimeException("Start date cannot be before End Date!");
 		
@@ -106,7 +172,7 @@ public class BudgetCategory extends Source {
 		//If Start and End are in the same budget period
 		if (BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), startDate).equals(
 				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
-			long amount = getBudgetedAmount(startDate);
+			long amount = getAmount(startDate);
 			long daysInPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
 			long daysBetween = DateFunctions.getDaysBetween(startDate, endDate, true);
 		
@@ -117,20 +183,19 @@ public class BudgetCategory extends Source {
 				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))
 				|| BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1).before(
 						BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
-			long amountStartPeriod = getBudgetedAmount(startDate);
+			long amountStartPeriod = getAmount(startDate);
 			long daysInStartPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
 			long daysAfterStartDateInStartPeriod = DateFunctions.getDaysBetween(startDate, BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), startDate), true);
 			long totalStartPeriod = (long) (((double) amountStartPeriod / (double) daysInStartPeriod) * daysAfterStartDateInStartPeriod);
 			
 			long totalInMiddle = 0;
-			for (BudgetPeriod bp : getModel().getBudgetPeriodsInRange(
-					getBudgetPeriodType(),
+			for (String periodKey : getBudgetPeriods(
 					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1),
 					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), endDate, -1))) {
-				totalInMiddle += bp.getAmount(this);
+				totalInMiddle += getAmount(getPeriodDate(periodKey));
 			}
 			
-			long amountEndPeriod = getBudgetedAmount(endDate);
+			long amountEndPeriod = getAmount(endDate);
 			long daysInEndPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
 			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(startDate, BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), startDate), true);
 			long totalEndPeriod = (long) (((double) amountEndPeriod / (double) daysInEndPeriod) * daysBeforeEndDateInEndPeriod); 

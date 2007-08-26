@@ -88,7 +88,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				}
 			}
 			
-			long budgeted = c.getBudgetedAmount(startDate, endDate);
+			long budgeted = c.getAmount(startDate, endDate);
 			if (c.isIncome()){
 				totalBudgeted += budgeted;
 			}

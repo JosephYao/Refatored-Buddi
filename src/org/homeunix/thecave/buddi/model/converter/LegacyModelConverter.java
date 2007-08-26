@@ -97,9 +97,9 @@ public class LegacyModelConverter {
 		
 	
 		//Categories next...
-		BudgetPeriodBean newBudgetPeriod = new BudgetPeriodBean();
-		newBudgetPeriod.setPeriodDate(DateFunctions.getStartOfMonth(new Date()));
-		newBudgetPeriod.setModifiedDate(new Date());
+//		BudgetPeriodBean newBudgetPeriod = new BudgetPeriodBean();
+//		newBudgetPeriod.setPeriodDate(DateFunctions.getStartOfMonth(new Date()));
+//		newBudgetPeriod.setModifiedDate(new Date());
 //		newModelBean.getBudgetPeriods().put(newModel.getPeriodKey(newBudgetPeriod.getPeriodDate()), newBudgetPeriod);
 
 		List<BudgetCategoryBean> newBudgetCategories = new LinkedList<BudgetCategoryBean>();
@@ -116,7 +116,7 @@ public class LegacyModelConverter {
 			newBudgetCategory.setIncome(oldCategory.isIncome());
 			newBudgetCategory.setModifiedDate(new Date());
 			newBudgetCategory.setName(oldCategory.getName());
-			
+			newBudgetCategory.getAmounts().put(key, value)
 			newBudgetPeriod.getBudgetCategories().put(newBudgetCategory, oldCategory.getBudgetedAmount());
 			
 			categoryMap.put(oldCategory, newBudgetCategory);

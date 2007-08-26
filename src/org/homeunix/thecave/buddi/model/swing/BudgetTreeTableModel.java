@@ -17,7 +17,6 @@ import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
-import org.homeunix.thecave.moss.util.DateFunctions;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class BudgetTreeTableModel extends AbstractTreeTableModel {
@@ -120,7 +119,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			if (column == 0)
 				return bc;
 			if (column >= 1 && column < getColumnCount())
-				return bc.getBudgetPeriod(getColumnDate(column)).getAmount(bc);
+				return bc.getAmount(getColumnDate(column));
 		}
 		return null;
 	}
@@ -174,7 +173,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 				BudgetCategory bc = (BudgetCategory) node;
 				try {
 					long amount = Long.parseLong(value.toString());
-					bc.getBudgetPeriod(getColumnDate(column)).setAmount(bc, amount);
+					bc.setAmount(getColumnDate(column), amount);
 				}
 				catch (NumberFormatException nfe){}
 			}

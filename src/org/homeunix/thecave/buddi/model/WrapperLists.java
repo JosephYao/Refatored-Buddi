@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.model.beans.AccountBean;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
-import org.homeunix.thecave.buddi.model.beans.BudgetPeriodBean;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
@@ -15,7 +14,6 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetPeriodImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableTypeImpl;
 import org.homeunix.thecave.moss.data.list.WrapperList;
@@ -96,21 +94,21 @@ public class WrapperLists {
 		}
 	}
 
-	public static class WrapperBudgetPeriodList extends BuddiWrapperList<BudgetPeriod, BudgetPeriodBean>{
-		public WrapperBudgetPeriodList(DataModel model, List<BudgetPeriodBean> wrappedList) {
-			super(model, wrappedList, true);
-		}
-		
-		@Override
-		public BudgetPeriodBean getWrappedObject(BudgetPeriod object) {
-			return object.getBudgetPeriodBean();
-		}
-
-		@Override
-		public BudgetPeriod getWrapperObject(BudgetPeriodBean object) {
-			return new BudgetPeriod(getDataModel(), object);
-		}
-	}
+//	public static class WrapperBudgetPeriodList extends BuddiWrapperList<BudgetPeriod, BudgetPeriodBean>{
+//		public WrapperBudgetPeriodList(DataModel model, List<BudgetPeriodBean> wrappedList) {
+//			super(model, wrappedList, true);
+//		}
+//		
+//		@Override
+//		public BudgetPeriodBean getWrappedObject(BudgetPeriod object) {
+//			return object.getBudgetPeriodBean();
+//		}
+//
+//		@Override
+//		public BudgetPeriod getWrapperObject(BudgetPeriodBean object) {
+//			return new BudgetPeriod(getDataModel(), object);
+//		}
+//	}
 	
 	public static class WrapperScheduledTransactionList extends BuddiWrapperList<ScheduledTransaction, ScheduledTransactionBean>{
 		public WrapperScheduledTransactionList(DataModel model, List<ScheduledTransactionBean> wrappedList) {
@@ -178,8 +176,8 @@ public class WrapperLists {
 				return (T) new ImmutableAccountImpl((Account) object);
 			if (object instanceof BudgetCategory)
 				return (T) new ImmutableBudgetCategoryImpl((BudgetCategory) object);
-			if (object instanceof BudgetPeriod)
-				return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
+//			if (object instanceof BudgetPeriod)
+//				return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
 			if (object instanceof Transaction)
 				return (T) new ImmutableTransactionImpl((Transaction) object);
 			if (object instanceof Type)

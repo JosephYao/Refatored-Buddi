@@ -38,6 +38,14 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	public BudgetPeriodType getBudgetPeriodType();
 	
 	/**
+	 * Returns the budgeted amount for the given date.
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public long getAmount(Date date);
+	
+	/**
 	 * Returns the budgeted amount spread across the date range.  For instance, given 
 	 * a monthly budget period, and the date range Sept 15 - Sept 30, and September
 	 * had a value of 100 for the given budget category, we would return 50.
@@ -46,5 +54,5 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	 * @param endDate
 	 * @return
 	 */
-	public long getBudgetedAmount(Date startDate, Date endDate);
+	public long getAmount(Date startDate, Date endDate);
 }
