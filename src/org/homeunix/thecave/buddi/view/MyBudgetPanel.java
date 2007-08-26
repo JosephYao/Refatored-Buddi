@@ -10,7 +10,6 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.TreeExpansionEvent;
@@ -31,19 +29,21 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
-import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
@@ -157,6 +157,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 
 //		dateSpinner.setPreferredSize(new Dimension(300, dateSpinner.getPreferredSize().height));
 //		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MMMM yyyy"));
+		dateSpinner.setPreferredSize(InternalFormatter.getComponentSize(dateSpinner, 120));
 		dateSpinner.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent arg0) {
 				if (dateSpinner.getValue() instanceof Date)
@@ -165,6 +166,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			}
 		});
 		
+//		periodTypeComboBox.setPreferredSize(InternalFormatter.getComponentSize(periodTypeComboBox, 100));
 		periodTypeComboBox.setSelectedItem(BudgetPeriodType.BUDGET_PERIOD_MONTH);
 		periodTypeComboBox.addActionListener(this);
 		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
@@ -176,15 +178,21 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		listScrollerPanel.add(listScroller, BorderLayout.CENTER);
 		listScrollerPanel.add(balanceLabelPanel, BorderLayout.SOUTH);
 
-		JPanel spinnerPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		spinnerPanelRight.add(periodTypeComboBox);
-		spinnerPanelRight.add(dateSpinner);
+		JPanel spinnerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		spinnerPanel.add(dateSpinner);
 
+		JPanel periodPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		periodPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SHOW_BUDGET_CATEGORIES_FOR_PERIOD)));
+		periodPanel.add(periodTypeComboBox);
+		
+		JPanel topPanel = new JPanel(new BorderLayout());
+		topPanel.add(spinnerPanel, BorderLayout.WEST);
+		topPanel.add(periodPanel, BorderLayout.EAST);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 
-		mainPanel.add(spinnerPanelRight, BorderLayout.NORTH);
+		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(listScrollerPanel, BorderLayout.CENTER);
 
 		if (OperatingSystemUtil.isMac()){
@@ -218,9 +226,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			tree.getColumn(i).setHeaderValue(treeTableModel.getColumnName(i));
 		
 		//Update the date spinner
-//		dateSpinner.setModel(new BudgetDateSpinnerModel(treeTableModel));
 		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, BudgetPeriodUtil.getDateFormat(treeTableModel.getSelectedBudgetPeriodType())));
-//		dateSpinner.setEditor(new JSpinner.DefaultEditor(dateSpinner));
 		
 		//Fire a change event on the table model.
 		treeTableModel.fireStructureChanged();

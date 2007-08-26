@@ -1,5 +1,6 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Sat Aug 25 19:52:59 MDT 2007
+#Sun Aug 26 00:35:35 MDT 2007
+SHOW_BUDGET_CATEGORIES_FOR_PERIOD=Show Budget Categories for Period:
 CREATED_NEW_DATA_FILE_MESSAGE=Created a new data file\:\n
 OPTIONAL_TAG=(optional)
 AND_REPEATING_EVERY=and repeating every

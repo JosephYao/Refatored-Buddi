@@ -172,7 +172,7 @@ public class InternalFormatter {
 			return false;
 	}
 
-	static Dimension getComponentSize(JComponent component, int minWidth){
+	public static Dimension getComponentSize(JComponent component, int minWidth){
 		return new Dimension(Math.max(minWidth, component.getPreferredSize().width), component.getPreferredSize().height);
 	}
 

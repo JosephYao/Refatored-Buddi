@@ -36,6 +36,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
@@ -113,6 +114,8 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		ok.addActionListener(this);
 		cancel.addActionListener(this);
 		parent.addActionListener(this);
+		
+		budgetPeriodType.setRenderer(new TranslatorListCellRenderer());
 		
 		name.addKeyListener(new KeyAdapter(){
 			@Override
@@ -198,6 +201,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			name.setValue("");
 			expense.setSelected(true);
 			parent.setSelectedItem(null);
+			budgetPeriodType.setSelectedItem(BudgetPeriodType.BUDGET_PERIOD_MONTH);
 			notes.setValue("");
 		}
 		else {
@@ -206,6 +210,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				income.setSelected(true);
 			else
 				expense.setSelected(true);
+			budgetPeriodType.setSelectedItem(selected.getBudgetPeriodType());
 			parent.setSelectedItem(selected.getParent());
 			notes.setValue(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 		}
@@ -232,7 +237,6 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				bc.setNotes(notes.getValue().toString());
 			}
 
-			System.out.println(model);
 			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){
