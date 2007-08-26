@@ -342,7 +342,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(period, endDate))){
 			budgetPeriods.add(getBudgetPeriod(getPeriodKey(period, temp)));
-			temp = BudgetPeriodUtil.getNextBudgetPeriod(period, temp);
+			temp = BudgetPeriodUtil.addBudgetPeriod(period, temp, 1);
 		}
 
 		return budgetPeriods;

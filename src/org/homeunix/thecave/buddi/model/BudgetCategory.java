@@ -113,9 +113,9 @@ public class BudgetCategory extends Source {
 			return (long) (((double) amount / (double) daysInPeriod) * daysBetween);
 		}
 		 
-		if (BudgetPeriodUtil.getNextBudgetPeriod(getBudgetPeriodType(), startDate).equals(
+		if (BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1).equals(
 				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))
-				|| BudgetPeriodUtil.getNextBudgetPeriod(getBudgetPeriodType(), startDate).before(
+				|| BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1).before(
 						BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
 			long amountStartPeriod = getBudgetedAmount(startDate);
 			long daysInStartPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
@@ -125,8 +125,8 @@ public class BudgetCategory extends Source {
 			long totalInMiddle = 0;
 			for (BudgetPeriod bp : getModel().getBudgetPeriodsInRange(
 					getBudgetPeriodType(),
-					BudgetPeriodUtil.getNextBudgetPeriod(getBudgetPeriodType(), startDate),
-					BudgetPeriodUtil.getPreviousBudgetPeriod(getBudgetPeriodType(), endDate))) {
+					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1),
+					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), endDate, -1))) {
 				totalInMiddle += bp.getAmount(this);
 			}
 			

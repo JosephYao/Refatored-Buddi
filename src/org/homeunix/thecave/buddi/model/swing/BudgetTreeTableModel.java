@@ -84,6 +84,8 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 	
 	public void setSelectedBudgetPeriodType(BudgetPeriodType periodType){
 		this.selectedBudgetPeriodType = periodType;
+		
+		setSelectedDate(getSelectedDate());
 	}
 
 	public int getColumnCount() {
@@ -104,23 +106,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 		if (column == 0)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_CATEGORY);
 
-		Date columnDate;
-		if (column >= 1 && column < monthOffset) {//column < getColumnCount()){
-			columnDate = BudgetPeriodUtil.getPreviousBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), monthOffset - column);
-		}
-		else if (column == monthOffset){
-			columnDate = BudgetPeriodUtil.getStartOfBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate());
-		}
-		else if (column > monthOffset && column < getColumnCount()){
-			columnDate = BudgetPeriodUtil.getNextBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), column - monthOffset);
-		}
-		else {
-			return "Unknown";
-		}
-				
-//				DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column);
-
-		return new SimpleDateFormat(BudgetPeriodUtil.getDateFormat(getSelectedBudgetPeriodType())).format(columnDate);
+		if (column >= 1 && column < getColumnCount())
+			return new SimpleDateFormat(BudgetPeriodUtil.getDateFormat(getSelectedBudgetPeriodType())).format(getColumnDate(column));
+			
+		return "";
 	}
 	
 	public Object getValueAt(Object node, int column) {
@@ -131,7 +120,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			if (column == 0)
 				return bc;
 			if (column >= 1 && column < getColumnCount())
-				return bc.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).getAmount(bc);
+				return bc.getBudgetPeriod(getColumnDate(column)).getAmount(bc);
 		}
 		return null;
 	}
@@ -185,7 +174,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 				BudgetCategory bc = (BudgetCategory) node;
 				try {
 					long amount = Long.parseLong(value.toString());
-					bc.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).setAmount(bc, amount);
+					bc.getBudgetPeriod(getColumnDate(column)).setAmount(bc, amount);
 				}
 				catch (NumberFormatException nfe){}
 			}
@@ -197,6 +186,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 		if (node instanceof BudgetCategory && column >= 1 && column < getColumnCount())
 			return true;
 		return false;
+	}
+	
+	private Date getColumnDate(int column){
+		return BudgetPeriodUtil.addBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), column - monthOffset);
 	}
 
 	@Override

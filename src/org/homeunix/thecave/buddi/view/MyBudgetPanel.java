@@ -107,7 +107,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setLeafIcon(null);
 		tree.setTreeCellRenderer(new BudgetCategoryNameCellRenderer());
 		
-		
+//		dateSpinner.setModel(model)
+//		
 
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
 			MossDecimalField editor = new MossDecimalField(0, true, 2);
@@ -217,7 +218,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			tree.getColumn(i).setHeaderValue(treeTableModel.getColumnName(i));
 		
 		//Update the date spinner
+//		dateSpinner.setModel(new BudgetDateSpinnerModel(treeTableModel));
 		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, BudgetPeriodUtil.getDateFormat(treeTableModel.getSelectedBudgetPeriodType())));
+//		dateSpinner.setEditor(new JSpinner.DefaultEditor(dateSpinner));
 		
 		//Fire a change event on the table model.
 		treeTableModel.fireStructureChanged();

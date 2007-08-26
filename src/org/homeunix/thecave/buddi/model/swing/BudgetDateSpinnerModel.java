@@ -10,6 +10,8 @@ import javax.swing.SpinnerDateModel;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 
 public class BudgetDateSpinnerModel extends SpinnerDateModel {
+	public static final long serialVersionUID = 0;
+	
 	private final BudgetTreeTableModel budgetModel;
 	
 	public BudgetDateSpinnerModel(BudgetTreeTableModel budgetModel) {
@@ -17,14 +19,20 @@ public class BudgetDateSpinnerModel extends SpinnerDateModel {
 		this.setValue(new Date());
 		this.budgetModel = budgetModel;
 	}
-	
-	@Override
+		
 	public Object getNextValue() {
-		return BudgetPeriodUtil.getNextBudgetPeriod(budgetModel.getSelectedBudgetPeriodType(), getDate());
+//		System.out.println(getDate());
+		return BudgetPeriodUtil.addBudgetPeriod(budgetModel.getSelectedBudgetPeriodType(), getDate(), 1);
+	}
+	
+	public Object getPreviousValue() {
+//		System.out.println(getDate());
+		return BudgetPeriodUtil.addBudgetPeriod(budgetModel.getSelectedBudgetPeriodType(), getDate(), -1);
 	}
 	
 	@Override
-	public Object getPreviousValue() {
-		return BudgetPeriodUtil.getPreviousBudgetPeriod(budgetModel.getSelectedBudgetPeriodType(), getDate());
+	public void setCalendarField(int calendarField) {
+		// TODO Auto-generated method stub
+//		super.setCalendarField(calendarField);
 	}
 }
