@@ -3,6 +3,9 @@
  */
 package org.homeunix.thecave.buddi.model;
 
+import java.util.Date;
+
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 
@@ -51,6 +54,50 @@ public class BudgetCategory extends Source {
 			return this.getParent().getFullName() + " " + this.getName();
 		
 		return this.getName();
+	}
+	
+	/**
+	 * Returns the Budget Period type.  One of the values in Enum BudgePeriodKeys.
+	 * @return
+	 */
+	public BudgetPeriodType getBudgetPeriodType() {
+		if (getBudgetCategory().getPeriodType() == null)
+			setPeriodType(BudgetPeriodType.BUDGET_PERIOD_MONTH);
+		return BudgetPeriodType.valueOf(getBudgetCategory().getPeriodType());
+	}
+	
+	/**
+	 * Sets the Budget Period type. 
+	 * @param periodType
+	 */
+	public void setPeriodType(BudgetPeriodType periodType) {
+		getBudgetCategory().setPeriodType(periodType.toString());
+	}
+	
+	/**
+	 * Returns the budget period object which contains the given date.
+	 * @param periodDate
+	 * @return
+	 */
+	public BudgetPeriod getBudgetPeriod(Date periodDate){
+		return getModel().getBudgetPeriod(getModel().getPeriodKey(getBudgetPeriodType(), periodDate));
+	}
+
+	
+	/**
+	 * Returns the budgeted amount associated with the given budget category, for 
+	 * the date in which the given period date exists.
+	 * @param budgetCategory
+	 * @param periodDate
+	 * @return
+	 */
+	public long getBudgetedAmount(Date periodDate){
+		return getModel().getBudgetPeriod(getModel().getPeriodKey(getBudgetPeriodType(), periodDate)).getAmount(this);
+	}
+	
+	public long getBudgetedAmount(Date startDate, Date endDate){
+		//TODO
+		return 0;
 	}
 	
 	@Override

@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.i18n.keys;
 
-public enum BudgetPeriodKeys {
+public enum BudgetPeriodType {
 	BUDGET_PERIOD_WEEK,
 	BUDGET_PERIOD_FORTNIGHT,
 	BUDGET_PERIOD_MONTH,

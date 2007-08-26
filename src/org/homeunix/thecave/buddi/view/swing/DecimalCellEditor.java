@@ -12,13 +12,13 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
 
-import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
+import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
 
 public class DecimalCellEditor extends AbstractCellEditor implements TableCellEditor {
 	public static final long serialVersionUID = 0;
 
 //	private final JTable table;
-	private final JDecimalField editor;// = new JDecimalField(0, true, 2);//{
+	private final MossDecimalField editor;// = new JDecimalField(0, true, 2);//{
 //		@Override
 //		public void keyPressed(KeyEvent e) {
 //			if (e.getKeyCode() == KeyEvent.VK_UP
@@ -33,7 +33,7 @@ public class DecimalCellEditor extends AbstractCellEditor implements TableCellEd
 //		}
 //	};
 
-	public DecimalCellEditor(JDecimalField editor) {
+	public DecimalCellEditor(MossDecimalField editor) {
 //		this.table = table;
 		this.editor = editor;
 		this.editor.setBorder(new LineBorder(Color.black));

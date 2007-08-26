@@ -11,10 +11,11 @@ import java.util.Map;
 
 
 /**
- * @author wyatt
  * The main container class for the new data model, to be implemented in Buddi version 3.0.
  * This contains all the data, most of it in list form.  This object is the root of the XML
  * file as serialized by XMLEncoder.
+ * 
+ * @author wyatt
  */
 public class DataModelBean extends ModelObjectBean {
 	//User data objects
@@ -25,16 +26,6 @@ public class DataModelBean extends ModelObjectBean {
 	private List<TransactionBean> transactions = new LinkedList<TransactionBean>();
 	private List<ScheduledTransactionBean> scheduledTransactions = new LinkedList<ScheduledTransactionBean>();
 
-	//Configuration Data for budget period
-	private String periodType;
-	
-	
-	public String getPeriodType() {
-		return periodType;
-	}
-	public void setPeriodType(String periodType) {
-		this.periodType = periodType;
-	}
 	public List<AccountBean> getAccounts() {
 		checkLists();
 		return accounts;

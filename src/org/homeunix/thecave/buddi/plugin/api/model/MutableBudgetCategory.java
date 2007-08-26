@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-public interface MutableBudgetCategory {
-
+public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableSource {
+	public void setIncome(boolean income);
+	
+	public void setParent(MutableBudgetCategory budgetCategory);
 }

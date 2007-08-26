@@ -3,6 +3,6 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-public interface MutableType {
-
+public interface MutableType extends ImmutableType {
+	public void setName(String name);
 }

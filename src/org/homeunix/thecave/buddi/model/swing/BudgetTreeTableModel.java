@@ -5,13 +5,18 @@ package org.homeunix.thecave.buddi.model.swing;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
@@ -22,17 +27,26 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 //	private int year;
 //	private int month;
 	private Date selectedDate;
+	private BudgetPeriodType selectedBudgetPeriodType;
+	
+	private final Map<BudgetPeriodType, List<BudgetCategory>> budgetCategoriesByType;
+	
 	private int monthOffset; //Where the selected month is in relation to the 
 							 // edge of the table.
 	
 	public BudgetTreeTableModel(DataModel model) {
 		super(new Object());
+		this.budgetCategoriesByType = new HashMap<BudgetPeriodType, List<BudgetCategory>>();
 		this.model = model;
 		this.root = getRoot();
 		this.selectedDate = new Date();
 //		this.year = DateFunctions.getYear(new Date());
 //		this.month = DateFunctions.getMonth(new Date());
 		this.monthOffset = 2; //This puts the current month in the middle of three columns.
+		
+		for (BudgetPeriodType type : BudgetPeriodType.values()) {
+			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
+		}
 	}
 	
 	
@@ -58,13 +72,19 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 		return selectedDate;
 	}
 
-
-
 	public void setSelectedDate(Date selectedDate) {
-		this.selectedDate = model.getStartOfBudgetPeriod(selectedDate);
+		this.selectedDate = BudgetPeriodUtil.getStartOfBudgetPeriod(getSelectedBudgetPeriodType(), selectedDate);
 	}
 
-
+	public BudgetPeriodType getSelectedBudgetPeriodType(){
+		if (selectedBudgetPeriodType == null)
+			selectedBudgetPeriodType = BudgetPeriodType.BUDGET_PERIOD_MONTH;
+		return selectedBudgetPeriodType;
+	}
+	
+	public void setSelectedBudgetPeriodType(BudgetPeriodType periodType){
+		this.selectedBudgetPeriodType = periodType;
+	}
 
 	public int getColumnCount() {
 		return PrefsModel.getInstance().getNumberOfBudgetColumns();
@@ -83,12 +103,24 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 	public String getColumnName(int column) {
 		if (column == 0)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_CATEGORY);
-		if (column >= 1 && column < getColumnCount()){		
-			Date columnDate = DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column);
 
-			return new SimpleDateFormat("MMM yyyy").format(columnDate);
+		Date columnDate;
+		if (column >= 1 && column < monthOffset) {//column < getColumnCount()){
+			columnDate = BudgetPeriodUtil.getPreviousBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), monthOffset - column);
 		}
-		return "";
+		else if (column == monthOffset){
+			columnDate = BudgetPeriodUtil.getStartOfBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate());
+		}
+		else if (column > monthOffset && column < getColumnCount()){
+			columnDate = BudgetPeriodUtil.getNextBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), column - monthOffset);
+		}
+		else {
+			return "Unknown";
+		}
+				
+//				DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column);
+
+		return new SimpleDateFormat(BudgetPeriodUtil.getDateFormat(getSelectedBudgetPeriodType())).format(columnDate);
 	}
 	
 	public Object getValueAt(Object node, int column) {
@@ -99,19 +131,19 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			if (column == 0)
 				return bc;
 			if (column >= 1 && column < getColumnCount())
-				return model.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).getAmount(bc);
+				return bc.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).getAmount(bc);
 		}
 		return null;
 	}
 
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null);
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent);
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
@@ -120,11 +152,11 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null);
 			return budgetCategories.size();
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent);
 			return budgetCategories.size();
 		}
 		
@@ -136,10 +168,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			return -1;
 		
 		if (parent.equals(root) && child instanceof BudgetCategory){
-			return new BudgetCategoryListFilteredByParent(model, null).indexOf(child);
+			return new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null).indexOf(child);
 		}
 		if (parent instanceof BudgetCategory && child instanceof BudgetCategory){
-			return new BudgetCategoryListFilteredByParent(model, (BudgetCategory) parent).indexOf(child);
+			return new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent).indexOf(child);
 		}
 		return -1;
 	}
@@ -153,7 +185,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 				BudgetCategory bc = (BudgetCategory) node;
 				try {
 					long amount = Long.parseLong(value.toString());
-					model.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).setAmount(bc, amount);
+					bc.getBudgetPeriod(DateFunctions.getDate(DateFunctions.getYear(selectedDate), DateFunctions.getMonth(selectedDate) - monthOffset + column)).setAmount(bc, amount);
 				}
 				catch (NumberFormatException nfe){}
 			}

@@ -7,7 +7,16 @@ public class BudgetCategoryBean extends SourceBean {
 	private boolean income;
 	private BudgetCategoryBean parent;
 	private boolean expanded;
+
+	//Configuration Data for budget period
+	private String periodType;
 	
+	public String getPeriodType() {
+		return periodType;
+	}
+	public void setPeriodType(String periodType) {
+		this.periodType = periodType;
+	}
 	public boolean isIncome() {
 		return income;
 	}

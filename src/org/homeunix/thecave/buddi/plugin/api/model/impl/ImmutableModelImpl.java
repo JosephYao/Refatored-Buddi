@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetPeriod;
@@ -32,8 +32,8 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	}
 	
 	
-	public BudgetPeriodKeys getPeriodType(){
-		return getModel().getPeriodType();
+	public BudgetPeriodType getPeriodType(){
+		return getModel().getBudgetPeriodType();
 	}
 	
 	public DataModel getModel(){

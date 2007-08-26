@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.model;
 import java.util.Date;
 import java.util.List;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.data.list.FilteredList;
@@ -27,7 +28,6 @@ public class FilteredLists {
 	private static abstract class BuddiFilteredList<T> extends FilteredList<T> {
 		public BuddiFilteredList(DataModel model, List<T> source) {
 			super(source);
-
 			model.addDocumentChangeListener(new DocumentChangeListener(){
 				public void documentChange(DocumentChangeEvent event) {
 					updateFilteredList();
@@ -222,8 +222,8 @@ public class FilteredLists {
 	public static class BudgetCategoryListFilteredByChildren extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
-		public BudgetCategoryListFilteredByChildren(DataModel model, BudgetCategory parent) {
-			super(model, model.getBudgetCategories());
+		public BudgetCategoryListFilteredByChildren(DataModel model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+			super(model, budgetCategories);
 			this.parent = parent;
 		}
 
@@ -248,8 +248,8 @@ public class FilteredLists {
 	public static class BudgetCategoryListFilteredByParent extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
-		public BudgetCategoryListFilteredByParent(DataModel model, BudgetCategory parent) {
-			super(model, model.getBudgetCategories());
+		public BudgetCategoryListFilteredByParent(DataModel model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+			super(model, budgetCategories);
 			this.parent = parent;
 		}
 
@@ -260,6 +260,28 @@ public class FilteredLists {
 					return object.getParent() == null;
 				else if (object.getParent() != null)
 					return object.getParent().equals(parent);
+			}
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a list of categories which are children of the given parent.
+	 * @author wyatt
+	 */
+	public static class BudgetCategoryListFilteredByPeriodType extends BuddiFilteredList<BudgetCategory> {
+		private final BudgetPeriodType type;
+
+		public BudgetCategoryListFilteredByPeriodType(DataModel model, BudgetPeriodType type) {
+			super(model, model.getBudgetCategories());
+			this.type = type;
+		}
+
+		@Override
+		public boolean isIncluded(BudgetCategory object) {
+			if (object != null){
+				if (object.getBudgetPeriodType() != null)
+					return object.getBudgetPeriodType().equals(type);
 			}
 			return false;
 		}

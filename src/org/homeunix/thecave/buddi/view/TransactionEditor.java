@@ -51,7 +51,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
 import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
+import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
 import org.homeunix.thecave.moss.swing.hint.JHintComboBox;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
 import org.homeunix.thecave.moss.swing.hint.JHintTextField;
@@ -78,7 +78,7 @@ public class TransactionEditor extends MossPanel {
 	private final JXDatePicker date;
 	private final JHintComboBox description;
 	private final JHintTextField number;
-	private final JDecimalField amount;
+	private final MossDecimalField amount;
 	private final JScrollingComboBox from;
 	private final JScrollingComboBox to;
 	private final JCheckBox cleared;
@@ -102,7 +102,7 @@ public class TransactionEditor extends MossPanel {
 		autoCompleteEntries = new AutoCompleteEntryModel(model);
 
 		date = new JXDatePicker();
-		amount = new JDecimalField();
+		amount = new MossDecimalField();
 		from = new JScrollingComboBox();
 		to = new JScrollingComboBox();
 		number = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));

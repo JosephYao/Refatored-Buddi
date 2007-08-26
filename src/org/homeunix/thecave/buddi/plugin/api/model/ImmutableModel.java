@@ -6,14 +6,26 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.DataModel;
 
 public interface ImmutableModel extends ImmutableModelObject {
 	
-	public BudgetPeriodKeys getPeriodType();
 	
+	/**
+	 * Returns the wrapped object from the underlying data model.  By 
+	 * accessing this method, you bypass all protection which the Buddi API
+	 * gives you; it is not recommended to use this method unless you understand
+	 * the risks associated with it. 
+	 * @return
+	 */
 	public DataModel getModel();
+
+	/**
+	 * Returns the period type associated with this 
+	 * @return
+	 */
+	public BudgetPeriodType getPeriodType();
 	
 	public List<ImmutableAccount> getAccounts();
 	

@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.util;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
@@ -19,90 +19,124 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  */
 public class BudgetPeriodUtil {
 	
-	public static Date getStartOfBudgetPeriod(BudgetPeriodKeys period, Date date){
+	public static Date getStartOfBudgetPeriod(BudgetPeriodType period, Date date){
 		//TODO
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return DateFunctions.getStartOfWeek(date);
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!");
-		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
 			return DateFunctions.getStartOfMonth(date);
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
 		}
 
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
 			throw new DataModelProblemException("Yearly period not implemented!");
 		}
 
 		throw new DataModelProblemException("Period " + period + " period not implemented!");
 	}
 	
-	public static Date getEndOfBudgetPeriod(BudgetPeriodKeys period, Date date){
+	public static Date getEndOfBudgetPeriod(BudgetPeriodType period, Date date){
 		//TODO
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return DateFunctions.getEndOfWeek(date);
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!");
-		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
 			return DateFunctions.getEndOfMonth(date);
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
 		}
 
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
 			throw new DataModelProblemException("Yearly period not implemented!");
 		}
 
 		throw new DataModelProblemException("Period " + period + " period not implemented!");
 	}
 	
-	public static Date getNextBudgetPeriod(BudgetPeriodKeys period, Date date){
+	
+	public static String getDateFormat(BudgetPeriodType period){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return "dd MMM yyyy";
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
+			throw new DataModelProblemException("Weekly period not implemented!");
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
+			return "MMM yyyy";
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
+			throw new DataModelProblemException("Quarterly period not implemented!");
+		}
+
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
+			throw new DataModelProblemException("Yearly period not implemented!");
+		}
+
+		throw new DataModelProblemException("Period " + period + " period not implemented!");
+	}
+	
+	
+	public static Date getNextBudgetPeriod(BudgetPeriodType period, Date date){
+		return getNextBudgetPeriod(period, date, 1);
+	}
+	
+	public static Date getNextBudgetPeriod(BudgetPeriodType period, Date date, int offset){
+		offset = Math.abs(offset);
 		date = getStartOfBudgetPeriod(period, date);
 		
 		//TODO
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return getStartOfBudgetPeriod(period, DateFunctions.addDays(DateFunctions.getStartOfMonth(date), 7 * offset));
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!");
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
+			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1 * offset));
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
-			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1));
-		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
 		}
 
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
 			throw new DataModelProblemException("Yearly period not implemented!");
 		}
 
 		throw new DataModelProblemException("Period " + period + " period not implemented!");
 	}
 	
-	public static Date getPreviousBudgetPeriod(BudgetPeriodKeys period, Date date){
+	public static Date getPreviousBudgetPeriod(BudgetPeriodType period, Date date){
+		return getPreviousBudgetPeriod(period, date, 1);
+	}
+	
+	public static Date getPreviousBudgetPeriod(BudgetPeriodType period, Date date, int offset){
+		offset = Math.abs(offset);
+		
 		//TODO
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return getStartOfBudgetPeriod(period, DateFunctions.addDays(DateFunctions.getStartOfMonth(date), -7 * offset));
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!");
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
+			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), -1 * offset));
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
-			return getStartOfBudgetPeriod(period, DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), -1));
-		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
 		}
 
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
 			throw new DataModelProblemException("Yearly period not implemented!");
 		}
 
@@ -117,27 +151,63 @@ public class BudgetPeriodUtil {
 	 * @param startOfBudgetPeriod The date to get the budget period from.
 	 * @return
 	 */
-	public static long getDaysInPeriod(BudgetPeriodKeys period, Date startOfBudgetPeriod){
+	public static long getDaysInPeriod(BudgetPeriodType period, Date startOfBudgetPeriod){
 		startOfBudgetPeriod = getStartOfBudgetPeriod(period, startOfBudgetPeriod);
 		
 		//TODO
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_WEEK)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_WEEK)){
+			return 7;
+		}
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_FORTNIGHT)){
 			throw new DataModelProblemException("Weekly period not implemented!");
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_FORTNIGHT)){
-			throw new DataModelProblemException("Weekly period not implemented!");
-		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_MONTH)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_MONTH)){
 			return DateFunctions.getDaysInMonth(startOfBudgetPeriod);
 		}
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_QUARTER)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_QUARTER)){
 			throw new DataModelProblemException("Quarterly period not implemented!");
 		}
 
-		if (period.equals(BudgetPeriodKeys.BUDGET_PERIOD_YEAR)){
+		if (period.equals(BudgetPeriodType.BUDGET_PERIOD_YEAR)){
 			throw new DataModelProblemException("Yearly period not implemented!");
 		}
 
 		throw new DataModelProblemException("Period " + period + " period not implemented!");	
 	}
+	
+//	/**
+//	 * Returns a date that is the beginning of the budget period which contains
+//	 * the given date.  This depends on the value of getPeriodType.
+//	 * @param date
+//	 * @return
+//	 */
+//	public Date getStartOfBudgetPeriod(Date date){
+//		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
+//	}
+//	
+//	/**
+//	 * Returns a date that is the end of the budget period which contains
+//	 * the given date.  This depends on the value of getPeriodType.
+//	 * @param date
+//	 * @return
+//	 */
+//	public Date getEndOfBudgetPeriod(Date date){
+//		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
+//	}
+	
+
+	
+
+
+
+//	/**
+//	 * Returns the budget period object which contains the given date.
+//	 * @param periodDate
+//	 * @return
+//	 */
+//	public BudgetPeriod getBudgetPeriod(Date periodDate){
+//		return getBudgetPeriod(getPeriodKey(periodDate));
+//	}
+
+
 }

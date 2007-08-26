@@ -22,7 +22,7 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
@@ -270,43 +270,26 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		return baos.toString();
 	}
 	
-	/**
-	 * Returns a date that is the beginning of the budget period which contains
-	 * the given date.  This depends on the value of getPeriodType.
-	 * @param date
-	 * @return
-	 */
-	public Date getStartOfBudgetPeriod(Date date){
-		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
-	}
-	
-	/**
-	 * Returns a date that is the end of the budget period which contains
-	 * the given date.  This depends on the value of getPeriodType.
-	 * @param date
-	 * @return
-	 */
-	public Date getEndOfBudgetPeriod(Date date){
-		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
-	}
+//	/**
+//	 * Returns a date that is the beginning of the budget period which contains
+//	 * the given date.  This depends on the value of getPeriodType.
+//	 * @param date
+//	 * @return
+//	 */
+//	public Date getStartOfBudgetPeriod(Date date){
+//		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
+//	}
+//	
+//	/**
+//	 * Returns a date that is the end of the budget period which contains
+//	 * the given date.  This depends on the value of getPeriodType.
+//	 * @param date
+//	 * @return
+//	 */
+//	public Date getEndOfBudgetPeriod(Date date){
+//		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
+//	}
 
-	/**
-	 * Returns the Budget Period type.  One of the values in Enum BudgePeriodKeys.
-	 * @return
-	 */
-	public BudgetPeriodKeys getPeriodType() {
-		if (dataModel.getPeriodType() == null)
-			setPeriodType(BudgetPeriodKeys.BUDGET_PERIOD_MONTH);
-		return BudgetPeriodKeys.valueOf(dataModel.getPeriodType());
-	}
-	
-	/**
-	 * Sets the Budget Period type. 
-	 * @param periodType
-	 */
-	public void setPeriodType(BudgetPeriodKeys periodType) {
-		dataModel.setPeriodType(periodType.toString());
-	}
 	
 	/**
 	 * Returns the key which is associated with the date contained within the
@@ -317,21 +300,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * @param periodDate
 	 * @return
 	 */
-	public String getPeriodKey(Date periodDate){
-		return getPeriodType() + ":" + getStartOfBudgetPeriod(periodDate).getTime();
+	public String getPeriodKey(BudgetPeriodType period, Date periodDate){
+		return period + ":" + BudgetPeriodUtil.getStartOfBudgetPeriod(period, periodDate).getTime();
 	}
 	
-	/**
-	 * Returns the budgeted amount associated with the given budget category, for 
-	 * the date in which the given period date exists.
-	 * @param budgetCategory
-	 * @param periodDate
-	 * @return
-	 */
-	public long getBudgetedAmount(BudgetCategory budgetCategory, Date periodDate){
-		return getBudgetPeriod(periodDate).getAmount(budgetCategory);
-	}
-
 	/**
 	 * Reverses getPeriodKey
 	 * @param periodKey
@@ -341,19 +313,19 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		String[] splitKey = periodKey.split(":");
 		if (splitKey.length > 1){
 			long l = Long.parseLong(splitKey[1]);
-			return getStartOfBudgetPeriod(new Date(l));
+			return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(periodKey), new Date(l));
 		}
 
-		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this);
+		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this.getModel());
 	}
+	
+	public BudgetPeriodType getPeriodType(String periodKey){
+		String[] splitKey = periodKey.split(":");
+		if (splitKey.length > 0){
+			return BudgetPeriodType.valueOf(splitKey[0]);
+		}
 
-	/**
-	 * Returns the budget period object which contains the given date.
-	 * @param periodDate
-	 * @return
-	 */
-	public BudgetPeriod getBudgetPeriod(Date periodDate){
-		return getBudgetPeriod(getPeriodKey(periodDate));
+		throw new DataModelProblemException("Cannot parse BudgetPeriodType from key " + periodKey, this.getModel());		
 	}
 
 	/**
@@ -363,14 +335,14 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * @param endDate
 	 * @return
 	 */
-	public List<BudgetPeriod> getBudgetPeriodsInRange(Date startDate, Date endDate){
+	public List<BudgetPeriod> getBudgetPeriodsInRange(BudgetPeriodType period, Date startDate, Date endDate){
 		List<BudgetPeriod> budgetPeriods = new LinkedList<BudgetPeriod>();
 
-		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), startDate);
+		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate);
 
-		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), endDate))){
-			budgetPeriods.add(getBudgetPeriod(temp));
-			temp = BudgetPeriodUtil.getNextBudgetPeriod(getPeriodType(), temp);
+		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(period, endDate))){
+			budgetPeriods.add(getBudgetPeriod(getPeriodKey(period, temp)));
+			temp = BudgetPeriodUtil.getNextBudgetPeriod(period, temp);
 		}
 
 		return budgetPeriods;
@@ -382,7 +354,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			dataModel.getBudgetPeriods().get(periodKey).setPeriodDate(getPeriodDate(periodKey));
 			if (Const.DEVEL) Log.debug("Added new budget period for date " + periodKey);
 
-			setChanged();
+			getModel().setChanged();
 		}
 		return new BudgetPeriod(this, dataModel.getBudgetPeriods().get(periodKey));		
 	}
@@ -582,7 +554,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public boolean removeBudgetCategory(BudgetCategory budgetCategory){
 		checkValid(budgetCategory, false, false);
 
-		List<BudgetCategory> catsToDelete = new FilteredLists.BudgetCategoryListFilteredByChildren(this, budgetCategory);
+		List<BudgetCategory> catsToDelete = new FilteredLists.BudgetCategoryListFilteredByChildren(this, this.getBudgetCategories(), budgetCategory);
 
 		//We either delete all the categories permanently, or none.
 		// We run through each one and test to see if we can delete
@@ -825,11 +797,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		//We only show 3 levels here; if there are more, we figure that it is not needed to
 		// output them in the toString method, as it is just for troubleshooting.
-		for (BudgetCategory bc : new BudgetCategoryListFilteredByParent(this, null)) {
+		for (BudgetCategory bc : new BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), null)) {
 			sb.append(bc).append("\n");
-			for (BudgetCategory child1 : new BudgetCategoryListFilteredByParent(this, bc)) {
+			for (BudgetCategory child1 : new BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), bc)) {
 				sb.append("\t").append(child1).append("\n");
-				for (BudgetCategory child2 : new BudgetCategoryListFilteredByParent(this, child1)) {
+				for (BudgetCategory child2 : new BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), child1)) {
 					sb.append("\t\t").append(child2).append("\n");	
 				}				
 			}

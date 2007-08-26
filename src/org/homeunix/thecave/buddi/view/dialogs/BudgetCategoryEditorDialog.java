@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
@@ -48,6 +49,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	private final JHintTextField name;
 	private final JComboBox parent;
+	private final JComboBox budgetPeriodType;
 	private final JRadioButton income;
 	private final JRadioButton expense;
 	private final JHintTextArea notes;
@@ -70,6 +72,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		name = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
 		parentComboBoxModel = new ParentComboBoxModel(model);
 		parent = new JComboBox(parentComboBoxModel);
+		budgetPeriodType = new JComboBox(BudgetPeriodType.values()); 
 		income = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_INCOME));
 		expense = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_EXPENSE));
 		notes = new JHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
@@ -88,12 +91,14 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NAME)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_PARENT)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_BUDGET_PERIOD_TYPE)));		
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(""));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NOTES)));
 
 		textPanelRight.add(name);
 		textPanelRight.add(parent);
+		textPanelRight.add(budgetPeriodType);
 		textPanelRight.add(income);
 		textPanelRight.add(expense);
 		textPanelRight.add(new JScrollPane(notes));
@@ -129,6 +134,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		cancel.addFocusListener(focusListener);
 		name.addFocusListener(focusListener);
 		parent.addFocusListener(focusListener);
+		budgetPeriodType.addFocusListener(focusListener);
 		income.addFocusListener(focusListener);
 		expense.addFocusListener(focusListener);
 		notes.addFocusListener(focusListener);
@@ -173,11 +179,13 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		
 		ok.setEnabled(name.getValue() != null && name.getValue().toString().length() > 0);
 		
+		budgetPeriodType.setEnabled(parent.getSelectedItem() == null);
 		income.setEnabled(parent.getSelectedItem() == null);
 		expense.setEnabled(parent.getSelectedItem() == null);
 
 		if (parent.getSelectedItem() != null){
 			BudgetCategory bc = (BudgetCategory) parent.getSelectedItem();
+			budgetPeriodType.setSelectedItem(bc.getBudgetPeriodType());
 			income.setSelected(bc.isIncome());
 			expense.setSelected(!bc.isIncome());
 		}
@@ -210,6 +218,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				bc = new BudgetCategory(model, name.getValue().toString(), income.isSelected());
 				bc.setParent((BudgetCategory) parent.getSelectedItem());
 				bc.setNotes(notes.getValue().toString());
+				bc.setPeriodType((BudgetPeriodType) budgetPeriodType.getSelectedItem());
 				Log.debug("Created new BudgetCategory " + bc);
 
 				model.addBudgetCategory(bc);
@@ -218,6 +227,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				bc = selected;
 				bc.setName(name.getValue().toString());
 				bc.setParent((BudgetCategory) parent.getSelectedItem());
+				bc.setPeriodType((BudgetPeriodType) budgetPeriodType.getSelectedItem());
 				bc.setIncome(income.isSelected());
 				bc.setNotes(notes.getValue().toString());
 			}

@@ -11,7 +11,7 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	
 	public Transaction getTransaction();
 	
-	public Boolean isCleared();
+	public boolean isCleared();
 	
 	public Date getDate();
 	
@@ -21,7 +21,7 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	
 	public String getNumber();
 	
-	public Boolean isReconciled();
+	public boolean isReconciled();
 	
 	public boolean isScheduled();
 	

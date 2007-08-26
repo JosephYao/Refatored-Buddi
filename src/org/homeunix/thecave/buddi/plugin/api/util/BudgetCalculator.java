@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.plugin.api.util;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
@@ -54,7 +54,7 @@ public class BudgetCalculator {
 	 * @return
 	 */
 	//TODO I have no idea if this works properly, or even if this makes sense with the new model.
-	public static long getAverageByInterval(long value, BudgetPeriodKeys period, Date startDate, Date endDate){
+	public static long getAverageByInterval(long value, BudgetPeriodType period, Date startDate, Date endDate){
 		long daysInInterval = BudgetPeriodUtil.getDaysInPeriod(period, BudgetPeriodUtil.getStartOfBudgetPeriod(period, startDate));		
 		
 		long daysBetweenDates =

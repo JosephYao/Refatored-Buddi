@@ -20,7 +20,7 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 		return (Transaction) getRaw();
 	}
 	
-	public Boolean isCleared() {
+	public boolean isCleared() {
 		return getTransaction().isCleared();
 	}
 	public Date getDate() {
@@ -35,7 +35,7 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	public String getNumber() {
 		return getTransaction().getNumber();
 	}
-	public Boolean isReconciled() {
+	public boolean isReconciled() {
 		return getTransaction().isReconciled();
 	}
 	public boolean isScheduled() {

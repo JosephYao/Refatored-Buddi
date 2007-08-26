@@ -22,9 +22,10 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	public ImmutableBudgetCategory getParent();
 	
 	/**
-	 * Returns the wrapped BudgetCategory object associated with this ImmutableBudgetCategory.
-	 * If you access this object, you will bypass all security associated with the Immutable API.
-	 * It is highly recommended not to use this method unless you know what you are doing.  
+	 * Returns the wrapped object from the underlying data model.  By 
+	 * accessing this method, you bypass all protection which the Buddi API
+	 * gives you; it is not recommended to use this method unless you understand
+	 * the risks associated with it. 
 	 * @return
 	 */
 	public BudgetCategory getBudgetCategory();

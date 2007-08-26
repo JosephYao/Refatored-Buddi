@@ -33,7 +33,7 @@ import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
+import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
 import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
 import org.homeunix.thecave.moss.swing.hint.JHintTextField;
 import org.homeunix.thecave.moss.swing.window.MossDialog;
@@ -46,7 +46,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	private final JHintTextField name;
 	private final JComboBox type;
-	private final JDecimalField startingBalance;
+	private final MossDecimalField startingBalance;
 	private final JHintTextArea notes;
 
 	private final JButton ok;
@@ -67,7 +67,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		name = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
 		typeComboBoxModel = new TypeComboBoxModel(model);
 		type = new JComboBox(typeComboBoxModel);
-		startingBalance = new JDecimalField(true);
+		startingBalance = new MossDecimalField(true);
 		notes = new JHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));

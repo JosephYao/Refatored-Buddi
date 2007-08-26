@@ -8,12 +8,14 @@ import java.awt.FlowLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,27 +31,31 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
+import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
-import org.homeunix.thecave.moss.swing.formatted.JDecimalField;
+import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
+import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
 import org.homeunix.thecave.moss.swing.window.MossPanel;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class MyBudgetPanel extends MossPanel {
+public class MyBudgetPanel extends MossPanel implements ActionListener {
 	public static final long serialVersionUID = 0;
 
 	private final JXTreeTable tree;
 	private final JLabel balanceLabel;
 
 	private final JSpinner dateSpinner;
-//	private final JComboBox monthComboBox;
+	private final JComboBox periodTypeComboBox;
 
 	private final BudgetTreeTableModel treeTableModel;
 	
@@ -62,8 +68,10 @@ public class MyBudgetPanel extends MossPanel {
 		tree = new JXTreeTable(treeTableModel);
 
 		balanceLabel = new JLabel();
-		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
+		dateSpinner = new JSpinner(new BudgetDateSpinnerModel(treeTableModel));
+//		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
+		periodTypeComboBox = new JComboBox(BudgetPeriodType.values());
 		
 		open();
 	}
@@ -83,6 +91,10 @@ public class MyBudgetPanel extends MossPanel {
 //			treeTableModel.setMonth(monthComboBox.getSelectedIndex());
 //			updateContent();
 //		}
+		if (e.getSource().equals(periodTypeComboBox)){
+			treeTableModel.setSelectedBudgetPeriodType((BudgetPeriodType) periodTypeComboBox.getSelectedItem());
+			updateContent();
+		}
 	}
 
 	public void init() {
@@ -98,8 +110,9 @@ public class MyBudgetPanel extends MossPanel {
 		
 
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
-			JDecimalField editor = new JDecimalField(0, true, 2);
+			MossDecimalField editor = new MossDecimalField(0, true, 2);
 			final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+			//This passes arrow keys on to the table, to allow cell navigation.
 			manager.addKeyEventDispatcher(new KeyEventDispatcher(){
 				public boolean dispatchKeyEvent(KeyEvent e) {
 					if (e.getKeyCode() == KeyEvent.VK_UP
@@ -108,6 +121,9 @@ public class MyBudgetPanel extends MossPanel {
 							|| e.getKeyCode() == KeyEvent.VK_LEFT){
 						manager.redispatchEvent(tree, e);
 						return true;
+					}
+					if ((OperatingSystemUtil.isMac() && e.isMetaDown()) || (!OperatingSystemUtil.isMac() && e.isControlDown())){
+						manager.redispatchEvent(parent, e);
 					}
 					return false;
 				}
@@ -139,7 +155,7 @@ public class MyBudgetPanel extends MossPanel {
 		JScrollPane listScroller = new JScrollPane(tree);
 
 //		dateSpinner.setPreferredSize(new Dimension(300, dateSpinner.getPreferredSize().height));
-		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MMMM yyyy"));
+//		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MMMM yyyy"));
 		dateSpinner.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent arg0) {
 				if (dateSpinner.getValue() instanceof Date)
@@ -147,6 +163,10 @@ public class MyBudgetPanel extends MossPanel {
 				updateContent();
 			}
 		});
+		
+		periodTypeComboBox.setSelectedItem(BudgetPeriodType.BUDGET_PERIOD_MONTH);
+		periodTypeComboBox.addActionListener(this);
+		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
 
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		balanceLabelPanel.add(balanceLabel);
@@ -156,6 +176,7 @@ public class MyBudgetPanel extends MossPanel {
 		listScrollerPanel.add(balanceLabelPanel, BorderLayout.SOUTH);
 
 		JPanel spinnerPanelRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		spinnerPanelRight.add(periodTypeComboBox);
 		spinnerPanelRight.add(dateSpinner);
 
 
@@ -194,6 +215,9 @@ public class MyBudgetPanel extends MossPanel {
 		// fires a change event.
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++)
 			tree.getColumn(i).setHeaderValue(treeTableModel.getColumnName(i));
+		
+		//Update the date spinner
+		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, BudgetPeriodUtil.getDateFormat(treeTableModel.getSelectedBudgetPeriodType())));
 		
 		//Fire a change event on the table model.
 		treeTableModel.fireStructureChanged();
