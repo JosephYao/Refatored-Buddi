@@ -38,16 +38,16 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 
 public class LocalePreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0; 
 
-	private final JScrollingComboBox language;
-	private final JScrollingComboBox dateFormat;
-	private final JScrollingComboBox currencyFormat;
+	private final MossScrollingComboBox language;
+	private final MossScrollingComboBox dateFormat;
+	private final MossScrollingComboBox currencyFormat;
 	private final JCheckBox currencySymbolAfterAmount;
 	private final JButton otherCurrencyButton;
 	private final JButton otherDateFormatButton;
@@ -59,12 +59,12 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 
 	public LocalePreferences() {
 		languageModel = new DefaultComboBoxModel();
-		language = new JScrollingComboBox(languageModel);
+		language = new MossScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
-		currencyFormat = new JScrollingComboBox(currencyModel);
+		currencyFormat = new MossScrollingComboBox(currencyModel);
 		currencySymbolAfterAmount = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
 		dateFormatModel = new DefaultComboBoxModel();
-		dateFormat = new JScrollingComboBox(dateFormatModel);
+		dateFormat = new MossScrollingComboBox(dateFormatModel);
 		otherCurrencyButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
 		otherDateFormatButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
 		editLanguagesButton = new JButton(TextFormatter.getTranslation(PreferencesKeys.EDIT_LANGUAGES));

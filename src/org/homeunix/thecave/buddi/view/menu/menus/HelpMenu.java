@@ -8,8 +8,8 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.buddi.view.menu.items.HelpDebug;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class HelpMenu extends MossMenu {

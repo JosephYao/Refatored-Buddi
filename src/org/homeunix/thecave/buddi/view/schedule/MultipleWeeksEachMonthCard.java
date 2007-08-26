@@ -17,13 +17,13 @@ import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyWeek;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.swing.MossPanel;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 
 public class MultipleWeeksEachMonthCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;
 
-	private final JScrollingComboBox multipleWeeksDayChooser = new JScrollingComboBox(ScheduleFrequencyDayOfWeek.values());
+	private final MossScrollingComboBox multipleWeeksDayChooser = new MossScrollingComboBox(ScheduleFrequencyDayOfWeek.values());
 	
 	private final JCheckBox multipleWeeksMonthlyFirstWeek;
 	private final JCheckBox multipleWeeksMonthlySecondWeek;

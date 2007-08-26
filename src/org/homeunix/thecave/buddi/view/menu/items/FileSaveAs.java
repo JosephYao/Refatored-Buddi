@@ -20,9 +20,9 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.swing.file.SmartFileChooser;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
 
 public class FileSaveAs extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -34,7 +34,7 @@ public class FileSaveAs extends MossMenuItem {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		File f = SmartFileChooser.showSaveFileDialog(
+		File f = MossSmartFileChooser.showSaveFileDialog(
 				getFrame(), 
 				PrefsModel.getInstance().getLastDataFile(), 
 				Const.FILE_FILTER_DATA, 

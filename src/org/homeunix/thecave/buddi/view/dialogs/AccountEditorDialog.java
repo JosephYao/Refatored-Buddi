@@ -33,10 +33,10 @@ import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
-import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
-import org.homeunix.thecave.moss.swing.hint.JHintTextField;
-import org.homeunix.thecave.moss.swing.window.MossDialog;
+import org.homeunix.thecave.moss.swing.MossDecimalField;
+import org.homeunix.thecave.moss.swing.MossDialog;
+import org.homeunix.thecave.moss.swing.MossHintTextArea;
+import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -44,10 +44,10 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	public static final long serialVersionUID = 0;
 
-	private final JHintTextField name;
+	private final MossHintTextField name;
 	private final JComboBox type;
 	private final MossDecimalField startingBalance;
-	private final JHintTextArea notes;
+	private final MossHintTextArea notes;
 
 	private final JButton ok;
 	private final JButton cancel;
@@ -64,11 +64,11 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		this.selected = selected;
 		this.model = model;
 
-		name = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
+		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
 		typeComboBoxModel = new TypeComboBoxModel(model);
 		type = new JComboBox(typeComboBoxModel);
 		startingBalance = new MossDecimalField(true);
-		notes = new JHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
+		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		cancel = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL));

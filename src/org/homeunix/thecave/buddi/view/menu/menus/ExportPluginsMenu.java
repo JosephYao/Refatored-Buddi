@@ -5,8 +5,8 @@ package org.homeunix.thecave.buddi.view.menu.menus;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenu;
 
 public class ExportPluginsMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

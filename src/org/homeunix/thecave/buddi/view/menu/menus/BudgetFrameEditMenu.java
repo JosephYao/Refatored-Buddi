@@ -11,7 +11,7 @@ import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
+import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class BudgetFrameEditMenu extends MossMenu {

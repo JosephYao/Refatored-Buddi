@@ -50,12 +50,12 @@ import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoComplet
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
-import org.homeunix.thecave.moss.swing.hint.JHintComboBox;
-import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
-import org.homeunix.thecave.moss.swing.hint.JHintTextField;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.swing.MossDecimalField;
+import org.homeunix.thecave.moss.swing.MossHintComboBox;
+import org.homeunix.thecave.moss.swing.MossHintTextArea;
+import org.homeunix.thecave.moss.swing.MossHintTextField;
+import org.homeunix.thecave.moss.swing.MossPanel;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -76,14 +76,14 @@ public class TransactionEditor extends MossPanel {
 	
 
 	private final JXDatePicker date;
-	private final JHintComboBox description;
-	private final JHintTextField number;
+	private final MossHintComboBox description;
+	private final MossHintTextField number;
 	private final MossDecimalField amount;
-	private final JScrollingComboBox from;
-	private final JScrollingComboBox to;
+	private final MossScrollingComboBox from;
+	private final MossScrollingComboBox to;
 	private final JCheckBox cleared;
 	private final JCheckBox reconciled;
-	private final JHintTextArea memo;
+	private final MossHintTextArea memo;
 
 	
 	
@@ -103,11 +103,11 @@ public class TransactionEditor extends MossPanel {
 
 		date = new JXDatePicker();
 		amount = new MossDecimalField();
-		from = new JScrollingComboBox();
-		to = new JScrollingComboBox();
-		number = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
-		description = new JHintComboBox(new AutoCompleteComboBoxModel(this.model), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
-		memo = new JHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
+		from = new MossScrollingComboBox();
+		to = new MossScrollingComboBox();
+		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
+		description = new MossHintComboBox(new AutoCompleteComboBoxModel(this.model), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+		memo = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
 		cleared = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED));
 

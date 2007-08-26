@@ -18,7 +18,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.swing.dialog.JPasswordInputDialog;
+import org.homeunix.thecave.moss.swing.MossPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
@@ -104,7 +104,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		}
 
 		if (this.key == null) {
-			JPasswordInputDialog jpid = new JPasswordInputDialog(
+			MossPasswordInputDialog jpid = new MossPasswordInputDialog(
 					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
 					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
 					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),
@@ -195,7 +195,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		boolean correctPassword = false;
 		do {
 			// ask for the password, which we use to generate the AES key
-			JPasswordInputDialog jpid = new JPasswordInputDialog(
+			MossPasswordInputDialog jpid = new MossPasswordInputDialog(
 					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
 					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
 					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),

@@ -4,7 +4,7 @@
 package org.homeunix.thecave.buddi.view.schedule;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.swing.MossPanel;
 
 public class DailyCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;

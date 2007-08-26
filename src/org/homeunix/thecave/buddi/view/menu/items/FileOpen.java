@@ -22,9 +22,9 @@ import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.file.SmartFileChooser;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
 import org.homeunix.thecave.moss.util.Log;
 
 public class FileOpen extends MossMenuItem {
@@ -37,7 +37,7 @@ public class FileOpen extends MossMenuItem {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		File f = SmartFileChooser.showSmartOpenDialog(
+		File f = MossSmartFileChooser.showSmartOpenDialog(
 				getFrame(), 
 				PrefsModel.getInstance().getLastDataFile(), 
 				Const.FILE_FILTER_DATA, 

@@ -37,9 +37,9 @@ import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.i18n.LanguageEditor;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
-import org.homeunix.thecave.moss.swing.menu.MossMenuBar;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
+import org.homeunix.thecave.moss.swing.MossMenu;
+import org.homeunix.thecave.moss.swing.MossMenuBar;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class BuddiLanguageEditor extends LanguageEditor {
 	public static final long serialVersionUID = 0;

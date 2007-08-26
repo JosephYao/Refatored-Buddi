@@ -12,17 +12,17 @@ import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfMonth;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.swing.MossPanel;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 
 public class MonthlyByDateCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;
 
-	private final JScrollingComboBox monthlyDateChooser;
+	private final MossScrollingComboBox monthlyDateChooser;
 	
 	public MonthlyByDateCard() {
 		super(true);
-		monthlyDateChooser = new JScrollingComboBox(ScheduleFrequencyDayOfMonth.values());
+		monthlyDateChooser = new MossScrollingComboBox(ScheduleFrequencyDayOfMonth.values());
 		open();
 	}
 	

@@ -8,7 +8,7 @@ import org.homeunix.thecave.buddi.view.menu.menus.FileMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.HelpMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.TransactionsFrameEditMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.WindowMenu;
-import org.homeunix.thecave.moss.swing.menu.MossMenuBar;
+import org.homeunix.thecave.moss.swing.MossMenuBar;
 
 public class TransactionsFrameMenuBar extends MossMenuBar {
 	public static final long serialVersionUID = 0;

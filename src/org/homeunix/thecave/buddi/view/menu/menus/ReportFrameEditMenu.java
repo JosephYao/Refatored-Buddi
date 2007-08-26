@@ -8,7 +8,7 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
+import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class ReportFrameEditMenu extends MossMenu {

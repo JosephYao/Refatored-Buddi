@@ -38,7 +38,7 @@ import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.window.MossFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.LookAndFeelUtil;

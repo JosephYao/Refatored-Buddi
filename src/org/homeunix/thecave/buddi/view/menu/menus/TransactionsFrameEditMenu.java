@@ -10,7 +10,7 @@ import org.homeunix.thecave.buddi.view.menu.items.EditClearTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditDeleteTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditRecordTransaction;
-import org.homeunix.thecave.moss.swing.menu.MossMenu;
+import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class TransactionsFrameEditMenu extends MossMenu {

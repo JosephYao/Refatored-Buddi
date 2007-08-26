@@ -10,7 +10,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class EditDeleteBudgetCategory extends MossMenuItem{
 	public static final long serialVersionUID = 0;

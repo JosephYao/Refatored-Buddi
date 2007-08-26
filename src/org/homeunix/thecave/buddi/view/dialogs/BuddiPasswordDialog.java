@@ -7,7 +7,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.swing.dialog.JPasswordInputDialog;
+import org.homeunix.thecave.moss.swing.MossPasswordInputDialog;
 
 /**
  * Simple class extending JPasswordInputDialog, which sets up the needed translations.
@@ -15,7 +15,7 @@ import org.homeunix.thecave.moss.swing.dialog.JPasswordInputDialog;
  * @author wyatt
  *
  */
-public class BuddiPasswordDialog extends JPasswordInputDialog {
+public class BuddiPasswordDialog extends MossPasswordInputDialog {
 	public static final long serialVersionUID = 0;
 	
 	public BuddiPasswordDialog() {

@@ -5,8 +5,8 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class HelpDebug extends MossMenuItem {
 	public static final long serialVersionUID = 0;

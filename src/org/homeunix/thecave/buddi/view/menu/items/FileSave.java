@@ -14,8 +14,8 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class FileSave extends MossMenuItem {
 	public static final long serialVersionUID = 0;

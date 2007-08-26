@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
 
-import org.homeunix.thecave.moss.swing.formatted.MossDecimalField;
+import org.homeunix.thecave.moss.swing.MossDecimalField;
 
 public class DecimalCellEditor extends AbstractCellEditor implements TableCellEditor {
 	public static final long serialVersionUID = 0;

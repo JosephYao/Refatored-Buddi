@@ -12,17 +12,17 @@ import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfWeek;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.window.MossPanel;
+import org.homeunix.thecave.moss.swing.MossPanel;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 
 public class BiWeeklyCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;
 
-	private final JScrollingComboBox biWeeklyDayChooser;
+	private final MossScrollingComboBox biWeeklyDayChooser;
 	
 	public BiWeeklyCard() {
 		super(true);
-		biWeeklyDayChooser = new JScrollingComboBox(ScheduleFrequencyDayOfWeek.values());
+		biWeeklyDayChooser = new MossScrollingComboBox(ScheduleFrequencyDayOfWeek.values());
 		open();
 	}
 	

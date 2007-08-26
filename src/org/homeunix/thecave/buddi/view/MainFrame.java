@@ -22,7 +22,7 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;

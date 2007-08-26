@@ -45,11 +45,11 @@ import org.homeunix.thecave.buddi.view.schedule.ScheduleCard;
 import org.homeunix.thecave.buddi.view.schedule.WeekdayCard;
 import org.homeunix.thecave.buddi.view.schedule.WeeklyCard;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.swing.components.JScrollingComboBox;
-import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
-import org.homeunix.thecave.moss.swing.hint.JHintTextField;
-import org.homeunix.thecave.moss.swing.window.MossDialog;
-import org.homeunix.thecave.moss.swing.window.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossDialog;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossHintTextArea;
+import org.homeunix.thecave.moss.swing.MossHintTextField;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -62,9 +62,9 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 	private final ScheduledTransaction schedule;
 
-	private final JHintTextField scheduleName;
-	private final JHintTextArea message;
-	private final JScrollingComboBox frequencyPulldown;
+	private final MossHintTextField scheduleName;
+	private final MossHintTextArea message;
+	private final MossScrollingComboBox frequencyPulldown;
 	private final JXDatePicker startDateChooser;
 	private final TransactionEditor transactionEditor;
 
@@ -98,9 +98,9 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		startDateChooser = new JXDatePicker();
 		transactionEditor = new TransactionEditor((DataModel) parentFrame.getDocument(), null, true);
 
-		scheduleName = new JHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
+		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
 
-		message = new JHintTextArea(TextFormatter.getTranslation(BuddiKeys.HINT_MESSAGE));
+		message = new MossHintTextArea(TextFormatter.getTranslation(BuddiKeys.HINT_MESSAGE));
 
 		//This is where we create all the check boxes
 
@@ -108,7 +108,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 
 		//This is where we give the Frequency dropdown options
-		frequencyPulldown = new JScrollingComboBox(ScheduleFrequency.values());
+		frequencyPulldown = new MossScrollingComboBox(ScheduleFrequency.values());
 		
 		
 		monthly = new MonthlyByDateCard();

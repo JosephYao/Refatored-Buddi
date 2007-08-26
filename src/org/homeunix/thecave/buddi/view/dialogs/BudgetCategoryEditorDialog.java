@@ -37,9 +37,9 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.data.list.CompositeList;
-import org.homeunix.thecave.moss.swing.hint.JHintTextArea;
-import org.homeunix.thecave.moss.swing.hint.JHintTextField;
-import org.homeunix.thecave.moss.swing.window.MossDialog;
+import org.homeunix.thecave.moss.swing.MossDialog;
+import org.homeunix.thecave.moss.swing.MossHintTextArea;
+import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -47,12 +47,12 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	public static final long serialVersionUID = 0;
 
-	private final JHintTextField name;
+	private final MossHintTextField name;
 	private final JComboBox parent;
 	private final JComboBox budgetPeriodType;
 	private final JRadioButton income;
 	private final JRadioButton expense;
-	private final JHintTextArea notes;
+	private final MossHintTextArea notes;
 
 	private final JButton ok;
 	private final JButton cancel;
@@ -69,13 +69,13 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		this.selected = selected;
 		this.model = model;
 
-		name = new JHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
+		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
 		parentComboBoxModel = new ParentComboBoxModel(model);
 		parent = new JComboBox(parentComboBoxModel);
 		budgetPeriodType = new JComboBox(BudgetPeriodType.values()); 
 		income = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_INCOME));
 		expense = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_EXPENSE));
-		notes = new JHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
+		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		cancel = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL));

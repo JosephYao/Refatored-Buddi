@@ -10,8 +10,8 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.menu.MossMenuItem;
-import org.homeunix.thecave.moss.swing.window.MossFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
+import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class EditDeleteAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;
