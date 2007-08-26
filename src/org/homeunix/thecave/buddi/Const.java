@@ -10,7 +10,19 @@ import javax.swing.JList;
 import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodWeekly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory;
+import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
+import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
+import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
+import org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.AdvancedPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.LocalePreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.NetworkPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.PluginPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.prefs.ViewPreferences;
 import org.homeunix.thecave.moss.util.Version;
 
 
@@ -197,30 +209,26 @@ public class Const {
 		"Kc"	//Something else; requested by a user
 	};
 	
+	public final static String[] BUILT_IN_BUDGET_PERIOD_TYPES = {
+		BudgetPeriodMonthly.class.toString(),
+		BudgetPeriodWeekly.class.toString(),
+	};
+	
+	public final static String[] BUILT_IN_PREFERENCE_PANELS = {
+		ViewPreferences.class.getCanonicalName(),
+		PluginPreferences.class.getCanonicalName(),
+		LocalePreferences.class.getCanonicalName(),
+		NetworkPreferences.class.getCanonicalName(),
+		AdvancedPreferences.class.getCanonicalName(),
+	};
+	
 	//The report plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_REPORTS = {
-		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByDescription",
-		"org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotCleared",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.TransactionsNotReconciled",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.NullReport",
-
-		"org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph",
-		"org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.ExpenseBudgetedVsActual",
-//		"org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthBreakdown",
-		"org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime",
-		
-//		"org.homeunix.thecave.plugins.graph.incomeovertime.IncomeAndExpenseOverTime",
-//		"org.homeunix.thecave.plugins.export.qif.ExportQIF"
-//		"org.homeunix.drummer.plugins.imports.SimpleImport"
-		
-//		"org.homeunix.drummer.plugins.exports.ExportHTML",
-//		"org.homeunix.drummer.plugins.exports.ExportCSV"
-//		"org.homeunix.drummer.plugins.exports.TestPlugin"
-//		"org.homeunix.thecave.plugins.graph.parentcategorypie.IncomePieGraph",
-//		"org.homeunix.thecave.plugins.report.select.ReportBySelectedAccount",
+		IncomeExpenseReportByCategory.class.getCanonicalName(),
+		AverageIncomeExpenseByCategory.class.getCanonicalName(),
+		IncomePieGraph.class.getCanonicalName(),
+		ExpensesPieGraph.class.getCanonicalName(),
+		NetWorthOverTime.class.getCanonicalName(),
 	};
 		
 	private Const(){}

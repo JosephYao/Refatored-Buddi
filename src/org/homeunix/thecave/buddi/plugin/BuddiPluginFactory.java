@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.plugin.api.BuddiBudgetPeriodTypePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
@@ -64,6 +65,37 @@ public class BuddiPluginFactory extends PluginFactory {
 
 		return reports;
 	}
+	
+	/**
+	 * Returns a list of all BudgetPeriodType plugins, including both built in 
+	 * ones and user-defined ones from Plugins. 
+	 * @return
+	 */
+	public static List<BuddiBudgetPeriodTypePlugin> getBudgetPeriodTypePlugins(){
+		List<BuddiBudgetPeriodTypePlugin> budgetPeriodTypes = new LinkedList<BuddiBudgetPeriodTypePlugin>();
+		
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_BUDGET_PERIOD_TYPES){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiBudgetPeriodTypePlugin){
+				budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
+			}
+		}
+		
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+					if (plugin instanceof BuddiBudgetPeriodTypePlugin){
+						budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
+					}
+				}
+			}
+		}
+		
+		return budgetPeriodTypes;
+	}
 
 	/**
 	 * Returns a list of valid plugin objects, both built-in and user-defined.
@@ -73,14 +105,16 @@ public class BuddiPluginFactory extends PluginFactory {
 	public static List<BuddiPreferencePlugin> getPreferencePlugins(){
 		List<BuddiPreferencePlugin> preferences = new LinkedList<BuddiPreferencePlugin>();
 
-		//Load built in plugins.  We kinda cheat for these plugins; instead of
-		// loading them reflexivly, we just create new objects.
-		preferences.add(new ViewPreferences());
-		preferences.add(new PluginPreferences());
-		preferences.add(new LocalePreferences());
-		preferences.add(new NetworkPreferences());
-		preferences.add(new AdvancedPreferences());
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_PREFERENCE_PANELS){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiPreferencePlugin){
+				preferences.add((BuddiPreferencePlugin) plugin);
+			}
+		}
 
+
+		//Load user defined plugins.
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
