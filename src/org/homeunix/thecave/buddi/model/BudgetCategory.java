@@ -157,7 +157,7 @@ public class BudgetCategory extends Source {
 
 		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), endDate))){
 			budgetPeriodKeys.add(getPeriodKey(temp));
-			temp = BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), temp, 1);
+			temp = BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), temp, 1);
 		}
 
 		return budgetPeriodKeys;
@@ -179,9 +179,9 @@ public class BudgetCategory extends Source {
 			return (long) (((double) amount / (double) daysInPeriod) * daysBetween);
 		}
 		 
-		if (BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1).equals(
+		if (BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1).equals(
 				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))
-				|| BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1).before(
+				|| BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1).before(
 						BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
 			long amountStartPeriod = getAmount(startDate);
 			long daysInStartPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
@@ -190,8 +190,8 @@ public class BudgetCategory extends Source {
 			
 			long totalInMiddle = 0;
 			for (String periodKey : getBudgetPeriods(
-					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), startDate, 1),
-					BudgetPeriodUtil.addBudgetPeriod(getBudgetPeriodType(), endDate, -1))) {
+					BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1),
+					BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), endDate, -1))) {
 				totalInMiddle += getAmount(getPeriodDate(periodKey));
 			}
 			

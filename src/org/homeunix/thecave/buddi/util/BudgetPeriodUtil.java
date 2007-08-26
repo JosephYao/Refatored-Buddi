@@ -107,7 +107,7 @@ public class BudgetPeriodUtil {
 	 * @param offset
 	 * @return
 	 */
-	public static Date addBudgetPeriod(BudgetPeriodType period, Date date, int offset){
+	public static Date getBudgetPeriodOffset(BudgetPeriodType period, Date date, int offset){
 		date = getStartOfBudgetPeriod(period, date);
 		
 		//TODO

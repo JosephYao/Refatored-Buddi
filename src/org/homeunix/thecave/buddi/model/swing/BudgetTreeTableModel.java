@@ -188,7 +188,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 	
 	private Date getColumnDate(int column){
-		return BudgetPeriodUtil.addBudgetPeriod(getSelectedBudgetPeriodType(), getSelectedDate(), column - monthOffset);
+		return BudgetPeriodUtil.getBudgetPeriodOffset(getSelectedBudgetPeriodType(), getSelectedDate(), column - monthOffset);
 	}
 
 	@Override
