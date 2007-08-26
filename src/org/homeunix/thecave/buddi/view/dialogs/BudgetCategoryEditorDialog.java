@@ -220,10 +220,9 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		if (e.getSource().equals(ok)){
 			BudgetCategory bc;
 			if (selected == null){
-				bc = new BudgetCategory(model, name.getValue().toString(), income.isSelected());
+				bc = new BudgetCategory(model, name.getValue().toString(), (BudgetPeriodType) budgetPeriodType.getSelectedItem(), income.isSelected());
 				bc.setParent((BudgetCategory) parent.getSelectedItem());
 				bc.setNotes(notes.getValue().toString());
-				bc.setPeriodType((BudgetPeriodType) budgetPeriodType.getSelectedItem());
 				Log.debug("Created new BudgetCategory " + bc);
 
 				model.addBudgetCategory(bc);

@@ -8,6 +8,7 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 
 public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implements ImmutableTransaction {
@@ -41,18 +42,18 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public ImmutableSourceImpl getFrom(){
+	public ImmutableSource getFrom(){
 		if (getTransaction().getFrom() instanceof Account)
-			return new ImmutableAccountImpl((Account) getTransaction().getFrom());
+			return new MutableAccountImpl((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
-			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
+			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
 		return null;
 	}
-	public ImmutableSourceImpl getTo(){
+	public ImmutableSource getTo(){
 		if (getTransaction().getTo() instanceof Account)
-			return new ImmutableAccountImpl((Account) getTransaction().getTo());
+			return new MutableAccountImpl((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
-			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
+			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
 	public long getBalanceFrom() {

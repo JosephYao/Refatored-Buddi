@@ -13,10 +13,10 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	public MutableAccountImpl(Account account) {
 		super(account);
 	}
-	
-	public MutableAccountImpl() {
-		super(new Account(getmodel, name, startingBalance, type));
-	}
+//	
+//	public MutableAccountImpl(String name, long startingBalance, MutableType type) {
+//		super(new Account(type.getType().getModel(), name, startingBalance, type.getType()));
+//	}
 
 	public void setStartingBalance(long startingBalance) {
 		getAccount().setStartingBalance(startingBalance);

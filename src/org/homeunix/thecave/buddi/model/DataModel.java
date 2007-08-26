@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
@@ -162,10 +163,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), false));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), BudgetPeriodType.BUDGET_PERIOD_MONTH, false));
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), true));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), BudgetPeriodType.BUDGET_PERIOD_MONTH, true));
 		}
 
 		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){

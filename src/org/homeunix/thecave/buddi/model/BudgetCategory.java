@@ -18,7 +18,7 @@ public class BudgetCategory extends Source {
 		super(model, budgetCategory);
 	}
 	
-	public BudgetCategory(DataModel model, String name, boolean isIncome) {
+	public BudgetCategory(DataModel model, String name, BudgetPeriodType periodType, boolean isIncome) {
 		this(model, new BudgetCategoryBean());
 		
 		this.setName(name);

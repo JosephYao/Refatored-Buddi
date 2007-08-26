@@ -20,7 +20,7 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 	}
 	public ImmutableBudgetCategory getParent() {
 		if (getBudgetCategory().getParent() != null)
-			return new ImmutableBudgetCategoryImpl(getBudgetCategory().getParent());
+			return new MutableBudgetCategoryImpl(getBudgetCategory().getParent());
 		return null;
 	}
 	
