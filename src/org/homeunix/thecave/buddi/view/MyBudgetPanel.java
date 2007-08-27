@@ -164,7 +164,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			}
 		});
 		
-//		periodTypeComboBox.setPreferredSize(InternalFormatter.getComponentSize(periodTypeComboBox, 100));
+		periodTypeComboBox.setPreferredSize(dateSpinner.getPreferredSize());
 		periodTypeComboBox.setSelectedItem(new BudgetPeriodMonthly());
 		periodTypeComboBox.addActionListener(this);
 		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
@@ -184,8 +184,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		periodPanel.add(periodTypeComboBox);
 		
 		JPanel topPanel = new JPanel(new BorderLayout());
-		topPanel.add(spinnerPanel, BorderLayout.WEST);
 		topPanel.add(periodPanel, BorderLayout.EAST);
+		topPanel.add(spinnerPanel, BorderLayout.WEST);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
