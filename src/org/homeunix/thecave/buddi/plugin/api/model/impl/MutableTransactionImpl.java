@@ -118,4 +118,8 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		else
 			getTransaction().setTo(to.getSource());
 	}
+	
+	public void setScheduled(boolean scheduled) {
+		getTransaction().setScheduled(scheduled);
+	}
 }

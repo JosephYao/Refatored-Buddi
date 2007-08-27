@@ -16,7 +16,6 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.converter.LegacyModelConverter;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
@@ -25,7 +24,6 @@ import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
-import org.homeunix.thecave.moss.util.Log;
 
 public class FileOpen extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -55,19 +53,7 @@ public class FileOpen extends MossMenuItem {
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (OperationCancelledException oce){}  //Do nothing
-		catch (DocumentLoadException dle){
-			//This can possibly happen if the data file is a legacy format.
-			// Try to load, and see what happens...
-			try {
-				Log.info("DocumentLoadException when loading file.  Perhaps this is a legacy file; trying to open it.");
-				MainFrame mainFrame = new MainFrame(new DataModel(LegacyModelConverter.convert(f)));
-				mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
-			}
-			catch (DocumentLoadException dle2){
-				Log.info("Failed to load legacy file.");
-			}
-			catch (WindowOpenException woe){}
-		}
+		catch (DocumentLoadException dle){}
 		catch (WindowOpenException foe){}
 	}
 }

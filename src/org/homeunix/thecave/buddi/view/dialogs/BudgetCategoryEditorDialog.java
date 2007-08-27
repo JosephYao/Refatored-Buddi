@@ -29,11 +29,14 @@ import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.api.BuddiBudgetPeriodTypePlugin;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
@@ -41,6 +44,7 @@ import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
+import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -73,7 +77,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
 		parentComboBoxModel = new ParentComboBoxModel(model);
 		parent = new JComboBox(parentComboBoxModel);
-		budgetPeriodType = new JComboBox(BudgetPeriodType.values()); 
+		budgetPeriodType = new JComboBox(new BackedComboBoxModel<BuddiBudgetPeriodTypePlugin>(BuddiPluginFactory.getBudgetPeriodTypePlugins())); 
 		income = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_INCOME));
 		expense = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_EXPENSE));
 		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
@@ -201,7 +205,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			name.setValue("");
 			expense.setSelected(true);
 			parent.setSelectedItem(null);
-			budgetPeriodType.setSelectedItem(BudgetPeriodType.BUDGET_PERIOD_MONTH);
+			budgetPeriodType.setSelectedItem(new BudgetPeriodMonthly());
 			notes.setValue("");
 		}
 		else {

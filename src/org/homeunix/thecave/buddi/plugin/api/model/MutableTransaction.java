@@ -60,4 +60,10 @@ public interface MutableTransaction extends ImmutableTransaction {
 	 * @param to
 	 */
 	public void setTo(MutableSource to);
+	
+	/**
+	 * Set this flag if the transaction was created via a scheduled transaction.
+	 * @param scheduled
+	 */
+	public void setScheduled(boolean scheduled);
 }

@@ -10,17 +10,14 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodWeekly;
 import org.homeunix.thecave.buddi.plugin.api.BuddiBudgetPeriodTypePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.AdvancedPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.LocalePreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.NetworkPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.PluginPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.prefs.ViewPreferences;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
 
@@ -75,12 +72,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		List<BuddiBudgetPeriodTypePlugin> budgetPeriodTypes = new LinkedList<BuddiBudgetPeriodTypePlugin>();
 		
 		//Load built in plugins
-		for (String className : Const.BUILT_IN_BUDGET_PERIOD_TYPES){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiBudgetPeriodTypePlugin){
-				budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
-			}
-		}
+		budgetPeriodTypes.add(new BudgetPeriodMonthly());
+		budgetPeriodTypes.add(new BudgetPeriodWeekly());
+//		for (String className : Const.BUILT_IN_BUDGET_PERIOD_TYPES){
+//			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+//			if (plugin instanceof BuddiBudgetPeriodTypePlugin){
+//				budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
+//			}
+//		}
 		
 		//Load user defined plugins
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 

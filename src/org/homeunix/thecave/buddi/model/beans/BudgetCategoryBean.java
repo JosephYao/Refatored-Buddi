@@ -6,10 +6,12 @@ package org.homeunix.thecave.buddi.model.beans;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
+
 public class BudgetCategoryBean extends SourceBean {
 	private boolean income;
 	private boolean expanded;
-	private String periodType;
+	private BudgetPeriodType periodType;
 	private BudgetCategoryBean parent;
 	private Map<String, Long> amounts;
 	
@@ -22,10 +24,10 @@ public class BudgetCategoryBean extends SourceBean {
 	public void setAmounts(Map<String, Long> amounts) {
 		this.amounts = amounts;
 	}
-	public String getPeriodType() {
+	public BudgetPeriodType getPeriodType() {
 		return periodType;
 	}
-	public void setPeriodType(String periodType) {
+	public void setPeriodType(BudgetPeriodType periodType) {
 		this.periodType = periodType;
 	}
 	public boolean isIncome() {

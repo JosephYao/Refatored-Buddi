@@ -18,7 +18,6 @@ import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
@@ -100,7 +99,6 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		this.loadKeys((Enum[]) BudgetExpenseDefaultKeys.values());
 		this.loadKeys((Enum[]) BudgetFrameKeys.values());
 		this.loadKeys((Enum[]) BudgetIncomeDefaultKeys.values());
-		this.loadKeys((Enum[]) BudgetPeriodType.values());
 		this.loadKeys((Enum[]) ButtonKeys.values());
 		this.loadKeys((Enum[]) MenuKeys.values());
 		this.loadKeys((Enum[]) MessageKeys.values());

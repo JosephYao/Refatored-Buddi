@@ -5,8 +5,8 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 
 public interface ImmutableBudgetCategory extends ImmutableSource {
 		

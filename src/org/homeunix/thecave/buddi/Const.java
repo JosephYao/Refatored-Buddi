@@ -68,8 +68,7 @@ public class Const {
 		@Override
 		public boolean accept(File f) {
 			if (f.isDirectory() 
-					|| f.getName().endsWith(Const.DATA_FILE_EXTENSION)
-					|| f.getName().endsWith(Const.DATA_FILE_EXTENSION_OLD)){
+					|| f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
 				return true;
 			}
 			return false;

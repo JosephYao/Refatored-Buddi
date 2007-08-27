@@ -3,7 +3,9 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
+import java.util.Date;
+
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 
 public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableSource {
 	/**
@@ -23,4 +25,10 @@ public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableS
 	 * @param parent
 	 */
 	public void setParent(MutableBudgetCategory parent);
+	
+	public long getAmount(Date startDate, Date endDate);
+	
+	public long getAmount(Date date);
+	
+	public void setAmount(Date date, long amount);
 }

@@ -5,8 +5,8 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 
@@ -33,6 +33,10 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 
 	public long getAmount(Date startDate, Date endDate) {
 		return getBudgetCategory().getAmount(startDate, endDate);
+	}
+	
+	public void setAmount(Date date, long amount) {
+		getBudgetCategory().setAmount(date, amount);
 	}
 	
 	public long getAmount(Date date) {

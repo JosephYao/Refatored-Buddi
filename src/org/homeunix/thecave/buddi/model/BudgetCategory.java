@@ -7,10 +7,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
-import org.homeunix.thecave.buddi.util.BudgetPeriodUtil;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 public class BudgetCategory extends Source {	
@@ -66,8 +65,8 @@ public class BudgetCategory extends Source {
 	 */
 	public BudgetPeriodType getBudgetPeriodType() {
 		if (getBudgetCategory().getPeriodType() == null)
-			setPeriodType(BudgetPeriodType.BUDGET_PERIOD_MONTH);
-		return BudgetPeriodType.valueOf(getBudgetCategory().getPeriodType());
+			setPeriodType(new BudgetPeriodMonthly());
+		return getBudgetCategory().getPeriodType();
 	}
 	
 	/**
@@ -75,7 +74,7 @@ public class BudgetCategory extends Source {
 	 * @param periodType
 	 */
 	public void setPeriodType(BudgetPeriodType periodType) {
-		getBudgetCategory().setPeriodType(periodType.toString());
+		getBudgetCategory().setPeriodType(periodType);
 	}
 	
 	/**
@@ -111,7 +110,7 @@ public class BudgetCategory extends Source {
 	 * @return
 	 */
 	private String getPeriodKey(Date periodDate){
-		return getBudgetPeriodType() + ":" + BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), periodDate).getTime();
+		return getBudgetPeriodType().getName() + ":" + getBudgetPeriodType().getStartOfBudgetPeriod(periodDate).getTime();
 	}
 	
 	/**
@@ -123,25 +122,25 @@ public class BudgetCategory extends Source {
 		String[] splitKey = periodKey.split(":");
 		if (splitKey.length > 1){
 			long l = Long.parseLong(splitKey[1]);
-			return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(periodKey), new Date(l));
+			return getBudgetPeriodType().getStartOfBudgetPeriod(new Date(l));
 		}
 
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey, this.getModel());
 	}
 	
-	/**
-	 * Parses a periodKey to get the period type
-	 * @param periodKey
-	 * @return
-	 */
-	private BudgetPeriodType getPeriodType(String periodKey){
-		String[] splitKey = periodKey.split(":");
-		if (splitKey.length > 0){
-			return BudgetPeriodType.valueOf(splitKey[0]);
-		}
-
-		throw new DataModelProblemException("Cannot parse BudgetPeriodType from key " + periodKey, this.getModel());		
-	}
+//	/**
+//	 * Parses a periodKey to get the period type
+//	 * @param periodKey
+//	 * @return
+//	 */
+//	private BudgetPeriodType getPeriodType(String periodKey){
+//		String[] splitKey = periodKey.split(":");
+//		if (splitKey.length > 0){
+//			return BudgetPeriodType.valueOf(splitKey[0]);
+//		}
+//
+//		throw new DataModelProblemException("Cannot parse BudgetPeriodType from key " + periodKey, this.getModel());		
+//	}
 	
 	/**
 	 * Returns a list of BudgetPeriods, covering the entire range of periods
@@ -153,11 +152,11 @@ public class BudgetCategory extends Source {
 	public List<String> getBudgetPeriods(Date startDate, Date endDate){
 		List<String> budgetPeriodKeys = new LinkedList<String>();
 
-		Date temp = BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), startDate);
+		Date temp = getBudgetPeriodType().getStartOfBudgetPeriod(startDate);
 
-		while (temp.before(BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), endDate))){
+		while (temp.before(getBudgetPeriodType().getEndOfBudgetPeriod(endDate))){
 			budgetPeriodKeys.add(getPeriodKey(temp));
-			temp = BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), temp, 1);
+			temp = getBudgetPeriodType().getBudgetPeriodOffset(temp, 1);
 		}
 
 		return budgetPeriodKeys;
@@ -170,34 +169,34 @@ public class BudgetCategory extends Source {
 //		DataModel model = getBudgetCategory().getModel(); 
 		
 		//If Start and End are in the same budget period
-		if (BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), startDate).equals(
-				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
+		if (getBudgetPeriodType().getStartOfBudgetPeriod(startDate).equals(
+				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
 			long amount = getAmount(startDate);
-			long daysInPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
+			long daysInPeriod = getBudgetPeriodType().getDaysInPeriod(startDate); 
 			long daysBetween = DateFunctions.getDaysBetween(startDate, endDate, true);
 		
 			return (long) (((double) amount / (double) daysInPeriod) * daysBetween);
 		}
 		 
-		if (BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1).equals(
-				BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))
-				|| BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1).before(
-						BudgetPeriodUtil.getStartOfBudgetPeriod(getBudgetPeriodType(), endDate))){
+		if (getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).equals(
+				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))
+				|| getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).before(
+						getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
 			long amountStartPeriod = getAmount(startDate);
-			long daysInStartPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
-			long daysAfterStartDateInStartPeriod = DateFunctions.getDaysBetween(startDate, BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), startDate), true);
+			long daysInStartPeriod = getBudgetPeriodType().getDaysInPeriod(startDate); 
+			long daysAfterStartDateInStartPeriod = DateFunctions.getDaysBetween(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate), true);
 			long totalStartPeriod = (long) (((double) amountStartPeriod / (double) daysInStartPeriod) * daysAfterStartDateInStartPeriod);
 			
 			long totalInMiddle = 0;
 			for (String periodKey : getBudgetPeriods(
-					BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), startDate, 1),
-					BudgetPeriodUtil.getBudgetPeriodOffset(getBudgetPeriodType(), endDate, -1))) {
+					getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1),
+					getBudgetPeriodType().getBudgetPeriodOffset(endDate, -1))) {
 				totalInMiddle += getAmount(getPeriodDate(periodKey));
 			}
 			
 			long amountEndPeriod = getAmount(endDate);
-			long daysInEndPeriod = BudgetPeriodUtil.getDaysInPeriod(getBudgetPeriodType(), startDate); 
-			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(startDate, BudgetPeriodUtil.getEndOfBudgetPeriod(getBudgetPeriodType(), startDate), true);
+			long daysInEndPeriod = getBudgetPeriodType().getDaysInPeriod(startDate); 
+			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate), true);
 			long totalEndPeriod = (long) (((double) amountEndPeriod / (double) daysInEndPeriod) * daysBeforeEndDateInEndPeriod); 
 
 			return totalStartPeriod + totalInMiddle + totalEndPeriod;

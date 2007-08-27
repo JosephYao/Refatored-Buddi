@@ -1,7 +1,7 @@
 /*
  * Created on Jul 29, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.converter;
+package org.homeunix.thecave.buddi.plugin.builtin.imports;
 
 import java.io.File;
 import java.util.Date;

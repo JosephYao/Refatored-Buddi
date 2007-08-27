@@ -10,7 +10,6 @@ import java.io.File;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
-
 public abstract class BuddiImportPlugin implements MossPlugin {
 	
 	/**
@@ -26,5 +25,9 @@ public abstract class BuddiImportPlugin implements MossPlugin {
 	 */
 	public String getDescription() {
 		return null;
+	}
+	
+	public boolean isPluginActive() {
+		return true;
 	}
 }

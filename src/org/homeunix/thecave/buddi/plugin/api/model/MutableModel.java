@@ -18,6 +18,12 @@ public interface MutableModel extends ImmutableModel {
 	public void addBudgetCategory(MutableBudgetCategory budgetCategory);
 	
 	/**
+	 * Adds a scheduled transaction to the model
+	 * @param scheduledTransaction
+	 */
+	public void addScheduledTransaction(MutableScheduledTransaction scheduledTransaction);
+	
+	/**
 	 * Adds a transaction to the model
 	 * @param transaction
 	 */
@@ -40,6 +46,12 @@ public interface MutableModel extends ImmutableModel {
 	 * @param budgetCategory
 	 */
 	public void removeBudgetCategory(MutableBudgetCategory budgetCategory);
+	
+	/**
+	 * Removes the given scheduled transaction from the model
+	 * @param scheduledTransaction
+	 */
+	public void removeScheduledTransaction(MutableScheduledTransaction scheduledTransaction);
 	
 	/**
 	 * Removes the given transaction from the model

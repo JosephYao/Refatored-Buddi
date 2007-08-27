@@ -6,7 +6,6 @@ package org.homeunix.thecave.buddi.model;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.data.list.FilteredList;

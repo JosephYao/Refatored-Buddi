@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
@@ -33,6 +32,7 @@ import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTypeList;
 import org.homeunix.thecave.buddi.model.beans.DataModelBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.BuddiCipherStreamFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
@@ -54,6 +54,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	
 	private DataModelBean dataModel;
 	private final Map<String, ModelObjectImpl> uidMap = new HashMap<String, ModelObjectImpl>();
+//	private final Map<String, BudgetPeriodType> budgetPeriodMap = new HashMap<String, BudgetPeriodType>();
 	
 	private char[] password; //Store the password on load.  This is not the best practice 
 							 // from a security point of view, but I suppose it will work...
@@ -163,10 +164,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), BudgetPeriodType.BUDGET_PERIOD_MONTH, false));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), new BudgetPeriodMonthly(), false));
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), BudgetPeriodType.BUDGET_PERIOD_MONTH, true));
+			this.addBudgetCategory(new BudgetCategory(this, s.toString(), new BudgetPeriodMonthly(), true));
 		}
 
 		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
@@ -302,6 +303,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public List<BudgetCategory> getBudgetCategories(){
 		return new WrapperBudgetCategoryList(this, dataModel.getBudgetCategories());
 	}
+	
+//	public BudgetPeriodType getBudgetPeriodByName(String name){
+//		return budgetPeriodMap.get(name);
+//	}
 	
 	/**
 	 * Returns a list of all accounts in the model.

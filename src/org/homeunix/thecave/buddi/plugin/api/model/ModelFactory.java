@@ -5,13 +5,15 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.keys.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTypeImpl;
 
@@ -38,5 +40,11 @@ public class ModelFactory {
 		Type t = new Type(model.getModel(), name, credit);
 		
 		return new MutableTypeImpl(t);
+	}
+	
+	public static MutableScheduledTransaction createMutableScheduledTransaction(MutableModel model){
+		ScheduledTransaction st = new ScheduledTransaction(model.getModel());
+		
+		return new MutableScheduledTransactionImpl(st);
 	}
 }
