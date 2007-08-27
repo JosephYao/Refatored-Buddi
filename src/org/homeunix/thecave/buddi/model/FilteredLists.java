@@ -131,7 +131,7 @@ public class FilteredLists {
 				return DateFunctions.getStartOfMonth(today).before(t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_QUARTER == dateFilter) {
-				return DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(today, 0)).before(t.getDate());
+				return DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(today)).before(t.getDate());
 			} 
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_YEAR == dateFilter) {
 				return DateFunctions.getStartOfYear(today).before(t.getDate());				

@@ -12,7 +12,9 @@ import javax.swing.filechooser.FileFilter;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodQuarterly;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodWeekly;
+import org.homeunix.thecave.buddi.model.periods.BudgetPeriodYearly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
@@ -211,6 +213,8 @@ public class Const {
 	public final static BudgetPeriodType[] BUDGET_PERIOD_TYPES = {
 		new BudgetPeriodMonthly(),
 		new BudgetPeriodWeekly(),
+		new BudgetPeriodQuarterly(),
+		new BudgetPeriodYearly(),
 	};
 	
 	public final static String[] BUILT_IN_PREFERENCE_PANELS = {

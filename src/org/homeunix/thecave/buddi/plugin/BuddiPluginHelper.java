@@ -88,13 +88,13 @@ public class BuddiPluginHelper {
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(new Date(), 0)),
-				DateFunctions.getStartOfDay(DateFunctions.getEndOfQuarter(new Date(), 0)),
+				DateFunctions.getStartOfQuarter(new Date()),
+				DateFunctions.getEndOfQuarter(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_QUARTER)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(new Date(), -1)),
-				DateFunctions.getStartOfDay(DateFunctions.getEndOfQuarter(new Date(), -1)),
+				DateFunctions.addQuarters(DateFunctions.getStartOfQuarter(new Date()), -1),
+				DateFunctions.addQuarters(DateFunctions.getEndOfQuarter(new Date()), -1),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_QUARTER)
 		));
 		intervals.add(new DateChoice(

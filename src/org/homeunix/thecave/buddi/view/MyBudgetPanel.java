@@ -55,6 +55,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	private final JXTreeTable tree;
 	private final JLabel balanceLabel;
 
+	private final BudgetDateSpinnerModel dateSpinnerModel;
 	private final JSpinner dateSpinner;
 	private final JComboBox periodTypeComboBox;
 
@@ -69,7 +70,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree = new JXTreeTable(treeTableModel);
 
 		balanceLabel = new JLabel();
-		dateSpinner = new JSpinner(new BudgetDateSpinnerModel(treeTableModel));
+		dateSpinnerModel = new BudgetDateSpinnerModel(treeTableModel);
+		dateSpinner = new JSpinner(dateSpinnerModel);
 //		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
 		periodTypeComboBox = new JComboBox(Const.BUDGET_PERIOD_TYPES);
@@ -94,6 +96,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 //		}
 		if (e.getSource().equals(periodTypeComboBox)){
 			treeTableModel.setSelectedBudgetPeriodType((BudgetPeriodType) periodTypeComboBox.getSelectedItem());
+			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
 			updateContent();
 		}
 	}
@@ -164,12 +167,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			}
 		});
 		
-		periodTypeComboBox.setPreferredSize(dateSpinner.getPreferredSize());
+//		periodTypeComboBox.setPreferredSize(dateSpinner.getPreferredSize());
 		periodTypeComboBox.setSelectedItem(new BudgetPeriodMonthly());
 		periodTypeComboBox.addActionListener(this);
 		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
 
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		balanceLabelPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.BUDGET_NET_INCOME)));
+		balanceLabelPanel.add(periodTypeComboBox);
 		balanceLabelPanel.add(balanceLabel);
 
 		JPanel listScrollerPanel = new JPanel(new BorderLayout());
@@ -179,13 +184,13 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		JPanel spinnerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(dateSpinner);
 
-		JPanel periodPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		periodPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SHOW_BUDGET_CATEGORIES_FOR_PERIOD)));
-		periodPanel.add(periodTypeComboBox);
+//		JPanel periodPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//		periodPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SHOW_BUDGET_CATEGORIES_FOR_PERIOD)));
+//		periodPanel.add(periodTypeComboBox);
 		
 		JPanel topPanel = new JPanel(new BorderLayout());
-		topPanel.add(periodPanel, BorderLayout.EAST);
-		topPanel.add(spinnerPanel, BorderLayout.WEST);
+//		topPanel.add(periodPanel, BorderLayout.EAST);
+		topPanel.add(spinnerPanel, BorderLayout.EAST);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
@@ -236,12 +241,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 				treeTableModel.getSelectedBudgetPeriodType())) {
 			budgetedNetIncome += (bc.getAmount(treeTableModel.getSelectedDate()) * (bc.isIncome() ? 1 : -1));
 		}
-		balanceLabel.setText(TextFormatter.getHtmlWrapper(
-				TextFormatter.getTranslation(BuddiKeys.BUDGET_NET_INCOME)
-				+ " "
-				+ TextFormatter.getTranslation(treeTableModel.getSelectedBudgetPeriodType().getName())
-				+ " : "
-				+ TextFormatter.getFormattedCurrency(budgetedNetIncome)));
+		balanceLabel.setText(TextFormatter.getHtmlWrapper(TextFormatter.getFormattedCurrency(budgetedNetIncome)));
 		
 		//Restore the state of the expanded / unrolled nodes.
 		for (BudgetCategory bc : ((DataModel) parent.getDocument()).getBudgetCategories()) {
