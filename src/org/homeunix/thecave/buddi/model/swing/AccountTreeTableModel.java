@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.model.FilteredLists.TypeListFilteredByAccounts;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class AccountTreeTableModel extends AbstractTreeTableModel {
@@ -47,20 +47,24 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 		if (node.getClass().equals(Account.class)){
 			Account a = (Account) node;
 			if (column == 1)
-				return InternalFormatter.getFormattedNameForAccount(a).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
+				return TextFormatter.getHtmlWrapper(
+						TextFormatter.getFormattedNameForAccount(a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
 			if (column == 2)
-				return InternalFormatter.getFormattedCurrency(a.getBalance(), a.getType().isCredit());
+				return TextFormatter.getHtmlWrapper(
+						TextFormatter.getFormattedCurrency(a.getBalance(), a.getType().isCredit()));
 		}
 		if (node.getClass().equals(Type.class)){
 			Type t = (Type) node;
 			if (column == 1)
-				return InternalFormatter.getFormattedNameForType(t);
+				return TextFormatter.getHtmlWrapper(
+						TextFormatter.getFormattedNameForType(t));
 			if (column == 2) {
 				int amount = 0;
 				for (Account a : new AccountListFilteredByType(model, t)) {
 					amount += a.getBalance();
 				}
-				return InternalFormatter.getFormattedCurrency(amount, t.isCredit());
+				return TextFormatter.getHtmlWrapper(
+						TextFormatter.getFormattedCurrency(amount, t.isCredit()));
 			}
 		}
 		return null;

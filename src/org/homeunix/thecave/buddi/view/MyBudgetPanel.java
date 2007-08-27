@@ -4,7 +4,6 @@
 package org.homeunix.thecave.buddi.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -15,10 +14,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -36,6 +33,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
@@ -46,7 +44,7 @@ import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
 import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
@@ -113,9 +111,6 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setLeafIcon(null);
 		tree.setTreeCellRenderer(new BudgetCategoryNameCellRenderer());
 		
-//		dateSpinner.setModel(model)
-//		
-
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
 			MossDecimalField editor = new MossDecimalField(0, true, 2);
 			final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -175,20 +170,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 //		periodTypeComboBox.setPreferredSize(InternalFormatter.getComponentSize(periodTypeComboBox, 100));
 		periodTypeComboBox.setSelectedItem(new BudgetPeriodMonthly());
 		periodTypeComboBox.addActionListener(this);
-		periodTypeComboBox.setRenderer(new DefaultListCellRenderer(){
-			public static final long serialVersionUID = 0;
-			@Override
-			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				
-				if (value instanceof MossPlugin)
-					this.setText(TextFormatter.getTranslation(((MossPlugin) value).getName()));
-				else
-					this.setText("Unknown Value");
-				
-				return this;
-			}
-		});
+		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
 
 		JPanel balanceLabelPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		balanceLabelPanel.add(balanceLabel);
@@ -249,6 +231,20 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		
 		//Fire a change event on the table model.
 		treeTableModel.fireStructureChanged();
+		
+		//Update the balance label
+		long budgetedNetIncome = 0;
+		for (BudgetCategory bc : new FilteredLists.BudgetCategoryListFilteredByPeriodType(
+				(DataModel) parent.getDocument(), 
+				treeTableModel.getSelectedBudgetPeriodType())) {
+			budgetedNetIncome += (bc.getAmount(treeTableModel.getSelectedDate()) * (bc.isIncome() ? 1 : -1));
+		}
+		balanceLabel.setText(TextFormatter.getHtmlWrapper(
+				TextFormatter.getTranslation(BuddiKeys.BUDGET_NET_INCOME)
+				+ " "
+				+ TextFormatter.getTranslation(treeTableModel.getSelectedBudgetPeriodType().getName())
+				+ " : "
+				+ TextFormatter.getFormattedCurrency(budgetedNetIncome)));
 		
 		//Restore the state of the expanded / unrolled nodes.
 		for (BudgetCategory bc : ((DataModel) parent.getDocument()).getBudgetCategories()) {

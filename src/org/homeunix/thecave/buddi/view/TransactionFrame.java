@@ -40,6 +40,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.TransactionsFrameMenuBar;
 import org.homeunix.thecave.buddi.view.swing.TransactionCellRenderer;
@@ -114,7 +115,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							sb.append("<br>");
 							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
 								sb.append("<font color='red'>");
-							sb.append(InternalFormatter.getFormattedCurrency(transaction.getAmount()));
+							sb.append(TextFormatter.getFormattedCurrency(transaction.getAmount()));
 							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
 								sb.append("</font>");
 

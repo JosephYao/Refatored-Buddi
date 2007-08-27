@@ -14,7 +14,6 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.util.BudgetCalculator;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -74,8 +73,8 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		sb.append(TextFormatter.getTranslation(BuddiKeys.ACTUAL));
 		sb.append("</th><th>");
 		sb.append(TextFormatter.getTranslation(BuddiKeys.AVERAGE));
-		sb.append(" / ");
-		sb.append(TextFormatter.getTranslation(model.getPeriodType()));
+//		sb.append(" / ");
+//		sb.append(TextFormatter.getTranslation(model.getPeriodType()));
 		sb.append("</th></tr>\n");
 		
 		long totalActual = 0, totalAverage = 0;
@@ -96,7 +95,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 				}
 			}
 
-			long average = BudgetCalculator.getAverageByInterval(actual, model.getPeriodType(), startDate, endDate);
+			long average = 0;//BudgetCalculator.getAverageByInterval(actual, model.getPeriodType(), startDate, endDate);
 			if (c.isIncome()){
 				totalAverage += average;
 			}

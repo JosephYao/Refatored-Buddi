@@ -8,7 +8,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public class DecimalCellRenderer extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;
@@ -18,9 +18,9 @@ public class DecimalCellRenderer extends DefaultTableCellRenderer {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 		if (value instanceof Long)
-			this.setText(InternalFormatter.getFormattedCurrency((Long) value));
+			this.setText(TextFormatter.getFormattedCurrency((Long) value));
 		else
-			this.setText(InternalFormatter.getFormattedCurrency(0));
+			this.setText(TextFormatter.getFormattedCurrency(0));
 
 		if (hasFocus && isSelected) {
 			table.editCellAt(row,column);

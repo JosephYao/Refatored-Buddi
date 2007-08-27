@@ -28,7 +28,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 import org.homeunix.thecave.buddi.model.Type;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AccountTreeTableModel;
-import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -194,6 +194,9 @@ public class MyAccountsPanel extends MossPanel {
 			netWorth += a.getBalance();
 		}
 		
-		balanceLabel.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) + ": " + InternalFormatter.getFormattedCurrency(netWorth));
+		balanceLabel.setText(TextFormatter.getHtmlWrapper(
+				PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) 
+				+ ": " 
+				+ TextFormatter.getFormattedCurrency(netWorth)));
 	}
 }

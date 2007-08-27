@@ -36,4 +36,9 @@ public abstract class BuddiBudgetPeriodTypePlugin implements MossPlugin, BudgetP
 			return getName().equals(((BuddiBudgetPeriodTypePlugin) obj).getName());
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return getName().toString();
+	}
 }

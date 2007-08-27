@@ -9,7 +9,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public class BudgetCategoryNameCellRenderer extends DefaultTreeCellRenderer {
 	public static final long serialVersionUID = 0;
@@ -20,7 +20,8 @@ public class BudgetCategoryNameCellRenderer extends DefaultTreeCellRenderer {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 		
 		if (value instanceof BudgetCategory)
-			this.setText(InternalFormatter.getFormattedNameForCategory((BudgetCategory) value));
+			this.setText(TextFormatter.getHtmlWrapper(
+					TextFormatter.getFormattedNameForCategory((BudgetCategory) value)));
 		else
 			this.setText("");
 		
