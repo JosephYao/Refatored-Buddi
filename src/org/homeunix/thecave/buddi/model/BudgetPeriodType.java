@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-public interface BudgetPeriodType {
+public abstract class BudgetPeriodType {
 	/**
 	 * Method to move forwards or backwards by the given number of periods.  This 
 	 * must conform to the following statements:
@@ -23,7 +23,7 @@ public interface BudgetPeriodType {
 	 * @param offset
 	 * @return
 	 */
-	public Date getBudgetPeriodOffset(Date date, int offset);
+	public abstract Date getBudgetPeriodOffset(Date date, int offset);
 	
 	/**
 	 * Returns the number of days in the period specified by date.  The given 
@@ -34,7 +34,7 @@ public interface BudgetPeriodType {
 	 * @param date
 	 * @return
 	 */
-	public long getDaysInPeriod(Date date);
+	public abstract long getDaysInPeriod(Date date);
 	
 	/**
 	 * Returns the date format associated with this budget period type.  This is
@@ -45,26 +45,41 @@ public interface BudgetPeriodType {
 	 * we want to show days as well, the format would be "dd MMM yyyy". 
 	 * @return
 	 */
-	public String getDateFormat();
+	public abstract String getDateFormat();
 	
 	/**
 	 * Returns the start of the budget period which contains the given date.
 	 * @param date
 	 * @return
 	 */
-	public Date getStartOfBudgetPeriod(Date date);
+	public abstract Date getStartOfBudgetPeriod(Date date);
 	
 	/**
 	 * Returns the end of the budget period which contains the given date.
 	 * @param date
 	 * @return
 	 */
-	public Date getEndOfBudgetPeriod(Date date);
+	public abstract Date getEndOfBudgetPeriod(Date date);
 	
 	/**
 	 * Returns the name of this budget period.  It will be filtered through the translator
 	 * before displaying it, do this can be a translation key if desired.
 	 * @return
 	 */
-	public String getName();
+	public abstract String getName();
+	
+	@Override
+	public boolean equals(Object obj) {
+		return toString().equals(obj.toString());
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
+	@Override
+	public int hashCode() {
+		return getName().hashCode();
+	}
 }

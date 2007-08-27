@@ -37,8 +37,6 @@ import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
-import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
-import org.homeunix.thecave.buddi.plugin.api.BuddiBudgetPeriodTypePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
@@ -47,7 +45,6 @@ import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
-import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
@@ -75,7 +72,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		dateSpinner = new JSpinner(new BudgetDateSpinnerModel(treeTableModel));
 //		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
-		periodTypeComboBox = new JComboBox(new BackedComboBoxModel<BuddiBudgetPeriodTypePlugin>(BuddiPluginFactory.getBudgetPeriodTypePlugins()));
+		periodTypeComboBox = new JComboBox(Const.BUDGET_PERIOD_TYPES);
 		
 		open();
 	}

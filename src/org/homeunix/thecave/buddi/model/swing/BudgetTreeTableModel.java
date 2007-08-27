@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetPeriodType;
@@ -17,7 +18,6 @@ import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class BudgetTreeTableModel extends AbstractTreeTableModel {
@@ -44,7 +44,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 //		this.month = DateFunctions.getMonth(new Date());
 		this.monthOffset = 2; //This puts the current month in the middle of three columns.
 		
-		for (BudgetPeriodType type : BuddiPluginFactory.getBudgetPeriodTypePlugins()) {
+		for (BudgetPeriodType type : Const.BUDGET_PERIOD_TYPES) {
 			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
 		}
 	}

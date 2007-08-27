@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.model.BudgetPeriodType;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodWeekly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -207,9 +208,9 @@ public class Const {
 		"Kc"	//Something else; requested by a user
 	};
 	
-	public final static String[] BUILT_IN_BUDGET_PERIOD_TYPES = {
-		BudgetPeriodMonthly.class.toString(),
-		BudgetPeriodWeekly.class.toString(),
+	public final static BudgetPeriodType[] BUDGET_PERIOD_TYPES = {
+		new BudgetPeriodMonthly(),
+		new BudgetPeriodWeekly(),
 	};
 	
 	public final static String[] BUILT_IN_PREFERENCE_PANELS = {
