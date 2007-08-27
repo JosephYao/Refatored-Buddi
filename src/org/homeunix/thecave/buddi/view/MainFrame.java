@@ -71,6 +71,10 @@ public class MainFrame extends MossDocumentFrame {
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile().getAbsolutePath();
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.BUDDI) + dataFile);
 
+		myAccounts.updateContent();
+		myBudget.updateContent();
+		myReports.updateContent();
+		
 		super.updateContent();
 	}
 	

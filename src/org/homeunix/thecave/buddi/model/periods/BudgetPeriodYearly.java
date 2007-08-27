@@ -28,10 +28,10 @@ public class BudgetPeriodYearly extends BudgetPeriodType {
 	}
 	
 	public String getDateFormat() {
-		return "MMM yyyy";
+		return "yyyy";
 	}
 			
 	public String getName() {
-		return BuddiKeys.BUDGET_PERIOD_QUARTER.toString();
+		return BuddiKeys.BUDGET_PERIOD_YEAR.toString();
 	}
 }

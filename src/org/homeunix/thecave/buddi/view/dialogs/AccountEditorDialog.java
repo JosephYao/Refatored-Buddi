@@ -197,7 +197,8 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 				a.setNotes(notes.getValue().toString());
 			}
 
-			System.out.println(model);
+			a.updateBalance();
+			
 			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){
