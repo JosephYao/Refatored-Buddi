@@ -19,13 +19,11 @@ import org.homeunix.thecave.buddi.model.DataModel;
 public interface ImmutableModel extends ImmutableModelObject {
 	
 	/**
-	 * Returns the wrapped object from the underlying data model.  By 
-	 * accessing this method, you bypass all protection which the Buddi API
-	 * gives you; it is not recommended to use this method unless you understand
-	 * the risks associated with it. 
+	 * Returns the account referenced by the given name.
+	 * @param name
 	 * @return
 	 */
-	public DataModel getModel();
+	public ImmutableAccount getAccount(String name);
 	
 	/**
 	 * Returns a list of all immutable accounts in the model
@@ -40,10 +38,20 @@ public interface ImmutableModel extends ImmutableModelObject {
 	public List<ImmutableBudgetCategory> getBudgetCategories();
 	
 	/**
-	 * Returns a list of all immutable types in the model
+	 * Returns the budget category referenced by the given full name.
+	 * @param fullName
 	 * @return
 	 */
-	public List<ImmutableType> getTypes();
+	public ImmutableBudgetCategory getBudgetCategory(String fullName);
+	
+	/**
+	 * Returns the wrapped object from the underlying data model.  By 
+	 * accessing this method, you bypass all protection which the Buddi API
+	 * gives you; it is not recommended to use this method unless you understand
+	 * the risks associated with it. 
+	 * @return
+	 */
+	public DataModel getModel();
 	
 	/**
 	 * Returns a list of all immutable transactions in the model
@@ -53,17 +61,17 @@ public interface ImmutableModel extends ImmutableModelObject {
 	
 	/**
 	 * Returns a list of all immutable transactions in the model which are
-	 * associatd with the given source
-	 * @return
-	 */
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source);
-	
-	/**
-	 * Returns a list of all immutable transactions in the model which are
 	 * between startDate and endDate
 	 * @return
 	 */
 	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate);
+	
+	/**
+	 * Returns a list of all immutable transactions in the model which are
+	 * associatd with the given source
+	 * @return
+	 */
+	public List<ImmutableTransaction> getTransactions(ImmutableSource source);
 	
 	/**
 	 * Returns a list of all immutable transactions in the model which are associated with
@@ -71,4 +79,17 @@ public interface ImmutableModel extends ImmutableModelObject {
 	 * @return
 	 */
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate);
+	
+	/**
+	 * Returns the type referenced by the given name.
+	 * @param name
+	 * @return
+	 */
+	public ImmutableType getType(String name);
+	
+	/**
+	 * Returns a list of all immutable types in the model
+	 * @return
+	 */
+	public List<ImmutableType> getTypes();
 }

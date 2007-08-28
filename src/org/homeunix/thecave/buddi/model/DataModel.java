@@ -34,6 +34,7 @@ import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
@@ -54,7 +55,13 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	
 	private DataModelBean dataModel;
 	private final Map<String, ModelObjectImpl> uidMap = new HashMap<String, ModelObjectImpl>();
-//	private final Map<String, BudgetPeriodType> budgetPeriodMap = new HashMap<String, BudgetPeriodType>();
+	
+	//These are maps of model objects to their names.  This serves two purposes: 1) we can easily
+	// verify if there is already another object of this name, and 2) we can retrieve it easily,
+	// which can be useful for some tasks.
+	private final Map<String, Account> accountMap = new HashMap<String, Account>();
+	private final Map<String, BudgetCategory> budgetCategoryMap = new HashMap<String, BudgetCategory>();
+	private final Map<String, Type> typeMap = new HashMap<String, Type>();
 	
 	private char[] password; //Store the password when loaded, and use the same one for save().
 							 // This is obviously not the best practice to use 
@@ -308,6 +315,15 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		return new WrapperBudgetCategoryList(this, dataModel.getBudgetCategories());
 	}
 	
+	/**
+	 * Returns the budget category referenced by Full Name.
+	 * @param fullName
+	 * @return
+	 */
+	public BudgetCategory getBudgetCategory(String fullName){
+		return budgetCategoryMap.get(fullName);
+	}
+	
 //	public BudgetPeriodType getBudgetPeriodByName(String name){
 //		return budgetPeriodMap.get(name);
 //	}
@@ -318,6 +334,15 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 */
 	public List<Account> getAccounts() {
 		return new WrapperAccountList(this, dataModel.getAccounts());
+	}
+	
+	/**
+	 * Returns the account of the given name.
+	 * @param name
+	 * @return
+	 */
+	public Account getAccount(String name){
+		return accountMap.get(name);
 	}
 
 	/**
@@ -372,6 +397,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 	public List<Type> getTypes() {
 		return new WrapperTypeList(this, dataModel.getTypes());
+	}
+	
+	public Type getType(String name){
+		return typeMap.get(name);
 	}
 
 	/**
@@ -430,6 +459,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		checkValid(account, true, false);
 
 		dataModel.getAccounts().add(account.getAccountBean());
+		accountMap.put(TextFormatter.getTranslation(account.getName()), account);
 		setChanged();
 	}
 
@@ -459,8 +489,10 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		//Actually remove or set the delete flag as needed.
 		if (!permanent)
 			account.setDeleted(true);
-		else 
+		else {
 			dataModel.getAccounts().remove(account.getAccountBean());
+			accountMap.remove(account.getName());
+		}
 
 		setChanged();
 		
@@ -489,6 +521,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		checkValid(budgetCategory, true, false);
 
 		dataModel.getBudgetCategories().add(budgetCategory.getBudgetCategoryBean());
+		budgetCategoryMap.put(TextFormatter.getTranslation(budgetCategory.getFullName()), budgetCategory);
 		setChanged();
 	}
 
@@ -530,6 +563,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			}
 			else {
 				dataModel.getBudgetCategories().remove(bc.getBudgetCategoryBean());
+				budgetCategoryMap.remove(budgetCategory.getFullName());
 			}
 		}
 
@@ -560,6 +594,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		checkValid(type, true, false);
 
 		dataModel.getTypes().add(type.getTypeBean());
+		typeMap.put(TextFormatter.getTranslation(type.getName()), type);
 		setChanged();
 	}
 
@@ -580,6 +615,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		}
 
 		dataModel.getTypes().remove(type.getTypeBean());
+		typeMap.remove(type.getName());
 		setChanged();
 		
 		return true;
@@ -700,11 +736,13 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		for (Account a : getAccounts()) {
 			checkValid(a, false, true);
 			registerObjectInUidMap(a);
+			accountMap.put(a.getName(), a);
 		}
 
 		for (BudgetCategory bc : getBudgetCategories()) {
 			checkValid(bc, false, true);
 			registerObjectInUidMap(bc);
+			budgetCategoryMap.put(bc.getFullName(), bc);
 		}
 
 //		for (BudgetPeriodBean bpb : dataModel.getBudgetPeriods().values()) {
@@ -716,6 +754,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		for (Type t : getTypes()) {
 			checkValid(t, false, true);
 			registerObjectInUidMap(t);	
+			typeMap.put(t.getName(), t);
 		}
 
 		for (Transaction t : getTransactions()) {

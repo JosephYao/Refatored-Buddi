@@ -29,8 +29,8 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	}
 	
 	
-	public DataModel getModel(){
-		return model;
+	public ImmutableAccount getAccount(String name) {
+		return new MutableAccountImpl(getModel().getAccount(name));
 	}
 	
 	public List<ImmutableAccount> getAccounts(){
@@ -41,23 +41,35 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getModel(), getModel().getBudgetCategories());
 	}
 	
-	public List<ImmutableType> getTypes(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableType, Type>(getModel(), getModel().getTypes());		
+	public ImmutableBudgetCategory getBudgetCategory(String fullName) {
+		return new MutableBudgetCategoryImpl(getModel().getBudgetCategory(fullName));
+	}
+	
+	public DataModel getModel(){
+		return model;
 	}
 	
 	public List<ImmutableTransaction> getTransactions(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions());
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
-	}
-	
 	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
 	}
 	
+	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
+	}
+	
 	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
+	}
+	
+	public ImmutableType getType(String name) {
+		return new MutableTypeImpl(getModel().getType(name));
+	}
+	
+	public List<ImmutableType> getTypes(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableType, Type>(getModel(), getModel().getTypes());		
 	}
 }
