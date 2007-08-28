@@ -74,10 +74,8 @@ public class TextFormatter {
 	 * currency symbol in the correct position (whether before or after the
 	 * amount).  Optionally it will be wrapped in red font tags.
 	 */
-	public static String getFormattedCurrency(long value, boolean negate){
-		if (negate)
-			value = value * -1;
-		return getFormattedCurrency(value, false, isRed(value));
+	public static String getFormattedCurrency(long value, boolean isRed){
+		return getFormattedCurrency(value, isRed, false);
 	}
 	
 	/**
@@ -86,7 +84,7 @@ public class TextFormatter {
 	 * @return
 	 */
 	public static String getFormattedCurrency(long value){
-		return getFormattedCurrency(value, false);
+		return getFormattedCurrency(value, value < 0);
 	}
 	
 	/**
@@ -104,13 +102,13 @@ public class TextFormatter {
 	 * @param value The currency amount, in cents (as per Buddi's internal 
 	 * representation of currency).  For instance, to represent the value
 	 * $123.45, you would pass in 12345.
-	 * @param red Wrap the return string in HTML font tags to make it red.
+	 * @param isRed Wrap the return string in HTML font tags to make it red.
 	 * @param negate Multiply the value by *1 before rendering.  
 	 * @return A string with proper decimal places, plus the user's defined 
 	 * currency symbol in the correct position (whether before or after the
 	 * amount).  Optionally it will be wrapped in red font tags.
 	 */
-	public static String getFormattedCurrency(long value, boolean negate, boolean red){
+	public static String getFormattedCurrency(long value, boolean isRed, boolean negate){
 		if (negate)
 			value *= -1;
 
@@ -119,11 +117,11 @@ public class TextFormatter {
 
 		
 		String formatted = 
-			(red ? "<font color='red'>" : "")
+			(isRed ? "<font color='red'>" : "")
 			+ (symbolAfterAmount ? "" : symbol)
 			+ Formatter.getDecimalFormat().format((double) value / 100.0)  
 			+ (symbolAfterAmount ? " " + symbol : "")
-			+ (red ? "</font>" : "");
+			+ (isRed ? "</font>" : "");
 
 		return formatted;
 	}

@@ -197,7 +197,7 @@ public class InternalFormatter {
 
 	public static boolean isRed(Account a, long value){
 		if (a.getType().isCredit())
-			return value <= 0;
+			return value >= 0;
 		else
 			return value < 0;
 	}
@@ -215,7 +215,7 @@ public class InternalFormatter {
 
 	public static boolean isRed(Type t, long value){
 		if (t.isCredit()){
-			return value <= 0;	
+			return value >= 0;	
 		}
 		else {
 			return value < 0;

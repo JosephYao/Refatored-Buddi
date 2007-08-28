@@ -39,9 +39,9 @@ import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.swing.BudgetCategoryNameCellRenderer;
-import org.homeunix.thecave.buddi.view.swing.DecimalCellEditor;
-import org.homeunix.thecave.buddi.view.swing.DecimalCellRenderer;
+import org.homeunix.thecave.buddi.view.swing.MyBudgetTableNameCellRenderer;
+import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
+import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
@@ -109,7 +109,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setClosedIcon(null);
 		tree.setOpenIcon(null);
 		tree.setLeafIcon(null);
-		tree.setTreeCellRenderer(new BudgetCategoryNameCellRenderer());
+		tree.setTreeCellRenderer(new MyBudgetTableNameCellRenderer());
 		
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
 			MossDecimalField editor = new MossDecimalField(0, true, 2);
@@ -130,8 +130,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 					return false;
 				}
 			});
-			tree.getColumn(i).setCellRenderer(new DecimalCellRenderer());
-			tree.getColumn(i).setCellEditor(new DecimalCellEditor(editor));
+			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
+			
+			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
 		}
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

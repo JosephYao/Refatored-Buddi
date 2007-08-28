@@ -18,6 +18,8 @@ import org.homeunix.thecave.buddi.model.FilteredLists;
 import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class BudgetTreeTableModel extends AbstractTreeTableModel {
@@ -119,8 +121,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			BudgetCategory bc = (BudgetCategory) node;
 			if (column == 0)
 				return bc;
-			if (column >= 1 && column < getColumnCount())
-				return bc.getAmount(getColumnDate(column));
+			if (column >= 1 && column < getColumnCount()){
+				long value = bc.getAmount(getColumnDate(column));
+				return TextFormatter.getHtmlWrapper(TextFormatter.getFormattedCurrency(value, InternalFormatter.isRed(bc, value))); 
+			}
 		}
 		return null;
 	}
