@@ -27,7 +27,6 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableType;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 
 /**
@@ -39,8 +38,7 @@ public class LegacyModelConverter {
 
 
 	public static void convert(MutableModel model, File oldFile) throws DocumentLoadException {
-
-//		DataModelBean newModelBean = new DataModelBean(); 
+ 
 		DataInstance.getInstance().loadDataFile(oldFile);
 		DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();
 
