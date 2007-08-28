@@ -15,7 +15,6 @@ public class WindowEntry extends MossMenuItem {
 	
 	public WindowEntry(MossFrame parentFrame, MossFrame targetFrame) {
 		super(parentFrame, targetFrame.getTitle());
-		
 		this.targetFrame = targetFrame;
 	}
 	

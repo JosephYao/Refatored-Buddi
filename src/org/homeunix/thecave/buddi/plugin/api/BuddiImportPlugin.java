@@ -7,27 +7,49 @@ package org.homeunix.thecave.buddi.plugin.api;
 
 import java.io.File;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 public abstract class BuddiImportPlugin implements MossPlugin {
 	
 	/**
-	 * Imports data as required.  The implementor chooses where to send
-	 * the file (it is recommended to open a JFileChooser, but
-	 * this is up to the implementor to decide).
+	 * Imports data as required.  The plugin launch code will prompt for a file
+	 * and pass it in (unless you override the isPromptForFile() method to return false).
 	 */
 	public abstract void importData(MutableModel model, File file);
 	
 	/**
-	 * This is not used in BuddiImportPlugin.
-	 * @see org.homeunix.thecave.moss.plugin.MossPlugin#getDescription()
+	 * Return the description which shows up in the file chooser.  By default, this 
+	 * is set to "Buddi Import Files".  This value is filtered through the translator
+	 * before being displayed.
 	 */
 	public String getDescription() {
-		return null;
+		return BuddiKeys.FILE_DESCRIPTION_BUDDI_IMPORT_FILES.toString();
 	}
 	
 	public boolean isPluginActive() {
 		return true;
+	}
+	
+	/**
+	 * Should Buddi prompt for a file to import?  Defaults to true.  If you know what
+	 * the file name is (or you are importing from a different source, such as the 
+	 * network), you should override this method and return false. 
+	 * @return
+	 */
+	public boolean isPromptForFile(){
+		return true;
+	}
+	
+	/**
+	 * Override to specify that Buddi should only include certain file types in 
+	 * the file chooser.  This only has an effect if isPromptForFile() is true.  If
+	 * you want to do this, return a String array of the file extensions which you wish
+	 * to match.  The plugin loader will create a FileFilter for this.
+	 * @return
+	 */
+	public String[] getFileExtensions(){
+		return null;
 	}
 }

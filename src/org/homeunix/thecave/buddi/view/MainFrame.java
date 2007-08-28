@@ -67,6 +67,13 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	@Override
+	public void initPostPack() {
+		super.initPostPack();
+		
+		updateContent();
+	}
+	
+	@Override
 	public void updateContent() {
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile().getAbsolutePath();
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.BUDDI) + dataFile);

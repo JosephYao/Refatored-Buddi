@@ -26,6 +26,9 @@ public class FileMenu extends MossMenu {
 		this.add(new FileSave(frame));
 		this.add(new FileSaveAs(frame));
 		this.addSeparator();
+		this.add(new FileImportMenu(frame));
+		this.add(new FileExportMenu(frame));
+		this.addSeparator();
 		this.add(new FileCloseWindow(frame));
 		if (!OperatingSystemUtil.isMac()){
 			this.addSeparator();

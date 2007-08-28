@@ -60,6 +60,68 @@ public class BuddiPluginFactory extends PluginFactory {
 		return reports;
 	}
 	
+	/**
+	 * Returns a list of valid plugin objects, both built-in and user-defined.
+	 * This method returns only plugins of type BuddiImportPlugin. 
+	 * @return
+	 */
+	public static List<BuddiImportPlugin> getImportPlugins(){
+		List<BuddiImportPlugin> imports = new LinkedList<BuddiImportPlugin>();
+
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_IMPORTS){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiImportPlugin){
+				imports.add((BuddiImportPlugin) plugin);
+			}
+		}
+
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+					if (plugin instanceof BuddiImportPlugin){
+						imports.add((BuddiImportPlugin) plugin);
+					}
+				}
+			}
+		}
+
+		return imports;
+	}
+	
+	/**
+	 * Returns a list of valid plugin objects, both built-in and user-defined.
+	 * This method returns only plugins of type BuddiExportPlugin. 
+	 * @return
+	 */
+	public static List<BuddiExportPlugin> getExportPlugins(){
+		List<BuddiExportPlugin> imports = new LinkedList<BuddiExportPlugin>();
+
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_EXPORTS){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiExportPlugin){
+				imports.add((BuddiExportPlugin) plugin);
+			}
+		}
+
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+					if (plugin instanceof BuddiExportPlugin){
+						imports.add((BuddiExportPlugin) plugin);
+					}
+				}
+			}
+		}
+
+		return imports;
+	}
+	
 //	/**
 //	 * Returns a list of all BudgetPeriodType plugins, including both built in 
 //	 * ones and user-defined ones from Plugins. 

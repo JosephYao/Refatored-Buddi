@@ -16,6 +16,7 @@ import org.homeunix.thecave.buddi.model.periods.BudgetPeriodQuarterly;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodWeekly;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodYearly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.builtin.imports.ImportLegacyData;
 import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
@@ -233,6 +234,14 @@ public class Const {
 		ExpensesPieGraph.class.getCanonicalName(),
 		NetWorthOverTime.class.getCanonicalName(),
 	};
+	
+	public static final String[] BUILT_IN_IMPORTS = {
+		ImportLegacyData.class.getCanonicalName(),
+	};
+	
+	public static final String[] BUILT_IN_EXPORTS = {
+		
+	};	
 		
 	private Const(){}
 }
