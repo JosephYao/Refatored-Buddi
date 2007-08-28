@@ -34,7 +34,7 @@ import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.util.BuddiCipherStreamFactory;
+import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
@@ -56,10 +56,15 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	private final Map<String, ModelObjectImpl> uidMap = new HashMap<String, ModelObjectImpl>();
 //	private final Map<String, BudgetPeriodType> budgetPeriodMap = new HashMap<String, BudgetPeriodType>();
 	
-	private char[] password; //Store the password on load.  This is not the best practice 
-							 // from a security point of view, but I suppose it will work...
-							 // The alternative is to create a Cipher object from the password,
-							 // and store that instead...
+	private char[] password; //Store the password when loaded, and use the same one for save().
+							 // This is obviously not the best practice to use 
+							 // from a security point of view.  However, if a malicious
+							 // third party has good enough access to the machine to be able
+							 // to read private Java objects, they will just read it when
+							 // we call MossCryptoFactory anyways - the password is handed 
+							 // there in plain text as well.  The window is already there - this
+							 // just increases the time it is available for.
+
 	
 	/**
 	 * Creates a new DataModel, given the backing bean.
@@ -100,7 +105,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		try {
 			InputStream is;
-			BuddiCipherStreamFactory factory = new BuddiCipherStreamFactory();
+			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			password = null;
 			
 			//Loop until the user gets the password correct, hits cancel, 
@@ -208,13 +213,12 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 		try {
-			password = null;
 			if ((flags & ENCRYPT_DATA_FILE) != 0){
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 				password = passwordDialog.askForPassword(true, false);
 			}
 			
-			BuddiCipherStreamFactory factory = new BuddiCipherStreamFactory();
+			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
 			
 

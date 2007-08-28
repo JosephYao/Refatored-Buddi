@@ -4,7 +4,7 @@
 package org.homeunix.thecave.buddi.util;
 
 import org.homeunix.thecave.moss.util.crypto.CipherException;
-import org.homeunix.thecave.moss.util.crypto.CipherStreamFactory;
+import org.homeunix.thecave.moss.util.crypto.MossCryptoFactory;
 
 /**
  * A class which extends CipherStreamFactory and provides the header and canary values
@@ -13,11 +13,11 @@ import org.homeunix.thecave.moss.util.crypto.CipherStreamFactory;
  * @author wyatt
  *
  */
-public class BuddiCipherStreamFactory  extends CipherStreamFactory {
+public class BuddiCryptoFactory  extends MossCryptoFactory {
 	private static final byte[] CANARY = "0123456789abcdef".getBytes();
 	private static final byte[] HEADER = "buddi3_data".getBytes();
 
-	public BuddiCipherStreamFactory() throws CipherException {}
+	public BuddiCryptoFactory() throws CipherException {}
 	
 	@Override
 	public byte[] getCanary() {
