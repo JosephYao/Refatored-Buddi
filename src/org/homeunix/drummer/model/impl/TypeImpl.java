@@ -93,7 +93,7 @@ public class TypeImpl extends EObjectImpl implements Type {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+		return TextFormatter.getTranslation(name);
 	}
 
 	/**

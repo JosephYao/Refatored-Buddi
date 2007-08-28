@@ -30,6 +30,8 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	
 	
 	public ImmutableAccount getAccount(String name) {
+		if (getModel().getAccount(name) == null)
+			return null;
 		return new MutableAccountImpl(getModel().getAccount(name));
 	}
 	
@@ -42,6 +44,8 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	}
 	
 	public ImmutableBudgetCategory getBudgetCategory(String fullName) {
+		if (getModel().getBudgetCategory(fullName) == null)
+			return null;
 		return new MutableBudgetCategoryImpl(getModel().getBudgetCategory(fullName));
 	}
 	
@@ -66,6 +70,8 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	}
 	
 	public ImmutableType getType(String name) {
+		if (getModel().getType(name) == null)
+			return null;
 		return new MutableTypeImpl(getModel().getType(name));
 	}
 	

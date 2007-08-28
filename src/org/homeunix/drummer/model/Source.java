@@ -107,4 +107,5 @@ public interface Source extends EObject, Comparable<Source> {
 	 */
 	void setCreationDate(Date value);
 
+	String getFullName();
 } // Source

@@ -18,52 +18,42 @@ public class MutableModelImpl extends ImmutableModelImpl implements MutableModel
 	}
 
 	public void addAccount(MutableAccount account) {
-		// TODO Auto-generated method stub
-		
+		getModel().addAccount(account.getAccount());
 	}
 
 	public void addBudgetCategory(MutableBudgetCategory budgetCategory) {
-		// TODO Auto-generated method stub
-		
+		getModel().addBudgetCategory(budgetCategory.getBudgetCategory());
 	}
 
 	public void addScheduledTransaction(MutableScheduledTransaction scheduledTransaction) {
-		// TODO Auto-generated method stub
-		
+		getModel().addScheduledTransaction(scheduledTransaction.getScheduledTransaction());		
 	}
 
 	public void addTransaction(MutableTransaction transaction) {
-		// TODO Auto-generated method stub
-		
+		getModel().addTransaction(transaction.getTransaction());
 	}
 
 	public void addType(MutableType type) {
-		// TODO Auto-generated method stub
-		
+		getModel().addType(type.getType());
 	}
 
 	public void removeAccount(MutableAccount account) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeAccount(account.getAccount());
 	}
 
 	public void removeBudgetCategory(MutableBudgetCategory budgetCategory) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeBudgetCategory(budgetCategory.getBudgetCategory());
 	}
 
 	public void removeScheduledTransaction(MutableScheduledTransaction scheduledTransaction) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeScheduledTransaction(scheduledTransaction.getScheduledTransaction());		
 	}
 
 	public void removeTransaction(MutableTransaction transaction) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeTransaction(transaction.getTransaction());
 	}
 
 	public void removeType(MutableType type) {
-		// TODO Auto-generated method stub
-		
+		getModel().removeType(type.getType());
 	}
 }

@@ -43,6 +43,8 @@ public abstract class ImmutableModelObjectImpl implements ImmutableModelObject {
 	
 	@Override
 	public String toString() {
-		return getRaw().toString();
+		if (getRaw() != null)
+			return getRaw().toString();
+		return "null";
 	}
 }

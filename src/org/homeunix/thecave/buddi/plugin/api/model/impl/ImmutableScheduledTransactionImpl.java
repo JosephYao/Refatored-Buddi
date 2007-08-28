@@ -14,6 +14,11 @@ public class ImmutableScheduledTransactionImpl extends ImmutableTransactionImpl 
 		super(scheduledTransaction);
 	}
 	
+	public ScheduledTransaction getTransaction(){
+		return (ScheduledTransaction) getRaw();
+	}
+
+	
 	public ScheduledTransaction getScheduledTransaction(){
 		return (ScheduledTransaction) getRaw();
 	}

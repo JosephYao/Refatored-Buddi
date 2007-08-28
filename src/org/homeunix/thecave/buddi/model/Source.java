@@ -36,7 +36,7 @@ public abstract class Source extends ModelObjectImpl {
 		}
 		else if (this instanceof BudgetCategory){
 			for (BudgetCategory bc : getModel().getBudgetCategories()) {
-				if (!this.equals(bc) && bc.getName().equals(name))
+				if (!this.equals(bc) && bc.getName().equals(name) && bc.getParent().equals(((BudgetCategory) this).getParent()))
 					throw new DataModelProblemException("Category name must be unique within the model", getModel());
 			}
 		}

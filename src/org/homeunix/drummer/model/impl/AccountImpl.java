@@ -486,5 +486,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		return super.compareTo(arg0);
 	}
 
-	
+	public String getFullName() {
+		return this.getName() + " (" + getAccountType().getName() + ")";
+	}
 } //AccountImpl

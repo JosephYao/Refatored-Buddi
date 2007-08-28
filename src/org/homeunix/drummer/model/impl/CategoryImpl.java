@@ -329,4 +329,11 @@ public class CategoryImpl extends SourceImpl implements Category {
 		return super.compareTo(arg0);
 	}
 
+	
+	public String getFullName(){
+		if (this.getParent() != null)
+			return this.getParent().getFullName() + " " + this.getName();
+		
+		return this.getName();
+	}
 } //CategoryImpl

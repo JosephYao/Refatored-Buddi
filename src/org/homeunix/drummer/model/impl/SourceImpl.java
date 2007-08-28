@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.homeunix.drummer.model.ModelPackage;
 import org.homeunix.drummer.model.Source;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 /**
  * <!-- begin-user-doc -->
@@ -115,7 +116,7 @@ public abstract class SourceImpl extends EObjectImpl implements Source {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+		return TextFormatter.getTranslation(name);
 	}
 
 	/**
