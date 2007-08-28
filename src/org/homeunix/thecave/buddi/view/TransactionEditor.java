@@ -446,6 +446,26 @@ public class TransactionEditor extends MossPanel {
 		return null;
 	}
 
+	/**
+	 * Returns the updated transaction.  If called from a new transaction, returns null.
+	 * @return
+	 */
+	public Transaction getUpdatedTransaction(){
+		if (transaction == null)
+			return null;
+		transaction.setDate(date.getDate());
+		transaction.setDescription(description.getValue().toString());
+		transaction.setAmount(amount.getValue());
+		transaction.setFrom((Source) from.getSelectedItem());
+		transaction.setTo((Source) to.getSelectedItem());
+		transaction.setNumber(number.getValue().toString());
+		transaction.setMemo(memo.getValue().toString());
+		transaction.setCleared(cleared.isSelected());
+		transaction.setReconciled(reconciled.isSelected());
+		
+		return transaction;
+	}
+	
 	public Transaction getTransaction(){
 		return transaction;
 	}

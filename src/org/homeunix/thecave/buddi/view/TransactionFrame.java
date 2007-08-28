@@ -654,7 +654,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			}
 			
 			if(isUpdate) {
-				t = transactionEditor.getTransaction();
+				t = transactionEditor.getUpdatedTransaction();
+				
 			} else {
 				t = transactionEditor.getNewTransaction();
 				getDataModel().addTransaction(t);
