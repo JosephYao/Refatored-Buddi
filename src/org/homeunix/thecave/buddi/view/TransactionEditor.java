@@ -39,7 +39,7 @@ import javax.swing.text.JTextComponent;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -87,14 +87,14 @@ public class TransactionEditor extends MossPanel {
 
 	
 	
-	private final DataModel model;
+	private final Document model;
 	private final Account associatedAccount;
 	
 	private final AutoCompleteEntryModel autoCompleteEntries;
 
 	private boolean changed;
 
-	public TransactionEditor(DataModel model, Account associatedAccount, boolean scheduledTransactionPane){
+	public TransactionEditor(Document model, Account associatedAccount, boolean scheduledTransactionPane){
 		super(true);
 		this.model = model;
 		this.associatedAccount = associatedAccount;

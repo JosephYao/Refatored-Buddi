@@ -1,7 +1,7 @@
 /*
  * Created on Jul 30, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -22,16 +22,26 @@ import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
-import org.homeunix.thecave.buddi.model.FilteredLists.AccountListFilteredByType;
-import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
-import org.homeunix.thecave.buddi.model.WrapperLists.WrapperAccountList;
-import org.homeunix.thecave.buddi.model.WrapperLists.WrapperBudgetCategoryList;
-import org.homeunix.thecave.buddi.model.WrapperLists.WrapperScheduledTransactionList;
-import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTransactionList;
-import org.homeunix.thecave.buddi.model.WrapperLists.WrapperTypeList;
-import org.homeunix.thecave.buddi.model.beans.DataModelBean;
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.beans.DocumentBean;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.model.exception.DocumentAlreadySetException;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists.WrapperAccountList;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists.WrapperBudgetCategoryList;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists.WrapperScheduledTransactionList;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists.WrapperTransactionList;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists.WrapperTypeList;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -46,48 +56,48 @@ import org.homeunix.thecave.moss.util.crypto.CipherException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
-public class DataModel extends AbstractDocument implements ModelObject {
+public class DocumentImpl extends AbstractDocument implements ModelObject, Document {
 
 	/**
 	 * Set this flag in the saveAs() method to specify that we should encrypt the data file.
 	 */
 	public static final int ENCRYPT_DATA_FILE = 1;
-	
-	private DataModelBean dataModel;
-	private final Map<String, ModelObjectImpl> uidMap = new HashMap<String, ModelObjectImpl>();
-	
+
+	private DocumentBean dataModel;
+	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
+
 	//These are maps of model objects to their names.  This serves two purposes: 1) we can easily
 	// verify if there is already another object of this name, and 2) we can retrieve it easily,
 	// which can be useful for some tasks.
 	private final Map<String, Account> accountMap = new HashMap<String, Account>();
 	private final Map<String, BudgetCategory> budgetCategoryMap = new HashMap<String, BudgetCategory>();
-	private final Map<String, Type> typeMap = new HashMap<String, Type>();
-	
-	private char[] password; //Store the password when loaded, and use the same one for save().
-							 // This is obviously not the best practice to use 
-							 // from a security point of view.  However, if a malicious
-							 // third party has good enough access to the machine to be able
-							 // to read private Java objects, they will just read it when
-							 // we call MossCryptoFactory anyways - the password is handed 
-							 // there in plain text as well.  The window is already there - this
-							 // just increases the time it is available for.
+	private final Map<String, AccountType> typeMap = new HashMap<String, AccountType>();
 
-	
+	private char[] password; //Store the password when loaded, and use the same one for save().
+	// This is obviously not the best practice to use 
+	// from a security point of view.  However, if a malicious
+	// third party has good enough access to the machine to be able
+	// to read private Java objects, they will just read it when
+	// we call MossCryptoFactory anyways - the password is handed 
+	// there in plain text as well.  The window is already there - this
+	// just increases the time it is available for.
+
+
 	/**
 	 * Creates a new DataModel, given the backing bean.
 	 * @param bean
 	 * @throws DocumentLoadException
 	 */
-	public DataModel(DataModelBean bean) throws DocumentLoadException {
+	public DocumentImpl(DocumentBean bean) throws DocumentLoadException {
 		if (bean == null)
 			throw new DocumentLoadException("DataModelBean cannot be null!");
-		
+
 		this.dataModel = bean;
 		this.refreshUidMap();
 		this.updateAllBalances();
 		this.setChanged();
 	}
-	
+
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 format.  To load a
 	 * legacy format, use ModelConverter to get a Bean object, and call the constructor which
@@ -95,13 +105,13 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * @param file File to load
 	 * @throws DocumentLoadException
 	 */
-	public DataModel(File file) throws DocumentLoadException, OperationCancelledException {
+	public DocumentImpl(File file) throws DocumentLoadException, OperationCancelledException {
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
-		
+
 		if (!file.exists())
 			throw new DocumentLoadException("File " + file + " does not exist.");
-		
+
 		if (!file.canRead())
 			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
@@ -114,7 +124,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			InputStream is;
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			password = null;
-			
+
 			//Loop until the user gets the password correct, hits cancel, 
 			// or some other error occurs.
 			while (true) {
@@ -124,20 +134,20 @@ public class DataModel extends AbstractDocument implements ModelObject {
 					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
 					XMLDecoder decoder = new XMLDecoder(is);
 					Object o = decoder.readObject();
-					if (o instanceof DataModelBean){
-						dataModel = (DataModelBean) o;
+					if (o instanceof DocumentBean){
+						dataModel = (DocumentBean) o;
 					}
 					else {
 						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
 					}
 					is.close();
-					
+
 					//Refresh the UID Map...
 					this.refreshUidMap();
-					
+
 					//Update all balances...
 					this.updateAllBalances();
-					
+
 					//Return to calling code... the model is correctly loaded.
 					return;
 				}
@@ -145,7 +155,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 					//The password was not correct.  Prompt for a new one.
 					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 					password = passwordDialog.askForPassword(false, true);
-					
+
 					//User hit cancel.  Cancel loading, and pass control to calling code. 
 					// Calling code will possibly prompt for a new file.
 					if (password == null)
@@ -171,23 +181,43 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	/**
 	 * Creates a new data model, with some default types and categories.
 	 */
-	public DataModel() {
-		dataModel = new DataModelBean();
+	public DocumentImpl() {
+		dataModel = new DocumentBean();
 		setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), new BudgetPeriodMonthly(), false));
+			try {
+				this.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
+			}
+			catch (ModelException me){
+				Log.error("Error creating budget category", me);
+			}
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			this.addBudgetCategory(new BudgetCategory(this, s.toString(), new BudgetPeriodMonthly(), true));
+			try {
+				this.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
+			}
+			catch (ModelException me){
+				Log.error("Error creating budget category", me);
+			}
 		}
 
 		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
-			this.addType(new Type(this, s.toString(), false));
+			try {
+				this.addAccountType(ModelFactory.createAccountType(s.toString(), false));
+			}
+			catch (ModelException me){
+				Log.error("Error creating account type", me);
+			}
 		}
 
 		for (TypeCreditDefaultKeys s : TypeCreditDefaultKeys.values()){
-			this.addType(new Type(this, s.toString(), true));
+			try {
+				this.addAccountType(ModelFactory.createAccountType(s.toString(), true));
+			}
+			catch (ModelException me){
+				Log.error("Error creating account type", me);
+			}
 		}	
 
 		this.refreshUidMap();
@@ -224,14 +254,14 @@ public class DataModel extends AbstractDocument implements ModelObject {
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 				password = passwordDialog.askForPassword(true, false);
 			}
-			
+
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
-			
+
 
 			//TODO Test to make sure this is reset at the right time.
 			if (resetUid)
-				dataModel.setUid(getGeneratedUid(dataModel));
+				dataModel.setUid(ModelFactory.getGeneratedUid(dataModel));
 
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.writeObject(dataModel);
@@ -249,7 +279,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			// Perhaps the user's platform does not support the given methods.
 			// Notify the user, and cancel the save.
 			//TODO Notify user
-			
+
 			throw new DocumentSaveException(ce);
 		}
 		catch (IOException ioe){
@@ -257,7 +287,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			// it.  Perhaps the user does not have write access, the folder does not exist,
 			// or something similar.  Notify the user, and cancel the save.
 			//TODO Notify user
-			
+
 			throw new DocumentSaveException(ioe);
 		}
 
@@ -277,44 +307,44 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		return baos.toString();
 	}
-	
+
 //	/**
-//	 * Returns a date that is the beginning of the budget period which contains
-//	 * the given date.  This depends on the value of getPeriodType.
-//	 * @param date
-//	 * @return
-//	 */
+//	* Returns a date that is the beginning of the budget period which contains
+//	* the given date.  This depends on the value of getPeriodType.
+//	* @param date
+//	* @return
+//	*/
 //	public Date getStartOfBudgetPeriod(Date date){
-//		return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
+//	return BudgetPeriodUtil.getStartOfBudgetPeriod(getPeriodType(), date);
 //	}
-//	
+
 //	/**
-//	 * Returns a date that is the end of the budget period which contains
-//	 * the given date.  This depends on the value of getPeriodType.
-//	 * @param date
-//	 * @return
-//	 */
+//	* Returns a date that is the end of the budget period which contains
+//	* the given date.  This depends on the value of getPeriodType.
+//	* @param date
+//	* @return
+//	*/
 //	public Date getEndOfBudgetPeriod(Date date){
-//		return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
+//	return BudgetPeriodUtil.getEndOfBudgetPeriod(getPeriodType(), date);
 //	}
 
 
 
 //	public BudgetPeriod getBudgetPeriod(String periodKey){
-//		if (dataModel.getBudgetPeriods().get(periodKey) == null) {
-//			dataModel.getBudgetPeriods().put(periodKey, new BudgetPeriodBean());
-//			dataModel.getBudgetPeriods().get(periodKey).setPeriodDate(getPeriodDate(periodKey));
-//			if (Const.DEVEL) Log.debug("Added new budget period for date " + periodKey);
-//
-//			getModel().setChanged();
-//		}
-//		return new BudgetPeriod(this, dataModel.getBudgetPeriods().get(periodKey));		
+//	if (dataModel.getBudgetPeriods().get(periodKey) == null) {
+//	dataModel.getBudgetPeriods().put(periodKey, new BudgetPeriodBean());
+//	dataModel.getBudgetPeriods().get(periodKey).setPeriodDate(getPeriodDate(periodKey));
+//	if (Const.DEVEL) Log.debug("Added new budget period for date " + periodKey);
+
+//	getModel().setChanged();
+//	}
+//	return new BudgetPeriod(this, dataModel.getBudgetPeriods().get(periodKey));		
 //	}
 
 	public List<BudgetCategory> getBudgetCategories(){
 		return new WrapperBudgetCategoryList(this, dataModel.getBudgetCategories());
 	}
-	
+
 	/**
 	 * Returns the budget category referenced by Full Name.
 	 * @param fullName
@@ -323,11 +353,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public BudgetCategory getBudgetCategory(String fullName){
 		return budgetCategoryMap.get(fullName);
 	}
-	
+
 //	public BudgetPeriodType getBudgetPeriodByName(String name){
-//		return budgetPeriodMap.get(name);
+//	return budgetPeriodMap.get(name);
 //	}
-	
+
 	/**
 	 * Returns a list of all accounts in the model.
 	 * @return
@@ -335,7 +365,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public List<Account> getAccounts() {
 		return new WrapperAccountList(this, dataModel.getAccounts());
 	}
-	
+
 	/**
 	 * Returns the account of the given name.
 	 * @param name
@@ -395,11 +425,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 				endDate);
 	}
 
-	public List<Type> getTypes() {
+	public List<AccountType> getAccountTypes() {
 		return new WrapperTypeList(this, dataModel.getTypes());
 	}
-	
-	public Type getType(String name){
+
+	public AccountType getAccountType(String name){
 		return typeMap.get(name);
 	}
 
@@ -421,7 +451,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction){
 		checkValid(scheduledTransaction, true, false);
 
-		dataModel.getScheduledTransactions().add(scheduledTransaction.getScheduledTranasactionBean());
+		dataModel.getScheduledTransactions().add(scheduledTransaction.getScheduledTransactionBean());
 		setChanged();		
 	}
 
@@ -434,7 +464,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		dataModel.getTransactions().remove(transaction.getTransactionBean());
 		setChanged();	
-		
+
 		return true;
 	}
 
@@ -445,9 +475,9 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction){
 		checkValid(scheduledTransaction, false, false);
 
-		dataModel.getScheduledTransactions().remove(scheduledTransaction.getScheduledTranasactionBean());
+		dataModel.getScheduledTransactions().remove(scheduledTransaction.getScheduledTransactionBean());
 		setChanged();
-		
+
 		return true;
 	}
 
@@ -495,7 +525,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		}
 
 		setChanged();
-		
+
 		return permanent;
 	}
 
@@ -568,7 +598,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		}
 
 		setChanged();
-		
+
 		return permanent;
 	}
 
@@ -590,7 +620,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * Adds the given type to the data model
 	 * @param type
 	 */
-	public void addType(Type type){
+	public void addAccountType(AccountType type){
 		checkValid(type, true, false);
 
 		dataModel.getTypes().add(type.getTypeBean());
@@ -603,9 +633,9 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * any account, we return 
 	 * @param type
 	 */
-	public boolean removeType(Type type){
+	public boolean removeAccountType(AccountType type){
 		checkValid(type, false, false);
-		
+
 		for (Account a : getAccounts()) {
 			if (a.getType().equals(type)) {
 				//We cannot delete this type, as it is referenced by an account.
@@ -617,7 +647,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		dataModel.getTypes().remove(type.getTypeBean());
 		typeMap.remove(type.getName());
 		setChanged();
-		
+
 		return true;
 	}
 
@@ -638,8 +668,8 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * such as if the UID is already entered into the model).
 	 * @param isUidRefresh Is this being called from the refreshUid method?
 	 */
-	private void checkValid(ModelObjectImpl object, boolean isAddOperation, boolean isUidRefresh){
-		if (!object.getModel().equals(this))
+	private void checkValid(ModelObject object, boolean isAddOperation, boolean isUidRefresh){
+		if (!object.getDocument().equals(this))
 			throw new DataModelProblemException("Cannot modify an object not in this model.", this);
 
 		if (isAddOperation){
@@ -681,33 +711,11 @@ public class DataModel extends AbstractDocument implements ModelObject {
 	 * @param uid Unique ID string for the desired object.
 	 * @return
 	 */
-	public ModelObjectImpl getObjectByUid(String uid){
+	public ModelObject getObjectByUid(String uid){
 		return uidMap.get(uid);
 	}
 
-	/**
-	 * Generate a UID string for a particular object.  This is guaranteed to be unique
-	 * for each call to this method, even if the object is the same.  It is generated 
-	 * by concatinating the following information, separated by the dash (-):
-	 * 
-	 * 1) The canonical name of the object (e.g. org.homeunix.thecave.buddi.model3.Account).
-	 * 2) A hexadecimal representation of the current system time in milliseconds
-	 * 3) A hexadecimal representation of a 16 bit random number
-	 * 4) A hexadecimal representation of the 16 least significant bits of this object's hash code (object.hashCode()).
-	 * @param object
-	 * @return
-	 */
-	public static String getGeneratedUid(ModelObjectBean object){
-		long time = System.currentTimeMillis();
-		int random = (int) (Math.random() * 0xFFFF);
-		int hash = object.hashCode() & 0xFFFF;
-
-		String uid = object.getClass().getCanonicalName() + "-" + Long.toHexString(time) + "-" + Integer.toHexString(random) + "-" + Integer.toHexString(hash);
-
-		return uid;
-	}
-
-	public void registerObjectInUidMap(ModelObjectImpl object){
+	public void registerObjectInUidMap(ModelObject object){
 		uidMap.put(object.getBean().getUid(), object);
 	}
 
@@ -746,12 +754,12 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		}
 
 //		for (BudgetPeriodBean bpb : dataModel.getBudgetPeriods().values()) {
-//			BudgetPeriod bp = new BudgetPeriod(this, bpb);
-//			checkValid(bp, false, true);
-//			registerObjectInUidMap(bp);			
+//		BudgetPeriod bp = new BudgetPeriod(this, bpb);
+//		checkValid(bp, false, true);
+//		registerObjectInUidMap(bp);			
 //		}
-//
-		for (Type t : getTypes()) {
+
+		for (AccountType t : getAccountTypes()) {
 			checkValid(t, false, true);
 			registerObjectInUidMap(t);	
 			typeMap.put(t.getName(), t);
@@ -761,7 +769,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 			checkValid(t, false, true);
 			registerObjectInUidMap(t);	
 		}
-		
+
 		for (ScheduledTransaction s : getScheduledTransactions()) {
 			checkValid(s, false, true);
 			registerObjectInUidMap(s);	
@@ -773,7 +781,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("\n--Accounts and Types--\n");
-		for (Type t : getTypes()) {
+		for (AccountType t : getAccountTypes()) {
 			sb.append(t).append("\n");
 
 			for (Account a : new AccountListFilteredByType(this, t)) {
@@ -799,7 +807,7 @@ public class DataModel extends AbstractDocument implements ModelObject {
 //		List<String> periodDates = new LinkedList<String>(dataModel.getBudgetPeriods().keySet());
 //		Collections.sort(periodDates);
 //		for (String d : periodDates) {
-//			sb.append(d).append(getBudgetPeriod(d));
+//		sb.append(d).append(getBudgetPeriod(d));
 //		}
 		sb.append("\n--Transactions--\n");
 		sb.append("Total transactions: ").append(getTransactions().size()).append("\n");
@@ -810,36 +818,40 @@ public class DataModel extends AbstractDocument implements ModelObject {
 
 		return sb.toString();
 	}
-	
+
 	public String getUid(){
 		return dataModel.getUid();
 	}
-	
+
 	public int compareTo(ModelObject o) {
 		return getUid().compareTo(o.getUid());
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DataModel)
-			return getUid().equals(((DataModel) obj).getUid());
+		if (obj instanceof DocumentImpl)
+			return getUid().equals(((DocumentImpl) obj).getUid());
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return getUid().hashCode();
 	}
-	
+
 	public void modify() {
 		dataModel.setModifiedDate(new Date());
 	}
-	
+
 	public ModelObjectBean getBean() {
 		return dataModel;
 	}
-	
-	public DataModel getModel() {
+
+	public Document getDocument() {
 		return this;
+	}
+
+	public void setDocument(Document document) throws DocumentAlreadySetException {
+		return;
 	}
 }

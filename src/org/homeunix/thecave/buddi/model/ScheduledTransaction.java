@@ -6,93 +6,49 @@ package org.homeunix.thecave.buddi.model;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 /**
  * @author wyatt
  *
  */
-public class ScheduledTransaction extends Transaction {
+public interface ScheduledTransaction extends Transaction {
+
+	public Date getEndDate();
 	
-	ScheduledTransaction(DataModel model, ScheduledTransactionBean scheduledTransaction) {
-		super(model, scheduledTransaction);
-	}
+	public String getFrequencyType();
 	
-	/**
-	 * Creates a new scheduled transaction with no fields set.  You need to add fields 
-	 * beore you can put it into the data model. 
-	 * @param model
-	 */
-	public ScheduledTransaction(DataModel model) {
-		this(model, new ScheduledTransactionBean());
-	}
+	public Date getLastDayCreated();
 	
-	public Date getEndDate() {
-		return getScheduledTransaction().getEndDate();
-	}
-	public void setEndDate(Date endDate) {
-		getScheduledTransaction().setEndDate(endDate);
-		getModel().setChanged();
-	}
-	public String getFrequencyType() {
-		return getScheduledTransaction().getFrequencyType();
-	}
-	public void setFrequencyType(String frequencyType) {
-		getScheduledTransaction().setFrequencyType(frequencyType);
-		getModel().setChanged();
-	}
-	public Date getLastDayCreated() {
-		return getScheduledTransaction().getLastDayCreated();
-	}
-	public void setLastDayCreated(Date lastDayCreated) {
-		getScheduledTransaction().setLastDayCreated(lastDayCreated);
-		getModel().setChanged();
-	}
-	public String getMessage() {
-		return getScheduledTransaction().getMessage();
-	}
-	public void setMessage(String message) {
-		getScheduledTransaction().setMessage(message);
-		getModel().setChanged();
-	}
-	public int getScheduleDay() {
-		return getScheduledTransaction().getScheduleDay();
-	}
-	public void setScheduleDay(int scheduleDay) {
-		getScheduledTransaction().setScheduleDay(scheduleDay);
-		getModel().setChanged();
-	}
-	public int getScheduleMonth() {
-		return getScheduledTransaction().getScheduleMonth();
-	}
-	public void setScheduleMonth(int scheduleMonth) {
-		getScheduledTransaction().setScheduleMonth(scheduleMonth);
-		getModel().setChanged();
-	}
-	public String getScheduleName() {
-		return getScheduledTransaction().getScheduleName();
-	}
-	public void setScheduleName(String scheduleName) {
-		getScheduledTransaction().setScheduleName(scheduleName);
-		getModel().setChanged();
-	}
-	public int getScheduleWeek() {
-		return getScheduledTransaction().getScheduleWeek();
-	}
-	public void setScheduleWeek(int scheduleWeek) {
-		getScheduledTransaction().setScheduleWeek(scheduleWeek);
-		getModel().setChanged();
-	}
-	public Date getStartDate() {
-		return getScheduledTransaction().getStartDate();
-	}
-	public void setStartDate(Date startDate) {
-		getScheduledTransaction().setStartDate(startDate);
-		getModel().setChanged();
-	}
-	ScheduledTransactionBean getScheduledTranasactionBean(){
-		return getScheduledTransaction();
-	}
-	private ScheduledTransactionBean getScheduledTransaction(){
-		return (ScheduledTransactionBean) getTransactionBean();
-	}
+	public String getMessage();
+	
+	public int getScheduleDay();
+	
+	public ScheduledTransactionBean getScheduledTransactionBean();
+	
+	public int getScheduleMonth();
+	
+	public String getScheduleName();
+	
+	public int getScheduleWeek();
+	
+	public Date getStartDate();
+	
+	public void setEndDate(Date endDate) throws InvalidValueException;
+	
+	public void setFrequencyType(String frequencyType) throws InvalidValueException;
+	
+	public void setLastDayCreated(Date lastDayCreated);
+	
+	public void setMessage(String message) throws InvalidValueException;
+	
+	public void setScheduleDay(int scheduleDay);
+	
+	public void setScheduleMonth(int scheduleMonth);
+	
+	public void setScheduleName(String scheduleName);
+	
+	public void setScheduleWeek(int scheduleWeek);
+	
+	public void setStartDate(Date startDate);
 }

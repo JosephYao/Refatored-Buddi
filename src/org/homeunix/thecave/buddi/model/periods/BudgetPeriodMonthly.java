@@ -6,10 +6,10 @@ package org.homeunix.thecave.buddi.model.periods;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.BudgetPeriodType;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
-public class BudgetPeriodMonthly extends BudgetPeriodType {
+public class BudgetPeriodMonthly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
 		return DateFunctions.getStartOfMonth(date);

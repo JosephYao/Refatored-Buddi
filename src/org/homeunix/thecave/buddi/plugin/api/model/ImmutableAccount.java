@@ -23,7 +23,7 @@ public interface ImmutableAccount extends ImmutableSource {
 	 * Returns the Type object associated with the account.
 	 * @return
 	 */
-	public ImmutableType getType();
+	public ImmutableAccountType getType();
 	
 	/**
 	 * Returns the wrapped object from the underlying data model.  By 

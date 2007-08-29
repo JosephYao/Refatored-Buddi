@@ -4,9 +4,9 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
 public class MutableAccountImpl extends MutableSourceImpl implements MutableAccount {
 
@@ -22,7 +22,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 		getAccount().setStartingBalance(startingBalance);
 	}
 
-	public void setType(MutableType type) {
+	public void setType(MutableAccountType type) {
 		getAccount().setType(type.getType());
 	}
 
@@ -38,7 +38,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 		return getAccount().getStartingBalance();
 	}
 
-	public ImmutableType getType() {
+	public ImmutableAccountType getType() {
 		if (getAccount().getType() != null)
 			return new ImmutableTypeImpl(getAccount().getType());
 		return null;

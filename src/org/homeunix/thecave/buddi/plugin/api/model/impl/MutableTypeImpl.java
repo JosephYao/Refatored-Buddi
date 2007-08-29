@@ -3,17 +3,17 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
-import org.homeunix.thecave.buddi.model.Type;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableType;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
-public class MutableTypeImpl extends MutableModelObjectImpl implements MutableType {
+public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAccountType {
 
-	public MutableTypeImpl(Type type) {
+	public MutableTypeImpl(AccountType type) {
 		super(type);
 	}
 	
-	public Type getType(){
-		return (Type) getRaw();
+	public AccountType getType(){
+		return (AccountType) getRaw();
 	}
 	
 	public String getName(){

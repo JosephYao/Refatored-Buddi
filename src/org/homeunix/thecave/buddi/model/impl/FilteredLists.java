@@ -1,12 +1,19 @@
 /*
  * Created on Aug 6, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.data.list.FilteredList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -25,7 +32,7 @@ public class FilteredLists {
 	 *
 	 */
 	private static abstract class BuddiFilteredList<T> extends FilteredList<T> {
-		public BuddiFilteredList(DataModel model, List<T> source) {
+		public BuddiFilteredList(Document model, List<T> source) {
 			super(source);
 			model.addDocumentChangeListener(new DocumentChangeListener(){
 				public void documentChange(DocumentChangeEvent event) {
@@ -43,7 +50,7 @@ public class FilteredLists {
 	public static class TransactionListFilteredBySource extends BuddiFilteredList<Transaction> {
 		private final Source source;
 
-		public TransactionListFilteredBySource(DataModel model, List<Transaction> transactions, Source source){
+		public TransactionListFilteredBySource(Document model, List<Transaction> transactions, Source source){
 			super(model, transactions);
 			this.source = source;
 		}
@@ -68,7 +75,7 @@ public class FilteredLists {
 		private final Date startDate;
 		private final Date endDate;
 
-		public TransactionListFilteredByDate(DataModel model, List<Transaction> transactions, Date startDate, Date endDate){
+		public TransactionListFilteredByDate(Document model, List<Transaction> transactions, Date startDate, Date endDate){
 			super(model, transactions);
 			this.startDate = startDate;
 			this.endDate = endDate;
@@ -95,7 +102,7 @@ public class FilteredLists {
 		private String searchText;
 		private TransactionDateFilterKeys dateFilter; 
 
-		public TransactionListFilteredBySearch(DataModel model, List<Transaction> transactions){
+		public TransactionListFilteredBySearch(Document model, List<Transaction> transactions){
 			super(model, transactions);
 		}
 		public void setDateFilter(TransactionDateFilterKeys dateFilter) {
@@ -178,9 +185,9 @@ public class FilteredLists {
 	 * @author wyatt
 	 */
 	public static class AccountListFilteredByType extends BuddiFilteredList<Account> {
-		private final Type type;
+		private final AccountType type;
 
-		public AccountListFilteredByType(DataModel model, Type type) {
+		public AccountListFilteredByType(Document model, AccountType type) {
 			super(model, model.getAccounts());
 			this.type = type;
 		}
@@ -198,16 +205,16 @@ public class FilteredLists {
 	 * Returns a list of all the type objects which have Accounts associated with them.
 	 * @author wyatt
 	 */
-	public static class TypeListFilteredByAccounts extends BuddiFilteredList<Type> {
-		private final DataModel model;
+	public static class TypeListFilteredByAccounts extends BuddiFilteredList<AccountType> {
+		private final Document model;
 
-		public TypeListFilteredByAccounts(DataModel model) {
-			super(model, model.getTypes());
+		public TypeListFilteredByAccounts(Document model) {
+			super(model, model.getAccountTypes());
 			this.model = model;
 		}
 
 		@Override
-		public boolean isIncluded(Type object) {
+		public boolean isIncluded(AccountType object) {
 			if (object != null){
 				for (Account a : model.getAccounts()) {
 					if (a.getType().equals(object))
@@ -221,7 +228,7 @@ public class FilteredLists {
 	public static class BudgetCategoryListFilteredByChildren extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
-		public BudgetCategoryListFilteredByChildren(DataModel model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+		public BudgetCategoryListFilteredByChildren(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
 			super(model, budgetCategories);
 			this.parent = parent;
 		}
@@ -247,7 +254,7 @@ public class FilteredLists {
 	public static class BudgetCategoryListFilteredByParent extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
-		public BudgetCategoryListFilteredByParent(DataModel model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+		public BudgetCategoryListFilteredByParent(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
 			super(model, budgetCategories);
 			this.parent = parent;
 		}
@@ -269,9 +276,9 @@ public class FilteredLists {
 	 * @author wyatt
 	 */
 	public static class BudgetCategoryListFilteredByPeriodType extends BuddiFilteredList<BudgetCategory> {
-		private final BudgetPeriodType type;
+		private final BudgetCategoryType type;
 
-		public BudgetCategoryListFilteredByPeriodType(DataModel model, BudgetPeriodType type) {
+		public BudgetCategoryListFilteredByPeriodType(Document model, BudgetCategoryType type) {
 			super(model, model.getBudgetCategories());
 			this.type = type;
 		}

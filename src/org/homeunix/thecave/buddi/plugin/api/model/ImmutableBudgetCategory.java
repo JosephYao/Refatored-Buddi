@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetPeriodType;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 
 public interface ImmutableBudgetCategory extends ImmutableSource {
 		
@@ -35,7 +35,7 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	 * Returns the budget period type associated with this budget category.
 	 * @return
 	 */
-	public BudgetPeriodType getBudgetPeriodType();
+	public BudgetCategoryType getBudgetPeriodType();
 	
 	/**
 	 * Returns the budgeted amount for the given date.

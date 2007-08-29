@@ -15,7 +15,7 @@ import java.util.List;
  * 
  * @author wyatt
  */
-public class DataModelBean extends ModelObjectBean {
+public class DocumentBean extends ModelObjectBean {
 	//User data objects
 	private List<AccountBean> accounts = new LinkedList<AccountBean>();
 	private List<BudgetCategoryBean> budgetCategories = new LinkedList<BudgetCategoryBean>();

@@ -13,7 +13,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataListener;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -21,10 +21,10 @@ import org.homeunix.thecave.moss.model.DocumentChangeListener;
 public class AutoCompleteComboBoxModel implements ComboBoxModel {
 	private static final long serialVersionUID = 0; 
 
-	private DataModel model;
+	private Document model;
 	private DefaultComboBoxModel comboBoxModel;
 
-	public AutoCompleteComboBoxModel(DataModel model) {
+	public AutoCompleteComboBoxModel(Document model) {
 		this.model = model;
 		this.comboBoxModel = new DefaultComboBoxModel();
 		updateAutoCompleteList();

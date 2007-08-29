@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 
 /**
  * The API version of DataModel.  This contains methods to access all other  
@@ -51,7 +51,7 @@ public interface ImmutableModel extends ImmutableModelObject {
 	 * the risks associated with it. 
 	 * @return
 	 */
-	public DataModel getModel();
+	public Document getModel();
 	
 	/**
 	 * Returns a list of all immutable transactions in the model
@@ -85,11 +85,11 @@ public interface ImmutableModel extends ImmutableModelObject {
 	 * @param name
 	 * @return
 	 */
-	public ImmutableType getType(String name);
+	public ImmutableAccountType getType(String name);
 	
 	/**
 	 * Returns a list of all immutable types in the model
 	 * @return
 	 */
-	public List<ImmutableType> getTypes();
+	public List<ImmutableAccountType> getTypes();
 }

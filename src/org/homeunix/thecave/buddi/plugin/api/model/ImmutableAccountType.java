@@ -3,9 +3,9 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.model.AccountType;
 
-public interface ImmutableType extends ImmutableModelObject {
+public interface ImmutableAccountType extends ImmutableModelObject {
 	
 	/**
 	 * Returns the wrapped object from the underlying data model.  By 
@@ -14,7 +14,7 @@ public interface ImmutableType extends ImmutableModelObject {
 	 * the risks associated with it. 
 	 * @return
 	 */
-	public Type getType();
+	public AccountType getType();
 	
 	/**
 	 * Returns the name associated with this type

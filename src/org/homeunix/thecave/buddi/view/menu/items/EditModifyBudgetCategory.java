@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.BudgetCategoryEditorDialog;
@@ -24,7 +24,7 @@ public class EditModifyBudgetCategory extends MossMenuItem{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getSelectedBudgetCategories()) {
-			BudgetCategoryEditorDialog editor = new BudgetCategoryEditorDialog((MainFrame) getFrame(), (DataModel) ((MainFrame) getFrame()).getDocument(), bc);
+			BudgetCategoryEditorDialog editor = new BudgetCategoryEditorDialog((MainFrame) getFrame(), (Document) ((MainFrame) getFrame()).getDocument(), bc);
 			try {
 				editor.openWindow();
 			}

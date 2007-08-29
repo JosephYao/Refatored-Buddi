@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -48,12 +48,12 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 
 	private final JXList list;
 	private final BackedListModel<ScheduledTransaction> listModel;
-	private final DataModel model;
+	private final Document model;
 
 	public ScheduleFrame(MossDocumentFrame frame){
-		super(frame, "ScheduledTransactionFrame" + ((DataModel) frame.getDocument()).getUid());
+		super(frame, "ScheduledTransactionFrame" + ((Document) frame.getDocument()).getUid());
 
-		this.model = (DataModel) frame.getDocument();
+		this.model = (Document) frame.getDocument();
 		
 //		scheduleEditor = new ScheduleEditorDialog(frame);
 

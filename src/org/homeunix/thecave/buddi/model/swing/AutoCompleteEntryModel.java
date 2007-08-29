@@ -6,17 +6,17 @@ package org.homeunix.thecave.buddi.model.swing;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 
 public class AutoCompleteEntryModel {
-	private final DataModel model;
+	private final Document model;
 	private final Map<String, AutoCompleteEntry> autoCompleteEntries;
 	
-	public AutoCompleteEntryModel(DataModel model) {
+	public AutoCompleteEntryModel(Document model) {
 		this.model = model;
 		this.autoCompleteEntries = new HashMap<String, AutoCompleteEntry>();
 		updateAutoCompleteList();

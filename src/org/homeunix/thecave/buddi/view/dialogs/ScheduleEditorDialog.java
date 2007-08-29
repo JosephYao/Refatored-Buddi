@@ -28,7 +28,7 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -83,12 +83,12 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 	private final CardLayout cardLayout;
 	private final JPanel cardHolder;
 	
-	private final DataModel model;
+	private final Document model;
 
 	public ScheduleEditorDialog(MossDocumentFrame parentFrame, ScheduledTransaction scheduleToEdit){
 		super(parentFrame);
 
-		this.model = (DataModel) parentFrame.getDocument();
+		this.model = (Document) parentFrame.getDocument();
 		
 		this.schedule = scheduleToEdit;
 		
@@ -96,7 +96,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		cancelButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL));
 		
 		startDateChooser = new JXDatePicker();
-		transactionEditor = new TransactionEditor((DataModel) parentFrame.getDocument(), null, true);
+		transactionEditor = new TransactionEditor((Document) parentFrame.getDocument(), null, true);
 
 		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
 

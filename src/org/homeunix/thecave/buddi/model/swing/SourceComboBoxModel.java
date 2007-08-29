@@ -13,19 +13,19 @@ import javax.swing.event.ListDataListener;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 
 public class SourceComboBoxModel implements ComboBoxModel {
 	private static final long serialVersionUID = 0; 
 
-	private final DataModel model;
+	private final Document model;
 	private final boolean includeIncome;
 	
 	private final DefaultComboBoxModel comboBoxModel;
 
-	public SourceComboBoxModel(DataModel model, boolean includeIncome) {
+	public SourceComboBoxModel(Document model, boolean includeIncome) {
 		this.model = model;
 		this.includeIncome = includeIncome;
 		this.comboBoxModel = new DefaultComboBoxModel();

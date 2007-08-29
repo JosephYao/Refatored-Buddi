@@ -13,7 +13,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.model.AccountType;
 
 public class InternalFormatter {
 //	public static DateFormat getDateFormat(){
@@ -209,11 +209,11 @@ public class InternalFormatter {
 			return value >= 0;
 	}
 
-	public static boolean isRed(Type t){
+	public static boolean isRed(AccountType t){
 		return t.isCredit();
 	}
 
-	public static boolean isRed(Type t, long value){
+	public static boolean isRed(AccountType t, long value){
 		if (t.isCredit()){
 			return value >= 0;	
 		}

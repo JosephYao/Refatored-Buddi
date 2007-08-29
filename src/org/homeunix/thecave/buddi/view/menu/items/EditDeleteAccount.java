@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
@@ -26,7 +26,7 @@ public class EditDeleteAccount extends MossMenuItem {
 			throw new RuntimeException("Calling frame not instance of AccountFrame");
 			
 		for (Account a : ((MainFrame) getFrame()).getSelectedAccounts()) {
-			((DataModel) ((MainFrame) getFrame()).getDocument()).removeAccount(a);
+			((Document) ((MainFrame) getFrame()).getDocument()).removeAccount(a);
 		}
 
 		((MainFrame) getFrame()).updateContent();

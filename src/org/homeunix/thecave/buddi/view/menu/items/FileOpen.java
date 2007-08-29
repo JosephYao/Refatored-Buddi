@@ -15,7 +15,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
@@ -49,7 +49,7 @@ public class FileOpen extends MossMenuItem {
 			return;
 		
 		try {
-			MainFrame mainFrame = new MainFrame(new DataModel(f));
+			MainFrame mainFrame = new MainFrame(new Document(f));
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (OperationCancelledException oce){}  //Do nothing

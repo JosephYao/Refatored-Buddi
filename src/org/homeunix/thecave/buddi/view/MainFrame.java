@@ -17,7 +17,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
@@ -33,7 +33,7 @@ public class MainFrame extends MossDocumentFrame {
 	
 	private final JTabbedPane tabs;
 	
-	public MainFrame(DataModel model) {
+	public MainFrame(Document model) {
 		super(model, "MainWindow" + model.getUid());
 		
 		myAccounts = new MyAccountsPanel(this);

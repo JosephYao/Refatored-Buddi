@@ -3,17 +3,19 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+
 public interface MutableAccount extends ImmutableAccount, MutableSource {
 		
 	/**
 	 * Sets the starting balance for this account
 	 * @param startingBalance
 	 */
-	public void setStartingBalance(long startingBalance);
+	public void setStartingBalance(long startingBalance) throws InvalidValueException ;
 	
 	/**
 	 * Sets the type for this account
 	 * @param type
 	 */
-	public void setType(MutableType type);
+	public void setType(MutableAccountType type) throws InvalidValueException;
 }

@@ -28,8 +28,8 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -56,9 +56,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	private final Account selected;
 	
-	private final DataModel model;
+	private final Document model;
 
-	public AccountEditorDialog(MainFrame frame, DataModel model, Account selected) {
+	public AccountEditorDialog(MainFrame frame, Document model, Account selected) {
 		super(frame);
 
 		this.selected = selected;
@@ -108,8 +108,8 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-				if (value instanceof Type)
-					this.setText(PrefsModel.getInstance().getTranslator().get(((Type) value).getName()));
+				if (value instanceof AccountType)
+					this.setText(PrefsModel.getInstance().getTranslator().get(((AccountType) value).getName()));
 				else
 					this.setText(" ");
 
@@ -183,7 +183,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		if (e.getSource().equals(ok)){
 			Account a;
 			if (selected == null){
-				a = new Account(model, name.getValue().toString(), startingBalance.getValue(), (Type) type.getSelectedItem());
+				a = new Account(model, name.getValue().toString(), startingBalance.getValue(), (AccountType) type.getSelectedItem());
 				a.setNotes(notes.getValue().toString());
 				Log.debug("Created new BudgetCategory " + a);
 
@@ -193,7 +193,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 				a = selected;
 				a.setName(name.getValue().toString());
 				a.setStartingBalance(startingBalance.getValue());
-				a.setType((Type) type.getSelectedItem());
+				a.setType((AccountType) type.getSelectedItem());
 				a.setNotes(notes.getValue().toString());
 			}
 
@@ -212,11 +212,11 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	private class TypeComboBoxModel extends DefaultComboBoxModel {
 		private static final long serialVersionUID = 0; 
 
-		private final List<Type> availableParents;
+		private final List<AccountType> availableParents;
 		private int selectedIndex = 0;
 
-		public TypeComboBoxModel(DataModel model) {
-			availableParents = model.getTypes();
+		public TypeComboBoxModel(Document model) {
+			availableParents = model.getAccountTypes();
 		}
 
 		public Object getSelectedItem() {

@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 
 public abstract class ModelObjectBean {
 	
@@ -23,7 +23,7 @@ public abstract class ModelObjectBean {
 	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
-			setUid(DataModel.getGeneratedUid(this));
+			setUid(ModelFactory.getGeneratedUid(this));
 		}
 		return uid;
 	}

@@ -19,14 +19,14 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
-import org.homeunix.thecave.buddi.plugin.api.model.ModelFactory;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 
 /**
@@ -42,8 +42,8 @@ public class LegacyModelConverter {
 		DataInstance.getInstance().loadDataFile(oldFile);
 		DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();
 
-		Map<Type, MutableType> typeMap = new HashMap<Type, MutableType>();
-		Map<MutableType, List<MutableAccount>> typeAccountMap = new HashMap<MutableType, List<MutableAccount>>();
+		Map<Type, MutableAccountType> typeMap = new HashMap<Type, MutableAccountType>();
+		Map<MutableAccountType, List<MutableAccount>> typeAccountMap = new HashMap<MutableAccountType, List<MutableAccount>>();
 		Map<Category, MutableBudgetCategory> categoryMap = new HashMap<Category, MutableBudgetCategory>();
 		Map<Source, MutableSource> sourceMap = new HashMap<Source, MutableSource>();
 
@@ -55,7 +55,7 @@ public class LegacyModelConverter {
 			org.homeunix.drummer.model.Type oldType = (org.homeunix.drummer.model.Type) oldTypeObject;
 
 			if (model.getType(oldType.getName()) == null){
-				MutableType newType = ModelFactory.createMutableType(model, oldType.getName(), oldType.isCredit());
+				MutableAccountType newType = MutableModelFactory.createMutableType(model, oldType.getName(), oldType.isCredit());
 
 				typeMap.put(oldType, newType);
 				typeAccountMap.put(newType, new LinkedList<MutableAccount>());
@@ -63,8 +63,8 @@ public class LegacyModelConverter {
 				model.addType(newType);
 			}
 			else {
-				typeMap.put(oldType, (MutableType) model.getType(oldType.getName()));
-				typeAccountMap.put((MutableType) model.getType(oldType.getName()), new LinkedList<MutableAccount>());				
+				typeMap.put(oldType, (MutableAccountType) model.getType(oldType.getName()));
+				typeAccountMap.put((MutableAccountType) model.getType(oldType.getName()), new LinkedList<MutableAccount>());				
 			}
 		}
 //		newModelBean.setTypes(newTypes);
@@ -75,7 +75,7 @@ public class LegacyModelConverter {
 			Account oldAccount = (Account) oldAccountObject;
 
 			if (model.getAccount(oldAccount.getName()) == null){
-				MutableAccount newAccount = ModelFactory.createMutableAccount(model, oldAccount.getName(), oldAccount.getStartingBalance(), typeMap.get(oldAccount.getAccountType()));
+				MutableAccount newAccount = MutableModelFactory.createMutableAccount(model, oldAccount.getName(), oldAccount.getStartingBalance(), typeMap.get(oldAccount.getAccountType()));
 				newAccount.setDeleted(oldAccount.isDeleted());
 
 //				newAccount.setBalance(oldAccount.getBalance());
@@ -114,7 +114,7 @@ public class LegacyModelConverter {
 			Category oldCategory = (Category) oldCategoryObject;
 
 			if (model.getBudgetCategory(oldCategory.getFullName()) == null){
-				MutableBudgetCategory newBudgetCategory = ModelFactory.createMutableBudgetCategory(model, oldCategory.getName(), new BudgetPeriodMonthly(), oldCategory.isIncome());
+				MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(model, oldCategory.getName(), new BudgetPeriodMonthly(), oldCategory.isIncome());
 //				newBudgetCategory.setCreatedDate(oldCategory.getCreationDate());
 				newBudgetCategory.setDeleted(oldCategory.isDeleted());
 //				newBudgetCategory.setPeriodType(BudgetPeriodType.BUDGET_PERIOD_MONTH.toString());
@@ -160,7 +160,7 @@ public class LegacyModelConverter {
 		for (Object oldTransactionObject : oldModel.getAllTransactions().getTransactions()){
 			Transaction oldTransaction = (Transaction) oldTransactionObject;
 
-			MutableTransaction newTransaction = ModelFactory.createMutableTransaction(
+			MutableTransaction newTransaction = MutableModelFactory.createMutableTransaction(
 					model, 
 					oldTransaction.getDate(), 
 					oldTransaction.getDescription(), 
@@ -187,7 +187,7 @@ public class LegacyModelConverter {
 		for (Object oldScheduledTransactionObject : oldModel.getAllTransactions().getScheduledTransactions()){
 			Schedule oldScheduledTransaction = (Schedule) oldScheduledTransactionObject;
 
-			MutableScheduledTransaction newScheduledTransaction = ModelFactory.createMutableScheduledTransaction(model);
+			MutableScheduledTransaction newScheduledTransaction = MutableModelFactory.createMutableScheduledTransaction(model);
 			newScheduledTransaction.setCleared(oldScheduledTransaction.isCleared());
 			newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
 			newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());

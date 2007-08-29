@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.model.exception;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 
 /**
  * The primary exception thrown when there is a problem with the data model.
@@ -16,7 +16,7 @@ import org.homeunix.thecave.buddi.model.DataModel;
 public class DataModelProblemException extends RuntimeException {
 	public static final long serialVersionUID = 0;
 	
-	private DataModel dataModel;
+	private Document dataModel;
 	
 	public DataModelProblemException() {
 		this(null, null, null);
@@ -36,7 +36,7 @@ public class DataModelProblemException extends RuntimeException {
 	 * @param message
 	 * @param dataModel
 	 */
-	public DataModelProblemException(String message, DataModel dataModel){
+	public DataModelProblemException(String message, Document dataModel){
 		this(message, null, dataModel);
 	}
 	/**
@@ -46,13 +46,13 @@ public class DataModelProblemException extends RuntimeException {
 	 * @param cause
 	 * @param dataModel
 	 */
-	public DataModelProblemException(String message, Throwable cause, DataModel dataModel){
+	public DataModelProblemException(String message, Throwable cause, Document dataModel){
 		super(message, cause);
 		
 		this.dataModel = dataModel;
 	}
 	
-	public DataModel getDataModel(){
+	public Document getDataModel(){
 		return dataModel;
 	}
 }

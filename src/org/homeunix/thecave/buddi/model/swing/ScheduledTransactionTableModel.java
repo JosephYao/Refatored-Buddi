@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 
 public class ScheduledTransactionTableModel extends AbstractTableModel {
 	public static final long serialVersionUID = 0;
 
-	private final DataModel model;
+	private final Document model;
 	private int selectedIndex = -1;
 
 	//We modify this list in memory.  When we hit Done, we save the changes.  Cancel will discard.
@@ -21,7 +21,7 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 //	private final CompositeList<ScheduledTransaction> allSchedules;
 	
 	@SuppressWarnings("unchecked")
-	public ScheduledTransactionTableModel(DataModel model) {
+	public ScheduledTransactionTableModel(Document model) {
 		this.model = model;
 		
 //		unsavedScheduledTransactions = new LinkedList<ScheduledTransaction>();

@@ -24,8 +24,8 @@ import javax.swing.tree.TreeSelectionModel;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AccountTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -51,7 +51,7 @@ public class MyAccountsPanel extends MossPanel {
 		super(true);
 //		this.model = model;
 		this.parent = parent;
-		this.treeTableModel = new AccountTreeTableModel((DataModel) parent.getDocument());
+		this.treeTableModel = new AccountTreeTableModel((Document) parent.getDocument());
 		
 		tree = new JXTreeTable(treeTableModel);
 		balanceLabel = new JLabel("Change Me");
@@ -70,12 +70,12 @@ public class MyAccountsPanel extends MossPanel {
 		return accounts;
 	}
 	
-	public List<Type> getSelectedTypes(){
-		List<Type> types = new LinkedList<Type>();
+	public List<AccountType> getSelectedTypes(){
+		List<AccountType> types = new LinkedList<AccountType>();
 		
 		for (Integer i : tree.getSelectedRows()) {
-			if (tree.getModel().getValueAt(i, -1) instanceof Type)
-				types.add((Type) tree.getModel().getValueAt(i, -1));
+			if (tree.getModel().getValueAt(i, -1) instanceof AccountType)
+				types.add((AccountType) tree.getModel().getValueAt(i, -1));
 		}
 		
 		return types;
@@ -153,15 +153,15 @@ public class MyAccountsPanel extends MossPanel {
 		tree.addTreeExpansionListener(new TreeExpansionListener(){
 			public void treeCollapsed(TreeExpansionEvent event) {
 				Object o = event.getPath().getPath()[event.getPath().getPath().length - 1];
-				if (o instanceof Type){
-					Type t = (Type) o;
+				if (o instanceof AccountType){
+					AccountType t = (AccountType) o;
 					t.setExpanded(false);
 				}
 			}
 			public void treeExpanded(TreeExpansionEvent event) {
 				Object o = event.getPath().getPath()[event.getPath().getPath().length - 1];
-				if (o instanceof Type){
-					Type t = (Type) o;
+				if (o instanceof AccountType){
+					AccountType t = (AccountType) o;
 					t.setExpanded(true);
 				}				
 			}
@@ -181,7 +181,7 @@ public class MyAccountsPanel extends MossPanel {
 		treeTableModel.fireStructureChanged();
 		
 		//Restore the state of the expanded / unrolled nodes.
-		for (Type t : ((DataModel) parent.getDocument()).getTypes()) {
+		for (AccountType t : ((Document) parent.getDocument()).getAccountTypes()) {
 			TreePath path = new TreePath(new Object[]{treeTableModel.getRoot(), t});
 			if (t.isExpanded())
 				tree.expandPath(path);
@@ -190,7 +190,7 @@ public class MyAccountsPanel extends MossPanel {
 		}
 		
 		long netWorth = 0;
-		for (Account a : ((DataModel) parent.getDocument()).getAccounts()) {
+		for (Account a : ((Document) parent.getDocument()).getAccounts()) {
 			netWorth += a.getBalance();
 		}
 		

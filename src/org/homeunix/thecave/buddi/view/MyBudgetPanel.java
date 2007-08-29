@@ -31,9 +31,9 @@ import javax.swing.tree.TreeSelectionModel;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetPeriodType;
-import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.FilteredLists;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
@@ -66,7 +66,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	public MyBudgetPanel(MainFrame parent) {
 		super(true);
 		this.parent = parent;
-		this.treeTableModel = new BudgetTreeTableModel((DataModel) parent.getDocument());
+		this.treeTableModel = new BudgetTreeTableModel((Document) parent.getDocument());
 		tree = new JXTreeTable(treeTableModel);
 
 		balanceLabel = new JLabel();
@@ -95,7 +95,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 //			updateContent();
 //		}
 		if (e.getSource().equals(periodTypeComboBox)){
-			treeTableModel.setSelectedBudgetPeriodType((BudgetPeriodType) periodTypeComboBox.getSelectedItem());
+			treeTableModel.setSelectedBudgetPeriodType((BudgetCategoryType) periodTypeComboBox.getSelectedItem());
 			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
 			updateContent();
 		}
@@ -238,14 +238,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		//Update the balance label
 		long budgetedNetIncome = 0;
 		for (BudgetCategory bc : new FilteredLists.BudgetCategoryListFilteredByPeriodType(
-				(DataModel) parent.getDocument(), 
+				(Document) parent.getDocument(), 
 				treeTableModel.getSelectedBudgetPeriodType())) {
 			budgetedNetIncome += (bc.getAmount(treeTableModel.getSelectedDate()) * (bc.isIncome() ? 1 : -1));
 		}
 		balanceLabel.setText(TextFormatter.getHtmlWrapper(TextFormatter.getFormattedCurrency(budgetedNetIncome)));
 		
 		//Restore the state of the expanded / unrolled nodes.
-		for (BudgetCategory bc : ((DataModel) parent.getDocument()).getBudgetCategories()) {
+		for (BudgetCategory bc : ((Document) parent.getDocument()).getBudgetCategories()) {
 			TreePath path = new TreePath(new Object[]{treeTableModel.getRoot(), bc});
 			if (bc.isExpanded())
 				tree.expandPath(path);

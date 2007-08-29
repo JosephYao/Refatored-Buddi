@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
@@ -25,7 +25,7 @@ public class EditDeleteBudgetCategory extends MossMenuItem{
 			throw new RuntimeException("Calling frame not instance of BudgetFrame");
 			
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getSelectedBudgetCategories()) {
-			((DataModel) ((MainFrame) getFrame()).getDocument()).removeBudgetCategory(bc);
+			((Document) ((MainFrame) getFrame()).getDocument()).removeBudgetCategory(bc);
 		}
 
 		((MainFrame) getFrame()).updateContent();

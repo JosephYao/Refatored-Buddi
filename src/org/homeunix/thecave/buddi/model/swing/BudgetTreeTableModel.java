@@ -12,10 +12,10 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetPeriodType;
-import org.homeunix.thecave.buddi.model.DataModel;
-import org.homeunix.thecave.buddi.model.FilteredLists;
-import org.homeunix.thecave.buddi.model.FilteredLists.BudgetCategoryListFilteredByParent;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -24,21 +24,21 @@ import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
-	private final DataModel model;
+	private final Document model;
 	private final Object root;
 //	private int year;
 //	private int month;
 	private Date selectedDate;
-	private BudgetPeriodType selectedBudgetPeriodType;
+	private BudgetCategoryType selectedBudgetPeriodType;
 	
-	private final Map<BudgetPeriodType, List<BudgetCategory>> budgetCategoriesByType;
+	private final Map<BudgetCategoryType, List<BudgetCategory>> budgetCategoriesByType;
 	
 	private int monthOffset; //Where the selected month is in relation to the 
 							 // edge of the table.
 	
-	public BudgetTreeTableModel(DataModel model) {
+	public BudgetTreeTableModel(Document model) {
 		super(new Object());
-		this.budgetCategoriesByType = new HashMap<BudgetPeriodType, List<BudgetCategory>>();
+		this.budgetCategoriesByType = new HashMap<BudgetCategoryType, List<BudgetCategory>>();
 		this.model = model;
 		this.root = getRoot();
 		this.selectedDate = new Date();
@@ -46,7 +46,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 //		this.month = DateFunctions.getMonth(new Date());
 		this.monthOffset = 2; //This puts the current month in the middle of three columns.
 		
-		for (BudgetPeriodType type : Const.BUDGET_PERIOD_TYPES) {
+		for (BudgetCategoryType type : Const.BUDGET_PERIOD_TYPES) {
 			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
 		}
 	}
@@ -78,13 +78,13 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 		this.selectedDate = getSelectedBudgetPeriodType().getStartOfBudgetPeriod(selectedDate);
 	}
 
-	public BudgetPeriodType getSelectedBudgetPeriodType(){
+	public BudgetCategoryType getSelectedBudgetPeriodType(){
 		if (selectedBudgetPeriodType == null)
 			selectedBudgetPeriodType = new BudgetPeriodMonthly();
 		return selectedBudgetPeriodType;
 	}
 	
-	public void setSelectedBudgetPeriodType(BudgetPeriodType periodType){
+	public void setSelectedBudgetPeriodType(BudgetCategoryType periodType){
 		this.selectedBudgetPeriodType = periodType;
 		
 		setSelectedDate(getSelectedDate());

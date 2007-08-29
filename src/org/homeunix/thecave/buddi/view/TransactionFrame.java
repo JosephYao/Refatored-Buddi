@@ -36,7 +36,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
@@ -78,9 +78,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, "Transactions" + ((DataModel) parent.getDocument()).getUid() + account.getFullName());
+		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullName());
 		this.associatedAccount = account;
-		this.listModel = new TransactionListModel((DataModel) parent.getDocument(), account);
+		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
 		
 		dateFilterComboBox = new JComboBox();
 
@@ -144,7 +144,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 
 		//Set up the editing portion
-		transactionEditor = new TransactionEditor((DataModel) parent.getDocument(), associatedAccount, false);
+		transactionEditor = new TransactionEditor((Document) parent.getDocument(), associatedAccount, false);
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
@@ -185,8 +185,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //		prototype.setNumber("Number");
 //		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 //		list.setPrototypeCellValue(prototype);
-		if (((DataModel) getDocument()).getBudgetCategories().size() > 0)
-			list.setPrototypeCellValue(new Transaction((DataModel) getDocument(), new Date(), "Relatively long description", 12345678, ((DataModel) getDocument()).getBudgetCategories().get(0), ((DataModel) getDocument()).getBudgetCategories().get(0)));
+		if (((Document) getDocument()).getBudgetCategories().size() > 0)
+			list.setPrototypeCellValue(new Transaction((Document) getDocument(), new Date(), "Relatively long description", 12345678, ((Document) getDocument()).getBudgetCategories().get(0), ((Document) getDocument()).getBudgetCategories().get(0)));
 
 		list.setModel(listModel);		
 		list.ensureIndexIsVisible(listModel.getSize() - 1);
@@ -197,7 +197,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	public void init(){
 		super.init();
 		
-		((DataModel) getDocument()).updateAllBalances();
+		((Document) getDocument()).updateAllBalances();
 		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new TransactionCellRenderer(associatedAccount, Buddi.isSimpleFont()));
@@ -763,7 +763,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		}
 	}
 	
-	private DataModel getDataModel(){
-		return (DataModel) getDocument();
+	private Document getDataModel(){
+		return (Document) getDocument();
 	}
 }

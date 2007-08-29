@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.AccountEditorDialog;
@@ -24,7 +24,7 @@ public class EditModifyAccount extends MossMenuItem {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (Account a : ((MainFrame) getFrame()).getSelectedAccounts()) {
-			AccountEditorDialog editor = new AccountEditorDialog((MainFrame) getFrame(), (DataModel) ((MainFrame) getFrame()).getDocument(), a);
+			AccountEditorDialog editor = new AccountEditorDialog((MainFrame) getFrame(), (Document) ((MainFrame) getFrame()).getDocument(), a);
 			try {
 				editor.openWindow();
 			}

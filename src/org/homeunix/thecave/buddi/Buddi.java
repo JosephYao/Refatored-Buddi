@@ -27,8 +27,9 @@ import net.java.dev.SwingWorker;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -214,8 +215,8 @@ public class Buddi {
 			if (!openedFile && filesToLoad.size() > 0){
 				for (File f : filesToLoad) {
 					try {
-						DataModel model;
-						model = new DataModel(f);
+						Document model;
+						model = new DocumentImpl(f);
 						
 						MainFrame mainWndow = new MainFrame(model);
 						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
@@ -231,8 +232,8 @@ public class Buddi {
 			//Handle opening the last user file, if available.
 			if (!openedFile && PrefsModel.getInstance().getLastDataFile() != null){
 					try {
-						DataModel model;
-						model = new DataModel(PrefsModel.getInstance().getLastDataFile());
+						Document model;
+						model = new DocumentImpl(PrefsModel.getInstance().getLastDataFile());
 						
 						MainFrame mainWndow = new MainFrame(model);
 						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
@@ -246,7 +247,7 @@ public class Buddi {
 			
 			//If no files are available, just create a new one.
 			if (!openedFile){
-				DataModel model = new DataModel();
+				Document model = new DocumentImpl();
 				MainFrame mainWndow = new MainFrame(model);
 				mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
 				frameToDisplay = mainWndow;
@@ -647,14 +648,14 @@ public class Buddi {
 		}
 	}
 
-	public static void sendBugReport(DataModel... models){
+	public static void sendBugReport(Document... models){
 		StringBuilder crashLog = new StringBuilder();
 		crashLog.append("\n---Starting Preferences---\n");
 		crashLog.append(PrefsModel.getInstance().saveToString());
 		crashLog.append("---Finished Preferences---\n\n");
 
 		if (models != null){
-			for (DataModel m : models) {
+			for (Document m : models) {
 				crashLog.append("---Starting Data File---\n");
 				crashLog.append(m.saveToString());
 				crashLog.append("---Finished Data File---\n\n");

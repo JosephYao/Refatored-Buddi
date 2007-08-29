@@ -7,13 +7,13 @@ import java.text.DateFormat;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.Type;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
 
@@ -155,7 +155,7 @@ public class TextFormatter {
 	 * @param t
 	 * @return
 	 */
-	public static String getFormattedNameForType(Type t){
+	public static String getFormattedNameForType(AccountType t){
 		return getFormattedNameGeneric(t.toString(), t.isCredit());
 	}
 
@@ -206,7 +206,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableType t){
+	public static boolean isRed(ImmutableAccountType t){
 		return InternalFormatter.isRed(t.getType());
 	}
 
@@ -215,7 +215,7 @@ public class TextFormatter {
 	 * @param s
 	 * @return
 	 */
-	public static boolean isRed(ImmutableType t, long value){
+	public static boolean isRed(ImmutableAccountType t, long value){
 		return InternalFormatter.isRed(t.getType(), value);
 	}
 	

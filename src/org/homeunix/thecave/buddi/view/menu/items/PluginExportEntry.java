@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileFilter;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableModelImpl;
@@ -71,6 +71,6 @@ public class PluginExportEntry extends MossMenuItem {
 				return;
 		}
 
-		plugin.exportData(new MutableModelImpl((DataModel) ((MossDocumentFrame) getFrame()).getDocument()), f);
+		plugin.exportData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), f);
 	}
 }

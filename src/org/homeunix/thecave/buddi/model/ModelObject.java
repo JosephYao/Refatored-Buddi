@@ -4,16 +4,11 @@
 package org.homeunix.thecave.buddi.model;
 
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
+import org.homeunix.thecave.buddi.model.exception.DocumentAlreadySetException;
 
 public interface ModelObject extends Comparable<ModelObject> {
 	
-	/**
-	 * Returns the model associated with this given model object.  This is not 
-	 * meant for direct access, and doing so can easily break the data model.
-	 * Don't use this unless you know exactly what you are doing!
-	 * @return
-	 */
-	public DataModel getModel();
+	public int compareTo(ModelObject o);
 	
 	/**
 	 * Returns the bean associated with this given model object.  This is not 
@@ -22,34 +17,24 @@ public interface ModelObject extends Comparable<ModelObject> {
 	 * @return
 	 */
 	public ModelObjectBean getBean();
-	
-	/**
-	 * Call this from the model absraction layer after all operations which
-	 * change a value. 
-	 */
-	public void modify();
-
-	/**
-	 * This should be implemented to return the same value for otherwise
-	 * equal objects.  The suggested method is to return the hashCode
-	 * for the UID string.
-	 * @return
-	 */
-	public int hashCode();
 		
-	public int compareTo(ModelObject o);
-	
-	/**
-	 * Return true for equal values.  The suggested method for this is
-	 * to return equals() for the UID strings.
-	 * @param obj
-	 * @return
-	 */
-	public boolean equals(Object obj);
-	
 	/**
 	 * Returns the UID string for this object.
 	 * @return
 	 */
 	public String getUid();
+	
+	/**
+	 * Returns the document associated with this model object, or null if
+	 * there is no document. 
+	 * @return
+	 */
+	public Document getDocument();
+	
+	/**
+	 * Sets the document.  You can only do this once per object; once the document 
+	 * is set, you cannot set another one.
+	 * @param document
+	 */
+	public void setDocument(Document document) throws DocumentAlreadySetException;
 }

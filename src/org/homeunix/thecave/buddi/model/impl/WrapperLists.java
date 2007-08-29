@@ -1,15 +1,22 @@
 /*
  * Created on Aug 4, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.List;
 
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.beans.AccountBean;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
@@ -24,34 +31,31 @@ import org.homeunix.thecave.moss.model.DocumentChangeListener;
 public class WrapperLists {
 
 	private WrapperLists() {}
-	
+
 	private abstract static class BuddiWrapperList<T, W> extends WrapperList<T, W> {
-		private final DataModel model;
-		
-		public BuddiWrapperList(DataModel model, List<W> wrappedList, boolean sorted) {
+		private final Document model;
+
+		public BuddiWrapperList(Document model, List<W> wrappedList, boolean sorted) {
 			super(wrappedList, sorted);
 			this.model = model;
-			
+
 			model.addDocumentChangeListener(new DocumentChangeListener(){
 				public void documentChange(DocumentChangeEvent event) {
 					updateWrapperList();
 				}
 			});
 		}
-		
-		public DataModel getDataModel(){
+
+		public Document getDataModel(){
 			return model;
 		}
 	}
-	
+
 	public static class WrapperAccountList extends WrapperList<Account, AccountBean>{
-		private final DataModel model;
-		
-		public WrapperAccountList(DataModel model, List<AccountBean> wrappedList) {
+		public WrapperAccountList(Document model, List<AccountBean> wrappedList) {
 			super(wrappedList, true);
-			this.model = model;
 		}
-		
+
 		@Override
 		public AccountBean getWrappedObject(Account object) {
 			return object.getAccountBean();
@@ -59,31 +63,41 @@ public class WrapperLists {
 
 		@Override
 		public Account getWrapperObject(AccountBean object) {
-			return new Account(model, object);
+			try {
+				return new AccountImpl(object);
+			}
+			catch (ModelException me){
+				return null;
+			}
 		}
 	}
 
-	public static class WrapperTypeList extends BuddiWrapperList<Type, TypeBean>{
-		public WrapperTypeList(DataModel model, List<TypeBean> wrappedList) {
+	public static class WrapperTypeList extends BuddiWrapperList<AccountType, TypeBean>{
+		public WrapperTypeList(Document model, List<TypeBean> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@Override
-		public TypeBean getWrappedObject(Type object) {
+		public TypeBean getWrappedObject(AccountType object) {
 			return object.getTypeBean();
 		}
 
 		@Override
-		public Type getWrapperObject(TypeBean object) {
-			return new Type(getDataModel(), object);
+		public AccountType getWrapperObject(TypeBean object) {
+			try {
+				return new AccountTypeImpl(object);
+			}
+			catch (ModelException me){
+				return null;
+			}
 		}
 	}
 
 	public static class WrapperBudgetCategoryList extends BuddiWrapperList<BudgetCategory, BudgetCategoryBean>{
-		public WrapperBudgetCategoryList(DataModel model, List<BudgetCategoryBean> wrappedList) {
+		public WrapperBudgetCategoryList(Document model, List<BudgetCategoryBean> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@Override
 		public BudgetCategoryBean getWrappedObject(BudgetCategory object) {
 			return object.getBudgetCategoryBean();
@@ -91,47 +105,57 @@ public class WrapperLists {
 
 		@Override
 		public BudgetCategory getWrapperObject(BudgetCategoryBean object) {
-			return new BudgetCategory(getDataModel(), object);
+			try {
+				return new BudgetCategoryImpl(object);
+			}
+			catch (ModelException me){
+				return null;
+			}
 		}
 	}
 
 //	public static class WrapperBudgetPeriodList extends BuddiWrapperList<BudgetPeriod, BudgetPeriodBean>{
-//		public WrapperBudgetPeriodList(DataModel model, List<BudgetPeriodBean> wrappedList) {
-//			super(model, wrappedList, true);
-//		}
-//		
-//		@Override
-//		public BudgetPeriodBean getWrappedObject(BudgetPeriod object) {
-//			return object.getBudgetPeriodBean();
-//		}
-//
-//		@Override
-//		public BudgetPeriod getWrapperObject(BudgetPeriodBean object) {
-//			return new BudgetPeriod(getDataModel(), object);
-//		}
+//	public WrapperBudgetPeriodList(DataModel model, List<BudgetPeriodBean> wrappedList) {
+//	super(model, wrappedList, true);
 //	}
-	
+
+//	@Override
+//	public BudgetPeriodBean getWrappedObject(BudgetPeriod object) {
+//	return object.getBudgetPeriodBean();
+//	}
+
+//	@Override
+//	public BudgetPeriod getWrapperObject(BudgetPeriodBean object) {
+//	return new BudgetPeriod(getDataModel(), object);
+//	}
+//	}
+
 	public static class WrapperScheduledTransactionList extends BuddiWrapperList<ScheduledTransaction, ScheduledTransactionBean>{
-		public WrapperScheduledTransactionList(DataModel model, List<ScheduledTransactionBean> wrappedList) {
+		public WrapperScheduledTransactionList(Document model, List<ScheduledTransactionBean> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@Override
 		public ScheduledTransactionBean getWrappedObject(ScheduledTransaction object) {
-			return object.getScheduledTranasactionBean();
+			return object.getScheduledTransactionBean();
 		}
 
 		@Override
 		public ScheduledTransaction getWrapperObject(ScheduledTransactionBean object) {
-			return new ScheduledTransaction(getDataModel(), object);
+			try {
+				return new ScheduledTransactionImpl(object);
+			}
+			catch (ModelException me){
+				return null;
+			}
 		}
 	}
 
 	public static class WrapperTransactionList extends BuddiWrapperList<Transaction, TransactionBean>{
-		public WrapperTransactionList(DataModel model, List<TransactionBean> wrappedList) {
+		public WrapperTransactionList(Document model, List<TransactionBean> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@Override
 		public TransactionBean getWrappedObject(Transaction object) {
 			return object.getTransactionBean();
@@ -139,37 +163,42 @@ public class WrapperLists {
 
 		@Override
 		public Transaction getWrapperObject(TransactionBean object) {
-			return new Transaction(getDataModel(), object);
+			try {
+				return new TransactionImpl(object);
+			}
+			catch (ModelException me){
+				return null;
+			}
 		}
 	}
-	
+
 	public static class ImmutableAccountList extends BuddiWrapperList<ImmutableAccount, Account> {
-		public ImmutableAccountList(DataModel model, List<Account> wrappedList) {
+		public ImmutableAccountList(Document model, List<Account> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@Override
 		public Account getWrappedObject(ImmutableAccount object) {
 			return (Account) object.getRaw();
 		}
-		
+
 		@Override
 		public ImmutableAccount getWrapperObject(Account object) {
 			return new ImmutableAccountImpl(object);
 		}
 	}
-	
+
 	public static class ImmutableObjectWrapperList<T extends ImmutableModelObject, W extends ModelObjectImpl> extends BuddiWrapperList<T, W> {
-		public ImmutableObjectWrapperList(DataModel model, List<W> wrappedList) {
+		public ImmutableObjectWrapperList(Document model, List<W> wrappedList) {
 			super(model, wrappedList, true);
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public W getWrappedObject(T object) {
 			return (W) object.getRaw();
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public T getWrapperObject(W object) {
@@ -178,12 +207,12 @@ public class WrapperLists {
 			if (object instanceof BudgetCategory)
 				return (T) new MutableBudgetCategoryImpl((BudgetCategory) object);
 //			if (object instanceof BudgetPeriod)
-//				return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
+//			return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
 			if (object instanceof Transaction)
 				return (T) new MutableTransactionImpl((Transaction) object);
-			if (object instanceof Type)
-				return (T) new MutableTypeImpl((Type) object);
-			
+			if (object instanceof AccountType)
+				return (T) new MutableTypeImpl((AccountType) object);
+
 			//Catch all
 			return null;
 		}

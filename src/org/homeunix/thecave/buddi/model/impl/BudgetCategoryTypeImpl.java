@@ -1,11 +1,11 @@
 /*
  * Created on Aug 26, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
-public abstract class BudgetPeriodType {
+public abstract class BudgetCategoryTypeImpl {
 	/**
 	 * Method to move forwards or backwards by the given number of periods.  This 
 	 * must conform to the following statements:

@@ -8,22 +8,22 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.Type;
-import org.homeunix.thecave.buddi.model.WrapperLists;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 
 public class ImmutableModelImpl extends ImmutableModelObjectImpl implements ImmutableModel {
-	private final DataModel model;
+	private final Document model;
 	
-	public ImmutableModelImpl(DataModel model) {
+	public ImmutableModelImpl(Document model) {
 		super(model);
 		this.model = model;
 	}
@@ -49,7 +49,7 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 		return new MutableBudgetCategoryImpl(getModel().getBudgetCategory(fullName));
 	}
 	
-	public DataModel getModel(){
+	public Document getModel(){
 		return model;
 	}
 	
@@ -69,13 +69,13 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	
-	public ImmutableType getType(String name) {
-		if (getModel().getType(name) == null)
+	public ImmutableAccountType getType(String name) {
+		if (getModel().getAccountType(name) == null)
 			return null;
-		return new MutableTypeImpl(getModel().getType(name));
+		return new MutableTypeImpl(getModel().getAccountType(name));
 	}
 	
-	public List<ImmutableType> getTypes(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableType, Type>(getModel(), getModel().getTypes());		
+	public List<ImmutableAccountType> getTypes(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
 	}
 }

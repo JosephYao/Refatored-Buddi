@@ -3,17 +3,17 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableType;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
 public class MutableModelImpl extends ImmutableModelImpl implements MutableModel {
 
-	public MutableModelImpl(DataModel model) {
+	public MutableModelImpl(Document model) {
 		super(model);
 	}
 
@@ -33,8 +33,8 @@ public class MutableModelImpl extends ImmutableModelImpl implements MutableModel
 		getModel().addTransaction(transaction.getTransaction());
 	}
 
-	public void addType(MutableType type) {
-		getModel().addType(type.getType());
+	public void addType(MutableAccountType type) {
+		getModel().addAccountType(type.getType());
 	}
 
 	public void removeAccount(MutableAccount account) {
@@ -53,7 +53,7 @@ public class MutableModelImpl extends ImmutableModelImpl implements MutableModel
 		getModel().removeTransaction(transaction.getTransaction());
 	}
 
-	public void removeType(MutableType type) {
-		getModel().removeType(type.getType());
+	public void removeType(MutableAccountType type) {
+		getModel().removeAccountType(type.getType());
 	}
 }

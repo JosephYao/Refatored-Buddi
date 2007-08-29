@@ -32,8 +32,8 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetPeriodType;
-import org.homeunix.thecave.buddi.model.DataModel;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
@@ -64,9 +64,9 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	private final BudgetCategory selected;
 	
-	private final DataModel model;
+	private final Document model;
 
-	public BudgetCategoryEditorDialog(MainFrame frame, DataModel model, BudgetCategory selected) {
+	public BudgetCategoryEditorDialog(MainFrame frame, Document model, BudgetCategory selected) {
 		super(frame);
 
 		this.selected = selected;
@@ -222,7 +222,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		if (e.getSource().equals(ok)){
 			BudgetCategory bc;
 			if (selected == null){
-				bc = new BudgetCategory(model, name.getValue().toString(), (BudgetPeriodType) budgetPeriodType.getSelectedItem(), income.isSelected());
+				bc = new BudgetCategory(model, name.getValue().toString(), (BudgetCategoryType) budgetPeriodType.getSelectedItem(), income.isSelected());
 				bc.setParent((BudgetCategory) parent.getSelectedItem());
 				bc.setNotes(notes.getValue().toString());
 				Log.debug("Created new BudgetCategory " + bc);
@@ -233,7 +233,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				bc = selected;
 				bc.setName(name.getValue().toString());
 				bc.setParent((BudgetCategory) parent.getSelectedItem());
-				bc.setPeriodType((BudgetPeriodType) budgetPeriodType.getSelectedItem());
+				bc.setPeriodType((BudgetCategoryType) budgetPeriodType.getSelectedItem());
 				bc.setIncome(income.isSelected());
 				bc.setNotes(notes.getValue().toString());
 			}
@@ -254,7 +254,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		private final List<BudgetCategory> availableParents;
 		private int selectedIndex = 0;
 
-		public ParentComboBoxModel(DataModel model) {
+		public ParentComboBoxModel(Document model) {
 			List<BudgetCategory> blank = new LinkedList<BudgetCategory>();
 			blank.add(null);
 			List<List<BudgetCategory>> allLists = new LinkedList<List<BudgetCategory>>();
