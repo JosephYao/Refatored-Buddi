@@ -7,15 +7,15 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.exception.DocumentAlreadySetException;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public abstract class ModelObjectImpl implements ModelObject {
 	private Document document;
 	private final ModelObjectBean bean;
 	
-	ModelObjectImpl(ModelObjectBean bean) throws ModelException {
+	ModelObjectImpl(ModelObjectBean bean) throws InvalidValueException {
 		if (bean == null)
-			throw new ModelException("Model Bean cannot be null.");
+			throw new InvalidValueException("Bean cannot be null.");
 		this.bean = bean;
 	}
 	
@@ -46,12 +46,10 @@ public abstract class ModelObjectImpl implements ModelObject {
 	}
 	
 	public Document getDocument() {
-		return null;
+		return document;
 	}
 	
 	public void setDocument(Document document) throws DocumentAlreadySetException {
-		if (this.document != null)
-			throw new DocumentAlreadySetException("The object " + this.toString() + " already has a document set.");
 		this.document = document;
 	}
 }

@@ -3,14 +3,14 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
-import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
 public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
-	AccountTypeImpl(TypeBean type) throws ModelException {
+	AccountTypeImpl(TypeBean type) throws InvalidValueException {
 		super(type);
 	}
 	

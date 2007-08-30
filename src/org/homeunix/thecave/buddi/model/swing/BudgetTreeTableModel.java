@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
@@ -180,6 +181,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 					long amount = Long.parseLong(value.toString());
 					bc.setAmount(getColumnDate(column), amount);
 				}
+				catch (InvalidValueException ive){} 
 				catch (NumberFormatException nfe){}
 			}
 		}

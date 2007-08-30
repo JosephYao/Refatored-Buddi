@@ -38,6 +38,9 @@ import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -81,7 +84,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullName());
 		this.associatedAccount = account;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
-		
+
 		dateFilterComboBox = new JComboBox();
 
 		//Set up the transaction list.  We don't set the model here, for performance reasons.
@@ -171,22 +174,26 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				break;
 			}
 		}
-		
+
 		this.requestFocusInWindow();
 	}
 
 	@Override
 	public void initPostPack() {
 		super.initPostPack();
-		
+
 //		if (getDataModel().getTransactions().size() > 0)
-//			list.setPrototypeCellValue(getDataModel().getTransactions().get(0));
+//		list.setPrototypeCellValue(getDataModel().getTransactions().get(0));
 //		Transaction prototype = new Transaction(getDataModel(), new Date(), "Description", 123456, getDataModel().getBudgetCategories().get(0), getDataModel().getBudgetCategories().get(0));
 //		prototype.setNumber("Number");
 //		prototype.setMemo("Testing 1, 2, 3, 4, 5");
 //		list.setPrototypeCellValue(prototype);
-		if (((Document) getDocument()).getBudgetCategories().size() > 0)
-			list.setPrototypeCellValue(new Transaction((Document) getDocument(), new Date(), "Relatively long description", 12345678, ((Document) getDocument()).getBudgetCategories().get(0), ((Document) getDocument()).getBudgetCategories().get(0)));
+		if (((Document) getDocument()).getBudgetCategories().size() > 0){
+			try {
+				list.setPrototypeCellValue(ModelFactory.createTransaction(new Date(), "Relatively long description", 12345678, ((Document) getDocument()).getBudgetCategories().get(0), ((Document) getDocument()).getBudgetCategories().get(0)));
+			}
+			catch (InvalidValueException ive){}
+		}
 
 		list.setModel(listModel);		
 		list.ensureIndexIsVisible(listModel.getSize() - 1);
@@ -196,9 +203,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	@Override
 	public void init(){
 		super.init();
-		
+
 		((Document) getDocument()).updateAllBalances();
-		
+
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new TransactionCellRenderer(associatedAccount, Buddi.isSimpleFont()));
 
@@ -233,7 +240,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		buttonPanel.add(buttonPanelLeft, BorderLayout.WEST);
 
 		JScrollPane listScroller = new JScrollPane(list);
-		
+
 		JPanel scrollPanel = new JPanel(new BorderLayout());
 		scrollPanel.add(topPanel, BorderLayout.NORTH);
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
@@ -247,7 +254,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
-		
+
 		recordButton.addActionListener(this);
 		clearButton.addActionListener(this);
 		deleteButton.addActionListener(this);
@@ -267,8 +274,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //			listScroller.setBorder(BorderFactory.createCompoundBorder(
-//					BorderFactory.createEmptyBorder(5, 10, 5, 10),
-//					listScroller.getBorder()));
+//			BorderFactory.createEmptyBorder(5, 10, 5, 10),
+//			listScroller.getBorder()));
 //			this.getRootPane().setBorder(BorderFactory.createTitledBorder(""));
 //			editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
 //			searchField.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
@@ -276,7 +283,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		else {
 			transactionEditor.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		}
-		
+
 //		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_ALL);
 //		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_TODAY);
 //		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_WEEK);
@@ -285,11 +292,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_YEAR);
 //		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_LAST_YEAR);
 //		if (PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled()){
-//			availableFilters.add(null);
-//			if (PrefsModel.getInstance().isShowReconciled())
-//				availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_RECONCILED);
-//			if (PrefsModel.getInstance().isShowCleared())
-//				availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_CLEARED);
+//		availableFilters.add(null);
+//		if (PrefsModel.getInstance().isShowReconciled())
+//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_RECONCILED);
+//		if (PrefsModel.getInstance().isShowCleared())
+//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_CLEARED);
 //		}
 
 		dateFilterComboBox.setModel(new DefaultComboBoxModel(TransactionDateFilterKeys.values()));
@@ -309,22 +316,22 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 			}			
 		});
-		
+
 		//Once we have the listeners all set up, we will load the saved filter.
 		// Since it is saved a string, and the model contains enum's, we have
 		// to check manually.  Yes, it's ugly.  Please let me know if I am 
 		// stupid and have missed a completely obvious alternative.
 //		String savedFilter = PrefsModel.getInstance().getSelectedFilter(); //TODO Save filter
 //		if (savedFilter != null){
-//			for (int i = 0; i < availableFilters.size(); i++){
-//				if (availableFilters.get(i) != null 
-//						&& availableFilters.get(i).toString().equals(savedFilter)){
-//					filterComboBox.setSelectedIndex(i);
-//					break;
-//				}
-//			}
+//		for (int i = 0; i < availableFilters.size(); i++){
+//		if (availableFilters.get(i) != null 
+//		&& availableFilters.get(i).toString().equals(savedFilter)){
+//		filterComboBox.setSelectedIndex(i);
+//		break;
 //		}
-		
+//		}
+//		}
+
 
 		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
@@ -405,13 +412,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 						Transaction t = (Transaction) list.getSelectedValue();
 
 						transactionEditor.setTransaction(t, false);
-						
+
 						Log.debug("Set transaction to " + t);
 					}
 					else if (list.getSelectedValue() == null){
 						transactionEditor.setTransaction(null, false);
 						transactionEditor.updateContent();
-						
+
 						Log.debug("Set transaction to null");
 					}
 
@@ -425,12 +432,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				listModel.update();
 			}
 		});
-		
+
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getFullName() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setJMenuBar(new TransactionsFrameMenuBar(this));
 	}
-	
+
 	@Override
 	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setTransactionWindowSize(this.getSize());
@@ -442,7 +449,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	public void updateButtons(){
 		super.updateButtons();
-		
+
 		if (transactionEditor == null 
 				|| transactionEditor.getTransaction() == null){
 			recordButton.setText(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
@@ -457,7 +464,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	}
 
 //	public Account getAssociatedAccount(){
-//		return associatedAccount;
+//	return associatedAccount;
 //	}
 
 //	public Component getPrintedComponent() {
@@ -466,8 +473,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 //	@Override
 //	public StandardWindow openWindow() {
-//		editableTransaction.resetSelection();
-//		return super.openWindow();
+//	editableTransaction.resetSelection();
+//	return super.openWindow();
 //	}
 
 
@@ -482,121 +489,121 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	 */
 	//TODO We probably don't need to do this anymore... double check, though.
 //	public static void updateAllTransactionWindows(){
-//		for (TransactionsFrame tf : transactionInstances.values()) {
-//			if (tf != null){
-//				tf.updateContent();
-//				tf.updateToFromComboBox();
-//			}
-//		}
+//	for (TransactionsFrame tf : transactionInstances.values()) {
+//	if (tf != null){
+//	tf.updateContent();
+//	tf.updateToFromComboBox();
+//	}
+//	}
 //	}
 
 //	/**
-//	 * Gets the filter text in the search box
-//	 * @return The contents of the search box
-//	 */
+//	* Gets the filter text in the search box
+//	* @return The contents of the search box
+//	*/
 //	public String getFilterText(){
-//		return searchField.getText();
+//	return searchField.getText();
 //	}
 
 //	/**
-//	 * Gets the selected item in the filter pulldown
-//	 * @return The selected item in the filter pulldown
-//	 */
+//	* Gets the selected item in the filter pulldown
+//	* @return The selected item in the filter pulldown
+//	*/
 //	public BuddiKeys getFilterComboBox(){
-//		return (BuddiKeys) filterComboBox.getSelectedItem();
+//	return (BuddiKeys) filterComboBox.getSelectedItem();
 //	}
 
 	/**
 	 * Forces a toggle on the Cleared state, without needing to save manually.
 	 */
 //	public void toggleCleared(){
-//		Transaction t = (Transaction) list.getSelectedValue();
-//		t.setCleared(!t.isCleared());
-//		baseModel.updateNoOrderChange(t);
-//		editableTransaction.updateClearedAndReconciled();
+//	Transaction t = (Transaction) list.getSelectedValue();
+//	t.setCleared(!t.isCleared());
+//	baseModel.updateNoOrderChange(t);
+//	editableTransaction.updateClearedAndReconciled();
 //	}
 
 	/**
 	 * Forces a toggle on the Reconciled state, without needing to save manually.
 	 */
 //	public void toggleReconciled(){
-//		Transaction t = (Transaction) list.getSelectedValue();
-//		t.setReconciled(!t.isReconciled());
-//		baseModel.updateNoOrderChange(t);
-//		editableTransaction.updateClearedAndReconciled();
-//
+//	Transaction t = (Transaction) list.getSelectedValue();
+//	t.setReconciled(!t.isReconciled());
+//	baseModel.updateNoOrderChange(t);
+//	editableTransaction.updateClearedAndReconciled();
+
 //	}
 
 //	public void clickClear(){
-//		clearButton.doClick();
+//	clearButton.doClick();
 //	}
 //	public void clickRecord(){
-//		recordButton.doClick();
+//	recordButton.doClick();
 //	}
 //	public void clickDelete(){
-//		deleteButton.doClick();
+//	deleteButton.doClick();
 //	}
 
 //	/**
-//	 * After creating a Collection of new Transactions via 
-//	 * DataInstance.getInstance().getDataModelFactory().createTransaction(),
-//	 * and filling in all the needed details, you call this method to
-//	 * add them to the data model and update all windows automatically.
-//	 * 
-//	 * Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
-//	 * you will not update the windows properly.
-//	 * @param t Transaction to add to the data model
-//	 */
+//	* After creating a Collection of new Transactions via 
+//	* DataInstance.getInstance().getDataModelFactory().createTransaction(),
+//	* and filling in all the needed details, you call this method to
+//	* add them to the data model and update all windows automatically.
+//	* 
+//	* Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
+//	* you will not update the windows properly.
+//	* @param t Transaction to add to the data model
+//	*/
 //	public static void addToTransactionListModel(Collection<Transaction> transactions){
-//		baseModel.addAll(transactions);
+//	baseModel.addAll(transactions);
 //	}
-//
+
 //	/**
-//	 * After creating a new Transaction via DataInstance.getInstance().getDataModelFactory().createTransaction(),
-//	 * and filling in all the needed details, you call this method to
-//	 * add it to the data model and update all windows automatically.
-//	 * 
-//	 * Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
-//	 * you will not update the windows properly.
-//	 * @param t Transaction to add to the data model
-//	 */
+//	* After creating a new Transaction via DataInstance.getInstance().getDataModelFactory().createTransaction(),
+//	* and filling in all the needed details, you call this method to
+//	* add it to the data model and update all windows automatically.
+//	* 
+//	* Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
+//	* you will not update the windows properly.
+//	* @param t Transaction to add to the data model
+//	*/
 //	public static void addToTransactionListModel(Transaction t){
-//		baseModel.add(t);
+//	baseModel.add(t);
 //	}
-//
+
 //	/**
-//	 * Remove a transaction from the data model and all open windows.
-//	 * 
-//	 * Note that you should *not* call DataInstance.getInstance().deleteTransaction() directly, as
-//	 * you will not update the windows properly.
-//	 * @param t Transaction to delete
-//	 * @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
-//	 * don't have this, you can use null, although you should be aware that there may be some
-//	 * problems updating transaction windows with the new data, as the windows will not
-//	 * have the update() method called on their FilteredDynamicListModels. 
-//	 */
+//	* Remove a transaction from the data model and all open windows.
+//	* 
+//	* Note that you should *not* call DataInstance.getInstance().deleteTransaction() directly, as
+//	* you will not update the windows properly.
+//	* @param t Transaction to delete
+//	* @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
+//	* don't have this, you can use null, although you should be aware that there may be some
+//	* problems updating transaction windows with the new data, as the windows will not
+//	* have the update() method called on their FilteredDynamicListModels. 
+//	*/
 //	public static void removeFromTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
-//		baseModel.remove(t, fdlm);
+//	baseModel.remove(t, fdlm);
 //	}
-//
+
 //	/**
-//	 * Notifies all windows that a transaction has been updated.  If you 
-//	 * change a transaction and do not register it here after all the changes
-//	 * are complete, you will not get the transaction updated in the 
-//	 * Transaction windows.
-//	 * 
-//	 * @param t Transaction to update
-//	 * @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
-//	 * don't have this, you can use null, although you should be aware that there may be some
-//	 * problems updating transaction windows with the new data, as the windows will not
-//	 * have the update() method called on their FilteredDynamicListModels. 
-//	 */
+//	* Notifies all windows that a transaction has been updated.  If you 
+//	* change a transaction and do not register it here after all the changes
+//	* are complete, you will not get the transaction updated in the 
+//	* Transaction windows.
+//	* 
+//	* @param t Transaction to update
+//	* @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
+//	* don't have this, you can use null, although you should be aware that there may be some
+//	* problems updating transaction windows with the new data, as the windows will not
+//	* have the update() method called on their FilteredDynamicListModels. 
+//	*/
 //	public static void updateTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
-//		baseModel.update(t, fdlm);
+//	baseModel.update(t, fdlm);
 //	}
-//
+
 //	public static void reloadModel(){
-//		baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
+//	baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
 //	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -623,7 +630,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			Transaction t;
 			boolean isUpdate;
-			
+
 			if (recordButton.getText().equals(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_UPDATE)))
 				isUpdate = true;
 			else if (recordButton.getText().equals(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD)))
@@ -632,12 +639,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				Log.error("Unknown record button state: " + recordButton.getText());
 				return;
 			}
-			
+
 			if (isUpdate && transactionEditor.isDangerouslyChanged()) {
 				String[] options = new String[2];
 				options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CREATE_NEW_TRANSACTION);
 				options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OVERWRITE_TRANSACTON);
-				
+
 				int ret = JOptionPane.showOptionDialog(
 						null, 
 						PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION),
@@ -647,24 +654,29 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 						null,
 						options,
 						options[0]);
-				
-			    if (ret == JOptionPane.YES_OPTION){ // create new transaction
+
+				if (ret == JOptionPane.YES_OPTION){ // create new transaction
 					isUpdate = false;
 				} // else continue with update
 			}
-			
-			if(isUpdate) {
-				t = transactionEditor.getUpdatedTransaction();
-				
-			} else {
-				t = transactionEditor.getNewTransaction();
-				getDataModel().addTransaction(t);
+
+			try {
+				if(isUpdate) {
+					t = transactionEditor.getUpdatedTransaction();
+
+				} else {
+					t = transactionEditor.getNewTransaction();
+					getDataModel().addTransaction(t);
+				}
+			}
+			catch (ModelException me){
+				return;
 			}
 
 			getDataModel().updateAllBalances();
-			
+
 			getDataModel().finishBatchChange();
-			
+
 			//TODO This should be done via a listener on AccountFrame.
 //			MainFrame.getInstance().getAccountListPanel().updateNetWorth();
 
@@ -762,7 +774,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			}
 		}
 	}
-	
+
 	private Document getDataModel(){
 		return (Document) getDocument();
 	}

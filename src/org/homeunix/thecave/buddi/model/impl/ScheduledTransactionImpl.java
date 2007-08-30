@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 /**
  * @author wyatt
@@ -15,7 +15,7 @@ import org.homeunix.thecave.buddi.model.exception.ModelException;
  */
 public class ScheduledTransactionImpl extends TransactionImpl implements ScheduledTransaction {
 	
-	ScheduledTransactionImpl(ScheduledTransactionBean scheduledTransaction) throws ModelException {
+	ScheduledTransactionImpl(ScheduledTransactionBean scheduledTransaction) throws InvalidValueException {
 		super(scheduledTransaction);
 	}
 	

@@ -29,12 +29,11 @@ public interface ModelObject extends Comparable<ModelObject> {
 	 * there is no document. 
 	 * @return
 	 */
-	public Document getDocument();
+	Document getDocument();
 	
 	/**
-	 * Sets the document.  You can only do this once per object; once the document 
-	 * is set, you cannot set another one.
+	 * Sets the document.
 	 * @param document
 	 */
-	public void setDocument(Document document) throws DocumentAlreadySetException;
+	void setDocument(Document document) throws DocumentAlreadySetException;
 }

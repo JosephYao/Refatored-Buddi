@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
@@ -28,7 +28,7 @@ public class FileNew extends MossMenuItem {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			MainFrame mainFrame = new MainFrame(new Document());
+			MainFrame mainFrame = new MainFrame(new DocumentImpl());
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (WindowOpenException foe){

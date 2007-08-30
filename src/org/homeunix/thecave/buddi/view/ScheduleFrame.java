@@ -22,6 +22,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
@@ -169,8 +170,12 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 		else if (e.getSource().equals(deleteButton)){
 			Object o = list.getSelectedValue();
 
-			if (o instanceof ScheduledTransaction)
-				model.removeScheduledTransaction((ScheduledTransaction) o);
+			if (o instanceof ScheduledTransaction){
+				try {
+					model.removeScheduledTransaction((ScheduledTransaction) o);
+				}
+				catch (ModelException me){}
+			}
 			
 			list.setSelectedIndex(-1);
 			listModel.fireListChanged();

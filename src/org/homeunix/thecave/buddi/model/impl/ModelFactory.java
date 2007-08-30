@@ -18,10 +18,10 @@ import org.homeunix.thecave.buddi.model.beans.ModelObjectBean;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public class ModelFactory {
-	public static Account createAccount(String name, AccountType type) throws ModelException {
+	public static Account createAccount(String name, AccountType type) throws InvalidValueException {
 		Account a = new AccountImpl(new AccountBean());
 		
 		a.setName(name);
@@ -30,7 +30,7 @@ public class ModelFactory {
 		return a;
 	}
 	
-	public static AccountType createAccountType(String name, boolean credit) throws ModelException {
+	public static AccountType createAccountType(String name, boolean credit) throws InvalidValueException {
 		AccountType at = new AccountTypeImpl(new TypeBean());
 		
 		at.setName(name);
@@ -39,7 +39,7 @@ public class ModelFactory {
 		return at;
 	}
 	
-	public static BudgetCategory createBudgetCategory(String name, BudgetCategoryType type, boolean income) throws ModelException {
+	public static BudgetCategory createBudgetCategory(String name, BudgetCategoryType type, boolean income) throws InvalidValueException {
 		BudgetCategory bc = new BudgetCategoryImpl(new BudgetCategoryBean());
 		
 		bc.setName(name);
@@ -49,7 +49,7 @@ public class ModelFactory {
 		return bc;
 	}
 		
-	public static Transaction createTransaction(Date date, String description, long amount, Source from, Source to) throws ModelException {
+	public static Transaction createTransaction(Date date, String description, long amount, Source from, Source to) throws InvalidValueException {
 		Transaction t = new TransactionImpl(new TransactionBean());
 		
 		t.setDate(date);
@@ -61,7 +61,7 @@ public class ModelFactory {
 		return t;
 	}
 	
-	public static ScheduledTransaction createScheduledTransaction() throws ModelException {
+	public static ScheduledTransaction createScheduledTransaction() throws InvalidValueException {
 		ScheduledTransaction st = new ScheduledTransactionImpl(new ScheduledTransactionBean());
 		
 		return st;

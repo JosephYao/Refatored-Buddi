@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 
 public class ScheduledTransactionTableModel extends AbstractTableModel {
 	public static final long serialVersionUID = 0;
@@ -62,7 +63,10 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 	}
 	
 	public void add(ScheduledTransaction s){
-		model.addScheduledTransaction(s);
+		try {
+			model.addScheduledTransaction(s);
+		}
+		catch (ModelException me){}
 		
 		fireTableChanged();
 	}
@@ -71,7 +75,10 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 //		if (unsavedScheduledTransactions.contains(s))
 //			unsavedScheduledTransactions.remove(s);
 //		else 
+		try {
 			model.removeScheduledTransaction(s);
+		}
+		catch (ModelException me){}
 
 	}
 	

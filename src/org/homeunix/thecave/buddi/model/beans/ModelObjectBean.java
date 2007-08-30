@@ -12,7 +12,7 @@ public abstract class ModelObjectBean {
 	private Date modifiedDate;
 	private String uid;
 	private String userUid;
-	
+	private DocumentBean document;
 	
 	
 	public Date getModifiedDate() {
@@ -35,6 +35,12 @@ public abstract class ModelObjectBean {
 	}
 	public void setUserUid(String userUid) {
 		this.userUid = userUid;
+	}
+	public DocumentBean getDocument() {
+		return document;
+	}
+	public void setDocument(DocumentBean document) {
+		this.document = document;
 	}
 	
 	@Override

@@ -6,15 +6,16 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.beans.AccountBean;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.exception.ModelException;
 
 public class AccountImpl extends SourceImpl implements Account {
 	
-	AccountImpl(AccountBean account) throws ModelException {
+	AccountImpl(AccountBean account) throws InvalidValueException {
 		super(account);
 	}
 	

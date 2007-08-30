@@ -28,8 +28,10 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -55,7 +57,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	private final TypeComboBoxModel typeComboBoxModel;
 
 	private final Account selected;
-	
+
 	private final Document model;
 
 	public AccountEditorDialog(MainFrame frame, Document model, Account selected) {
@@ -76,7 +78,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	public void init() {
 		super.init();
-		
+
 		JPanel textPanel = new JPanel(new BorderLayout());
 		JPanel textPanelLeft = new JPanel(new GridLayout(0, 1));
 		JPanel textPanelRight = new JPanel(new GridLayout(0, 1));
@@ -100,7 +102,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		cancel.addActionListener(this);
 
 		type.addActionListener(this);
-		
+
 		type.setRenderer(new DefaultListCellRenderer(){
 			private static final long serialVersionUID = 0;
 
@@ -116,23 +118,23 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 				return this;
 			}
 		});
-		
+
 		name.addKeyListener(new KeyAdapter(){
 			@Override
 			public void keyReleased(KeyEvent e) {
 				super.keyReleased(e);
-				
+
 				updateButtons();
 			}
 		});
-		
+
 		FocusListener focusListener = new FocusListener(){
 			public void focusGained(FocusEvent e) {}
 			public void focusLost(FocusEvent e) {
 				updateButtons();
 			}
 		};
-		
+
 		ok.addFocusListener(focusListener);
 		cancel.addFocusListener(focusListener);
 		name.addFocusListener(focusListener);
@@ -158,13 +160,13 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	public void updateButtons() {
 		super.updateButtons();
-		
+
 		ok.setEnabled(name.getValue() != null && name.getValue().toString().length() > 0);
 	}
 
 	public void updateContent() {
 		super.updateContent();
-		
+
 		if (selected == null){
 			name.setValue("");
 //			type.setSelectedItem(null);
@@ -182,23 +184,29 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(ok)){
 			Account a;
-			if (selected == null){
-				a = new Account(model, name.getValue().toString(), startingBalance.getValue(), (AccountType) type.getSelectedItem());
-				a.setNotes(notes.getValue().toString());
-				Log.debug("Created new BudgetCategory " + a);
+			try {
+				if (selected == null){
+					a = ModelFactory.createAccount(name.getValue().toString(), (AccountType) type.getSelectedItem());
+					a.setStartingBalance(startingBalance.getValue());
+					a.setNotes(notes.getValue().toString());
+					Log.debug("Created new BudgetCategory " + a);
 
-				model.addAccount(a);
+					model.addAccount(a);
+				}
+				else {
+					a = selected;
+					a.setName(name.getValue().toString());
+					a.setStartingBalance(startingBalance.getValue());
+					a.setType((AccountType) type.getSelectedItem());
+					a.setNotes(notes.getValue().toString());
+				}
+				a.updateBalance();
 			}
-			else {
-				a = selected;
-				a.setName(name.getValue().toString());
-				a.setStartingBalance(startingBalance.getValue());
-				a.setType((AccountType) type.getSelectedItem());
-				a.setNotes(notes.getValue().toString());
+			catch (ModelException me){
+				Log.error("Error adding account", me);
 			}
 
-			a.updateBalance();
-			
+
 			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){

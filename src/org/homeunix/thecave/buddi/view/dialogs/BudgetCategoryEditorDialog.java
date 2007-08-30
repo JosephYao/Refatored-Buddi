@@ -34,6 +34,8 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
@@ -63,7 +65,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	private final ParentComboBoxModel parentComboBoxModel;
 
 	private final BudgetCategory selected;
-	
+
 	private final Document model;
 
 	public BudgetCategoryEditorDialog(MainFrame frame, Document model, BudgetCategory selected) {
@@ -116,25 +118,25 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		ok.addActionListener(this);
 		cancel.addActionListener(this);
 		parent.addActionListener(this);
-		
+
 		budgetPeriodType.setRenderer(new TranslatorListCellRenderer());
-		
+
 		name.addKeyListener(new KeyAdapter(){
 			@Override
 			public void keyReleased(KeyEvent e) {
 				super.keyReleased(e);
-				
+
 				updateButtons();
 			}
 		});
-		
+
 		FocusListener focusListener = new FocusListener(){
 			public void focusGained(FocusEvent e) {}
 			public void focusLost(FocusEvent e) {
 				updateButtons();
 			}
 		};
-		
+
 		ok.addFocusListener(focusListener);
 		cancel.addFocusListener(focusListener);
 		name.addFocusListener(focusListener);
@@ -143,8 +145,8 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		income.addFocusListener(focusListener);
 		expense.addFocusListener(focusListener);
 		notes.addFocusListener(focusListener);
-		
-		
+
+
 		parent.setRenderer(new DefaultListCellRenderer(){
 			private static final long serialVersionUID = 0;
 
@@ -172,7 +174,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			buttonPanel.add(ok);
 			buttonPanel.add(cancel);
 		}
-		
+
 		this.getRootPane().setDefaultButton(ok);
 		this.setLayout(new BorderLayout());
 		this.add(textPanel, BorderLayout.CENTER);
@@ -181,9 +183,9 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	public void updateButtons() {
 		super.updateButtons();
-		
+
 		ok.setEnabled(name.getValue() != null && name.getValue().toString().length() > 0);
-		
+
 		budgetPeriodType.setEnabled(parent.getSelectedItem() == null);
 		income.setEnabled(parent.getSelectedItem() == null);
 		expense.setEnabled(parent.getSelectedItem() == null);
@@ -198,7 +200,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	public void updateContent() {
 		super.updateContent();
-		
+
 		if (selected == null){
 			name.setValue("");
 			expense.setSelected(true);
@@ -221,21 +223,26 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(ok)){
 			BudgetCategory bc;
-			if (selected == null){
-				bc = new BudgetCategory(model, name.getValue().toString(), (BudgetCategoryType) budgetPeriodType.getSelectedItem(), income.isSelected());
-				bc.setParent((BudgetCategory) parent.getSelectedItem());
-				bc.setNotes(notes.getValue().toString());
-				Log.debug("Created new BudgetCategory " + bc);
+			try {
+				if (selected == null){
+					bc = ModelFactory.createBudgetCategory(name.getValue().toString(), (BudgetCategoryType) budgetPeriodType.getSelectedItem(), income.isSelected());
+					bc.setParent((BudgetCategory) parent.getSelectedItem());
+					bc.setNotes(notes.getValue().toString());
+					Log.debug("Created new BudgetCategory " + bc);
 
-				model.addBudgetCategory(bc);
+					model.addBudgetCategory(bc);
+				}
+				else {
+					bc = selected;
+					bc.setName(name.getValue().toString());
+					bc.setParent((BudgetCategory) parent.getSelectedItem());
+					bc.setPeriodType((BudgetCategoryType) budgetPeriodType.getSelectedItem());
+					bc.setIncome(income.isSelected());
+					bc.setNotes(notes.getValue().toString());
+				}
 			}
-			else {
-				bc = selected;
-				bc.setName(name.getValue().toString());
-				bc.setParent((BudgetCategory) parent.getSelectedItem());
-				bc.setPeriodType((BudgetCategoryType) budgetPeriodType.getSelectedItem());
-				bc.setIncome(income.isSelected());
-				bc.setNotes(notes.getValue().toString());
+			catch (ModelException me){
+				Log.error("Error creating budget category", me);
 			}
 
 			closeWindow();

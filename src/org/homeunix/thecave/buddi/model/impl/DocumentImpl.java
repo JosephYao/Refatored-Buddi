@@ -73,14 +73,14 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private final Map<String, BudgetCategory> budgetCategoryMap = new HashMap<String, BudgetCategory>();
 	private final Map<String, AccountType> typeMap = new HashMap<String, AccountType>();
 
-	private char[] password; //Store the password when loaded, and use the same one for save().
-	// This is obviously not the best practice to use 
-	// from a security point of view.  However, if a malicious
-	// third party has good enough access to the machine to be able
-	// to read private Java objects, they will just read it when
-	// we call MossCryptoFactory anyways - the password is handed 
-	// there in plain text as well.  The window is already there - this
-	// just increases the time it is available for.
+	private char[] password; 	//Store the password when loaded, and use the same one for save().
+								// This is obviously not the best practice to use 
+								// from a security point of view.  However, if a malicious
+								// third party has good enough access to the machine to be able
+								// to read private Java objects, they will just read it when
+								// we call MossCryptoFactory anyways - the password is handed 
+								// there in plain text as well.  The window is already there - this
+								// just increases the time it is available for.
 
 
 	/**
@@ -93,7 +93,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			throw new DocumentLoadException("DataModelBean cannot be null!");
 
 		this.dataModel = bean;
-		this.refreshUidMap();
+		try {
+			this.refreshUidMap();
+		}
+		catch (ModelException me){
+			throw new DocumentLoadException(me);
+		}
 		this.updateAllBalances();
 		this.setChanged();
 	}
@@ -151,6 +156,9 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					//Return to calling code... the model is correctly loaded.
 					return;
 				}
+				catch (ModelException me){
+					throw new DocumentLoadException("Model exception", me);
+				}
 				catch (IncorrectPasswordException ipe){
 					//The password was not correct.  Prompt for a new one.
 					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
@@ -181,13 +189,19 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	/**
 	 * Creates a new data model, with some default types and categories.
 	 */
-	public DocumentImpl() {
+	public DocumentImpl() throws ModelException {
 		dataModel = new DocumentBean();
+		try {
+			setDocument(this);
+		}
+		catch (DocumentAlreadySetException dase){
+			throw new ModelException(dase);
+		}
 		setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
 			try {
-				this.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
+				this.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
 			}
 			catch (ModelException me){
 				Log.error("Error creating budget category", me);
@@ -437,7 +451,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * Adds the given transaction to the data model.
 	 * @param transaction
 	 */
-	public void addTransaction(Transaction transaction){
+	public void addTransaction(Transaction transaction) throws ModelException {
+		transaction.setDocument(this);
 		checkValid(transaction, true, false);
 
 		dataModel.getTransactions().add(transaction.getTransactionBean());
@@ -448,7 +463,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * Adds the given scheduled transaction to the data model. 
 	 * @param scheduledTransaction
 	 */
-	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction){
+	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
+		scheduledTransaction.setDocument(this);
 		checkValid(scheduledTransaction, true, false);
 
 		dataModel.getScheduledTransactions().add(scheduledTransaction.getScheduledTransactionBean());
@@ -459,10 +475,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * Removes the given transaction from the data model.
 	 * @param transaction
 	 */
-	public boolean removeTransaction(Transaction transaction){
+	public boolean removeTransaction(Transaction transaction) throws ModelException {
 		checkValid(transaction, false, false);
 
 		dataModel.getTransactions().remove(transaction.getTransactionBean());
+		transaction.setDocument(null);
 		setChanged();	
 
 		return true;
@@ -472,10 +489,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * Removes the given scheduled transaction from the data model.
 	 * @param scheduledTransaction
 	 */
-	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction){
+	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
 		checkValid(scheduledTransaction, false, false);
 
 		dataModel.getScheduledTransactions().remove(scheduledTransaction.getScheduledTransactionBean());
+		scheduledTransaction.setDocument(null);
 		setChanged();
 
 		return true;
@@ -485,7 +503,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * Adds the given account to the data model.  
 	 * @param account
 	 */
-	public void addAccount(Account account){
+	public void addAccount(Account account) throws ModelException {
+		account.setDocument(this);
 		checkValid(account, true, false);
 
 		dataModel.getAccounts().add(account.getAccountBean());
@@ -494,60 +513,57 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 
 	/**
-	 * Deletes the given account.  If possible, it will be removed from the data
-	 * model.  If there are references to the account, it will only be marked 
-	 * as deleted. 
+	 * Deletes the given account if possible.
 	 * @param account
 	 * @return <code>true</code> if the account has been removed from 
 	 * the data model, <code>false</code> otherwise.
 	 */
-	public boolean removeAccount(Account account){
+	public boolean removeAccount(Account account) throws ModelException {
 		checkValid(account, false, false);
 
 		//Check if this is being used somewhere.  If so, 
 		// we do the 'delete flag' deletion.
-		boolean permanent = true;
+		boolean canDelete = true;
 
 		if (this.getTransactions(account).size() > 0)
-			permanent = false;
+			canDelete = false;
 		for (ScheduledTransaction st : this.getScheduledTransactions()) {
 			if (st.getFrom().equals(account) || st.getTo().equals(account))
-				permanent = false;
+				canDelete = false;
 		}
 
 
 		//Actually remove or set the delete flag as needed.
-		if (!permanent)
-			account.setDeleted(true);
-		else {
+		if (canDelete) {
 			dataModel.getAccounts().remove(account.getAccountBean());
 			accountMap.remove(account.getName());
+			account.setDocument(null);
+			setChanged();
 		}
-
-		setChanged();
-
-		return permanent;
+		
+		return canDelete;
 	}
 
-	/**
-	 * If a previous call to removeAccount() returned false (i.e., the account 
-	 * was not permanently deleted, but only flagged as such), it is possible
-	 * to undelete it.
-	 * @param account
-	 */
-	public void undeleteAccount(Account account){
-		checkValid(account, false, false);
-
-		account.setDeleted(false);
-
-		setChanged();
-	}
+//	/**
+//	 * If a previous call to removeAccount() returned false (i.e., the account 
+//	 * was not permanently deleted, but only flagged as such), it is possible
+//	 * to undelete it.
+//	 * @param account
+//	 */
+//	public void undeleteAccount(Account account) throws ModelException {
+//		checkValid(account, false, false);
+//
+//		account.setDeleted(false);
+//
+//		setChanged();
+//	}
 
 	/**
 	 * Adds the given budget category to the data model.
 	 * @param budgetCategory
 	 */
-	public void addBudgetCategory(BudgetCategory budgetCategory){
+	public void addBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+		budgetCategory.setDocument(this);
 		checkValid(budgetCategory, true, false);
 
 		dataModel.getBudgetCategories().add(budgetCategory.getBudgetCategoryBean());
@@ -563,7 +579,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @return <code>true</code> if the account has been removed from 
 	 * the data model, <code>false</code> otherwise.
 	 */
-	public boolean removeBudgetCategory(BudgetCategory budgetCategory){
+	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		checkValid(budgetCategory, false, false);
 
 		List<BudgetCategory> catsToDelete = new FilteredLists.BudgetCategoryListFilteredByChildren(this, this.getBudgetCategories(), budgetCategory);
@@ -575,52 +591,51 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//
 		// Check if this is being used somewhere.  If so, 
 		// we do the 'delete flag' deletion.
-		boolean permanent = true;
+		boolean canDelete = true;
 
 		for (BudgetCategory bc : catsToDelete) {
 			if (this.getTransactions(bc).size() > 0)
-				permanent = false;
+				canDelete = false;
 			for (ScheduledTransaction st : this.getScheduledTransactions()) {
 				if (st.getFrom().equals(bc) || st.getTo().equals(bc))
-					permanent = false;
+					canDelete = false;
 			}
 		}
 
 		//We now execute the deletion.
 		for (BudgetCategory bc : catsToDelete) {
-			if (!permanent){
-				bc.setDeleted(true);
-			}
-			else {
+			if (canDelete) {
 				dataModel.getBudgetCategories().remove(bc.getBudgetCategoryBean());
 				budgetCategoryMap.remove(budgetCategory.getFullName());
+				budgetCategory.setDocument(null);
 			}
 		}
 
 		setChanged();
 
-		return permanent;
+		return canDelete;
 	}
 
-	/**
-	 * If a previous call to removeBudgetCategory() returned false (i.e., the budgetCategory 
-	 * was not permanently deleted, but only flagged as such), it is possible
-	 * to undelete it.
-	 * @param budgetCategory
-	 */
-	public void undeleteBudgetCategory(BudgetCategory budgetCategory){
-		checkValid(budgetCategory, false, false);
-
-		if (budgetCategory.getParent() != null && budgetCategory.getParent().isDeleted()){
-			undeleteBudgetCategory(budgetCategory.getParent());
-		}
-	}
+//	/**
+//	 * If a previous call to removeBudgetCategory() returned false (i.e., the budgetCategory 
+//	 * was not permanently deleted, but only flagged as such), it is possible
+//	 * to undelete it.
+//	 * @param budgetCategory
+//	 */
+//	public void undeleteBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+//		checkValid(budgetCategory, false, false);
+//
+//		if (budgetCategory.getParent() != null && budgetCategory.getParent().isDeleted()){
+//			undeleteBudgetCategory(budgetCategory.getParent());
+//		}
+//	}
 
 	/**
 	 * Adds the given type to the data model
 	 * @param type
 	 */
-	public void addAccountType(AccountType type){
+	public void addAccountType(AccountType type) throws ModelException {
+		type.setDocument(this);
 		checkValid(type, true, false);
 
 		dataModel.getTypes().add(type.getTypeBean());
@@ -633,7 +648,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * any account, we return 
 	 * @param type
 	 */
-	public boolean removeAccountType(AccountType type){
+	public boolean removeAccountType(AccountType type) throws ModelException {
 		checkValid(type, false, false);
 
 		for (Account a : getAccounts()) {
@@ -646,6 +661,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		dataModel.getTypes().remove(type.getTypeBean());
 		typeMap.remove(type.getName());
+		type.setDocument(null);
 		setChanged();
 
 		return true;
@@ -668,9 +684,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * such as if the UID is already entered into the model).
 	 * @param isUidRefresh Is this being called from the refreshUid method?
 	 */
-	private void checkValid(ModelObject object, boolean isAddOperation, boolean isUidRefresh){
-		if (!object.getDocument().equals(this))
-			throw new DataModelProblemException("Cannot modify an object not in this model.", this);
+	private void checkValid(ModelObject object, boolean isAddOperation, boolean isUidRefresh) throws ModelException {
+		if (object.getDocument() == null)
+			throw new ModelException("Document has not yet been set for this object");
+		
+		if(!object.getDocument().equals(this))
+			throw new ModelException("Cannot modify an object not in this model");
 
 		if (isAddOperation){
 //			if (this.getUid(object.getBean()) != null)
@@ -679,21 +698,21 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			if (object instanceof Account){
 				for (Account a : getAccounts()) {
 					if (a.getName().equalsIgnoreCase(((Account) object).getName()))
-						throw new DataModelProblemException("Cannot have multiple accounts with the same name.", this);
+						throw new ModelException("Cannot have multiple accounts with the same name");
 				}
 			}
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
 					if (bc.getFullName().equalsIgnoreCase(((BudgetCategory) object).getFullName()))
-						throw new DataModelProblemException("Cannot have multiple budget categories with the same name.", this);
+						throw new ModelException("Cannot have multiple budget categories with the same name");
 				}
 			}
 
 			if (object instanceof ScheduledTransaction){
 				for (ScheduledTransaction s : getScheduledTransactions()) {
 					if (s.getScheduleName().equalsIgnoreCase(((ScheduledTransaction) object).getScheduleName()))
-						throw new DataModelProblemException("Cannot have multiple scheduled transactions with the same name.", this);
+						throw new ModelException("Cannot have multiple scheduled transactions with the same name");
 				}				
 			}
 		}
@@ -738,7 +757,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * We iterate through all objects for each data type, and add them to the UID map.
 	 * This will associate the object with their UID as the key in the Map.
 	 */
-	public void refreshUidMap(){
+	public void refreshUidMap() throws ModelException {
 		uidMap.clear();
 
 		for (Account a : getAccounts()) {

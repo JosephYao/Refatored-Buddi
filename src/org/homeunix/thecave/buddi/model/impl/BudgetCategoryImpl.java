@@ -18,7 +18,7 @@ import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {	
-	BudgetCategoryImpl(BudgetCategoryBean budgetCategory) throws ModelException {
+	BudgetCategoryImpl(BudgetCategoryBean budgetCategory) throws InvalidValueException {
 		super(budgetCategory);
 	}
 	

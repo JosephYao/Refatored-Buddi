@@ -16,7 +16,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
@@ -69,7 +69,7 @@ public class FileSaveAs extends MossMenuItem {
 					options,
 					options[0]
 			) == JOptionPane.YES_OPTION)
-				flags = flags | DataModel.ENCRYPT_Document;
+				flags = flags | DocumentImpl.ENCRYPT_DATA_FILE;
 			
 			((MossDocumentFrame) getFrame()).getDocument().saveAs(f, flags);
 			getFrame().updateContent();

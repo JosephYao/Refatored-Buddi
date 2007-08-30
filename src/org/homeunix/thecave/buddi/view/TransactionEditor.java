@@ -42,6 +42,8 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
@@ -450,7 +452,7 @@ public class TransactionEditor extends MossPanel {
 	 * Returns the updated transaction.  If called from a new transaction, returns null.
 	 * @return
 	 */
-	public Transaction getUpdatedTransaction(){
+	public Transaction getUpdatedTransaction() throws InvalidValueException {
 		if (transaction == null)
 			return null;
 		transaction.setDate(date.getDate());
@@ -476,11 +478,11 @@ public class TransactionEditor extends MossPanel {
 	 * returns null.
 	 * @return
 	 */
-	public Transaction getNewTransaction(){
+	public Transaction getNewTransaction() throws InvalidValueException {
 		if (!isTransactionValid())
 			return null;
 		
-		Transaction t = new Transaction(model, date.getDate(), description.getValue().toString(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
+		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getValue().toString(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
 		t.setNumber(number.getValue().toString());
 		t.setMemo(memo.getValue().toString());
 		t.setCleared(cleared.isSelected());

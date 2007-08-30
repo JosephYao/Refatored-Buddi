@@ -13,7 +13,7 @@ import javax.swing.KeyStroke;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.model.AbstractDocument;
+import org.homeunix.thecave.moss.model.StandardDocument;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
@@ -27,7 +27,7 @@ public class FileSave extends MossMenuItem {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		AbstractDocument model = ((MossDocumentFrame) getFrame()).getDocument(); 
+		StandardDocument model = ((MossDocumentFrame) getFrame()).getDocument(); 
 		File f = model.getFile();
 		try {
 			if (f == null) {

@@ -31,6 +31,8 @@ import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
@@ -79,22 +81,22 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 	private final MultipleMonthsEachYearCard multipleMonthsYearly;
 
 	private final Map<String, ScheduleCard> cardMap = new HashMap<String, ScheduleCard>();
-	
+
 	private final CardLayout cardLayout;
 	private final JPanel cardHolder;
-	
+
 	private final Document model;
 
 	public ScheduleEditorDialog(MossDocumentFrame parentFrame, ScheduledTransaction scheduleToEdit){
 		super(parentFrame);
 
 		this.model = (Document) parentFrame.getDocument();
-		
+
 		this.schedule = scheduleToEdit;
-		
+
 		okButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OK));
 		cancelButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL));
-		
+
 		startDateChooser = new JXDatePicker();
 		transactionEditor = new TransactionEditor((Document) parentFrame.getDocument(), null, true);
 
@@ -109,8 +111,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 		//This is where we give the Frequency dropdown options
 		frequencyPulldown = new MossScrollingComboBox(ScheduleFrequency.values());
-		
-		
+
+
 		monthly = new MonthlyByDateCard();
 		oneDayMonthly = new OneDayEveryMonthCard();
 		weekly = new WeeklyCard();
@@ -130,13 +132,13 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 	public void init() {
 		message.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_SCHEDULED_MESSAGE));
-		
+
 		okButton.setPreferredSize(InternalFormatter.getButtonSize(okButton));
 		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));
-		
+
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
-		
+
 		JScrollPane messageScroller = new JScrollPane(message);
 		messageScroller.setPreferredSize(new Dimension(300, 100));
 
@@ -170,13 +172,13 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		JPanel scheduleNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		scheduleNamePanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SCHEDULE_NAME)));
 		scheduleNamePanel.add(scheduleName);
-		
+
 		//The namePanel is where we keep the Schedule Name.
 		JPanel entireSchedulePanel = new JPanel(new BorderLayout());
 		entireSchedulePanel.setBorder(BorderFactory.createTitledBorder((String) null));
 		entireSchedulePanel.add(scheduleNamePanel, BorderLayout.NORTH);
 		entireSchedulePanel.add(scheduleDetailsPanel, BorderLayout.CENTER);
-		
+
 		//We new define each 'card' separately, with the correct
 		// options for each frequency.  This is then added to the
 		// card holder for quick random access when the frequency 
@@ -189,7 +191,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString(), everyDay);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString(), multipleWeeksMonthly);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString(), multipleMonthsYearly);
-		
+
 		cardHolder.add(monthly, ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
 		cardHolder.add(oneDayMonthly, ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString());
 		cardHolder.add(weekly, ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY.toString());
@@ -210,11 +212,11 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.add(scheduleAndMessagePanel, BorderLayout.CENTER);
 		mainPanel.add(transactionEditor, BorderLayout.SOUTH);
-		
+
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(okButton);
-		
+
 		this.getRootPane().setDefaultButton(okButton);
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -256,7 +258,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 				ScheduleEditorDialog.this.updateSchedulePulldown();
 			}
 		});
-		
+
 		loadSchedule();
 	}
 
@@ -306,99 +308,102 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 	 * @return
 	 */
 	private boolean saveScheduledTransaction(){
-		ScheduledTransaction s;
-		final boolean needToAdd;
-		
-		//If the currently edited schedule is null, we need to create a new one, and
-		// flag to add it to the model.
-		if (schedule == null) {
-			s = new ScheduledTransaction(model);
-			needToAdd = true;
-		}
-		else {
-			s = schedule;
-			needToAdd = false;
-		}
-		
-		if (ScheduleEditorDialog.this.ensureInfoCorrect()){
-			String[] options = new String[2];
-			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+		try {
+			ScheduledTransaction s;
+			final boolean needToAdd;
 
-			if (!ScheduleEditorDialog.this.startDateChooser.getDate().before(new Date())
-					|| schedule != null		//If the schedule has already been defined, we won't bother people again 
-					|| JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
-							TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST), 
-							TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST_TITLE), 
-							JOptionPane.OK_CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE,
-							null,
-							options,
-							options[0]) == JOptionPane.OK_OPTION){
-
-				String name = this.scheduleName.getValue().toString();
-				String message = this.message.getValue().toString();
-				long amount = transactionEditor.getAmount();
-				String description = transactionEditor.getDescription();
-				String number = transactionEditor.getNumber();
-				Source from = transactionEditor.getFrom();
-				Source to = transactionEditor.getTo();
-				boolean cleared = transactionEditor.isCleared();
-				boolean reconciled = transactionEditor.isReconciled();
-				String memo = transactionEditor.getMemo();
-				
-				s.setScheduleName(name);
-				s.setMessage(message);
-				s.setAmount(amount);
-				s.setDescription(description);
-				s.setNumber(number);
-				s.setTo(to);
-				s.setFrom(from);
-				s.setCleared(cleared);
-				s.setReconciled(reconciled);
-				s.setMemo(memo);
-
-				//TODO We should not have to save this, as it cannot be modified.
-				if (needToAdd){
-					s.setStartDate(startDateChooser.getDate());
-					s.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
-					s.setScheduleDay(getSelectedCard().getScheduleDay());
-					s.setScheduleWeek(getSelectedCard().getScheduleWeek());
-					s.setScheduleMonth(getSelectedCard().getScheduleMonth());
-				}
-				
-				//TODO Need to check for 
-				if (needToAdd)
-					model.addScheduledTransaction(s);
-				
-				return true;
+			//If the currently edited schedule is null, we need to create a new one, and
+			// flag to add it to the model.
+			if (schedule == null) {
+				s = ModelFactory.createScheduledTransaction();
+				needToAdd = true;
 			}
-			else
-				if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
-		}
-		else {
-			String[] options = new String[1];
-			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+			else {
+				s = schedule;
+				needToAdd = false;
+			}
 
-			JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
-					TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO),
-					TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
-					JOptionPane.DEFAULT_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					null,
-					options,
-					options[0]);
+			if (ScheduleEditorDialog.this.ensureInfoCorrect()){
+				String[] options = new String[2];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+
+				if (!ScheduleEditorDialog.this.startDateChooser.getDate().before(new Date())
+						|| schedule != null		//If the schedule has already been defined, we won't bother people again 
+						|| JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
+								TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST), 
+								TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST_TITLE), 
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.PLAIN_MESSAGE,
+								null,
+								options,
+								options[0]) == JOptionPane.OK_OPTION){
+
+					String name = this.scheduleName.getValue().toString();
+					String message = this.message.getValue().toString();
+					long amount = transactionEditor.getAmount();
+					String description = transactionEditor.getDescription();
+					String number = transactionEditor.getNumber();
+					Source from = transactionEditor.getFrom();
+					Source to = transactionEditor.getTo();
+					boolean cleared = transactionEditor.isCleared();
+					boolean reconciled = transactionEditor.isReconciled();
+					String memo = transactionEditor.getMemo();
+
+					s.setScheduleName(name);
+					s.setMessage(message);
+					s.setAmount(amount);
+					s.setDescription(description);
+					s.setNumber(number);
+					s.setTo(to);
+					s.setFrom(from);
+					s.setCleared(cleared);
+					s.setReconciled(reconciled);
+					s.setMemo(memo);
+
+					//TODO We should not have to save this, as it cannot be modified.
+					if (needToAdd){
+						s.setStartDate(startDateChooser.getDate());
+						s.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
+						s.setScheduleDay(getSelectedCard().getScheduleDay());
+						s.setScheduleWeek(getSelectedCard().getScheduleWeek());
+						s.setScheduleMonth(getSelectedCard().getScheduleMonth());
+					}
+
+					//TODO Need to check for 
+					if (needToAdd)
+						model.addScheduledTransaction(s);
+
+					return true;
+				}
+				else
+					if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
+			}
+			else {
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
+						TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO),
+						TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]);
+			}
 		}
-		
+		catch (ModelException me){}
+
 		return false;
 	}
-	
+
 	private ScheduleCard getSelectedCard(){
 		if (frequencyPulldown.getSelectedItem() == null)
 			return null;
 		return cardMap.get(frequencyPulldown.getSelectedItem().toString());
 	}
-	
+
 	private void loadSchedule(){
 		if (schedule != null){
 			transactionEditor.updateContent();
@@ -414,16 +419,16 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 			startDateChooser.setDate(schedule.getStartDate());
 			if (schedule.getFrequencyType() != null)
 				frequencyPulldown.setSelectedItem(ScheduleFrequency.valueOf(schedule.getFrequencyType()));
-			
+
 			updateSchedulePulldown();
-			
+
 			//Load the schedule in the selected card.
 			if (getSelectedCard() != null)
 				getSelectedCard().loadSchedule(schedule);
 		}
 	}
-	
-	
+
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			if (saveScheduledTransaction())
@@ -433,28 +438,28 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 			this.closeWindow();
 		}
 	}
-	
+
 //	public void loadSchedule(ScheduledTransaction s){
-//		this.schedule = s;
-//		
-//		if (s != null){
-//			transactionEditor.updateContent();
-//
-//			//Load the changeable fields, including Transaction
-//			scheduleName.setValue(s.getScheduleName());
-//			message.setValue(s.getMessage());
-//			transactionEditor.setTransaction(s, true);
-//
-//			//Load the schedule pulldowns, based on which type of 
-//			// schedule we're following.
-//			startDateChooser.setDate(s.getStartDate());
-//			frequencyPulldown.setSelectedItem(s.getFrequencyType());
-//
-//			updateSchedulePulldown();
-//			
-//			//Load the schedule in the selected card.
-//			if (getSelectedCard() != null)
-//				getSelectedCard().loadSchedule(s);
-//		}
+//	this.schedule = s;
+
+//	if (s != null){
+//	transactionEditor.updateContent();
+
+//	//Load the changeable fields, including Transaction
+//	scheduleName.setValue(s.getScheduleName());
+//	message.setValue(s.getMessage());
+//	transactionEditor.setTransaction(s, true);
+
+//	//Load the schedule pulldowns, based on which type of 
+//	// schedule we're following.
+//	startDateChooser.setDate(s.getStartDate());
+//	frequencyPulldown.setSelectedItem(s.getFrequencyType());
+
+//	updateSchedulePulldown();
+
+//	//Load the schedule in the selected card.
+//	if (getSelectedCard() != null)
+//	getSelectedCard().loadSchedule(s);
+//	}
 //	}
 }

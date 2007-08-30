@@ -12,11 +12,12 @@ import org.homeunix.thecave.buddi.model.beans.AccountBean;
 import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.beans.TransactionBean;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 public class TransactionImpl extends ModelObjectImpl implements Transaction {	
-	TransactionImpl(TransactionBean transaction) throws ModelException {
+	TransactionImpl(TransactionBean transaction) throws InvalidValueException {
 		super(transaction);
 	}
 

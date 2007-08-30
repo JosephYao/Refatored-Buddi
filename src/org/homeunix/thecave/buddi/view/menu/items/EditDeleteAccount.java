@@ -8,10 +8,12 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.util.Log;
 
 public class EditDeleteAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -26,7 +28,12 @@ public class EditDeleteAccount extends MossMenuItem {
 			throw new RuntimeException("Calling frame not instance of AccountFrame");
 			
 		for (Account a : ((MainFrame) getFrame()).getSelectedAccounts()) {
-			((Document) ((MainFrame) getFrame()).getDocument()).removeAccount(a);
+			try {
+				((Document) ((MainFrame) getFrame()).getDocument()).removeAccount(a);
+			}
+			catch (ModelException me){
+				Log.error(me);
+			}
 		}
 
 		((MainFrame) getFrame()).updateContent();

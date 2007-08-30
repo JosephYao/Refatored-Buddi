@@ -4,7 +4,7 @@
 package org.homeunix.thecave.buddi.model;
 
 import org.homeunix.thecave.buddi.model.beans.TypeBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 
 public interface AccountType extends ModelObject {
@@ -19,7 +19,7 @@ public interface AccountType extends ModelObject {
 	
 	public void setExpanded(boolean isExpanded);
 	
-	public void setName(String name) throws ModelException;
+	public void setName(String name) throws InvalidValueException;
 	
 	public TypeBean getTypeBean();
 }

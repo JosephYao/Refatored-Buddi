@@ -6,11 +6,11 @@ package org.homeunix.thecave.buddi.model.impl;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.beans.SourceBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public abstract class SourceImpl extends ModelObjectImpl implements Source {
 
-	SourceImpl(SourceBean source) throws ModelException {
+	SourceImpl(SourceBean source) throws InvalidValueException {
 		super(source);
 	}
 
