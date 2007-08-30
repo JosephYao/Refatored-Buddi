@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
@@ -24,5 +26,8 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 	}
 	public Account getAccount(){
 		return (Account) getRaw(); 
+	}
+	public Date getStartDate() {
+		return getAccount().getStartDate();
 	}
 }

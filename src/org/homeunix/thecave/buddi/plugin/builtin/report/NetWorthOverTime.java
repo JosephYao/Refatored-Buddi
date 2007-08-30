@@ -111,7 +111,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 		Map<ImmutableAccount, Long> map = new HashMap<ImmutableAccount, Long>();
 
 		for (ImmutableAccount a : model.getAccounts()) {
-			if (a.getEarliestDate().before(date))
+			if (a.getStartDate().before(date))
 				map.put(a, a.getStartingBalance());
 			else
 				map.put(a, 0l);

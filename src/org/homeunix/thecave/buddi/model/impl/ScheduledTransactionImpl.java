@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.Transaction;
 
 public class ScheduledTransactionImpl extends TransactionImpl implements ScheduledTransaction {
 	
@@ -80,5 +82,15 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
-	}	
+	}
+	@Override
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof Transaction){
+			ScheduledTransaction st = (ScheduledTransaction) arg0;
+
+			//We want to sort schedued transactions by name, for the list
+			return this.getScheduleName().compareTo(st.getScheduleName());
+		}
+		return super.compareTo(arg0);
+	}
 }

@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.Account;
 
 public interface ImmutableAccount extends ImmutableSource {
@@ -33,4 +35,12 @@ public interface ImmutableAccount extends ImmutableSource {
 	 * @return
 	 */
 	public Account getAccount();
+	
+	/**
+	 * Returns the date of the first transaction associated with this account.  This 
+	 * defines when the account 'starts'; any accesses before this (such as querying
+	 * balance, etc) will return the default values (0, etc).
+	 * @return
+	 */
+	public Date getStartDate();
 }

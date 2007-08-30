@@ -20,7 +20,7 @@ Buddi's core functions include:
 
 Buddi is Open Source software, and is released under the GNU General Public License (GNU GPL).  For full text of this license, please see the Licenses document.  Basically, this means that you are free to use it, share it, change it, and do just about anything you want with it as long as you keep this notice and keep the derivative works licensed under the GPL as well.
 
-If you like this software, please consider donating via the link on the main Buddi homepage (http://buddi.sourceforge.net).  I develop, support, and maintain Buddi in my spare time, and greatly appreciate all support that I recieve.  Donations can help me buy new hardware for testing, as well as helping me and my family financially, allowing me to spend more time working on Buddi.
+If you like this software, please consider donating via the link on the main Buddi homepage (http://buddi.sourceforge.net).  I develop, support, and maintain Buddi in my spare time, and greatly appreciate all support that I recieve.  Donations have helpd me buy new hardware for testing, as well as helping me and my family financially, allowing me to spend more time working on Buddi.
 
 To run the program, either double click on the .exe file (Windows), double click on the Buddi application file (Macintosh), or type from a command line (in the Buddi directory) 'java -jar Buddi.jar' (just about any other operating system).
 

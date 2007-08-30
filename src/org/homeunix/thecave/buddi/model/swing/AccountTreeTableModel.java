@@ -45,7 +45,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			return node;
 		if (column == 0)
 			return "";
-		if (node.getClass().equals(Account.class)){
+		if (node instanceof Account){
 			Account a = (Account) node;
 			if (column == 1)
 				return TextFormatter.getHtmlWrapper(
@@ -55,7 +55,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 						TextFormatter.getFormattedCurrency(a.getBalance(), InternalFormatter.isRed(a, a.getBalance())));
 			}
 		}
-		if (node.getClass().equals(AccountType.class)){
+		if (node instanceof AccountType){
 			AccountType t = (AccountType) node;
 			if (column == 1)
 				return TextFormatter.getHtmlWrapper(

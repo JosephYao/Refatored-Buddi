@@ -3,11 +3,14 @@
  */
 package org.homeunix.thecave.buddi.model;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface Account extends Source{
 	
 	public long getBalance();
+	public Date getStartDate();
 	public long getStartingBalance();
 	public AccountType getType();
 	public void setStartingBalance(long startingBalance) throws InvalidValueException;

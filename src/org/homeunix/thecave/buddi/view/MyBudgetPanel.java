@@ -131,7 +131,6 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 				}
 			});
 			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
-			
 			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
 		}
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

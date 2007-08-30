@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.ModelObject;
 
 public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 	private String name;
@@ -37,7 +38,15 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 		this.isExpanded = isExpanded;
 	}
 	@Override
-	public String toString() {
-		return getName() + ":0x" + getUid();
+	public int compareTo(ModelObject o) {
+		if (o instanceof AccountTypeImpl){
+			AccountTypeImpl t = (AccountTypeImpl) o;
+			if (this.isCredit() != t.isCredit()){
+				if (t.isCredit())
+					return -1;
+				return 1;
+			}
+		}
+		return super.compareTo(o);
 	}
 }

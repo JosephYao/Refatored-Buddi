@@ -118,7 +118,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 	public Object getValueAt(Object node, int column) {
 		if (column == -1)
 			return node;
-		if (node.getClass().equals(BudgetCategory.class)){
+		if (node instanceof BudgetCategory){
 			BudgetCategory bc = (BudgetCategory) node;
 			if (column == 0)
 				return bc;

@@ -3,8 +3,6 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-import java.util.Date;
-
 import org.homeunix.thecave.buddi.model.Source;
 
 public interface ImmutableSource extends ImmutableModelObject {

@@ -6,8 +6,10 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.moss.util.DateFunctions;
 
 public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private Date date;
@@ -107,6 +109,31 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 		//If neither sources are BudgetCategory, this is not an inflow.
 		return false;
+	}
+	@Override
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof Transaction){
+			Transaction t = (Transaction) arg0;
+
+			//For regular transactions, first we sort by date 
+			if (!DateFunctions.isSameDay(this.getDate(), t.getDate()))
+				return this.getDate().compareTo(t.getDate());
+
+			//Next we sort by debit / credit.  This is a nebulous beast, because of negative 
+			// amounts, credit accounts, splits, etc.
+			// We check the transaction source, and use some logic to determine if this means it
+			// is inflow or outflow. 
+			if (this.isInflow() != t.isInflow()){
+				if (this.isInflow())
+					return -1;
+				return 1;
+			}
+
+			//If everything else is the same, we sort on description.
+			else 
+				return this.getDescription().compareTo(t.getDescription());
+		}
+		return super.compareTo(arg0);
 	}
 	
 

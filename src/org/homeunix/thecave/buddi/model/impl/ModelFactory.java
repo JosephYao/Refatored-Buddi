@@ -128,7 +128,7 @@ public class ModelFactory {
 					is.close();
 
 					//Refresh the UID Map...
-//					document.refreshUidMap();
+					document.refreshUidMap();
 
 					//This wil let us know where to save the file to.
 					document.setFile(file);
@@ -154,6 +154,9 @@ public class ModelFactory {
 					// This is not a valid Buddi3 data file.
 					throw new DocumentLoadException("Incorrect document format", ife);
 				}
+				catch (ModelException me){
+					throw new DocumentLoadException("Model exception", me);
+				}
 			}
 		}
 		catch (CipherException ce){
@@ -176,7 +179,7 @@ public class ModelFactory {
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
 			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
+				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
 			}
 			catch (ModelException me){
 				Log.error("Error creating budget category", me);

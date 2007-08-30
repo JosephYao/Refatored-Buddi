@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
@@ -43,5 +45,8 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 		if (getAccount().getType() != null)
 			return new ImmutableTypeImpl(getAccount().getType());
 		return null;
+	}
+	public Date getStartDate() {
+		return getAccount().getStartDate();
 	}
 }

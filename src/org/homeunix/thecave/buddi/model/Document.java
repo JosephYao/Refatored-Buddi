@@ -31,6 +31,7 @@ public interface Document extends ModelObject, StandardDocument {
 	public List<Transaction> getTransactions(Date startDate, Date endDate);
 	public List<Transaction> getTransactions(Source source);
 	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate);
+	public void refreshUidMap() throws ModelException;
 	public boolean removeAccount(Account account) throws ModelException;
 	public boolean removeAccountType(AccountType type) throws ModelException;
 	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException;

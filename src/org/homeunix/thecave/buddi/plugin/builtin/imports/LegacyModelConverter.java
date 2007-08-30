@@ -18,6 +18,7 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
@@ -39,6 +40,7 @@ public class LegacyModelConverter {
 
 	public static void convert(MutableModel model, File oldFile) throws DocumentLoadException {
  
+		try {
 		DataInstance.getInstance().loadDataFile(oldFile);
 		DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();
 
@@ -215,5 +217,9 @@ public class LegacyModelConverter {
 
 		//Finally, we return the new model.
 //		return newModelBean;
+		}
+		catch (ModelException me){
+			throw new DocumentLoadException(me);
+		}
 	}
 }

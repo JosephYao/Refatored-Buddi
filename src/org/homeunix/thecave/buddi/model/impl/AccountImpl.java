@@ -3,10 +3,12 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 
 public class AccountImpl extends SourceImpl implements Account {
@@ -19,6 +21,11 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public void setStartingBalance(long startingBalance) {
 		this.startingBalance = startingBalance;
+	}
+	public Date getStartDate() {
+		if (getDocument() != null)
+			return getDocument().getTransactions(this).get(0).getDate();
+		return null;
 	}
 	public long getBalance() {
 		return balance;
@@ -58,5 +65,17 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public String getFullName() {
 		return this.getName() + " (" + getType().getName() + ")";
+	}
+	@Override
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof AccountImpl){
+			AccountImpl a = (AccountImpl) arg0;
+			if (this.getType().isCredit() != a.getType().isCredit()){
+				if (this.getType().isCredit())
+					return -1;
+				return 1;
+			}
+		}
+		return super.compareTo(arg0);
 	}
 }

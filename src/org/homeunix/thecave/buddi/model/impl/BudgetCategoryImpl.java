@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.moss.util.DateFunctions;
@@ -179,5 +180,14 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (getPeriodType() == null)
 			setPeriodType(new BudgetPeriodMonthly());
 		return getPeriodType();
+	}
+	@Override
+	public int compareTo(ModelObject arg0) {
+		if (arg0 instanceof BudgetCategoryImpl){
+			BudgetCategoryImpl c = (BudgetCategoryImpl) arg0;
+			if (this.isIncome() != c.isIncome())
+				return -1 * new Boolean(this.isIncome()).compareTo(new Boolean(c.isIncome()));
+		}
+		return super.compareTo(arg0);
 	}
 }

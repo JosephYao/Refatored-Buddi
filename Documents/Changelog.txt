@@ -1,3 +1,8 @@
+2.9.0.0
+-Complete rewrite of low level model
+-Complete reimplementation of many core features, especially the My Budget tab
+-More changes than can possibly be listed here.  Changes are, at least a portion of all parts of the program have changed.
+
 2.5.9.0 (July 30 2007)
 -Fixed bug which made the description pulldown grow too large for the window, if a long description was entered.  Now in the pulldown, I chop off the text at the same point as I do in the TransactionCellRenderer.
 -Added feature request #1761758 (Update To / From lists when adding / removing new accounts or categories)

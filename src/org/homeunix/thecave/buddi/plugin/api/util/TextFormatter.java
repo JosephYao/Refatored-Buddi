@@ -134,7 +134,7 @@ public class TextFormatter {
 	 * @return
 	 */
 	public static String getFormattedNameForAccount(Account a){
-		return getFormattedNameGeneric(a.toString(), a.getType().isCredit());
+		return getFormattedNameGeneric(a.getName(), a.getType().isCredit());
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class TextFormatter {
 	 * @return
 	 */
 	public static String getFormattedNameForCategory(BudgetCategory c){
-		return getFormattedNameGeneric(c.toString(), !c.isIncome());
+		return getFormattedNameGeneric(c.getName(), !c.isIncome());
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class TextFormatter {
 	 * @return
 	 */
 	public static String getFormattedNameForType(AccountType t){
-		return getFormattedNameGeneric(t.toString(), t.isCredit());
+		return getFormattedNameGeneric(t.getName(), t.isCredit());
 	}
 
 	/**
