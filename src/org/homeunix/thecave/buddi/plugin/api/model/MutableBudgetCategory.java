@@ -6,14 +6,14 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableSource {
 	/**
 	 * Sets the budget period type associated with this budget category.
 	 * @return
 	 */
-	public void setBudgetPeriodType(BudgetCategoryType periodType);
+	public void setBudgetPeriodType(BudgetCategoryType periodType) throws InvalidValueException;
 	
 	/**
 	 * Sets whether this budget category represents income or not.

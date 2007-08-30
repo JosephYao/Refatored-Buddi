@@ -1,7 +1,7 @@
 /*
  * Created on Aug 4, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.impl;
+package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.List;
 
@@ -9,14 +9,8 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.beans.AccountBean;
-import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
-import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
-import org.homeunix.thecave.buddi.model.beans.TransactionBean;
-import org.homeunix.thecave.buddi.model.beans.TypeBean;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
@@ -51,69 +45,6 @@ public class WrapperLists {
 		}
 	}
 
-	public static class WrapperAccountList extends WrapperList<Account, AccountBean>{
-		public WrapperAccountList(Document model, List<AccountBean> wrappedList) {
-			super(wrappedList, true);
-		}
-
-		@Override
-		public AccountBean getWrappedObject(Account object) {
-			return object.getAccountBean();
-		}
-
-		@Override
-		public Account getWrapperObject(AccountBean object) {
-			try {
-				return new AccountImpl(object);
-			}
-			catch (ModelException me){
-				return null;
-			}
-		}
-	}
-
-	public static class WrapperTypeList extends BuddiWrapperList<AccountType, TypeBean>{
-		public WrapperTypeList(Document model, List<TypeBean> wrappedList) {
-			super(model, wrappedList, true);
-		}
-
-		@Override
-		public TypeBean getWrappedObject(AccountType object) {
-			return object.getTypeBean();
-		}
-
-		@Override
-		public AccountType getWrapperObject(TypeBean object) {
-			try {
-				return new AccountTypeImpl(object);
-			}
-			catch (ModelException me){
-				return null;
-			}
-		}
-	}
-
-	public static class WrapperBudgetCategoryList extends BuddiWrapperList<BudgetCategory, BudgetCategoryBean>{
-		public WrapperBudgetCategoryList(Document model, List<BudgetCategoryBean> wrappedList) {
-			super(model, wrappedList, true);
-		}
-
-		@Override
-		public BudgetCategoryBean getWrappedObject(BudgetCategory object) {
-			return object.getBudgetCategoryBean();
-		}
-
-		@Override
-		public BudgetCategory getWrapperObject(BudgetCategoryBean object) {
-			try {
-				return new BudgetCategoryImpl(object);
-			}
-			catch (ModelException me){
-				return null;
-			}
-		}
-	}
-
 //	public static class WrapperBudgetPeriodList extends BuddiWrapperList<BudgetPeriod, BudgetPeriodBean>{
 //	public WrapperBudgetPeriodList(DataModel model, List<BudgetPeriodBean> wrappedList) {
 //	super(model, wrappedList, true);
@@ -129,48 +60,6 @@ public class WrapperLists {
 //	return new BudgetPeriod(getDataModel(), object);
 //	}
 //	}
-
-	public static class WrapperScheduledTransactionList extends BuddiWrapperList<ScheduledTransaction, ScheduledTransactionBean>{
-		public WrapperScheduledTransactionList(Document model, List<ScheduledTransactionBean> wrappedList) {
-			super(model, wrappedList, true);
-		}
-
-		@Override
-		public ScheduledTransactionBean getWrappedObject(ScheduledTransaction object) {
-			return object.getScheduledTransactionBean();
-		}
-
-		@Override
-		public ScheduledTransaction getWrapperObject(ScheduledTransactionBean object) {
-			try {
-				return new ScheduledTransactionImpl(object);
-			}
-			catch (ModelException me){
-				return null;
-			}
-		}
-	}
-
-	public static class WrapperTransactionList extends BuddiWrapperList<Transaction, TransactionBean>{
-		public WrapperTransactionList(Document model, List<TransactionBean> wrappedList) {
-			super(model, wrappedList, true);
-		}
-
-		@Override
-		public TransactionBean getWrappedObject(Transaction object) {
-			return object.getTransactionBean();
-		}
-
-		@Override
-		public Transaction getWrapperObject(TransactionBean object) {
-			try {
-				return new TransactionImpl(object);
-			}
-			catch (ModelException me){
-				return null;
-			}
-		}
-	}
 
 	public static class ImmutableAccountList extends BuddiWrapperList<ImmutableAccount, Account> {
 		public ImmutableAccountList(Document model, List<Account> wrappedList) {
@@ -188,7 +77,7 @@ public class WrapperLists {
 		}
 	}
 
-	public static class ImmutableObjectWrapperList<T extends ImmutableModelObject, W extends ModelObjectImpl> extends BuddiWrapperList<T, W> {
+	public static class ImmutableObjectWrapperList<T extends ImmutableModelObject, W extends ModelObject> extends BuddiWrapperList<T, W> {
 		public ImmutableObjectWrapperList(Document model, List<W> wrappedList) {
 			super(model, wrappedList, true);
 		}

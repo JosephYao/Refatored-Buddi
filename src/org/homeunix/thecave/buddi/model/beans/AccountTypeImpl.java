@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-public class TypeBean extends ModelObjectBean {
+import org.homeunix.thecave.buddi.model.AccountType;
+
+public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 	private String name;
 	private boolean credit;
 	private boolean isExpanded;

@@ -3,12 +3,10 @@
  */
 package org.homeunix.thecave.buddi.model;
 
-import org.homeunix.thecave.buddi.model.beans.AccountBean;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface Account extends Source{
 	
-	public AccountBean getAccountBean();
 	public long getBalance();
 	public long getStartingBalance();
 	public AccountType getType();

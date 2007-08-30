@@ -3,9 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
-import java.util.Date;
-
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 
 public abstract class MutableSourceImpl extends MutableModelObjectImpl implements MutableSource {
@@ -19,7 +18,7 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 		
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws InvalidValueException{
 		getSource().setName(name);
 	}
 
@@ -29,9 +28,6 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 
 	public Source getSource(){
 		return (Source) getRaw(); 
-	}
-	public Date getEarliestDate() {
-		return getSource().getEarliestDate();
 	}
 	public boolean isDeleted() {
 		return getSource().isDeleted();

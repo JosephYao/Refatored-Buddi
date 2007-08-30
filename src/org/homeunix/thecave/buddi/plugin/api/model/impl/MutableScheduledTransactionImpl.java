@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 
 public class MutableScheduledTransactionImpl extends MutableTransactionImpl implements MutableScheduledTransaction {
@@ -54,11 +55,11 @@ public class MutableScheduledTransactionImpl extends MutableTransactionImpl impl
 		return getScheduledTransaction().getStartDate();
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Date endDate) throws InvalidValueException{
 		getScheduledTransaction().setEndDate(endDate);
 	}
 
-	public void setFrequencyType(String frequencyType) {
+	public void setFrequencyType(String frequencyType) throws InvalidValueException{
 		getScheduledTransaction().setFrequencyType(frequencyType);		
 	}
 
@@ -66,7 +67,7 @@ public class MutableScheduledTransactionImpl extends MutableTransactionImpl impl
 		getScheduledTransaction().setLastDayCreated(lastDayCreated);		
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(String message) throws InvalidValueException{
 		getScheduledTransaction().setMessage(message);		
 	}
 

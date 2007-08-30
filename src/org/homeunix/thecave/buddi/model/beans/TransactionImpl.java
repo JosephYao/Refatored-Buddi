@@ -5,13 +5,17 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-public class TransactionBean extends ModelObjectBean {
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Transaction;
+
+public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private Date date;
 	private String description;
 	private String number;
 	private long amount;
-	private SourceBean from;
-	private SourceBean to;
+	private Source from;
+	private Source to;
 	private boolean cleared;
 	private boolean reconciled; 
 	private String memo;
@@ -57,16 +61,16 @@ public class TransactionBean extends ModelObjectBean {
 	public void setReconciled(boolean reconciled) {
 		this.reconciled = reconciled;
 	}
-	public SourceBean getFrom() {
+	public Source getFrom() {
 		return from;
 	}
-	public void setFrom(SourceBean from) {
+	public void setFrom(Source from) {
 		this.from = from;
 	}
-	public SourceBean getTo() {
+	public Source getTo() {
 		return to;
 	}
-	public void setTo(SourceBean to) {
+	public void setTo(Source to) {
 		this.to = to;
 	}
 	public boolean isScheduled() {
@@ -81,18 +85,30 @@ public class TransactionBean extends ModelObjectBean {
 	public void setAmount(long amount) {
 		this.amount = amount;
 	}
-	public long volatileGetBalanceTo() {
+	public long getBalanceTo() {
 		return balanceTo;
 	}
-	public void volatileSetBalanceTo(long balanceTo) {
+	public void setBalanceTo(long balanceTo) {
 		this.balanceTo = balanceTo;
 	}
-	public long volatileGetBalanceFrom() {
+	public long getBalanceFrom() {
 		return balanceFrom;
 	}
-	public void volatileSetBalanceFrom(long balanceFrom) {
+	public void setBalanceFrom(long balanceFrom) {
 		this.balanceFrom = balanceFrom;
 	}
+	public boolean isInflow(){
+		if (getFrom() instanceof BudgetCategory){
+			return this.getAmount() >= 0;
+		}
+		if (getTo() instanceof BudgetCategory){
+			return this.getAmount() < 0;
+		}
+
+		//If neither sources are BudgetCategory, this is not an inflow.
+		return false;
+	}
+	
 
 //	public void calculateBalance(){
 //	//Update balance in affected accounts

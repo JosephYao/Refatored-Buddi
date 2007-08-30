@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
 public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAccountType {
@@ -24,7 +25,7 @@ public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAc
 		return getType().isCredit();
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws InvalidValueException{
 		getType().setName(name);
 	}
 }

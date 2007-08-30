@@ -5,14 +5,14 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.ModelObject;
 
-public abstract class ModelObjectBean {
+public abstract class ModelObjectImpl implements ModelObject {
 	
 	private Date modifiedDate;
 	private String uid;
-	private String userUid;
-	private DocumentBean document;
+	private Document document;
 	
 	
 	public Date getModifiedDate() {
@@ -30,24 +30,22 @@ public abstract class ModelObjectBean {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	public String getUserUid() {
-		return userUid;
-	}
-	public void setUserUid(String userUid) {
-		this.userUid = userUid;
-	}
-	public DocumentBean getDocument() {
+	public Document getDocument() {
 		return document;
 	}
-	public void setDocument(DocumentBean document) {
+	public void setDocument(Document document) {
 		this.document = document;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ModelObjectBean)
-			return this.getUid().equals(((ModelObjectBean) obj).getUid());
+		if (obj instanceof ModelObjectImpl)
+			return this.getUid().equals(((ModelObjectImpl) obj).getUid());
 		return false;
+	}
+	
+	public int compareTo(ModelObject o) {
+		return (getUid().compareTo(o.getUid()));
 	}
 
 }

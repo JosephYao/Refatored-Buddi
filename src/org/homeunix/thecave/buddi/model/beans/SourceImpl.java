@@ -3,7 +3,9 @@
  */
 package org.homeunix.thecave.buddi.model.beans;
 
-public abstract class SourceBean extends ModelObjectBean {
+import org.homeunix.thecave.buddi.model.Source;
+
+public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	//Source Attributes
 	private String name;
 	private boolean deleted;

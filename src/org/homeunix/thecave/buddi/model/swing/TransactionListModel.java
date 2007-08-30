@@ -8,7 +8,7 @@ import javax.swing.AbstractListModel;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.beans.FilteredLists;
 
 public class TransactionListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;

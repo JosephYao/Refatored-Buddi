@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 
-public class ScheduledTransactionBean extends TransactionBean {
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+
+public class ScheduledTransactionImpl extends TransactionImpl implements ScheduledTransaction {
 	
 	//Scheduling Information
 	private Date startDate;

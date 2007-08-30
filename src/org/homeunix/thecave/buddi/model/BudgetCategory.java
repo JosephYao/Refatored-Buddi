@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.beans.BudgetCategoryBean;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface BudgetCategory extends Source {	
@@ -19,8 +18,6 @@ public interface BudgetCategory extends Source {
 	public long getAmount(Date periodDate);
 	
 	public long getAmount(Date startDate, Date endDate);
-	
-	public BudgetCategoryBean getBudgetCategoryBean();
 	
 	/**
 	 * Returns a list of BudgetPeriods, covering the entire range of periods

@@ -1,7 +1,7 @@
 /*
  * Created on Aug 6, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.impl;
+package org.homeunix.thecave.buddi.model.beans;
 
 import java.util.Date;
 import java.util.List;

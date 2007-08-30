@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 
@@ -20,7 +21,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 		getBudgetCategory().setIncome(income);
 	}
 
-	public void setParent(MutableBudgetCategory budgetCategory) {
+	public void setParent(MutableBudgetCategory budgetCategory) throws InvalidValueException{
 		System.out.println(budgetCategory);
 		if (budgetCategory == null)
 			getBudgetCategory().setParent(null);
@@ -36,7 +37,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 		return getBudgetCategory().getAmount(startDate, endDate);
 	}
 	
-	public void setAmount(Date date, long amount) {
+	public void setAmount(Date date, long amount) throws InvalidValueException{
 		getBudgetCategory().setAmount(date, amount);
 	}
 	
@@ -48,7 +49,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 		return getBudgetCategory().getBudgetPeriodType();
 	}
 
-	public void setBudgetPeriodType(BudgetCategoryType periodType) {
+	public void setBudgetPeriodType(BudgetCategoryType periodType) throws InvalidValueException{
 		if (periodType != null)
 			getBudgetCategory().setPeriodType(periodType);
 	}

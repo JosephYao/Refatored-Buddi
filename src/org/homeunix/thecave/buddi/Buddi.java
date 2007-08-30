@@ -28,8 +28,9 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.beans.ModelFactory;
 import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
-import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -208,56 +209,59 @@ public class Buddi {
 		//Choose which data file to open, or create a new one.
 		try {
 			boolean openedFile = false; //Set to true once we opened a file, to avoid trying to open more.
-			
+
 			MainFrame frameToDisplay = null;
-			
+
 			//Handle opening files from command line.
 			if (!openedFile && filesToLoad.size() > 0){
 				for (File f : filesToLoad) {
 					try {
 						Document model;
-						model = new DocumentImpl(f);
-						
+						model = ModelFactory.createDocument(f);
+
 						MainFrame mainWndow = new MainFrame(model);
 						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
 						frameToDisplay = mainWndow;
-						
+
 						openedFile = true;
 					}
 					catch (DocumentLoadException lme){}
 					catch (OperationCancelledException oce){}  //Do nothing
 				}
 			}
-			
+
 			//Handle opening the last user file, if available.
 			if (!openedFile && PrefsModel.getInstance().getLastDataFile() != null){
-					try {
-						Document model;
-						model = new DocumentImpl(PrefsModel.getInstance().getLastDataFile());
-						
-						MainFrame mainWndow = new MainFrame(model);
-						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-						frameToDisplay = mainWndow;
-						
-						openedFile = true;
-					}
-					catch (DocumentLoadException lme){}
-					catch (OperationCancelledException oce){}  //Do nothing
+				try {
+					Document model;
+					model = ModelFactory.createDocument(PrefsModel.getInstance().getLastDataFile());
+
+					MainFrame mainWndow = new MainFrame(model);
+					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+					frameToDisplay = mainWndow;
+
+					openedFile = true;
+				}
+				catch (DocumentLoadException lme){}
+				catch (OperationCancelledException oce){}  //Do nothing
 			}
-			
+
 			//If no files are available, just create a new one.
 			if (!openedFile){
-				Document model = new DocumentImpl();
-				MainFrame mainWndow = new MainFrame(model);
-				mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-				frameToDisplay = mainWndow;
-				
-				openedFile = true;
+				try {
+					Document model = ModelFactory.createDocument();
+					MainFrame mainWndow = new MainFrame(model);
+					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+					frameToDisplay = mainWndow;
+
+					openedFile = true;
+				}
+				catch (ModelException dle){}
 			}
 
 			if (frameToDisplay == null)
 				throw new WindowOpenException("Buddi main window did not open!");
-				
+
 			//Start the background startup tasks... 
 			startVersionCheck(frameToDisplay);
 			startUpdateCheck(frameToDisplay, false);
@@ -277,9 +281,9 @@ public class Buddi {
 					options,
 					options[0]
 			);
-			
+
 			woe.printStackTrace(Log.getPrintStream());
-			
+
 			System.exit(1);
 		}
 
@@ -322,7 +326,7 @@ public class Buddi {
 				@Override
 				public void handleOpenFile(ApplicationEvent arg0) {
 					arg0.setHandled(true);
-					
+
 					filesToLoad.add(new File(arg0.getFilename()));
 				}
 

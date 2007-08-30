@@ -23,7 +23,7 @@ public interface ImmutableSource extends ImmutableModelObject {
 	 * by looking at the associated transactions / period dates.
 	 * @return
 	 */
-	public Date getEarliestDate();
+//	public Date getEarliestDate();
 	
 	/**
 	 * Is this source deleted?

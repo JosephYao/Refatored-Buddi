@@ -3,7 +3,6 @@
  */
 package org.homeunix.thecave.buddi.model;
 
-import org.homeunix.thecave.buddi.model.beans.SourceBean;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface Source extends ModelObject {
@@ -13,8 +12,6 @@ public interface Source extends ModelObject {
 	public String getName();
 	
 	public String getNotes();
-	
-	public SourceBean getSourceBean();
 	
 	public boolean isDeleted();
 

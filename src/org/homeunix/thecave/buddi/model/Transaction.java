@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.beans.TransactionBean;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface Transaction extends ModelObject {	
@@ -28,8 +27,6 @@ public interface Transaction extends ModelObject {
 	
 	public Source getTo();
 	
-	public TransactionBean getTransactionBean();
-	
 	public boolean isCleared();
 	
 	public boolean isInflow();
@@ -40,9 +37,9 @@ public interface Transaction extends ModelObject {
 	
 	public void setAmount(long amount);
 	
-	public void setBalanceFrom(long balanceFrom);
+	void setBalanceFrom(long balanceFrom);
 	
-	public void setBalanceTo(long balanceTo);
+	void setBalanceTo(long balanceTo);
 	
 	public void setCleared(boolean cleared);
 	

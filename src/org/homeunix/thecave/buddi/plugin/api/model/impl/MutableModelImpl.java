@@ -4,12 +4,13 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
 public class MutableModelImpl extends ImmutableModelImpl implements MutableModel {
 
@@ -17,43 +18,43 @@ public class MutableModelImpl extends ImmutableModelImpl implements MutableModel
 		super(model);
 	}
 
-	public void addAccount(MutableAccount account) {
+	public void addAccount(MutableAccount account) throws ModelException{
 		getModel().addAccount(account.getAccount());
 	}
 
-	public void addBudgetCategory(MutableBudgetCategory budgetCategory) {
+	public void addBudgetCategory(MutableBudgetCategory budgetCategory) throws ModelException{
 		getModel().addBudgetCategory(budgetCategory.getBudgetCategory());
 	}
 
-	public void addScheduledTransaction(MutableScheduledTransaction scheduledTransaction) {
+	public void addScheduledTransaction(MutableScheduledTransaction scheduledTransaction) throws ModelException{
 		getModel().addScheduledTransaction(scheduledTransaction.getScheduledTransaction());		
 	}
 
-	public void addTransaction(MutableTransaction transaction) {
+	public void addTransaction(MutableTransaction transaction) throws ModelException{
 		getModel().addTransaction(transaction.getTransaction());
 	}
 
-	public void addType(MutableAccountType type) {
+	public void addType(MutableAccountType type) throws ModelException{
 		getModel().addAccountType(type.getType());
 	}
 
-	public void removeAccount(MutableAccount account) {
+	public void removeAccount(MutableAccount account) throws ModelException{
 		getModel().removeAccount(account.getAccount());
 	}
 
-	public void removeBudgetCategory(MutableBudgetCategory budgetCategory) {
+	public void removeBudgetCategory(MutableBudgetCategory budgetCategory) throws ModelException{
 		getModel().removeBudgetCategory(budgetCategory.getBudgetCategory());
 	}
 
-	public void removeScheduledTransaction(MutableScheduledTransaction scheduledTransaction) {
+	public void removeScheduledTransaction(MutableScheduledTransaction scheduledTransaction) throws ModelException{
 		getModel().removeScheduledTransaction(scheduledTransaction.getScheduledTransaction());		
 	}
 
-	public void removeTransaction(MutableTransaction transaction) {
+	public void removeTransaction(MutableTransaction transaction) throws ModelException{
 		getModel().removeTransaction(transaction.getTransaction());
 	}
 
-	public void removeType(MutableAccountType type) {
+	public void removeType(MutableAccountType type) throws ModelException{
 		getModel().removeAccountType(type.getType());
 	}
 }

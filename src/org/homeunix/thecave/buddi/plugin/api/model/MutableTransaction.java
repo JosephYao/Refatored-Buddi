@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface MutableTransaction extends ImmutableTransaction {
 	

@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.beans.ScheduledTransactionBean;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 /**
@@ -23,8 +22,6 @@ public interface ScheduledTransaction extends Transaction {
 	public String getMessage();
 	
 	public int getScheduleDay();
-	
-	public ScheduledTransactionBean getScheduledTransactionBean();
 	
 	public int getScheduleMonth();
 	

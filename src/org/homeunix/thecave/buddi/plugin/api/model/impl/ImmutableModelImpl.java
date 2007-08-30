@@ -7,18 +7,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.AccountType;
-import org.homeunix.thecave.buddi.model.impl.WrapperLists;
+import org.homeunix.thecave.buddi.model.beans.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 
 public class ImmutableModelImpl extends ImmutableModelObjectImpl implements ImmutableModel {
 	private final Document model;

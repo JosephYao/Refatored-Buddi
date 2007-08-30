@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
@@ -18,11 +19,11 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 //		super(new Account(type.getType().getModel(), name, startingBalance, type.getType()));
 //	}
 
-	public void setStartingBalance(long startingBalance) {
+	public void setStartingBalance(long startingBalance) throws InvalidValueException {
 		getAccount().setStartingBalance(startingBalance);
 	}
 
-	public void setType(MutableAccountType type) {
+	public void setType(MutableAccountType type) throws InvalidValueException {
 		getAccount().setType(type.getType());
 	}
 

@@ -8,6 +8,7 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
@@ -85,22 +86,22 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		getTransaction().setCleared(cleared);
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Date date) throws InvalidValueException{
 		getTransaction().setDate(date);
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(String description) throws InvalidValueException{
 		getTransaction().setDescription(description);
 	}
 
-	public void setFrom(MutableSource from) {
+	public void setFrom(MutableSource from) throws InvalidValueException{
 		if (from == null)
 			getTransaction().setFrom(null);
 		else
 			getTransaction().setFrom(from.getSource());
 	}
 
-	public void setMemo(String memo) {
+	public void setMemo(String memo) throws InvalidValueException{
 		getTransaction().setMemo(memo);
 	}
 
@@ -112,7 +113,7 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		getTransaction().setReconciled(reconciled);
 	}
 
-	public void setTo(MutableSource to) {
+	public void setTo(MutableSource to) throws InvalidValueException{
 		if (to == null)
 			getTransaction().setTo(null);
 		else
