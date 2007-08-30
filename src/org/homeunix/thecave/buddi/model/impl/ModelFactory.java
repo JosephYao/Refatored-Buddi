@@ -1,7 +1,7 @@
 /*
  * Created on Aug 28, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.beans;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.beans.XMLDecoder;
 import java.io.File;
