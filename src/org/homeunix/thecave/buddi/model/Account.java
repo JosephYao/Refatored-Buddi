@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 
 public interface Account extends Source{
 	

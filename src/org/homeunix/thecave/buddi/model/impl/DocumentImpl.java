@@ -27,8 +27,8 @@ import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredByDate;
@@ -54,17 +54,17 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public static final int ENCRYPT_DATA_FILE = 1;
 
 	private char[] password; 	//Store the password when loaded, and use the same one for save().
-								// This is obviously not the best practice to use 
-								// from a security point of view.  However, if a malicious
-								// third party has good enough access to the machine to be able
-								// to read private Java objects, they will just read it when
-								// we call MossCryptoFactory anyways - the password is handed 
-								// there in plain text as well.  The window is already there - this
-								// just increases the time it is available for.
+	// This is obviously not the best practice to use 
+	// from a security point of view.  However, if a malicious
+	// third party has good enough access to the machine to be able
+	// to read private Java objects, they will just read it when
+	// we call MossCryptoFactory anyways - the password is handed 
+	// there in plain text as well.  The window is already there - this
+	// just increases the time it is available for.
 
 	//Convenience class for checking if objects are already entered.
 	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
-	
+
 	//User data objects
 	private List<Account> accounts = new LinkedList<Account>();
 	private List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>();
@@ -99,7 +99,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public List<Transaction> getTransactions() {
 		checkLists();
-		return Collections.unmodifiableList(transactions);
+		return transactions;
 	}
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
@@ -107,7 +107,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public List<AccountType> getAccountTypes() {
 		checkLists();
-		return Collections.unmodifiableList(accountTypes);
+		return accountTypes;
 	}
 	public void setAccountTypes(List<AccountType> types) {
 		this.accountTypes = types;
@@ -210,12 +210,29 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return new TransactionListFilteredBySource(this, getTransactions(), source);
 	}
 	public boolean removeAccount(Account account) throws ModelException {
+		if (getTransactions(account).size() > 0)
+			throw new ModelException("Cannot remove account " + account + "; it contains transactions");
+		for (ScheduledTransaction st : getScheduledTransactions())
+			if (st.getFrom().equals(account)
+					|| st.getTo().equals(account))
+				throw new ModelException("Cannot remove account " + account + "; it contains scheduled transactions");		
 		return accounts.remove(account);
 	}
 	public boolean removeAccountType(AccountType type) throws ModelException {
+		for (Account a : getAccounts()) {
+			if (a.getType().equals(type))
+				throw new ModelException("Cannot remove account type " + type + "; it is referred to by " + a);
+		}
 		return accountTypes.remove(type);
 	}
 	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+		if (getTransactions(budgetCategory).size() > 0)
+			throw new ModelException("Cannot remove budget category " + budgetCategory + "; it is referenced by at least one transaction");
+		for (ScheduledTransaction st : getScheduledTransactions())
+			if (st.getFrom().equals(budgetCategory)
+					|| st.getTo().equals(budgetCategory))
+				throw new ModelException("Cannot remove budget category " + budgetCategory + "; it contains scheduled transactions");		
+
 		return budgetCategories.remove(budgetCategory);
 	}
 	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
@@ -259,7 +276,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 			//TODO Test to make sure this is reset at the right time.
 //			if (resetUid)
-//				setUid(ModelFactory.getGeneratedUid(this));
+//			setUid(ModelFactory.getGeneratedUid(this));
 
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
@@ -395,7 +412,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			registerObjectInUidMap(s);	
 		}
 	}
-	
+
 	private void registerObjectInUidMap(ModelObject object){
 		uidMap.put(object.getUid(), object);
 	}
@@ -442,7 +459,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		return sb.toString();
 	}
-	
+
 	private void checkLists(){
 		if (this.accounts == null)
 			this.accounts = new LinkedList<Account>();
@@ -453,7 +470,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		if (this.accountTypes == null)
 			this.accountTypes = new LinkedList<AccountType>();
 	}
-	
+
 	/**
 	 * Perform all the sanity checks here, for code simplicity
 	 * @param object The object to be modified
@@ -464,7 +481,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private void checkValid(ModelObject object, boolean isAddOperation, boolean isUidRefresh) throws ModelException {
 		if (object.getDocument() == null)
 			throw new ModelException("Document has not yet been set for this object");
-		
+
 		if(!object.getDocument().equals(this))
 			throw new ModelException("Cannot modify an object not in this model");
 

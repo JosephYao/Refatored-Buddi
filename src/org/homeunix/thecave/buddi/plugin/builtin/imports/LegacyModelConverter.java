@@ -18,7 +18,7 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;

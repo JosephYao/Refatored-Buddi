@@ -8,7 +8,8 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
@@ -32,7 +33,12 @@ public class EditDeleteAccount extends MossMenuItem {
 				((Document) ((MainFrame) getFrame()).getDocument()).removeAccount(a);
 			}
 			catch (ModelException me){
-				Log.error(me);
+				try {
+					a.setDeleted(true);
+				}
+				catch (InvalidValueException ive){
+					Log.error("Error setting deleted flag on account");
+				}
 			}
 		}
 

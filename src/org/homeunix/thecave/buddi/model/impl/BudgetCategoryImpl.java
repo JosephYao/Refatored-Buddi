@@ -12,7 +12,7 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ModelObject;
-import org.homeunix.thecave.buddi.model.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.model.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.moss.util.DateFunctions;
 

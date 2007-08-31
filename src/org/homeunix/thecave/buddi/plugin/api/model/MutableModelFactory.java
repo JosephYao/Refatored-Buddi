@@ -11,7 +11,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;

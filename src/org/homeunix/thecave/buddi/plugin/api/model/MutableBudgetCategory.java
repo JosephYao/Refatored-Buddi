@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 
 public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableSource {
 	/**

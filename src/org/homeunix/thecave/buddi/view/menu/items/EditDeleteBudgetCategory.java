@@ -8,7 +8,8 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
@@ -31,7 +32,12 @@ public class EditDeleteBudgetCategory extends MossMenuItem{
 				((Document) ((MainFrame) getFrame()).getDocument()).removeBudgetCategory(bc);
 			}
 			catch (ModelException me){
-				Log.error(me);
+				try {
+					bc.setDeleted(true);
+				}
+				catch (InvalidValueException ive){
+					Log.error("Error setting deleted flag on budget category");
+				}
 			}
 		}
 

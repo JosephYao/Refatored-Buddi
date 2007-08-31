@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.model.exception.ModelException;
+import org.homeunix.thecave.buddi.model.api.exception.ModelException;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.StandardDocument;
 

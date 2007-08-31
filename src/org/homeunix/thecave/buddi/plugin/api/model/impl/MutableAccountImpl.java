@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;

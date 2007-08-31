@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 
 public interface MutableSource extends ImmutableSource {
 	

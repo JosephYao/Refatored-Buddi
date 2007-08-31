@@ -10,7 +10,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 import org.homeunix.thecave.moss.util.Log;
 
 public class AccountImpl extends SourceImpl implements Account {
@@ -26,7 +26,8 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public Date getStartDate() {
 		if (getDocument() != null)
-			return getDocument().getTransactions(this).get(0).getDate();
+//			return getDocument().getTransactions(this).get(0).getDate();
+			return new Date();
 		return null;
 	}
 	public long getBalance() {
