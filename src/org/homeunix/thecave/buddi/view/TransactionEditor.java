@@ -460,7 +460,7 @@ public class TransactionEditor extends MossPanel {
 	 * Returns the updated transaction.  If called from a new transaction, returns null.
 	 * @return
 	 */
-	public Transaction getUpdatedTransaction() throws InvalidValueException {
+	public Transaction getTransactionUpdated() throws InvalidValueException {
 		if (transaction == null)
 			return null;
 		transaction.setDate(date.getDate());
@@ -471,12 +471,12 @@ public class TransactionEditor extends MossPanel {
 		transaction.setNumber(number.getValue().toString());
 		transaction.setMemo(memo.getValue().toString());
 		if (associatedAccount.equals(from.getSelectedItem())){
-			cleared.setSelected(transaction.isClearedFrom());
-			reconciled.setSelected(transaction.isReconciledFrom());				
+			transaction.setClearedFrom(cleared.isSelected());
+			transaction.setReconciledFrom(reconciled.isSelected());			
 		}
 		else if (associatedAccount.equals(to.getSelectedItem())){
-			cleared.setSelected(transaction.isClearedTo());
-			reconciled.setSelected(transaction.isReconciledTo());
+			transaction.setClearedTo(cleared.isSelected());
+			transaction.setReconciledTo(reconciled.isSelected());	
 		}
 		return transaction;
 	}
@@ -491,7 +491,7 @@ public class TransactionEditor extends MossPanel {
 	 * returns null.
 	 * @return
 	 */
-	public Transaction getNewTransaction() throws InvalidValueException {
+	public Transaction getTransactionNew() throws InvalidValueException {
 		if (!isTransactionValid())
 			return null;
 

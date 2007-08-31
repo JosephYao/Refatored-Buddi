@@ -662,10 +662,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			try {
 				if(isUpdate) {
-					t = transactionEditor.getUpdatedTransaction();
+					t = transactionEditor.getTransactionUpdated();
 
 				} else {
-					t = transactionEditor.getNewTransaction();
+					t = transactionEditor.getTransactionNew();
 					getDataModel().addTransaction(t);
 				}
 			}
