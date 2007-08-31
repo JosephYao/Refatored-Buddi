@@ -68,7 +68,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	//User data objects
 	private List<Account> accounts = new LinkedList<Account>();
 	private List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>();
-	private List<AccountType> types = new LinkedList<AccountType>();
+	private List<AccountType> accountTypes = new LinkedList<AccountType>();
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private List<ScheduledTransaction> scheduledTransactions = new LinkedList<ScheduledTransaction>();
 
@@ -105,12 +105,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		this.transactions = transactions;
 		Collections.sort(transactions);
 	}
-	public List<AccountType> getTypes() {
+	public List<AccountType> getAccountTypes() {
 		checkLists();
-		return types;
+		return Collections.unmodifiableList(accountTypes);
 	}
-	public void setTypes(List<AccountType> types) {
-		this.types = types;
+	public void setAccountTypes(List<AccountType> types) {
+		this.accountTypes = types;
 	}
 
 
@@ -126,7 +126,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void addAccountType(AccountType type) throws ModelException {
 		type.setDocument(this);
 		checkValid(type, true, false);
-		types.add(type);
+		accountTypes.add(type);
 		Collections.sort(budgetCategories);
 		setChanged();
 	}
@@ -178,9 +178,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		}
 		return null;
 	}
-	public List<AccountType> getAccountTypes() {
-		return Collections.unmodifiableList(types);
-	}
 	public BudgetCategory getBudgetCategory(String fullName) {
 		for (BudgetCategory bc : getBudgetCategories()) {
 			if (bc.getFullName().equals(fullName))
@@ -216,7 +213,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return accounts.remove(account);
 	}
 	public boolean removeAccountType(AccountType type) throws ModelException {
-		return types.remove(type);
+		return accountTypes.remove(type);
 	}
 	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		return budgetCategories.remove(budgetCategory);
@@ -453,8 +450,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			this.transactions = new LinkedList<Transaction>();
 		if (this.scheduledTransactions == null)
 			this.scheduledTransactions = new LinkedList<ScheduledTransaction>();
-		if (this.types == null)
-			this.types = new LinkedList<AccountType>();
+		if (this.accountTypes == null)
+			this.accountTypes = new LinkedList<AccountType>();
 	}
 	
 	/**
