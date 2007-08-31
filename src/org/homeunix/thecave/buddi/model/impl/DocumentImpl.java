@@ -117,20 +117,39 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 
 	public void addAccount(Account account) throws ModelException {
+		account.setDocument(this);
+		checkValid(account, true, false);
 		accounts.add(account);
+		Collections.sort(accounts);
+		setChanged();
 	}
 	public void addAccountType(AccountType type) throws ModelException {
+		type.setDocument(this);
+		checkValid(type, true, false);
 		types.add(type);
+		Collections.sort(budgetCategories);
+		setChanged();
 	}
 	public void addBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+		budgetCategory.setDocument(this);
+		checkValid(budgetCategory, true, false);
 		budgetCategories.add(budgetCategory);
+		Collections.sort(budgetCategories);
+		setChanged();
 	}
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
+		scheduledTransaction.setDocument(this);
+		checkValid(scheduledTransaction, true, false);
 		scheduledTransactions.add(scheduledTransaction);
+		Collections.sort(scheduledTransactions);
+		setChanged();
 	}
 	public void addTransaction(Transaction transaction) throws ModelException {
+		transaction.setDocument(this);
+		checkValid(transaction, true, false);
 		transactions.add(transaction);
 		Collections.sort(transactions);
+		setChanged();
 	}
 	public Account getAccount(String name) {
 		for (Account a : getAccounts()) { //Try strict matching first
@@ -242,8 +261,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 
 			//TODO Test to make sure this is reset at the right time.
-			if (resetUid)
-				setUid(ModelFactory.getGeneratedUid(this));
+//			if (resetUid)
+//				setUid(ModelFactory.getGeneratedUid(this));
 
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
@@ -309,6 +328,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
+	public void setChanged(){
+		setModifiedDate(new Date());
+		super.setChanged();
+	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
 			setUid(ModelFactory.getGeneratedUid(this));
@@ -325,8 +348,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ModelObjectImpl)
-			return this.getUid().equals(((ModelObjectImpl) obj).getUid());
+		if (obj instanceof DocumentImpl)
+			return this.getUid().equals(((DocumentImpl) obj).getUid());
 		return false;
 	}
 

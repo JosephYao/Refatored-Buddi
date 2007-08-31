@@ -11,6 +11,7 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
+import org.homeunix.thecave.moss.util.Log;
 
 public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
@@ -62,7 +63,9 @@ public class AccountImpl extends SourceImpl implements Account {
 					transaction.setBalanceFrom(balance);
 				}
 			}
-			catch (InvalidValueException ive){}
+			catch (InvalidValueException ive){
+				Log.error(ive);
+			}
 		}
 
 		setBalance(balance);

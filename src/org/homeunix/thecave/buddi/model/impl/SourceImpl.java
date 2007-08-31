@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	//Source Attributes
@@ -18,7 +19,7 @@ public abstract class SourceImpl extends ModelObjectImpl implements Source {
 		this.deleted = deleted;
 	}
 	public String getName() {
-		return name;
+		return TextFormatter.getTranslation(name);
 	}
 	public void setName(String name) {
 		this.name = name;

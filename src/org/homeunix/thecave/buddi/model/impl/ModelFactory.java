@@ -92,7 +92,7 @@ public class ModelFactory {
 	 * @throws DocumentLoadException
 	 */
 	public static Document createDocument(File file) throws DocumentLoadException, OperationCancelledException {
-		Document document;
+		DocumentImpl document;
 		
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
@@ -119,8 +119,8 @@ public class ModelFactory {
 					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
 					XMLDecoder decoder = new XMLDecoder(is);
 					Object o = decoder.readObject();
-					if (o instanceof Document){
-						document = (Document) o;
+					if (o instanceof DocumentImpl){
+						document = (DocumentImpl) o;
 					}
 					else {
 						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
@@ -135,6 +135,10 @@ public class ModelFactory {
 					
 					//Update all balances...
 					document.updateAllBalances();
+					
+					//Fire a change event
+					document.setChanged();
+					document.resetChanged();
 
 					//Return to calling code... the model is correctly loaded.
 					return document;

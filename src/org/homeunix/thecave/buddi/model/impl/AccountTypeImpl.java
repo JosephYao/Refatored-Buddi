@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 	private String name;
@@ -25,7 +26,7 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 		this.credit = credit;
 	}
 	public String getName() {
-		return name;
+		return TextFormatter.getTranslation(name);
 	}
 	public void setName(String name) {
 		this.setModifiedDate(new Date());

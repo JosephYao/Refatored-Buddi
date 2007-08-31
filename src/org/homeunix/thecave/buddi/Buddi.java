@@ -242,7 +242,9 @@ public class Buddi {
 
 					openedFile = true;
 				}
-				catch (DocumentLoadException lme){}
+				catch (DocumentLoadException lme){
+					Log.error(lme);
+				}
 				catch (OperationCancelledException oce){}  //Do nothing
 			}
 

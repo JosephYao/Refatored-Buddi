@@ -15,6 +15,10 @@ public abstract class ModelObjectImpl implements ModelObject {
 	private Document document;
 	
 	
+	public void setChanged(){
+		setModifiedDate(new Date());
+		document.setChanged();
+	}
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
