@@ -17,12 +17,12 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
-public class AccountTreeTableModel extends AbstractTreeTableModel {
+public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 
 	private final Document model;
 	private final Object root;
 
-	public AccountTreeTableModel(Document model) {
+	public MyAccountTreeTableModel(Document model) {
 		super(new Object());
 		this.model = model;
 		this.root = getRoot();
@@ -51,7 +51,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			if (column == 1)
 				return TextFormatter.getHtmlWrapper(
 						TextFormatter.getDeletedWrapper(
-								TextFormatter.getFormattedNameForAccount(a), a).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp "));
+								TextFormatter.getFormattedNameForAccount(a), a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
 						if (column == 2){
 							return TextFormatter.getHtmlWrapper(
 									TextFormatter.getDeletedWrapper(

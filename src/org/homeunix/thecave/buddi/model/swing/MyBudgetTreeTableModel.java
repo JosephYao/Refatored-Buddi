@@ -24,7 +24,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
-public class BudgetTreeTableModel extends AbstractTreeTableModel {
+public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 
 	private final Document model;
 	private final Object root;
@@ -38,7 +38,7 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 	private int monthOffset; //Where the selected month is in relation to the 
 							 // edge of the table.
 	
-	public BudgetTreeTableModel(Document model) {
+	public MyBudgetTreeTableModel(Document model) {
 		super(new Object());
 		this.budgetCategoriesByType = new HashMap<BudgetCategoryType, List<BudgetCategory>>();
 		this.model = model;

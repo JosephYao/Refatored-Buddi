@@ -10,9 +10,9 @@ import javax.swing.SpinnerDateModel;
 public class BudgetDateSpinnerModel extends SpinnerDateModel {
 	public static final long serialVersionUID = 0;
 	
-	private final BudgetTreeTableModel budgetModel;
+	private final MyBudgetTreeTableModel budgetModel;
 	
-	public BudgetDateSpinnerModel(BudgetTreeTableModel budgetModel) {
+	public BudgetDateSpinnerModel(MyBudgetTreeTableModel budgetModel) {
 		super();
 		this.setValue(new Date());
 		this.budgetModel = budgetModel;

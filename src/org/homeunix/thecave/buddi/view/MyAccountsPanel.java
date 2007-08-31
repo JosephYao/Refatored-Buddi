@@ -27,7 +27,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.model.swing.AccountTreeTableModel;
+import org.homeunix.thecave.buddi.model.swing.MyAccountTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -43,7 +43,7 @@ public class MyAccountsPanel extends MossPanel {
 	private final JXTreeTable tree;
 	private final JLabel balanceLabel;
 
-	private final AccountTreeTableModel treeTableModel;
+	private final MyAccountTreeTableModel treeTableModel;
 	
 	private final MainFrame parent;
 	
@@ -51,7 +51,7 @@ public class MyAccountsPanel extends MossPanel {
 		super(true);
 //		this.model = model;
 		this.parent = parent;
-		this.treeTableModel = new AccountTreeTableModel((Document) parent.getDocument());
+		this.treeTableModel = new MyAccountTreeTableModel((Document) parent.getDocument());
 		
 		tree = new JXTreeTable(treeTableModel);
 		balanceLabel = new JLabel("Change Me");

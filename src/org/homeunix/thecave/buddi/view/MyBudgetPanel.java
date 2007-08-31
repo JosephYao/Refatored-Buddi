@@ -36,7 +36,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
-import org.homeunix.thecave.buddi.model.swing.BudgetTreeTableModel;
+import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableNameCellRenderer;
@@ -59,14 +59,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	private final JSpinner dateSpinner;
 	private final JComboBox periodTypeComboBox;
 
-	private final BudgetTreeTableModel treeTableModel;
+	private final MyBudgetTreeTableModel treeTableModel;
 	
 	private final MainFrame parent;
 	
 	public MyBudgetPanel(MainFrame parent) {
 		super(true);
 		this.parent = parent;
-		this.treeTableModel = new BudgetTreeTableModel((Document) parent.getDocument());
+		this.treeTableModel = new MyBudgetTreeTableModel((Document) parent.getDocument());
 		tree = new JXTreeTable(treeTableModel);
 
 		balanceLabel = new JLabel();
