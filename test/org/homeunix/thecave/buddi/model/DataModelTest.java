@@ -3,21 +3,32 @@
  */
 package org.homeunix.thecave.buddi.model;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.junit.Before;
+import org.junit.Test;
 
 
-public class DataModelTest extends TestCase {
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-	}
 
-	@Override
-	protected void tearDown() throws Exception {
-		// TODO Auto-generated method stub
-		super.tearDown();
+public class DataModelTest {
+
+	private Document d;
+	
+	@Before
+	public void setup() throws Exception{
+		d = ModelFactory.createDocument();
 	}
 	
+	@Test
+	public void testDocument(){
+		try {
+			assertTrue(d.getBudgetCategories().size() > 1);
+		
+		}
+		catch (Exception e){
+			fail("Exception: " + e);
+		}
+	}
 	
 }
