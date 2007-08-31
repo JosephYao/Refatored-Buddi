@@ -19,7 +19,13 @@ public interface MutableTransaction extends ImmutableTransaction {
 	 * Marks this transaction as cleared
 	 * @param cleared
 	 */
-	public void setCleared(boolean cleared) throws InvalidValueException;
+	public void setClearedFrom(boolean cleared) throws InvalidValueException;
+
+	/**
+	 * Marks this transaction as cleared
+	 * @param cleared
+	 */
+	public void setClearedTo(boolean cleared) throws InvalidValueException;
 	
 	/**
 	 * Sets the date associated with this account
@@ -55,7 +61,13 @@ public interface MutableTransaction extends ImmutableTransaction {
 	 * Marks this transactin as reconciled
 	 * @param reconciled
 	 */
-	public void setReconciled(boolean reconciled) throws InvalidValueException;
+	public void setReconciledFrom(boolean reconciled) throws InvalidValueException;
+
+	/**
+	 * Marks this transactin as reconciled
+	 * @param reconciled
+	 */
+	public void setReconciledTo(boolean reconciled) throws InvalidValueException;
 	
 	/**
 	 * Sets the given source as the To field

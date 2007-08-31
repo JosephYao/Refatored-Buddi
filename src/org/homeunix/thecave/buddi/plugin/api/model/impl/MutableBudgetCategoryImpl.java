@@ -17,7 +17,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 		super(budgetCategory);
 	}
 
-	public void setIncome(boolean income) {
+	public void setIncome(boolean income) throws InvalidValueException {
 		getBudgetCategory().setIncome(income);
 	}
 

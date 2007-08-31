@@ -15,9 +15,9 @@ public interface Source extends ModelObject {
 	
 	public boolean isDeleted();
 
-	public void setDeleted(boolean deleted);
+	public void setDeleted(boolean deleted) throws InvalidValueException;
 
 	public void setName(String name) throws InvalidValueException;
 	
-	public void setNotes(String notes);
+	public void setNotes(String notes) throws InvalidValueException;
 }

@@ -18,8 +18,10 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private long amount;
 	private Source from;
 	private Source to;
-	private boolean cleared;
-	private boolean reconciled; 
+	private boolean clearedFrom;
+	private boolean clearedTo;
+	private boolean reconciledFrom;
+	private boolean reconciledTo; 
 	private String memo;
 
 	private boolean scheduled;
@@ -27,11 +29,17 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private long balanceFrom;
 	private long balanceTo;
 	
-	public boolean isCleared() {
-		return cleared;
+	public boolean isClearedFrom() {
+		return clearedFrom;
 	}
-	public void setCleared(boolean cleared) {
-		this.cleared = cleared;
+	public boolean isClearedTo() {
+		return clearedTo;
+	}
+	public void setClearedFrom(boolean cleared) {
+		this.clearedFrom = cleared;
+	}
+	public void setClearedTo(boolean cleared) {
+		this.clearedTo = cleared;
 	}
 	public Date getDate() {
 		return date;
@@ -57,11 +65,17 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public void setNumber(String number) {
 		this.number = number;
 	}
-	public boolean isReconciled() {
-		return reconciled;
+	public boolean isReconciledFrom() {
+		return reconciledFrom;
 	}
-	public void setReconciled(boolean reconciled) {
-		this.reconciled = reconciled;
+	public void setReconciledFrom(boolean reconciled) {
+		this.reconciledFrom = reconciled;
+	}
+	public boolean isReconciledTo() {
+		return reconciledTo;
+	}
+	public void setReconciledTo(boolean reconciled) {
+		this.reconciledTo = reconciled;
 	}
 	public Source getFrom() {
 		return from;

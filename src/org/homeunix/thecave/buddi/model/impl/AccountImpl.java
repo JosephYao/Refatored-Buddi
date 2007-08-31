@@ -10,12 +10,13 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private AccountType type;
-	
+
 	public long getStartingBalance() {
 		return startingBalance;
 	}
@@ -42,25 +43,28 @@ public class AccountImpl extends SourceImpl implements Account {
 	public void updateBalance(){
 		if (getDocument() == null)
 			return;
-		
+
 		long balance = this.getStartingBalance();
-		
+
 		List<Transaction> transactions = getDocument().getTransactions(this);
-		
+
 		for (Transaction transaction : transactions) {
-			//We are moving money *to* this account
-			if (transaction.getTo().equals(this)){
-				balance = balance + transaction.getAmount();
-				transaction.setBalanceTo(balance);
+			try {
+				//We are moving money *to* this account
+				if (transaction.getTo().equals(this)){
+					balance = balance + transaction.getAmount();
+					transaction.setBalanceTo(balance);
+				}
+
+				//We are moving money *from* this account
+				else{
+					balance = balance - transaction.getAmount();
+					transaction.setBalanceFrom(balance);
+				}
 			}
-			
-			//We are moving money *from* this account
-			else{
-				balance = balance - transaction.getAmount();
-				transaction.setBalanceFrom(balance);
-			}
+			catch (InvalidValueException ive){}
 		}
-		
+
 		setBalance(balance);
 	}
 	public String getFullName() {

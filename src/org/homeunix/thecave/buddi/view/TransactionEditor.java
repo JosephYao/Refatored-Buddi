@@ -75,7 +75,7 @@ public class TransactionEditor extends MossPanel {
 	private final Vector<JComponent> components;
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
-	
+
 
 	private final JXDatePicker date;
 	private final MossHintComboBox description;
@@ -87,11 +87,11 @@ public class TransactionEditor extends MossPanel {
 	private final JCheckBox reconciled;
 	private final MossHintTextArea memo;
 
-	
-	
+
+
 	private final Document model;
 	private final Account associatedAccount;
-	
+
 	private final AutoCompleteEntryModel autoCompleteEntries;
 
 	private boolean changed;
@@ -100,7 +100,7 @@ public class TransactionEditor extends MossPanel {
 		super(true);
 		this.model = model;
 		this.associatedAccount = associatedAccount;
-		
+
 		autoCompleteEntries = new AutoCompleteEntryModel(model);
 
 		date = new JXDatePicker();
@@ -114,8 +114,10 @@ public class TransactionEditor extends MossPanel {
 		reconciled = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED));
 
 		components = new Vector<JComponent>();
-		
+
 		date.setVisible(!scheduledTransactionPane);
+		cleared.setVisible(!scheduledTransactionPane);
+		reconciled.setVisible(!scheduledTransactionPane);
 		
 		open();
 	}
@@ -132,7 +134,7 @@ public class TransactionEditor extends MossPanel {
 
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
-		
+
 		date.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
 		date.setDate(new Date());
 
@@ -165,7 +167,7 @@ public class TransactionEditor extends MossPanel {
 
 		memoScroller.setPreferredSize(new Dimension(130, memo.getPreferredSize().height));		
 
-		
+
 		JPanel topPanel = new JPanel(new GridBagLayout());
 		JPanel bottomPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints cTop = new GridBagConstraints();
@@ -197,7 +199,7 @@ public class TransactionEditor extends MossPanel {
 			cTop.gridx = 4;
 			topPanel.add(reconciled, cTop);
 		}
-		
+
 		cBottom.weighty = 0;
 		cBottom.gridy = 0;
 		cBottom.fill = GridBagConstraints.HORIZONTAL;
@@ -221,7 +223,7 @@ public class TransactionEditor extends MossPanel {
 		cBottom.ipadx = 0;
 		cBottom.gridx = 3;
 		bottomPanel.add(to, cBottom);
-		
+
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(topPanel);
@@ -389,8 +391,14 @@ public class TransactionEditor extends MossPanel {
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
-			cleared.setSelected(transaction.isCleared());
-			reconciled.setSelected(transaction.isReconciled());
+			if (associatedAccount.equals(from.getSelectedItem())){
+				cleared.setSelected(transaction.isClearedFrom());
+				reconciled.setSelected(transaction.isReconciledFrom());				
+			}
+			else if (associatedAccount.equals(to.getSelectedItem())){
+				cleared.setSelected(transaction.isClearedTo());
+				reconciled.setSelected(transaction.isReconciledTo());
+			}
 		}
 		else{
 			if (date.getDate() == null)
@@ -462,16 +470,21 @@ public class TransactionEditor extends MossPanel {
 		transaction.setTo((Source) to.getSelectedItem());
 		transaction.setNumber(number.getValue().toString());
 		transaction.setMemo(memo.getValue().toString());
-		transaction.setCleared(cleared.isSelected());
-		transaction.setReconciled(reconciled.isSelected());
-		
+		if (associatedAccount.equals(from.getSelectedItem())){
+			cleared.setSelected(transaction.isClearedFrom());
+			reconciled.setSelected(transaction.isReconciledFrom());				
+		}
+		else if (associatedAccount.equals(to.getSelectedItem())){
+			cleared.setSelected(transaction.isClearedTo());
+			reconciled.setSelected(transaction.isReconciledTo());
+		}
 		return transaction;
 	}
-	
+
 	public Transaction getTransaction(){
 		return transaction;
 	}
-	
+
 	/**
 	 * Creates and returns a new transaction, given the currently entered values
 	 * in TransactinEditor.  If all the required fields are not filled in, 
@@ -481,13 +494,18 @@ public class TransactionEditor extends MossPanel {
 	public Transaction getNewTransaction() throws InvalidValueException {
 		if (!isTransactionValid())
 			return null;
-		
+
 		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getValue().toString(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
 		t.setNumber(number.getValue().toString());
 		t.setMemo(memo.getValue().toString());
-		t.setCleared(cleared.isSelected());
-		t.setReconciled(reconciled.isSelected());
-		
+		if (associatedAccount.equals(from.getSelectedItem())){
+			t.setClearedFrom(cleared.isSelected());
+			t.setReconciledFrom(reconciled.isSelected());				
+		}
+		else if (associatedAccount.equals(to.getSelectedItem())){
+			t.setClearedTo(cleared.isSelected());
+			t.setReconciledTo(reconciled.isSelected());				
+		}		
 		return t;
 	}
 
@@ -529,11 +547,11 @@ public class TransactionEditor extends MossPanel {
 	public boolean isReconciled(){
 		return reconciled.isSelected();
 	}
-	
+
 	public boolean isTransactionValid(){
 		return this.isTransactionValid(null);
 	}
-	
+
 	public boolean isTransactionValid(Account thisAccount){
 		if (description.getValue().toString().length() == 0)
 			return false;
@@ -547,7 +565,7 @@ public class TransactionEditor extends MossPanel {
 			if (!from.getSelectedItem().equals(thisAccount) && !to.getSelectedItem().equals(thisAccount))
 				return false;
 		}
-		
+
 		return true;
 	}
 
@@ -600,8 +618,14 @@ public class TransactionEditor extends MossPanel {
 	 * Clear / Reconcile shortcuts. 
 	 */
 	public void updateClearedAndReconciled(){
-		cleared.setSelected(transaction.isCleared());
-		reconciled.setSelected(transaction.isReconciled());
+		if (associatedAccount.equals(from.getSelectedItem())){
+			cleared.setSelected(transaction.isClearedFrom());
+			reconciled.setSelected(transaction.isReconciledFrom());				
+		}
+		else if (associatedAccount.equals(to.getSelectedItem())){
+			cleared.setSelected(transaction.isClearedTo());
+			reconciled.setSelected(transaction.isReconciledTo());
+		}
 	}
 
 	private void fillInOtherFields(boolean forceAll){		

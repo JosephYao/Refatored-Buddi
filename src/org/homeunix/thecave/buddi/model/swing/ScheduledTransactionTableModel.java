@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.exception.ModelException;
 
 public class ScheduledTransactionTableModel extends AbstractTableModel {
@@ -54,7 +55,10 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		ScheduledTransaction s = getScheduledTransactios().get(rowIndex);
-		s.setScheduleName(aValue.toString());
+		try {
+			s.setScheduleName(aValue.toString());
+		}
+		catch (InvalidValueException ive){}
 	}
 
 	@Override

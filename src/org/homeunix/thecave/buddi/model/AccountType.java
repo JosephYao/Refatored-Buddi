@@ -14,7 +14,7 @@ public interface AccountType extends ModelObject {
 	
 	public boolean isExpanded();
 	
-	public void setCredit(boolean credit);
+	public void setCredit(boolean credit) throws InvalidValueException;
 	
 	public void setExpanded(boolean isExpanded);
 	

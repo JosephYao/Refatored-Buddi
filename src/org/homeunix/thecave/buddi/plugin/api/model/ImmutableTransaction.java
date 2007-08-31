@@ -22,7 +22,13 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * Is this transaction marked as cleared?
 	 * @return
 	 */
-	public boolean isCleared();
+	public boolean isClearedFrom();
+
+	/**
+	 * Is this transaction marked as cleared?
+	 * @return
+	 */
+	public boolean isClearedTo();
 	
 	/**
 	 * Returns the date associated with this transaction
@@ -52,7 +58,13 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * Is this transaction marked as reconciled?
 	 * @return
 	 */
-	public boolean isReconciled();
+	public boolean isReconciledFrom();
+
+	/**
+	 * Is this transaction marked as reconciled?
+	 * @return
+	 */
+	public boolean isReconciledTo();
 	
 	/**
 	 * Was this transaction created through a scheduled transaction?

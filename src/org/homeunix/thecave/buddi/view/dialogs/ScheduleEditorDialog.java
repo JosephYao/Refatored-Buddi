@@ -346,8 +346,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 					String number = transactionEditor.getNumber();
 					Source from = transactionEditor.getFrom();
 					Source to = transactionEditor.getTo();
-					boolean cleared = transactionEditor.isCleared();
-					boolean reconciled = transactionEditor.isReconciled();
+//					boolean cleared = transactionEditor.isCleared();
+//					boolean reconciled = transactionEditor.isReconciled();
 					String memo = transactionEditor.getMemo();
 
 					s.setScheduleName(name);
@@ -357,8 +357,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 					s.setNumber(number);
 					s.setTo(to);
 					s.setFrom(from);
-					s.setCleared(cleared);
-					s.setReconciled(reconciled);
+//					s.setCleared(cleared);
+//					s.setReconciled(reconciled);
 					s.setMemo(memo);
 
 					//TODO We should not have to save this, as it cannot be modified.

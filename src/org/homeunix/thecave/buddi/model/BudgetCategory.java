@@ -49,7 +49,7 @@ public interface BudgetCategory extends Source {
 	
 	public void setExpanded(boolean expanded);
 	
-	public void setIncome(boolean income);
+	public void setIncome(boolean income) throws InvalidValueException;
 	
 	public void setParent(BudgetCategory parent) throws InvalidValueException;
 	

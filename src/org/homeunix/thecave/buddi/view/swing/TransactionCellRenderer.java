@@ -160,13 +160,15 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			//Cleared and Reconciled
 			if (showCleared){
 				g.setColor(GREEN);
-				if (transaction.isCleared())
+				if (account.equals(transaction.getTo()) && transaction.isClearedTo()
+						|| account.equals(transaction.getFrom()) && transaction.isClearedFrom())
 					g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED), 20, bottomRowYPos);
 				g.setColor(textColor);
 			}
 			if (showReconciled){
 				g.setColor(GREEN);
-				if (transaction.isReconciled())
+				if (account.equals(transaction.getTo()) && transaction.isReconciledTo()
+						|| account.equals(transaction.getFrom()) && transaction.isReconciledFrom())
 					g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED), 30, bottomRowYPos);
 				g.setColor(textColor);
 			}

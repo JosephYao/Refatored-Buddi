@@ -23,9 +23,19 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		return (Transaction) getRaw();
 	}
 	
-	public boolean isCleared() {
-		return getTransaction().isCleared();
+	public boolean isClearedFrom() {
+		return getTransaction().isClearedFrom();
 	}
+	public boolean isClearedTo() {
+		return getTransaction().isClearedTo();
+	}
+	public boolean isReconciledFrom() {
+		return getTransaction().isReconciledFrom();
+	}
+	public boolean isReconciledTo() {
+		return getTransaction().isReconciledTo();
+	}
+
 	public Date getDate() {
 		return getTransaction().getDate();
 	}
@@ -37,9 +47,6 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	}
 	public String getNumber() {
 		return getTransaction().getNumber();
-	}
-	public boolean isReconciled() {
-		return getTransaction().isReconciled();
 	}
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
@@ -82,8 +89,12 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		getTransaction().setAmount(amount);
 	}
 
-	public void setCleared(boolean cleared) {
-		getTransaction().setCleared(cleared);
+	public void setClearedFrom(boolean cleared) throws InvalidValueException{
+		getTransaction().setClearedFrom(cleared);
+	}
+
+	public void setClearedTo(boolean cleared) throws InvalidValueException{
+		getTransaction().setClearedTo(cleared);
 	}
 
 	public void setDate(Date date) throws InvalidValueException{
@@ -105,12 +116,16 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		getTransaction().setMemo(memo);
 	}
 
-	public void setNumber(String number) {
+	public void setNumber(String number) throws InvalidValueException{
 		getTransaction().setNumber(number);
 	}
 
-	public void setReconciled(boolean reconciled) {
-		getTransaction().setReconciled(reconciled);
+	public void setReconciledFrom(boolean reconciled) throws InvalidValueException{
+		getTransaction().setReconciledFrom(reconciled);
+	}
+
+	public void setReconciledTo(boolean reconciled) throws InvalidValueException{
+		getTransaction().setReconciledTo(reconciled);
 	}
 
 	public void setTo(MutableSource to) throws InvalidValueException{
@@ -120,7 +135,7 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 			getTransaction().setTo(to.getSource());
 	}
 	
-	public void setScheduled(boolean scheduled) {
+	public void setScheduled(boolean scheduled) throws InvalidValueException{
 		getTransaction().setScheduled(scheduled);
 	}
 }

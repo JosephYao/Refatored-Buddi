@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.model;
 
-import org.homeunix.thecave.buddi.model.exception.DocumentAlreadySetException;
+import org.homeunix.thecave.buddi.model.exception.InvalidValueException;
 
 public interface ModelObject extends Comparable<ModelObject> {
 	
@@ -26,5 +26,5 @@ public interface ModelObject extends Comparable<ModelObject> {
 	 * Sets the document.
 	 * @param document
 	 */
-	void setDocument(Document document) throws DocumentAlreadySetException;
+	void setDocument(Document document) throws InvalidValueException;
 }

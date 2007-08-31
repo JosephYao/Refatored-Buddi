@@ -21,8 +21,11 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 		return (Transaction) getRaw();
 	}
 	
-	public boolean isCleared() {
-		return getTransaction().isCleared();
+	public boolean isClearedFrom() {
+		return getTransaction().isClearedFrom();
+	}
+	public boolean isClearedTo() {
+		return getTransaction().isClearedTo();
 	}
 	public Date getDate() {
 		return getTransaction().getDate();
@@ -36,8 +39,11 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	public String getNumber() {
 		return getTransaction().getNumber();
 	}
-	public boolean isReconciled() {
-		return getTransaction().isReconciled();
+	public boolean isReconciledFrom() {
+		return getTransaction().isReconciledFrom();
+	}
+	public boolean isReconciledTo() {
+		return getTransaction().isReconciledTo();
 	}
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();

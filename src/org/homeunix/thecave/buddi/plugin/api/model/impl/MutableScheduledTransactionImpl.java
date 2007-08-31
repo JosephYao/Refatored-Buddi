@@ -63,7 +63,7 @@ public class MutableScheduledTransactionImpl extends MutableTransactionImpl impl
 		getScheduledTransaction().setFrequencyType(frequencyType);		
 	}
 
-	public void setLastDayCreated(Date lastDayCreated) {
+	public void setLastDayCreated(Date lastDayCreated) throws InvalidValueException {
 		getScheduledTransaction().setLastDayCreated(lastDayCreated);		
 	}
 
@@ -71,23 +71,23 @@ public class MutableScheduledTransactionImpl extends MutableTransactionImpl impl
 		getScheduledTransaction().setMessage(message);		
 	}
 
-	public void setScheduleDay(int scheduleDay) {
+	public void setScheduleDay(int scheduleDay) throws InvalidValueException{
 		getScheduledTransaction().setScheduleDay(scheduleDay);		
 	}
 
-	public void setScheduleMonth(int scheduleMonth) {
+	public void setScheduleMonth(int scheduleMonth) throws InvalidValueException{
 		getScheduledTransaction().setScheduleMonth(scheduleMonth);		
 	}
 
-	public void setScheduleName(String scheduleName) {
+	public void setScheduleName(String scheduleName) throws InvalidValueException{
 		getScheduledTransaction().setScheduleName(scheduleName);		
 	}
 
-	public void setScheduleWeek(int scheduleWeek) {
+	public void setScheduleWeek(int scheduleWeek) throws InvalidValueException{
 		getScheduledTransaction().setScheduleWeek(scheduleWeek);
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Date startDate) throws InvalidValueException{
 		getScheduledTransaction().setStartDate(startDate);		
 	}
 }

@@ -13,7 +13,7 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 		super(source);
 	}
 
-	public void setDeleted(boolean deleted) {
+	public void setDeleted(boolean deleted) throws InvalidValueException{
 		getSource().setDeleted(deleted);
 		
 	}
@@ -22,7 +22,7 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 		getSource().setName(name);
 	}
 
-	public void setNotes(String notes) {
+	public void setNotes(String notes) throws InvalidValueException{
 		getSource().setNotes(notes);
 	}
 

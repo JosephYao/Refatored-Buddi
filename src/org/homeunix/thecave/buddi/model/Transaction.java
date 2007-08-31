@@ -27,21 +27,27 @@ public interface Transaction extends ModelObject {
 	
 	public Source getTo();
 	
-	public boolean isCleared();
+	public boolean isClearedFrom();
+	
+	public boolean isClearedTo();
 	
 	public boolean isInflow();
 	
-	public boolean isReconciled();
+	public boolean isReconciledFrom();
+	
+	public boolean isReconciledTo();
 	
 	public boolean isScheduled();
 	
 	public void setAmount(long amount);
 	
-	void setBalanceFrom(long balanceFrom);
+	void setBalanceFrom(long balanceFrom) throws InvalidValueException;
 	
-	void setBalanceTo(long balanceTo);
+	void setBalanceTo(long balanceTo) throws InvalidValueException;
 	
-	public void setCleared(boolean cleared);
+	public void setClearedFrom(boolean cleared) throws InvalidValueException;
+	
+	public void setClearedTo(boolean cleared) throws InvalidValueException;
 	
 	public void setDate(Date date) throws InvalidValueException;
 	
@@ -51,11 +57,13 @@ public interface Transaction extends ModelObject {
 	
 	public void setMemo(String memo) throws InvalidValueException;
 
-	public void setNumber(String number);
+	public void setNumber(String number) throws InvalidValueException;
 
-	public void setReconciled(boolean reconciled);
+	public void setReconciledFrom(boolean reconciled) throws InvalidValueException;
 	
-	public void setScheduled(boolean scheduled);
+	public void setReconciledTo(boolean reconciled) throws InvalidValueException;
+	
+	public void setScheduled(boolean scheduled) throws InvalidValueException;
 	
 	public void setTo(Source to) throws InvalidValueException;
 }

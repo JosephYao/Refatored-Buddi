@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -99,14 +100,19 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_BUDGET_PERIOD_TYPE)));		
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(""));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NOTES)));
+//		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NOTES)));
 
 		textPanelRight.add(name);
 		textPanelRight.add(parent);
 		textPanelRight.add(budgetPeriodType);
 		textPanelRight.add(income);
 		textPanelRight.add(expense);
-		textPanelRight.add(new JScrollPane(notes));
+//		textPanelRight.add(new JScrollPane(notes));
+		
+		JScrollPane notesScroller = new JScrollPane(notes);
+		notesScroller.setPreferredSize(new Dimension(150, 75));		
+		textPanel.add(notesScroller, BorderLayout.SOUTH);
+
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(income);

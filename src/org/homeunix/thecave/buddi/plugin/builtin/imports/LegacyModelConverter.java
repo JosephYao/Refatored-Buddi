@@ -170,10 +170,12 @@ public class LegacyModelConverter {
 					sourceMap.get(oldTransaction.getFrom()),
 					sourceMap.get(oldTransaction.getTo())
 			);
-			newTransaction.setCleared(oldTransaction.isCleared());
+			newTransaction.setClearedFrom(oldTransaction.isCleared());
+			newTransaction.setClearedTo(oldTransaction.isCleared());
 			newTransaction.setMemo(oldTransaction.getMemo());
 			newTransaction.setNumber(oldTransaction.getNumber());
-			newTransaction.setReconciled(oldTransaction.isReconciled());
+			newTransaction.setReconciledFrom(oldTransaction.isReconciled());
+			newTransaction.setReconciledTo(oldTransaction.isReconciled());
 			newTransaction.setFrom(sourceMap.get(oldTransaction.getFrom()));
 			newTransaction.setTo(sourceMap.get(oldTransaction.getTo()));
 			newTransaction.setScheduled(oldTransaction.isScheduled());
@@ -190,7 +192,8 @@ public class LegacyModelConverter {
 			Schedule oldScheduledTransaction = (Schedule) oldScheduledTransactionObject;
 
 			MutableScheduledTransaction newScheduledTransaction = MutableModelFactory.createMutableScheduledTransaction(model);
-			newScheduledTransaction.setCleared(oldScheduledTransaction.isCleared());
+			newScheduledTransaction.setClearedFrom(oldScheduledTransaction.isCleared());
+			newScheduledTransaction.setClearedTo(oldScheduledTransaction.isCleared());
 			newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
 			newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());
 			newScheduledTransaction.setEndDate(oldScheduledTransaction.getEndDate());
@@ -199,7 +202,8 @@ public class LegacyModelConverter {
 			newScheduledTransaction.setMemo(oldScheduledTransaction.getMemo());
 			newScheduledTransaction.setMessage(oldScheduledTransaction.getMessage());
 			newScheduledTransaction.setNumber(oldScheduledTransaction.getNumber());
-			newScheduledTransaction.setReconciled(oldScheduledTransaction.isReconciled());
+			newScheduledTransaction.setReconciledFrom(oldScheduledTransaction.isReconciled());
+			newScheduledTransaction.setReconciledTo(oldScheduledTransaction.isReconciled());
 			newScheduledTransaction.setScheduled(oldScheduledTransaction.isScheduled());
 			newScheduledTransaction.setScheduleDay(oldScheduledTransaction.getScheduleDay());
 			newScheduledTransaction.setScheduleWeek(oldScheduledTransaction.getScheduleWeek());

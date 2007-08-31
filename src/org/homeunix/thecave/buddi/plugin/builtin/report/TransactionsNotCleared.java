@@ -37,7 +37,8 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();
 		
 		for (ImmutableTransaction transaction : temp) {
-			if (!transaction.isCleared()){
+			if (!transaction.isClearedFrom()
+					|| !transaction.isClearedTo()){
 				transactions.add(transaction);
 			}
 		}

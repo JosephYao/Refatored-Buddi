@@ -29,7 +29,8 @@ public class TransactionsNotReconciled extends BuddiReportPlugin {
 		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();
 
 		for (ImmutableTransaction transaction : temp) {
-			if (!transaction.isReconciled()){
+			if (!transaction.isReconciledFrom()
+					|| !transaction.isReconciledTo()){
 				transactions.add(transaction);
 			}
 		}

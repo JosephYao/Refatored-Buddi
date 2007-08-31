@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -88,12 +89,14 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_NAME)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_STARTING_BALANCE)));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_NOTES)));
-
+		
 		textPanelRight.add(name);
 		textPanelRight.add(type);
 		textPanelRight.add(startingBalance);
-		textPanelRight.add(new JScrollPane(notes));
+		
+		JScrollPane notesScroller = new JScrollPane(notes);
+		notesScroller.setPreferredSize(new Dimension(150, 75));		
+		textPanel.add(notesScroller, BorderLayout.SOUTH);
 
 		ok.setPreferredSize(InternalFormatter.getButtonSize(ok));
 		cancel.setPreferredSize(InternalFormatter.getButtonSize(cancel));
