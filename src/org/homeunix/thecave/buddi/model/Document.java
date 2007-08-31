@@ -32,11 +32,11 @@ public interface Document extends ModelObject, StandardDocument {
 	public List<Transaction> getTransactions(Source source);
 	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate);
 	public void refreshUidMap() throws ModelException;
-	public boolean removeAccount(Account account) throws ModelException;
-	public boolean removeAccountType(AccountType type) throws ModelException;
-	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException;
-	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException;
-	public boolean removeTransaction(Transaction transaction) throws ModelException;
+	public void removeAccount(Account account) throws ModelException;
+	public void removeAccountType(AccountType type) throws ModelException;
+	public void removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException;
+	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException;
+	public void removeTransaction(Transaction transaction) throws ModelException;
 	public void save() throws DocumentSaveException;
 	public void saveAs(File file, int flags) throws DocumentSaveException;
 	public String saveToString();

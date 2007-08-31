@@ -20,27 +20,20 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.moss.swing.ApplicationTracker;
 import org.homeunix.thecave.moss.swing.MossFrame;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
 	
 	private final JTabbedPane tabs;
-	
-//	private final ViewPreferences view;
-//	private final PluginPreferences plugin;
-//	private final LocalePreferences locale;
-//	private final NetworkPreferences network;
-//	private final AdvancedPreferences advanced;
-	
 	private final List<BuddiPreferencePlugin> preferencePanels;
 	
 	private final JButton okButton;
 	private final JButton cancelButton;
 	
-	public PreferencesFrame(MossFrame frame) {
-		super(frame);
-		
+	public PreferencesFrame() {
+		super();
 		tabs = new JTabbedPane();
 		
 		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		
@@ -85,6 +78,9 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
 		
+		for (MossFrame frame : ApplicationTracker.getInstance().getOpenFrames()) {
+			frame.updateContent();
+		}
 		super.closeWindowWithoutPrompting();
 	}
 	

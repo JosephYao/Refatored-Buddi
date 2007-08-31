@@ -14,17 +14,18 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 public class MyBudgetTableNameCellRenderer extends DefaultTreeCellRenderer {
 	public static final long serialVersionUID = 0;
 
-	
+
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-		
+
 		if (value instanceof BudgetCategory)
 			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getFormattedNameForCategory((BudgetCategory) value)));
+					TextFormatter.getDeletedWrapper(
+							TextFormatter.getFormattedNameForCategory((BudgetCategory) value), (BudgetCategory) value)));
 		else
 			this.setText("");
-		
+
 		return this;
 	}
 }

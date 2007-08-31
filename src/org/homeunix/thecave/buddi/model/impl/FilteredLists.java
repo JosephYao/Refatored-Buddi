@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.data.list.FilteredList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -187,8 +188,8 @@ public class FilteredLists {
 	public static class AccountListFilteredByType extends BuddiFilteredList<Account> {
 		private final AccountType type;
 
-		public AccountListFilteredByType(Document model, AccountType type) {
-			super(model, model.getAccounts());
+		public AccountListFilteredByType(Document model, List<Account> accounts, AccountType type) {
+			super(model, accounts);
 			this.type = type;
 		}
 
@@ -196,6 +197,26 @@ public class FilteredLists {
 		public boolean isIncluded(Account object) {
 			if (object != null && object.getType() != null){
 				return object.getType().equals(type);
+			}
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a list of all accounts included in the constructor, with deleted 
+	 * ones removed if the Preferences state that you should do it.
+	 * @author wyatt
+	 *
+	 */
+	public static class AccountListFilteredByDeleted extends BuddiFilteredList<Account> {
+		public AccountListFilteredByDeleted(Document model, List<Account> accounts) {
+			super(model, accounts);
+		}
+
+		@Override
+		public boolean isIncluded(Account object) {
+			if (object != null){
+				return !object.isDeleted() || PrefsModel.getInstance().isShowDeleted();
 			}
 			return false;
 		}
@@ -266,6 +287,24 @@ public class FilteredLists {
 					return object.getParent() == null;
 				else if (object.getParent() != null)
 					return object.getParent().equals(parent);
+			}
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns a list of categories, filtered by deleted status if the preferences state such.
+	 * @author wyatt
+	 */
+	public static class BudgetCategoryListFilteredByDeleted extends BuddiFilteredList<BudgetCategory> {
+		public BudgetCategoryListFilteredByDeleted(Document model, List<BudgetCategory> budgetCategories) {
+			super(model, budgetCategories);
+		}
+
+		@Override
+		public boolean isIncluded(BudgetCategory object) {
+			if (object != null){
+				return !object.isDeleted() || PrefsModel.getInstance().isShowDeleted();
 			}
 			return false;
 		}

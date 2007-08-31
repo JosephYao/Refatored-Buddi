@@ -16,6 +16,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -132,12 +133,12 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent));
 			if (childIndex < budgetCategories.size())
 				return budgetCategories.get(childIndex);
 		}
@@ -146,11 +147,11 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
 			return budgetCategories.size();
 		}
 		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent);
+			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent));
 			return budgetCategories.size();
 		}
 		
@@ -162,10 +163,10 @@ public class BudgetTreeTableModel extends AbstractTreeTableModel {
 			return -1;
 		
 		if (parent.equals(root) && child instanceof BudgetCategory){
-			return new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null).indexOf(child);
+			return new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null)).indexOf(child);
 		}
 		if (parent instanceof BudgetCategory && child instanceof BudgetCategory){
-			return new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent).indexOf(child);
+			return new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent)).indexOf(child);
 		}
 		return -1;
 	}

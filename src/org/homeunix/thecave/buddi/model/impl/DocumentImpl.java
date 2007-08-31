@@ -209,23 +209,25 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public List<Transaction> getTransactions(Source source) {
 		return new TransactionListFilteredBySource(this, getTransactions(), source);
 	}
-	public boolean removeAccount(Account account) throws ModelException {
+	public void removeAccount(Account account) throws ModelException {
 		if (getTransactions(account).size() > 0)
 			throw new ModelException("Cannot remove account " + account + "; it contains transactions");
 		for (ScheduledTransaction st : getScheduledTransactions())
 			if (st.getFrom().equals(account)
 					|| st.getTo().equals(account))
 				throw new ModelException("Cannot remove account " + account + "; it contains scheduled transactions");		
-		return accounts.remove(account);
+		accounts.remove(account);
+		setChanged();
 	}
-	public boolean removeAccountType(AccountType type) throws ModelException {
+	public void removeAccountType(AccountType type) throws ModelException {
 		for (Account a : getAccounts()) {
 			if (a.getType().equals(type))
 				throw new ModelException("Cannot remove account type " + type + "; it is referred to by " + a);
 		}
-		return accountTypes.remove(type);
+		accountTypes.remove(type);
+		setChanged();
 	}
-	public boolean removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+	public void removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		if (getTransactions(budgetCategory).size() > 0)
 			throw new ModelException("Cannot remove budget category " + budgetCategory + "; it is referenced by at least one transaction");
 		for (ScheduledTransaction st : getScheduledTransactions())
@@ -233,13 +235,16 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					|| st.getTo().equals(budgetCategory))
 				throw new ModelException("Cannot remove budget category " + budgetCategory + "; it contains scheduled transactions");		
 
-		return budgetCategories.remove(budgetCategory);
+		budgetCategories.remove(budgetCategory);
+		setChanged();
 	}
-	public boolean removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
-		return scheduledTransactions.remove(scheduledTransaction);
+	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
+		scheduledTransactions.remove(scheduledTransaction);
+		setChanged();
 	}
-	public boolean removeTransaction(Transaction transaction) throws ModelException {
-		return transactions.remove(transaction);
+	public void removeTransaction(Transaction transaction) throws ModelException {
+		transactions.remove(transaction);
+		setChanged();
 	}
 	/**
 	 * Saves the data file to the current file.  If the file has not yet been set,
@@ -425,7 +430,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		for (AccountType t : getAccountTypes()) {
 			sb.append(t).append("\n");
 
-			for (Account a : new AccountListFilteredByType(this, t)) {
+			for (Account a : new AccountListFilteredByType(this, this.getAccounts(), t)) {
 				sb.append("\t").append(a).append("\n");
 			}
 		}

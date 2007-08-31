@@ -7,8 +7,9 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TypeListFilteredByAccounts;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -20,17 +21,17 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 
 	private final Document model;
 	private final Object root;
-	
+
 	public AccountTreeTableModel(Document model) {
 		super(new Object());
 		this.model = model;
 		this.root = getRoot();
 	}
-	
+
 	public int getColumnCount() {
 		return 3;
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 		if (column == 1)
@@ -39,7 +40,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AMOUNT);
 		return "";
 	}
-	
+
 	public Object getValueAt(Object node, int column) {
 		if (column == -1)
 			return node;
@@ -49,11 +50,14 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			Account a = (Account) node;
 			if (column == 1)
 				return TextFormatter.getHtmlWrapper(
-						TextFormatter.getFormattedNameForAccount(a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
-			if (column == 2){
-				return TextFormatter.getHtmlWrapper(
-						TextFormatter.getFormattedCurrency(a.getBalance(), InternalFormatter.isRed(a, a.getBalance())));
-			}
+						TextFormatter.getDeletedWrapper(
+								TextFormatter.getFormattedNameForAccount(a), a).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp "));
+						if (column == 2){
+							return TextFormatter.getHtmlWrapper(
+									TextFormatter.getDeletedWrapper(
+											TextFormatter.getFormattedCurrency(a.getBalance(), InternalFormatter.isRed(a, a.getBalance())), a));
+
+						}
 		}
 		if (node instanceof AccountType){
 			AccountType t = (AccountType) node;
@@ -62,7 +66,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 						TextFormatter.getFormattedNameForType(t));
 			if (column == 2) {
 				int amount = 0;
-				for (Account a : new AccountListFilteredByType(model, t)) {
+				for (Account a : new AccountListFilteredByType(model, model.getAccounts(), t)) {
 					amount += a.getBalance();
 				}
 				return TextFormatter.getHtmlWrapper(
@@ -79,7 +83,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 				return types.get(childIndex);
 		}
 		if (parent instanceof AccountType){
-			List<Account> accounts = new AccountListFilteredByType(model, (AccountType) parent);
+			List<Account> accounts = new AccountListFilteredByDeleted(model, new AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			if (childIndex < accounts.size())
 				return accounts.get(childIndex);
 		}
@@ -92,37 +96,37 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			return types.size();
 		}
 		if (parent instanceof AccountType){
-			List<Account> accounts = new AccountListFilteredByType(model, (AccountType) parent);
+			List<Account> accounts = new AccountListFilteredByDeleted(model, new AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			return accounts.size();
 		}
-		
+
 		return 0;
 	}
 
 	public int getIndexOfChild(Object parent, Object child) {
 		if (parent == null || child == null)
 			return -1;
-		
+
 		if (parent.equals(root) && child instanceof AccountType){
 			List<AccountType> types = new TypeListFilteredByAccounts(model);
 			return types.indexOf(child);
 		}
-		
+
 		if (parent instanceof AccountType && child instanceof Account){
-			List<Account> accounts = new AccountListFilteredByType(model, (AccountType) parent);
+			List<Account> accounts = new AccountListFilteredByDeleted(model, new AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			return accounts.indexOf(child);
 		}
 		return -1;
 	}
-	
+
 	public void fireStructureChanged(){
 		modelSupport.fireStructureChanged();
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (int i = 0; i < getChildCount(root); i++) {
 			Object o1 = getChild(root, i);
 			sb.append(o1).append(" [");
@@ -134,7 +138,7 @@ public class AccountTreeTableModel extends AbstractTreeTableModel {
 			}
 			sb.append("]  ");
 		}
-		
+
 		return sb.toString();
 	}
 }

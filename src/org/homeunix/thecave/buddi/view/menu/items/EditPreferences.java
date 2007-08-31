@@ -21,7 +21,7 @@ public class EditPreferences extends MossMenuItem{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PreferencesFrame prefs = new PreferencesFrame(getFrame());
+		PreferencesFrame prefs = new PreferencesFrame();
 		try {
 			prefs.openWindow(null, PrefsModel.getInstance().getPreferencesWindowLocation());
 		}

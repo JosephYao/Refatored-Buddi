@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
@@ -172,6 +173,12 @@ public class TextFormatter {
 			+ (isRed ? "</font>" : "");
 
 		return formatted;
+	}
+	
+	public static String getDeletedWrapper(String s, Source source){
+		if (source.isDeleted())
+			return "<strike>" + s + "</strike>";
+		return s;
 	}
 	
 	/**
