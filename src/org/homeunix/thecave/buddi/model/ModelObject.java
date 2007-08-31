@@ -10,6 +10,13 @@ public interface ModelObject extends Comparable<ModelObject> {
 	public int compareTo(ModelObject o);
 	
 	/**
+	 * Returns the document associated with this model object, or null if
+	 * there is no document. 
+	 * @return
+	 */
+	public Document getDocument();
+	
+	/**
 	 * Returns the UID string for this object.
 	 * @return
 	 */
@@ -22,15 +29,8 @@ public interface ModelObject extends Comparable<ModelObject> {
 	public void setChanged();
 	
 	/**
-	 * Returns the document associated with this model object, or null if
-	 * there is no document. 
-	 * @return
-	 */
-	Document getDocument();
-	
-	/**
 	 * Sets the document.
 	 * @param document
 	 */
-	void setDocument(Document document) throws InvalidValueException;
+	public void setDocument(Document document) throws InvalidValueException;
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 
-public interface BudgetCategory extends Source {	
+public interface BudgetCategory extends Source, Expandable {	
 	
 	/**
 	 * Returns the budgeted amount associated with the given budget category, for 
@@ -35,8 +35,6 @@ public interface BudgetCategory extends Source {
 	public BudgetCategoryType getBudgetPeriodType();
 	
 	public BudgetCategory getParent();
-		
-	public boolean isExpanded();
 	
 	public boolean isIncome();
 	
@@ -46,8 +44,6 @@ public interface BudgetCategory extends Source {
 	 * @param amount
 	 */
 	public void setAmount(Date periodDate, long amount) throws InvalidValueException;
-	
-	public void setExpanded(boolean expanded);
 	
 	public void setIncome(boolean income) throws InvalidValueException;
 	

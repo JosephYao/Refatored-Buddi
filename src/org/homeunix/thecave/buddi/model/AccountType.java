@@ -6,17 +6,13 @@ package org.homeunix.thecave.buddi.model;
 import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
 
 
-public interface AccountType extends ModelObject {
+public interface AccountType extends ModelObject, Expandable {
 	
 	public String getName();
 	
 	public boolean isCredit();
 	
-	public boolean isExpanded();
-	
 	public void setCredit(boolean credit) throws InvalidValueException;
-	
-	public void setExpanded(boolean isExpanded);
 	
 	public void setName(String name) throws InvalidValueException;
 }

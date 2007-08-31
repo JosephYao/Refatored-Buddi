@@ -216,9 +216,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 					else
 						balanceValue = transaction.getBalanceTo();
 
-					int xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, account.getType().isCredit()));
+					int xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, account.getAccountType().isCredit()));
 					g.setColor(InternalFormatter.isRed(account, balanceValue) ? Color.RED : textColor);
-					g.drawString(TextFormatter.getFormattedCurrency(balanceValue, false, account.getType().isCredit()), xPos, bottomRowYPos);
+					g.drawString(TextFormatter.getFormattedCurrency(balanceValue, false, account.getAccountType().isCredit()), xPos, bottomRowYPos);
 					g.setColor(textColor);
 				}
 			}

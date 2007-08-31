@@ -42,8 +42,8 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	}
 
 	public ImmutableAccountType getType() {
-		if (getAccount().getType() != null)
-			return new ImmutableTypeImpl(getAccount().getType());
+		if (getAccount().getAccountType() != null)
+			return new ImmutableTypeImpl(getAccount().getAccountType());
 		return null;
 	}
 	public Date getStartDate() {

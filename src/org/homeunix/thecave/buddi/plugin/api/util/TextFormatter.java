@@ -135,7 +135,7 @@ public class TextFormatter {
 	 * @return
 	 */
 	public static String getFormattedNameForAccount(Account a){
-		return getFormattedNameGeneric(a.getName(), a.getType().isCredit());
+		return getFormattedNameGeneric(a.getName(), a.getAccountType().isCredit());
 	}
 
 	/**

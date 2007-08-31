@@ -221,7 +221,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public void removeAccountType(AccountType type) throws ModelException {
 		for (Account a : getAccounts()) {
-			if (a.getType().equals(type))
+			if (a.getAccountType().equals(type))
 				throw new ModelException("Cannot remove account type " + type + "; it is referred to by " + a);
 		}
 		accountTypes.remove(type);

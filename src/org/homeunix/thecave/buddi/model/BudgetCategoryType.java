@@ -6,6 +6,11 @@ package org.homeunix.thecave.buddi.model;
 import java.util.Date;
 
 public abstract class BudgetCategoryType {
+	@Override
+	public boolean equals(Object obj) {
+		return toString().equals(obj.toString());
+	}
+	
 	/**
 	 * Method to move forwards or backwards by the given number of periods.  This 
 	 * must conform to the following statements:
@@ -26,17 +31,6 @@ public abstract class BudgetCategoryType {
 	public abstract Date getBudgetPeriodOffset(Date date, int offset);
 	
 	/**
-	 * Returns the number of days in the period specified by date.  The given 
-	 * date can be any date within the budget period.  For instance, if this
-	 * class defines a Monthly type, passing in a date of August 4 2007 would
-	 * return the value 31; passing in the date of September 20 2009 would 
-	 * return the value 30.   
-	 * @param date
-	 * @return
-	 */
-	public abstract long getDaysInPeriod(Date date);
-	
-	/**
 	 * Returns the date format associated with this budget period type.  This is
 	 * used in the My Budgets window to format the date spinner and the column 
 	 * names.  For information on how to display the format, please see the
@@ -48,11 +42,15 @@ public abstract class BudgetCategoryType {
 	public abstract String getDateFormat();
 	
 	/**
-	 * Returns the start of the budget period which contains the given date.
+	 * Returns the number of days in the period specified by date.  The given 
+	 * date can be any date within the budget period.  For instance, if this
+	 * class defines a Monthly type, passing in a date of August 4 2007 would
+	 * return the value 31; passing in the date of September 20 2009 would 
+	 * return the value 30.   
 	 * @param date
 	 * @return
 	 */
-	public abstract Date getStartOfBudgetPeriod(Date date);
+	public abstract long getDaysInPeriod(Date date);
 	
 	/**
 	 * Returns the end of the budget period which contains the given date.
@@ -68,18 +66,20 @@ public abstract class BudgetCategoryType {
 	 */
 	public abstract String getName();
 	
+	/**
+	 * Returns the start of the budget period which contains the given date.
+	 * @param date
+	 * @return
+	 */
+	public abstract Date getStartOfBudgetPeriod(Date date);
+	
 	@Override
-	public boolean equals(Object obj) {
-		return toString().equals(obj.toString());
+	public int hashCode() {
+		return getName().hashCode();
 	}
 	
 	@Override
 	public String toString() {
 		return getName();
-	}
-	
-	@Override
-	public int hashCode() {
-		return getName().hashCode();
 	}
 }

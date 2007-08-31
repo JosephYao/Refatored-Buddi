@@ -186,7 +186,7 @@ public class InternalFormatter {
 	
 	public static boolean isRed(Source s){
 		if (s instanceof Account){
-			return ((Account) s).getType().isCredit();
+			return ((Account) s).getAccountType().isCredit();
 		}
 		else if (s instanceof BudgetCategory){
 			return !((BudgetCategory) s).isIncome();
@@ -196,7 +196,7 @@ public class InternalFormatter {
 	}
 
 	public static boolean isRed(Account a, long value){
-		if (a.getType().isCredit())
+		if (a.getAccountType().isCredit())
 			return value >= 0;
 		else
 			return value < 0;

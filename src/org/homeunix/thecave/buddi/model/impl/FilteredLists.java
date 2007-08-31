@@ -195,8 +195,8 @@ public class FilteredLists {
 
 		@Override
 		public boolean isIncluded(Account object) {
-			if (object != null && object.getType() != null){
-				return object.getType().equals(type);
+			if (object != null && object.getAccountType() != null){
+				return object.getAccountType().equals(type);
 			}
 			return false;
 		}
@@ -238,7 +238,7 @@ public class FilteredLists {
 		public boolean isIncluded(AccountType object) {
 			if (object != null){
 				for (Account a : model.getAccounts()) {
-					if (a.getType().equals(object))
+					if (a.getAccountType().equals(object))
 						return true;
 				}
 			}

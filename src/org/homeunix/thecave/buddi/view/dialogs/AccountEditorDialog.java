@@ -178,7 +178,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		}
 		else {
 			name.setValue(PrefsModel.getInstance().getTranslator().get(selected.getName()));
-			type.setSelectedItem(selected.getType());
+			type.setSelectedItem(selected.getAccountType());
 			startingBalance.setValue(selected.getStartingBalance());
 			notes.setValue(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 		}

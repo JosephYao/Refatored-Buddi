@@ -22,7 +22,7 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 		return getAccount().getBalance();
 	}
 	public ImmutableAccountType getType() {
-		return new MutableTypeImpl(getAccount().getType());
+		return new MutableTypeImpl(getAccount().getAccountType());
 	}
 	public Account getAccount(){
 		return (Account) getRaw(); 

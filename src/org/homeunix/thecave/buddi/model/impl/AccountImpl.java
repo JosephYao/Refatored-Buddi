@@ -36,7 +36,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	public void setBalance(long balance) {
 		this.balance = balance;
 	}
-	public AccountType getType() {
+	public AccountType getAccountType() {
 		return type;
 	}
 	public void setType(AccountType type) {
@@ -72,14 +72,14 @@ public class AccountImpl extends SourceImpl implements Account {
 		setBalance(balance);
 	}
 	public String getFullName() {
-		return this.getName() + " (" + getType().getName() + ")";
+		return this.getName() + " (" + getAccountType().getName() + ")";
 	}
 	@Override
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof AccountImpl){
 			AccountImpl a = (AccountImpl) arg0;
-			if (this.getType().isCredit() != a.getType().isCredit()){
-				if (this.getType().isCredit())
+			if (this.getAccountType().isCredit() != a.getAccountType().isCredit()){
+				if (this.getAccountType().isCredit())
 					return -1;
 				return 1;
 			}
