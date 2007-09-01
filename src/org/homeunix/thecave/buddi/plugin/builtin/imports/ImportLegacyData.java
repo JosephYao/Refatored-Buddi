@@ -75,7 +75,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				org.homeunix.drummer.model.Type oldType = (org.homeunix.drummer.model.Type) oldTypeObject;
 
 				if (model.getType(oldType.getName()) == null){
-					MutableAccountType newType = MutableModelFactory.createMutableType(model, oldType.getName(), oldType.isCredit());
+					MutableAccountType newType = MutableModelFactory.createMutableAccountType(oldType.getName(), oldType.isCredit());
 
 					typeMap.put(oldType, newType);
 					typeAccountMap.put(newType, new LinkedList<MutableAccount>());
@@ -93,7 +93,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				Account oldAccount = (Account) oldAccountObject;
 
 				if (model.getAccount(oldAccount.getName()) == null){
-					MutableAccount newAccount = MutableModelFactory.createMutableAccount(model, oldAccount.getName(), oldAccount.getStartingBalance(), typeMap.get(oldAccount.getAccountType()));
+					MutableAccount newAccount = MutableModelFactory.createMutableAccount(oldAccount.getName(), oldAccount.getStartingBalance(), typeMap.get(oldAccount.getAccountType()));
 					newAccount.setStartingBalance(oldAccount.getStartingBalance());
 					newAccount.setDeleted(oldAccount.isDeleted());
 					
@@ -112,7 +112,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				Category oldCategory = (Category) oldCategoryObject;
 
 				if (model.getBudgetCategory(oldCategory.getFullName()) == null){
-					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(model, oldCategory.getName(), new BudgetPeriodMonthly(), oldCategory.isIncome());
+					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(oldCategory.getName(), new BudgetPeriodMonthly(), oldCategory.isIncome());
 					newBudgetCategory.setDeleted(oldCategory.isDeleted());
 					newBudgetCategory.setAmount(new Date(), oldCategory.getBudgetedAmount());
 
@@ -144,8 +144,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 			for (Object oldTransactionObject : oldModel.getAllTransactions().getTransactions()){
 				Transaction oldTransaction = (Transaction) oldTransactionObject;
 
-				MutableTransaction newTransaction = MutableModelFactory.createMutableTransaction(
-						model, 
+				MutableTransaction newTransaction = MutableModelFactory.createMutableTransaction( 
 						oldTransaction.getDate(), 
 						oldTransaction.getDescription(), 
 						oldTransaction.getAmount(), 
@@ -169,7 +168,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 			for (Object oldScheduledTransactionObject : oldModel.getAllTransactions().getScheduledTransactions()){
 				Schedule oldScheduledTransaction = (Schedule) oldScheduledTransactionObject;
 
-				MutableScheduledTransaction newScheduledTransaction = MutableModelFactory.createMutableScheduledTransaction(model);
+				MutableScheduledTransaction newScheduledTransaction = MutableModelFactory.createMutableScheduledTransaction();
 				newScheduledTransaction.setClearedFrom(oldScheduledTransaction.isCleared());
 				newScheduledTransaction.setClearedTo(oldScheduledTransaction.isCleared());
 				newScheduledTransaction.setDate(oldScheduledTransaction.getDate());

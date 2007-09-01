@@ -10,25 +10,22 @@ import org.homeunix.thecave.buddi.model.Transaction;
 public interface ImmutableTransaction extends ImmutableModelObject {
 	
 	/**
-	 * Returns the wrapped object from the underlying data model.  By 
-	 * accessing this method, you bypass all protection which the Buddi API
-	 * gives you; it is not recommended to use this method unless you understand
-	 * the risks associated with it. 
+	 * Returns the amouns associated with this transaction
 	 * @return
 	 */
-	public Transaction getTransaction();
+	public long getAmount();
 	
 	/**
-	 * Is this transaction marked as cleared?
+	 * Returns the balance in the From account at the point in time of this transaction
 	 * @return
 	 */
-	public boolean isClearedFrom();
+	public long getBalanceFrom();
 
 	/**
-	 * Is this transaction marked as cleared?
+	 * Returns the balance in the To account at the point in time of this transaction
 	 * @return
 	 */
-	public boolean isClearedTo();
+	public long getBalanceTo();
 	
 	/**
 	 * Returns the date associated with this transaction
@@ -43,6 +40,12 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	public String getDescription();
 	
 	/**
+	 * Returns the source associated with this transaction's From field
+	 * @return
+	 */
+	public ImmutableSource getFrom();
+	
+	/**
 	 * Returns the memo associated with this transaction
 	 * @return
 	 */
@@ -53,13 +56,46 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * @return
 	 */
 	public String getNumber();
+
+	/**
+	 * Returns the source associated with this transaction's To field
+	 * @return
+	 */
+	public ImmutableSource getTo();
+	
+	/**
+	 * Returns the wrapped object from the underlying data model.  By 
+	 * accessing this method, you bypass all protection which the Buddi API
+	 * gives you; it is not recommended to use this method unless you understand
+	 * the risks associated with it. 
+	 * @return
+	 */
+	public Transaction getTransaction();
+	
+	/**
+	 * Is this transaction marked as cleared?
+	 * @return
+	 */
+	public boolean isClearedFrom();
+	
+	/**
+	 * Is this transaction marked as cleared?
+	 * @return
+	 */
+	public boolean isClearedTo();
+	
+	/**
+	 * Does this transacton represent an inflow of cash or an outflow?
+	 * @return
+	 */
+	public boolean isInflow();
 	
 	/**
 	 * Is this transaction marked as reconciled?
 	 * @return
 	 */
 	public boolean isReconciledFrom();
-
+	
 	/**
 	 * Is this transaction marked as reconciled?
 	 * @return
@@ -71,40 +107,4 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * @return
 	 */
 	public boolean isScheduled();
-	
-	/**
-	 * Returns the source associated with this transaction's From field
-	 * @return
-	 */
-	public ImmutableSource getFrom();
-	
-	/**
-	 * Returns the source associated with this transaction's To field
-	 * @return
-	 */
-	public ImmutableSource getTo();
-	
-	/**
-	 * Returns the balance in the From account at the point in time of this transaction
-	 * @return
-	 */
-	public long getBalanceFrom();
-	
-	/**
-	 * Returns the balance in the To account at the point in time of this transaction
-	 * @return
-	 */
-	public long getBalanceTo();
-	
-	/**
-	 * Does this transacton represent an inflow of cash or an outflow?
-	 * @return
-	 */
-	public boolean isInflow();
-	
-	/**
-	 * Returns the amouns associated with this transaction
-	 * @return
-	 */
-	public long getAmount();
 }

@@ -8,6 +8,12 @@ import org.homeunix.thecave.buddi.model.AccountType;
 public interface ImmutableAccountType extends ImmutableModelObject {
 	
 	/**
+	 * Returns the name associated with this type
+	 * @return
+	 */
+	public String getName();
+	
+	/**
 	 * Returns the wrapped object from the underlying data model.  By 
 	 * accessing this method, you bypass all protection which the Buddi API
 	 * gives you; it is not recommended to use this method unless you understand
@@ -15,12 +21,6 @@ public interface ImmutableAccountType extends ImmutableModelObject {
 	 * @return
 	 */
 	public AccountType getType();
-	
-	/**
-	 * Returns the name associated with this type
-	 * @return
-	 */
-	public String getName();
 	
 	/**
 	 * Does this type represent credit accounts? 

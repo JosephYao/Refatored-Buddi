@@ -25,7 +25,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 		getAccount().setStartingBalance(startingBalance);
 	}
 
-	public void setType(MutableAccountType type) throws InvalidValueException {
+	public void setAccountType(MutableAccountType type) throws InvalidValueException {
 		getAccount().setAccountType(type.getType());
 	}
 
@@ -41,7 +41,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 		return getAccount().getStartingBalance();
 	}
 
-	public ImmutableAccountType getType() {
+	public ImmutableAccountType getAccountType() {
 		if (getAccount().getAccountType() != null)
 			return new ImmutableTypeImpl(getAccount().getAccountType());
 		return null;

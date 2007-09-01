@@ -21,7 +21,7 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 	public long getBalance() {
 		return getAccount().getBalance();
 	}
-	public ImmutableAccountType getType() {
+	public ImmutableAccountType getAccountType() {
 		return new MutableTypeImpl(getAccount().getAccountType());
 	}
 	public Account getAccount(){

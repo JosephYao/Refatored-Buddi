@@ -10,24 +10,6 @@ import org.homeunix.thecave.buddi.model.Account;
 public interface ImmutableAccount extends ImmutableSource {
 		
 	/**
-	 * Returns the starting balance for the account.
-	 * @return
-	 */
-	public long getStartingBalance();
-	
-	/**
-	 * Returns the current balance of the account. 
-	 * @return
-	 */
-	public long getBalance();
-	
-	/**
-	 * Returns the Type object associated with the account.
-	 * @return
-	 */
-	public ImmutableAccountType getType();
-	
-	/**
 	 * Returns the wrapped object from the underlying data model.  By 
 	 * accessing this method, you bypass all protection which the Buddi API
 	 * gives you; it is not recommended to use this method unless you understand
@@ -37,10 +19,27 @@ public interface ImmutableAccount extends ImmutableSource {
 	public Account getAccount();
 	
 	/**
-	 * Returns the date of the first transaction associated with this account.  This 
-	 * defines when the account 'starts'; any accesses before this (such as querying
-	 * balance, etc) will return the default values (0, etc).
+	 * Returns the Type object associated with the account.
+	 * @return
+	 */
+	public ImmutableAccountType getAccountType();
+	
+	/**
+	 * Returns the current balance of the account. 
+	 * @return
+	 */
+	public long getBalance();
+	
+	/**
+	 * Returns the earliest date assoicated with this source.  This is obtained 
+	 * by looking at the associated transactions / period dates.
 	 * @return
 	 */
 	public Date getStartDate();
+	
+	/**
+	 * Returns the starting balance for the account.
+	 * @return
+	 */
+	public long getStartingBalance();
 }

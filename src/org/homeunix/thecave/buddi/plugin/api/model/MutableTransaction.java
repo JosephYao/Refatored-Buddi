@@ -70,14 +70,14 @@ public interface MutableTransaction extends ImmutableTransaction {
 	public void setReconciledTo(boolean reconciled) throws InvalidValueException;
 	
 	/**
-	 * Sets the given source as the To field
-	 * @param to
-	 */
-	public void setTo(MutableSource to) throws InvalidValueException;
-	
-	/**
 	 * Set this flag if the transaction was created via a scheduled transaction.
 	 * @param scheduled
 	 */
 	public void setScheduled(boolean scheduled) throws InvalidValueException;
+	
+	/**
+	 * Sets the given source as the To field
+	 * @param to
+	 */
+	public void setTo(MutableSource to) throws InvalidValueException;
 }

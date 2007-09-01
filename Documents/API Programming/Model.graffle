@@ -20,113 +20,8 @@
 	<key>GraphicsList</key>
 	<array>
 		<dict>
-			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>187</integer>
-			</dict>
-			<key>ID</key>
-			<integer>202</integer>
-			<key>Points</key>
-			<array>
-				<string>{1058.06, 202.333}</string>
-				<string>{1011.31, 458.167}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>Arrow</string>
-					<key>TailScale</key>
-					<real>1.5</real>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>196</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>185</integer>
-			</dict>
-			<key>ID</key>
-			<integer>201</integer>
-			<key>Points</key>
-			<array>
-				<string>{1038.95, 202.333}</string>
-				<string>{953.112, 290}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>Arrow</string>
-					<key>TailScale</key>
-					<real>1.5</real>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>196</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>199</integer>
-			</dict>
-			<key>ID</key>
-			<integer>200</integer>
-			<key>Points</key>
-			<array>
-				<string>{689.983, 78.3333}</string>
-				<string>{459.7, 435.667}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>Arrow</string>
-					<key>TailScale</key>
-					<real>1.5</real>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>190</integer>
-			</dict>
-		</dict>
-		<dict>
 			<key>Bounds</key>
-			<string>{{180.333, 435.667}, {377, 282}}</string>
+			<string>{{209.917, 54.5003}, {94.75, 93}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -141,7 +36,449 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>199</integer>
+			<integer>66</integer>
+			<key>ListOrientation</key>
+			<string>Vertical</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>GradientAngle</key>
+					<real>304</real>
+					<key>GradientCenter</key>
+					<string>{-0.294118, -0.264706}</string>
+				</dict>
+			</dict>
+			<key>TextList</key>
+			<array>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+
+\f0\b\fs16 \cf0 Source\
+&lt;&lt;Interface&gt;&gt;}</string>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs16 \cf0 +setNotes(String)\
++setName(String)\
++setDeleted(boolean)\
++isDeleted()\
++getNotes()\
++getName()\
++getFullName()}</string>
+				</dict>
+			</array>
+			<key>TextPlacement</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{25.6671, 144.417}, {132.333, 291}}</string>
+			<key>Class</key>
+			<string>MultiTextGraphic</string>
+			<key>FitText</key>
+			<string>Vertical</string>
+			<key>Flow</key>
+			<string>Resize</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Font</key>
+				<string>Arial-BoldMT</string>
+				<key>Size</key>
+				<real>8</real>
+			</dict>
+			<key>ID</key>
+			<integer>65</integer>
+			<key>ListOrientation</key>
+			<string>Vertical</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>GradientAngle</key>
+					<real>304</real>
+					<key>GradientCenter</key>
+					<string>{-0.294118, -0.264706}</string>
+				</dict>
+			</dict>
+			<key>TextList</key>
+			<array>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+
+\f0\b\fs16 \cf0 Transaction\
+&lt;&lt;Interface&gt;&gt;}</string>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs16 \cf0 +setTo(Source)\
++setScheduled(boolean)\
++setReconciledTo(boolean)\
++setReconciledFrom(boolean)\
++setNumber(String)\
++setMemo(String)\
++setFrom(Source)\
++setDescription(String)\
++setDate(Date)\
++setClearedTo(boolean)\
++setClearedFrom(boolean)\
++setBalanceTo(long)\
++setBalanceFrom(long)\
++setAmount(long)\
++isScheduled()\
++isReconciledTo()\
++isReconciledFrom()\
++isInflow()\
++isClearedTo()\
++isClearedFrom()\
++getTo()\
++getNumber()\
++getMemo()\
++getFrom()\
++getDescription()\
++getDate()\
++getBalanceTo()\
++getBalanceFrom()\
++getAmount()}</string>
+				</dict>
+			</array>
+			<key>TextPlacement</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Class</key>
+			<string>LineGraphic</string>
+			<key>Head</key>
+			<dict>
+				<key>ID</key>
+				<integer>58</integer>
+			</dict>
+			<key>ID</key>
+			<integer>64</integer>
+			<key>Points</key>
+			<array>
+				<string>{292.11, 287.375}</string>
+				<string>{294.313, 321.251}</string>
+			</array>
+			<key>Style</key>
+			<dict>
+				<key>stroke</key>
+				<dict>
+					<key>HeadArrow</key>
+					<string>0</string>
+					<key>LineType</key>
+					<integer>1</integer>
+					<key>TailArrow</key>
+					<string>Arrow</string>
+					<key>TailScale</key>
+					<real>1.5</real>
+				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>63</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{170.334, 158.375}, {235.167, 129}}</string>
+			<key>Class</key>
+			<string>MultiTextGraphic</string>
+			<key>FitText</key>
+			<string>Vertical</string>
+			<key>Flow</key>
+			<string>Resize</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Font</key>
+				<string>Arial-BoldMT</string>
+				<key>Size</key>
+				<real>8</real>
+			</dict>
+			<key>ID</key>
+			<integer>63</integer>
+			<key>ListOrientation</key>
+			<string>Vertical</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>GradientAngle</key>
+					<real>304</real>
+					<key>GradientCenter</key>
+					<string>{-0.294118, -0.264706}</string>
+				</dict>
+			</dict>
+			<key>TextList</key>
+			<array>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+
+\f0\b\fs16 \cf0 StandardDocument\
+&lt;&lt;Interface&gt;&gt;}</string>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs16 \cf0 +startBatchChange()\
++setFile(File)\
++setChanged()\
++saveAs(File, int)\
++save()\
++resetChanged()\
++removeDocumentChangeListener(DocumentChangeListener)\
++isChanged()\
++getFile()\
++finishBatchChange()\
++addDocumentChangeListener(DocumentChangeListener)}</string>
+				</dict>
+			</array>
+			<key>TextPlacement</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{302.583, 618.5}, {254, 94}}</string>
+			<key>Class</key>
+			<string>MultiTextGraphic</string>
+			<key>FitText</key>
+			<string>Vertical</string>
+			<key>Flow</key>
+			<string>Resize</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Font</key>
+				<string>Arial-BoldMT</string>
+				<key>Size</key>
+				<real>8</real>
+			</dict>
+			<key>ID</key>
+			<integer>62</integer>
+			<key>ListOrientation</key>
+			<string>Vertical</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>GradientAngle</key>
+					<real>304</real>
+					<key>GradientCenter</key>
+					<string>{-0.294118, -0.264706}</string>
+				</dict>
+			</dict>
+			<key>TextList</key>
+			<array>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+
+\f0\b\fs16 \cf0 ModelFactory}</string>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Align</key>
+					<integer>0</integer>
+					<key>Text</key>
+					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs16 \cf0 +getGeneratedUid(ModelObject)\
++createTransaction(Date, String, long, Source, Source)\
++createScheduledTransaction()\
++createDocument(File)\
++createDocument()\
++createBudgetCategory(String, BudgetCategoryType, boolean)\
++createAccountType(String, boolean)\
++createAccount(String, AccountType)}</string>
+				</dict>
+			</array>
+			<key>TextPlacement</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Class</key>
+			<string>LineGraphic</string>
+			<key>Head</key>
+			<dict>
+				<key>ID</key>
+				<integer>47</integer>
+			</dict>
+			<key>ID</key>
+			<integer>61</integer>
+			<key>Points</key>
+			<array>
+				<string>{502.641, 68.3333}</string>
+				<string>{497.979, 113.5}</string>
+			</array>
+			<key>Style</key>
+			<dict>
+				<key>stroke</key>
+				<dict>
+					<key>HeadArrow</key>
+					<string>0</string>
+					<key>LineType</key>
+					<integer>1</integer>
+					<key>TailArrow</key>
+					<string>Arrow</string>
+					<key>TailScale</key>
+					<real>1.5</real>
+				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>56</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Class</key>
+			<string>LineGraphic</string>
+			<key>Head</key>
+			<dict>
+				<key>ID</key>
+				<integer>45</integer>
+			</dict>
+			<key>ID</key>
+			<integer>60</integer>
+			<key>Points</key>
+			<array>
+				<string>{454.337, 46.8353}</string>
+				<string>{413.97, 48.8242}</string>
+			</array>
+			<key>Style</key>
+			<dict>
+				<key>stroke</key>
+				<dict>
+					<key>HeadArrow</key>
+					<string>0</string>
+					<key>LineType</key>
+					<integer>1</integer>
+					<key>TailArrow</key>
+					<string>Arrow</string>
+					<key>TailScale</key>
+					<real>1.5</real>
+				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>56</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Class</key>
+			<string>LineGraphic</string>
+			<key>Head</key>
+			<dict>
+				<key>ID</key>
+				<integer>58</integer>
+			</dict>
+			<key>ID</key>
+			<integer>59</integer>
+			<key>Points</key>
+			<array>
+				<string>{94.1206, 77.3333}</string>
+				<string>{228.171, 321.251}</string>
+			</array>
+			<key>Style</key>
+			<dict>
+				<key>stroke</key>
+				<dict>
+					<key>HeadArrow</key>
+					<string>0</string>
+					<key>LineType</key>
+					<integer>1</integer>
+					<key>TailArrow</key>
+					<string>Arrow</string>
+					<key>TailScale</key>
+					<real>1.5</real>
+				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>50</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{198.708, 321.251}, {208.958, 273}}</string>
+			<key>Class</key>
+			<string>MultiTextGraphic</string>
+			<key>FitText</key>
+			<string>Vertical</string>
+			<key>Flow</key>
+			<string>Resize</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Font</key>
+				<string>Arial-BoldMT</string>
+				<key>Size</key>
+				<real>8</real>
+			</dict>
+			<key>ID</key>
+			<integer>58</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -181,77 +518,41 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +addAccount(Account account) throws ModelException\
-+addAccountType(AccountType type) throws ModelException\
-+addBudgetCategory(BudgetCategory budgetCategory) throws ModelException\
-+addScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException\
-+addTransaction(Transaction transaction) throws ModelException\
-+getAccount(String name)\
-+getAccounts()\
-+getAccountType(String name)\
-+getAccountTypes()\
-+getBudgetCategories()\
-+getBudgetCategory(String fullName)\
-+getObjectByUid(String uid)\
-+getScheduledTransactions()\
-+getSources()\
-+getTransactions()\
-+getTransactions(Date startDate, Date endDate)\
-+getTransactions(Source source)\
-+getTransactions(Source source, Date startDate, Date endDate)\
-+refreshUidMap() throws ModelException\
-+removeAccount(Account account) throws ModelException\
-+removeAccountType(AccountType type) throws ModelException\
-+removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException\
-+removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException\
-+removeTransaction(Transaction transaction) throws ModelException\
-+save() throws DocumentSaveException\
-+saveAs(File file, int flags) throws DocumentSaveException\
+\f0\fs16 \cf0 +updateAllBalances()\
 +saveToString()\
-+updateAllBalances()}</string>
++removeTransaction(Transaction)\
++removeScheduledTransaction(ScheduledTransaction)\
++removeBudgetCategory(BudgetCategory)\
++removeAccountType(AccountType)\
++removeAccount(Account)\
++refreshUidMap()\
++getTransactions(Source, Date, Date)\
++getTransactions(Source)\
++getTransactions(Date, Date)\
++getTransactions()\
++getSources()\
++getScheduledTransactions()\
++getObjectByUid(String)\
++getBudgetCategory(String)\
++getBudgetCategories()\
++getAccountTypes()\
++getAccountType(String)\
++getAccounts()\
++getAccount(String)\
++addTransaction(Transaction)\
++addScheduledTransaction(ScheduledTransaction)\
++addBudgetCategory(BudgetCategory)\
++addAccountType(AccountType)\
++addAccount(Account)\
+}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
 			<integer>0</integer>
 		</dict>
 		<dict>
-			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>197</integer>
-			</dict>
-			<key>ID</key>
-			<integer>198</integer>
-			<key>Points</key>
-			<array>
-				<string>{816.864, 68.7388}</string>
-				<string>{888, 84.5033}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>Arrow</string>
-					<key>TailScale</key>
-					<real>1.5</real>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>190</integer>
-			</dict>
-		</dict>
-		<dict>
 			<key>Bounds</key>
-			<string>{{888, 57.1667}, {132.333, 84}}</string>
+			<string>{{426.084, 505.5}, {132.333, 76}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -266,7 +567,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>197</integer>
+			<integer>57</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -290,8 +591,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\b\fs16 \cf0 BudgetCategoryType\
-&lt;&lt;Interface&gt;&gt;}</string>
+\f0\b\fs16 \cf0 BudgetCategoryType}</string>
 				</dict>
 				<dict>
 					<key>Align</key>
@@ -306,12 +606,12 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getBudgetPeriodOffset(Date, int)\
-+getDateFormat()\
-+getDaysInPeriod(Date)\
-+getEndOfBudgetPeriod(Date)\
+\f0\fs16 \cf0 +getStartOfBudgetPeriod(Date)\
 +getName()\
-+getStartOfBudgetPeriod(Date)}</string>
++getEndOfBudgetPeriod(Date)\
++getDaysInPeriod(Date)\
++getDateFormat()\
++getBudgetPeriodOffset(Date, int)}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -319,7 +619,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1011.67, 154.333}, {101.562, 48}}</string>
+			<string>{{454.337, 20.3333}, {101.562, 48}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -334,7 +634,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>196</integer>
+			<integer>56</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -394,14 +694,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>194</integer>
+				<integer>54</integer>
 			</dict>
 			<key>ID</key>
-			<integer>195</integer>
+			<integer>55</integer>
 			<key>Points</key>
 			<array>
-				<string>{270, 237.233}</string>
-				<string>{240.771, 255.32}</string>
+				<string>{80.5095, 435.417}</string>
+				<string>{77.8049, 470.166}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -420,12 +720,12 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>184</integer>
+				<integer>65</integer>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{19.3334, 227.833}, {221.437, 192}}</string>
+			<string>{{14.0001, 470.166}, {112.667, 192}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -440,7 +740,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>194</integer>
+			<integer>54</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -480,24 +780,24 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getEndDate()\
-+getFrequencyType()\
-+getLastDayCreated()\
-+getMessage()\
-+getScheduleDay()\
-+getScheduleMonth()\
-+getScheduleName()\
-+getScheduleWeek()\
+\f0\fs16 \cf0 +setStartDate(Date)\
++setScheduleWeek(int)\
++setScheduleName(String)\
++setScheduleMonth(int)\
++setScheduleDay(int)\
++setMessage(String)\
++setLastDayCreated(Date)\
++setFrequencyType(String)\
++setEndDate(Date)\
 +getStartDate()\
-+setEndDate(Date) throws InvalidValueException\
-+setFrequencyType(String) throws InvalidValueException\
-+setLastDayCreated(Date) throws InvalidValueException\
-+setMessage(String) throws InvalidValueException\
-+setScheduleDay(int) throws InvalidValueException\
-+setScheduleMonth(int) throws InvalidValueException\
-+setScheduleName(String) throws InvalidValueException\
-+setScheduleWeek(int) throws InvalidValueException\
-+setStartDate(Date) throws InvalidValueException}</string>
++getScheduleWeek()\
++getScheduleName()\
++getScheduleMonth()\
++getScheduleDay()\
++getMessage()\
++getLastDayCreated()\
++getFrequencyType()\
++getEndDate()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -516,14 +816,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>184</integer>
+				<integer>65</integer>
 			</dict>
 			<key>ID</key>
-			<integer>193</integer>
+			<integer>53</integer>
 			<key>Points</key>
 			<array>
-				<string>{621.708, 78.3333}</string>
-				<string>{504, 121.714}</string>
+				<string>{78.1144, 77.3333}</string>
+				<string>{82.4436, 144.417}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -542,7 +842,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>190</integer>
+				<integer>50</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -558,14 +858,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>185</integer>
+				<integer>45</integer>
 			</dict>
 			<key>ID</key>
-			<integer>192</integer>
+			<integer>52</integer>
 			<key>Points</key>
 			<array>
-				<string>{733.502, 78.3333}</string>
-				<string>{876.228, 290}</string>
+				<string>{134.333, 45.6573}</string>
+				<string>{325.636, 49.9981}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -584,7 +884,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>190</integer>
+				<integer>50</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -600,14 +900,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>183</integer>
+				<integer>66</integer>
 			</dict>
 			<key>ID</key>
-			<integer>191</integer>
+			<integer>51</integer>
 			<key>Points</key>
 			<array>
-				<string>{713.89, 78.3333}</string>
-				<string>{730.117, 281.167}</string>
+				<string>{134.333, 62.57}</string>
+				<string>{209.917, 86.1934}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -626,12 +926,12 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>190</integer>
+				<integer>50</integer>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{605.636, 12.3333}, {211.229, 66}}</string>
+			<string>{{17.6361, 11.3333}, {116.697, 66}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -646,7 +946,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>190</integer>
+			<integer>50</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -686,10 +986,10 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getDocument()\
-+getUid()\
+\f0\fs16 \cf0 +setDocument(Document)\
 +setChanged()\
-+setDocument(Document) throws InvalidValueException}</string>
++getUid()\
++getDocument()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -708,14 +1008,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>187</integer>
+				<integer>47</integer>
 			</dict>
 			<key>ID</key>
-			<integer>189</integer>
+			<integer>49</integer>
 			<key>Points</key>
 			<array>
-				<string>{827.525, 401.167}</string>
-				<string>{915.504, 458.167}</string>
+				<string>{304.667, 114.711}</string>
+				<string>{417.834, 147.463}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -734,7 +1034,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>183</integer>
+				<integer>66</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -750,14 +1050,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>186</integer>
+				<integer>46</integer>
 			</dict>
 			<key>ID</key>
-			<integer>188</integer>
+			<integer>48</integer>
 			<key>Points</key>
 			<array>
-				<string>{730.364, 401.167}</string>
-				<string>{718.528, 557.167}</string>
+				<string>{304.667, 140.251}</string>
+				<string>{436.126, 249.167}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -776,12 +1076,12 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>183</integer>
+				<integer>66</integer>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{874.167, 458.167}, {254, 111}}</string>
+			<string>{{417.834, 113.5}, {148.833, 111}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -796,7 +1096,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>187</integer>
+			<integer>47</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -836,15 +1136,15 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getAmount(Date)\
-+getAmount(Date, Date)\
-+getBudgetPeriodType()\
-+getParent()\
+\f0\fs16 \cf0 +setPeriodType(BudgetCategoryType)\
++setParent(BudgetCategory)\
++setIncome(boolean)\
++setAmount(Date, long)\
 +isIncome()\
-+setAmount(Date, long) throws InvalidValueException\
-+setIncome(boolean) throws InvalidValueException\
-+setParent(BudgetCategory) throws InvalidValueException\
-+setPeriodType(BudgetCategoryType) throws InvalidValueException}</string>
++getParent()\
++getBudgetPeriodType()\
++getAmount(Date, Date)\
++getAmount(Date)}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -852,7 +1152,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{598, 557.167}, {234, 93}}</string>
+			<string>{{426.084, 249.167}, {132.333, 93}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -867,7 +1167,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>186</integer>
+			<integer>46</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -907,13 +1207,13 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getAccountType()\
-+getBalance()\
-+getStartDate()\
+\f0\fs16 \cf0 +updateBalance()\
++setStartingBalance(long)\
++setAccountType(AccountType)\
 +getStartingBalance()\
-+setAccountType(AccountType) throws InvalidValueException\
-+setStartingBalance(long) throws InvalidValueException\
-+updateBalance()}</string>
++getStartDate()\
++getBalance()\
++getAccountType()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -921,7 +1221,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{851.333, 290}, {112.5, 93}}</string>
+			<string>{{325.636, 18.0003}, {88.3337, 66}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -936,7 +1236,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>185</integer>
+			<integer>45</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -976,173 +1276,10 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs16 \cf0 +getName()\
-+getTypeBean()\
-+isCredit()\
-+isExpanded()\
+\f0\fs16 \cf0 +setName(String)\
 +setCredit(boolean)\
-+setExpanded(boolean)\
-+setName(String)}</string>
-				</dict>
-			</array>
-			<key>TextPlacement</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>Bounds</key>
-			<string>{{270, 19.3333}, {234, 291}}</string>
-			<key>Class</key>
-			<string>MultiTextGraphic</string>
-			<key>FitText</key>
-			<string>Vertical</string>
-			<key>Flow</key>
-			<string>Resize</string>
-			<key>FontInfo</key>
-			<dict>
-				<key>Font</key>
-				<string>Arial-BoldMT</string>
-				<key>Size</key>
-				<real>8</real>
-			</dict>
-			<key>ID</key>
-			<integer>184</integer>
-			<key>ListOrientation</key>
-			<string>Vertical</string>
-			<key>Style</key>
-			<dict>
-				<key>fill</key>
-				<dict>
-					<key>GradientAngle</key>
-					<real>304</real>
-					<key>GradientCenter</key>
-					<string>{-0.294118, -0.264706}</string>
-				</dict>
-			</dict>
-			<key>TextList</key>
-			<array>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-					<key>Text</key>
-					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
-{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
-
-\f0\b\fs16 \cf0 Transaction\
-&lt;&lt;Interface&gt;&gt;}</string>
-				</dict>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-				</dict>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-					<key>Text</key>
-					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
-{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-
-\f0\fs16 \cf0 +getAmount()\
-+getBalanceFrom()\
-+getBalanceTo()\
-+getDate()\
-+getDescription()\
-+getFrom()\
-+getMemo()\
-+getNumber()\
-+getTo()\
-+isClearedFrom()\
-+isClearedTo()\
-+isInflow()\
-+isReconciledFrom()\
-+isReconciledTo()\
-+isScheduled()\
-+setAmount(long)\
-+setBalanceFrom(long) throws InvalidValueException\
-+setBalanceTo(long) throws InvalidValueException\
-+setClearedFrom(boolean) throws InvalidValueException\
-+setClearedTo(boolean) throws InvalidValueException\
-+setDate(Date) throws InvalidValueException\
-+setDescription(String) throws InvalidValueException\
-+setFrom(Source) throws InvalidValueException\
-+setMemo(String) throws InvalidValueException\
-+setNumber(String) throws InvalidValueException\
-+setReconciledFrom(boolean) throws InvalidValueException\
-+setReconciledTo(boolean) throws InvalidValueException\
-+setScheduled(boolean) throws InvalidValueException\
-+setTo(Source) throws InvalidValueException}</string>
-				</dict>
-			</array>
-			<key>TextPlacement</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>Bounds</key>
-			<string>{{640.25, 281.167}, {189.333, 120}}</string>
-			<key>Class</key>
-			<string>MultiTextGraphic</string>
-			<key>FitText</key>
-			<string>Vertical</string>
-			<key>Flow</key>
-			<string>Resize</string>
-			<key>FontInfo</key>
-			<dict>
-				<key>Font</key>
-				<string>Arial-BoldMT</string>
-				<key>Size</key>
-				<real>8</real>
-			</dict>
-			<key>ID</key>
-			<integer>183</integer>
-			<key>ListOrientation</key>
-			<string>Vertical</string>
-			<key>Style</key>
-			<dict>
-				<key>fill</key>
-				<dict>
-					<key>GradientAngle</key>
-					<real>304</real>
-					<key>GradientCenter</key>
-					<string>{-0.294118, -0.264706}</string>
-				</dict>
-			</dict>
-			<key>TextList</key>
-			<array>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-					<key>Text</key>
-					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
-{\fonttbl\f0\fswiss\fcharset77 Arial-BoldMT;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
-
-\f0\b\fs16 \cf0 Source\
-&lt;&lt;Interface&gt;&gt;}</string>
-				</dict>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-				</dict>
-				<dict>
-					<key>Align</key>
-					<integer>0</integer>
-					<key>Text</key>
-					<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
-{\fonttbl\f0\fswiss\fcharset77 ArialMT;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-
-\f0\fs16 \cf0 +getFullName()\
-+getName()\
-+getNotes()\
-+isDeleted()\
-+setDeleted(boolean deleted) throws InvalidValueException\
-+setName(String name) throws InvalidValueException\
-+setNotes(String notes) throws InvalidValueException}</string>
++isCredit()\
++getName()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -1156,7 +1293,7 @@
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>HPages</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>ImageCounter</key>
 	<integer>1</integer>
 	<key>IsPalette</key>
@@ -1202,7 +1339,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2007-08-31 18:54:54 -0600</string>
+	<string>2007-08-31 22:58:27 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -1300,8 +1437,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDgtMzFUMjM6MTA6
-	NDhaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDFUMDI6NTM6
+	MjlaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -1314,7 +1451,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA4LTMxVDIzOjEwOjQ4WjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTAxVDAyOjUzOjI5WjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8
@@ -1426,9 +1563,9 @@
 		<key>ShowStatusBar</key>
 		<true/>
 		<key>VisibleRegion</key>
-		<string>{{157, 8}, {995, 719}}</string>
+		<string>{{-374.667, -112}, {1326.67, 958.667}}</string>
 		<key>Zoom</key>
-		<string>1</string>
+		<string>0.75</string>
 	</dict>
 </dict>
 </plist>

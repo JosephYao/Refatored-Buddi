@@ -14,6 +14,12 @@ public interface MutableModel extends ImmutableModel {
 	public void addAccount(MutableAccount account) throws ModelException;
 	
 	/**
+	 * Adds a type to the model
+	 * @param type
+	 */
+	public void addAccountType(MutableAccountType type) throws ModelException;
+	
+	/**
 	 * Adds a budget category to the model
 	 * @param budgetCategory
 	 */
@@ -30,12 +36,6 @@ public interface MutableModel extends ImmutableModel {
 	 * @param transaction
 	 */
 	public void addTransaction(MutableTransaction transaction) throws ModelException;
-	
-	/**
-	 * Adds a type to the model
-	 * @param type
-	 */
-	public void addAccountType(MutableAccountType type) throws ModelException;
 	
 	/**
 	 * Removes the given account from the model

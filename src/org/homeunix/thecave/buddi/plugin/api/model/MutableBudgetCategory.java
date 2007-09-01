@@ -5,15 +5,24 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
 public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableSource {
 	/**
+	 * Sets the amount for the budget period which contains the given date.  This is 
+	 * defined by the currently selected BudgetCategoryType object associated with
+	 * this category.  
+	 * @param date
+	 * @param amount
+	 * @throws InvalidValueException
+	 */
+	public void setAmount(Date date, long amount) throws InvalidValueException;
+	
+	/**
 	 * Sets the budget period type associated with this budget category.
 	 * @return
 	 */
-	public void setBudgetPeriodType(BudgetCategoryType periodType) throws InvalidValueException;
+	public void setBudgetCategoryType(ImmutableBudgetCategoryType budgetCategoryType) throws InvalidValueException;
 	
 	/**
 	 * Sets whether this budget category represents income or not.
@@ -26,10 +35,4 @@ public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableS
 	 * @param parent
 	 */
 	public void setParent(MutableBudgetCategory parent) throws InvalidValueException;
-	
-//	public long getAmount(Date startDate, Date endDate);
-//	
-//	public long getAmount(Date date);
-	
-	public void setAmount(Date date, long amount) throws InvalidValueException;
 }

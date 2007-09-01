@@ -6,8 +6,8 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategoryType;
 
 public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements ImmutableBudgetCategory {
 	
@@ -36,7 +36,7 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 		return getBudgetCategory().getAmount(date);
 	}
 	
-	public BudgetCategoryType getBudgetPeriodType() {
-		return getBudgetCategory().getBudgetPeriodType();
+	public ImmutableBudgetCategoryType getBudgetPeriodType() {
+		return new ImmutableBudgetCategoryTypeImpl(getBudgetCategory().getBudgetPeriodType());
 	}
 }

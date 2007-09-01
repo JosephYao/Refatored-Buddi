@@ -36,6 +36,13 @@ import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
 public class ModelFactory {
+	/**
+	 * Creates a new Account with the given values
+	 * @param name
+	 * @param type
+	 * @return
+	 * @throws InvalidValueException
+	 */
 	public static Account createAccount(String name, AccountType type) throws InvalidValueException {
 		Account a = new AccountImpl();
 		
@@ -45,6 +52,13 @@ public class ModelFactory {
 		return a;
 	}
 	
+	/**
+	 * Creates a new AccountType with the given values
+	 * @param name
+	 * @param credit
+	 * @return
+	 * @throws InvalidValueException
+	 */
 	public static AccountType createAccountType(String name, boolean credit) throws InvalidValueException {
 		AccountType at = new AccountTypeImpl();
 		
@@ -54,6 +68,14 @@ public class ModelFactory {
 		return at;
 	}
 	
+	/**
+	 * Creates a new BudgetCategory with the given values
+	 * @param name
+	 * @param type
+	 * @param income
+	 * @return
+	 * @throws InvalidValueException
+	 */
 	public static BudgetCategory createBudgetCategory(String name, BudgetCategoryType type, boolean income) throws InvalidValueException {
 		BudgetCategory bc = new BudgetCategoryImpl();
 		
@@ -64,25 +86,53 @@ public class ModelFactory {
 		return bc;
 	}
 		
-	public static Transaction createTransaction(Date date, String description, long amount, Source from, Source to) throws InvalidValueException {
-		Transaction t = new TransactionImpl();
+	/**
+	 * Creates a new data model, with some default types and categories.
+	 */
+	public static Document createDocument() throws ModelException {
+		Document document = new DocumentImpl();
+		document.setFile(null); //A null dataFile will prompt for location on first save.
+
+		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
+			try {
+				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
+			}
+			catch (ModelException me){
+				Log.error("Error creating budget category", me);
+			}
+		}
+		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
+			try {
+				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
+			}
+			catch (ModelException me){
+				Log.error("Error creating budget category", me);
+			}
+		}
+
+		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
+			try {
+				document.addAccountType(ModelFactory.createAccountType(s.toString(), false));
+			}
+			catch (ModelException me){
+				Log.error("Error creating account type", me);
+			}
+		}
+
+		for (TypeCreditDefaultKeys s : TypeCreditDefaultKeys.values()){
+			try {
+				document.addAccountType(ModelFactory.createAccountType(s.toString(), true));
+			}
+			catch (ModelException me){
+				Log.error("Error creating account type", me);
+			}
+		}	
+
+		document.updateAllBalances();
+		document.setChanged();
 		
-		t.setDate(date);
-		t.setDescription(description);
-		t.setAmount(amount);
-		t.setFrom(from);
-		t.setTo(to);
-		
-		return t;
+		return document;
 	}
-	
-	public static ScheduledTransaction createScheduledTransaction() throws InvalidValueException {
-		ScheduledTransaction st = new ScheduledTransactionImpl();
-		
-		return st;
-	}
-	
-	
 	
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 format.  To load a
@@ -173,53 +223,40 @@ public class ModelFactory {
 			throw new DocumentLoadException(ioe);
 		}
 	}
+	
+	
+	
+	/**
+	 * Creates a new ScheduledTransaction with the given values
+	 * @return
+	 * @throws InvalidValueException
+	 */
+	public static ScheduledTransaction createScheduledTransaction() throws InvalidValueException {
+		ScheduledTransaction st = new ScheduledTransactionImpl();
+		
+		return st;
+	}
 
 	/**
-	 * Creates a new data model, with some default types and categories.
+	 * Creates a new Transaction with the given values
+	 * @param date
+	 * @param description
+	 * @param amount
+	 * @param from
+	 * @param to
+	 * @return
+	 * @throws InvalidValueException
 	 */
-	public static Document createDocument() throws ModelException {
-		Document document = new DocumentImpl();
-		document.setFile(null); //A null dataFile will prompt for location on first save.
-
-		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
-			}
-			catch (ModelException me){
-				Log.error("Error creating budget category", me);
-			}
-		}
-		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
-			}
-			catch (ModelException me){
-				Log.error("Error creating budget category", me);
-			}
-		}
-
-		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
-			try {
-				document.addAccountType(ModelFactory.createAccountType(s.toString(), false));
-			}
-			catch (ModelException me){
-				Log.error("Error creating account type", me);
-			}
-		}
-
-		for (TypeCreditDefaultKeys s : TypeCreditDefaultKeys.values()){
-			try {
-				document.addAccountType(ModelFactory.createAccountType(s.toString(), true));
-			}
-			catch (ModelException me){
-				Log.error("Error creating account type", me);
-			}
-		}	
-
-		document.updateAllBalances();
-		document.setChanged();
+	public static Transaction createTransaction(Date date, String description, long amount, Source from, Source to) throws InvalidValueException {
+		Transaction t = new TransactionImpl();
 		
-		return document;
+		t.setDate(date);
+		t.setDescription(description);
+		t.setAmount(amount);
+		t.setFrom(from);
+		t.setTo(to);
+		
+		return t;
 	}
 
 	
