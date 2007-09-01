@@ -47,10 +47,10 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		clearPanel.add(showClear);
 		reconcilePanel.add(showReconcile);
 		
+		panel.add(autoCompletePanel);
 		panel.add(deletePanel);
 		panel.add(clearPanel);
 		panel.add(reconcilePanel);
-		panel.add(autoCompletePanel);
 		panel.add(Box.createVerticalGlue());
 		
 		return panel;

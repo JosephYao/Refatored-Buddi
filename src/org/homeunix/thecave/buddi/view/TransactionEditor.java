@@ -44,7 +44,7 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.model.swing.AutoCompleteComboBoxModel;
+import org.homeunix.thecave.buddi.model.swing.DescriptionList;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
 import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoCompleteEntry;
@@ -52,6 +52,8 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
+import org.homeunix.thecave.moss.swing.AutoCompleteComboBox;
+import org.homeunix.thecave.moss.swing.AutoCompleteComboBoxModel;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossHintComboBox;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
@@ -108,7 +110,10 @@ public class TransactionEditor extends MossPanel {
 		from = new MossScrollingComboBox();
 		to = new MossScrollingComboBox();
 		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
-		description = new MossHintComboBox(new AutoCompleteComboBoxModel(this.model), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+		if (PrefsModel.getInstance().isShowAutoComplete())
+			description = new AutoCompleteComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+		else
+			description = new MossHintComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
 		memo = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
 		cleared = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED));
