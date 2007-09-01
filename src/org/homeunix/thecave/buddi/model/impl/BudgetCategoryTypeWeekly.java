@@ -1,7 +1,7 @@
 /*
  * Created on Aug 26, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.periods;
+package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
@@ -9,29 +9,29 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
-public class BudgetPeriodMonthly extends BudgetCategoryType {
+public class BudgetCategoryTypeWeekly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
-		return DateFunctions.getStartOfMonth(date);
+		return DateFunctions.getStartOfWeek(date);
 	}
 	
 	public Date getEndOfBudgetPeriod(Date date) {
-		return DateFunctions.getEndOfMonth(date);
+		return DateFunctions.getEndOfWeek(date);
 	}
 	
 	public Date getBudgetPeriodOffset(Date date, int offset) {
-		return getStartOfBudgetPeriod(DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1 * offset));
+		return getStartOfBudgetPeriod(DateFunctions.addDays(DateFunctions.getStartOfWeek(date), 7 * offset));
 	}
 	
 	public long getDaysInPeriod(Date date) {
-		return DateFunctions.getDaysInMonth(date);
+		return 7;
 	}
 	
 	public String getDateFormat() {
-		return "MMM yyyy";
+		return "dd MMM yyyy";
 	}
 			
 	public String getName() {
-		return BuddiKeys.BUDGET_PERIOD_MONTH.toString();
+		return BuddiKeys.BUDGET_PERIOD_WEEK.toString();
 	}
 }

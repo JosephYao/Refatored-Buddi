@@ -53,7 +53,7 @@ import org.homeunix.thecave.moss.util.crypto.CipherException;
 public class DocumentImpl extends AbstractDocument implements ModelObject, Document {
 	public static final int ENCRYPT_DATA_FILE = 1;
 
-	private char[] password; 	//Store the password when loaded, and use the same one for save().
+	//Store the password when loaded, and use the same one for save().
 	// This is obviously not the best practice to use 
 	// from a security point of view.  However, if a malicious
 	// third party has good enough access to the machine to be able
@@ -61,6 +61,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	// we call MossCryptoFactory anyways - the password is handed 
 	// there in plain text as well.  The window is already there - this
 	// just increases the time it is available for.
+	private char[] password; 	
 
 	//Convenience class for checking if objects are already entered.
 	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
@@ -523,5 +524,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		}
 
 	}
-
+	
+	public void setPassword(char[] password) {
+		this.password = password;
+	}
 }

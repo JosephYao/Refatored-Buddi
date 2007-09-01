@@ -23,7 +23,6 @@ import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
@@ -95,7 +94,7 @@ public class ModelFactory {
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
 			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), false));
+				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), false));
 			}
 			catch (ModelException me){
 				Log.error("Error creating budget category", me);
@@ -103,7 +102,7 @@ public class ModelFactory {
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
 			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetPeriodMonthly(), true));
+				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), true));
 			}
 			catch (ModelException me){
 				Log.error("Error creating budget category", me);
@@ -185,6 +184,9 @@ public class ModelFactory {
 					
 					//Update all balances...
 					document.updateAllBalances();
+					
+					//Store the password
+					document.setPassword(password);
 					
 					//Fire a change event
 					document.setChanged();

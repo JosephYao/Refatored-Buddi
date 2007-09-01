@@ -35,8 +35,8 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
@@ -211,7 +211,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			name.setValue("");
 			expense.setSelected(true);
 			parent.setSelectedItem(null);
-			budgetPeriodType.setSelectedItem(new BudgetPeriodMonthly());
+			budgetPeriodType.setSelectedItem(new BudgetCategoryTypeMonthly());
 			notes.setValue("");
 		}
 		else {

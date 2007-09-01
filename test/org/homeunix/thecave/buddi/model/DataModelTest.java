@@ -7,8 +7,8 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
+import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class DataModelTest {
 	@Test
 	public void testBudgetCategory(){
 		try {
-			BudgetCategoryType bct = new BudgetPeriodMonthly();
+			BudgetCategoryType bct = new BudgetCategoryTypeMonthly();
 			BudgetCategory bc = ModelFactory.createBudgetCategory("Test", bct, false);
 			bc.setAmount(DateFunctions.getDate(2007, Calendar.APRIL, 1), 100);
 			bc.setAmount(DateFunctions.getDate(2007, Calendar.MAY, 1), 200);

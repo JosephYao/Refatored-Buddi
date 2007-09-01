@@ -14,10 +14,10 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
-import org.homeunix.thecave.buddi.model.periods.BudgetPeriodMonthly;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -58,7 +58,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public BudgetCategoryType getSelectedBudgetPeriodType(){
 		if (selectedBudgetPeriodType == null)
-			selectedBudgetPeriodType = new BudgetPeriodMonthly();
+			selectedBudgetPeriodType = new BudgetCategoryTypeMonthly();
 		return selectedBudgetPeriodType;
 	}
 
