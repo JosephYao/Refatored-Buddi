@@ -16,11 +16,11 @@ import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime;
-import org.homeunix.thecave.buddi.view.dialogs.AdvancedPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.LocalePreferences;
-import org.homeunix.thecave.buddi.view.dialogs.NetworkPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.PluginPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.ViewPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.preferences.AdvancedPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.preferences.LocalePreferences;
+import org.homeunix.thecave.buddi.view.dialogs.preferences.NetworkPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.preferences.PluginPreferences;
+import org.homeunix.thecave.buddi.view.dialogs.preferences.ViewPreferences;
 import org.homeunix.thecave.moss.util.Version;
 
 

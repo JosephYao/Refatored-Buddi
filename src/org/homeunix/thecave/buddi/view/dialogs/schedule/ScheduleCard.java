@@ -1,7 +1,7 @@
 /*
  * Created on Aug 18, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view.schedule;
+package org.homeunix.thecave.buddi.view.dialogs.schedule;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 

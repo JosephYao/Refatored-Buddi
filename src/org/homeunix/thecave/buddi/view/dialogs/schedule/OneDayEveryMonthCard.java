@@ -1,30 +1,28 @@
 /*
  * Created on Aug 18, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view.schedule;
+package org.homeunix.thecave.buddi.view.dialogs.schedule;
 
 import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfWeek;
+import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyFirstWeekOfMonth;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 
-public class WeeklyCard extends MossPanel implements ScheduleCard {
+public class OneDayEveryMonthCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;
 
-	private final MossScrollingComboBox weeklyDayChooser;
+	private final MossScrollingComboBox monthlyFirstDayChooser;
 	
-	public WeeklyCard() {
+	public OneDayEveryMonthCard() {
 		super(true);
-		
-		weeklyDayChooser = new MossScrollingComboBox(ScheduleFrequencyDayOfWeek.values());
-		
+		monthlyFirstDayChooser = new MossScrollingComboBox(ScheduleFrequencyFirstWeekOfMonth.values());	
 		open();
 	}
 	
@@ -33,21 +31,22 @@ public class WeeklyCard extends MossPanel implements ScheduleCard {
 		super.init();
 
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.AND_REPEATING_EVERY)));
-		this.add(weeklyDayChooser);
+		this.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.AND_REPEATING_ON_THE)));
+		this.add(monthlyFirstDayChooser);
+		this.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.OF_EACH_MONTH)));
 		
-		weeklyDayChooser.setRenderer(new TranslatorListCellRenderer());
+		monthlyFirstDayChooser.setRenderer(new TranslatorListCellRenderer());
 	}
 	
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 		
-		weeklyDayChooser.setEnabled(enabled);
+		monthlyFirstDayChooser.setEnabled(enabled);
 	}
 	
 	public int getScheduleDay() {
-		return weeklyDayChooser.getSelectedIndex();
+		return monthlyFirstDayChooser.getSelectedIndex();
 	}
 	
 	public int getScheduleWeek() {
@@ -59,6 +58,6 @@ public class WeeklyCard extends MossPanel implements ScheduleCard {
 	}
 	
 	public void loadSchedule(ScheduledTransaction s) {
-		weeklyDayChooser.setSelectedIndex(s.getScheduleDay());
+		monthlyFirstDayChooser.setSelectedIndex(s.getScheduleDay());	
 	}
 }

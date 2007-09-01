@@ -1,12 +1,12 @@
 /*
  * Created on Aug 18, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view.schedule;
+package org.homeunix.thecave.buddi.view.dialogs.schedule;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.moss.swing.MossPanel;
 
-public class DailyCard extends MossPanel implements ScheduleCard {
+public class WeekdayCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;
 	
 	public int getScheduleDay() {
