@@ -10,8 +10,6 @@ import org.homeunix.thecave.buddi.view.menu.items.EditDeleteAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditModifyAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
-import org.homeunix.thecave.buddi.view.menu.items.EditRollAllAccounts;
-import org.homeunix.thecave.buddi.view.menu.items.EditUnrollAllAccounts;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.swing.MossMenu;
@@ -26,9 +24,6 @@ public class MyAccountsEditMenu extends MossMenu {
 		this.add(new EditNewAccount(frame));
 		this.add(new EditModifyAccount(frame));
 		this.add(new EditDeleteAccount(frame));
-		this.addSeparator();
-		this.add(new EditUnrollAllAccounts(frame));
-		this.add(new EditRollAllAccounts(frame));
 		this.addSeparator();
 		this.add(new EditViewTransactions(frame));
 		this.add(new EditViewScheduledTransactions(frame));

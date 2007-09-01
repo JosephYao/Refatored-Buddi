@@ -182,6 +182,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		listScrollerPanel.add(balanceLabelPanel, BorderLayout.SOUTH);
 
 		JPanel spinnerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		spinnerPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.CURRENT_BUDGET_PERIOD)));
 		spinnerPanel.add(dateSpinner);
 
 //		JPanel periodPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));

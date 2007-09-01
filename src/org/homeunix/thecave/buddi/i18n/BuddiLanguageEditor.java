@@ -128,13 +128,21 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		MossMenuBar menuBar = new MossMenuBar(this);
 		MossMenu fileMenu = new MossMenu(this, "File");
 		MossMenuItem save = new MossMenuItem(this, "Save Translation", KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		MossMenuItem close = new MossMenuItem(this, "Close Window", KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				
 				BuddiLanguageEditor.this.saveLanguages(Buddi.getLanguagesFolder());
+			}
+		});
+		close.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				BuddiLanguageEditor.this.closeWindow();
 			}
 		});
 		
 		fileMenu.add(save);
+		fileMenu.add(close);
 		menuBar.add(fileMenu);
 		this.setJMenuBar(menuBar);		
 	}

@@ -17,7 +17,7 @@ public class EditViewScheduledTransactions extends MossMenuItem{
 
 	//This has to be a AccountFrame, as we need to get selected accounts.
 	public EditViewScheduledTransactions(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_VIEW_SCHEDULED_TRANSACTIONS));
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_EDIT_SCHEDULED_TRANSACTIONS));
 	}
 
 	@Override

@@ -10,8 +10,6 @@ import org.homeunix.thecave.buddi.view.menu.items.EditDeleteBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
-import org.homeunix.thecave.buddi.view.menu.items.EditRollAllBudgetCategories;
-import org.homeunix.thecave.buddi.view.menu.items.EditUnrollAllBudgetCategories;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
 import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -25,9 +23,6 @@ public class MyBudgetEditMenu extends MossMenu {
 		this.add(new EditNewBudgetCategory(frame));
 		this.add(new EditModifyBudgetCategory(frame));
 		this.add(new EditDeleteBudgetCategory(frame));
-		this.addSeparator();
-		this.add(new EditUnrollAllBudgetCategories(frame));
-		this.add(new EditRollAllBudgetCategories(frame));
 		this.addSeparator();
 		this.add(new EditViewScheduledTransactions(frame));
 		if (!OperatingSystemUtil.isMac()){
