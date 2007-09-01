@@ -6,26 +6,29 @@ package org.homeunix.thecave.buddi.view.menu.menus;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.buddi.view.menu.items.EditDeleteAccount;
-import org.homeunix.thecave.buddi.view.menu.items.EditModifyAccount;
-import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
+import org.homeunix.thecave.buddi.view.menu.items.EditDeleteBudgetCategory;
+import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
+import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
+import org.homeunix.thecave.buddi.view.menu.items.EditRollAllBudgetCategories;
+import org.homeunix.thecave.buddi.view.menu.items.EditUnrollAllBudgetCategories;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
-import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
-public class AccountFrameEditMenu extends MossMenu {
+public class MyBudgetEditMenu extends MossMenu {
 	public static final long serialVersionUID = 0;
-	
-	public AccountFrameEditMenu(MainFrame frame) {
+
+	public MyBudgetEditMenu(MainFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT));
 		
-		this.add(new EditNewAccount(frame));
-		this.add(new EditModifyAccount(frame));
-		this.add(new EditDeleteAccount(frame));
+		this.add(new EditNewBudgetCategory(frame));
+		this.add(new EditModifyBudgetCategory(frame));
+		this.add(new EditDeleteBudgetCategory(frame));
 		this.addSeparator();
-		this.add(new EditViewTransactions(frame));
+		this.add(new EditUnrollAllBudgetCategories(frame));
+		this.add(new EditRollAllBudgetCategories(frame));
+		this.addSeparator();
 		this.add(new EditViewScheduledTransactions(frame));
 		if (!OperatingSystemUtil.isMac()){
 			this.addSeparator();

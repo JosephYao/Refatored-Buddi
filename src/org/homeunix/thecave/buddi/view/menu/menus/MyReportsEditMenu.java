@@ -11,10 +11,10 @@ import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
 import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
-public class ReportFrameEditMenu extends MossMenu {
+public class MyReportsEditMenu extends MossMenu {
 	public static final long serialVersionUID = 0;
 	
-	public ReportFrameEditMenu(MainFrame frame) {
+	public MyReportsEditMenu(MainFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT));
 		
 		this.add(new EditViewScheduledTransactions(frame));
