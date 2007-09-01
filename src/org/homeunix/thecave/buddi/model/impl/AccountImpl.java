@@ -29,6 +29,8 @@ public class AccountImpl extends SourceImpl implements Account {
 		return startingBalance;
 	}
 	public void setStartingBalance(long startingBalance) {
+		if (this.startingBalance != startingBalance)
+			setChanged();
 		this.startingBalance = startingBalance;
 	}
 	public Date getStartDate() {
@@ -41,6 +43,8 @@ public class AccountImpl extends SourceImpl implements Account {
 		return balance;
 	}
 	public void setBalance(long balance) {
+		if (this.balance != balance)
+			setChanged();
 		this.balance = balance;
 	}
 	public AccountType getAccountType() {
@@ -48,6 +52,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public void setAccountType(AccountType type) {
 		this.type = type;
+		setChanged();
 	}
 	public void updateBalance(){
 		if (getDocument() == null)

@@ -19,23 +19,26 @@ public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	private boolean deleted;
 	private String notes;
 	
+	public String getName() {
+		return TextFormatter.getTranslation(name);
+	}
+	public String getNotes() {
+		return notes;
+	}
 	public boolean isDeleted() {
 		return deleted;
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
-	}
-	public String getName() {
-		return TextFormatter.getTranslation(name);
+		setChanged();
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getNotes() {
-		return notes;
+		setChanged();
 	}
 	public void setNotes(String notes) {
 		this.notes = notes;
+		setChanged();
 	}
 	@Override
 	public String toString() {

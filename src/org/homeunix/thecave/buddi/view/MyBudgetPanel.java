@@ -26,7 +26,6 @@ import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
@@ -133,8 +132,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
 			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
 		}
-		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+//		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+//		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+//		tree.setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
 		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		
 		tree.addTreeExpansionListener(new TreeExpansionListener(){

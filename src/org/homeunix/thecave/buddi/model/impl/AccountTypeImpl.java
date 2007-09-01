@@ -3,8 +3,6 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
-import java.util.Date;
-
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -25,15 +23,15 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 		return credit;
 	}
 	public void setCredit(boolean credit) {
-		this.setModifiedDate(new Date());
 		this.credit = credit;
+		setChanged();
 	}
 	public String getName() {
 		return TextFormatter.getTranslation(name);
 	}
 	public void setName(String name) {
-		this.setModifiedDate(new Date());
 		this.name = name;
+		setChanged();
 	}
 	public boolean isExpanded() {
 		return isExpanded;

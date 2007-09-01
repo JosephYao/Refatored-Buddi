@@ -83,8 +83,8 @@ public class BuddiPluginHelper {
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -1),
-				DateFunctions.addMonths(DateFunctions.getEndOfMonth(new Date()), -1),
+				DateFunctions.getStartOfMonth(DateFunctions.addMonths(new Date(), -1)),
+				DateFunctions.getEndOfMonth(DateFunctions.addMonths(new Date(), -1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_MONTH)
 		));
 		intervals.add(new DateChoice(

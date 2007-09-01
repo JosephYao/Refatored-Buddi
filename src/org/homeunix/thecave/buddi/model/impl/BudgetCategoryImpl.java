@@ -120,24 +120,28 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	 */
 	public void setAmount(Date periodDate, long amount){
 		getAmounts().put(getPeriodKey(periodDate), amount);
+		setChanged();
 	}
 	public BudgetCategoryType getPeriodType() {
 		return periodType;
 	}
 	public void setPeriodType(BudgetCategoryType periodType) {
 		this.periodType = periodType;
+		setChanged();
 	}
 	public boolean isIncome() {
 		return income;
 	}
 	public void setIncome(boolean income) {
 		this.income = income;
+		setChanged();
 	}
 	public BudgetCategory getParent() {
 		return parent;
 	}
 	public void setParent(BudgetCategory parent) {
 		this.parent = parent;
+		setChanged();
 	}
 	public boolean isExpanded() {
 		return expanded;

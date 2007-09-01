@@ -33,60 +33,6 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 	private String scheduleName;
 	private String message;
 	
-	public Date getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-	public String getFrequencyType() {
-		return frequencyType;
-	}
-	public void setFrequencyType(String frequencyType) {
-		this.frequencyType = frequencyType;
-	}
-	public Date getLastDayCreated() {
-		return lastDayCreated;
-	}
-	public void setLastDayCreated(Date lastDayCreated) {
-		this.lastDayCreated = lastDayCreated;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	public int getScheduleDay() {
-		return scheduleDay;
-	}
-	public void setScheduleDay(int scheduleDay) {
-		this.scheduleDay = scheduleDay;
-	}
-	public int getScheduleMonth() {
-		return scheduleMonth;
-	}
-	public void setScheduleMonth(int scheduleMonth) {
-		this.scheduleMonth = scheduleMonth;
-	}
-	public String getScheduleName() {
-		return scheduleName;
-	}
-	public void setScheduleName(String scheduleName) {
-		this.scheduleName = scheduleName;
-	}
-	public int getScheduleWeek() {
-		return scheduleWeek;
-	}
-	public void setScheduleWeek(int scheduleWeek) {
-		this.scheduleWeek = scheduleWeek;
-	}
-	public Date getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
 	@Override
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Transaction){
@@ -96,5 +42,68 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 			return this.getScheduleName().compareTo(st.getScheduleName());
 		}
 		return super.compareTo(arg0);
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public String getFrequencyType() {
+		return frequencyType;
+	}
+	public Date getLastDayCreated() {
+		return lastDayCreated;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public int getScheduleDay() {
+		return scheduleDay;
+	}
+	public int getScheduleMonth() {
+		return scheduleMonth;
+	}
+	public String getScheduleName() {
+		return scheduleName;
+	}
+	public int getScheduleWeek() {
+		return scheduleWeek;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+		setChanged();
+	}
+	public void setFrequencyType(String frequencyType) {
+		this.frequencyType = frequencyType;
+		setChanged();
+	}
+	public void setLastDayCreated(Date lastDayCreated) {
+		this.lastDayCreated = lastDayCreated;
+		setChanged();
+	}
+	public void setMessage(String message) {
+		this.message = message;
+		setChanged();
+	}
+	public void setScheduleDay(int scheduleDay) {
+		this.scheduleDay = scheduleDay;
+		setChanged();
+	}
+	public void setScheduleMonth(int scheduleMonth) {
+		this.scheduleMonth = scheduleMonth;
+		setChanged();
+	}
+	public void setScheduleName(String scheduleName) {
+		this.scheduleName = scheduleName;
+		setChanged();
+	}
+	public void setScheduleWeek(int scheduleWeek) {
+		this.scheduleWeek = scheduleWeek;
+		setChanged();
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+		setChanged();
 	}
 }

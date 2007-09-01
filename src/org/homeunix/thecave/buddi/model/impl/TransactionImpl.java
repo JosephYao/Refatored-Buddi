@@ -37,101 +37,6 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private long balanceTo;
 	
 	
-	public boolean isClearedFrom() {
-		return clearedFrom;
-	}
-	public boolean isClearedTo() {
-		return clearedTo;
-	}
-	public void setClearedFrom(boolean cleared) {
-		this.clearedFrom = cleared;
-	}
-	public void setClearedTo(boolean cleared) {
-		this.clearedTo = cleared;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getMemo() {
-		return memo;
-	}
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
-	}
-	public boolean isReconciledFrom() {
-		return reconciledFrom;
-	}
-	public void setReconciledFrom(boolean reconciled) {
-		this.reconciledFrom = reconciled;
-	}
-	public boolean isReconciledTo() {
-		return reconciledTo;
-	}
-	public void setReconciledTo(boolean reconciled) {
-		this.reconciledTo = reconciled;
-	}
-	public Source getFrom() {
-		return from;
-	}
-	public void setFrom(Source from) {
-		this.from = from;
-	}
-	public Source getTo() {
-		return to;
-	}
-	public void setTo(Source to) {
-		this.to = to;
-	}
-	public boolean isScheduled() {
-		return scheduled;
-	}
-	public void setScheduled(boolean scheduled) {
-		this.scheduled = scheduled;
-	}
-	public long getAmount() {
-		return amount;
-	}
-	public void setAmount(long amount) {
-		this.amount = amount;
-	}
-	public long getBalanceTo() {
-		return balanceTo;
-	}
-	public void setBalanceTo(long balanceTo) {
-		this.balanceTo = balanceTo;
-	}
-	public long getBalanceFrom() {
-		return balanceFrom;
-	}
-	public void setBalanceFrom(long balanceFrom) {
-		this.balanceFrom = balanceFrom;
-	}
-	public boolean isInflow(){
-		if (getFrom() instanceof BudgetCategory){
-			return this.getAmount() >= 0;
-		}
-		if (getTo() instanceof BudgetCategory){
-			return this.getAmount() < 0;
-		}
-
-		//If neither sources are BudgetCategory, this is not an inflow.
-		return false;
-	}
 	@Override
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Transaction){
@@ -157,18 +62,110 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		}
 		return super.compareTo(arg0);
 	}
-	
+	public long getAmount() {
+		return amount;
+	}
+	public long getBalanceFrom() {
+		return balanceFrom;
+	}
+	public long getBalanceTo() {
+		return balanceTo;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public Source getFrom() {
+		return from;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public Source getTo() {
+		return to;
+	}
+	public boolean isClearedFrom() {
+		return clearedFrom;
+	}
+	public boolean isClearedTo() {
+		return clearedTo;
+	}
+	public boolean isInflow(){
+		if (getFrom() instanceof BudgetCategory){
+			return this.getAmount() >= 0;
+		}
+		if (getTo() instanceof BudgetCategory){
+			return this.getAmount() < 0;
+		}
 
-//	public void calculateBalance(){
-//	//Update balance in affected accounts
-//	for (TransactionSplit split : splits) {
-//	if (split.getFrom() instanceof Account){
-//	((Account) split.getFrom()).calculateBalance();
-//	}
-//	if (split.getTo() instanceof Account){
-//	((Account) split.getTo()).calculateBalance();
-//	}
-
-//	}
-//	}
+		//If neither sources are BudgetCategory, this is not an inflow.
+		return false;
+	}
+	public boolean isReconciledFrom() {
+		return reconciledFrom;
+	}
+	public boolean isReconciledTo() {
+		return reconciledTo;
+	}
+	public boolean isScheduled() {
+		return scheduled;
+	}
+	public void setAmount(long amount) {
+		this.amount = amount;
+		setChanged();
+	}
+	public void setBalanceFrom(long balanceFrom) {
+		this.balanceFrom = balanceFrom;
+	}
+	public void setBalanceTo(long balanceTo) {
+		this.balanceTo = balanceTo;
+	}
+	public void setClearedFrom(boolean cleared) {
+		this.clearedFrom = cleared;
+		setChanged();
+	}
+	public void setClearedTo(boolean cleared) {
+		this.clearedTo = cleared;
+		setChanged();
+	}
+	public void setDate(Date date) {
+		this.date = date;
+		setChanged();
+	}
+	public void setDescription(String description) {
+		this.description = description;
+		setChanged();
+	}
+	public void setFrom(Source from) {
+		this.from = from;
+		setChanged();
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+		setChanged();
+	}
+	public void setNumber(String number) {
+		this.number = number;
+		setChanged();
+	}
+	public void setReconciledFrom(boolean reconciled) {
+		this.reconciledFrom = reconciled;
+		setChanged();
+	}
+	public void setReconciledTo(boolean reconciled) {
+		this.reconciledTo = reconciled;
+		setChanged();
+	}
+	public void setScheduled(boolean scheduled) {
+		this.scheduled = scheduled;
+	}
+	public void setTo(Source to) {
+		this.to = to;
+		setChanged();
+	}
 }

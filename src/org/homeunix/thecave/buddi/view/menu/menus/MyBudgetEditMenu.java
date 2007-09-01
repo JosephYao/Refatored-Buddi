@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.view.menu.menus;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.menu.items.EditCopyBudgetCategoryValuesBackwards;
+import org.homeunix.thecave.buddi.view.menu.items.EditCopyBudgetCategoryValuesForward;
 import org.homeunix.thecave.buddi.view.menu.items.EditDeleteBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
@@ -23,6 +25,9 @@ public class MyBudgetEditMenu extends MossMenu {
 		this.add(new EditNewBudgetCategory(frame));
 		this.add(new EditModifyBudgetCategory(frame));
 		this.add(new EditDeleteBudgetCategory(frame));
+		this.addSeparator();
+		this.add(new EditCopyBudgetCategoryValuesBackwards(frame));
+		this.add(new EditCopyBudgetCategoryValuesForward(frame));
 		this.addSeparator();
 		this.add(new EditViewScheduledTransactions(frame));
 		if (!OperatingSystemUtil.isMac()){
