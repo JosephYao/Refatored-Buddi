@@ -22,7 +22,9 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
+import org.homeunix.thecave.moss.swing.ApplicationTracker;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;
@@ -146,5 +148,11 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	public boolean isMyReportsTabSelected(){
 		return tabs.getSelectedIndex() == 2;
+	}
+	
+	public static void updateAllContent(){
+		for (MossFrame frame : ApplicationTracker.getInstance().getOpenFrames()) {
+			frame.updateContent();
+		}
 	}
 }

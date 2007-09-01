@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
-import org.homeunix.thecave.buddi.model.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 
 public class ScheduledTransactionTableModel extends AbstractTableModel {
 	public static final long serialVersionUID = 0;

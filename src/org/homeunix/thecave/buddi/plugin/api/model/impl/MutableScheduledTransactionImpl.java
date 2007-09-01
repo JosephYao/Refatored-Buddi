@@ -6,7 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 
 public class MutableScheduledTransactionImpl extends MutableTransactionImpl implements MutableScheduledTransaction {

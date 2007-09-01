@@ -20,7 +20,6 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.swing.ApplicationTracker;
 import org.homeunix.thecave.moss.swing.MossFrame;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
@@ -77,10 +76,9 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
+
+		MainFrame.updateAllContent();
 		
-		for (MossFrame frame : ApplicationTracker.getInstance().getOpenFrames()) {
-			frame.updateContent();
-		}
 		super.closeWindowWithoutPrompting();
 	}
 	

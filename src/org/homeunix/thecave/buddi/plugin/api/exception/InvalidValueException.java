@@ -1,7 +1,7 @@
 /*
  * Created on Aug 3, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model.api.exception;
+package org.homeunix.thecave.buddi.plugin.api.exception;
 
 
 /**

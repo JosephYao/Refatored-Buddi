@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
 public interface MutableScheduledTransaction extends MutableTransaction, ImmutableScheduledTransaction {
 	public void setEndDate(Date endDate) throws InvalidValueException;

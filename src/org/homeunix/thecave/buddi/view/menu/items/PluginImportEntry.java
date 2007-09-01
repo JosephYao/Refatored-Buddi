@@ -16,9 +16,11 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableModelImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
+import org.homeunix.thecave.moss.util.Log;
 
 public class PluginImportEntry extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -71,6 +73,17 @@ public class PluginImportEntry extends MossMenuItem {
 				return;
 		}
 
+		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
+		
+		Log.debug("Calling importData()");
 		plugin.importData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), f);
+		Log.debug("Finished importData(); updating balances");
+		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
+		Log.debug("Finished updating balances");
+		
+		((MossDocumentFrame) getFrame()).getDocument().finishBatchChange();
+		
+		//Update all windows when done
+		MainFrame.updateAllContent();
 	}
 }

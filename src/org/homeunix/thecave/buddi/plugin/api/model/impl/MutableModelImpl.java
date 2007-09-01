@@ -4,7 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;

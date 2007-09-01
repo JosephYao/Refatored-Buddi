@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
-import org.homeunix.thecave.buddi.model.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 
 public interface MutableModel extends ImmutableModel {
 

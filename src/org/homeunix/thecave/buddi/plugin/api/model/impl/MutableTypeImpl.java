@@ -4,7 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.AccountType;
-import org.homeunix.thecave.buddi.model.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
 public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAccountType {
