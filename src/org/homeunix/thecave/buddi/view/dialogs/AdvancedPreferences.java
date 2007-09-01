@@ -1,7 +1,7 @@
 /*
  * Created on Aug 12, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view.dialogs.prefs;
+package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.FlowLayout;
 
