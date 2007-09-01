@@ -30,6 +30,8 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.MyAccountTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
+import org.homeunix.thecave.buddi.view.swing.MyAccountTableAmountCellRenderer;
+import org.homeunix.thecave.buddi.view.swing.MyAccountTableNameCellRenderer;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 import org.homeunix.thecave.moss.swing.MossPanel;
@@ -99,11 +101,15 @@ public class MyAccountsPanel extends MossPanel {
 		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		
+		
 		int treeColumnWidth = 30;
 		tree.getColumn(0).setMaxWidth(treeColumnWidth);
 		tree.getColumn(0).setMinWidth(treeColumnWidth);
 		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
 
+		tree.getColumn(1).setCellRenderer(new MyAccountTableNameCellRenderer());
+		tree.getColumn(2).setCellRenderer(new MyAccountTableAmountCellRenderer((Document) parent.getDocument()));
+		
 		parent.getDocument().addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				updateContent();

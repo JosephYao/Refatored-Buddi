@@ -39,7 +39,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	public AccountType getAccountType() {
 		return type;
 	}
-	public void setType(AccountType type) {
+	public void setAccountType(AccountType type) {
 		this.type = type;
 	}
 	public void updateBalance(){

@@ -13,7 +13,7 @@ public interface Account extends Source{
 	public long getBalance();
 	public Date getStartDate();
 	public long getStartingBalance();
+	public void setAccountType(AccountType accountType) throws InvalidValueException;
 	public void setStartingBalance(long startingBalance) throws InvalidValueException;
-	public void setType(AccountType type) throws InvalidValueException;
 	public void updateBalance();
 }

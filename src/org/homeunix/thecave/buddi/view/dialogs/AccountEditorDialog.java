@@ -200,7 +200,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a = selected;
 					a.setName(name.getValue().toString());
 					a.setStartingBalance(startingBalance.getValue());
-					a.setType((AccountType) type.getSelectedItem());
+					a.setAccountType((AccountType) type.getSelectedItem());
 					a.setNotes(notes.getValue().toString());
 				}
 				a.updateBalance();

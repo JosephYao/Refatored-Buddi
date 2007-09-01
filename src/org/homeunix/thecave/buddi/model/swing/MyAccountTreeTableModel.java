@@ -13,8 +13,6 @@ import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredBy
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TypeListFilteredByAccounts;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyAccountTreeTableModel extends AbstractTreeTableModel {
@@ -42,38 +40,9 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public Object getValueAt(Object node, int column) {
-		if (column == -1)
-			return node;
 		if (column == 0)
 			return "";
-		if (node instanceof Account){
-			Account a = (Account) node;
-			if (column == 1)
-				return TextFormatter.getHtmlWrapper(
-						TextFormatter.getDeletedWrapper(
-								TextFormatter.getFormattedNameForAccount(a), a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp ");
-						if (column == 2){
-							return TextFormatter.getHtmlWrapper(
-									TextFormatter.getDeletedWrapper(
-											TextFormatter.getFormattedCurrency(a.getBalance(), InternalFormatter.isRed(a, a.getBalance())), a));
-
-						}
-		}
-		if (node instanceof AccountType){
-			AccountType t = (AccountType) node;
-			if (column == 1)
-				return TextFormatter.getHtmlWrapper(
-						TextFormatter.getFormattedNameForType(t));
-			if (column == 2) {
-				int amount = 0;
-				for (Account a : new AccountListFilteredByType(model, model.getAccounts(), t)) {
-					amount += a.getBalance();
-				}
-				return TextFormatter.getHtmlWrapper(
-						TextFormatter.getFormattedCurrency(amount, InternalFormatter.isRed(t, amount)));
-			}
-		}
-		return null;
+		return node;
 	}
 
 	public Object getChild(Object parent, int childIndex) {

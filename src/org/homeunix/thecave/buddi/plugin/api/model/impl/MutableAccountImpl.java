@@ -26,7 +26,7 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	}
 
 	public void setType(MutableAccountType type) throws InvalidValueException {
-		getAccount().setType(type.getType());
+		getAccount().setAccountType(type.getType());
 	}
 
 	public Account getAccount() {

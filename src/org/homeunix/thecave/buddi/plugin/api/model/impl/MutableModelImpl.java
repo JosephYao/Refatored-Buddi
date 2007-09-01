@@ -34,7 +34,7 @@ public class MutableModelImpl extends ImmutableModelImpl implements MutableModel
 		getModel().addTransaction(transaction.getTransaction());
 	}
 
-	public void addType(MutableAccountType type) throws ModelException{
+	public void addAccountType(MutableAccountType type) throws ModelException{
 		getModel().addAccountType(type.getType());
 	}
 

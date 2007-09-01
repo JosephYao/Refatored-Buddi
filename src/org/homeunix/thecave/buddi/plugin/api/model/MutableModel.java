@@ -35,7 +35,7 @@ public interface MutableModel extends ImmutableModel {
 	 * Adds a type to the model
 	 * @param type
 	 */
-	public void addType(MutableAccountType type) throws ModelException;
+	public void addAccountType(MutableAccountType type) throws ModelException;
 	
 	/**
 	 * Removes the given account from the model

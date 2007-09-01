@@ -40,7 +40,7 @@ public class ModelFactory {
 		Account a = new AccountImpl();
 		
 		a.setName(name);
-		a.setType(type);
+		a.setAccountType(type);
 		
 		return a;
 	}

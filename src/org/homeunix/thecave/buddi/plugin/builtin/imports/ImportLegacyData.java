@@ -80,7 +80,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					typeMap.put(oldType, newType);
 					typeAccountMap.put(newType, new LinkedList<MutableAccount>());
 
-					model.addType(newType);
+					model.addAccountType(newType);
 				}
 				else {
 					typeMap.put(oldType, (MutableAccountType) model.getType(oldType.getName()));
