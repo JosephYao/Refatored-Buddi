@@ -10,51 +10,25 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
-import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.util.InternalFormatter;
 
-public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
+public class MyAccountTableNameCellRenderer extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;
 	
-	private final Document document;
-	
-	public MyAccountTableAmountCellRenderer(Document document) {
-		this.document = document;
-	}
-
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-
-
-
 		if (value instanceof Account){
 			Account a = (Account) value;
-			boolean red = InternalFormatter.isRed(a, a.getBalance());
-			if (a.getAccountType().isCredit())
-				red = !red;
 			this.setText(TextFormatter.getHtmlWrapper(
 					TextFormatter.getDeletedWrapper(
-							TextFormatter.getFormattedCurrency(
-									a.getBalance(), 
-									red, 
-									a.getAccountType().isCredit()
-							), a)));
+							TextFormatter.getFormattedNameForAccount(a), a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp "));
 		}
 		if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
-			int amount = 0;
-			for (Account a : new AccountListFilteredByType(document, document.getAccounts(), t)) {
-				amount += a.getBalance();
-			}
-			boolean red = InternalFormatter.isRed(t, amount);
-			if (t.isCredit())
-				red = !red;
 			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getFormattedCurrency(amount, red, t.isCredit())));
+					TextFormatter.getFormattedNameForType(t)));
 		}
 
 

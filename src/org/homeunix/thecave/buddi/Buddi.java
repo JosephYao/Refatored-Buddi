@@ -170,7 +170,7 @@ public class Buddi {
 				"Warning",
 				JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.WARNING_MESSAGE
-		) == JOptionPane.CANCEL_OPTION)  //The index of the Cancel button.
+		) != JOptionPane.OK_OPTION)  //The index of the Cancel button.
 			System.exit(0);
 
 

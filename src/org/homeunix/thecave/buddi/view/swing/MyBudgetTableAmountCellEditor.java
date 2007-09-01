@@ -17,31 +17,21 @@ import org.homeunix.thecave.moss.swing.MossDecimalField;
 public class MyBudgetTableAmountCellEditor extends AbstractCellEditor implements TableCellEditor {
 	public static final long serialVersionUID = 0;
 
-//	private final JTable table;
-	private final MossDecimalField editor;// = new JDecimalField(0, true, 2);//{
-//		@Override
-//		public void keyPressed(KeyEvent e) {
-//			if (e.getKeyCode() == KeyEvent.VK_UP
-//					|| e.getKeyCode() == KeyEvent.VK_DOWN
-//					|| e.getKeyCode() == KeyEvent.VK_RIGHT
-//					|| e.getKeyCode() == KeyEvent.VK_LEFT){
-//				System.out.println("Arrows");
-//				return;
-//			}
-//
-//			super.keyPressed(e);
-//		}
-//	};
+	private final MossDecimalField editor;
 
 	public MyBudgetTableAmountCellEditor(MossDecimalField editor) {
-//		this.table = table;
 		this.editor = editor;
 		this.editor.setBorder(new LineBorder(Color.black));
 	}
 
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		long l = Long.parseLong(value.toString().replaceAll("[^0-9-]", "")); 
-		editor.setValue(l);
+		if (value instanceof Object[]){
+//			long l = Long.parseLong(value.toString().replaceAll("[^0-9-]", ""));
+			Object[] values = (Object[]) value;
+			editor.setValue((Long) values[1]);
+		}
+		else
+			editor.setValue(0);
 		return editor;
 	}
 
