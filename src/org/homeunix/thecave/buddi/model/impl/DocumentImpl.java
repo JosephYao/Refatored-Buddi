@@ -82,6 +82,17 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private Date modifiedDate;
 	private String uid;
 	
+	
+	/**
+	 * By default, we start with one batch change enabled.  You must call finisheBatchChange()
+	 * before any change events will be sent!  ModelFactory does this for you automatically;
+	 * you are much better off to use that to create Document objects. 
+	 */
+	public DocumentImpl() {
+		startBatchChange();
+	}
+	
+	
 	public List<Account> getAccounts() {
 		checkLists();
 		return accounts;
@@ -289,6 +300,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 //			if (resetUid)
 //			setUid(ModelFactory.getGeneratedUid(this));
 
+			startBatchChange();
+			
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
 				protected Expression instantiate(Object oldInstance, Encoder out ){
@@ -308,6 +321,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			encoder.writeObject(this);
 			encoder.flush();
 			encoder.close();
+			
+			finishBatchChange();
 
 			//Save where we last saved this file.
 			setFile(file);

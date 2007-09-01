@@ -116,8 +116,9 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		return scheduled;
 	}
 	public void setAmount(long amount) {
+		if (this.amount != amount)
+			setChanged();
 		this.amount = amount;
-		setChanged();
 	}
 	public void setBalanceFrom(long balanceFrom) {
 		this.balanceFrom = balanceFrom;
@@ -126,46 +127,54 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		this.balanceTo = balanceTo;
 	}
 	public void setClearedFrom(boolean cleared) {
+		if (this.clearedFrom != cleared)
+			setChanged();
 		this.clearedFrom = cleared;
-		setChanged();
 	}
 	public void setClearedTo(boolean cleared) {
+		if (this.clearedTo != cleared)
+			setChanged();
 		this.clearedTo = cleared;
-		setChanged();
 	}
 	public void setDate(Date date) {
+		if (this.date != null && !this.date.equals(date))
+			setChanged();
 		this.date = date;
-		setChanged();
 	}
 	public void setDescription(String description) {
+		if (this.description != null && !this.description.equals(description))
+			setChanged();
 		this.description = description;
-		setChanged();
 	}
 	public void setFrom(Source from) {
-		this.from = from;
 		setChanged();
+		this.from = from;
 	}
 	public void setMemo(String memo) {
+		if (this.memo != null && !this.memo.equals(memo))
+			setChanged();
 		this.memo = memo;
-		setChanged();
 	}
 	public void setNumber(String number) {
+		if (this.number != null && !this.number.equals(number))
+			setChanged();
 		this.number = number;
-		setChanged();
 	}
 	public void setReconciledFrom(boolean reconciled) {
+		if (this.reconciledFrom != reconciled)
+			setChanged();
 		this.reconciledFrom = reconciled;
-		setChanged();
 	}
 	public void setReconciledTo(boolean reconciled) {
+		if (this.reconciledTo != reconciled)
+			setChanged();
 		this.reconciledTo = reconciled;
-		setChanged();
 	}
 	public void setScheduled(boolean scheduled) {
 		this.scheduled = scheduled;
 	}
 	public void setTo(Source to) {
-		this.to = to;
 		setChanged();
+		this.to = to;
 	}
 }

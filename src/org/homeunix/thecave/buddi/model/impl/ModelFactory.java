@@ -149,9 +149,19 @@ public class ModelFactory {
 			document.addAccountType(ModelFactory.createAccountType(s.toString(), true));
 		}	
 
+		//Refresh the UID Map...
+		document.refreshUidMap();
+
+		//Update all balances...
 		document.updateAllBalances();
+
+		//Allow changes to start firing
+		document.finishBatchChange();
+		
+		//Fire a change event
 		document.setChanged();
 
+		//Return to calling code... the model is correctly loaded.
 		return document;
 	}
 
@@ -210,6 +220,9 @@ public class ModelFactory {
 					//Store the password
 					document.setPassword(password);
 
+					//Allow changes to start firing
+					document.finishBatchChange();
+					
 					//Fire a change event
 					document.setChanged();
 					document.resetChanged();

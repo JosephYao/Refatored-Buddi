@@ -119,8 +119,9 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	 * @param amount
 	 */
 	public void setAmount(Date periodDate, long amount){
+		if (getAmount(periodDate) != amount)
+			setChanged();
 		getAmounts().put(getPeriodKey(periodDate), amount);
-		setChanged();
 	}
 	public BudgetCategoryType getPeriodType() {
 		return periodType;

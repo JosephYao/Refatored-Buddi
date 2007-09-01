@@ -23,7 +23,8 @@ public abstract class ModelObjectImpl implements ModelObject {
 		
 	public void setChanged(){
 		setModifiedDate(new Date());
-		document.setChanged();
+		if (document != null)
+			document.setChanged();
 	}
 	public Date getModifiedDate() {
 		return modifiedDate;
