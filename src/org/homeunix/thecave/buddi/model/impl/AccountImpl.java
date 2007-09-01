@@ -13,11 +13,18 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.moss.util.Log;
 
+/**
+ * Default implementation of an Account.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private AccountType type;
-
+	
 	public long getStartingBalance() {
 		return startingBalance;
 	}

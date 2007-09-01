@@ -9,7 +9,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
@@ -34,7 +37,45 @@ import org.homeunix.thecave.moss.util.crypto.CipherException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
+/**
+ * The factory for all model objects.  It is highly recommended to use this
+ * class instead of the constructors, for all model objects.
+ * 
+ * @author wyatt
+ *
+ */
 public class ModelFactory {
+	
+	public static Map<String, BudgetCategoryType> budgetPeriodTypes;
+	
+	/**
+	 * Returns the budget category type of the given type, or null if it 
+	 * does not exist.
+	 * @param name
+	 * @return
+	 */
+	public static BudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes type){
+		return getBudgetCategoryType(type.toString());
+	}
+	
+	/**
+	 * Returns the budget category type of the given name, or null if it 
+	 * does not exist.
+	 * @param name
+	 * @return
+	 */
+	public static BudgetCategoryType getBudgetCategoryType(String name){
+		if (budgetPeriodTypes == null){
+			budgetPeriodTypes = new HashMap<String, BudgetCategoryType>();
+			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH.toString(), new BudgetCategoryTypeMonthly());
+			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_WEEK.toString(), new BudgetCategoryTypeWeekly());
+			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_QUARTER.toString(), new BudgetCategoryTypeQuarterly());
+			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_YEAR.toString(), new BudgetCategoryTypeYearly());
+		}
+		
+		return budgetPeriodTypes.get(name);
+	}
+	
 	/**
 	 * Creates a new Account with the given values
 	 * @param name
@@ -44,13 +85,13 @@ public class ModelFactory {
 	 */
 	public static Account createAccount(String name, AccountType type) throws InvalidValueException {
 		Account a = new AccountImpl();
-		
+
 		a.setName(name);
 		a.setAccountType(type);
-		
+
 		return a;
 	}
-	
+
 	/**
 	 * Creates a new AccountType with the given values
 	 * @param name
@@ -60,13 +101,13 @@ public class ModelFactory {
 	 */
 	public static AccountType createAccountType(String name, boolean credit) throws InvalidValueException {
 		AccountType at = new AccountTypeImpl();
-		
+
 		at.setName(name);
 		at.setCredit(credit);
-		
+
 		return at;
 	}
-	
+
 	/**
 	 * Creates a new BudgetCategory with the given values
 	 * @param name
@@ -77,14 +118,14 @@ public class ModelFactory {
 	 */
 	public static BudgetCategory createBudgetCategory(String name, BudgetCategoryType type, boolean income) throws InvalidValueException {
 		BudgetCategory bc = new BudgetCategoryImpl();
-		
+
 		bc.setName(name);
 		bc.setPeriodType(type);
 		bc.setIncome(income);
-		
+
 		return bc;
 	}
-		
+
 	/**
 	 * Creates a new data model, with some default types and categories.
 	 */
@@ -93,46 +134,27 @@ public class ModelFactory {
 		document.setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){
-			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), false));
-			}
-			catch (ModelException me){
-				Log.error("Error creating budget category", me);
-			}
+			BudgetCategory bc = ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), false); 
+			document.addBudgetCategory(bc);
 		}
 		for (BudgetIncomeDefaultKeys s : BudgetIncomeDefaultKeys.values()){
-			try {
-				document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), true));
-			}
-			catch (ModelException me){
-				Log.error("Error creating budget category", me);
-			}
+			document.addBudgetCategory(ModelFactory.createBudgetCategory(s.toString(), new BudgetCategoryTypeMonthly(), true));
 		}
 
 		for (TypeDebitDefaultKeys s : TypeDebitDefaultKeys.values()){
-			try {
-				document.addAccountType(ModelFactory.createAccountType(s.toString(), false));
-			}
-			catch (ModelException me){
-				Log.error("Error creating account type", me);
-			}
+			document.addAccountType(ModelFactory.createAccountType(s.toString(), false));
 		}
 
 		for (TypeCreditDefaultKeys s : TypeCreditDefaultKeys.values()){
-			try {
-				document.addAccountType(ModelFactory.createAccountType(s.toString(), true));
-			}
-			catch (ModelException me){
-				Log.error("Error creating account type", me);
-			}
+			document.addAccountType(ModelFactory.createAccountType(s.toString(), true));
 		}	
 
 		document.updateAllBalances();
 		document.setChanged();
-		
+
 		return document;
 	}
-	
+
 	/**
 	 * Attempts to load a data model from file.  Works with Buddi 3 format.  To load a
 	 * legacy format, use ModelConverter to get a Bean object, and call the constructor which
@@ -142,7 +164,7 @@ public class ModelFactory {
 	 */
 	public static Document createDocument(File file) throws DocumentLoadException, OperationCancelledException {
 		DocumentImpl document;
-		
+
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
@@ -181,13 +203,13 @@ public class ModelFactory {
 
 					//This wil let us know where to save the file to.
 					document.setFile(file);
-					
+
 					//Update all balances...
 					document.updateAllBalances();
-					
+
 					//Store the password
 					document.setPassword(password);
-					
+
 					//Fire a change event
 					document.setChanged();
 					document.resetChanged();
@@ -225,9 +247,9 @@ public class ModelFactory {
 			throw new DocumentLoadException(ioe);
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Creates a new ScheduledTransaction with the given values
 	 * @return
@@ -235,7 +257,7 @@ public class ModelFactory {
 	 */
 	public static ScheduledTransaction createScheduledTransaction() throws InvalidValueException {
 		ScheduledTransaction st = new ScheduledTransactionImpl();
-		
+
 		return st;
 	}
 
@@ -251,18 +273,18 @@ public class ModelFactory {
 	 */
 	public static Transaction createTransaction(Date date, String description, long amount, Source from, Source to) throws InvalidValueException {
 		Transaction t = new TransactionImpl();
-		
+
 		t.setDate(date);
 		t.setDescription(description);
 		t.setAmount(amount);
 		t.setFrom(from);
 		t.setTo(to);
-		
+
 		return t;
 	}
 
-	
-	
+
+
 	/**
 	 * Generate a UID string for a particular object.  This is guaranteed to be unique
 	 * for each call to this method, even if the object is the same.  It is generated 

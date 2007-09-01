@@ -9,15 +9,18 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
+/**
+ * Default implementation of an AccountType.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 	private String name;
 	private boolean credit;
 	private boolean isExpanded;
 
-//	public TypeBean() {
-//		this.setUid(DataModel.getGeneratedUid(this));
-//	}
-	
 	public boolean isCredit() {
 		return credit;
 	}

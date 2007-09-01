@@ -5,7 +5,19 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
+/**
+ * Abstract definition of BudgetCategoryType.  Extend this object to define new 
+ * BudgetCategoryType classes.  (Note that it is highly recommended to not create
+ * new classes of this type yourself, as it will rended data files which use it
+ * incompatible with other Buddi versions.  If you wish to define a new budget
+ * period type, please send the resulting class to Wyatt Olson to add into a future
+ * Buddi version)
+ * 
+ * @author wyatt
+ *
+ */
 public abstract class BudgetCategoryTypeImpl {
+	
 	/**
 	 * Method to move forwards or backwards by the given number of periods.  This 
 	 * must conform to the following statements:

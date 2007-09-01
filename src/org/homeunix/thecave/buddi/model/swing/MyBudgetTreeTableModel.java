@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -43,7 +43,8 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 		this.selectedDate = new Date();
 		this.monthOffset = 2; //This puts the current month in the middle of three columns.
 
-		for (BudgetCategoryType type : Const.BUDGET_PERIOD_TYPES) {
+		for (BudgetCategoryTypes typeEnum : BudgetCategoryTypes.values()) {
+			BudgetCategoryType type = ModelFactory.getBudgetCategoryType(typeEnum);
 			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
 		}
 	}
@@ -58,7 +59,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 
 	public BudgetCategoryType getSelectedBudgetPeriodType(){
 		if (selectedBudgetPeriodType == null)
-			selectedBudgetPeriodType = new BudgetCategoryTypeMonthly();
+			selectedBudgetPeriodType = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
 		return selectedBudgetPeriodType;
 	}
 

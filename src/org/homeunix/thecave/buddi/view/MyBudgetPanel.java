@@ -30,18 +30,18 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.swing.MyBudgetTableNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
+import org.homeunix.thecave.buddi.view.swing.MyBudgetTableNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
@@ -74,7 +74,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		dateSpinner = new JSpinner(dateSpinnerModel);
 //		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
-		periodTypeComboBox = new JComboBox(Const.BUDGET_PERIOD_TYPES);
+		periodTypeComboBox = new JComboBox(BudgetCategoryTypes.values());
 		
 		open();
 	}
@@ -95,7 +95,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 //			updateContent();
 //		}
 		if (e.getSource().equals(periodTypeComboBox)){
-			treeTableModel.setSelectedBudgetPeriodType((BudgetCategoryType) periodTypeComboBox.getSelectedItem());
+			treeTableModel.setSelectedBudgetPeriodType(ModelFactory.getBudgetCategoryType(periodTypeComboBox.getSelectedItem().toString()));
 			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
 			updateContent();
 		}
@@ -168,7 +168,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		});
 		
 //		periodTypeComboBox.setPreferredSize(dateSpinner.getPreferredSize());
-		periodTypeComboBox.setSelectedItem(new BudgetCategoryTypeMonthly());
+		periodTypeComboBox.setSelectedItem(ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH));
 		periodTypeComboBox.addActionListener(this);
 		periodTypeComboBox.setRenderer(new TranslatorListCellRenderer());
 

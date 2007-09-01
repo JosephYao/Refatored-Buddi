@@ -5,10 +5,16 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
-import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
+/**
+ * Definition of a Monthly BudgetCategoryType.
+ *  
+ * @author wyatt
+ *
+ */
 public class BudgetCategoryTypeMonthly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
@@ -32,6 +38,6 @@ public class BudgetCategoryTypeMonthly extends BudgetCategoryType {
 	}
 			
 	public String getName() {
-		return BuddiKeys.BUDGET_PERIOD_MONTH.toString();
+		return BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH.toString();
 	}
 }

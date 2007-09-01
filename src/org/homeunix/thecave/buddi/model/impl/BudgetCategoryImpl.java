@@ -15,13 +15,19 @@ import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
+/**
+ * Default implementation of an BudgetCategory.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	private boolean income;
 	private boolean expanded;
 	private BudgetCategoryType periodType;
 	private BudgetCategory parent;
 	private Map<String, Long> amounts;
-	
 	
 	public Map<String, Long> getAmounts() {
 		if (amounts == null)

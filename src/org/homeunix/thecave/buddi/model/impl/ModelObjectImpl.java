@@ -8,13 +8,19 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 
+/**
+ * The class from which most other model objects descend from.  You should not 
+ * instantiate this class directly.
+ * 
+ * @author wyatt
+ *
+ */
 public abstract class ModelObjectImpl implements ModelObject {
 	
 	private Date modifiedDate;
 	private String uid;
 	private Document document;
-	
-	
+		
 	public void setChanged(){
 		setModifiedDate(new Date());
 		document.setChanged();

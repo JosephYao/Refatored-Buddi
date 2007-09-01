@@ -21,10 +21,11 @@ import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
@@ -135,7 +136,7 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 		// we may as well start at a time in the past rather than just
 		// give them the current date, as we have done before now.
 		// Added to address feature request #1649972.
-		BudgetCategoryType period = new BudgetCategoryTypeMonthly();
+		BudgetCategoryType period = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
 		startDateChooser.setDate(period.getStartOfBudgetPeriod(new Date()));			
 
 		setVisibility(plugin.getDateRangeChoice());

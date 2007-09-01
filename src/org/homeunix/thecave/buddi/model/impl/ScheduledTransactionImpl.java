@@ -9,6 +9,13 @@ import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
 
+/**
+ * Default implementation of an ScheduledTrasaction.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public class ScheduledTransactionImpl extends TransactionImpl implements ScheduledTransaction {
 	
 	//Scheduling Information
@@ -25,9 +32,6 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 	//User information
 	private String scheduleName;
 	private String message;
-	
-	
-	
 	
 	public Date getEndDate() {
 		return endDate;

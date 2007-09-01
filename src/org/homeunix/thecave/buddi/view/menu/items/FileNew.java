@@ -10,12 +10,14 @@ import java.awt.event.KeyEvent;
 import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.util.Log;
 
 public class FileNew extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -28,8 +30,11 @@ public class FileNew extends MossMenuItem {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			MainFrame mainFrame = new MainFrame(new DocumentImpl());
+			MainFrame mainFrame = new MainFrame(ModelFactory.createDocument());
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
+		}
+		catch (ModelException me){
+			Log.error(me);
 		}
 		catch (WindowOpenException foe){
 			throw new RuntimeException(foe);

@@ -19,7 +19,8 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
@@ -112,7 +113,10 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				Category oldCategory = (Category) oldCategoryObject;
 
 				if (model.getBudgetCategory(oldCategory.getFullName()) == null){
-					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(oldCategory.getName(), new BudgetCategoryTypeMonthly(), oldCategory.isIncome());
+					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(
+							oldCategory.getName(), 
+							ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH), 
+							oldCategory.isIncome());
 					newBudgetCategory.setDeleted(oldCategory.isDeleted());
 					newBudgetCategory.setAmount(new Date(), oldCategory.getBudgetedAmount());
 

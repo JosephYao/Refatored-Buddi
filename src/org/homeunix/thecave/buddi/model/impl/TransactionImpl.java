@@ -11,6 +11,13 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
+/**
+ * Default implementation of a Transaction.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private Date date;
 	private String description;
@@ -28,6 +35,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 	private long balanceFrom;
 	private long balanceTo;
+	
 	
 	public boolean isClearedFrom() {
 		return clearedFrom;

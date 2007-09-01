@@ -3,42 +3,24 @@
  */
 package org.homeunix.thecave.buddi.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 
-import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeMonthly;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.moss.util.DateFunctions;
-import org.junit.Before;
 import org.junit.Test;
 
 
 
-public class DataModelTest {
-
-	private Document d;
-	
-	@Before
-	public void setup() throws Exception{
-		d = ModelFactory.createDocument();
-	}
-	
-	@Test
-	public void testDocument(){
-		try {
-			assertTrue(d.getBudgetCategories().size() > 1);
-		
-		}
-		catch (Exception e){
-			fail("Exception: " + e);
-		}
-	}
+public class BudgetCategoryTest {
 	
 	@Test
 	public void testBudgetCategory(){
 		try {
-			BudgetCategoryType bct = new BudgetCategoryTypeMonthly();
+			BudgetCategoryType bct = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
 			BudgetCategory bc = ModelFactory.createBudgetCategory("Test", bct, false);
 			bc.setAmount(DateFunctions.getDate(2007, Calendar.APRIL, 1), 100);
 			bc.setAmount(DateFunctions.getDate(2007, Calendar.MAY, 1), 200);

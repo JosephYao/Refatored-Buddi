@@ -6,6 +6,13 @@ package org.homeunix.thecave.buddi.model.impl;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
+/**
+ * Default implementation of a Source.  You should not create this object directly; 
+ * instead, please use the ModelFactory to create it, as this will ensure that all
+ * required fields are correctly set.
+ * @author wyatt
+ *
+ */
 public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	//Source Attributes
 	private String name;

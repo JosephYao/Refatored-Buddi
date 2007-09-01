@@ -42,11 +42,16 @@ import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
 
 
-
 /**
  * The main container class for the new data model, to be implemented in Buddi version 3.0.
  * This contains all the data, most of it in list form.  This object is the root of the XML
  * file as serialized by XMLEncoder.
+ * 
+ * You should *not* create this class by calling its constructor - you must create it using
+ * one of the ModelFactory.createDocument methods.  The factory will correctly initialize
+ * the default types and budget categories.  The only reason we did not make the default
+ * constructor for this class to be non-public was because the XMLDecoder needs public
+ * consructors to create objects at load time.  
  * 
  * @author wyatt
  */
@@ -76,7 +81,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	//Model object data
 	private Date modifiedDate;
 	private String uid;
-
+	
 	public List<Account> getAccounts() {
 		checkLists();
 		return accounts;
@@ -292,6 +297,14 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
 				}
 			});
+//			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
+//				protected Expression instantiate(Object oldInstance, Encoder out ){
+//					File file = (File) oldInstance;
+//					String filePath = file.getAbsolutePath();
+//					return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
+//				}
+//			});
+
 			encoder.writeObject(this);
 			encoder.flush();
 			encoder.close();
