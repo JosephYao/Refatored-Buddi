@@ -3,8 +3,11 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.event.ActionEvent;
+
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
@@ -13,5 +16,10 @@ public class EditClearTransaction extends MossMenuItem {
 
 	public EditClearTransaction(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_CLEAR_NEW));
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		((TransactionFrame) getFrame()).doClickClear();
 	}
 }

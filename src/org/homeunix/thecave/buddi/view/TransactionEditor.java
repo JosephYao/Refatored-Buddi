@@ -44,15 +44,14 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.model.swing.DescriptionList;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
+import org.homeunix.thecave.buddi.model.swing.DescriptionList;
 import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoCompleteEntry;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.swing.MossAutoCompleteComboBox;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossHintComboBox;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
@@ -60,6 +59,7 @@ import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.swing.model.AutoCompleteComboBoxModel;
+import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -110,10 +110,12 @@ public class TransactionEditor extends MossPanel {
 		from = new MossScrollingComboBox();
 		to = new MossScrollingComboBox();
 		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
+		description = new MossHintComboBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+
 		if (PrefsModel.getInstance().isShowAutoComplete())
-			description = new MossAutoCompleteComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+			description.setModel(new AutoCompleteComboBoxModel<String>(description, new DescriptionList(this.model)));
 		else
-			description = new MossHintComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+			description.setModel(new BackedComboBoxModel<String>(new DescriptionList(this.model)));
 		memo = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
 		cleared = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED));
 		reconciled = new JCheckBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED));
@@ -123,13 +125,15 @@ public class TransactionEditor extends MossPanel {
 		date.setVisible(!scheduledTransactionPane);
 		cleared.setVisible(!scheduledTransactionPane);
 		reconciled.setVisible(!scheduledTransactionPane);
-		
+
 		open();
 	}
 
 	@Override
 	public void init() {
 		super.init();
+
+		description.setText("");
 
 		from.setModel(new SourceComboBoxModel(this.model, true));
 		to.setModel(new SourceComboBoxModel(this.model, false));
@@ -275,21 +279,23 @@ public class TransactionEditor extends MossPanel {
 			public void focusLost(FocusEvent arg0) {
 				fillInOtherFields(false);
 			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				super.focusGained(e);
-			}
 		});
 
 		((JTextComponent) description.getEditor().getEditorComponent()).addKeyListener(new KeyAdapter(){
+
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER){
-					fillInOtherFields(true);
-				}
-				super.keyPressed(e);
+			public void keyReleased(KeyEvent e) {
+				super.keyReleased(e);
+				fillInOtherFields(false);
 			}
+
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+////			if (e.getKeyCode() == KeyEvent.VK_ENTER){
+//			fillInOtherFields(false);
+////			}
+//			super.keyPressed(e);
+//			}
 		});
 
 		// When you select one source, automatically select the other if possible
@@ -390,9 +396,9 @@ public class TransactionEditor extends MossPanel {
 		if (transaction != null){
 			System.out.println(transaction.getDescription());
 			date.setDate(transaction.getDate());			
-			number.setValue(transaction.getNumber());
-			description.setValue(transaction.getDescription());
-			memo.setValue(transaction.getMemo());
+			number.setText(transaction.getNumber());
+			description.setText(transaction.getDescription());
+			memo.setText(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
@@ -410,12 +416,12 @@ public class TransactionEditor extends MossPanel {
 		else{
 			if (date.getDate() == null)
 				date.setDate(new Date());
-			number.setValue("");
-			description.setValue(null);
+			number.setText("");
+			description.setText("");
 			amount.setValue(0);
 			to.setSelectedItem(null);
 			from.setSelectedItem(null);
-			memo.setValue("");
+			memo.setText("");
 			cleared.setSelected(false);
 			reconciled.setSelected(false);
 
@@ -438,29 +444,14 @@ public class TransactionEditor extends MossPanel {
 	public boolean isDangerouslyChanged() {
 		if (transaction == null) 
 			return false;
-		boolean changedDesc = !(getDescription().equals(transaction.getDescription()));
-		boolean changedAmt  = !(getAmount() == transaction.getAmount());
-		boolean changedDate = !(getDate().equals(transaction.getDate()));
+		boolean changedDesc = !(description.getText().equals(transaction.getDescription()));
+		boolean changedAmt  = !(amount.getValue() == transaction.getAmount());
+		boolean changedDate = !(date.getDate().equals(transaction.getDate()));
 		return changedDesc && changedAmt && changedDate;
 	}
 
 	public void setChanged(boolean changed){
 		this.changed = changed;
-	}
-
-	public Date getDate(){
-		return date.getDate();
-	}
-
-	public String getNumber(){
-		return number.getValue().toString();
-	}
-
-	public String getDescription(){
-		System.out.println("Description: " + description.getValue());
-		if (description.getValue() != null)
-			return description.getValue().toString();
-		return null;
 	}
 
 	/**
@@ -469,14 +460,15 @@ public class TransactionEditor extends MossPanel {
 	 */
 	public Transaction getTransactionUpdated() throws InvalidValueException {
 		if (transaction == null)
-			return null;
+			throw new InvalidValueException("This transaction is not already created; call getTransactionNew() to get it.");
+
 		transaction.setDate(date.getDate());
-		transaction.setDescription(description.getValue().toString());
+		transaction.setDescription(description.getText());
 		transaction.setAmount(amount.getValue());
 		transaction.setFrom((Source) from.getSelectedItem());
 		transaction.setTo((Source) to.getSelectedItem());
-		transaction.setNumber(number.getValue().toString());
-		transaction.setMemo(memo.getValue().toString());
+		transaction.setNumber(number.getText().toString());
+		transaction.setMemo(memo.getText().toString());
 		if (associatedAccount.equals(from.getSelectedItem())){
 			transaction.setClearedFrom(cleared.isSelected());
 			transaction.setReconciledFrom(reconciled.isSelected());			
@@ -500,11 +492,11 @@ public class TransactionEditor extends MossPanel {
 	 */
 	public Transaction getTransactionNew() throws InvalidValueException {
 		if (!isTransactionValid())
-			return null;
+			throw new InvalidValueException("New transaction is not completely filled in");
 
-		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getValue().toString(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
-		t.setNumber(number.getValue().toString());
-		t.setMemo(memo.getValue().toString());
+		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
+		t.setNumber(number.getText().toString());
+		t.setMemo(memo.getText().toString());
 		if (associatedAccount.equals(from.getSelectedItem())){
 			t.setClearedFrom(cleared.isSelected());
 			t.setReconciledFrom(reconciled.isSelected());				
@@ -514,13 +506,6 @@ public class TransactionEditor extends MossPanel {
 			t.setReconciledTo(reconciled.isSelected());				
 		}		
 		return t;
-	}
-
-	public long getAmount(){
-		if (this.amount != null)
-			return this.amount.getValue();
-		else
-			return 0;
 	}
 
 	public Source getFrom(){
@@ -542,25 +527,12 @@ public class TransactionEditor extends MossPanel {
 		return null;
 	}
 
-
-	public String getMemo(){
-		return memo.getValue().toString();
-	}
-
-	public boolean isCleared(){
-		return cleared.isSelected();
-	}
-
-	public boolean isReconciled(){
-		return reconciled.isSelected();
-	}
-
 	public boolean isTransactionValid(){
 		return this.isTransactionValid(null);
 	}
 
 	public boolean isTransactionValid(Account thisAccount){
-		if (description.getValue().toString().length() == 0)
+		if (description.getText().length() == 0)
 			return false;
 		if (date.getDate() == null)
 			return false;
@@ -641,9 +613,9 @@ public class TransactionEditor extends MossPanel {
 		// the dictionary map, but only if they haven't been modified from their default values!
 		if (PrefsModel.getInstance().isShowAutoComplete()){
 			if (description != null 
-					&& description.getSelectedItem() != null 
-					&& description.getSelectedItem().toString().length() > 0){
-				AutoCompleteEntry ace = autoCompleteEntries.getEntry(description.getSelectedItem().toString());
+					&& description.getText() != null 
+					&& description.getText().length() > 0){
+				AutoCompleteEntry ace = autoCompleteEntries.getEntry(description.getText());
 				if (ace != null){
 					//We don't do the numbers any more, as this tends to be unique to one transaction.
 //					if (forceAll || (ace.getNumber() != null && number.isHintShowing()))
@@ -678,11 +650,13 @@ public class TransactionEditor extends MossPanel {
 					}
 				}
 				else {
-//					number.setValue("");
-					amount.setValue(0);
-//					memo.setValue("");
-					from.setSelectedItem(null);
-					to.setSelectedItem(null);
+					if (forceAll){
+//						number.setValue("");
+						amount.setValue(0);
+//						memo.setValue("");
+						from.setSelectedItem(null);
+						to.setSelectedItem(null);
+					}
 				}
 			}
 		}

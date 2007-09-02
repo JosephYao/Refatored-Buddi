@@ -32,7 +32,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
-import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
@@ -288,37 +288,37 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		}
 	}
 
-	private boolean ensureInfoCorrect(){
-
-		//We must have filled in at least the name and the date.
-		if ((scheduleName.getValue().toString().length() == 0)
-				|| (startDateChooser.getDate() == null)){
-			return false;
-		}
-
-		//If we're just fillinf in the transaction, we need at least
-		// amount, description, to, and from.
-		if ((transactionEditor.getAmount() != 0)
-				&& (transactionEditor.getDescription() != null && transactionEditor.getDescription().length() > 0)
-				&& (transactionEditor.getTo() != null)
-				&& (transactionEditor.getFrom() != null)){
-			return true;
-		}
-
-		//If the message is filled in, we can let the action succeed
-		// without the transaction being filled out.  However, if any
-		// part of the transaction is filled in, it all must be.
-		if ((message.getValue().toString().length() > 0)
-				&& (transactionEditor.getAmount() == 0)
-				&& (transactionEditor.getDescription() == null 
-						|| transactionEditor.getDescription().length() == 0)
-				&& (transactionEditor.getTo() == null)
-				&& (transactionEditor.getFrom() == null)){
-			return true;
-		}
-
-		return false;
-	}
+//	private boolean ensureInfoCorrect(){
+//
+//		//We must have filled in at least the name and the date.
+//		if ((scheduleName.getText().length() == 0)
+//				|| (startDateChooser.getDate() == null)){
+//			return false;
+//		}
+//
+//		//If we're just fillinf in the transaction, we need at least
+//		// amount, description, to, and from.
+//		if ((transactionEditor.getAmount() != 0)
+//				&& (transactionEditor.getDescription() != null && transactionEditor.getDescription().length() > 0)
+//				&& (transactionEditor.getTo() != null)
+//				&& (transactionEditor.getFrom() != null)){
+//			return true;
+//		}
+//
+//		//If the message is filled in, we can let the action succeed
+//		// without the transaction being filled out.  However, if any
+//		// part of the transaction is filled in, it all must be.
+//		if ((message.getText().length() > 0)
+//				&& (transactionEditor.getAmount() == 0)
+//				&& (transactionEditor.getDescription() == null 
+//						|| transactionEditor.getDescription().length() == 0)
+//				&& (transactionEditor.getTo() == null)
+//				&& (transactionEditor.getFrom() == null)){
+//			return true;
+//		}
+//
+//		return false;
+//	}
 
 	/**
 	 * Saves the changes to the scheduled transaction.  Returns true if the 
@@ -342,7 +342,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 				needToAdd = false;
 			}
 
-			if (ScheduleEditorDialog.this.ensureInfoCorrect()){
+			if (transactionEditor.isTransactionValid()){
 				String[] options = new String[2];
 				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
@@ -358,27 +358,33 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 								options,
 								options[0]) == JOptionPane.OK_OPTION){
 
-					String name = this.scheduleName.getValue().toString();
-					String message = this.message.getValue().toString();
-					long amount = transactionEditor.getAmount();
-					String description = transactionEditor.getDescription();
-					String number = transactionEditor.getNumber();
-					Source from = transactionEditor.getFrom();
-					Source to = transactionEditor.getTo();
-//					boolean cleared = transactionEditor.isCleared();
-//					boolean reconciled = transactionEditor.isReconciled();
-					String memo = transactionEditor.getMemo();
+					Transaction t;
+					if (needToAdd)
+						t = transactionEditor.getTransactionNew();
+					else
+						t = transactionEditor.getTransactionUpdated();
+					
+					String name = this.scheduleName.getText();
+					String message = this.message.getText();
+//					long amount = t.getAmount();
+//					String description = transactionEditor.getDescription();
+//					String number = transactionEditor.getNumber();
+//					Source from = transactionEditor.getFrom();
+//					Source to = transactionEditor.getTo();
+////					boolean cleared = transactionEditor.isCleared();
+////					boolean reconciled = transactionEditor.isReconciled();
+//					String memo = transactionEditor.getMemo();
 
 					s.setScheduleName(name);
 					s.setMessage(message);
-					s.setAmount(amount);
-					s.setDescription(description);
-					s.setNumber(number);
-					s.setTo(to);
-					s.setFrom(from);
+					s.setAmount(t.getAmount());
+					s.setDescription(t.getDescription());
+					s.setNumber(t.getNumber());
+					s.setTo(t.getTo());
+					s.setFrom(t.getFrom());
 //					s.setCleared(cleared);
 //					s.setReconciled(reconciled);
-					s.setMemo(memo);
+					s.setMemo(t.getMemo());
 
 					//TODO We should not have to save this, as it cannot be modified.
 					if (needToAdd){
@@ -431,8 +437,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 			updateSchedulePulldown();
 
 			//Load the changeable fields, including Transaction
-			scheduleName.setValue(schedule.getScheduleName());
-			message.setValue(schedule.getMessage());
+			scheduleName.setText(schedule.getScheduleName());
+			message.setText(schedule.getMessage());
 			transactionEditor.setTransaction(schedule, true);
 
 			//Load the schedule pulldowns, based on which type of 

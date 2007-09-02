@@ -188,7 +188,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	public void updateButtons() {
 		super.updateButtons();
 
-		ok.setEnabled(name.getValue() != null && name.getValue().toString().length() > 0);
+		ok.setEnabled(name.getText() != null && name.getText().length() > 0);
 
 		budgetCategoryType.setEnabled(parent.getSelectedItem() == null);
 		income.setEnabled(parent.getSelectedItem() == null);
@@ -206,21 +206,21 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		super.updateContent();
 
 		if (selected == null){
-			name.setValue("");
+			name.setText("");
 			expense.setSelected(true);
 			parent.setSelectedItem(null);
 			budgetCategoryType.setSelectedItem(ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH));
-			notes.setValue("");
+			notes.setText("");
 		}
 		else {
-			name.setValue(PrefsModel.getInstance().getTranslator().get(selected.getName()));
+			name.setText(PrefsModel.getInstance().getTranslator().get(selected.getName()));
 			if (selected.isIncome())
 				income.setSelected(true);
 			else
 				expense.setSelected(true);
 			budgetCategoryType.setSelectedItem(BudgetCategoryTypes.valueOf(selected.getBudgetPeriodType().getName()));
 			parent.setSelectedItem(selected.getParent());
-			notes.setValue(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
+			notes.setText(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 		}
 	}
 
@@ -229,20 +229,20 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			BudgetCategory bc;
 			try {
 				if (selected == null){
-					bc = ModelFactory.createBudgetCategory(name.getValue().toString(), ModelFactory.getBudgetCategoryType(budgetCategoryType.getSelectedItem().toString()), income.isSelected());
+					bc = ModelFactory.createBudgetCategory(name.getText(), ModelFactory.getBudgetCategoryType(budgetCategoryType.getSelectedItem().toString()), income.isSelected());
 					bc.setParent((BudgetCategory) parent.getSelectedItem());
-					bc.setNotes(notes.getValue().toString());
+					bc.setNotes(notes.getText());
 					Log.debug("Created new BudgetCategory " + bc);
 
 					model.addBudgetCategory(bc);
 				}
 				else {
 					bc = selected;
-					bc.setName(name.getValue().toString());
+					bc.setName(name.getText());
 					bc.setParent((BudgetCategory) parent.getSelectedItem());
 					bc.setPeriodType(ModelFactory.getBudgetCategoryType(budgetCategoryType.getSelectedItem().toString()));
 					bc.setIncome(income.isSelected());
-					bc.setNotes(notes.getValue().toString());
+					bc.setNotes(notes.getText());
 				}
 			}
 			catch (ModelException me){

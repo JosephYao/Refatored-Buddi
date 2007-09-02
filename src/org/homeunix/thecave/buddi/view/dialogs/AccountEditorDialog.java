@@ -164,23 +164,23 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	public void updateButtons() {
 		super.updateButtons();
 
-		ok.setEnabled(name.getValue() != null && name.getValue().toString().length() > 0);
+		ok.setEnabled(name.getText() != null && name.getText().length() > 0);
 	}
 
 	public void updateContent() {
 		super.updateContent();
 
 		if (selected == null){
-			name.setValue("");
+			name.setText("");
 //			type.setSelectedItem(null);
 			startingBalance.setValue(0l);
-			notes.setValue("");
+			notes.setText("");
 		}
 		else {
-			name.setValue(PrefsModel.getInstance().getTranslator().get(selected.getName()));
+			name.setText(PrefsModel.getInstance().getTranslator().get(selected.getName()));
 			type.setSelectedItem(selected.getAccountType());
 			startingBalance.setValue(selected.getStartingBalance());
-			notes.setValue(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
+			notes.setText(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 		}
 	}
 
@@ -189,19 +189,19 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			Account a;
 			try {
 				if (selected == null){
-					a = ModelFactory.createAccount(name.getValue().toString(), (AccountType) type.getSelectedItem());
+					a = ModelFactory.createAccount(name.getText(), (AccountType) type.getSelectedItem());
 					a.setStartingBalance(startingBalance.getValue());
-					a.setNotes(notes.getValue().toString());
+					a.setNotes(notes.getText());
 					Log.debug("Created new BudgetCategory " + a);
 
 					model.addAccount(a);
 				}
 				else {
 					a = selected;
-					a.setName(name.getValue().toString());
+					a.setName(name.getText());
 					a.setStartingBalance(startingBalance.getValue());
 					a.setAccountType((AccountType) type.getSelectedItem());
-					a.setNotes(notes.getValue().toString());
+					a.setNotes(notes.getText());
 				}
 				a.updateBalance();
 			}

@@ -271,33 +271,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		list.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 
 		if (OperatingSystemUtil.isMac()){
-//			list.putClientProperty("Quaqua.List.style", "striped");
 			listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//			listScroller.setBorder(BorderFactory.createCompoundBorder(
-//			BorderFactory.createEmptyBorder(5, 10, 5, 10),
-//			listScroller.getBorder()));
-//			this.getRootPane().setBorder(BorderFactory.createTitledBorder(""));
-//			editableTransaction.setBorder(BorderFactory.createEmptyBorder(2, 8, 5, 8));
-//			searchField.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 		}
 		else {
 			transactionEditor.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		}
-
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_ALL);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_TODAY);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_WEEK);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_MONTH);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_QUARTER);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_THIS_YEAR);
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_LAST_YEAR);
-//		if (PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled()){
-//		availableFilters.add(null);
-//		if (PrefsModel.getInstance().isShowReconciled())
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_RECONCILED);
-//		if (PrefsModel.getInstance().isShowCleared())
-//		availableFilters.add(BuddiKeys.TRANSACTION_FILTER_NOT_CLEARED);
-//		}
 
 		dateFilterComboBox.setModel(new DefaultComboBoxModel(TransactionDateFilterKeys.values()));
 		dateFilterComboBox.setRenderer(new TranslatorListCellRenderer());
@@ -317,26 +295,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			}			
 		});
 
-		//Once we have the listeners all set up, we will load the saved filter.
-		// Since it is saved a string, and the model contains enum's, we have
-		// to check manually.  Yes, it's ugly.  Please let me know if I am 
-		// stupid and have missed a completely obvious alternative.
-//		String savedFilter = PrefsModel.getInstance().getSelectedFilter(); //TODO Save filter
-//		if (savedFilter != null){
-//		for (int i = 0; i < availableFilters.size(); i++){
-//		if (availableFilters.get(i) != null 
-//		&& availableFilters.get(i).toString().equals(savedFilter)){
-//		filterComboBox.setSelectedIndex(i);
-//		break;
-//		}
-//		}
-//		}
-
-
 		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
 				listModel.setSearchText(searchField.getText());
-//				list.ensureIndexIsVisible(listModel.getSize() - 1);
 			}
 		});
 
@@ -773,6 +734,18 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 //				DocumentController.saveFileSoon();
 			}
 		}
+	}
+	
+	public void doClickRecord(){
+		recordButton.doClick();
+	}
+	
+	public void doClickClear(){
+		clearButton.doClick();
+	}
+	
+	public void doClickDelete(){
+		deleteButton.doClick();
 	}
 
 	private Document getDataModel(){
