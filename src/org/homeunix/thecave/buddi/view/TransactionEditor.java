@@ -457,9 +457,9 @@ public class TransactionEditor extends MossPanel {
 	}
 
 	public String getDescription(){
-		System.out.println("Description: " + description.getSelectedItem());
-		if (description.getSelectedItem() != null)
-			return description.getSelectedItem().toString();
+		System.out.println("Description: " + description.getValue());
+		if (description.getValue() != null)
+			return description.getValue().toString();
 		return null;
 	}
 

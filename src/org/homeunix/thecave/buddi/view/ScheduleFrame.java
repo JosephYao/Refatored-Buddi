@@ -85,7 +85,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 
 	public void init() {
 //		scheduleEditor.loadSchedule(null);
-
+		
 		doneButton.setPreferredSize(InternalFormatter.getButtonSize(doneButton));
 		newButton.setPreferredSize(InternalFormatter.getButtonSize(newButton));
 		editButton.setPreferredSize(InternalFormatter.getButtonSize(editButton));

@@ -15,7 +15,7 @@ import org.homeunix.thecave.moss.util.crypto.MossCryptoFactory;
  */
 public class BuddiCryptoFactory  extends MossCryptoFactory {
 	private static final byte[] CANARY = "0123456789abcdef".getBytes();
-	private static final byte[] HEADER = "buddi3_data".getBytes();
+	private static final byte[] HEADER = "buddi_data_03.00".getBytes();
 
 	public BuddiCryptoFactory() throws CipherException {}
 	

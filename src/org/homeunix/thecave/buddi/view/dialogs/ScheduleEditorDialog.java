@@ -144,6 +144,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		JScrollPane messageScroller = new JScrollPane(message);
 		messageScroller.setPreferredSize(new Dimension(300, 100));
 
+		endDateChooserEnabled.setSelected(true);
+		
 		startDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
 		startDateChooser.setDate(new Date());
 

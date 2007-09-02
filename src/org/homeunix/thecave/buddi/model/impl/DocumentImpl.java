@@ -572,6 +572,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 + 	 * that has gone past.
 	 */
 	public void updateScheduledTransactions(){
+		startBatchChange();
+		
+		boolean changed = false;  //Set to true if we do anything.  If we do, we will set the model to changed when done.
+		
 		//Update any scheduled transactions
 		final Date today = DateFunctions.getEndOfDay(new Date());
 		//We specify a GregorianCalendar because we make some assumptions
@@ -771,10 +775,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 							this.addTransaction(t);
 							if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+							changed = true;
 						}
 					}
 					else {
-						Log.info("There was an error adding a scheduled transaction:\n\tDate = " 
+						Log.debug("Today was not the day to add the scheduled transaction...\n\tDate = " 
 								+ tempDate
 								+ "\n\tDescription = " 
 								+ s.getDescription());
@@ -788,6 +793,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				tempDate = DateFunctions.addDays(tempDate, 1);
 			}
 		}
+		
+		finishBatchChange();
+		
+		updateAllBalances();
+		
+		if (changed)
+			setChanged();
 	}
 
 	public void setPassword(char[] password) {
