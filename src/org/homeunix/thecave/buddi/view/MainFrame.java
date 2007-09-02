@@ -22,7 +22,7 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
-import org.homeunix.thecave.moss.swing.ApplicationTracker;
+import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 
@@ -151,7 +151,7 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	public static void updateAllContent(){
-		for (MossFrame frame : ApplicationTracker.getInstance().getOpenFrames()) {
+		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			frame.updateContent();
 		}
 	}

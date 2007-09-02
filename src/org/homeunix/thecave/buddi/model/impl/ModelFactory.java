@@ -220,6 +220,9 @@ public class ModelFactory {
 					//Store the password
 					document.setPassword(password);
 
+					//Check for scheduled transactions
+					document.updateScheduledTransactions();
+					
 					//Allow changes to start firing
 					document.finishBatchChange();
 					

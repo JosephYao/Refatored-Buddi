@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -52,6 +54,7 @@ import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -68,6 +71,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 	private final MossHintTextArea message;
 	private final MossScrollingComboBox frequencyPulldown;
 	private final JXDatePicker startDateChooser;
+	private final JXDatePicker endDateChooser;
+	private final JCheckBox endDateChooserEnabled;
 	private final TransactionEditor transactionEditor;
 
 	//Each card
@@ -98,16 +103,13 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		cancelButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL));
 
 		startDateChooser = new JXDatePicker();
+		endDateChooser = new JXDatePicker();
+		endDateChooserEnabled = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.ENDING_ON));
 		transactionEditor = new TransactionEditor((Document) parentFrame.getDocument(), null, true);
 
 		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
 
 		message = new MossHintTextArea(TextFormatter.getTranslation(BuddiKeys.HINT_MESSAGE));
-
-		//This is where we create all the check boxes
-
-		//Create the check boxes for Multiple Weeks each Month.
-
 
 		//This is where we give the Frequency dropdown options
 		frequencyPulldown = new MossScrollingComboBox(ScheduleFrequency.values());
@@ -145,31 +147,47 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		startDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
 		startDateChooser.setDate(new Date());
 
+		endDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
+		endDateChooser.setDate(DateFunctions.addYears(new Date(), 1));
+
 		Dimension textSize = new Dimension(Math.max(250, scheduleName.getPreferredSize().width), scheduleName.getPreferredSize().height);
 		startDateChooser.setPreferredSize(textSize);
+		endDateChooser.setPreferredSize(textSize);
 		scheduleName.setPreferredSize(textSize);
 
 
 
 		//The top part of the schedule information
 		JLabel intro = new JLabel(TextFormatter.getTranslation(BuddiKeys.REPEAT_THIS_ACTION));
-		JPanel introHolder = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel introHolder = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		introHolder.add(intro);
 		introHolder.add(frequencyPulldown);
 
 		//The middle part of the schedule information
-		JPanel startDatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel startDatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		startDatePanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.STARTING_ON)));
 		startDatePanel.add(startDateChooser);
+		
+		//The middle part of the schedule information
+		JPanel endDatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		endDatePanel.add(endDateChooserEnabled);
+		endDatePanel.add(endDateChooser);
 
+		JPanel middlePanel = new JPanel(new GridLayout(0, 1));
+		middlePanel.add(startDatePanel);
+		middlePanel.add(endDatePanel);
+		
+		JPanel cardHolderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		cardHolderPanel.add(cardHolder);
+		
 		//Put the schedule panel together properly...
 		//The schedulePanel is where we keep all the options for scheduling
 		JPanel scheduleDetailsPanel = new JPanel(new BorderLayout());
 		scheduleDetailsPanel.add(introHolder, BorderLayout.NORTH);
-		scheduleDetailsPanel.add(startDatePanel, BorderLayout.CENTER);
-		scheduleDetailsPanel.add(cardHolder, BorderLayout.SOUTH);
+		scheduleDetailsPanel.add(middlePanel, BorderLayout.CENTER);
+		scheduleDetailsPanel.add(cardHolderPanel, BorderLayout.SOUTH);
 
-		JPanel scheduleNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel scheduleNamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		scheduleNamePanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SCHEDULE_NAME)));
 		scheduleNamePanel.add(scheduleName);
 
@@ -201,11 +219,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		cardHolder.add(multipleWeeksMonthly, ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
 		cardHolder.add(multipleMonthsYearly, ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
 
-//		namePanel.add(messageScroller, BorderLayout.SOUTH);
-
 		//Done all the fancy stuff... now just put all the panels together
 		JPanel scheduleAndMessagePanel = new JPanel(new BorderLayout());
-//		scheduleAndMessagePanel.setBorder(BorderFactory.createEmptyBorder(7, 0, 10, 0));
 		scheduleAndMessagePanel.add(entireSchedulePanel, BorderLayout.CENTER);
 		scheduleAndMessagePanel.add(messageScroller, BorderLayout.EAST);
 
@@ -222,24 +237,17 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		this.add(mainPanel, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 
-
-//		JPanel mainBorderPanel = new JPanel();
-//		mainBorderPanel.setLayout(new BorderLayout());
-//		mainBorderPanel.setBorder(BorderFactory.createTitledBorder((String) null));
-//		mainBorderPanel.add(textPanelSpacer);
-
 		if (OperatingSystemUtil.isMac()){
-//			textPanelSpacer.setBorder(BorderFactory.createEmptyBorder(7, 17, 17, 17));
 			messageScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			messageScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		}
-
-//		this.add(mainPanel, BorderLayout.CENTER);
 
 		//If we are viewing existing transactions, we cannot 
 		// modify the schedule at all.
 		//TODO Make a more intelligent enabled check thingy
 		startDateChooser.setEnabled(schedule == null);
+		endDateChooser.setEnabled(schedule == null);
+		endDateChooserEnabled.setEnabled(schedule == null);
 		frequencyPulldown.setEnabled(schedule == null);
 		monthly.setEnabled(schedule == null);
 		oneDayMonthly.setEnabled(schedule == null);
@@ -252,6 +260,14 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 		updateSchedulePulldown();
 
+		if (schedule == null){
+			endDateChooserEnabled.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					endDateChooser.setEnabled(endDateChooserEnabled.isSelected() && schedule == null);
+				}
+			});
+		}
+		
 		frequencyPulldown.setRenderer(new TranslatorListCellRenderer());
 		frequencyPulldown.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -281,7 +297,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		//If we're just fillinf in the transaction, we need at least
 		// amount, description, to, and from.
 		if ((transactionEditor.getAmount() != 0)
-				&& (transactionEditor.getDescription().length() > 0)
+				&& (transactionEditor.getDescription() != null && transactionEditor.getDescription().length() > 0)
 				&& (transactionEditor.getTo() != null)
 				&& (transactionEditor.getFrom() != null)){
 			return true;
@@ -292,7 +308,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		// part of the transaction is filled in, it all must be.
 		if ((message.getValue().toString().length() > 0)
 				&& (transactionEditor.getAmount() == 0)
-				&& (transactionEditor.getDescription().length() == 0)
+				&& (transactionEditor.getDescription() == null 
+						|| transactionEditor.getDescription().length() == 0)
 				&& (transactionEditor.getTo() == null)
 				&& (transactionEditor.getFrom() == null)){
 			return true;
@@ -364,6 +381,8 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 					//TODO We should not have to save this, as it cannot be modified.
 					if (needToAdd){
 						s.setStartDate(startDateChooser.getDate());
+						if (endDateChooserEnabled.isSelected())
+							s.setEndDate(endDateChooser.getDate());
 						s.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
 						s.setScheduleDay(getSelectedCard().getScheduleDay());
 						s.setScheduleWeek(getSelectedCard().getScheduleWeek());
@@ -417,6 +436,13 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 			//Load the schedule pulldowns, based on which type of 
 			// schedule we're following.
 			startDateChooser.setDate(schedule.getStartDate());
+			if (schedule.getEndDate() != null){
+				endDateChooser.setDate(schedule.getEndDate());
+				endDateChooserEnabled.setSelected(true);
+			}
+			else {
+				endDateChooserEnabled.setSelected(false);
+			}
 			if (schedule.getFrequencyType() != null)
 				frequencyPulldown.setSelectedItem(ScheduleFrequency.valueOf(schedule.getFrequencyType()));
 
@@ -431,8 +457,10 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
-			if (saveScheduledTransaction())
+			if (saveScheduledTransaction()){
+				model.updateAllBalances();
 				this.closeWindow();
+			}
 		}
 		else if (e.getSource().equals(cancelButton)){
 			this.closeWindow();

@@ -11,7 +11,7 @@ import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.moss.swing.ApplicationTracker;
+import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.Log;
@@ -25,7 +25,7 @@ public class FileQuit extends MossMenuItem {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		for (MossFrame frame : ApplicationTracker.getInstance().getOpenFrames()) {
+		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			if (!frame.canClose()){
 				Log.debug("Frame " + frame.getTitle() + " refused to quit; cancelling quit request.");
 				return;
@@ -33,8 +33,8 @@ public class FileQuit extends MossMenuItem {
 		}
 		
 		//We have already checked the windows; if none of them cancelled the request, we can just close.
-		while (ApplicationTracker.getInstance().getOpenFrames().size() > 0) {
-			ApplicationTracker.getInstance().getOpenFrames().get(0).closeWindowWithoutPrompting();
+		while (ApplicationModel.getInstance().getOpenFrames().size() > 0) {
+			ApplicationModel.getInstance().getOpenFrames().get(0).closeWindowWithoutPrompting();
 		}
 		
 		System.exit(0);

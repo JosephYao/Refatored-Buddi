@@ -12,6 +12,7 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -63,6 +64,37 @@ public class FilteredLists {
 				return true;
 			}
 
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns all scheduled transactions who meet the following criteria: 
+	 * 
+	 * 1) Start date is before today
+	 * 2) Last date created is before today (or is not yet set).
+	 * 3) End date is after today (or is not defined)
+	 * 
+	 * This is used at startup when determining which scheduled transactions
+	 * we need to check and possibly add.
+	 * @author wyatt
+	 *
+	 */
+	public static class ScheduledTransactionListFilteredByBeforeToday extends BuddiFilteredList<ScheduledTransaction> {
+		private Date today = DateFunctions.getStartOfDay(new Date());
+		
+		public ScheduledTransactionListFilteredByBeforeToday(Document model, List<ScheduledTransaction> transactions){
+			super(model, transactions);
+		}
+
+		@Override
+		public boolean isIncluded(ScheduledTransaction st) {
+			if ((DateFunctions.getDaysBetween(st.getStartDate(), new Date(), false) == 0
+					|| DateFunctions.getStartOfDay(st.getStartDate()).before(today))
+					&& (st.getLastDayCreated() == null 
+							|| DateFunctions.getStartOfDay(st.getLastDayCreated()).before(today))
+							&& (st.getEndDate() == null || st.getEndDate().after(today)))
+				return true;
 			return false;
 		}
 	}

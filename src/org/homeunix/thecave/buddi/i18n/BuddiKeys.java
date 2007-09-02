@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	ENDING_ON,
 	CURRENT_BUDGET_PERIOD,
 	FILECHOOSER_EXPORT_FILE_TITLE,
 	FILECHOOSER_IMPORT_FILE_TITLE,

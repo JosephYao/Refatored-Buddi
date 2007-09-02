@@ -52,14 +52,14 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.swing.AutoCompleteComboBox;
-import org.homeunix.thecave.moss.swing.AutoCompleteComboBoxModel;
+import org.homeunix.thecave.moss.swing.MossAutoCompleteComboBox;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossHintComboBox;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
+import org.homeunix.thecave.moss.swing.model.AutoCompleteComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -111,7 +111,7 @@ public class TransactionEditor extends MossPanel {
 		to = new MossScrollingComboBox();
 		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
 		if (PrefsModel.getInstance().isShowAutoComplete())
-			description = new AutoCompleteComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+			description = new MossAutoCompleteComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
 		else
 			description = new MossHintComboBox(new AutoCompleteComboBoxModel<String>(new DescriptionList(this.model)), PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
 		memo = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
@@ -396,13 +396,15 @@ public class TransactionEditor extends MossPanel {
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
-			if (associatedAccount.equals(from.getSelectedItem())){
-				cleared.setSelected(transaction.isClearedFrom());
-				reconciled.setSelected(transaction.isReconciledFrom());				
-			}
-			else if (associatedAccount.equals(to.getSelectedItem())){
-				cleared.setSelected(transaction.isClearedTo());
-				reconciled.setSelected(transaction.isReconciledTo());
+			if (associatedAccount != null){
+				if (associatedAccount.equals(from.getSelectedItem())){
+					cleared.setSelected(transaction.isClearedFrom());
+					reconciled.setSelected(transaction.isReconciledFrom());				
+				}
+				else if (associatedAccount.equals(to.getSelectedItem())){
+					cleared.setSelected(transaction.isClearedTo());
+					reconciled.setSelected(transaction.isReconciledTo());
+				}
 			}
 		}
 		else{

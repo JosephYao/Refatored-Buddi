@@ -12,13 +12,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
+import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
@@ -29,16 +37,20 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.ScheduledTransactionListFilteredByBeforeToday;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredByDate;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredBySource;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
+import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
 
 
@@ -81,8 +93,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	//Model object data
 	private Date modifiedDate;
 	private String uid;
-	
-	
+
+
 	/**
 	 * By default, we start with one batch change enabled.  You must call finisheBatchChange()
 	 * before any change events will be sent!  ModelFactory does this for you automatically;
@@ -91,8 +103,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public DocumentImpl() {
 		startBatchChange();
 	}
-	
-	
+
+
 	public List<Account> getAccounts() {
 		checkLists();
 		return accounts;
@@ -301,7 +313,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 //			setUid(ModelFactory.getGeneratedUid(this));
 
 			startBatchChange();
-			
+
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
 				protected Expression instantiate(Object oldInstance, Encoder out ){
@@ -311,17 +323,17 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				}
 			});
 //			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
-//				protected Expression instantiate(Object oldInstance, Encoder out ){
-//					File file = (File) oldInstance;
-//					String filePath = file.getAbsolutePath();
-//					return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
-//				}
+//			protected Expression instantiate(Object oldInstance, Encoder out ){
+//			File file = (File) oldInstance;
+//			String filePath = file.getAbsolutePath();
+//			return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
+//			}
 //			});
 
 			encoder.writeObject(this);
 			encoder.flush();
 			encoder.close();
-			
+
 			finishBatchChange();
 
 			//Save where we last saved this file.
@@ -552,7 +564,232 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		}
 
 	}
-	
+
+	/**
+	 * Runs through the list of scheduled transactions, and adds any which
+	 * show be executed to the apropriate transacactions list.
++ 	 * Checks for the frequency type and based on it finds if a transaction is scheduled for a date
++ 	 * that has gone past.
+	 */
+	public void updateScheduledTransactions(){
+		//Update any scheduled transactions
+		final Date today = DateFunctions.getEndOfDay(new Date());
+		//We specify a GregorianCalendar because we make some assumptions
+		// about numbering of months, etc that may break if we 
+		// use the default calendar for the locale.  It's not the
+		// prettiest code, but it works.  Perhaps we can change
+		// it to be cleaner later on...
+		final GregorianCalendar tempCal = new GregorianCalendar();
+
+		for (ScheduledTransaction s : new ScheduledTransactionListFilteredByBeforeToday(this, getScheduledTransactions())) {
+			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
+
+			Date tempDate = s.getLastDayCreated();
+			//#1779286 Bug BiWeekly Scheduled Transactions -Check if this transcation has never been created. 
+			boolean isNewTransaction=false;
+			//The lastDayCreated need to date as such without rolling forward by a day and the start fo the day 
+			//so calculations of difference of days are on the smae keel as tempDate.
+			Date lastDayCreated = null;
+			//Temp date is where we will start looping from.
+			if (tempDate == null){
+				//If it is null, we need to init it to a sane value.
+				tempDate = s.getStartDate();
+				isNewTransaction=true;
+				//The below is just to avoid NPE's ideally changing the order of the checking below will solve the problem, but better safe than sorry.
+				lastDayCreated=DateFunctions.getStartOfDay(tempDate);
+			}
+			else {
+				lastDayCreated = DateFunctions.getStartOfDay(tempDate);
+				//We start one day after the last day, to avoid repeats.  
+				// See bug #1641937 for more details.
+				tempDate = DateFunctions.addDays(tempDate, 1);
+
+			}
+
+
+
+			tempDate = DateFunctions.getStartOfDay(tempDate);
+
+			if (Const.DEVEL){
+				Log.debug("tempDate = " + tempDate);
+				Log.debug("startDate = " + s.getStartDate());
+			}
+
+			//The transaction is scheduled for a date before today and before the EndDate 
+			while (tempDate.before(today)) {
+				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
+
+				//We use a Calendar instead of a Date object for comparisons
+				// because the Calendar interface is much nicer.
+				tempCal.setTime(tempDate);
+
+				boolean todayIsTheDay = false;
+
+				//We check each type of schedule, and if it matches,
+				// we set todayIsTheDay to true.  We could do it 
+				// all in one huge if statement, but that is very
+				// hard to read and maintain.
+
+				//If we are using the Monthly by Date frequency, 
+				// we only check if the given day is equal to the
+				// scheduled day.
+				if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					todayIsTheDay = true;
+				}
+				//If we are using the Monthly by Day of Week,
+				// we check if the given day (Sunday, Monday, etc) is equal to the
+				// scheduleDay, and if the given day is within the first week.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						&& tempCal.get(Calendar.DAY_OF_MONTH) <= 7){
+					todayIsTheDay = true;
+				}
+				//If we are using Weekly frequency, we only need to compare
+				// the number of the day.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					todayIsTheDay = true;
+				}
+				//If we are using BiWeekly frequency, we need to compare
+				// the number of the day as well as ensure that there is one
+				// week between each scheduled transaction.
+				// FYI, we store Sunday == 0, even though Calendar.SUNDAY == 1.  Thus,
+				// we add 1 to our stored day before comparing it.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
+						//As tempdate has been moved forward by one day we need to check if it is >= 13 instead of >13
+						&& ((DateFunctions.getDaysBetween(lastDayCreated, tempDate, false) >= 13)
+								|| isNewTransaction)){
+					todayIsTheDay = true;
+					lastDayCreated = (Date) tempDate.clone();
+					if(isNewTransaction){
+						isNewTransaction=false;
+					}
+				}
+				//Every day - it's obvious enough even for a monkey!
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString())){
+					todayIsTheDay = true;
+				}
+				//Every weekday - all days but Saturday and Sunday.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString())
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) < Calendar.SATURDAY)
+						&& (tempCal.get(Calendar.DAY_OF_WEEK) > Calendar.SUNDAY)){
+					todayIsTheDay = true;
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do our bit bashing to determine
+				// if the week is correct.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString())
+						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
+					if (Const.DEVEL) {
+						Log.debug("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
+						Log.debug("s.getScheduleWeek() == " + s.getScheduleWeek());
+					}
+					int week = s.getScheduleWeek();
+					//The week mask should return 1 for the first week (day 1 - 7), 
+					// 2 for the second week (day 8 - 14), 4 for the third week (day 15 - 21),
+					// and 8 for the fourth week (day 22 - 28).  We then AND it with 
+					// the scheduleWeek to determine if this week matches the criteria
+					// or not.
+					int weekNumber = tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1;
+					int weekMask = (int) Math.pow(2, weekNumber);
+					if (Const.DEVEL){
+						Log.debug("The week number is " + weekNumber + ", the week mask is " + weekMask + ", and the day of week in month is " + tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+					}
+					if ((week & weekMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						todayIsTheDay = true;
+					}
+				}
+				//To make this one clearer, we do it in two passes.
+				// First, we check the frequency type and the day.
+				// If these match, we do our bit bashing to determine
+				// if the month is correct.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString())
+						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+					int months = s.getScheduleMonth();
+					//The month mask should be 2 ^ MONTH NUMBER,
+					// where January == 0.
+					// i.e. 1 for January, 4 for March, 2048 for December.
+					int monthMask = (int) Math.pow(2, tempCal.get(Calendar.MONTH));
+					if ((months & monthMask) != 0){
+						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						todayIsTheDay = true;
+					}
+				}
+
+				try {
+					//If one of the above rules matches, we will copy the
+					// scheduled transaction into the transactions list
+					// at the given day.
+					if (todayIsTheDay){
+						if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
+						s.setLastDayCreated(DateFunctions.getEndOfDay(tempDate));
+						if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDayCreated());
+
+						if (s.getMessage() != null && s.getMessage().trim().length() > 0){
+							String[] options = new String[1];
+							options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+							JOptionPane.showOptionDialog(
+									null, 
+									s.getMessage(), 
+									TextFormatter.getTranslation(BuddiKeys.SCHEDULED_MESSAGE), 
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.INFORMATION_MESSAGE,
+									null,
+									options,
+									options[0]
+							);
+						}
+
+						if (tempDate != null
+								&& s.getDescription() != null) {
+							Transaction t = ModelFactory.createTransaction(
+									tempDate, 
+									s.getDescription(), 
+									s.getAmount(), 
+									s.getFrom(), 
+									s.getTo());
+
+							t.setDate(tempDate);
+							t.setDescription(s.getDescription());
+							t.setAmount(s.getAmount());
+							t.setTo(s.getTo());
+							t.setFrom(s.getFrom());
+							t.setMemo(s.getMemo());
+							t.setNumber(s.getNumber());
+//							t.setCleared(s.isCleared());
+//							t.setReconciled(s.isReconciled());
+							t.setScheduled(true);
+
+							this.addTransaction(t);
+							if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+						}
+					}
+					else {
+						Log.info("There was an error adding a scheduled transaction:\n\tDate = " 
+								+ tempDate
+								+ "\n\tDescription = " 
+								+ s.getDescription());
+					}
+
+				}
+				catch (ModelException me){
+					Log.error("Error adding scheduled tranaction: " + me);
+				}
+
+				tempDate = DateFunctions.addDays(tempDate, 1);
+			}
+		}
+	}
+
 	public void setPassword(char[] password) {
 		this.password = password;
 	}
