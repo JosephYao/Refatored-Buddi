@@ -58,7 +58,7 @@ import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.swing.model.AutoCompleteComboBoxModel;
+import org.homeunix.thecave.moss.swing.model.AutoCompleteMossHintComboBoxModel;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -113,7 +113,7 @@ public class TransactionEditor extends MossPanel {
 		description = new MossHintComboBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
 
 		if (PrefsModel.getInstance().isShowAutoComplete())
-			description.setModel(new AutoCompleteComboBoxModel<String>(description, new DescriptionList(this.model)));
+			description.setModel(new AutoCompleteMossHintComboBoxModel<String>(description, new DescriptionList(this.model)));
 		else
 			description.setModel(new BackedComboBoxModel<String>(new DescriptionList(this.model)));
 		memo = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_MEMO));
