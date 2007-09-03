@@ -22,12 +22,17 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 		return getAccount().getBalance();
 	}
 	public ImmutableAccountType getAccountType() {
-		return new MutableTypeImpl(getAccount().getAccountType());
+		return new MutableAccountTypeImpl(getAccount().getAccountType());
 	}
 	public Account getAccount(){
 		return (Account) getRaw(); 
 	}
 	public Date getStartDate() {
 		return getAccount().getStartDate();
+	}
+	
+	@Override
+	public String toString() {
+		return getFullName();
 	}
 }

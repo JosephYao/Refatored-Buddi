@@ -41,4 +41,8 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 	public String getNotes() {
 		return getSource().getNotes();
 	}
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }

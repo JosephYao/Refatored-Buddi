@@ -16,7 +16,7 @@ import org.homeunix.thecave.buddi.model.Document;
  * @author wyatt
  *
  */
-public interface ImmutableModel extends ImmutableModelObject {
+public interface ImmutableDocument extends ImmutableModelObject {
 	
 	/**
 	 * Returns the account referenced by the given name.

@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
@@ -23,7 +23,7 @@ public class TransactionsNotReconciled extends BuddiReportPlugin {
 
 	public static final long serialVersionUID = 0;
 
-	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
 		List<ImmutableTransaction> temp = model.getTransactions(startDate, endDate);
 		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();

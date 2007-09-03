@@ -17,7 +17,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTypeImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.moss.data.list.WrapperList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -100,7 +100,7 @@ public class WrapperLists {
 			if (object instanceof Transaction)
 				return (T) new MutableTransactionImpl((Transaction) object);
 			if (object instanceof AccountType)
-				return (T) new MutableTypeImpl((AccountType) object);
+				return (T) new MutableAccountTypeImpl((AccountType) object);
 
 			//Catch all
 			return null;

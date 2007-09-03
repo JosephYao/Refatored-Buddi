@@ -113,23 +113,30 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//Make a backup of the file...
 		//Backup the file, now that we know it is good...
 		try{
-			//Use a rotating backup file, of form 'Data.X.buddi'  
-			// The one with the smallest number X is the most recent.
-			String fileBase = getFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
-			for (int i = PrefsModel.getInstance().getNumberOfBackups() - 2; i >= 0; i--){
-				File tempBackupDest = new File(fileBase + "_" + (i + 1) + Const.BACKUP_FILE_EXTENSION);
-				File tempBackupSource = new File(fileBase + "_" + i + Const.BACKUP_FILE_EXTENSION);
-				if (tempBackupSource.exists()){
-					FileFunctions.copyFile(tempBackupSource, tempBackupDest);
-					Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+			if (getFile() != null){
+				//Use a rotating backup file, of form 'Data.X.buddi'  
+				// The one with the smallest number X is the most recent.
+				String fileBase = getFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+				for (int i = PrefsModel.getInstance().getNumberOfBackups() - 2; i >= 0; i--){
+					File tempBackupDest = new File(fileBase + "_" + (i + 1) + Const.BACKUP_FILE_EXTENSION);
+					File tempBackupSource = new File(fileBase + "_" + i + Const.BACKUP_FILE_EXTENSION);
+					if (tempBackupSource.exists()){
+						FileFunctions.copyFile(tempBackupSource, tempBackupDest);
+						Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+					}
 				}
+				File tempBackupDest = new File(fileBase + "_0" + Const.BACKUP_FILE_EXTENSION);
+				FileFunctions.copyFile(getFile(), tempBackupDest);
+				if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
 			}
-			File tempBackupDest = new File(fileBase + "_0" + Const.BACKUP_FILE_EXTENSION);
-			FileFunctions.copyFile(getFile(), tempBackupDest);
-			if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
 		}
 		catch(IOException ioe){
-			Log.emergency("Problem backing up data files when starting program: " + ioe);
+			Log.error("Problem backing up data files: ");
+			ioe.printStackTrace(Log.getPrintStream());
+		}
+		catch (RuntimeException re){
+			Log.emergency("Runtime Exception encountered when backuing up data file!");
+			re.printStackTrace(Log.getPrintStream());
 		}
 	}
 	
@@ -250,12 +257,16 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private List<Source> sources = null;
 	@SuppressWarnings("unchecked")
 	public List<Source> getSources() {
-		return new CompositeList<Source>(true, false, getAccounts(), getBudgetCategories());
+		if (sources == null)
+			sources = new CompositeList<Source>(true, false, getAccounts(), getBudgetCategories());
+		return sources;
 	}
 	public List<Transaction> getTransactions(Date startDate, Date endDate) {
-		return new FilteredLists.TransactionListFilteredByDate(this, getTransactions(), startDate, endDate);
+		return new TransactionListFilteredByDate(this, getTransactions(), startDate, endDate);
 	}
 	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate) {
 		return new TransactionListFilteredBySource(

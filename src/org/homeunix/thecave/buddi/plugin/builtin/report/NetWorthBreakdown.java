@@ -19,7 +19,7 @@ import org.homeunix.drummer.model.Transaction;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -35,7 +35,7 @@ public class NetWorthBreakdown extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 	
 	@Override
-	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
 		Map<Account, Long> accounts = getAccountBalance(endDate);

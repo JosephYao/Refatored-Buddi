@@ -18,7 +18,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
@@ -34,7 +34,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 	
 	@Override
-	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		DefaultPieDataset pieData = new DefaultPieDataset();
 		
 		Map<ImmutableBudgetCategory, Long> categories = getIncomeBetween(model, startDate, endDate);
@@ -79,7 +79,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 		return new HtmlPage(sb.toString(), images);
 	}
 		
-	private Map<ImmutableBudgetCategory, Long> getIncomeBetween(ImmutableModel model, Date startDate, Date endDate){
+	private Map<ImmutableBudgetCategory, Long> getIncomeBetween(ImmutableDocument model, Date startDate, Date endDate){
 		List<ImmutableTransaction> transactions = model.getTransactions(startDate, endDate);
 		Map<ImmutableBudgetCategory, Long> categories = new HashMap<ImmutableBudgetCategory, Long>();
 		

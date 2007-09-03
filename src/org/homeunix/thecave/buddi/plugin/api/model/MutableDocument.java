@@ -5,7 +5,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 
-public interface MutableModel extends ImmutableModel {
+public interface MutableDocument extends ImmutableDocument {
 
 	/**
 	 * Adds an account to the model

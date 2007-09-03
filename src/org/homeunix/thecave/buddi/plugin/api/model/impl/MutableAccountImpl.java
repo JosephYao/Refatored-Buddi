@@ -49,4 +49,8 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	public Date getStartDate() {
 		return getAccount().getStartDate();
 	}
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }

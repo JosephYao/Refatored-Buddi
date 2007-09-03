@@ -23,4 +23,9 @@ public class ImmutableTypeImpl extends ImmutableModelObjectImpl implements Immut
 	public boolean isCredit(){
 		return getType().isCredit();
 	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

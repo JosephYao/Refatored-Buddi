@@ -16,14 +16,14 @@ import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 
-public class ImmutableModelImpl extends ImmutableModelObjectImpl implements ImmutableModel {
+public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements ImmutableDocument {
 	private final Document model;
 	
-	public ImmutableModelImpl(Document model) {
+	public ImmutableDocumentImpl(Document model) {
 		super(model);
 		this.model = model;
 	}
@@ -72,10 +72,15 @@ public class ImmutableModelImpl extends ImmutableModelObjectImpl implements Immu
 	public ImmutableAccountType getType(String name) {
 		if (getModel().getAccountType(name) == null)
 			return null;
-		return new MutableTypeImpl(getModel().getAccountType(name));
+		return new MutableAccountTypeImpl(getModel().getAccountType(name));
 	}
 	
 	public List<ImmutableAccountType> getTypes(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
+	}
+	
+	@Override
+	public String toString() {
+		return getUid();
 	}
 }

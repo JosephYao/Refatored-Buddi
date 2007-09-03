@@ -16,10 +16,10 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableModelImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTypeImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 
@@ -29,8 +29,8 @@ public class MutableModelFactory {
 	 * @return
 	 * @throws ModelException
 	 */
-	public static MutableModel createDocument() throws ModelException {
-		return new MutableModelImpl(ModelFactory.createDocument());
+	public static MutableDocument createDocument() throws ModelException {
+		return new MutableDocumentImpl(ModelFactory.createDocument());
 	}
 	
 	/**
@@ -40,8 +40,8 @@ public class MutableModelFactory {
 	 * @throws DocumentLoadException
 	 * @throws OperationCancelledException
 	 */
-	public static MutableModel createDocument(File file) throws DocumentLoadException, OperationCancelledException {
-		return new MutableModelImpl(ModelFactory.createDocument(file));
+	public static MutableDocument createDocument(File file) throws DocumentLoadException, OperationCancelledException {
+		return new MutableDocumentImpl(ModelFactory.createDocument(file));
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class MutableModelFactory {
 	public static MutableAccountType createMutableAccountType(String name, boolean credit) throws ModelException {
 		AccountType t = ModelFactory.createAccountType(name, credit);
 		
-		return new MutableTypeImpl(t);
+		return new MutableAccountTypeImpl(t);
 	}
 	
 	/**

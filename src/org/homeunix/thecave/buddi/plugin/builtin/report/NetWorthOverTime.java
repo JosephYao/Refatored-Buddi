@@ -17,7 +17,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
@@ -36,7 +36,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 
 	@Override
-	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		final int NUM_SAMPLES = 12;
 
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
@@ -107,7 +107,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 		return BuddiKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME.toString();
 	}
 
-	private Map<ImmutableAccount, Long> getAccountBalance(ImmutableModel model, Date date){
+	private Map<ImmutableAccount, Long> getAccountBalance(ImmutableDocument model, Date date){
 		Map<ImmutableAccount, Long> map = new HashMap<ImmutableAccount, Long>();
 
 		for (ImmutableAccount a : model.getAccounts()) {

@@ -31,6 +31,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	private BudgetCategoryType selectedBudgetPeriodType;
 
 	private final Map<BudgetCategoryType, List<BudgetCategory>> budgetCategoriesByType;
+	private final Map<Object, BudgetCategoryListFilteredByDeleted> childrenMap;
 
 	private int monthOffset; //Where the selected month is in relation to the 
 	// edge of the table.
@@ -38,6 +39,8 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	public MyBudgetTreeTableModel(Document model) {
 		super(new Object());
 		this.budgetCategoriesByType = new HashMap<BudgetCategoryType, List<BudgetCategory>>();
+		this.childrenMap = new HashMap<Object, BudgetCategoryListFilteredByDeleted>();
+		
 		this.model = model;
 		this.root = getRoot();
 		this.selectedDate = new Date();
@@ -150,16 +153,18 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public int getChildCount(Object parent) {
-		if (parent.equals(root)){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
-			return budgetCategories.size();
-		}
-		if (parent instanceof BudgetCategory){
-			List<BudgetCategory> budgetCategories = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent));
-			return budgetCategories.size();
+		if (childrenMap.get(parent) == null){
+			if (parent.equals(root)){
+				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null)));
+//				return budgetCategories.size();
+			}
+			if (parent instanceof BudgetCategory){
+				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent)));
+//				return budgetCategories.size();
+			}
 		}
 
-		return 0;
+		return childrenMap.get(parent).size();
 	}
 
 	public int getIndexOfChild(Object parent, Object child) {

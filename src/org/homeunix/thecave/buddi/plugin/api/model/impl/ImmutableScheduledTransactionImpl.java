@@ -57,5 +57,5 @@ public class ImmutableScheduledTransactionImpl extends ImmutableTransactionImpl 
 
 	public Date getStartDate() {
 		return getScheduledTransaction().getStartDate();
-	}
+	}	
 }

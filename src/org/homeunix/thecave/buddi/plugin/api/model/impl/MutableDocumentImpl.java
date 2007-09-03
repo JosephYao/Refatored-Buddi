@@ -8,13 +8,13 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
 
-public class MutableModelImpl extends ImmutableModelImpl implements MutableModel {
+public class MutableDocumentImpl extends ImmutableDocumentImpl implements MutableDocument {
 
-	public MutableModelImpl(Document model) {
+	public MutableDocumentImpl(Document model) {
 		super(model);
 	}
 

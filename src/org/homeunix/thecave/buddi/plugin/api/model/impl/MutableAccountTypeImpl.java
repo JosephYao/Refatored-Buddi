@@ -7,9 +7,9 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 
-public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAccountType {
+public class MutableAccountTypeImpl extends MutableModelObjectImpl implements MutableAccountType {
 
-	public MutableTypeImpl(AccountType type) {
+	public MutableAccountTypeImpl(AccountType type) {
 		super(type);
 	}
 	
@@ -27,5 +27,9 @@ public class MutableTypeImpl extends MutableModelObjectImpl implements MutableAc
 
 	public void setName(String name) throws InvalidValueException{
 		getType().setName(name);
+	}
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

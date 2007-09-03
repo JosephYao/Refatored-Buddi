@@ -39,4 +39,9 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 	public ImmutableBudgetCategoryType getBudgetPeriodType() {
 		return new ImmutableBudgetCategoryTypeImpl(getBudgetCategory().getBudgetPeriodType());
 	}
+	
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }

@@ -8,7 +8,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 import java.io.File;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
@@ -18,7 +18,7 @@ public abstract class BuddiImportPlugin implements MossPlugin {
 	 * Imports data as required.  The plugin launch code will prompt for a file
 	 * and pass it in (unless you override the isPromptForFile() method to return false).
 	 */
-	public abstract void importData(MutableModel model, MossDocumentFrame callingFrame, File file);
+	public abstract void importData(MutableDocument model, MossDocumentFrame callingFrame, File file);
 	
 	/**
 	 * Return the description which shows up in the file chooser.  By default, this 

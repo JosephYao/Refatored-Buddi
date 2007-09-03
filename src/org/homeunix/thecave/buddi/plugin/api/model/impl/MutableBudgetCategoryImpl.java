@@ -63,4 +63,8 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	public boolean isIncome() {
 		return getBudgetCategory().isIncome();
 	}
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }

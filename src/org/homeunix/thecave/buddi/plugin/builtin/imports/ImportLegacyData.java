@@ -26,7 +26,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.MutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
@@ -39,7 +39,7 @@ import org.homeunix.thecave.moss.util.Version;
 public class ImportLegacyData extends BuddiImportPlugin {
 
 	@Override
-	public void importData(MutableModel model, MossDocumentFrame callingFrame, File file) {
+	public void importData(MutableDocument model, MossDocumentFrame callingFrame, File file) {
 		try {
 			if (file == null)
 				return;
@@ -63,7 +63,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 		return BuddiKeys.IMPORT_LEGACY_BUDDI_FORMAT.toString();
 	}
 	
-	public void convert(MutableModel model, File oldFile) throws DocumentLoadException {
+	public void convert(MutableDocument model, File oldFile) throws DocumentLoadException {
 		try {
 			DataInstance.getInstance().loadDataFile(oldFile);
 			DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();

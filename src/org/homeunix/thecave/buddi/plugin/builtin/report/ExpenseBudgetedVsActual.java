@@ -18,7 +18,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModel;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
@@ -35,7 +35,7 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 	
 	@Override
-	public HtmlPage getReport(ImmutableModel model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
 		Map<ImmutableBudgetCategory, Long> categories = getExpensesBetween(model, startDate, endDate);
@@ -85,7 +85,7 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 		return BuddiKeys.ACTUAL_VS_BUDGETED_EXPENSES_TITLE.toString();
 	}
 	
-	private Map<ImmutableBudgetCategory, Long> getExpensesBetween(ImmutableModel model, Date startDate, Date endDate){
+	private Map<ImmutableBudgetCategory, Long> getExpensesBetween(ImmutableDocument model, Date startDate, Date endDate){
 		List<ImmutableTransaction> transactions = model.getTransactions(startDate, endDate);
 		Map<ImmutableBudgetCategory, Long> categories = new HashMap<ImmutableBudgetCategory, Long>();
 		

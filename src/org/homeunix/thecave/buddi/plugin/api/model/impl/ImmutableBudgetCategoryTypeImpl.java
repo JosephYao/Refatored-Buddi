@@ -54,4 +54,9 @@ public class ImmutableBudgetCategoryTypeImpl implements ImmutableBudgetCategoryT
 	public Date getStartOfBudgetPeriod(Date date) {
 		return getBudgetCategoryType().getStartOfBudgetPeriod(date);
 	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

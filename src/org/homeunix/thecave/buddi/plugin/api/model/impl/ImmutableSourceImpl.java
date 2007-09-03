@@ -26,4 +26,9 @@ public abstract class ImmutableSourceImpl extends ImmutableModelObjectImpl imple
 	public String getNotes() {
 		return getSource().getNotes();
 	}
+	
+	@Override
+	public String toString() {
+		return getFullName();
+	}
 }
