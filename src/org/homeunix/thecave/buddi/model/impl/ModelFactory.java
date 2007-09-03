@@ -137,7 +137,44 @@ public class ModelFactory {
 	 * Creates a new data model, with some default types and categories.
 	 */
 	public static Document createDocument() throws ModelException {
-		Document document = new DocumentImpl();
+		Document document;
+		if (getAutoSaveLocation(null).exists() && getAutoSaveLocation(null).canRead()){
+			Log.info("Autosave file found; prompting user if we should use it or not");
+			
+			String[] options = new String[2];
+			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
+			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
+
+			if (JOptionPane.showOptionDialog(
+					null, 
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[0]
+			) == 0) {  //The index of the Yes button.
+				try {
+					document = createDocument(getAutoSaveLocation(null));
+					document.setFile(null);
+					document.setChanged();
+					Log.info("User decided to load AutoSave file");
+					return document;
+				}
+				catch (DocumentLoadException dle){
+					Log.error("Error opening auto save file.  Continuing on to create normal file.");
+				}
+				catch (OperationCancelledException oce){
+					Log.debug("User cancelled opening auto save file.  Continuing on to create normal file.");
+				}
+			}
+			else {
+				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
+			}
+		}
+		
+		document = new DocumentImpl();
 		document.setFile(null); //A null dataFile will prompt for location on first save.
 
 		for (BudgetExpenseDefaultKeys s : BudgetExpenseDefaultKeys.values()){

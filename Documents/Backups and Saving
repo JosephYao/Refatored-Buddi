@@ -23,20 +23,18 @@ If you have not yet saved the data file, the file will be saved to the same loca
 preferences file is set to go to, as it is a reasonable assumption that we have write 
 access to this location (and if not, you already have problems).
 
-***NOTE****
+***SECURITY NOTE****
 If you have not yet saved the file, you have therefore not yet set a password for the data file.
 In this case, the autosave file will *not* be encrypted, but will be saved in plain text.  This
 could allow a third party who has access to your computer to read your data file.  This risk is 
 at least slightly mitigated by the fact that when you first create a file, you have probably 
 not entered too much data.
-***NOTE****
 
-This file is removed automatically once you save the document via File -> Save.
+The auto save file is removed automatically once you save the document via File -> Save.
 
 Whenever you start Buddi, whether by opening a data file or just by starting the program manually,
-we check for the existance of this auto save file.  If it exists, we open a new window (in addition
-to whatever other windows we have open) with the contents of this auto save file, and prompt the user
-that we have loaded an autosave file.  If you choose to do so, you can then save this file as desired.
+we check for the existance of this auto save file.  If it exists, we prompt the user that there is
+an auto save file, and asks if we should load it instead of the regular file.
 
 
 
