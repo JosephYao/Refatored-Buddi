@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.menu.items.WindowEntry;
+import org.homeunix.thecave.buddi.view.menu.items.WindowMinimize;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
@@ -35,6 +36,9 @@ public class WindowMenu extends MossMenu {
 		super.updateMenus();
 		
 		this.removeAll();
+		
+		this.add(new WindowMinimize(getFrame()));
+		this.addSeparator();
 		
 		for (MossFrame targetFrame : ApplicationModel.getInstance().getOpenFrames()) {
 			this.add(new WindowEntry(getFrame(), targetFrame));

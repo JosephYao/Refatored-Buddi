@@ -14,11 +14,11 @@ import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.Log;
 
-public class FileBackupManager extends MossMenuItem {
+public class FileRevertToBackup extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileBackupManager(MossFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_BACKUP_MANAGER));
+	public FileRevertToBackup(MossFrame frame) {
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_REVERT_TO_BACKUP));
 	}
 	
 	@Override

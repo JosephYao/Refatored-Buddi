@@ -17,8 +17,6 @@ public class HelpAbout extends MossMenuItem {
 
 	public HelpAbout(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_HELP_ABOUT));
-
-		this.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {

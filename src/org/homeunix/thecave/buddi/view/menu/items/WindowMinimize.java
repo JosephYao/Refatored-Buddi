@@ -15,17 +15,17 @@ import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.apple.HiddenMossFrame;
 
-public class FileCloseWindow extends MossMenuItem {
+public class WindowMinimize extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileCloseWindow(MossFrame frame) {
+	public WindowMinimize(MossFrame frame) {
 		super(frame, 
-				PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_CLOSE_WINDOW),
-				KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_WINDOW_MINIMIZE),
+				KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		getFrame().closeWindow();
+		getFrame().setState(MossFrame.ICONIFIED);
 	}
 	
 	@Override

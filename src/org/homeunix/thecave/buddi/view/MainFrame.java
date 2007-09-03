@@ -21,7 +21,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
@@ -53,7 +53,7 @@ public class MainFrame extends MossDocumentFrame {
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_BUDGET), myBudget);
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_REPORTS), myReports);
 
-		MainFrame.this.setJMenuBar(new MainFrameMenuBar(MainFrame.this));
+		MainFrame.this.setJMenuBar(new BuddiMenuBar(MainFrame.this));
 		
 		ComponentAdapter tabSelectListener = new ComponentAdapter(){
 			@Override

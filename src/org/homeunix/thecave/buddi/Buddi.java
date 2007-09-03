@@ -375,6 +375,25 @@ public class Buddi {
 
 					filesToLoad.add(new File(arg0.getFilename()));
 				}
+				
+				@Override
+				public void handleReOpenApplication(ApplicationEvent arg0) {
+					arg0.setHandled(true);
+					
+					if (ApplicationModel.getInstance().getOpenFrames().size() == 0){
+						try {
+							Document model = ModelFactory.createDocument();
+							MainFrame mainWndow = new MainFrame(model);
+							mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+						}
+						catch (ModelException me){
+							me.printStackTrace(Log.getPrintStream());
+						}
+						catch (WindowOpenException woe){
+							woe.printStackTrace(Log.getPrintStream());
+						}
+					}
+				}
 
 				@Override
 				public void handlePreferences(ApplicationEvent arg0) {

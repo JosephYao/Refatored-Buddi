@@ -15,8 +15,6 @@ public class HelpDebug extends MossMenuItem {
 
 	public HelpDebug(MossFrame frame) {
 		super(frame, "Dump Data Model");
-
-		this.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {

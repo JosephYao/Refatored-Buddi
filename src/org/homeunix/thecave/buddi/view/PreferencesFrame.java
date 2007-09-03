@@ -20,6 +20,7 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
@@ -64,6 +65,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 			panel.load();
 		}
 		
+		this.setJMenuBar(new BuddiMenuBar(this));
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.PREFERENCES));
 		this.getRootPane().setDefaultButton(okButton);
 		this.setLayout(new BorderLayout());

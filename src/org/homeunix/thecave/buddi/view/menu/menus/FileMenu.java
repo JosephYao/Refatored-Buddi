@@ -5,12 +5,14 @@ package org.homeunix.thecave.buddi.view.menu.menus;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
-import org.homeunix.thecave.buddi.view.menu.items.FileBackupManager;
 import org.homeunix.thecave.buddi.view.menu.items.FileCloseWindow;
 import org.homeunix.thecave.buddi.view.menu.items.FileNew;
 import org.homeunix.thecave.buddi.view.menu.items.FileOpen;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
+import org.homeunix.thecave.buddi.view.menu.items.FileRevertToBackup;
+import org.homeunix.thecave.buddi.view.menu.items.FileRevertToSaved;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
+import org.homeunix.thecave.buddi.view.menu.items.FileSaveAll;
 import org.homeunix.thecave.buddi.view.menu.items.FileSaveAs;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
@@ -24,10 +26,13 @@ public class FileMenu extends MossMenu {
 		
 		this.add(new FileNew(frame));
 		this.add(new FileOpen(frame));
+		this.addSeparator();
 		this.add(new FileSave(frame));
 		this.add(new FileSaveAs(frame));
+		this.add(new FileSaveAll(frame));
+		this.add(new FileRevertToSaved(frame));
 		this.addSeparator();
-		this.add(new FileBackupManager(frame));
+		this.add(new FileRevertToBackup(frame));
 		this.addSeparator();
 		this.add(new FileImportMenu(frame));
 		this.add(new FileExportMenu(frame));

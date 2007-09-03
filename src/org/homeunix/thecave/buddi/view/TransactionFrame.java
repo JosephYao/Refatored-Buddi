@@ -45,7 +45,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.menu.bars.TransactionsFrameMenuBar;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.swing.TransactionCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -396,7 +396,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getFullName() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
-		this.setJMenuBar(new TransactionsFrameMenuBar(this));
+		this.setJMenuBar(new BuddiMenuBar(this));
 	}
 
 	@Override
