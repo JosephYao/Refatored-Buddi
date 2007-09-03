@@ -12,9 +12,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
+import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
+import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.Account;
@@ -28,11 +33,13 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
@@ -175,6 +182,11 @@ public class ModelFactory {
 	public static Document createDocument(File file) throws DocumentLoadException, OperationCancelledException {
 		DocumentImpl document;
 
+		//Which file to actually load from.  Initially set to the given file, but
+		// this may be changed if we find an autosave document and the user wants 
+		// to load it.
+		File fileToLoad = file;
+		
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
@@ -184,7 +196,32 @@ public class ModelFactory {
 		if (!file.canRead())
 			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
-		Log.debug("Trying to load file " + file);
+		if (getAutoSaveLocation(file).exists() && getAutoSaveLocation(file).canRead()){
+			Log.info("Autosave file found; prompting user if we should use it or not");
+			
+			String[] options = new String[2];
+			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
+			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
+
+			if (JOptionPane.showOptionDialog(
+					null, 
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
+					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[0]
+			) == 0) {  //The index of the Yes button.
+				fileToLoad = getAutoSaveLocation(file);
+				Log.info("User decided to load AutoSave file");
+			}
+			else {
+				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
+			}
+		}
+		
+		Log.debug("Trying to load file " + fileToLoad);
 
 		try {
 			InputStream is;
@@ -195,7 +232,7 @@ public class ModelFactory {
 			// or some other error occurs.
 			while (true) {
 				try {
-					is = factory.getCipherInputStream(new FileInputStream(file), password);
+					is = factory.getCipherInputStream(new FileInputStream(fileToLoad), password);
 
 					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
 					XMLDecoder decoder = new XMLDecoder(is);
@@ -211,7 +248,9 @@ public class ModelFactory {
 					//Refresh the UID Map...
 					document.refreshUidMap();
 
-					//This wil let us know where to save the file to.
+					//This wil let us know where to save the file to.  Even if we found
+					// an autosave file, we want to save the file to the new location, 
+					// so we don't use the fileToLoad variable.
 					document.setFile(file);
 
 					//Update all balances...
@@ -321,5 +360,31 @@ public class ModelFactory {
 		String uid = object.getClass().getCanonicalName() + "-" + Long.toHexString(time) + "-" + Integer.toHexString(random) + "-" + Integer.toHexString(hash);
 
 		return uid;
+	}
+	
+	/**
+	 * Returns the auto save file locaton for the given base file.  If the base file
+	 * is null, return the Preferences directory and a filename of "AutosaveData.buddi3autosave";
+	 * if the base file is not null, return the location of the data file, with the extension
+	 * changed from .buddi3 to .buddi3autosave.
+	 * @param baseFile
+	 * @return
+	 */
+	public static File getAutoSaveLocation(File baseFile){
+		if (baseFile == null){
+			return OperatingSystemUtil.getPreferencesFile(
+					"Buddi", 
+					"AutosaveData" + Const.AUTOSAVE_FILE_EXTENSION);
+		}
+		else {
+			String autoSaveLocationString = baseFile.getAbsolutePath();
+			autoSaveLocationString = 
+				autoSaveLocationString.replaceAll(
+						Const.DATA_FILE_EXTENSION + "$", "");
+			autoSaveLocationString = 
+				autoSaveLocationString 
+				+ Const.AUTOSAVE_FILE_EXTENSION;
+			return new File(autoSaveLocationString);
+		}
 	}
 }

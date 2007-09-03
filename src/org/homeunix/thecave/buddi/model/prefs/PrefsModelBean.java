@@ -55,6 +55,7 @@ public class PrefsModelBean {
 	
 	//Advanced Options
 	private int numberOfBackups = 10;
+	private int autosaveDelay = 30;
 	private boolean sendCrashReports;
 	
 	
@@ -83,6 +84,14 @@ public class PrefsModelBean {
 
 	public void setCurrencySign(String currencySign) {
 		this.currencySign = currencySign;
+	}
+
+	public int getAutosaveDelay() {
+		return autosaveDelay;
+	}
+
+	public void setAutosaveDelay(int autosaveDelay) {
+		this.autosaveDelay = autosaveDelay;
 	}
 
 	public String getDateFormat() {

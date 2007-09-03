@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
@@ -96,12 +98,41 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 
 	/**
-	 * By default, we start with one batch change enabled.  You must call finisheBatchChange()
-	 * before any change events will be sent!  ModelFactory does this for you automatically;
-	 * you are much better off to use that to create Document objects. 
+	 * By default, we start with one batch change enabled.  This is because, otherwise,
+	 * the XMLDecoder will cause many model change events to be fired, which will result in
+	 * much longer load times.  You must call finisheBatchChange() before any change 
+	 * events will be sent!  ModelFactory does this for you automatically; as such,
+	 * you are much better off to use that to create Document objects.
+	 * 
+	 * (In fact, this constructor would be private, except for XMLDecoder's need for a public
+	 * constructor.)
 	 */
 	public DocumentImpl() {
 		startBatchChange();
+
+		Timer t = new Timer();
+		t.schedule(new TimerTask(){
+			@Override
+			public void run() {
+				if (isChanged()){
+					File autoSaveLocation = ModelFactory.getAutoSaveLocation(getFile());
+
+					try {
+						saveInternal(autoSaveLocation, 0);
+						Log.debug("Auto saved file to " + autoSaveLocation);
+					}
+					catch (DocumentSaveException dse){
+						Log.critical("Error saving autosave file:");
+						dse.printStackTrace(Log.getPrintStream());
+					}
+				}
+				else {
+					Log.debug("Did not autosave, as there are no changes to the data file");
+				}
+			}
+		}, 
+		PrefsModel.getInstance().getAutosaveDelay() * 1000, 
+		PrefsModel.getInstance().getAutosaveDelay() * 1000);
 	}
 
 
@@ -281,7 +312,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @throws SaveModelException
 	 */
 	public void save() throws DocumentSaveException {
-		saveInternal(getFile(), 0, false);
+		saveWrapper(getFile(), 0, false);
 	}
 
 	/**
@@ -292,12 +323,58 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @throws SaveModelException
 	 */
 	public void saveAs(File file, int flags) throws DocumentSaveException {
-		saveInternal(file, flags, true);
+		saveWrapper(file, flags, true);
+
 	}
 
-	private void saveInternal(File file, int flags, boolean resetUid) throws DocumentSaveException {
+	/**
+	 * This is a simple wrapper around the saveInternal method, which adds some key functionality.
+	 * This is especially related to handling autoSave files, and will remove the autosave
+	 * file associated with this file if it exists. 
+	 * @param file
+	 * @param flags
+	 * @param resetUid
+	 * @throws DocumentSaveException
+	 */
+	private void saveWrapper(File file, int flags, boolean resetUid) throws DocumentSaveException {
+		//Reset the document's UID.  This needs to be done when saving to a different file,
+		// or else you cannot have multiple files open at the same time.
+		if (resetUid)
+			setUid(ModelFactory.getGeneratedUid(this));
+
+		//Save the file
+		saveInternal(file, flags);
+
+		//Save where we last saved this file.
+		setFile(file);
+		PrefsModel.getInstance().setLastOpenedDataFile(file);
+
+		//Reset the changed flag.
+		resetChanged();
+
+		//Remove any auto save files which are associated with this document
+		File autosave = ModelFactory.getAutoSaveLocation(file);
+		if (autosave.exists() && autosave.isFile()){
+			if (!autosave.delete())
+				Log.error("Unable to delete file " + autosave + "; you may be prompted to load this file next time you load.");
+		}
+	}
+
+	/**
+	 * Very simple save method.  Will do the following:
+	 * 
+	 * 1) Prompt for password if the encryption flag is set.
+	 * 2) Stream the document to XML using the XMLEncoder, optionally using an encrypted 
+	 * output stream if the password is set.
+	 * 
+	 * @param file
+	 * @param flags
+	 * @throws DocumentSaveException
+	 */
+	private void saveInternal(File file, int flags) throws DocumentSaveException {
 		if (file == null)
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
+
 		try {
 			if ((flags & ENCRYPT_DATA_FILE) != 0){
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
@@ -307,11 +384,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
 
-
-			//TODO Test to make sure this is reset at the right time.
-//			if (resetUid)
-//			setUid(ModelFactory.getGeneratedUid(this));
-
+			//We don't want to be firing change events in the middle of a save
 			startBatchChange();
 
 			XMLEncoder encoder = new XMLEncoder(os);
@@ -322,25 +395,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
 				}
 			});
-//			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
-//			protected Expression instantiate(Object oldInstance, Encoder out ){
-//			File file = (File) oldInstance;
-//			String filePath = file.getAbsolutePath();
-//			return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
-//			}
-//			});
 
 			encoder.writeObject(this);
 			encoder.flush();
 			encoder.close();
 
 			finishBatchChange();
-
-			//Save where we last saved this file.
-			setFile(file);
-			PrefsModel.getInstance().setLastOpenedDataFile(file);
-
-			resetChanged();
 		}
 		catch (CipherException ce){
 			//This means that there is something seriously wrong with the encryption methods.
@@ -573,9 +633,9 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 */
 	public void updateScheduledTransactions(){
 		startBatchChange();
-		
+
 		boolean changed = false;  //Set to true if we do anything.  If we do, we will set the model to changed when done.
-		
+
 		//Update any scheduled transactions
 		final Date today = DateFunctions.getEndOfDay(new Date());
 		//We specify a GregorianCalendar because we make some assumptions
@@ -793,11 +853,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				tempDate = DateFunctions.addDays(tempDate, 1);
 			}
 		}
-		
+
 		finishBatchChange();
-		
+
 		updateAllBalances();
-		
+
 		if (changed)
 			setChanged();
 	}

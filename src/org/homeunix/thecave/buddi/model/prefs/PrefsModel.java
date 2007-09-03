@@ -103,6 +103,14 @@ public class PrefsModel {
 		return translate;
 	}
 	
+	public int getAutosaveDelay() {
+		return prefsModel.getAutosaveDelay();
+	}
+
+	public void setAutosaveDelay(int autosaveDelay) {
+		prefsModel.setAutosaveDelay(autosaveDelay);
+	}
+	
 	public Version getLastVersion(){
 		if (prefsModel.getLastVersion() == null)
 			return null;

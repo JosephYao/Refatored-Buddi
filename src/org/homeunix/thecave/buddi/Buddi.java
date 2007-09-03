@@ -488,6 +488,11 @@ public class Buddi {
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
 
+		//Set Buddi-specific LnF options
+		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
+		
+		
+		
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

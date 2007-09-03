@@ -1,0 +1,51 @@
+Backups and Saving
+
+Buddi is designed to ensure that your data is not lost if at all possible.  There are two separate 
+safety nets which can help ensure that you are safe:
+
+1) Auto save
+2) Rotating backups
+
+Each are discussed in turn.
+
+1) Auto Save
+When you create any Buddi document, Buddi will write the changes to disk every 30 seconds 
+(configurable via Preferences), if there has been any changes to the document model. This 
+means that if your computer crashes, you will have lost at most 30 seconds of work.
+
+The location of this file differs based on the state of the data file.  If you have already
+saved the data file (so that the file location is on the title bar in the main Buddi window),
+the file is saved to the same location, with the extension ".autosave" added.  Thus, if the
+file was saved to /Users/Wyatt/Documents/Buddi/Data.buddi3, the auto save document would be
+/Users/Wyatt/Documents/Buddi/Data.buddi3.autosave.  
+
+If you have not yet saved the data file, the file will be saved to the same location your 
+preferences file is set to go to, as it is a reasonable assumption that we have write 
+access to this location (and if not, you already have problems).
+
+***NOTE****
+If you have not yet saved the file, you have therefore not yet set a password for the data file.
+In this case, the autosave file will *not* be encrypted, but will be saved in plain text.  This
+could allow a third party who has access to your computer to read your data file.  This risk is 
+at least slightly mitigated by the fact that when you first create a file, you have probably 
+not entered too much data.
+***NOTE****
+
+This file is removed automatically once you save the document via File -> Save.
+
+Whenever you start Buddi, whether by opening a data file or just by starting the program manually,
+we check for the existance of this auto save file.  If it exists, we open a new window (in addition
+to whatever other windows we have open) with the contents of this auto save file, and prompt the user
+that we have loaded an autosave file.  If you choose to do so, you can then save this file as desired.
+
+
+
+2) Rotating Backups
+Whenever you open a Buddi file, Buddi will first back it up, using a rotating backup system.
+For instance, assume that you open the file /Users/Wyatt/Deskop/Test.buddi3.  Once the file is
+parsed and read in (and is confirmed to be valid), we make a copy of it.  This copy is the same name 
+as the main data file, with a "_0" inserted before the extension, and the extension changed to 
+".buddi3bak".  This 0 is the backup number, and means that this was the most recent file backed 
+up.  If there is already a _0 file, that one is copied to _1; if _1 exists, it is copied to _2, 
+etc, up to a maximum of the max backup files as defined in Preferences.
+
