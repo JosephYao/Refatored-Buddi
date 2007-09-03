@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
@@ -109,32 +107,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 */
 	public DocumentImpl() {
 		startBatchChange();
-
-		Timer t = new Timer();
-		t.schedule(new TimerTask(){
-			@Override
-			public void run() {
-				if (isChanged()){
-					File autoSaveLocation = ModelFactory.getAutoSaveLocation(getFile());
-
-					try {
-						saveInternal(autoSaveLocation, 0);
-						Log.debug("Auto saved file to " + autoSaveLocation);
-					}
-					catch (DocumentSaveException dse){
-						Log.critical("Error saving autosave file:");
-						dse.printStackTrace(Log.getPrintStream());
-					}
-				}
-				else {
-					Log.debug("Did not autosave, as there are no changes to the data file");
-				}
-			}
-		}, 
-		PrefsModel.getInstance().getAutosaveDelay() * 1000, 
-		PrefsModel.getInstance().getAutosaveDelay() * 1000);
 	}
-
 
 	public List<Account> getAccounts() {
 		checkLists();
@@ -324,7 +297,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 */
 	public void saveAs(File file, int flags) throws DocumentSaveException {
 		saveWrapper(file, flags, true);
-
+	}
+	
+	public void saveAuto(File file) throws DocumentSaveException {
+		saveInternal(file, 0);
 	}
 
 	/**

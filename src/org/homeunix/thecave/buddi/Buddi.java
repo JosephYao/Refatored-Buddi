@@ -16,6 +16,8 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -28,6 +30,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
@@ -38,8 +41,10 @@ import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -289,6 +294,36 @@ public class Buddi {
 			System.exit(1);
 		}
 
+		
+		//Start the auto save timer
+		Timer t = new Timer();
+		t.schedule(new TimerTask(){
+			@Override
+			public void run() {
+				for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
+					if (frame instanceof MainFrame){
+						MainFrame mainFrame = (MainFrame) frame;
+						if (mainFrame.getDocument().isChanged()){
+							File autoSaveLocation = ModelFactory.getAutoSaveLocation(mainFrame.getDocument().getFile());
+
+							try {
+								((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
+								Log.debug("Auto saved file to " + autoSaveLocation);
+							}
+							catch (DocumentSaveException dse){
+								Log.critical("Error saving autosave file:");
+								dse.printStackTrace(Log.getPrintStream());
+							}
+						}
+						else {
+							Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
+						}		
+					}
+				}
+			}
+		}, 
+		10 * 1000, //Save the first one after 10 seconds 
+		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide period
 	}
 
 	/**

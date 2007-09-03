@@ -17,6 +17,7 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
@@ -34,6 +35,10 @@ public class FileSaveAs extends MossMenuItem {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		boolean removeAutosave = false;
+		if (((MossDocumentFrame) getFrame()).getDocument().getFile() == null)
+			removeAutosave = true;
+		
 		File f = MossSmartFileChooser.showSaveFileDialog(
 				getFrame(), 
 				PrefsModel.getInstance().getLastDataFile(), 
@@ -77,6 +82,15 @@ public class FileSaveAs extends MossMenuItem {
 		catch (DocumentSaveException dse){
 			throw new RuntimeException("Error saving file: " + dse);
 		}
+		
+		//If we started out with a null file (i.e., this is a save as for a new
+		// file), we will remove any auto save we find in the default auto save
+		// location.  If we have multiple unsaved files open, this may remove
+		// a different file's auto save information, but it will be recreated
+		// within the set auto save period (and if there were two open, they would
+		// be overwriting each other anyway, so there is no problem).
+		if (removeAutosave)
+			ModelFactory.getAutoSaveLocation(null).delete();
 	}
 	
 	

@@ -18,6 +18,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.MainFrameMenuBar;
@@ -122,6 +123,8 @@ public class MainFrame extends MossDocumentFrame {
 		PrefsModel.getInstance().setMainWindowSize(this.getSize());
 		PrefsModel.getInstance().setMainWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
+		
+		ModelFactory.getAutoSaveLocation(getDocument().getFile()).delete();
 		
 		super.closeWindowWithoutPrompting();
 	}

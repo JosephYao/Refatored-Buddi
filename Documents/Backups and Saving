@@ -30,7 +30,8 @@ could allow a third party who has access to your computer to read your data file
 at least slightly mitigated by the fact that when you first create a file, you have probably 
 not entered too much data.
 
-The auto save file is removed automatically once you save the document via File -> Save.
+The auto save file is removed automatically once you save the document via File -> Save, or if
+you exit and do not save changes.
 
 Whenever you start Buddi, whether by opening a data file or just by starting the program manually,
 we check for the existance of this auto save file.  If it exists, we prompt the user that there is

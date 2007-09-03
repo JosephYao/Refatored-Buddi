@@ -11,6 +11,10 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	SECONDS,
+	MINUTES,
+	MINUTE,
+	AUTOSAVE_PERIOD,
 	ENDING_ON,
 	CURRENT_BUDGET_PERIOD,
 	FILECHOOSER_EXPORT_FILE_TITLE,
