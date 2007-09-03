@@ -144,7 +144,7 @@ public class MyAccountsPanel extends MossPanel {
 		
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
-				parent.updateContent();
+				parent.updateButtons();
 			}
 		});
 		

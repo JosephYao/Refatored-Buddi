@@ -109,7 +109,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		startBatchChange();
 	}
 
-	public void doBackupDataFile() {
+	private void doBackupDataFile() {
 		//Make a backup of the file...
 		//Backup the file, now that we know it is good...
 		try{
@@ -338,11 +338,14 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @throws DocumentSaveException
 	 */
 	private void saveWrapper(File file, int flags, boolean resetUid) throws DocumentSaveException {
+		//Do a rotating backup before saving
+		doBackupDataFile();
+		
 		//Reset the document's UID.  This needs to be done when saving to a different file,
 		// or else you cannot have multiple files open at the same time.
 		if (resetUid)
 			setUid(ModelFactory.getGeneratedUid(this));
-
+		
 		//Save the file
 		saveInternal(file, flags);
 

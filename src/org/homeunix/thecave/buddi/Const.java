@@ -228,9 +228,9 @@ public class Const {
 		ImportLegacyData.class.getCanonicalName(),
 	};
 	
-	public static final String[] BUILT_IN_EXPORTS = {
-		
-	};	
+	public static final String[] BUILT_IN_EXPORTS = {};
+	
+	public static final String[] BUILT_IN_SYNCHRONIZES = {};
 		
 	private Const(){}
 }

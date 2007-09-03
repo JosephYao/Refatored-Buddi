@@ -41,6 +41,5 @@ public interface Document extends ModelObject, StandardDocument {
 	public void saveAs(File file, int flags) throws DocumentSaveException;
 	public String saveToString();
 	public void updateAllBalances();
-	public void doBackupDataFile();
 
 }

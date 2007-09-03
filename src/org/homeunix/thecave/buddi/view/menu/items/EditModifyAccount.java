@@ -38,6 +38,7 @@ public class EditModifyAccount extends MossMenuItem {
 	public void updateMenus() {
 		super.updateMenus();
 		
+		System.out.println(((MainFrame) getFrame()).getSelectedAccounts().size());
 		this.setEnabled(((MainFrame) getFrame()).getSelectedAccounts().size() > 0);
 	}
 }

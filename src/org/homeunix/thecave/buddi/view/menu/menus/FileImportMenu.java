@@ -17,21 +17,19 @@ public class FileImportMenu extends MossMenu {
 	
 	public FileImportMenu(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_IMPORT));
-	
-		updateMenus();
 	}
 	
 	@Override
 	public void updateMenus() {
-		super.updateMenus();
-
-		this.setEnabled(getFrame() instanceof MossDocumentFrame);
-		
 		this.removeAll();
 		
 		for (BuddiImportPlugin plugin : BuddiPluginFactory.getImportPlugins()) {
 			if (getFrame() instanceof MossDocumentFrame)
 				this.add(new PluginImportEntry((MossDocumentFrame) getFrame(), plugin));
 		}
+		
+		this.setEnabled(getFrame() instanceof MossDocumentFrame && this.getComponentCount() > 0);
+		
+		super.updateMenus();
 	}
 }

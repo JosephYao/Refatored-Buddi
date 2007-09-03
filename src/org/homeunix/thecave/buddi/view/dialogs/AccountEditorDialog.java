@@ -179,7 +179,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		else {
 			name.setText(PrefsModel.getInstance().getTranslator().get(selected.getName()));
 			type.setSelectedItem(selected.getAccountType());
-			startingBalance.setValue(selected.getStartingBalance());
+			startingBalance.setValue(selected.getStartingBalance() * (selected.getAccountType().isCredit() ? -1 : 1));
 			notes.setText(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 		}
 	}
@@ -190,27 +190,27 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			try {
 				if (selected == null){
 					a = ModelFactory.createAccount(name.getText(), (AccountType) type.getSelectedItem());
-					a.setStartingBalance(startingBalance.getValue());
+					a.setStartingBalance(startingBalance.getValue() * (((AccountType) type.getSelectedItem()).isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
-					Log.debug("Created new BudgetCategory " + a);
+					Log.debug("Created new Account " + a);
 
 					model.addAccount(a);
 				}
 				else {
 					a = selected;
 					a.setName(name.getText());
-					a.setStartingBalance(startingBalance.getValue());
 					a.setAccountType((AccountType) type.getSelectedItem());
+					a.setStartingBalance(startingBalance.getValue() * (a.getAccountType().isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
 				}
 				a.updateBalance();
+								
+				closeWindow();
 			}
 			catch (ModelException me){
+				//TODO Check for valid before sending to model
 				Log.error("Error adding account", me);
 			}
-
-
-			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){
 			closeWindow();

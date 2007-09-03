@@ -148,12 +148,10 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 					catch (DocumentSaveException dse){
 						Log.error("Error saving data file prior to restore.  Continuing with restore anyway.");
 						dse.printStackTrace(Log.getPrintStream());
-					}
-					document.doBackupDataFile();					
+					}					
 					
 					Document newDoc = ModelFactory.createDocument((File) backupList.getSelectedValue());
 					newDoc.setFile(document.getFile());
-					newDoc.doBackupDataFile();
 					
 					MainFrame mainWndow = new MainFrame(newDoc);
 					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation(), true);

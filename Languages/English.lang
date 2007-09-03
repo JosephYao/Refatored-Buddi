@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Mon Sep 03 03:34:11 MDT 2007
+#Mon Sep 03 11:23:51 MDT 2007
 CREATED_NEW_DATA_FILE_MESSAGE=Created a new data file\:\n
 OPTIONAL_TAG=(optional)
 AND_REPEATING_EVERY=and repeating every
@@ -160,7 +160,7 @@ SCHEDULE_DAY_SATURDAY=Saturday
 SCHEDULE_DATE_FOURTH=4th
 SCHEDULE_DAY_SUNDAY=Sunday
 HINT_DESCRIPTION=<Description>
-MENU_FILE_SAVE_AS=Save As
+MENU_FILE_SAVE_AS=Save As...
 MUST_SELECT_BUDDI_FILE=Must select a .buddi file.
 SHORT_RECONCILED=R
 CHECK_CONSOLE=Please check the console for more details
@@ -228,6 +228,7 @@ MENU_EDIT_TOGGLE_RECONCILED=Toggle Reconciled
 CHOOSE_EXPORT_FILE=Choose Export File
 MESSAGE_GENERATING_GRAPH=Generating Graph...
 MONTH_OCTOBER=October
+MENU_FILE_SYNCHRONIZE=Synchronize
 REPORT_TITLE_TRANSACTIONS_NOT_RECONCILED=Transactions Not Reconciled
 MENU_EDIT_NEW_ACCOUNT=Create Account
 MENU_EDIT_CLEAR_NEW=Clear / New
@@ -371,6 +372,7 @@ START_DATE=Start Date
 MENU_EDIT_VIEW_REPORTS=View My Reports
 MESSAGE_ERROR_SAVING_FILE=There was a problem saving the file
 NO_PARENT=<No Parent>
+FILECHOOSER_SYNCHRONIZE_FILE_TITLE=Choose File to Synchronize Data...
 SCHEDULE_MONTH_APRIL=April
 PLUGIN_FILTER_LAST_QUARTER=Last Quarter
 MESSAGE_AUTOSAVE_FILE_FOUND=There was an auto save file found.  This could mean that Buddi crashed \nlast time you were working on this file.  You can either load this file,\nand restore the data from the last auto save point, or you can ignore the\nautosave file.  If you ignore the auto save file, it will be deleted the next \ntime you save.\n\nDo you want to load the auto save file?
@@ -491,6 +493,7 @@ BUDGET_EDITOR_EXPENSE=Expense
 NO_PLUGINS_IN_JAR_TITLE=No Buddi Plugins Found
 ABOUT_BUDDI=About Buddi
 SCHEDULE_WEEK_SECOND=Second Week
+FILE_DESCRIPTION_BUDDI_SYNCHRONIZE_FILES=Buddi Synchronize Files
 ACCOUNT_AND_CATEGORY_SUMMARY=Account and Budget Category Summary
 MENU_WINDOW_RIGHT_TAB=Next Tab
 REPORT_ERROR_ADVANCED_DISPLAY_NOT_ENABLED=This report requires that you have enabled the 'Show Clear / Reconcile Transactions' option in the View section of the Preferences window.  Enabling this will add a C and an R check box to your transactions screens.  This will let you mark transactions as 'Cleared' or 'Reconciled', respectively.  This report will then let you view all transactions which you have not selected.

@@ -15,6 +15,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
+import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
 
@@ -83,6 +84,37 @@ public class BuddiPluginFactory extends PluginFactory {
 				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
 					if (plugin instanceof BuddiImportPlugin){
 						imports.add((BuddiImportPlugin) plugin);
+					}
+				}
+			}
+		}
+
+		return imports;
+	}
+	
+	/**
+	 * Returns a list of valid plugin objects, both built-in and user-defined.
+	 * This method returns only plugins of type BuddiSynchronizePlugin. 
+	 * @return
+	 */
+	public static List<BuddiSynchronizePlugin> getSynchronizePlugins(){
+		List<BuddiSynchronizePlugin> imports = new LinkedList<BuddiSynchronizePlugin>();
+
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_SYNCHRONIZES){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiSynchronizePlugin){
+				imports.add((BuddiSynchronizePlugin) plugin);
+			}
+		}
+
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+					if (plugin instanceof BuddiSynchronizePlugin){
+						imports.add((BuddiSynchronizePlugin) plugin);
 					}
 				}
 			}
