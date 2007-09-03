@@ -22,13 +22,14 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
 
 public class FileSaveAs extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileSaveAs(MossDocumentFrame frame) {
+	public FileSaveAs(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_SAVE_AS),
 				KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_MASK));
 	}
@@ -93,5 +94,10 @@ public class FileSaveAs extends MossMenuItem {
 			ModelFactory.getAutoSaveLocation(null).delete();
 	}
 	
-	
+	@Override
+	public void updateMenus() {
+		super.updateMenus();
+
+		this.setEnabled(getFrame() instanceof MossDocumentFrame);
+	}
 }

@@ -13,6 +13,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.util.apple.HiddenMossFrame;
 
 public class FileCloseWindow extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -27,5 +28,12 @@ public class FileCloseWindow extends MossMenuItem {
 	
 	public void actionPerformed(ActionEvent e) {
 		getFrame().closeWindow();
+	}
+	
+	@Override
+	public void updateMenus() {
+		super.updateMenus();
+
+		this.setEnabled(!(getFrame() instanceof HiddenMossFrame));
 	}
 }

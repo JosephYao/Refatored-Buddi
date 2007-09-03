@@ -9,12 +9,13 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.view.menu.items.PluginExportEntry;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
 
 public class FileExportMenu extends MossMenu {
 	public static final long serialVersionUID = 0;
 	
-	public FileExportMenu(MossDocumentFrame frame) {
+	public FileExportMenu(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_EXPORT));
 		
 	}
@@ -23,10 +24,13 @@ public class FileExportMenu extends MossMenu {
 	public void updateMenus() {
 		super.updateMenus();
 		
+		this.setEnabled(getFrame() instanceof MossDocumentFrame);
+		
 		this.removeAll();
 		
 		for (BuddiExportPlugin plugin : BuddiPluginFactory.getExportPlugins()) {
-			this.add(new PluginExportEntry((MossDocumentFrame) getFrame(), plugin));
+			if (getFrame() instanceof MossDocumentFrame)
+				this.add(new PluginExportEntry((MossDocumentFrame) getFrame(), plugin));
 		}
 	}
 }

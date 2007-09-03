@@ -47,6 +47,8 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	public void init() {
+		super.init();
+		
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_ACCOUNTS), myAccounts);
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_BUDGET), myBudget);
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_REPORTS), myReports);
@@ -70,22 +72,15 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	@Override
-	public void initPostPack() {
-		super.initPostPack();
-		
-		updateContent();
-	}
-	
-	@Override
 	public void updateContent() {
+		super.updateContent();
+		
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile().getAbsolutePath();
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.BUDDI) + dataFile);
 
 		myAccounts.updateContent();
 		myBudget.updateContent();
 		myReports.updateContent();
-		
-		super.updateContent();
 	}
 	
 	@Override

@@ -10,13 +10,14 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.dialogs.BackupManagerDialog;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.Log;
 
 public class FileBackupManager extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileBackupManager(MossDocumentFrame frame) {
+	public FileBackupManager(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_BACKUP_MANAGER));
 	}
 	
@@ -29,5 +30,12 @@ public class FileBackupManager extends MossMenuItem {
 		catch (WindowOpenException woe){
 			Log.error(woe);
 		}
+	}
+	
+	@Override
+	public void updateMenus() {
+		super.updateMenus();
+
+		this.setEnabled(getFrame() instanceof MossDocumentFrame);
 	}
 }

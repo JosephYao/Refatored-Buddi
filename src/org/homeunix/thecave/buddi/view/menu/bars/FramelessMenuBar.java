@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.view.menu.bars;
 
-import org.homeunix.thecave.buddi.view.menu.menus.FileMenuFrameless;
+import org.homeunix.thecave.buddi.view.menu.menus.FileMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.HelpMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.WindowMenu;
 import org.homeunix.thecave.moss.swing.MossMenuBar;
@@ -15,7 +15,7 @@ public class FramelessMenuBar extends MossMenuBar {
 	public FramelessMenuBar() {
 		super(Application.getApplication().getHiddenFrame());
 
-		this.add(new FileMenuFrameless(getFrame()));
+		this.add(new FileMenu(getFrame()));
 		this.add(new WindowMenu(getFrame()));
 		this.add(new HelpMenu(getFrame()));
 	}

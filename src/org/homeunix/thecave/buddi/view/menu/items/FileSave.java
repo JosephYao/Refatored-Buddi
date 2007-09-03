@@ -15,12 +15,13 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.StandardDocument;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
 public class FileSave extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
-	public FileSave(MossDocumentFrame frame) {
+	public FileSave(MossFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_SAVE),
 				KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 	}
@@ -44,5 +45,12 @@ public class FileSave extends MossMenuItem {
 			// conditions.
 			throw new RuntimeException("Error saving file: " + dse, dse);
 		}
+	}
+	
+	@Override
+	public void updateMenus() {
+		super.updateMenus();
+
+		this.setEnabled(getFrame() instanceof MossDocumentFrame);
 	}
 }

@@ -35,6 +35,7 @@ public class WindowMenu extends MossMenu {
 		super.updateMenus();
 		
 		this.removeAll();
+		
 		for (MossFrame targetFrame : ApplicationModel.getInstance().getOpenFrames()) {
 			this.add(new WindowEntry(getFrame(), targetFrame));
 		}
