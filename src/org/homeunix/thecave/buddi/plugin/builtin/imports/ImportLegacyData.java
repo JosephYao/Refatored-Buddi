@@ -102,8 +102,6 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					sourceMap.put(oldAccount, newAccount);
 				}
 				else {
-					System.out.println(oldAccount.getName());
-					System.out.println(model.getAccount(oldAccount.getName()));
 					sourceMap.put(oldAccount, (MutableAccount) model.getAccount(oldAccount.getName()));
 				}
 			}

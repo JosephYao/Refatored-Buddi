@@ -287,7 +287,6 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 			}
 		}
 		else if (e.getSource().equals(editLanguagesButton)){
-			System.out.println("Opening Language Editor");
 			try {
 				BuddiLanguageEditor ble = BuddiLanguageEditor.getInstance(language.getSelectedItem().toString());
 				ble.openWindow();

@@ -394,7 +394,6 @@ public class TransactionEditor extends MossPanel {
 		if (!force && this.transaction != null && this.transaction.equals(transaction))
 			return;
 		if (transaction != null){
-			System.out.println(transaction.getDescription());
 			date.setDate(transaction.getDate());			
 			number.setText(transaction.getNumber());
 			description.setText(transaction.getDescription());
