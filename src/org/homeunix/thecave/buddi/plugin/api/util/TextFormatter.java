@@ -36,7 +36,7 @@ public class TextFormatter {
 	public static DateFormat getDateFormat(){
 		return Formatter.getDateFormat(PrefsModel.getInstance().getDateFormat());
 	}
-	
+
 	/**
 	 * Returns a formatted version of the given date.  A wrapper method 
 	 * for getDateFormat().format(date).
@@ -46,7 +46,7 @@ public class TextFormatter {
 	public static String getFormattedDate(Date date){
 		return getDateFormat().format(date);
 	}
-	
+
 	/**
 	 * Return the translation for the given key.
 	 * @param key
@@ -55,7 +55,7 @@ public class TextFormatter {
 	public static String getTranslation(String key){
 		return PrefsModel.getInstance().getTranslator().get(key);
 	}
-	
+
 	/**
 	 * Return the translation for the given key.
 	 * @param key
@@ -68,7 +68,7 @@ public class TextFormatter {
 	public static String getHtmlWrapper(String htmlToWrap){
 		return "<html>" + htmlToWrap + "</html>";
 	}
-	
+
 	/**
 	 * Converts a long value (in cents: 10000 == $100.00) to a string
 	 * with proper decimal values, with the user's desired currency
@@ -89,7 +89,7 @@ public class TextFormatter {
 	public static String getFormattedCurrency(long value, boolean isRed){
 		return getFormattedCurrency(value, isRed, false);
 	}
-	
+
 	/**
 	 * Returns the given value formatted as a currency.
 	 * @param value
@@ -98,7 +98,7 @@ public class TextFormatter {
 	public static String getFormattedCurrency(long value){
 		return getFormattedCurrency(value, value < 0);
 	}
-	
+
 	/**
 	 * Converts a long value (in cents: 10000 == $100.00) to a string
 	 * with proper decimal values, with the user's desired currency
@@ -127,7 +127,7 @@ public class TextFormatter {
 		boolean symbolAfterAmount = PrefsModel.getInstance().isShowCurrencyAfterAmount();
 		String symbol = PrefsModel.getInstance().getCurrencySign();
 
-		
+
 		String formatted = 
 			(isRed ? "<font color='red'>" : "")
 			+ (symbolAfterAmount ? "" : symbol)
@@ -136,6 +136,47 @@ public class TextFormatter {
 			+ (isRed ? "</font>" : "");
 
 		return formatted;
+	}
+
+	/**
+	 * Just like getFormattedCurrency, but uses a string builder (passed
+	 * as an argument) instead of creating a new string.  Should be faster.
+	 * 
+	 * Converts a long value (in cents: 10000 == $100.00) to a string
+	 * with proper decimal values, with the user's desired currency
+	 * sign in the user's specified position (whether behind or in front
+	 * of the amount).  It is highly recommended that you use this method
+	 * to output monetary values, as it presents the user with a constant
+	 * look for currency.
+	 * 
+	 * Note that this method uses HTML font tags to set the color.  This
+	 * means that you must wrap all code which uses this with HTML start 
+	 * and end tags - you can use the getHtmlWrapper() method to do this.
+	 * 
+	 * @param value The currency amount, in cents (as per Buddi's internal 
+	 * representation of currency).  For instance, to represent the value
+	 * $123.45, you would pass in 12345.
+	 * @param isRed Wrap the return string in HTML font tags to make it red.
+	 * @param negate Multiply the value by *1 before rendering.  
+	 * @return A string with proper decimal places, plus the user's defined 
+	 * currency symbol in the correct position (whether before or after the
+	 * amount).  Optionally it will be wrapped in red font tags.
+	 */
+	public static void appendFormattedCurrency(StringBuilder sb, long value, boolean isRed, boolean negate){
+		if (negate)
+			value *= -1;
+
+		boolean symbolAfterAmount = PrefsModel.getInstance().isShowCurrencyAfterAmount();
+
+		if (isRed)
+			sb.append("<font color='red'>");
+		if (!symbolAfterAmount)
+			sb.append(PrefsModel.getInstance().getCurrencySign());
+		sb.append(Formatter.getDecimalFormat().format((double) value / 100.0));  
+		if (symbolAfterAmount)
+			sb.append(PrefsModel.getInstance().getCurrencySign());
+		if (isRed)
+			sb.append("</font>");
 	}
 
 	/**
@@ -185,13 +226,13 @@ public class TextFormatter {
 
 		return formatted;
 	}
-	
+
 	public static String getDeletedWrapper(String s, Source source){
 		if (source.isDeleted())
 			return "<strike>" + s + "</strike>";
 		return s;
 	}
-	
+
 	/**
 	 * Should the arguments be colored in red text when displayed?
 	 * @param s
@@ -209,7 +250,7 @@ public class TextFormatter {
 	public static boolean isRed(ImmutableAccount a, long value){
 		return InternalFormatter.isRed(a.getAccount(), value);
 	}
-	
+
 	/**
 	 * Should the arguments be colored in red text when displayed?
 	 * @param s
@@ -236,7 +277,7 @@ public class TextFormatter {
 	public static boolean isRed(ImmutableAccountType t, long value){
 		return InternalFormatter.isRed(t.getType(), value);
 	}
-	
+
 	/**
 	 * Should the arguments be colored in red text when displayed?
 	 * @param s
@@ -245,7 +286,7 @@ public class TextFormatter {
 	public static boolean isRed(ImmutableTransaction t){
 		return InternalFormatter.isRed(t.getTransaction());
 	}
-	
+
 	/**
 	 * Should the arguments be colored in red text when displayed?
 	 * @param s

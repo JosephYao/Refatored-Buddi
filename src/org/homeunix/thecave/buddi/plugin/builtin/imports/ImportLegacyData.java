@@ -32,13 +32,14 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 
 public class ImportLegacyData extends BuddiImportPlugin {
 
 	@Override
-	public void importData(MutableModel model, File file) {
+	public void importData(MutableModel model, MossDocumentFrame callingFrame, File file) {
 		try {
 			if (file == null)
 				return;

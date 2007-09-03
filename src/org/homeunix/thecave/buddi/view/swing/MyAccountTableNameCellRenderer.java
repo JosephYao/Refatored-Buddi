@@ -21,14 +21,13 @@ public class MyAccountTableNameCellRenderer extends DefaultTableCellRenderer {
 
 		if (value instanceof Account){
 			Account a = (Account) value;
-			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getDeletedWrapper(
-							TextFormatter.getFormattedNameForAccount(a), a)).replaceAll("<html>", "<html>&nbsp&nbsp&nbsp "));
+			this.setText("<html>&nbsp&nbsp&nbsp " 
+					+ TextFormatter.getDeletedWrapper(TextFormatter.getFormattedNameForAccount(a), a)
+					+ "</html>");
 		}
 		if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
-			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getFormattedNameForType(t)));
+			this.setText("<html>" + TextFormatter.getFormattedNameForType(t) + "</html>");
 		}
 
 

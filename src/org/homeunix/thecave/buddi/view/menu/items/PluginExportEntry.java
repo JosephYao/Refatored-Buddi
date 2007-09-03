@@ -71,6 +71,6 @@ public class PluginExportEntry extends MossMenuItem {
 				return;
 		}
 
-		plugin.exportData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), f);
+		plugin.exportData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
 	}
 }

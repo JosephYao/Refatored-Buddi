@@ -76,7 +76,7 @@ public class PluginImportEntry extends MossMenuItem {
 		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
 		
 		Log.debug("Calling importData()");
-		plugin.importData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), f);
+		plugin.importData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
 		Log.debug("Finished importData(); updating balances");
 		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
 		Log.debug("Finished updating balances");

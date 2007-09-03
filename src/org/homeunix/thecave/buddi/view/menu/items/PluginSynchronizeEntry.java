@@ -76,7 +76,7 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
 		
 		Log.debug("Calling synchronizeData()");
-		plugin.synchronizeData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), f);
+		plugin.synchronizeData(new MutableModelImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
 		Log.debug("Finished synchronizeData(); updating balances");
 		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
 		Log.debug("Finished updating balances");
