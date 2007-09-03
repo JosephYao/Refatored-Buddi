@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	BACKUP_MANAGER,
 	SECONDS,
 	MINUTES,
 	MINUTE,

@@ -37,6 +37,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.menu.bars.FramelessMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
@@ -210,6 +211,10 @@ public class Buddi {
 			}
 		}
 
+		//If we are on a Mac, open a new Frameless menu bar.
+		if (OperatingSystemUtil.isMac()){
+			Application.getApplication().setFramessMenuBar(new FramelessMenuBar());
+		}
 
 		//Choose which data file to open, or create a new one.
 		try {
@@ -230,7 +235,9 @@ public class Buddi {
 
 						openedFile = true;
 					}
-					catch (DocumentLoadException lme){}
+					catch (DocumentLoadException lme){
+						lme.printStackTrace(Log.getPrintStream());
+					}
 					catch (OperationCancelledException oce){}  //Do nothing
 				}
 			}
@@ -248,7 +255,7 @@ public class Buddi {
 					openedFile = true;
 				}
 				catch (DocumentLoadException lme){
-					Log.error(lme);
+					lme.printStackTrace(Log.getPrintStream());
 				}
 				catch (OperationCancelledException oce){}  //Do nothing
 			}
@@ -263,7 +270,9 @@ public class Buddi {
 
 					openedFile = true;
 				}
-				catch (ModelException dle){}
+				catch (ModelException me){
+					me.printStackTrace(Log.getPrintStream());
+				}
 			}
 
 			if (frameToDisplay == null)

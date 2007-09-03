@@ -50,6 +50,7 @@ import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
 
@@ -94,7 +95,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private Date modifiedDate;
 	private String uid;
 
-
 	/**
 	 * By default, we start with one batch change enabled.  This is because, otherwise,
 	 * the XMLDecoder will cause many model change events to be fired, which will result in
@@ -109,6 +109,30 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		startBatchChange();
 	}
 
+	public void doBackupDataFile() {
+		//Make a backup of the file...
+		//Backup the file, now that we know it is good...
+		try{
+			//Use a rotating backup file, of form 'Data.X.buddi'  
+			// The one with the smallest number X is the most recent.
+			String fileBase = getFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+			for (int i = PrefsModel.getInstance().getNumberOfBackups() - 2; i >= 0; i--){
+				File tempBackupDest = new File(fileBase + "_" + (i + 1) + Const.BACKUP_FILE_EXTENSION);
+				File tempBackupSource = new File(fileBase + "_" + i + Const.BACKUP_FILE_EXTENSION);
+				if (tempBackupSource.exists()){
+					FileFunctions.copyFile(tempBackupSource, tempBackupDest);
+					Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+				}
+			}
+			File tempBackupDest = new File(fileBase + "_0" + Const.BACKUP_FILE_EXTENSION);
+			FileFunctions.copyFile(getFile(), tempBackupDest);
+			if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
+		}
+		catch(IOException ioe){
+			Log.emergency("Problem backing up data files when starting program: " + ioe);
+		}
+	}
+	
 	public List<Account> getAccounts() {
 		checkLists();
 		return accounts;
@@ -260,6 +284,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		accountTypes.remove(type);
 		setChanged();
 	}
+
 	public void removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		if (getTransactions(budgetCategory).size() > 0)
 			throw new ModelException("Cannot remove budget category " + budgetCategory + "; it is referenced by at least one transaction");
@@ -298,7 +323,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void saveAs(File file, int flags) throws DocumentSaveException {
 		saveWrapper(file, flags, true);
 	}
-	
+
 	public void saveAuto(File file) throws DocumentSaveException {
 		saveInternal(file, 0);
 	}

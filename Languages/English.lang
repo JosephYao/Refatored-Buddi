@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Sun Sep 02 20:07:34 MDT 2007
+#Mon Sep 03 01:32:47 MDT 2007
 CREATED_NEW_DATA_FILE_MESSAGE=Created a new data file\:\n
 OPTIONAL_TAG=(optional)
 AND_REPEATING_EVERY=and repeating every
@@ -294,6 +294,7 @@ TO=\ \u2192
 SHOW_INTEREST_RATE=Show Interest Rate
 MESSAGE_ENTER_PASSWORD_TITLE=Enter Password
 TOOLTIP_SHOW_INTEREST_RATE=<html>Show the interest rate in the Accounts<br>window, and allow you to enter it for<br>each account in the Account Edit window.<br>Does not automatically calculate interest.</html>
+BUTTON_LOAD=Load
 LANGUAGE_EDITOR_LOCALE=Please enter the Locale code, e.g.\:\n'US' for English (US)\n'MX' for Espanol (MX)\n\nYou can leave this field blank.
 CLEAR_TRANSACTION_LOSE_CHANGES=Do you want to clear the current transaction?\nYou will lose all unsaved changes.
 MESSAGE_NO_NEW_VERSION_TITLE=No New Version
@@ -513,6 +514,7 @@ SCHEDULE_MONTH_JULY=July
 BUDDI=Buddi
 SCHEDULE_DATE_TENTH=10th
 SCHEDULE_DATE_TWENTYTHIRD=23rd
+MESSAGE_RESTORE_FROM_BACKUP=Are you sure you want to restore from backup?  All changes that you\nhave made to the current data file will be lost, and you will revert to\nthe backed up version.\n\nHit Yes to restore from backup.
 TRANSACTIONS=Transactions
 SCHEDULE_DATE_TWENTYEIGHTH=28th
 DIFFERENCE=Difference
@@ -524,11 +526,13 @@ MESSAGE_ERROR_DELETING_PLUGIN=There was an error deleting the plugin.  You\nmay 
 MESSAGE_ENCRYPT_DATA_FILE_WARNING=This will encrypt your data file and remove\nthe original.  If you forget your password,\nyour data CANNOT BE RECOVERED\!\n\nAre you sure you want to encrypt the data file?
 INTEREST_RATE=Interest Rate
 MENU_EDIT_MODIFY_TYPE=Modify Account Type
+MENU_FILE_BACKUP_MANAGER=Manage Backups...
 ABOUT_EMAIL=wyatt.olson@gmail.com
 CHEQUING=Chequing
 NOT_CLEARED=Not Cleared
 MESSAGE_READING_FILE=Reading File...
 CLOSE_DATA_FILE=Close Data File...
+MESSAGE_RESTORE_FROM_BACKUP_TITLE=Restore From Backup
 MESSAGE_CHANGE_EXISTING_TRANSACTION=You have changed this transaction substantially from what\nit was before.  Usually this is a mistake, and you really\nwanted to create a new transaction.\n\nDo you want to create a new transaction, or modify the existing one?
 CANNOT_SAVE_OVER_DIR=Cannot save over a directory.
 TYPE_MODIFY_NEW=Create New Type

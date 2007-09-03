@@ -14,6 +14,7 @@ public enum ButtonKeys {
     BUTTON_DONE,
     BUTTON_DOWNLOAD,
     BUTTON_EDIT,
+    BUTTON_LOAD,
     BUTTON_NEW,
     BUTTON_NEW_DATA_FILE,
     BUTTON_NO,

@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.util;
 
 import java.text.DateFormat;
+import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
@@ -34,6 +35,16 @@ public class TextFormatter {
 	 */
 	public static DateFormat getDateFormat(){
 		return Formatter.getDateFormat(PrefsModel.getInstance().getDateFormat());
+	}
+	
+	/**
+	 * Returns a formatted version of the given date.  A wrapper method 
+	 * for getDateFormat().format(date).
+	 * @param date
+	 * @return
+	 */
+	public static String getFormattedDate(Date date){
+		return getDateFormat().format(date);
 	}
 	
 	/**

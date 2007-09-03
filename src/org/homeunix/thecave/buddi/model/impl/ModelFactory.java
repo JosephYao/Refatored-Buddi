@@ -281,6 +281,10 @@ public class ModelFactory {
 						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
 					}
 					is.close();
+					
+					//If this is not a backup restore file, do a backup
+					if (!fileToLoad.getName().endsWith(Const.BACKUP_FILE_EXTENSION))
+						document.doBackupDataFile();
 
 					//Refresh the UID Map...
 					document.refreshUidMap();
