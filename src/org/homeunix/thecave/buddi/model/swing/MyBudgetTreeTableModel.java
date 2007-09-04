@@ -31,7 +31,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	private BudgetCategoryType selectedBudgetPeriodType;
 
 	private final Map<BudgetCategoryType, List<BudgetCategory>> budgetCategoriesByType;
-	private final Map<Object, BudgetCategoryListFilteredByDeleted> childrenMap;
+//	private final Map<Object, BudgetCategoryListFilteredByDeleted> childrenMap;
 
 	private int monthOffset; //Where the selected month is in relation to the 
 	// edge of the table.
@@ -39,13 +39,13 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	public MyBudgetTreeTableModel(Document model) {
 		super(new Object());
 		this.budgetCategoriesByType = new HashMap<BudgetCategoryType, List<BudgetCategory>>();
-		this.childrenMap = new HashMap<Object, BudgetCategoryListFilteredByDeleted>();
+//		this.childrenMap = new HashMap<Object, BudgetCategoryListFilteredByDeleted>();
 		
 		this.model = model;
 		this.root = getRoot();
 		this.selectedDate = new Date();
 		this.monthOffset = 2; //This puts the current month in the middle of three columns.
-
+		
 		for (BudgetCategoryTypes typeEnum : BudgetCategoryTypes.values()) {
 			BudgetCategoryType type = ModelFactory.getBudgetCategoryType(typeEnum);
 			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
@@ -153,18 +153,21 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public int getChildCount(Object parent) {
-		if (childrenMap.get(parent) == null){
+//		if (childrenMap.get(parent) == null){
 			if (parent.equals(root)){
-				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null)));
+//				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null)));
+				return new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null)).size();
 //				return budgetCategories.size();
 			}
 			if (parent instanceof BudgetCategory){
-				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent)));
+//				childrenMap.put(parent, new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent)));
+				return new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), (BudgetCategory) parent)).size();
 //				return budgetCategories.size();
 			}
-		}
+//		}
 
-		return childrenMap.get(parent).size();
+		return 0;
+//		return childrenMap.get(parent).size();
 	}
 
 	public int getIndexOfChild(Object parent, Object child) {
@@ -228,6 +231,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
+		System.out.println("Firing 'Structure Changed' for MyBudgetTreeTableModel");
 		modelSupport.fireStructureChanged();
 	}
 }

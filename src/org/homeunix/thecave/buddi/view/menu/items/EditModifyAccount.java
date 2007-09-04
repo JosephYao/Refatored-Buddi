@@ -32,6 +32,7 @@ public class EditModifyAccount extends MossMenuItem {
 		}
 
 		((MainFrame) getFrame()).updateContent();
+		((MainFrame) getFrame()).fireStructureChanged();
 	}
 
 	@Override

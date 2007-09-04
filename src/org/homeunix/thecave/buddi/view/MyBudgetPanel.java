@@ -97,6 +97,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			treeTableModel.setSelectedBudgetPeriodType(ModelFactory.getBudgetCategoryType(periodTypeComboBox.getSelectedItem().toString()));
 			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
 			updateContent();
+			fireStructureChanged();
 		}
 	}
 
@@ -237,7 +238,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, treeTableModel.getSelectedBudgetPeriodType().getDateFormat()));
 
 		//Fire a change event on the table model.
-		treeTableModel.fireStructureChanged();
+//		treeTableModel.fireStructureChanged();
 
 		//Update the balance label
 		long budgetedNetIncome = 0;
@@ -256,5 +257,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			else
 				tree.collapsePath(path);
 		}
+	}
+	
+	public void fireStructureChanged(){
+		treeTableModel.fireStructureChanged();
 	}
 }

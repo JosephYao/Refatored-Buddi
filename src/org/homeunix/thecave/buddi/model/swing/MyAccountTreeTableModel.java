@@ -24,6 +24,12 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 		super(new Object());
 		this.model = model;
 		this.root = getRoot();
+		
+//		this.model.addDocumentChangeListener(new DocumentChangeListener(){
+//			public void documentChange(DocumentChangeEvent event) {
+//				fireStructureChanged();
+//			}
+//		});
 	}
 
 	public int getColumnCount() {
@@ -89,6 +95,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
+		System.out.println("Firing 'Structure Changed' for MyAccountsTreeTableModel");
 		modelSupport.fireStructureChanged();
 	}
 

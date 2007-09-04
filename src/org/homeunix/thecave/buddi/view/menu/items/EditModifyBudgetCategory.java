@@ -32,6 +32,7 @@ public class EditModifyBudgetCategory extends MossMenuItem{
 		}
 
 		((MainFrame) getFrame()).updateContent();
+		((MainFrame) getFrame()).fireStructureChanged();
 	}
 	
 	@Override

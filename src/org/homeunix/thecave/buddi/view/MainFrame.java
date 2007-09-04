@@ -153,4 +153,9 @@ public class MainFrame extends MossDocumentFrame {
 			frame.updateContent();
 		}
 	}
+	
+	public void fireStructureChanged(){
+		myAccounts.fireStructureChanged();
+		myBudget.fireStructureChanged();
+	}
 }

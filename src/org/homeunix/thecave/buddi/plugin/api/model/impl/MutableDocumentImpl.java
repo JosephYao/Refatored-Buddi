@@ -89,9 +89,10 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 	}
 	
 	public MutableBudgetCategory getBudgetCategory(String fullName) {
-		if (getModel().getBudgetCategory(fullName) == null)
+		BudgetCategory bc = getModel().getBudgetCategory(fullName);
+		if (bc == null)
 			return null;
-		return new MutableBudgetCategoryImpl(getModel().getBudgetCategory(fullName));
+		return new MutableBudgetCategoryImpl(bc);
 	}
 	
 	public Document getModel(){

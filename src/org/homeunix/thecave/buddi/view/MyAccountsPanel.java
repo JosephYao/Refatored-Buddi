@@ -184,7 +184,7 @@ public class MyAccountsPanel extends MossPanel {
 		super.updateContent();
 		
 		//Fire a change event on the table model.
-		treeTableModel.fireStructureChanged();
+//		treeTableModel.fireStructureChanged();
 		
 		//Restore the state of the expanded / unrolled nodes.
 		for (AccountType t : ((Document) parent.getDocument()).getAccountTypes()) {
@@ -204,5 +204,9 @@ public class MyAccountsPanel extends MossPanel {
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) 
 				+ ": " 
 				+ TextFormatter.getFormattedCurrency(netWorth)));
+	}
+	
+	public void fireStructureChanged(){
+		treeTableModel.fireStructureChanged();
 	}
 }
