@@ -31,6 +31,13 @@ public interface ImmutableAccount extends ImmutableSource {
 	public long getBalance();
 	
 	/**
+	 * Returns the balance as of the given date.
+	 * @param d
+	 * @return
+	 */
+	public long getBalance(Date d);
+	
+	/**
 	 * Returns the earliest date assoicated with this source.  This is obtained 
 	 * by looking at the associated transactions / period dates.
 	 * @return

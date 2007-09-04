@@ -80,4 +80,18 @@ public interface MutableTransaction extends ImmutableTransaction {
 	 * @param to
 	 */
 	public void setTo(MutableSource to) throws InvalidValueException;
+	
+	
+	
+	/**
+	 * Returns the source associated with this transaction's From field
+	 * @return
+	 */
+	public MutableSource getFrom();
+
+	/**
+	 * Returns the source associated with this transaction's To field
+	 * @return
+	 */
+	public MutableSource getTo();
 }

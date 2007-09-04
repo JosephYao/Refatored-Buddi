@@ -85,7 +85,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 		
 		//This map is where we store the totals for this time period.
 		for (ImmutableBudgetCategory category : model.getBudgetCategories()) {
-			if (!category.isIncome())
+			if (category.isIncome())
 				categories.put(category, new Long(0));
 		}
 		
@@ -122,11 +122,11 @@ public class IncomePieGraph extends BuddiReportPlugin {
 	}
 	
 	public String getDescription() {
-		return BuddiKeys.GRAPH_DESCRIPTION_EXPENSE_PIE_GRAPH.toString();
+		return BuddiKeys.GRAPH_DESCRIPTION_INCOME_PIE_GRAPH.toString();
 	}
 
 	public String getName() {
-		return BuddiKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH.toString();
+		return BuddiKeys.GRAPH_TITLE_INCOME_PIE_GRAPH.toString();
 	}
 
 	public boolean isPluginActive() {

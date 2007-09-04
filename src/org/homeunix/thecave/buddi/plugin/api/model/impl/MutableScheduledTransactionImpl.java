@@ -90,4 +90,6 @@ public class MutableScheduledTransactionImpl extends MutableTransactionImpl impl
 	public void setStartDate(Date startDate) throws InvalidValueException{
 		getScheduledTransaction().setStartDate(startDate);		
 	}
+	
+	
 }

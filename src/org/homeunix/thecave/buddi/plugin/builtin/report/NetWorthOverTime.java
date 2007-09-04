@@ -18,7 +18,6 @@ import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -56,17 +55,17 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 
 		dates.add(new Date());
 
+		List<ImmutableAccount> accounts = model.getAccounts();
 		for (Date d : dates) {
-			Map<ImmutableAccount, Long> accounts = getAccountBalance(model, d);
-
-			long total = 0;
-			for (ImmutableAccount a : accounts.keySet()) {
-//				barData.addValue((Number) new Double(accounts.get(a) / 100.0), Formatter.getInstance().getDateFormat().format(d), a.getName());
-				total += accounts.get(a);
+			long total = 0; 
+			for (ImmutableAccount a : accounts) {
+				total += a.getBalance(d);
 			}
+
+//			barData.addValue((Number) new Double(accounts.get(a) / 100.0), TextFormatter.getFormattedDate(d), a.getName());
 			barData.addValue((Number) new Double(total / 100.0), 
 					TextFormatter.getTranslation(BuddiKeys.NET_WORTH), 
-					Formatter.getDateFormat("MM/dd").format(d));
+					(Formatter.getDateFormat("MM/dd").format(d)));
 		}
 
 
@@ -105,41 +104,6 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 
 	public String getName() {
 		return BuddiKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME.toString();
-	}
-
-	private Map<ImmutableAccount, Long> getAccountBalance(ImmutableDocument model, Date date){
-		Map<ImmutableAccount, Long> map = new HashMap<ImmutableAccount, Long>();
-
-		for (ImmutableAccount a : model.getAccounts()) {
-			if (a.getStartDate().before(date))
-				map.put(a, a.getStartingBalance());
-			else
-				map.put(a, 0l);
-		}
-
-		List<ImmutableTransaction> transactions = model.getTransactions();
-
-		for (ImmutableTransaction transaction : transactions) {
-			if (transaction.getDate().before(date)){
-				//We are moving money *to* this account
-				if (transaction.getTo() instanceof ImmutableAccount){
-					ImmutableAccount a = (ImmutableAccount) transaction.getTo();
-					map.put(a, map.get(a) + transaction.getAmount());
-				}
-
-				//We are moving money *from* this account
-				if (transaction.getFrom() instanceof ImmutableAccount){
-					ImmutableAccount a = (ImmutableAccount) transaction.getFrom();
-					System.out.println(map.get(a));
-					map.put(a, map.get(a) - transaction.getAmount());
-				}
-			}
-			else{
-				Log.debug("Not including transaction.");
-			}
-		}
-
-		return map;
 	}
 
 	@Override

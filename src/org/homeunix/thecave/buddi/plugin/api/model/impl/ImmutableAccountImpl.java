@@ -35,4 +35,8 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 	public String toString() {
 		return getFullName();
 	}
+	
+	public long getBalance(Date d) {
+		return getAccount().getBalance(d);
+	}
 }

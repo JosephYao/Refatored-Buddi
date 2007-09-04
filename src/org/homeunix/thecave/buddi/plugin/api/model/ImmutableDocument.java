@@ -91,5 +91,5 @@ public interface ImmutableDocument extends ImmutableModelObject {
 	 * Returns a list of all immutable types in the model
 	 * @return
 	 */
-	public List<ImmutableAccountType> getTypes();
+	public List<ImmutableAccountType> getAccountTypes();
 }

@@ -18,4 +18,9 @@ public interface MutableAccount extends ImmutableAccount, MutableSource {
 	 * @param startingBalance
 	 */
 	public void setStartingBalance(long startingBalance) throws InvalidValueException;
+	/**
+	 * Returns the Type object associated with the account.
+	 * @return
+	 */
+	public MutableAccountType getAccountType();
 }

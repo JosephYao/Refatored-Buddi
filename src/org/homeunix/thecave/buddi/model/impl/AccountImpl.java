@@ -24,7 +24,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private AccountType type;
-	
+
 	public long getStartingBalance() {
 		return startingBalance;
 	}
@@ -34,10 +34,10 @@ public class AccountImpl extends SourceImpl implements Account {
 		this.startingBalance = startingBalance;
 	}
 	public Date getStartDate() {
-		if (getDocument() != null)
-//			return getDocument().getTransactions(this).get(0).getDate();
-			return new Date();
-		return null;
+		List<Transaction> ts = getDocument().getTransactions(this);
+		if (getDocument() != null && ts.size() > 0)
+			return getDocument().getTransactions(this).get(0).getDate();
+		return new Date();
 	}
 	public long getBalance() {
 		return balance;
@@ -85,6 +85,23 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public String getFullName() {
 		return this.getName() + " (" + getAccountType().getName() + ")";
+	}
+	public long getBalance(Date d) {
+		if (getDocument() == null)
+			return 0; //Document not set; not valid.  Possibly throw exception?
+		if (d.before(getStartDate()))
+			return getStartingBalance(); //This is poorly defined... we could argue to return the starting balance or 0.  I decided to return SB.
+		List<Transaction> ts = getDocument().getTransactions(this, getStartDate(), d);
+		if (ts.size() > 0){
+			Transaction t = ts.get(ts.size() - 1);
+			if (t.getFrom().equals(this))
+				return t.getBalanceFrom();
+			else if (t.getTo().equals(this))
+				return t.getBalanceTo();
+		}
+
+//		Log.error("AccountImpl.getBalance(Date) - Something is wrong... we should not be here.");
+		return 0;
 	}
 	@Override
 	public int compareTo(ModelObject arg0) {

@@ -6,9 +6,9 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 
-public class ImmutableTypeImpl extends ImmutableModelObjectImpl implements ImmutableAccountType {
+public class ImmutableAccountTypeImpl extends ImmutableModelObjectImpl implements ImmutableAccountType {
 	
-	public ImmutableTypeImpl(AccountType type) {
+	public ImmutableAccountTypeImpl(AccountType type) {
 		super(type);
 	}
 	

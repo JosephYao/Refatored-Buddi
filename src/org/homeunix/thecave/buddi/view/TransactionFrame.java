@@ -712,38 +712,45 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 				Transaction t = (Transaction) list.getSelectedValue();
 				int position = list.getSelectedIndex();
-//				baseModel.remove(t, listModel);
+				try {
+					((Document) getDocument()).removeTransaction(t);
+//					baseModel.remove(t, listModel);
 
-//				updateAllTransactionWindows();
-				updateButtons();
-//				MainFrame.getInstance().getAccountListPanel().updateContent();
+//					updateAllTransactionWindows();
+					updateButtons();
+//					MainFrame.getInstance().getAccountListPanel().updateContent();
 
-				list.setSelectedIndex(position);
-				if (list.getSelectedValue() instanceof Transaction){
-					t = (Transaction) list.getSelectedValue();
-					transactionEditor.setTransaction(t, true);
-					list.ensureIndexIsVisible(position);
+					list.setSelectedIndex(position);
+					if (list.getSelectedValue() instanceof Transaction){
+						t = (Transaction) list.getSelectedValue();
+						transactionEditor.setTransaction(t, true);
+						list.ensureIndexIsVisible(position);
+					}
+					else{
+						transactionEditor.setTransaction(null, true);
+						list.clearSelection();
+					}
+
+					transactionEditor.setChanged(false);
+
 				}
-				else{
-					transactionEditor.setTransaction(null, true);
-					list.clearSelection();
+				catch (ModelException me){
+					me.printStackTrace(Log.getPrintStream());
 				}
-
-				transactionEditor.setChanged(false);
 
 //				DocumentController.saveFileSoon();
 			}
 		}
 	}
-	
+
 	public void doClickRecord(){
 		recordButton.doClick();
 	}
-	
+
 	public void doClickClear(){
 		clearButton.doClick();
 	}
-	
+
 	public void doClickDelete(){
 		deleteButton.doClick();
 	}

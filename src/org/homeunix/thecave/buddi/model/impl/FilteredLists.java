@@ -116,8 +116,8 @@ public class FilteredLists {
 
 		@Override
 		public boolean isIncluded(Transaction t) {
-			if (t.getDate().after(startDate) 
-					&& t.getDate().before(endDate)){
+			if ((t.getDate().after(startDate) || t.getDate().equals(startDate)) 
+					&& (t.getDate().before(endDate) || t.getDate().equals(endDate))){
 				return true;
 			}
 

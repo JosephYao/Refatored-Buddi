@@ -34,5 +34,10 @@ public interface MutableBudgetCategory extends ImmutableBudgetCategory, MutableS
 	 * Sets the parent of this budget category.  Set to null for no parent.
 	 * @param parent
 	 */
-	public void setParent(MutableBudgetCategory parent) throws InvalidValueException;
+	public void setParent(MutableBudgetCategory parent) throws InvalidValueException;	
+	/**
+	 * Returns the parent of this ImmutableBudgetCategory, or null if there is no parent.
+	 * @return
+	 */
+	public MutableBudgetCategory getParent();
 }

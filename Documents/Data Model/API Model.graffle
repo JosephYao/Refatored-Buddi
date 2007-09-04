@@ -36,7 +36,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>189</integer>
+			<integer>34</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -104,7 +104,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>188</integer>
+			<integer>33</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -162,13 +162,13 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>184</integer>
+				<integer>29</integer>
 			</dict>
 			<key>ID</key>
-			<integer>187</integer>
+			<integer>32</integer>
 			<key>Points</key>
 			<array>
-				<string>{1016.57, 476.333}</string>
+				<string>{1016.56, 476.333}</string>
 				<string>{976.906, 538.5}</string>
 			</array>
 			<key>Style</key>
@@ -188,7 +188,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>172</integer>
+				<integer>17</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -197,13 +197,13 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>183</integer>
+				<integer>28</integer>
 			</dict>
 			<key>ID</key>
-			<integer>186</integer>
+			<integer>31</integer>
 			<key>Points</key>
 			<array>
-				<string>{942.906, 217}</string>
+				<string>{942.905, 217}</string>
 				<string>{929.278, 250}</string>
 			</array>
 			<key>Style</key>
@@ -223,7 +223,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>158</integer>
+				<integer>3</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -232,10 +232,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>184</integer>
+				<integer>29</integer>
 			</dict>
 			<key>ID</key>
-			<integer>185</integer>
+			<integer>30</integer>
 			<key>Points</key>
 			<array>
 				<string>{912.317, 370}</string>
@@ -258,7 +258,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>183</integer>
+				<integer>28</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -278,7 +278,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>184</integer>
+			<integer>29</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -349,7 +349,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>183</integer>
+			<integer>28</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -418,14 +418,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>171</integer>
+				<integer>16</integer>
 			</dict>
 			<key>ID</key>
-			<integer>182</integer>
+			<integer>27</integer>
 			<key>Points</key>
 			<array>
 				<string>{286.496, 286.667}</string>
-				<string>{242.663, 495}</string>
+				<string>{242.662, 495}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -444,7 +444,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>157</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -460,14 +460,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>174</integer>
+				<integer>19</integer>
 			</dict>
 			<key>ID</key>
-			<integer>181</integer>
+			<integer>26</integer>
 			<key>Points</key>
 			<array>
-				<string>{159.367, 393.5}</string>
-				<string>{130.619, 603.5}</string>
+				<string>{158.654, 402.5}</string>
+				<string>{130.674, 603.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -486,7 +486,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>160</integer>
+				<integer>5</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -502,10 +502,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>175</integer>
+				<integer>20</integer>
 			</dict>
 			<key>ID</key>
-			<integer>180</integer>
+			<integer>25</integer>
 			<key>Points</key>
 			<array>
 				<string>{362.318, 449.333}</string>
@@ -528,7 +528,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>161</integer>
+				<integer>6</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -544,10 +544,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>173</integer>
+				<integer>18</integer>
 			</dict>
 			<key>ID</key>
-			<integer>179</integer>
+			<integer>24</integer>
 			<key>Points</key>
 			<array>
 				<string>{489.923, 294}</string>
@@ -570,7 +570,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>159</integer>
+				<integer>4</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -586,10 +586,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>172</integer>
+				<integer>17</integer>
 			</dict>
 			<key>ID</key>
-			<integer>178</integer>
+			<integer>23</integer>
 			<key>Points</key>
 			<array>
 				<string>{1004.48, 217}</string>
@@ -612,7 +612,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>158</integer>
+				<integer>3</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -628,14 +628,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>175</integer>
+				<integer>20</integer>
 			</dict>
 			<key>ID</key>
-			<integer>177</integer>
+			<integer>22</integer>
 			<key>Points</key>
 			<array>
 				<string>{259.407, 552}</string>
-				<string>{325.502, 634.833}</string>
+				<string>{325.501, 634.833}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -654,7 +654,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>171</integer>
+				<integer>16</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -670,10 +670,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>174</integer>
+				<integer>19</integer>
 			</dict>
 			<key>ID</key>
-			<integer>176</integer>
+			<integer>21</integer>
 			<key>Points</key>
 			<array>
 				<string>{206.705, 552}</string>
@@ -696,7 +696,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>171</integer>
+				<integer>16</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -716,7 +716,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>175</integer>
+			<integer>20</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -782,7 +782,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>174</integer>
+			<integer>19</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -846,7 +846,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>173</integer>
+			<integer>18</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -909,7 +909,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>172</integer>
+			<integer>17</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -983,7 +983,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>171</integer>
+			<integer>16</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1044,14 +1044,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>169</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>170</integer>
+			<integer>15</integer>
 			<key>Points</key>
 			<array>
-				<string>{701.457, 393.167}</string>
-				<string>{707.498, 487.667}</string>
+				<string>{701.456, 393.167}</string>
+				<string>{707.497, 487.667}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1070,7 +1070,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>156</integer>
+				<integer>1</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1090,7 +1090,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>169</integer>
+			<integer>14</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1158,13 +1158,13 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>156</integer>
+				<integer>1</integer>
 			</dict>
 			<key>ID</key>
-			<integer>168</integer>
+			<integer>13</integer>
 			<key>Points</key>
 			<array>
-				<string>{753.717, 80.3333}</string>
+				<string>{753.718, 80.3333}</string>
 				<string>{711.978, 264.167}</string>
 			</array>
 			<key>Style</key>
@@ -1184,7 +1184,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>164</integer>
+				<integer>9</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1200,10 +1200,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>158</integer>
+				<integer>3</integer>
 			</dict>
 			<key>ID</key>
-			<integer>167</integer>
+			<integer>12</integer>
 			<key>Points</key>
 			<array>
 				<string>{812.667, 74.2749}</string>
@@ -1226,7 +1226,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>164</integer>
+				<integer>9</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1242,10 +1242,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>159</integer>
+				<integer>4</integer>
 			</dict>
 			<key>ID</key>
-			<integer>166</integer>
+			<integer>11</integer>
 			<key>Points</key>
 			<array>
 				<string>{728.885, 80.3333}</string>
@@ -1268,7 +1268,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>164</integer>
+				<integer>9</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1284,14 +1284,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>157</integer>
+				<integer>2</integer>
 			</dict>
 			<key>ID</key>
-			<integer>165</integer>
+			<integer>10</integer>
 			<key>Points</key>
 			<array>
 				<string>{705.667, 78.0563}</string>
-				<string>{335.333, 228.425}</string>
+				<string>{335.333, 228.426}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1310,7 +1310,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>164</integer>
+				<integer>9</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1330,7 +1330,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>164</integer>
+			<integer>9</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1369,10 +1369,10 @@
 {\fonttbl\f0\fswiss\fcharset77 ArialMT;}
 {\colortbl;\red255\green255\blue255;}
 \deftab720
-\pard\pardeftab720
+\pard\pardeftab720\ql\qnatural
 
 \f0\fs16 \cf0 +getRaw()\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\ql\qnatural\pardirnatural
 \cf0 +getUid()}</string>
 				</dict>
 			</array>
@@ -1392,14 +1392,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>161</integer>
+				<integer>6</integer>
 			</dict>
 			<key>ID</key>
-			<integer>163</integer>
+			<integer>8</integer>
 			<key>Points</key>
 			<array>
 				<string>{313.149, 286.667}</string>
-				<string>{346.518, 365.333}</string>
+				<string>{346.517, 365.333}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1418,7 +1418,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>157</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1434,14 +1434,14 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>160</integer>
+				<integer>5</integer>
 			</dict>
 			<key>ID</key>
-			<integer>162</integer>
+			<integer>7</integer>
 			<key>Points</key>
 			<array>
-				<string>{255.333, 278.705}</string>
-				<string>{208.568, 318.5}</string>
+				<string>{255.333, 280.081}</string>
+				<string>{211, 319.331}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1460,7 +1460,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>157</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1480,7 +1480,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>161</integer>
+			<integer>6</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1533,7 +1533,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{118, 318.5}, {93, 75}}</string>
+			<string>{{118, 318.5}, {93, 84}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1548,7 +1548,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>160</integer>
+			<integer>5</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1591,6 +1591,7 @@
 \f0\fs16 \cf0 +getAccount()\
 +getAccountType()\
 +getBalance()\
++getBalance(Date)\
 +getStartDate()\
 +getStartingBalance()}</string>
 				</dict>
@@ -1615,7 +1616,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>159</integer>
+			<integer>4</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1680,7 +1681,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>158</integer>
+			<integer>3</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1758,7 +1759,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>157</integer>
+			<integer>2</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1826,7 +1827,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>156</integer>
+			<integer>1</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1934,7 +1935,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2007-08-31 22:07:21 -0600</string>
+	<string>2007-09-03 21:34:13 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -2032,8 +2033,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDFUMDI6NTM6
-	MjBaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDRUMDM6MjY6
+	NDFaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -2046,7 +2047,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTAxVDAyOjUzOjIwWjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTA0VDAzOjI2OjQxWjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8
@@ -2158,7 +2159,7 @@
 		<key>ShowStatusBar</key>
 		<true/>
 		<key>VisibleRegion</key>
-		<string>{{79, 8}, {995, 719}}</string>
+		<string>{{0, 8}, {995, 719}}</string>
 		<key>Zoom</key>
 		<string>1</string>
 	</dict>

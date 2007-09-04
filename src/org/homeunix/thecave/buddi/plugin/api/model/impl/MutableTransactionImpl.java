@@ -51,18 +51,18 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public ImmutableSourceImpl getFrom(){
+	public MutableSourceImpl getFrom(){
 		if (getTransaction().getFrom() instanceof Account)
-			return new ImmutableAccountImpl((Account) getTransaction().getFrom());
+			return new MutableAccountImpl((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
-			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
+			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
 		return null;
 	}
-	public ImmutableSourceImpl getTo(){
+	public MutableSourceImpl getTo(){
 		if (getTransaction().getTo() instanceof Account)
-			return new ImmutableAccountImpl((Account) getTransaction().getTo());
+			return new MutableAccountImpl((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
-			return new ImmutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
+			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
 	public long getBalanceFrom() {

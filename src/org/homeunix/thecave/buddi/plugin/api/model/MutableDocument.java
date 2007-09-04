@@ -3,10 +3,92 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
+import java.util.Date;
+import java.util.List;
+
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 
-public interface MutableDocument extends ImmutableDocument {
+public interface MutableDocument extends ImmutableModelObject {
 
+	/**
+	 * Returns the account referenced by the given name.
+	 * @param name
+	 * @return
+	 */
+	public MutableAccount getAccount(String name);
+	
+	/**
+	 * Returns a list of all immutable accounts in the model
+	 * @return
+	 */
+	public List<MutableAccount> getAccounts();
+	
+	/**
+	 * Returns a list of all immutable budget categories in the model
+	 * @return
+	 */
+	public List<MutableBudgetCategory> getBudgetCategories();
+	
+	/**
+	 * Returns the budget category referenced by the given full name.
+	 * @param fullName
+	 * @return
+	 */
+	public MutableBudgetCategory getBudgetCategory(String fullName);
+	
+	/**
+	 * Returns the wrapped object from the underlying data model.  By 
+	 * accessing this method, you bypass all protection which the Buddi API
+	 * gives you; it is not recommended to use this method unless you understand
+	 * the risks associated with it. 
+	 * @return
+	 */
+	public Document getModel();
+	
+	/**
+	 * Returns a list of all immutable transactions in the model
+	 * @return
+	 */
+	public List<MutableTransaction> getTransactions();
+	
+	/**
+	 * Returns a list of all immutable transactions in the model which are
+	 * between startDate and endDate
+	 * @return
+	 */
+	public List<MutableTransaction> getTransactions(Date startDate, Date endDate);
+	
+	/**
+	 * Returns a list of all immutable transactions in the model which are
+	 * associatd with the given source
+	 * @return
+	 */
+	public List<MutableTransaction> getTransactions(MutableSource source);
+	
+	/**
+	 * Returns a list of all immutable transactions in the model which are associated with
+	 * source and between startDate and endDate
+	 * @return
+	 */
+	public List<MutableTransaction> getTransactions(MutableSource source, Date startDate, Date endDate);
+	
+	/**
+	 * Returns the type referenced by the given name.
+	 * @param name
+	 * @return
+	 */
+	public MutableAccountType getType(String name);
+	
+	/**
+	 * Returns a list of all immutable types in the model
+	 * @return
+	 */
+	public List<MutableAccountType> getAccountTypes();
+	
+	
+	
+	
 	/**
 	 * Adds an account to the model
 	 * @param account

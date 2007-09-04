@@ -75,7 +75,7 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 		return new MutableAccountTypeImpl(getModel().getAccountType(name));
 	}
 	
-	public List<ImmutableAccountType> getTypes(){
+	public List<ImmutableAccountType> getAccountTypes(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
 	}
 	
