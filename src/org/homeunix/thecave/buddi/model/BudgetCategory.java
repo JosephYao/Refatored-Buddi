@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
@@ -52,6 +53,12 @@ public interface BudgetCategory extends Source, Expandable {
 	 * @return
 	 */
 	public BudgetCategory getParent();
+	
+	/**
+	 * Returns a list of children for this budget category.
+	 * @return
+	 */
+	public List<BudgetCategory> getChildren();
 	
 	/**
 	 * Does this budget category represent an income category?

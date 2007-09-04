@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 /**
@@ -28,7 +29,7 @@ public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	public boolean isDeleted() {
 		return deleted;
 	}
-	public void setDeleted(boolean deleted) {
+	public void setDeleted(boolean deleted) throws InvalidValueException {
 		this.deleted = deleted;
 		setChanged();
 	}

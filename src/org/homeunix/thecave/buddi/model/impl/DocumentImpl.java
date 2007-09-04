@@ -297,16 +297,27 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 
 	public void removeBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
+		//We call the recursive check to ensure that all descendants of this budget category 
+		// are cleared to be deleted.  If one is not, we cancel the operation.
+		recursiveCheckRemoveBudgetCategory(budgetCategory);
+		
+		budgetCategories.remove(budgetCategory);
+		setChanged();
+	}
+	
+	private void recursiveCheckRemoveBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		if (getTransactions(budgetCategory).size() > 0)
 			throw new ModelException("Cannot remove budget category " + budgetCategory + "; it is referenced by at least one transaction");
 		for (ScheduledTransaction st : getScheduledTransactions())
 			if (st.getFrom().equals(budgetCategory)
 					|| st.getTo().equals(budgetCategory))
 				throw new ModelException("Cannot remove budget category " + budgetCategory + "; it contains scheduled transactions");		
-
-		budgetCategories.remove(budgetCategory);
-		setChanged();
+		
+		for (BudgetCategory bc : budgetCategory.getChildren()) {
+			recursiveCheckRemoveBudgetCategory(bc);
+		}
 	}
+	
 	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
 		scheduledTransactions.remove(scheduledTransaction);
 		setChanged();

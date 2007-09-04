@@ -12,7 +12,9 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 /**
@@ -28,6 +30,7 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	private BudgetCategoryType periodType;
 	private BudgetCategory parent;
 	private Map<String, Long> amounts;
+	private List<BudgetCategory> children;
 	
 	public Map<String, Long> getAmounts() {
 		if (amounts == null)
@@ -48,6 +51,33 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (l == null)
 			return 0;
 		return l;
+	}
+	
+	@Override
+	public void setDeleted(boolean deleted) throws InvalidValueException {
+		getDocument().startBatchChange();
+		//We need to delete / undelete ancestors / descendents as needed.  The rule to follow is that
+		// we cannot have any account which is not deleted which has a parent which is deleted.
+		if (deleted){
+			//If we delete this one, we must also delete all children.
+			for (BudgetCategory bc : getChildren()) {
+				bc.setDeleted(deleted);
+			}
+		}
+		else {
+			//If we undelete this one, we must also undelete all ancestors.  
+			if (getParent() != null)
+				getParent().setDeleted(deleted);
+		}
+		
+		super.setDeleted(deleted);
+		getDocument().finishBatchChange();
+	}
+	
+	public List<BudgetCategory> getChildren() {
+		if (children == null)
+			children = new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this);
+		return children;
 	}
 	
 	public long getAmount(Date startDate, Date endDate){
