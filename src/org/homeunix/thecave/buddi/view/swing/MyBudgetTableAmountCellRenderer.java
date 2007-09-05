@@ -21,7 +21,7 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-		if (value instanceof Object[]){
+//		if (value instanceof Object[]){
 			Object[] values = (Object[]) value;
 			
 			if (sb.length() > 0)
@@ -46,7 +46,7 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 			sb.insert(0, "<html>");
 			sb.append("</html>");
 			this.setText(sb.toString());
-		}
+//		}
 
 		if (hasFocus && isSelected) {
 			table.editCellAt(row,column);
