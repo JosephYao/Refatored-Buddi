@@ -9,7 +9,7 @@ import java.util.List;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 
-public interface MutableDocument extends ImmutableModelObject {
+public interface MutableDocument extends ImmutableDocument {
 
 	/**
 	 * Returns the account referenced by the given name.
@@ -22,13 +22,13 @@ public interface MutableDocument extends ImmutableModelObject {
 	 * Returns a list of all immutable accounts in the model
 	 * @return
 	 */
-	public List<MutableAccount> getAccounts();
+	public List<MutableAccount> getMutableAccounts();
 	
 	/**
 	 * Returns a list of all immutable budget categories in the model
 	 * @return
 	 */
-	public List<MutableBudgetCategory> getBudgetCategories();
+	public List<MutableBudgetCategory> getMutableBudgetCategories();
 	
 	/**
 	 * Returns the budget category referenced by the given full name.
@@ -50,28 +50,28 @@ public interface MutableDocument extends ImmutableModelObject {
 	 * Returns a list of all immutable transactions in the model
 	 * @return
 	 */
-	public List<MutableTransaction> getTransactions();
+	public List<MutableTransaction> getMutableTransactions();
 	
 	/**
 	 * Returns a list of all immutable transactions in the model which are
 	 * between startDate and endDate
 	 * @return
 	 */
-	public List<MutableTransaction> getTransactions(Date startDate, Date endDate);
+	public List<MutableTransaction> getMutableTransactions(Date startDate, Date endDate);
 	
 	/**
 	 * Returns a list of all immutable transactions in the model which are
 	 * associatd with the given source
 	 * @return
 	 */
-	public List<MutableTransaction> getTransactions(MutableSource source);
+	public List<MutableTransaction> getMutableTransactions(MutableSource source);
 	
 	/**
 	 * Returns a list of all immutable transactions in the model which are associated with
 	 * source and between startDate and endDate
 	 * @return
 	 */
-	public List<MutableTransaction> getTransactions(MutableSource source, Date startDate, Date endDate);
+	public List<MutableTransaction> getMutableTransactions(MutableSource source, Date startDate, Date endDate);
 	
 	/**
 	 * Returns the type referenced by the given name.
@@ -84,7 +84,7 @@ public interface MutableDocument extends ImmutableModelObject {
 	 * Returns a list of all immutable types in the model
 	 * @return
 	 */
-	public List<MutableAccountType> getAccountTypes();
+	public List<MutableAccountType> getMutableAccountTypes();
 	
 	
 	

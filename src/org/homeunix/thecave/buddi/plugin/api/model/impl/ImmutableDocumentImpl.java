@@ -35,11 +35,11 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 		return new MutableAccountImpl(getModel().getAccount(name));
 	}
 	
-	public List<ImmutableAccount> getAccounts(){
+	public List<ImmutableAccount> getImmutableAccounts(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccount, Account>(getModel(), getModel().getAccounts());
 	}
 	
-	public List<ImmutableBudgetCategory> getBudgetCategories(){
+	public List<ImmutableBudgetCategory> getImmutableBudgetCategories(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getModel(), getModel().getBudgetCategories());
 	}
 	
@@ -53,19 +53,19 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 		return model;
 	}
 	
-	public List<ImmutableTransaction> getTransactions(){
+	public List<ImmutableTransaction> getImmutableTransactions(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions());
 	}
 	
-	public List<ImmutableTransaction> getTransactions(Date startDate, Date endDate){
+	public List<ImmutableTransaction> getImmutableTransactions(Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source){
+	public List<ImmutableTransaction> getImmutableTransactions(ImmutableSource source){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
 	}
 	
-	public List<ImmutableTransaction> getTransactions(ImmutableSource source, Date startDate, Date endDate){
+	public List<ImmutableTransaction> getImmutableTransactions(ImmutableSource source, Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	
@@ -75,7 +75,7 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 		return new MutableAccountTypeImpl(getModel().getAccountType(name));
 	}
 	
-	public List<ImmutableAccountType> getAccountTypes(){
+	public List<ImmutableAccountType> getImmutableAccountTypes(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
 	}
 	

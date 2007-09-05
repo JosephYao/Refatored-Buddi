@@ -38,7 +38,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
-		List<ImmutableBudgetCategory> categories = model.getBudgetCategories();
+		List<ImmutableBudgetCategory> categories = model.getImmutableBudgetCategories();
 		Collections.sort(categories, new Comparator<ImmutableBudgetCategory>(){
 			public int compare(ImmutableBudgetCategory o1, ImmutableBudgetCategory o2) {
 				//First we sort by income
@@ -72,7 +72,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		long totalActual = 0, totalBudgeted = 0;
 		
 		for (ImmutableBudgetCategory c : categories){
-			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
+			List<ImmutableTransaction> transactions = model.getImmutableTransactions(c, startDate, endDate);
 			long actual = 0;
 			for (ImmutableTransaction transaction : transactions) {
 				actual += transaction.getAmount();
@@ -130,7 +130,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
 		for (ImmutableBudgetCategory c : categories){
-			List<ImmutableTransaction> transactions = model.getTransactions(c, startDate, endDate);
+			List<ImmutableTransaction> transactions = model.getImmutableTransactions(c, startDate, endDate);
 			
 			
 			if (transactions.size() > 0){

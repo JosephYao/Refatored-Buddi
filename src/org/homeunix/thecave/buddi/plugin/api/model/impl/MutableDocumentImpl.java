@@ -14,6 +14,12 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
@@ -22,7 +28,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
 
-public class MutableDocumentImpl extends MutableModelObjectImpl implements MutableDocument {
+public class MutableDocumentImpl extends MutableModelObjectImpl implements MutableDocument, ImmutableDocument {
 
 	private final Document model;
 	
@@ -80,11 +86,11 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 		return new MutableAccountImpl(getModel().getAccount(name));
 	}
 	
-	public List<MutableAccount> getAccounts(){
+	public List<MutableAccount> getMutableAccounts(){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableAccount, Account>(getModel(), getModel().getAccounts());
 	}
 	
-	public List<MutableBudgetCategory> getBudgetCategories(){
+	public List<MutableBudgetCategory> getMutableBudgetCategories(){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableBudgetCategory, BudgetCategory>(getModel(), getModel().getBudgetCategories());
 	}
 	
@@ -99,19 +105,19 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 		return model;
 	}
 	
-	public List<MutableTransaction> getTransactions(){
+	public List<MutableTransaction> getMutableTransactions(){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableTransaction, Transaction>(getModel(), getModel().getTransactions());
 	}
 	
-	public List<MutableTransaction> getTransactions(Date startDate, Date endDate){
+	public List<MutableTransaction> getMutableTransactions(Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
 	}
 	
-	public List<MutableTransaction> getTransactions(MutableSource source){
+	public List<MutableTransaction> getMutableTransactions(MutableSource source){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
 	}
 	
-	public List<MutableTransaction> getTransactions(MutableSource source, Date startDate, Date endDate){
+	public List<MutableTransaction> getMutableTransactions(MutableSource source, Date startDate, Date endDate){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
 	}
 	
@@ -121,9 +127,38 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 		return new MutableAccountTypeImpl(getModel().getAccountType(name));
 	}
 	
-	public List<MutableAccountType> getAccountTypes(){
+	public List<MutableAccountType> getMutableAccountTypes(){
 		return new WrapperLists.ImmutableObjectWrapperList<MutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
 	}
 	
 	
+	
+	
+	public List<ImmutableAccount> getImmutableAccounts(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccount, Account>(getModel(), getModel().getAccounts());
+	}
+	
+	public List<ImmutableBudgetCategory> getImmutableBudgetCategories(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getModel(), getModel().getBudgetCategories());
+	}
+	
+	public List<ImmutableTransaction> getImmutableTransactions(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions());
+	}
+	
+	public List<ImmutableTransaction> getImmutableTransactions(Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions(startDate, endDate));
+	}
+	
+	public List<ImmutableTransaction> getImmutableTransactions(ImmutableSource source){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw()));
+	}
+	
+	public List<ImmutableTransaction> getImmutableTransactions(ImmutableSource source, Date startDate, Date endDate){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransaction, Transaction>(getModel(), getModel().getTransactions((Source) source.getRaw(), startDate, endDate));
+	}
+	
+	public List<ImmutableAccountType> getImmutableAccountTypes(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
+	}
 }

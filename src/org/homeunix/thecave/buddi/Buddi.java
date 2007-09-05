@@ -550,11 +550,11 @@ public class Buddi {
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
+//		LookAndFeelUtil.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 
 		//Set Buddi-specific LnF options.
 		//This one removes the width limitation for dialogs.  Since we already 
 		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
-		
 		
 		
 		//Start the GUI in the proper thread

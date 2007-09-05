@@ -685,7 +685,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				//If it is null, we need to init it to a sane value.
 				tempDate = s.getStartDate();
 				isNewTransaction=true;
-				//The below is just to avoid NPE's ideally changing the order of the checking below will solve the problem, but better safe than sorry.
+				//The below is just to avoid NPE's; ideally changing the order 
+				// of the checking below will solve the problem, but better safe than sorry.
 				lastDayCreated=DateFunctions.getStartOfDay(tempDate);
 			}
 			else {
@@ -703,10 +704,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			if (Const.DEVEL){
 				Log.debug("tempDate = " + tempDate);
 				Log.debug("startDate = " + s.getStartDate());
+				Log.debug("endDate = " + s.getEndDate());
 			}
 
 			//The transaction is scheduled for a date before today and before the EndDate 
-			while (tempDate.before(today)) {
+			while (tempDate.before(today) && (s.getEndDate() == null || s.getEndDate().after(tempDate))) {
 				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
 
 				//We use a Calendar instead of a Date object for comparisons

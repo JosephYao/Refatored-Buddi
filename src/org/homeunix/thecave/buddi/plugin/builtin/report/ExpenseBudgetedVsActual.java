@@ -86,11 +86,11 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 	}
 	
 	private Map<ImmutableBudgetCategory, Long> getExpensesBetween(ImmutableDocument model, Date startDate, Date endDate){
-		List<ImmutableTransaction> transactions = model.getTransactions(startDate, endDate);
+		List<ImmutableTransaction> transactions = model.getImmutableTransactions(startDate, endDate);
 		Map<ImmutableBudgetCategory, Long> categories = new HashMap<ImmutableBudgetCategory, Long>();
 		
 		//This map is where we store the totals for this time period.
-		for (ImmutableBudgetCategory category : model.getBudgetCategories()) {
+		for (ImmutableBudgetCategory category : model.getImmutableBudgetCategories()) {
 			if (!category.isIncome())
 				categories.put(category, new Long(0));
 		}

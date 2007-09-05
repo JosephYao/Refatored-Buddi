@@ -33,7 +33,7 @@ public class TransactionsNotCleared extends BuddiReportPlugin {
 	
 	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
-		List<ImmutableTransaction> temp = model.getTransactions(startDate, endDate);
+		List<ImmutableTransaction> temp = model.getImmutableTransactions(startDate, endDate);
 		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();
 		
 		for (ImmutableTransaction transaction : temp) {

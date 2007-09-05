@@ -35,7 +35,7 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 
 		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");
 		
-		List<ImmutableTransaction> transactions = model.getTransactions(startDate, endDate);
+		List<ImmutableTransaction> transactions = model.getImmutableTransactions(startDate, endDate);
 		Map<String, List<ImmutableTransaction>> descriptions = new HashMap<String, List<ImmutableTransaction>>();
 		
 		for (ImmutableTransaction transaction : transactions) {

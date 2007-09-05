@@ -55,7 +55,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 
 		dates.add(new Date());
 
-		List<ImmutableAccount> accounts = model.getAccounts();
+		List<ImmutableAccount> accounts = model.getImmutableAccounts();
 		for (Date d : dates) {
 			long total = 0; 
 			for (ImmutableAccount a : accounts) {

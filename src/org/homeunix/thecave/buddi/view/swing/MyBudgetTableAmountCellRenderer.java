@@ -46,6 +46,7 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 			sb.insert(0, "<html>");
 			sb.append("</html>");
 			this.setText(sb.toString());
+//			this.setText(values[1].toString());
 //		}
 
 		if (hasFocus && isSelected) {

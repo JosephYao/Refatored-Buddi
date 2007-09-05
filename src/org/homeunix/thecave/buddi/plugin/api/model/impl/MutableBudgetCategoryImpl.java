@@ -4,9 +4,12 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategoryType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 
@@ -65,5 +68,29 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	@Override
 	public String toString() {
 		return getFullName();
+	}
+	
+	public List<MutableBudgetCategory> getAllChildren() {
+		return null;
+	}
+	
+	public List<MutableBudgetCategory> getChildren() {
+		return null;
+	}
+	
+	public List<MutableBudgetCategory> getAllMutableChildren() {
+		return new WrapperLists.ImmutableObjectWrapperList<MutableBudgetCategory, BudgetCategory>(getBudgetCategory().getDocument(), getBudgetCategory().getAllChildren());
+	}
+	
+	public List<MutableBudgetCategory> getMutableChildren() {
+		return new WrapperLists.ImmutableObjectWrapperList<MutableBudgetCategory, BudgetCategory>(getBudgetCategory().getDocument(), getBudgetCategory().getChildren());
+	}
+	
+	public List<ImmutableBudgetCategory> getAllImmutableChildren() {
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getBudgetCategory().getDocument(), getBudgetCategory().getAllChildren());
+	}
+	
+	public List<ImmutableBudgetCategory> getImmutableChildren() {
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getBudgetCategory().getDocument(), getBudgetCategory().getChildren());
 	}
 }

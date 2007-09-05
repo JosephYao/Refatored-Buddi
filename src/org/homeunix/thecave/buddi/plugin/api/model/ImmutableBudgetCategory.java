@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 
@@ -36,6 +37,25 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	 * @return
 	 */
 	public BudgetCategory getBudgetCategory();
+	
+	/**
+	 * Returns all visible children of this budget category.  'Visible Children' are
+	 * defined to be all children which do not have the deleted flag set, plus all 
+	 * children which have the deleted flag set IIF the Preferences define that the user
+	 * wants to see deleted sources.
+	 * 
+	 * This method is mostly used for GUI functions, such as reports and graphs; if you
+	 * want to access the model it is usually a better idea to use the getAllChildren()
+	 * method, which will return all children regardless of delete flag state.  
+	 * @return
+	 */
+	public List<ImmutableBudgetCategory> getImmutableChildren();
+	
+	/**
+	 * Returns all children of this budget category, regardless of delete flag state. 
+	 * @return
+	 */
+	public List<ImmutableBudgetCategory> getAllImmutableChildren();
 	
 	/**
 	 * Returns the budget period type associated with this budget category.
