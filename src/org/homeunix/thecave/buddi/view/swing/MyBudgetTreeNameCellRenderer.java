@@ -11,7 +11,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
-public class MyBudgetTableNameCellRenderer extends DefaultTreeCellRenderer {
+public class MyBudgetTreeNameCellRenderer extends DefaultTreeCellRenderer {
 	public static final long serialVersionUID = 0;
 
 

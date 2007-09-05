@@ -12,6 +12,7 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -31,6 +32,7 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	private BudgetCategory parent;
 	private Map<String, Long> amounts;
 	private List<BudgetCategory> children;
+	private List<BudgetCategory> allChildren;
 	
 	public Map<String, Long> getAmounts() {
 		if (amounts == null)
@@ -76,9 +78,15 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	
 	public List<BudgetCategory> getChildren() {
 		if (children == null)
-			children = new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this);
+			children = new BudgetCategoryListFilteredByDeleted(getDocument(), new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this));
 		return children;
 	}
+	
+	public List<BudgetCategory> getAllChildren() {
+		if (allChildren == null)
+			allChildren = new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this);
+		return allChildren;
+	}	
 	
 	public long getAmount(Date startDate, Date endDate){
 		if (startDate.after(endDate))

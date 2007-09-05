@@ -36,6 +36,7 @@ public class FileRevertToBackup extends MossMenuItem {
 	public void updateMenus() {
 		super.updateMenus();
 
-		this.setEnabled(getFrame() instanceof MossDocumentFrame);
+		this.setEnabled(getFrame() instanceof MossDocumentFrame 
+				&& ((MossDocumentFrame) getFrame()).getDocument().getFile() != null);
 	}
 }

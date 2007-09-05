@@ -55,10 +55,20 @@ public interface BudgetCategory extends Source, Expandable {
 	public BudgetCategory getParent();
 	
 	/**
-	 * Returns a list of children for this budget category.
+	 * Returns a list of children for this budget category.  The contents of this list
+	 * will include only children which match the current preferences for deleted items.
+	 * This means that if the user has specified to only show non-deleted sources, we
+	 * will not return deleted children here.  To get a list of all children, regardles 
+	 * of deleted state, use the getAllChildren() method. 
 	 * @return
 	 */
 	public List<BudgetCategory> getChildren();
+	
+	/**
+	 * Returns a list of all children for this budget category, inluding deleted ones.
+	 * @return
+	 */
+	public List<BudgetCategory> getAllChildren();
 	
 	/**
 	 * Does this budget category represent an income category?

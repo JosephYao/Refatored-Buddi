@@ -79,7 +79,7 @@ public class Buddi {
 	private static String languagesFolder;
 	private static List<File> filesToLoad;
 	private static Boolean debian = false;
-	private static Boolean slackware = false;
+	private static Boolean genericUnix = false;
 	private static Boolean redhat = false;
 	private static Boolean simpleFont = false;
 	private static File logFile = null;
@@ -120,9 +120,9 @@ public class Buddi {
 	 * download a .jar.
 	 */
 	public static boolean isSlackware(){
-		if (slackware == null)
-			slackware = false;
-		return slackware;
+		if (genericUnix == null)
+			genericUnix = false;
+		return genericUnix;
 	}
 
 	/** 
@@ -420,7 +420,7 @@ public class Buddi {
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
-		// Undocumented flag --slackware will specify a .tgz download for new versions.
+		// Undocumented flag --unix will specify a .tgz download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
 		variables.add(new ParseVariable("-p", String.class, false));
@@ -433,7 +433,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
-		variables.add(new ParseVariable("--slackware", Boolean.class, false));
+		variables.add(new ParseVariable("--unix", Boolean.class, false));
 
 		ParseResults results = ParseCommands.parse(args, help, variables);
 
@@ -508,7 +508,7 @@ public class Buddi {
 		simpleFont = results.getBoolean("--simpleFont");
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
-		slackware = results.getBoolean("--slackware");
+		genericUnix = results.getBoolean("--unix");
 
 		filesToLoad = new LinkedList<File>();
 		for (String s : results.getCommands()) {
@@ -551,7 +551,8 @@ public class Buddi {
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
 
-		//Set Buddi-specific LnF options
+		//Set Buddi-specific LnF options.
+		//This one removes the width limitation for dialogs.  Since we already 
 		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
 		
 		

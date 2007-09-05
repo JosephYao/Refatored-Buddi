@@ -40,7 +40,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
-import org.homeunix.thecave.buddi.view.swing.MyBudgetTableNameCellRenderer;
+import org.homeunix.thecave.buddi.view.swing.MyBudgetTreeNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
@@ -109,7 +109,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setClosedIcon(null);
 		tree.setOpenIcon(null);
 		tree.setLeafIcon(null);
-		tree.setTreeCellRenderer(new MyBudgetTableNameCellRenderer());
+		tree.setTreeCellRenderer(new MyBudgetTreeNameCellRenderer());
 
 		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
 			MossDecimalField editor = new MossDecimalField(0, true, 2);

@@ -33,21 +33,19 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public int getColumnCount() {
-		return 3;
+		return 2;
 	}
 
 	@Override
 	public String getColumnName(int column) {
-		if (column == 1)
+		if (column == 0)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT);
-		if (column == 2)
+		if (column == 1)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AMOUNT);
 		return "";
 	}
 
 	public Object getValueAt(Object node, int column) {
-		if (column == 0)
-			return "";
 		return node;
 	}
 

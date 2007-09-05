@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
-public class MyAccountTableNameCellRenderer extends DefaultTableCellRenderer {
+public class MyAccountTableNameCellRendererOld extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;
 	
 	@Override
