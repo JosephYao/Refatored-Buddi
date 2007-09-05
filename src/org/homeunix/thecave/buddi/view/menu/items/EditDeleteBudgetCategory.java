@@ -19,7 +19,7 @@ public class EditDeleteBudgetCategory extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 	
 	public EditDeleteBudgetCategory(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_DELETE_BUDGET_CATEGORY));
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_DELETE_BUDGET_CATEGORIES));
 	}
 	
 	@Override

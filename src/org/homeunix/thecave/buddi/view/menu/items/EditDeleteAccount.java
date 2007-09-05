@@ -20,7 +20,7 @@ public class EditDeleteAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 
 	public EditDeleteAccount(MossFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_DELETE_ACCOUNT));
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_DELETE_ACCOUNTS));
 	}
 	
 	@Override

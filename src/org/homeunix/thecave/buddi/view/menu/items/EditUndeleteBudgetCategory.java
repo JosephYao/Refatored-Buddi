@@ -7,30 +7,33 @@ import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.buddi.view.dialogs.BudgetCategoryEditorDialog;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.util.Log;
 
-public class EditModifyBudgetCategory extends MossMenuItem{
+public class EditUndeleteBudgetCategory extends MossMenuItem{
 	public static final long serialVersionUID = 0;
-
-	public EditModifyBudgetCategory(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_MODIFY_BUDGET_CATEGORIES));
+	
+	public EditUndeleteBudgetCategory(MainFrame frame) {
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_DELETE_BUDGET_CATEGORIES));
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (!(getFrame() instanceof MainFrame))
+			throw new RuntimeException("Calling frame not instance of BudgetFrame");
+			
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getSelectedBudgetCategories()) {
-			BudgetCategoryEditorDialog editor = new BudgetCategoryEditorDialog((MainFrame) getFrame(), (Document) ((MainFrame) getFrame()).getDocument(), bc);
 			try {
-				editor.openWindow();
+				bc.setDeleted(false);
 			}
-			catch (WindowOpenException woe){}
+			catch (InvalidValueException ive){
+				Log.error("Error setting deleted flag to false on budget category");
+			}
 		}
-
+		
 		((MainFrame) getFrame()).updateContent();
 		((MainFrame) getFrame()).fireStructureChanged();
 	}
@@ -40,5 +43,7 @@ public class EditModifyBudgetCategory extends MossMenuItem{
 		super.updateMenus();
 		
 		this.setEnabled(((MainFrame) getFrame()).getSelectedBudgetCategories().size() > 0);
+		
+		this.setVisible(PrefsModel.getInstance().isShowDeleted());
 	}
 }

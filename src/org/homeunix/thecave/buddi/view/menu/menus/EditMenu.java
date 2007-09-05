@@ -19,6 +19,8 @@ import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditRecordTransaction;
+import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteAccount;
+import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
 import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
 import org.homeunix.thecave.moss.swing.MossFrame;
@@ -45,6 +47,7 @@ public class EditMenu extends MossMenu {
 				this.add(new EditNewAccount(frame));
 				this.add(new EditModifyAccount(frame));
 				this.add(new EditDeleteAccount(frame));
+				this.add(new EditUndeleteAccount(frame));
 				this.addSeparator();
 				this.add(new EditViewTransactions(frame));
 			}
@@ -52,6 +55,7 @@ public class EditMenu extends MossMenu {
 				this.add(new EditNewBudgetCategory(frame));
 				this.add(new EditModifyBudgetCategory(frame));
 				this.add(new EditDeleteBudgetCategory(frame));
+				this.add(new EditUndeleteBudgetCategory(frame));
 				this.addSeparator();
 				this.add(new EditCopyBudgetCategoryValuesBackwards(frame));
 				this.add(new EditCopyBudgetCategoryValuesForward(frame));
