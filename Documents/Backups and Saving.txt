@@ -40,11 +40,11 @@ an auto save file, and asks if we should load it instead of the regular file.
 
 
 2) Rotating Backups
-Whenever you open a Buddi file, Buddi will first back it up, using a rotating backup system.
-For instance, assume that you open the file /Users/Wyatt/Deskop/Test.buddi3.  Once the file is
-parsed and read in (and is confirmed to be valid), we make a copy of it.  This copy is the same name 
-as the main data file, with a "_0" inserted before the extension, and the extension changed to 
-".buddi3bak".  This 0 is the backup number, and means that this was the most recent file backed 
-up.  If there is already a _0 file, that one is copied to _1; if _1 exists, it is copied to _2, 
+Whenever you save a Buddi file, Buddi will first back it up, using a rotating backup system.
+For instance, assume that you save the file /Users/Wyatt/Deskop/Test.buddi3.  Before saving, we
+first make a copy of it.  This copy is the same name as the main data file, with a "_0" 
+inserted before the extension, and the extension changed to ".buddi3bak".  This 0 
+is the backup number, and means that this was the most recent file backed up.  If 
+there is already a _0 file, that one is copied to _1; if _1 exists, it is copied to _2, 
 etc, up to a maximum of the max backup files as defined in Preferences.
 

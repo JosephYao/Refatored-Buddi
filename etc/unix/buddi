@@ -64,4 +64,4 @@ fi
 # Launch Buddi
 ####
 
-${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR_DIR}/Buddi.jar --slackware $*
+${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR_DIR}/Buddi.jar --unix $*

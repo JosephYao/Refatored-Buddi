@@ -36,7 +36,7 @@
 		<pathelement location="lib/jcommon-1.0.5.jar"/>
 		<pathelement location="lib/quaqua-3.9.2.jar"/>
 		<pathelement location="lib/BrowserLauncher2-10.jar"/>
-		<pathelement location="lib/moss-1.1.1.0.jar"/>
+		<pathelement location="lib/moss-1.2.0.0.jar"/>
 		<pathelement location="lib/swingx-2007_08_12.jar"/>
 		<pathelement location="lib/SwingWorker.jar"/>
 	</path> 
@@ -66,7 +66,7 @@
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10.jar" relpath=""/> 
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/moss-1.1.1.0.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/moss-1.2.0.0.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/SwingWorker.jar" relpath=""/>
 		</fatjar.build>

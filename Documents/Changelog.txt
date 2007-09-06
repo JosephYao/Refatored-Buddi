@@ -1,7 +1,16 @@
-2.9.0.0
+2.9.0.0 (September 5 2007)
+***DO NOT USE THIS AS A PRODUCTION APPLICATION***
+This is a Development Preview release, and should be considered Alpha quality code.  This is different from all of my other development releases, as it is not intended for end users to run it for production (i.e. real) data.  It is very likely that the data file format will change before I am ready to release it, and if it does, you will lose all your data.  I can not stress this enough: DO NOT USE THIS AS A PRODUCTION APPLICATION.  This release is ONLY meant for developers and end users to review and provide me with feedback (whether it be in regards to architecture, GUI design, etc).  By not promising to provide backwards compatibility with this release in future versions, I am free to make major changes to the data structures if the need arises, and I fully plan on doing so.
+This release uses a different preferences and data format than previous versions, and thus you can run both side by side with no ill effects.
+
+Some of the major changes from an architectural point of view include:
 -Complete rewrite of low level model
 -Complete reimplementation of many core features, especially the My Budget tab
 -More changes than can possibly be listed here.  Changes are, at least a portion of all parts of the program have changed.
+
+I have tried to keep the user interface as similar as possible, unless I had a good reason to change it.  You will notice many differences, but I hope that they will not distract from the simple interface people have come to expect from Buddi.
+
+At this point, I am ready to start accepting bug reports for this version.  Please use the trackers on the SourceForge.net website to submit any bugs which you may find.  If you have general questions, please submit them to the forums, so that others can benefit from the answers.
 
 2.5.9.0 (July 30 2007)
 -Fixed bug which made the description pulldown grow too large for the window, if a long description was entered.  Now in the pulldown, I chop off the text at the same point as I do in the TransactionCellRenderer.

@@ -28,8 +28,8 @@ function init {
 	DEST=/Users/wyatt/Desktop/Buddi_Development
 	DEBIANROOT=$DEST/Debian
 	DEBIAN=$DEBIANROOT/Buddi
-	SLACKROOT=$DEST/Slackware
-	SLACK=$SLACKROOT/Buddi
+	UNIXROOT=$DEST/unix
+	UNIX=$UNIXROOT/Buddi
 	OSXROOT=$DEST/Buddi_OSX
 	OSX=$OSXROOT/Buddi
 	GENERICROOT=$DEST/Generic
@@ -57,18 +57,9 @@ function init {
 
 
 
-# Do the compilation and jar'ing.  You can avoid running this function
-# if you do it yourself.
+# Do the compilation and jar'ing.
 function make_jar {
 	ant
-#	ant jar
-#
-#	# Run the retroweaver methods to make old jars...
-#	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar Buddi-base.jar Buddi-base-1.4.jar
-#	java -cp ../ant_tasks/retroweaver/lib/asm-commons-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-3.0_RC1.jar:../ant_tasks/retroweaver/lib/asm-util-3.0_RC1.jar:../ant_tasks/retroweaver/release/retroweaver-2.0Beta1.jar net.sourceforge.retroweaver.Weaver -jar lib/Moss.jar lib/Moss-1.4.jar
-#
-#	# This runs both fatjar and fatjar-1.4
-#	ant fatjar
 }
 
 
@@ -170,12 +161,15 @@ function bundle_debian {
 
 
 
-function bundle_slackware {
-        mkdir -p $SLACK/usr/bin
-        cp Buddi.jar $SLACK/usr/bin
-        cp etc/slackware/buddi $SLACK/usr/bin/buddi
+function bundle_unix {
+	mkdir -p $UNIX
+	cp Buddi.jar $UNIX
+	cp etc/unix/buddi $UNIX
+	cp etc/unix/readme.unix $UNIX
+#	cp -R Documents $UNIX
+#	cp -R Licenses $UNIX
 
-	tar -C $SLACK -czf $DEST/Buddi-$VERSION.tgz usr
+	tar -C $UNIX -czf $DEST/Buddi-$VERSION.tgz buddi Buddi.jar
 }
 
 
@@ -199,8 +193,8 @@ function bundle_osx {
 	cp lib/quaqua*.jar $OSX/Buddi.app/Contents/Resources/Java/Quaqua.jar
 
 	# Copy text files
-#	cp -R $DEST/$SOURCE/Documents $OSX
-#	cp -R $DEST/$SOURCE/Licenses $OSX
+#	cp -R Documents $OSX
+#	cp -R Licenses $OSX
 
 	if [ "$VERSION" != "" ]; then
 		# Archive the bundles
@@ -232,8 +226,8 @@ function bundle_windows {
 	# Create the Windows bundle
 #	mkdir -p $WINDOWS
 	cp Buddi.exe $DEST/Buddi-$VERSION.exe
-#	cp -R $DEST/$SOURCE/Documents $WINDOWS
-#	cp -R $DEST/$SOURCE/Licenses $WINDOWS
+#	cp -R Documents $WINDOWS
+#	cp -R Licenses $WINDOWS
 
 #	cd $WINDOWSROOT
 #	zip -r $DEST/Buddi-$VERSION.zip Buddi
@@ -259,7 +253,7 @@ function clean {
 	rm -rf $WINDOWSROOT
 	rm -rf $OSXROOT
 	rm -rf $DEBIANROOT
-	rm -rf $SLACKROOT
+	rm -rf $UNIXROOT
 	rm -rf $GENERICROOT
 	
 	rm Buddi.exe
@@ -298,6 +292,7 @@ put Buddi-$VERSION.exe
 put Buddi-$VERSION.jar
 put Buddi-$VERSION.dmg
 put Buddi-$VERSION.deb
+put Buddi-$VERSION.tgz
 put Buddi-$VERSION.src.tgz
 bye
 END_OF_FTP
@@ -313,7 +308,7 @@ init $*
 make_jar $*
 #bundle_help $*
 bundle_debian $*
-bundle_slackware $*
+bundle_unix $*
 bundle_windows $*
 bundle_osx $*
 bundle_generic $*
