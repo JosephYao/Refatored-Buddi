@@ -52,7 +52,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	private final Document model;
 
 	public ScheduleFrame(MossDocumentFrame frame){
-		super(frame, "ScheduledTransactionFrame" + ((Document) frame.getDocument()).getUid());
+		super(frame, "ScheduledTransactionFrame" + ((Document) frame.getDocument()).getUid(), "Resources/Buddi.gif");
 
 		this.model = (Document) frame.getDocument();
 		

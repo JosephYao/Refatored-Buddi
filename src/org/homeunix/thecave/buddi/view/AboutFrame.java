@@ -38,7 +38,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 	private final JLabel text;
 
 	public AboutFrame() {
-		super(null);
+		super("Resources/Buddi.gif");
 		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		donateButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DONATE));
 

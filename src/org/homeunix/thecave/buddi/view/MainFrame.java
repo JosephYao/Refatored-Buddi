@@ -37,7 +37,7 @@ public class MainFrame extends MossDocumentFrame {
 	private final JTabbedPane tabs;
 	
 	public MainFrame(Document model) {
-		super(model, "MainWindow" + model.getUid());
+		super(model, "MainWindow" + model.getUid(), "Resources/Buddi.gif");
 		
 		myAccounts = new MyAccountsPanel(this);
 		myBudget = new MyBudgetPanel(this);
