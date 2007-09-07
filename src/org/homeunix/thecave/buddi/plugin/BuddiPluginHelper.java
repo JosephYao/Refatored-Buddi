@@ -40,6 +40,7 @@ public class BuddiPluginHelper {
 				try {
 					File index = report.getReport(
 									new ImmutableDocumentImpl((Document) frame.getDocument()),
+									frame,
 									startDate, 
 									endDate).createHTML("report");
 					BrowserLauncher bl = new BrowserLauncher(null);

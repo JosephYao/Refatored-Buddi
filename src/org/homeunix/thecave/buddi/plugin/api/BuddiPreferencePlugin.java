@@ -8,6 +8,7 @@ package org.homeunix.thecave.buddi.plugin.api;
 import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 /**
@@ -46,12 +47,12 @@ public abstract class BuddiPreferencePlugin implements MossPlugin {
 	/**
 	 * Saves the preferences which this panel is responsible for.
 	 */
-	public abstract void save();
+	public abstract void save() throws PluginException;
 	
 	/**
 	 * Loads the preferences which this panel is responsible for.
 	 */
-	public abstract void load();
+	public abstract void load() throws PluginException;
 
 	/**
 	 * If true, we put a JPanel wrapper around this JPanel, so that it keeps 

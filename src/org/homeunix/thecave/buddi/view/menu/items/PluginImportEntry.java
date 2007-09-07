@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -76,7 +77,12 @@ public class PluginImportEntry extends MossMenuItem {
 		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
 		
 		Log.debug("Calling importData()");
-		plugin.importData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		try {
+			plugin.importData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		}
+		catch (PluginException pe){
+			pe.printStackTrace(Log.getPrintStream());
+		}
 		Log.debug("Finished importData(); updating balances");
 		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
 		Log.debug("Finished updating balances");

@@ -17,13 +17,14 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Version;
 
 public class TransactionsNotReconciled extends BuddiReportPlugin {
 
 	public static final long serialVersionUID = 0;
 
-	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, MossDocumentFrame frame, Date startDate, Date endDate) {
 		//Find all transactions between given dates which have not been cleared
 		List<ImmutableTransaction> temp = model.getImmutableTransactions(startDate, endDate);
 		List<ImmutableTransaction> transactions = new LinkedList<ImmutableTransaction>();

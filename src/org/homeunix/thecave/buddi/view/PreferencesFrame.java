@@ -18,10 +18,12 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
+import org.homeunix.thecave.moss.util.Log;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -62,7 +64,12 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		cancelButton.addActionListener(this);
 		
 		for (BuddiPreferencePlugin panel : preferencePanels) {
-			panel.load();
+			try {
+				panel.load();
+			}
+			catch (PluginException pe){
+				pe.printStackTrace(Log.getPrintStream());
+			}
 		}
 		
 		this.setJMenuBar(new BuddiMenuBar(this));
@@ -87,7 +94,12 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			for (BuddiPreferencePlugin panel : preferencePanels) {
-				panel.save();
+				try {
+					panel.save();
+				}
+				catch (PluginException pe){
+					pe.printStackTrace(Log.getPrintStream());
+				}
 			}
 			
 			PrefsModel.getInstance().save();

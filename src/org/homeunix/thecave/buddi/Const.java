@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileFilter;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.builtin.imports.ImportLegacyData;
+import org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
@@ -218,7 +219,7 @@ public class Const {
 	//The report plugins which are included in the main Buddi jar.
 	public final static String[] BUILT_IN_REPORTS = {
 		IncomeExpenseReportByCategory.class.getCanonicalName(),
-//		AverageIncomeExpenseByCategory.class.getCanonicalName(),
+		AverageIncomeExpenseByCategory.class.getCanonicalName(),
 		IncomePieGraph.class.getCanonicalName(),
 		ExpensesPieGraph.class.getCanonicalName(),
 		NetWorthOverTime.class.getCanonicalName(),

@@ -14,11 +14,13 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
+import org.homeunix.thecave.moss.util.Log;
 
 public class PluginExportEntry extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -71,6 +73,12 @@ public class PluginExportEntry extends MossMenuItem {
 				return;
 		}
 
-		plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		try {
+			plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		}
+		catch (PluginException pe){
+			pe.printStackTrace(Log.getPrintStream());
+		}
+
 	}
 }

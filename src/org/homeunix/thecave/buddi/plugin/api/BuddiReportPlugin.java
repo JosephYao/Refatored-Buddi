@@ -8,9 +8,11 @@ package org.homeunix.thecave.buddi.plugin.api;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
 
 public abstract class BuddiReportPlugin implements MossPlugin {
@@ -25,7 +27,7 @@ public abstract class BuddiReportPlugin implements MossPlugin {
 	 * @param endDate End of report period
 	 * @return
 	 */
-	public abstract HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate);
+	public abstract HtmlPage getReport(ImmutableDocument model, MossDocumentFrame callingFrame, Date startDate, Date endDate) throws PluginException;
 	
 	/**
 	 * The type of plugin this should be.  Can choose between one of the following enum

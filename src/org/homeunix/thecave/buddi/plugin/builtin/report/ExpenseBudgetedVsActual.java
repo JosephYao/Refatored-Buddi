@@ -23,6 +23,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
@@ -35,7 +36,7 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 	
 	@Override
-	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, MossDocumentFrame frame, Date startDate, Date endDate) {
 		DefaultCategoryDataset barData = new DefaultCategoryDataset();
 		
 		Map<ImmutableBudgetCategory, Long> categories = getExpensesBetween(model, startDate, endDate);

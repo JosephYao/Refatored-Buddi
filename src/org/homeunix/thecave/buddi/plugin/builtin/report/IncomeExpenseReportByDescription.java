@@ -19,6 +19,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -30,7 +31,7 @@ public class IncomeExpenseReportByDescription extends BuddiReportPlugin {
 	public static final long serialVersionUID = 0;
 	
 	@Override
-	public HtmlPage getReport(ImmutableDocument model, Date startDate, Date endDate) {
+	public HtmlPage getReport(ImmutableDocument model, MossDocumentFrame frame, Date startDate, Date endDate) {
 		StringBuilder sb = HtmlHelper.getHtmlHeader(getName(), null, startDate, endDate);
 
 		sb.append("<h1>").append(TextFormatter.getTranslation(BuddiKeys.REPORT_DETAILS)).append("</h1>\n");

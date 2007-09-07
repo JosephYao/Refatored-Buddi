@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -76,7 +77,12 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
 		
 		Log.debug("Calling synchronizeData()");
-		plugin.synchronizeData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		try {
+			plugin.synchronizeData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
+		}
+		catch (PluginException pe){
+			pe.printStackTrace(Log.getPrintStream());
+		}
 		Log.debug("Finished synchronizeData(); updating balances");
 		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
 		Log.debug("Finished updating balances");
