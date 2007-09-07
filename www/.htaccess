@@ -1,0 +1,90 @@
+RewriteEngine on
+
+# Stable downloads
+RewriteRule buddi.dmg \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.dmg \
+[R,NC]
+RewriteRule buddi.tgz \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.jar \
+[R,NC]
+RewriteRule buddi.zip \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.exe \
+[R,NC]
+RewriteRule buddi.deb \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.deb \
+[R,NC]
+RewriteRule buddi.exe \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.exe \
+[R,NC]
+RewriteRule buddi.jar \
+http://downloads.sourceforge.net/buddi/Buddi-2.6.2.0.jar \
+[R,NC]
+
+# Development downloads
+RewriteRule buddi-development.dmg \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.dmg \
+[R,NC]
+RewriteRule buddi-development.tgz \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.jar \
+[R,NC]
+RewriteRule buddi-development.zip \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.exe \
+[R,NC]
+RewriteRule buddi-development.deb \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.deb \
+[R,NC]
+RewriteRule buddi-development.exe \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.exe \
+[R,NC]
+RewriteRule buddi-development.jar \
+http://downloads.sourceforge.net/buddi/Buddi-2.9.0.0.jar \
+[R,NC]
+
+# Debian repository - link to the most recent downloads
+RewriteRule /debian/dists/development/main/binary-all/buddi-development.deb \
+http://buddi.sourceforge.net/buddi-development.deb \
+[P,NC]
+
+# Do not rewrite anything else for debian folder
+#RewriteCond %{REQUEST_URI} ^/debian.*
+#RewriteRule ^(.*)$ $1 [L] 
+#RewriteRule  [L]
+
+# Attempts to get .html / .htm files are redirected to .php
+RewriteBase /
+RewriteRule ^(.*)\.html$ $1.php [R,NC]
+RewriteRule ^(.*)\.htm$ $1.php [R,NC]
+
+# If there is no file given, redirect to index.php
+RewriteRule ^([a-z]{2})$ \
+http://buddi.sourceforge.net/$1/index.php
+
+# Redirect to en directory if no path is given
+RewriteCond %{REQUEST_URI} !language_bar.php [NC]
+RewriteCond %{REQUEST_URI} !translate.php [NC]
+RewriteRule ^([a-z]+\.php)?$ /en/$1 [L,R]
+
+# Redirect <full language> to <short language>, in preparation for Babelfish translation
+# If Babelfish does not support a given language, redirect to en here to avoid error messaages later.
+RewriteRule ^English/([.a-z]*)?$ http://buddi.sourceforge.net/en/$1 [L,R,NC]
+RewriteRule ^Espanol/([.a-z]*)?$ http://buddi.sourceforge.net/es/$1 [L,R,NC]
+RewriteRule ^Deutsch/([.a-z]*)?$ http://buddi.sourceforge.net/de/$1 [L,R,NC]
+RewriteRule ^Francais/([.a-z]*)?$ http://buddi.sourceforge.net/fr/$1 [L,R,NC]
+RewriteRule ^Nederlands/([.a-z]*)?$ http://buddi.sourceforge.net/de/$1 [L,R,NC]
+RewriteRule ^Portugues/([.a-z]*)?$ http://buddi.sourceforge.net/pt/$1 [L,R,NC]
+RewriteRule ^Russian/([.a-z]*)?$ http://buddi.sourceforge.net/ru/$1 [L,R,NC]
+
+# Catch-all rule: anything which is not specified, but more than 2 
+# characters long, we redirect to en.
+RewriteCond %{REQUEST_URI} !css/style.css [NC]
+RewriteCond %{REQUEST_URI} !img/.* [NC]
+RewriteCond %{REQUEST_URI} !debian/.* [NC]
+RewriteRule ^[A-Za-z]{2}.+/([.a-z]*)?$ http://buddi.sourceforge.net/en/$1 [R,NC]
+
+#Translate the page (Currently by Google)
+RewriteCond %{REQUEST_URI} !en/ [NC] 
+RewriteRule ^([a-z]{2})/([a-z]*\.php)?$ \
+http://translate.google.com/translate?hl=$1&sl=en&u=\
+http://buddi.sourceforge.net/en/$2 [L,NC]
+
+
