@@ -13,10 +13,9 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.homeunix.thecave.buddi.Buddi;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 /**
  * A small class which defines an HTML page.  There are two parts to this: the HTML text,
@@ -55,16 +54,16 @@ public class HtmlPage {
 	 * on failure. 
 	 */
 	public File createHTML(String name){
-		final int countMax = 1000;
+		final int countMax = 100;
 
-		File dataFolder = PrefsModel.getInstance().getLastDataFile().getParentFile();
+		File dataFolder = OperatingSystemUtil.getUserFolder("Buddi");
 		File htmlFolder = null;
 		int counter = 0;
 
-		if (dataFolder == null) {
-			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
-			dataFolder = new File(Buddi.getWorkingDir());
-		}
+//		if (dataFolder) {
+//			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
+//			dataFolder = new File(Buddi.getWorkingDir());
+//		}
 
 		//Do some sanity checks, logging results
 		if (dataFolder == null)

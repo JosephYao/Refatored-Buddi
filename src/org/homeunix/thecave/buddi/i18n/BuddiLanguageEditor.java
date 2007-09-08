@@ -131,7 +131,8 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		MossMenuItem close = new MossMenuItem(this, "Close Window", KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				
+				if (!Buddi.getLanguagesFolder().exists())
+					Buddi.getLanguagesFolder().mkdirs();
 				BuddiLanguageEditor.this.saveLanguages(Buddi.getLanguagesFolder());
 			}
 		});

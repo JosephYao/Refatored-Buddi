@@ -35,7 +35,7 @@ public class PrefsModel {
 	
 	//If you want to load from a custom location, set this static variable 
 	// before you call the singleton getInstance() method. 
-	private static File prefsFile = OperatingSystemUtil.getPreferencesFile("Buddi", "Buddi3_Prefs.xml");
+	private static File prefsFile = OperatingSystemUtil.getUserFile("Buddi", "Buddi3_Prefs.xml");
 
 	private PrefsModel() {
 		try {

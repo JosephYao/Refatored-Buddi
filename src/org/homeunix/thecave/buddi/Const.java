@@ -33,13 +33,13 @@ import org.homeunix.thecave.moss.util.Version;
  */
 public class Const {
 	public static final String STABLE = "STABLE";
-	public static final String UNSTABLE = "UNSTABLE";
+	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
 	public static final Version VERSION = new Version("2.9.0.0");
-	public static final String BRANCH = UNSTABLE;
+	public static final String BRANCH = DEVELOPMENT;
 	public static final boolean DEVEL = true;
-	public static final Version API_VERSION = new Version("3.0");
+//	public static final Version API_VERSION = new Version("3.0");
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
@@ -98,9 +98,9 @@ public class Const {
 	
 	//Web addresses
 	public final static String DONATE_URL = "http://sourceforge.net/donate/index.php?group_id=167026";
-	public final static String PROJECT_URL = "http://buddi.sourceforge.net/";
-	public final static String DOWNLOAD_URL_STABLE = "http://buddi.sourceforge.net/Buddi";
-	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.sourceforge.net/Buddi-development";
+	public final static String PROJECT_URL = "http://buddi.thecave.homeunix.org/";
+	public final static String DOWNLOAD_URL_STABLE = "http://buddi.thecave.homeunix.org/buddi";
+	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.thecave.homeunix.org/buddi-development";
 	public final static String VERSION_FILE = "version.txt";
 	
 	//File Types
@@ -128,7 +128,7 @@ public class Const {
 //	public final static String FROM = "from";
 	
 	//File names
-	public final static String LOG_FILE = "buddi.log";
+	public final static String LOG_FILE = "Buddi.log";
 	
 	//Colors
 	public final static Color COLOR_SELECTED = new JList().getSelectionBackground(); // new Color(181, 213, 255);
@@ -148,7 +148,6 @@ public class Const {
 		"English_(US)",
 		"English",
 		"Espanol",
-		"Espanol_(MX)",
 		"Francais",
 		"Greek",
 		"Italiano",
@@ -167,10 +166,8 @@ public class Const {
 	};
 	
 	public final static String[] BUNDLED_LICENSES = {
-		"Artistic License.txt",
 		"GNU General Public License.txt",
 		"GNU Lesser General Public License.txt",
-		"Modified BSD License.txt"
 	};
 	
 	//Date formats to appear in Preferences.

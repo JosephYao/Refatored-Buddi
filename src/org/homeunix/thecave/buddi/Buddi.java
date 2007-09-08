@@ -74,7 +74,7 @@ import edu.stanford.ejalbert.BrowserLauncher;
  */
 public class Buddi {
 
-	private static String workingDir;
+	private static String userDir;
 	private static String pluginsFolder;
 	private static String languagesFolder;
 	private static List<File> filesToLoad;
@@ -103,12 +103,12 @@ public class Buddi {
 	 * is useful for running on a thumb drive.
 	 * @return
 	 */
-	public static String getWorkingDir(){
-		if (workingDir == null){
-			workingDir = "";
+	public static String getUserDir(){
+		if (userDir == null){
+			userDir = "";
 		}
 
-		return workingDir;
+		return userDir;
 	}
 
 	/** 
@@ -155,15 +155,15 @@ public class Buddi {
 
 	public static File getPluginsFolder(){
 		if (pluginsFolder == null)
-			pluginsFolder = Buddi.getWorkingDir() + File.separator + Const.PLUGIN_FOLDER;
+			pluginsFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.PLUGIN_FOLDER;
 		return new File(pluginsFolder);
 	}
 
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
-			languagesFolder = Buddi.getWorkingDir() + File.separator + Const.LANGUAGE_FOLDER;
+			languagesFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.LANGUAGE_FOLDER;
 		return new File(languagesFolder);
-	}	
+	}
 
 	/**
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
@@ -410,21 +410,21 @@ public class Buddi {
 		}
 
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
-			+ "-p\tFilename\tPath and name of Preference File\n"
-			+ "-v\t0-7\tVerbosity Level (7 = Debug)\n"
-			+ "--plugins\tFolder\tFolder to store plugins (should be writable if you wish to add plugins)"
-			+ "--languages\tFolder\tFolder to store custom languages (must be writable)"
+			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
+			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
+			+ "--languages\tFolder\tFolder to store custom languages (should be writable)"
+			+ "--plugins\tFolder\tFolder to store plugins (should be writable)"
 			+ "--lnf\tclassName\tJava Look and Feel to use\n"
-			+ "--font\tfontName\tFont to use by default\n"
-			+ "--simpleFont\t\tDon't use bold or italic fonts (better Unicode support)\n"
+			+ "--simpleFont\t\tDon't use bold or italic fonts (better support for special characters on Windows)\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
+		// Undocumented flag --font	<fontName> will specifya font to use by default
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --unix will specify a .tgz download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
-		variables.add(new ParseVariable("-p", String.class, false));
-		variables.add(new ParseVariable("-v", Integer.class, false));
+		variables.add(new ParseVariable("--prefs", String.class, false));
+		variables.add(new ParseVariable("--verbosity", Integer.class, false));
 		variables.add(new ParseVariable("--plugins", String.class, false));
 		variables.add(new ParseVariable("--languages", String.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
@@ -444,15 +444,15 @@ public class Buddi {
 		// the same path), etc.
 		try {
 			if (System.getProperty("user.dir").length() > 0)
-				workingDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
+				userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
 
 			//If we did not set it via user.dir, we set it here.
-			if (workingDir.length() == 0)
-				workingDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+			if (userDir.length() == 0)
+				userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 		}
 		catch (IOException ioe){
 			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
-			workingDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+			userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 		}
 
 
@@ -472,10 +472,8 @@ public class Buddi {
 					logFile = new File(results.getString("--log"));
 				}
 			}
-			else if (!OperatingSystemUtil.isMac())
-				logFile = new File(getWorkingDir() + Const.LOG_FILE);
-			else if (OperatingSystemUtil.isMac() && System.getProperty("user.home").length() > 0)
-				logFile = new File(System.getProperty("user.home") + "/Library/Logs/" + Const.LOG_FILE);
+			else
+				logFile = OperatingSystemUtil.getLogFile("Buddi", Const.LOG_FILE);
 
 			if (logFile != null)
 				logStream = new PrintStream(logFile);
@@ -489,7 +487,7 @@ public class Buddi {
 		}
 
 		//Set up the log levels
-		Integer verbosity = results.getInteger("-v");
+		Integer verbosity = results.getInteger("--verbosity");
 		if (verbosity != null){
 			Log.setLogLevel(verbosity);
 			Log.debug("Setting log level to " + verbosity);
@@ -500,7 +498,7 @@ public class Buddi {
 
 
 
-		String prefsLocation = results.getString("-p");
+		String prefsLocation = results.getString("--prefs");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
 		languagesFolder = results.getString("--languages");
@@ -546,7 +544,7 @@ public class Buddi {
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
-		Log.notice("Set working directory to " + workingDir);
+		Log.notice("Set working directory to " + userDir);
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);

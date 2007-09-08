@@ -20,6 +20,6 @@ public class BuddiTranslator extends org.homeunix.thecave.moss.i18n.Translator {
 	public void reloadLanguages(){
 		translations.clear();
 		loadLanguages("/Languages", this.getLanguageList(PrefsModel.getInstance().getLanguage()));
-		loadLanguages(new File(Buddi.getWorkingDir() + "Languages"), this.getLanguageList(PrefsModel.getInstance().getLanguage()));
+		loadLanguages(new File(Buddi.getUserDir() + File.separator + "Languages"), this.getLanguageList(PrefsModel.getInstance().getLanguage()));
 	}
 }

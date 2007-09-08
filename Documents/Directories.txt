@@ -1,0 +1,57 @@
+Directory Structure from a User's Point of View
+
+There are a few directories used for Buddi, for various purposes.  The exact
+locations will differ by platform, but the purposes are consistent.  These
+are listed below:
+
+
+
+Program Folder
+This is where the main Buddi application can be located.  It is generally
+encoureaged to put this in the correct location for your OS, but it is not
+required to do so.  Below are suggested locations by platform:
+	Windows: C:\Program Files\Buddi\Buddi.exe
+	OS X: /Applications/Buddi.app
+	Unix: /usr/bin/buddi, /usr/bin/Buddi.jar
+
+
+
+User Folder:
+This is where the user-specific files are stored.  This should be unique
+to each user; if multiple user accounts are on the same machine, each will
+have a different folder.  This differs by platform, and is selected 
+automatically by Buddi:
+	Windows: C:\Documents and Settings\<User Name>\Application Data\Buddi\
+	OS X: ~/Library/Application Support/Buddi/
+	Unix: ~/.buddi/
+
+This contains the following files and folders:
+	Buddi3_prefs.xml	(Buddi Preferences)
+	Languages/		(Customized Languages)
+	Plugins/		(Plugins)
+
+
+Log Folder:
+This is where the log file is saved.  This is OS specific, as follows:
+
+	Windows: C:\Documents and Settings\<User Name>\Application Data\Buddi\
+	OS X: ~/Library/Logs/
+	Unix: ~/.buddi/
+
+
+Data Files:
+Users can save data files wherever they wish.  Buddi does not keep track of
+this, short of remember the last file which was opened.
+
+
+Temporary Files:
+When you create a report, the HTML is written to disk, in the user folder, 
+in a sub folder called 'Reports'.  This folder and all files in it 
+are deleted at program close.  Note that this is a potential security 
+vulnerability: the HTML files are not encrytped, and are not deleted in a 
+secure manner.  It is possible for an attacker with access to your machine to 
+read the files, and it would be possible for an attacker with access to
+an undelete utility to read the deleted HTML files.  I feel that, due to the
+fact that the attacker must already have access to your machine, the risk is
+minimal, but if you are very concerned about this, you may not wish to run
+reports.

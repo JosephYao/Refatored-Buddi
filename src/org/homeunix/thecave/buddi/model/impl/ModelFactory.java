@@ -412,11 +412,8 @@ public class ModelFactory {
 	 * @return
 	 */
 	public static File getAutoSaveLocation(File baseFile){
-		if (baseFile == null){
-			return OperatingSystemUtil.getPreferencesFile(
-					"Buddi", 
-					"AutosaveData" + Const.AUTOSAVE_FILE_EXTENSION);
-		}
+		if (baseFile == null)
+			return OperatingSystemUtil.getUserFile("Buddi", "AutosaveData" + Const.AUTOSAVE_FILE_EXTENSION);
 		else {
 			String autoSaveLocationString = baseFile.getAbsolutePath();
 			autoSaveLocationString = 
