@@ -36,7 +36,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>44</integer>
+			<integer>22</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -105,7 +105,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>43</integer>
+			<integer>21</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -185,10 +185,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>36</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>42</integer>
+			<integer>20</integer>
 			<key>Points</key>
 			<array>
 				<string>{292.111, 287.375}</string>
@@ -211,7 +211,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>41</integer>
+				<integer>19</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -231,7 +231,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>41</integer>
+			<integer>19</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -304,7 +304,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>40</integer>
+			<integer>18</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -362,10 +362,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>25</integer>
+				<integer>3</integer>
 			</dict>
 			<key>ID</key>
-			<integer>39</integer>
+			<integer>17</integer>
 			<key>Points</key>
 			<array>
 				<string>{502.641, 68.3333}</string>
@@ -388,7 +388,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>34</integer>
+				<integer>12</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -397,10 +397,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>23</integer>
+				<integer>1</integer>
 			</dict>
 			<key>ID</key>
-			<integer>38</integer>
+			<integer>16</integer>
 			<key>Points</key>
 			<array>
 				<string>{454.337, 46.8353}</string>
@@ -423,7 +423,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>34</integer>
+				<integer>12</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -432,10 +432,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>36</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>37</integer>
+			<integer>15</integer>
 			<key>Points</key>
 			<array>
 				<string>{94.1205, 77.3333}</string>
@@ -458,7 +458,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>6</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -478,7 +478,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>36</integer>
+			<integer>14</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -567,7 +567,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>35</integer>
+			<integer>13</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -635,7 +635,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>34</integer>
+			<integer>12</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -695,10 +695,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>32</integer>
+				<integer>10</integer>
 			</dict>
 			<key>ID</key>
-			<integer>33</integer>
+			<integer>11</integer>
 			<key>Points</key>
 			<array>
 				<string>{80.5096, 435.417}</string>
@@ -721,7 +721,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>43</integer>
+				<integer>21</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -741,7 +741,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>32</integer>
+			<integer>10</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -817,10 +817,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>43</integer>
+				<integer>21</integer>
 			</dict>
 			<key>ID</key>
-			<integer>31</integer>
+			<integer>9</integer>
 			<key>Points</key>
 			<array>
 				<string>{78.1143, 77.3333}</string>
@@ -843,7 +843,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>6</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -859,10 +859,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>23</integer>
+				<integer>1</integer>
 			</dict>
 			<key>ID</key>
-			<integer>30</integer>
+			<integer>8</integer>
 			<key>Points</key>
 			<array>
 				<string>{134.333, 45.6573}</string>
@@ -885,7 +885,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>6</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -901,10 +901,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>44</integer>
+				<integer>22</integer>
 			</dict>
 			<key>ID</key>
-			<integer>29</integer>
+			<integer>7</integer>
 			<key>Points</key>
 			<array>
 				<string>{134.333, 62.5699}</string>
@@ -927,7 +927,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>6</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -947,7 +947,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>28</integer>
+			<integer>6</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1009,10 +1009,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>25</integer>
+				<integer>3</integer>
 			</dict>
 			<key>ID</key>
-			<integer>27</integer>
+			<integer>5</integer>
 			<key>Points</key>
 			<array>
 				<string>{304.667, 114.711}</string>
@@ -1035,7 +1035,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>44</integer>
+				<integer>22</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1051,10 +1051,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>24</integer>
+				<integer>2</integer>
 			</dict>
 			<key>ID</key>
-			<integer>26</integer>
+			<integer>4</integer>
 			<key>Points</key>
 			<array>
 				<string>{304.667, 141.159}</string>
@@ -1077,7 +1077,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>44</integer>
+				<integer>22</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1097,7 +1097,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>25</integer>
+			<integer>3</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1168,7 +1168,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>24</integer>
+			<integer>2</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1238,7 +1238,7 @@
 				<real>8</real>
 			</dict>
 			<key>ID</key>
-			<integer>23</integer>
+			<integer>1</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -1341,7 +1341,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2007-09-03 21:34:46 -0600</string>
+	<string>2007-09-07 20:20:16 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -1439,8 +1439,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDRUMDM6MzQ6
-	MTlaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDhUMDI6MjA6
+	MDhaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -1453,7 +1453,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTA0VDAzOjM0OjE5WjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTA4VDAyOjIwOjA4WjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8

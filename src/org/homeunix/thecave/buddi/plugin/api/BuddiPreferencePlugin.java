@@ -7,42 +7,23 @@ package org.homeunix.thecave.buddi.plugin.api;
 
 import javax.swing.JPanel;
 
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 
 /**
+ * A Buddi plugin which will be loaded into the Preferences screen.  If your plugin needs
+ * user configuration, it is highly recommended to use this class to perform that.
+ * 
+ * It is quite simple to do this; you need to create a JPanel of the component layout
+ * in getPreferencesPanel(), and provide the logic to load and save these values in
+ * the load() and save() methods.
+ * 
+ * See the documentation for BuddiPluginPreference to see how to access the preferences file.
+ * 
  * @author wyatt
  * 
- * A Buddi plugin which will be loaded into the Preferences screen.  You can 
- * use this plugin to store user preferences about the plugin.
  */
-public abstract class BuddiPreferencePlugin implements MossPlugin {
-	
-	/**
-	 * Loads the value which is associated with the given key.
-	 * @param key The key to read.
-	 * @return The value associated with the given key, or null if there was no 
-	 * such value set.
-	 */
-	public String getPreference(String key){
-		return PrefsModel.getInstance().getPluginPreference(key);
-	}
-	
-	/**
-	 * @param key The key to save.  In order to ensure that you do not
-	 * overwrite the preferences for another plugin, you must use
-	 * the key format as follows:
-	 * 
-	 * "package.Plugin.property"
-	 * 
-	 * For instance, use the key "com.example.buddi.ImportFoo.LAST_EXECUTE_DAY" 
-	 * instead of the key "LAST_EXECUTE_DAY".
-	 * @param value The value to store.  Can be any valid String.
-	 */
-	public void putPreference(String key, String value){
-		PrefsModel.getInstance().putPluginPreference(key, value);
-	}
+public abstract class BuddiPreferencePlugin extends BuddiPluginPreference implements MossPlugin {
 	
 	/**
 	 * Saves the preferences which this panel is responsible for.

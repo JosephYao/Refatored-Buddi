@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.plugin.api.exception;
 
 
 /**
- * The exception thrown when there is a problem with a plugin.
+ * The exception thrown when there is a problem with a plugin.  Most abstract plugins
+ * allow this to be thrown from the main plugin method.  The calling code is to catch 
+ * it, and display the error message in the logs accordingly. 
  * 
  * @author wyatt
  *

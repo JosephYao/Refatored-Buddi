@@ -5,6 +5,8 @@ package org.homeunix.thecave.buddi.plugin.api.exception;
 
 
 /**
+ * The value being set to the model object is not valid.
+ * 
  * @author wyatt
  *
  */

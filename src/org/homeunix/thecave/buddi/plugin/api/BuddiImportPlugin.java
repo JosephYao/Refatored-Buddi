@@ -13,7 +13,16 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
-public abstract class BuddiImportPlugin implements MossPlugin {
+/**
+ * The abstract class to extend when creating an import plugin.  The method importData() 
+ * is the one which is called by Buddi when executing the plugin.  In this method,
+ * you have access to the main document object, the frame from which the plugin was
+ * called, and the file to import from.
+ * 
+ * @author wyatt
+ *
+ */
+public abstract class BuddiImportPlugin extends BuddiPluginPreference implements MossPlugin {
 	
 	/**
 	 * Imports data as required.  The plugin launch code will prompt for a file

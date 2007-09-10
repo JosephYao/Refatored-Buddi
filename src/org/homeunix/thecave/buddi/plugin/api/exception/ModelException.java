@@ -5,10 +5,8 @@ package org.homeunix.thecave.buddi.plugin.api.exception;
 
 
 /**
- * The primary exception thrown when there is a problem with the data model.
- * 
- * It is recommended to throw the instance of the problem data model if at
- * all possible, as this helps in debugging.
+ * The operation which was attempted on the model did not succeed, and is to be cancelled.
+ *  
  * @author wyatt
  *
  */

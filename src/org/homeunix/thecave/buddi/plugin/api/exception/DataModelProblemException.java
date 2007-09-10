@@ -10,6 +10,9 @@ import org.homeunix.thecave.buddi.model.Document;
  * 
  * It is recommended to throw the instance of the problem data model if at
  * all possible, as this helps in debugging.
+ * 
+ * This extends RuntimeException, and thus should only be thrown if there is 
+ * no chance of recovery. 
  * @author wyatt
  *
  */

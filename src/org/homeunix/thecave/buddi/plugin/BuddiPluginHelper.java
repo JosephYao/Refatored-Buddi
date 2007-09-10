@@ -103,6 +103,12 @@ public class BuddiPluginHelper {
 				DateFunctions.getEndOfDay(DateFunctions.getEndOfYear(new Date())),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_YEAR)
 		));
+		intervals.add(new DateChoice(
+				DateFunctions.getStartOfDay(DateFunctions.getStartOfYear(new Date())),
+				DateFunctions.getEndOfDay(new Date()),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_YEAR_TO_DATE)
+		));
+
 
 		intervals.add(new DateChoice(
 				DateFunctions.addYears(DateFunctions.getStartOfYear(new Date()), -1),

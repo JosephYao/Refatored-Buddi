@@ -13,7 +13,16 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
-public abstract class BuddiExportPlugin implements MossPlugin {
+/**
+ * The abstract class to extend when creating an export plugin.  The method exportData() 
+ * is the one which is called by Buddi when executing the plugin.  In this method,
+ * you have access to the main document object, the frame from which the plugin was
+ * called, and the file to export to. 
+ * 
+ * @author wyatt
+ *
+ */
+public abstract class BuddiExportPlugin extends BuddiPluginPreference implements MossPlugin {
 
 	/**
 	 * Exports data as required.  The plugin launch code will prompt for a file

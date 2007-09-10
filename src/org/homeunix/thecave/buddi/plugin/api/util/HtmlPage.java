@@ -25,6 +25,9 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
  * to a buffered image.  The buffered images will be stored to disk, to the file name
  * given in the map.
  * 
+ * For an example on how to do this, please refer to some of the built in reports in 
+ * the Buddi SVN repository.
+ * 
  * @author wyatt
  *
  */

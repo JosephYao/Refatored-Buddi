@@ -6,7 +6,6 @@ package org.homeunix.thecave.buddi.plugin.api.util;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 
@@ -31,7 +30,7 @@ public class HtmlHelper {
 		sb.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
 		sb.append("<head>\n");
 		sb.append("<title>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(title));
+		sb.append(TextFormatter.getTranslation(title));
 		sb.append("</title>\n");
 
 		//Screen CSS
@@ -106,10 +105,10 @@ public class HtmlHelper {
 		sb.append("<body>\n<div class='separator'></div>\n");
 
 		sb.append("<div class='header'>\n<div class='empty'>&nbsp;</div>");
-		sb.append("<h1>").append(PrefsModel.getInstance().getTranslator().get(title)).append("</h1>\n");
+		sb.append("<h1>").append(TextFormatter.getTranslation(title)).append("</h1>\n");
 
 		if (subtitle != null){
-			sb.append("<h2>").append(PrefsModel.getInstance().getTranslator().get(subtitle)).append("</h2>\n");
+			sb.append("<h2>").append(TextFormatter.getTranslation(subtitle)).append("</h2>\n");
 		}
 
 		if (startDate != null && endDate != null){
@@ -171,13 +170,13 @@ public class HtmlHelper {
 //		else if (t.getFrom() instanceof ImmutableAccount)
 //			accountToUse = (ImmutableAccount) t.getFrom();
 //		
-//		sb.append(getLinkToTransactionsFrame(PrefsModel.getInstance().getTranslator().get(t.getDescription()), accountToUse, t));
-		sb.append(PrefsModel.getInstance().getTranslator().get(t.getDescription()));
+//		sb.append(getLinkToTransactionsFrame(TextFormatter.getTranslation(t.getDescription()), accountToUse, t));
+		sb.append(TextFormatter.getTranslation(t.getDescription()));
 
 		sb.append("</td><td width='35%'>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(t.getFrom().toString()));
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HTML_TO));
-		sb.append(PrefsModel.getInstance().getTranslator().get(t.getTo().toString()));
+		sb.append(TextFormatter.getTranslation(t.getFrom().toString()));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.HTML_TO));
+		sb.append(TextFormatter.getTranslation(t.getTo().toString()));
 
 		boolean red;
 		if (source != null)
@@ -202,13 +201,13 @@ public class HtmlHelper {
 
 		sb.append("<table class='main'>\n");
 		sb.append("<tr><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.DATE));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.DATE));
 		sb.append("</th><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.DESCRIPTION));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.DESCRIPTION));
 		sb.append("</th><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SOURCE_TO_FROM));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.SOURCE_TO_FROM));
 		sb.append("</th><th>");
-		sb.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.AMOUNT));
+		sb.append(TextFormatter.getTranslation(BuddiKeys.AMOUNT));
 		sb.append("</th></tr>\n");
 
 		return sb;

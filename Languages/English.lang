@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Tue Sep 04 18:52:07 MDT 2007
+#Sat Sep 08 09:44:04 MDT 2007
 CREATED_NEW_DATA_FILE_MESSAGE=Created a new data file\:\n
 OPTIONAL_TAG=(optional)
 AND_REPEATING_EVERY=and repeating every
@@ -143,8 +143,8 @@ MESSAGE_ERROR_CANNOT_WRITE_PREFS_FILE=Cannot write to the preferences file\!\nPl
 MENU_EDIT_EDIT_SCHEDULED_TRANSACTIONS=Edit Scheduled Transactions
 MENU_FILE_REVERT_TO_SAVED=Revert to Saved
 SALARY=Salary
-MENU_EDIT_MODIFY_BUDGET_CATEGORIES=Modify Budget Categories
 ERROR=Error
+MENU_EDIT_MODIFY_BUDGET_CATEGORIES=Modify Budget Categories
 DEFAULT_SEARCH=<Search>
 TOOLTIP_SCHEDULED_MESSAGE=<html>If you wish, you can enter a message here.  This message will be displayed<br>whenever the scheduled action is performed.  If you specify a message,<br>you do not need to put anything in the transaction fields - Buddi<br>will just display the message when it is scheduled.</html>
 MENU_EDIT_DELETE_BUDGET_CATEGORIES=Delete Budget Categories
@@ -551,6 +551,7 @@ CANNOT_SAVE_OVER_DIR=Cannot save over a directory.
 MESSAGE_CHANGE_EXISTING_TRANSACTION=You have changed this transaction substantially from what\nit was before.  Usually this is a mistake, and you really\nwanted to create a new transaction.\n\nDo you want to create a new transaction, or modify the existing one?
 BUTTON_NEW_DATA_FILE=New Data File
 TYPE_MODIFY_NEW=Create New Type
+PLUGIN_FILTER_THIS_YEAR_TO_DATE=This Year to Date
 SHOW_BUDGET_CATEGORIES_FOR_PERIOD=Show Budget Categories for Period\:
 EXPENSES=Expenses
 FILE_DESCRIPTION_BUDDI_DATA_FILES=Buddi Data Files

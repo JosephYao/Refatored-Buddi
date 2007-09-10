@@ -15,7 +15,16 @@ import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
 
-public abstract class BuddiReportPlugin implements MossPlugin {
+/**
+ * This class is the defintion of a Buddi report, which writes out HTML to disk and opens
+ * it with a browser.  The main method which needs to be implemented is the getReport()
+ * method.  This method gives you the document object, the frame which called this plugin,
+ * and the date range on which to report.
+ *  
+ * @author wyatt
+ *
+ */
+public abstract class BuddiReportPlugin extends BuddiPluginPreference implements MossPlugin {
 	/**
 	 * Returns an in-memory version of the printed page, as an HTML
 	 * file.  An HtmlPage object is just a small class containing a string
