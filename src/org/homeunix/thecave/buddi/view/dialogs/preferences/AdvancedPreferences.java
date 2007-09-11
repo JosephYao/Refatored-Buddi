@@ -26,15 +26,17 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 
 	private final JComboBox numberOfBackups;
 	private final JComboBox autosavePeriod;
-	private final JCheckBox promptForDataFile;
+	private final JCheckBox showPromptForDataFile;
 	private final JCheckBox sendCrashReport;
+	private final JCheckBox showUpdateNotifications;
 
 	
 	public AdvancedPreferences() {
 		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
 		autosavePeriod = new JComboBox(new Integer[]{15, 30, 60, 120, 300});
-		promptForDataFile = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
+		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.PROMPT_FOR_DATA_FILE_AT_STARTUP));
 		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SEND_CRASH_REPORTS));
+		showUpdateNotifications = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.ENABLE_UPDATE_NOTIFICATIONS));
 	}
 
 	@Override
@@ -65,6 +67,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		JPanel editLanguagesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel editTypesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel promptForDataFilePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel checkForUpdatesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		JLabel autosavePeriodLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.AUTOSAVE_PERIOD));
@@ -76,7 +79,8 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
 		
-		promptForDataFilePanel.add(promptForDataFile);
+		promptForDataFilePanel.add(showPromptForDataFile);
+		checkForUpdatesPanel.add(showUpdateNotifications);
 		sendCrashReportPanel.add(sendCrashReport);
 				
 		panel.add(autosavePeriodPanel);
@@ -85,6 +89,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		panel.add(editTypesPanel);
 		panel.add(updatePanel);
 		panel.add(promptForDataFilePanel);
+		panel.add(checkForUpdatesPanel);
 		panel.add(sendCrashReportPanel);
 		
 		return panel;
@@ -93,14 +98,16 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public void load() {
 		autosavePeriod.setSelectedItem(PrefsModel.getInstance().getAutosaveDelay());
 		numberOfBackups.setSelectedItem(PrefsModel.getInstance().getNumberOfBackups());
-		promptForDataFile.setSelected(PrefsModel.getInstance().isShowPromptAtStartup());
+		showPromptForDataFile.setSelected(PrefsModel.getInstance().isShowPromptAtStartup());
+		showUpdateNotifications.setSelected(PrefsModel.getInstance().isShowUpdateNotifications());
 		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());		
 	}
 
 	public void save() {
 		PrefsModel.getInstance().setAutosaveDelay((Integer) autosavePeriod.getSelectedItem());
 		PrefsModel.getInstance().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
-		PrefsModel.getInstance().setShowPromptAtStartup(promptForDataFile.isSelected());
+		PrefsModel.getInstance().setShowPromptAtStartup(showPromptForDataFile.isSelected());
+		PrefsModel.getInstance().setShowUpdateNotifications(showUpdateNotifications.isSelected());
 		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
 	}
 	

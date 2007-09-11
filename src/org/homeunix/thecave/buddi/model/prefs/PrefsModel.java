@@ -174,6 +174,7 @@ public class PrefsModel {
 						: new Dimension(600, 400));
 	}
 
+
 //	public Dimension getScheduledTransactionWindowSize() {
 //		return (prefsModel.getScheduledPlacement().getSize() != null
 //				? prefsModel.getScheduledPlacement().getSize() 
@@ -305,6 +306,15 @@ public class PrefsModel {
 		if (proxyServer != null)
 			prefsModel.setProxyServer(proxyServer);
 	}
+	
+	public int getPort() {
+		return prefsModel.getPort();
+	}
+
+	public void setPort(int port) {
+		prefsModel.setPort(port);
+	}
+
 
 	public boolean isShowAutoComplete() {
 		return prefsModel.isShowAutoComplete();

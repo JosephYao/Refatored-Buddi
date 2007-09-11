@@ -44,19 +44,20 @@ public class PrefsModelBean {
 	private boolean showAutoComplete;
 	private boolean showCleared;
 	private boolean showReconciled;
-	private boolean showPromptAtStartup;
-	private boolean showUpdateNotifications;
 	private int numberOfBudgetColumns;
 	
 	//Network Options
 	private boolean showProxySettings;
 	private String proxyServer;
+	private int port;
 	//TODO get more options here
 	
 	//Advanced Options
 	private int numberOfBackups = 10;
 	private int autosaveDelay = 30;
 	private boolean sendCrashReports;
+	private boolean showUpdateNotifications;
+	private boolean showPromptAtStartup;
 	
 	
 	//Define the max / min number of budget columns visible.
@@ -132,6 +133,14 @@ public class PrefsModelBean {
 
 	public void setProxyServer(String proxyServer) {
 		this.proxyServer = proxyServer;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 	public boolean isShowAutoComplete() {

@@ -11,6 +11,9 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	PROXY_SERVER,
+	HINT_PORT,
+	USE_PROXY_SERVER,
 	BACKUP_MANAGER,
 	SECONDS,
 	MINUTES,
@@ -89,7 +92,6 @@ public enum BuddiKeys {
     DOCUMENTS,
     EDIT_ACCOUNT_TYPES,
     EDIT_CATEGORY,
-    ENABLE_UPDATE_NOTIFICATIONS,
     ENCRYPT_DATA_FILE_TITLE,
     ENCRYPT_DATA_FILE_YES_NO,
     ENTERTAINMENT, 
@@ -124,6 +126,7 @@ public enum BuddiKeys {
     HINT_NUMBER,
     HINT_NAME,
     HINT_NOTES,
+    HINT_PROXY_SERVER_NAME,
     HINT_PASSWORD,
     HOUSEHOLD,
     HTML_TO,

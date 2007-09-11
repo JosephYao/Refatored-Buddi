@@ -8,9 +8,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -607,10 +613,27 @@ public class Buddi {
 				@Override
 				public Object construct() {
 					try{
-						Properties versions = new Properties();
+						
+						
+						Proxy p;
+						if (PrefsModel.getInstance().isShowProxySettings()){
+							InetAddress proxyAddress = InetAddress.getByName(PrefsModel.getInstance().getProxyServer());
+							InetSocketAddress socketAddress = new InetSocketAddress(proxyAddress, PrefsModel.getInstance().getPort()); 
+							p = new Proxy(Proxy.Type.DIRECT, socketAddress);
+						}
+						else {
+							p = Proxy.NO_PROXY;
+						}
+						
 						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
+						URLConnection connection = mostRecentVersion.openConnection(p);
+						
+						InputStream is = connection.getInputStream();
+						
+						
+						Properties versions = new Properties();
 
-						versions.load(mostRecentVersion.openStream());
+						versions.load(is);
 
 						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
 						Version thisVersion = Const.VERSION;
@@ -620,6 +643,14 @@ public class Buddi {
 
 						if (thisVersion.compareTo(availableVersion) < 0)
 							return availableVersion;
+					}
+					catch (ConnectException ce){
+						//TODO Show warning dialog.
+						Log.error(ce);
+					}
+					catch (IllegalArgumentException iae){
+						//TODO Show warning dialog.
+						Log.error(iae);
 					}
 					catch (MalformedURLException mue){
 						Log.error(mue);
