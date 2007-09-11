@@ -1,8 +1,0 @@
-#Mon Sep 03 10:32:03 CEST 2007
-BUTTON_CREATE_NEW_TRANSACTION=Nueva
-MENU_EDIT_TOGGLE_RECONCILED=Marcar transacci\u00F3n completada
-MENU_EDIT_TOGGLE_CLEARED=Marcar transacci\u00F3n iniciada
-BUTTON_OVERWRITE_TRANSACTON=Reemplazar
-MESSAGE_ERROR_CHECKING_FOR_UPDATES=Se produjo un error al buscar actualizaciones.\nPuede que no est\u00E9 conectado a Internet o que est\u00E9\nconectado mediante un proxy.\n\nTambi\u00E9n se puede buscar actualizaciones visitando\nla p\u00E1gina web de Buddi.\n \nPuede desactivar la b\u00FAsqueda autom\u00E1tica\nde actualizaciones en el men\u00FA Preferencias. 
-MESSAGE_CHANGE_EXISTING_TRANSACTION_TITLE=\u00BFModificar la transacci\u00F3n?
-MESSAGE_CHANGE_EXISTING_TRANSACTION=Est\u00E1 usted modificando sustancialmente esta transacci\u00F3n.\n\nEsto ocurre frecuentemente por error cuando se quiere\ncrear una transacci\u00F3n nueva.\n\n\u00BFPrefiere crear una transacci\u00F3n nueva o modificar la existente?
