@@ -80,7 +80,7 @@ import edu.stanford.ejalbert.BrowserLauncher;
  */
 public class Buddi {
 
-	private static String userDir;
+//	private static String userDir;
 	private static String pluginsFolder;
 	private static String languagesFolder;
 	private static List<File> filesToLoad;
@@ -109,13 +109,13 @@ public class Buddi {
 	 * is useful for running on a thumb drive.
 	 * @return
 	 */
-	public static String getUserDir(){
-		if (userDir == null){
-			userDir = "";
-		}
-
-		return userDir;
-	}
+//	public static String getUserDir(){
+//		if (userDir == null){
+//			userDir = "";
+//		}
+//
+//		return userDir;
+//	}
 
 	/** 
 	 * @return True if running on Slackware, false otherwise.  This is 
@@ -167,7 +167,7 @@ public class Buddi {
 
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
-			languagesFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.LANGUAGE_FOLDER;
+			languagesFolder = OperatingSystemUtil.getUserFile("Buddi", Const.LANGUAGE_FOLDER).getAbsolutePath();
 		return new File(languagesFolder);
 	}
 
@@ -448,18 +448,19 @@ public class Buddi {
 		// us to use relative paths for such things as running from
 		// USB drives, from remote shares (which would not always have
 		// the same path), etc.
-		try {
-			if (System.getProperty("user.dir").length() > 0)
-				userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
-
-			//If we did not set it via user.dir, we set it here.
-			if (userDir.length() == 0)
-				userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-		}
-		catch (IOException ioe){
-			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
-			userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-		}
+		//Removed in 3.0, as there are stricter definitions for file locations than before.
+//		try {
+//			if (System.getProperty("user.dir").length() > 0)
+//				userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
+//
+//			//If we did not set it via user.dir, we set it here.
+//			if (userDir.length() == 0)
+//				userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+//		}
+//		catch (IOException ioe){
+//			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
+//			userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+//		}
 
 
 		//Set up the logging system.  If we have specified --log, we first
@@ -550,16 +551,15 @@ public class Buddi {
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
-		Log.notice("Set working directory to " + userDir);
-
-		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-		LookAndFeelUtil.setLookAndFeel(lnf);
-//		LookAndFeelUtil.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//		Log.notice("Set working directory to " + userDir);
 
 		//Set Buddi-specific LnF options.
 		//This one removes the width limitation for dialogs.  Since we already 
 		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
-		
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Buddi");
+
+		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
+		LookAndFeelUtil.setLookAndFeel(lnf);
 		
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {

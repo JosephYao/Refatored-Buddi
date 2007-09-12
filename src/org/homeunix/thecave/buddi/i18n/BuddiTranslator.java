@@ -3,8 +3,6 @@
  */
 package org.homeunix.thecave.buddi.i18n;
 
-import java.io.File;
-
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -20,6 +18,6 @@ public class BuddiTranslator extends org.homeunix.thecave.moss.i18n.Translator {
 	public void reloadLanguages(){
 		translations.clear();
 		loadLanguages("/Languages", this.getLanguageList(PrefsModel.getInstance().getLanguage()));
-		loadLanguages(new File(Buddi.getUserDir() + File.separator + "Languages"), this.getLanguageList(PrefsModel.getInstance().getLanguage()));
+		loadLanguages(Buddi.getLanguagesFolder(), this.getLanguageList(PrefsModel.getInstance().getLanguage()));
 	}
 }
