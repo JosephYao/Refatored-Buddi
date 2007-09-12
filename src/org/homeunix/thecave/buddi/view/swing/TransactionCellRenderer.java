@@ -175,9 +175,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 
 			//To / From sources
 			g.setFont(italic);
-			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom().getFullName() + "       " + transaction.getTo().getFullName()), 50, bottomRowYPos);
+			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom().getNameLong() + "       " + transaction.getTo().getNameLong()), 50, bottomRowYPos);
 			fm = this.getGraphics().getFontMetrics();
-			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom().getFullName() + " ");
+			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom().getNameLong() + " ");
 			g.setFont(f);
 			g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TO), arrowOffset, bottomRowYPos);
 

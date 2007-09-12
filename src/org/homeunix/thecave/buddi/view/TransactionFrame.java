@@ -81,7 +81,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullName(), "Resources/Buddi.gif");
+		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getNameLong(), "Resources/Buddi.gif");
 		this.associatedAccount = account;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
 
@@ -123,11 +123,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 								sb.append("</font>");
 
 							sb.append("  ");
-							sb.append(transaction.getFrom().getFullName())
+							sb.append(transaction.getFrom().getNameLong())
 							.append(" ")
 							.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TO))
 							.append(" ")
-							.append(transaction.getTo().getFullName());
+							.append(transaction.getTo().getNameLong());
 
 							if (transaction.getMemo().length() > 0){
 								sb.append("<br>");
@@ -395,7 +395,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		});
 
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getFullName() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getNameLong() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setJMenuBar(new BuddiMenuBar(this));
 	}
 

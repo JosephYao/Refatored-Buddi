@@ -225,7 +225,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				return a;
 		}
 		for (Account a : getAccounts()) { //Finally try checking full name
-			if (a.getFullName().equalsIgnoreCase(name))
+			if (a.getNameLong().equalsIgnoreCase(name))
 				return a;
 		}
 
@@ -244,11 +244,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public BudgetCategory getBudgetCategory(String fullName) {
 		for (BudgetCategory bc : getBudgetCategories()) {
-			if (bc.getFullName().equals(fullName))
+			if (bc.getNameLong().equals(fullName))
 				return bc;
 		}
 		for (BudgetCategory bc : getBudgetCategories()) {
-			if (bc.getFullName().equalsIgnoreCase(fullName))
+			if (bc.getNameLong().equalsIgnoreCase(fullName))
 				return bc;
 		}
 		return null;
@@ -630,7 +630,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
-					if (bc.getFullName().equalsIgnoreCase(((BudgetCategory) object).getFullName()))
+					if (bc.getNameLong().equalsIgnoreCase(((BudgetCategory) object).getNameLong()))
 						throw new ModelException("Cannot have multiple budget categories with the same name");
 				}
 			}

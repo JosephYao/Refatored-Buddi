@@ -67,7 +67,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	}
 	@Override
 	public String toString() {
-		return getFullName();
+		return getNameLong();
 	}
 	
 	public List<MutableBudgetCategory> getAllChildren() {

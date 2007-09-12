@@ -12,7 +12,7 @@ public interface Source extends ModelObject {
 	 * for Accounts and Budget Categories.
 	 * @return
 	 */
-	public String getFullName();
+	public String getNameLong();
 	
 	/**
 	 * Returns the name of the source 

@@ -44,7 +44,7 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 	
 	@Override
 	public String toString() {
-		return getFullName();
+		return getNameLong();
 	}
 
 	public List<ImmutableBudgetCategory> getAllImmutableChildren() {
