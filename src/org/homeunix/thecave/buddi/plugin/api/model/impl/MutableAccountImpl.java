@@ -53,6 +53,6 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	}
 	@Override
 	public String toString() {
-		return getNameLong();
+		return getFullName();
 	}
 }

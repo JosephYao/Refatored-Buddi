@@ -12,7 +12,7 @@ public interface ImmutableSource extends ImmutableModelObject {
 	 * the path to get there (parent categories, etc).
 	 * @return
 	 */
-	public String getNameLong();
+	public String getFullName();
 	
 	/**
 	 * Returns the name of this source 

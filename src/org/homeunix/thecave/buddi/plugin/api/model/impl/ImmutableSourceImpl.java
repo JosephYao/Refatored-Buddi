@@ -20,8 +20,8 @@ public abstract class ImmutableSourceImpl extends ImmutableModelObjectImpl imple
 	public String getName() {
 		return getSource().getName();
 	}
-	public String getNameLong() {
-		return getSource().getNameLong();
+	public String getFullName() {
+		return getSource().getFullLong();
 	}
 	public String getNotes() {
 		return getSource().getNotes();
@@ -29,6 +29,6 @@ public abstract class ImmutableSourceImpl extends ImmutableModelObjectImpl imple
 	
 	@Override
 	public String toString() {
-		return getNameLong();
+		return getFullName();
 	}
 }

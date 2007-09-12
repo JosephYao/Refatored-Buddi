@@ -214,9 +214,9 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey);
 	}
-	public String getNameLong(){
+	public String getFullLong(){
 		if (this.getParent() != null)
-			return this.getParent().getNameLong() + " " + this.getName();
+			return this.getParent().getFullLong() + " " + this.getName();
 		
 		return this.getName();
 	}

@@ -33,7 +33,7 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 	
 	@Override
 	public String toString() {
-		return getNameLong();
+		return getFullName();
 	}
 	
 	public long getBalance(Date d) {

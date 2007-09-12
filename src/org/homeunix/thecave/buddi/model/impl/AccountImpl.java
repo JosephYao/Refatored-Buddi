@@ -83,7 +83,7 @@ public class AccountImpl extends SourceImpl implements Account {
 
 		setBalance(balance);
 	}
-	public String getNameLong() {
+	public String getFullLong() {
 		return this.getName() + " (" + getAccountType().getName() + ")";
 	}
 	public long getBalance(Date d) {
