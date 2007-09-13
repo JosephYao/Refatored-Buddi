@@ -1,3 +1,10 @@
+2.9.1.0 (September 12 2007)
+This is the second (and hopefully last) development preview release.  While the program itself is much more stable and usable than in the last version, there is still the possibility that the data format will change.  Do not use this version for production data.  Assuming continuous positive feedback from testers, the next version will hopefully be back to my 'normal' Development release, where people are free to use it for production data, but the risk of bugs or changes is still quite small.
+Changes:
+-Many bug fixes, feature implementations, enhancements, etc.
+-Finalized (?) the Legacy Import plugin.  Beta testers: please verify that this import method works correctly.  Please send any and all comments or bugs to me ASAP!
+-Small modifications to model and API model.
+
 2.9.0.0 (September 5 2007)
 ***DO NOT USE THIS AS A PRODUCTION APPLICATION***
 This is a Development Preview release, and should be considered Alpha quality code.  This is different from all of my other development releases, as it is not intended for end users to run it for production (i.e. real) data.  It is very likely that the data file format will change before I am ready to release it, and if it does, you will lose all your data.  I can not stress this enough: DO NOT USE THIS AS A PRODUCTION APPLICATION.  This release is ONLY meant for developers and end users to review and provide me with feedback (whether it be in regards to architecture, GUI design, etc).  By not promising to provide backwards compatibility with this release in future versions, I am free to make major changes to the data structures if the need arises, and I fully plan on doing so.
