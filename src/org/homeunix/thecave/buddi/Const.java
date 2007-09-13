@@ -36,7 +36,7 @@ public class Const {
 	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
-	public static final Version VERSION = new Version("2.9.0.0");
+	public static final Version VERSION = new Version("2.9.1.0");
 	public static final String BRANCH = DEVELOPMENT;
 	public static final boolean DEVEL = true;
 //	public static final Version API_VERSION = new Version("3.0");
@@ -50,8 +50,8 @@ public class Const {
 	public final static String DATA_FILE_EXTENSION = ".buddi3";
 	public final static String BACKUP_FILE_EXTENSION = ".buddi3bak";
 	public final static String AUTOSAVE_FILE_EXTENSION = ".buddi3autosave";
-	public final static String DATA_FILE_EXTENSION_OLD = ".buddi";
-	public final static String BACKUP_FILE_EXTENSION_OLD = ".buddi.bak";
+//	public final static String DATA_FILE_EXTENSION_OLD = ".buddi";
+//	public final static String BACKUP_FILE_EXTENSION_OLD = ".buddi.bak";
 	
 	//Plugin Constants
 	public static final String PLUGIN_FOLDER = "Plugins";
@@ -83,8 +83,7 @@ public class Const {
 		@Override
 		public boolean accept(File f) {
 			if (f.isDirectory() 
-					|| f.getName().endsWith(Const.BACKUP_FILE_EXTENSION)
-					|| f.getName().endsWith(Const.BACKUP_FILE_EXTENSION_OLD)){
+					|| f.getName().endsWith(Const.BACKUP_FILE_EXTENSION)){
 				return true;
 			}
 			return false;

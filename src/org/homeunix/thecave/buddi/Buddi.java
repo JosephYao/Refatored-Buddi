@@ -110,11 +110,11 @@ public class Buddi {
 	 * @return
 	 */
 //	public static String getUserDir(){
-//		if (userDir == null){
-//			userDir = "";
-//		}
-//
-//		return userDir;
+//	if (userDir == null){
+//	userDir = "";
+//	}
+
+//	return userDir;
 //	}
 
 	/** 
@@ -205,15 +205,13 @@ public class Buddi {
 
 
 			//Make a backup of the last data file, just to be safe...
-			if (PrefsModel.getInstance().getLastDataFile() != null){
-				File dataFile = PrefsModel.getInstance().getLastDataFile();
-				File backupDataFile = new File(PrefsModel.getInstance().getLastDataFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + "_" + Const.VERSION + "_" + Const.BACKUP_FILE_EXTENSION);
-				try {
-					FileFunctions.copyFile(dataFile, backupDataFile);
-				}
-				catch (IOException ioe){
-					Log.warning("Error backing up file: " + ioe);
-				}
+			File file = PrefsModel.getInstance().getLastDataFile();
+			File backupDataFile = new File(file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + "_" + Const.VERSION + "_" + Const.BACKUP_FILE_EXTENSION);
+			try {
+				FileFunctions.copyFile(file, backupDataFile);
+			}
+			catch (IOException ioe){
+				Log.warning("Error backing up file: " + ioe);
 			}
 		}
 
@@ -249,10 +247,11 @@ public class Buddi {
 			}
 
 			//Handle opening the last user file, if available.
-			if (!openedFile && PrefsModel.getInstance().getLastDataFile() != null){
+			if (!openedFile) {
+				File file = PrefsModel.getInstance().getLastDataFile();
 				try {
 					Document model;
-					model = ModelFactory.createDocument(PrefsModel.getInstance().getLastDataFile());
+					model = ModelFactory.createDocument(file);
 
 					MainFrame mainWndow = new MainFrame(model);
 					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
@@ -309,7 +308,7 @@ public class Buddi {
 			System.exit(1);
 		}
 
-		
+
 		//Start the auto save timer
 		Timer t = new Timer();
 		t.schedule(new TimerTask(){
@@ -381,11 +380,11 @@ public class Buddi {
 
 					filesToLoad.add(new File(arg0.getFilename()));
 				}
-				
+
 				@Override
 				public void handleReOpenApplication(ApplicationEvent arg0) {
 					arg0.setHandled(true);
-					
+
 					if (ApplicationModel.getInstance().getOpenFrames().size() == 0){
 						try {
 							Document model = ModelFactory.createDocument();
@@ -450,16 +449,16 @@ public class Buddi {
 		// the same path), etc.
 		//Removed in 3.0, as there are stricter definitions for file locations than before.
 //		try {
-//			if (System.getProperty("user.dir").length() > 0)
-//				userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
-//
-//			//If we did not set it via user.dir, we set it here.
-//			if (userDir.length() == 0)
-//				userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+//		if (System.getProperty("user.dir").length() > 0)
+//		userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
+
+//		//If we did not set it via user.dir, we set it here.
+//		if (userDir.length() == 0)
+//		userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 //		}
 //		catch (IOException ioe){
-//			//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
-//			userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
+//		//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
+//		userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
 //		}
 
 
@@ -560,7 +559,7 @@ public class Buddi {
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
-		
+
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -613,8 +612,8 @@ public class Buddi {
 				@Override
 				public Object construct() {
 					try{
-						
-						
+
+
 						Proxy p;
 						if (PrefsModel.getInstance().isShowProxySettings()){
 							InetAddress proxyAddress = InetAddress.getByName(PrefsModel.getInstance().getProxyServer());
@@ -624,13 +623,13 @@ public class Buddi {
 						else {
 							p = Proxy.NO_PROXY;
 						}
-						
+
 						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
 						URLConnection connection = mostRecentVersion.openConnection(p);
-						
+
 						InputStream is = connection.getInputStream();
-						
-						
+
+
 						Properties versions = new Properties();
 
 						versions.load(is);

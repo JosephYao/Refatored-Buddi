@@ -159,7 +159,8 @@ public class PrefsModel {
 	}
 
 	public void setLastOpenedDataFile(File lastOpenedDataFile) {
-		prefsModel.setLastDataFile(lastOpenedDataFile.getAbsolutePath());
+		if (lastOpenedDataFile != null)
+			prefsModel.setLastDataFile(lastOpenedDataFile.getAbsolutePath());
 	}
 
 	public Dimension getMainWindowSize() {

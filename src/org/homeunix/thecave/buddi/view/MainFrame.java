@@ -115,6 +115,7 @@ public class MainFrame extends MossDocumentFrame {
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
+		PrefsModel.getInstance().setLastOpenedDataFile(this.getDocument().getFile());
 		PrefsModel.getInstance().setMainWindowSize(this.getSize());
 		PrefsModel.getInstance().setMainWindowLocation(this.getLocation());
 		PrefsModel.getInstance().save();
