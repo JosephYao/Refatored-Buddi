@@ -57,7 +57,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	
 	@Override
 	public void setDeleted(boolean deleted) throws InvalidValueException {
-		getDocument().startBatchChange();
+		if (getDocument() != null)
+			getDocument().startBatchChange();
 		//We need to delete / undelete ancestors / descendents as needed.  The rule to follow is that
 		// we cannot have any account which is not deleted which has a parent which is deleted.
 		if (deleted){
@@ -73,7 +74,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		}
 		
 		super.setDeleted(deleted);
-		getDocument().finishBatchChange();
+		if (getDocument() != null)
+			getDocument().finishBatchChange();
 	}
 	
 	public List<BudgetCategory> getChildren() {
@@ -215,9 +217,6 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey);
 	}
 	public String getFullLong(){
-		if (this.getParent() != null)
-			return this.getParent().getFullLong() + " " + this.getName();
-		
 		return this.getName();
 	}
 	/**

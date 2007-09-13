@@ -36,7 +36,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	public Date getStartDate() {
 		List<Transaction> ts = getDocument().getTransactions(this);
 		if (getDocument() != null && ts.size() > 0)
-			return getDocument().getTransactions(this).get(0).getDate();
+			return ts.get(0).getDate();
 		return new Date();
 	}
 	public long getBalance() {

@@ -113,7 +113,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 
 				if (model.getBudgetCategory(oldCategory.getFullName()) == null){
 					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(
-							oldCategory.getName(), 
+							oldCategory.getFullName(), 
 							ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH), 
 							oldCategory.isIncome());
 					newBudgetCategory.setDeleted(oldCategory.isDeleted());
@@ -125,24 +125,26 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					model.addBudgetCategory(newBudgetCategory);
 				}
 				else {
-					categoryMap.put(oldCategory, (MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName()));
-					sourceMap.put(oldCategory, (MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName()));
+					MutableBudgetCategory newBudgetCategory = (MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName());
+					if (newBudgetCategory.getAmount(new Date()) == 0)
+						newBudgetCategory.setAmount(new Date(), oldCategory.getBudgetedAmount());
+					categoryMap.put(oldCategory, newBudgetCategory);
+					sourceMap.put(oldCategory, newBudgetCategory);
 				}
 			}
 
- 
+			//Set parent categories
 			for (Object oldCategoryObject : oldModel.getAllCategories().getCategories()){
 				Category oldCategory = (Category) oldCategoryObject;
 
 				if (oldCategory.getParent() != null){
 					Category oldParent = oldCategory.getParent();
-					if (model.getBudgetCategory(oldCategory.getName()) != null){
-						System.out.println(model.getBudgetCategory(oldCategory.getName()));						
-						((MutableBudgetCategory) model.getBudgetCategory(oldCategory.getName())).setParent((MutableBudgetCategory) model.getBudgetCategory(oldParent.getName()));
+					if (model.getBudgetCategory(oldCategory.getFullName()) != null){
+						System.out.println(model.getBudgetCategory(oldCategory.getFullName()));						
+						((MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName())).setParent((MutableBudgetCategory) model.getBudgetCategory(oldParent.getFullName()));
 					}
 				}
 			}
-
 			
 			for (Object oldTransactionObject : oldModel.getAllTransactions().getTransactions()){
 				Transaction oldTransaction = (Transaction) oldTransactionObject;
@@ -195,6 +197,26 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				newScheduledTransaction.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
 
 				model.addScheduledTransaction(newScheduledTransaction);
+			}
+			
+			
+			//Find the earliest date in the model
+			Date earliest = new Date();
+			for (MutableAccount a : model.getMutableAccounts()) {
+				if (earliest.after(a.getStartDate()))
+					earliest = a.getStartDate();
+			}
+			
+			//Set budget for each period all the way back
+			for (MutableBudgetCategory bc : model.getMutableBudgetCategories()) {
+				Date tempDate = new Date();
+				long amount = bc.getAmount(new Date());
+				if (earliest.before(tempDate)){
+					while (earliest.before(tempDate)){
+						bc.setAmount(tempDate, amount);
+						tempDate = bc.getBudgetPeriodType().getBudgetPeriodOffset(tempDate, -1);
+					}
+				}
 			}
 		}
 		catch (ModelException me){

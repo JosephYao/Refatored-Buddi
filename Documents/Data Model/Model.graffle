@@ -191,8 +191,8 @@
 			<integer>20</integer>
 			<key>Points</key>
 			<array>
-				<string>{292.111, 287.375}</string>
-				<string>{294.313, 321.251}</string>
+				<string>{292.042, 297.002}</string>
+				<string>{292.042, 325.251}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -216,7 +216,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{170.334, 158.375}, {235.167, 129}}</string>
+			<string>{{174.459, 168.002}, {235.167, 129}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -368,8 +368,8 @@
 			<integer>17</integer>
 			<key>Points</key>
 			<array>
-				<string>{502.641, 68.3333}</string>
-				<string>{497.979, 113.5}</string>
+				<string>{492.251, 68.3333}</string>
+				<string>{492.251, 113.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -403,8 +403,8 @@
 			<integer>16</integer>
 			<key>Points</key>
 			<array>
-				<string>{454.337, 46.8353}</string>
-				<string>{413.97, 48.8242}</string>
+				<string>{441.47, 44.3333}</string>
+				<string>{410.97, 44.3333}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -438,8 +438,8 @@
 			<integer>15</integer>
 			<key>Points</key>
 			<array>
-				<string>{94.1205, 77.3333}</string>
-				<string>{228.171, 321.251}</string>
+				<string>{93.0655, 77.3333}</string>
+				<string>{221.389, 325.251}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -463,7 +463,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{198.708, 321.251}, {208.958, 273}}</string>
+			<string>{{187.563, 325.251}, {208.958, 273}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -502,7 +502,7 @@
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
 
-\f0\b\fs16 \cf0 Model\
+\f0\b\fs16 \cf0 Document\
 &lt;&lt;Interface&gt;&gt;}</string>
 				</dict>
 				<dict>
@@ -620,7 +620,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{454.337, 20.3333}, {101.562, 48}}</string>
+			<string>{{441.47, 20.3333}, {101.562, 48}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -865,8 +865,8 @@
 			<integer>8</integer>
 			<key>Points</key>
 			<array>
-				<string>{134.333, 45.6573}</string>
-				<string>{325.636, 49.9981}</string>
+				<string>{134.333, 44.3333}</string>
+				<string>{322.636, 44.3333}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1223,7 +1223,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{325.636, 18.0003}, {88.3337, 66}}</string>
+			<string>{{322.636, 11.3333}, {88.3337, 66}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1341,7 +1341,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2007-09-07 20:20:16 -0600</string>
+	<string>2007-09-12 17:00:02 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -1439,8 +1439,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMDhUMDI6MjA6
-	MDhaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDctMDktMTJUMjI6NTg6
+	NDRaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -1453,7 +1453,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTA4VDAyOjIwOjA4WjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA3LTA5LTEyVDIyOjU4OjQ0WjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8
@@ -1565,7 +1565,7 @@
 		<key>ShowStatusBar</key>
 		<true/>
 		<key>VisibleRegion</key>
-		<string>{{-209, 8}, {995, 719}}</string>
+		<string>{{-209, 15}, {995, 719}}</string>
 		<key>Zoom</key>
 		<string>1</string>
 	</dict>

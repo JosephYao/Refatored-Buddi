@@ -181,7 +181,7 @@ public class BuddiPluginHelper {
 		));
 
 		startDates.add(new DateChoice(
-				DateFunctions.getStartOfYear(new Date()),
+				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -12),
 				null,
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_YEAR)
 		));

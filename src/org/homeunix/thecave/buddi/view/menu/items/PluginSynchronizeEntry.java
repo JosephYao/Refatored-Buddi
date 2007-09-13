@@ -18,6 +18,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
@@ -88,6 +89,11 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 		Log.debug("Finished updating balances");
 		
 		((MossDocumentFrame) getFrame()).getDocument().finishBatchChange();
+		
+		if (getFrame() instanceof MainFrame)
+			((MainFrame) getFrame()).fireStructureChanged();
+		if (getFrame() instanceof TransactionFrame)
+			((TransactionFrame) getFrame()).fireStructureChanged();
 		
 		//Update all windows when done
 		MainFrame.updateAllContent();

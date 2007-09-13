@@ -89,7 +89,7 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 				TextFormatter.getTranslation(BuddiKeys.GRAPH_TITLE_NET_WORTH_OVER_TIME), 
 				null, 
 				startDate, 
-				endDate);
+				new Date());
 
 		sb.append("<img class='center_img' src='graph.png' />");
 		sb.append(HtmlHelper.getHtmlFooter());

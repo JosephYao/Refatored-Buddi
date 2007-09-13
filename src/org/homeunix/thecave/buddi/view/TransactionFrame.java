@@ -77,12 +77,14 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final TransactionListModel listModel;
 
 	private final Account associatedAccount;
+	private final MainFrame parent;
 
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
 		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullLong(), "Resources/Buddi.gif");
 		this.associatedAccount = account;
+		this.parent = parent;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
 
 		dateFilterComboBox = new JComboBox();
@@ -757,5 +759,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	private Document getDataModel(){
 		return (Document) getDocument();
+	}
+	
+	public void fireStructureChanged(){
+		parent.fireStructureChanged();
 	}
 }

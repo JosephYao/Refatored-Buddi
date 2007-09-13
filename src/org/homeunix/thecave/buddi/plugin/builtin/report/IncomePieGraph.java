@@ -63,7 +63,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 		chart.setBorderStroke(new BasicStroke(0));
 				
 		StringBuilder sb = HtmlHelper.getHtmlHeader(
-				TextFormatter.getTranslation(BuddiKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH), 
+				TextFormatter.getTranslation(BuddiKeys.GRAPH_TITLE_INCOME_PIE_GRAPH), 
 				TextFormatter.getFormattedCurrency(totalIncome), 
 				startDate, 
 				endDate);
