@@ -76,7 +76,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 			for (Object oldTypeObject : oldModel.getAllTypes().getTypes()){
 				org.homeunix.drummer.model.Type oldType = (org.homeunix.drummer.model.Type) oldTypeObject;
 
-				if (model.getType(oldType.getName()) == null){
+				if (model.getAccountType(oldType.getName()) == null){
 					MutableAccountType newType = MutableModelFactory.createMutableAccountType(oldType.getName(), oldType.isCredit());
 
 					typeMap.put(oldType, newType);
@@ -85,8 +85,8 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					model.addAccountType(newType);
 				}
 				else {
-					typeMap.put(oldType, (MutableAccountType) model.getType(oldType.getName()));
-					typeAccountMap.put((MutableAccountType) model.getType(oldType.getName()), new LinkedList<MutableAccount>());				
+					typeMap.put(oldType, (MutableAccountType) model.getAccountType(oldType.getName()));
+					typeAccountMap.put((MutableAccountType) model.getAccountType(oldType.getName()), new LinkedList<MutableAccount>());				
 				}
 			}
 

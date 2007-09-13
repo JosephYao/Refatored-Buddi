@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
@@ -18,6 +19,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Version;
 
 /**
@@ -74,8 +76,8 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 		sb.append(TextFormatter.getTranslation(BuddiKeys.ACTUAL));
 		sb.append("</th><th>");
 		sb.append(TextFormatter.getTranslation(BuddiKeys.AVERAGE));
-//		sb.append(" / ");
-//		sb.append(TextFormatter.getTranslation(model.getPeriodType()));
+		sb.append(" / ");
+		sb.append(TextFormatter.getTranslation(model.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH).getName()));
 		sb.append("</th></tr>\n");
 		
 		long totalActual = 0, totalAverage = 0;
@@ -96,7 +98,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 				}
 			}
 
-			long average = 0;//BudgetCalculator.getAverageByInterval(actual, model.getPeriodType(), startDate, endDate);
+			long average = (long) ((double) actual / (double) DateFunctions.getDaysBetween(startDate, endDate, true) * model.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH).getDaysInPeriod(endDate));
 			if (c.isIncome()){
 				totalAverage += average;
 			}

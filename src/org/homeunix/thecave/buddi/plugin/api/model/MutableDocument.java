@@ -78,7 +78,7 @@ public interface MutableDocument extends ImmutableDocument {
 	 * @param name
 	 * @return
 	 */
-	public MutableAccountType getType(String name);
+	public MutableAccountType getAccountType(String name);
 	
 	/**
 	 * Returns a list of all immutable types in the model

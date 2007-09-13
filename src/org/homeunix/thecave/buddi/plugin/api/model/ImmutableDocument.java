@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.util.Date;
 import java.util.List;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.Document;
 
 /**
@@ -85,11 +86,19 @@ public interface ImmutableDocument extends ImmutableModelObject {
 	 * @param name
 	 * @return
 	 */
-	public ImmutableAccountType getType(String name);
+	public ImmutableAccountType getAccountType(String name);
 	
 	/**
 	 * Returns a list of all immutable types in the model
 	 * @return
 	 */
 	public List<ImmutableAccountType> getImmutableAccountTypes();
+	
+	/**
+	 * Returns an ImmutableBudgetCategoryType object, with the given name.  If the name is
+	 * not a valid one, returns null.
+	 * @param name
+	 * @return
+	 */
+	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name);
 }

@@ -108,7 +108,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append(TextFormatter.getFormattedCurrency(budgeted));				
 				long difference = actual - budgeted;
 				sb.append("</td><td class='right" + (difference > 0 ^ c.isIncome() ? " red'>" : "'>"));
-				sb.append(TextFormatter.getFormattedCurrency(difference, difference < 0));				
+				sb.append(TextFormatter.getFormattedCurrency(difference, false, difference < 0));				
 				sb.append("</td></tr>\n");
 			}
 		}
@@ -121,7 +121,7 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 		sb.append(TextFormatter.getFormattedCurrency(totalBudgeted));
 		long totalDifference = totalActual - totalBudgeted; 
 		sb.append("</th><th class='right" + (totalDifference < 0 ? " red'>" : "'>"));
-		sb.append(TextFormatter.getFormattedCurrency(totalDifference));				
+		sb.append(TextFormatter.getFormattedCurrency(totalDifference, false, totalDifference < 0));				
 		sb.append("</th></tr>\n");
 
 		sb.append("</table>\n\n");
