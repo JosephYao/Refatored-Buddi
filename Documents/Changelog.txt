@@ -1,3 +1,6 @@
+2.9.1.1 (September 13 2007)
+-Fixed a bug with the last version which caused a stack overflow when opening transaction window.
+
 2.9.1.0 (September 12 2007)
 This is the second (and hopefully last) development preview release.  While the program itself is much more stable and usable than in the last version, there is still the possibility that the data format will change.  Do not use this version for production data.  Assuming continuous positive feedback from testers, the next version will hopefully be back to my 'normal' Development release, where people are free to use it for production data, but the risk of bugs or changes is still quite small.
 Changes:
