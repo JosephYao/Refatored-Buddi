@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.model;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
 public interface ModelObject extends Comparable<ModelObject> {
@@ -27,6 +29,12 @@ public interface ModelObject extends Comparable<ModelObject> {
 	 * is major enough to warrant it.
 	 */
 	public void setChanged();
+	
+	/**
+	 * Gets the last modified date of the object
+	 * @return
+	 */
+	public Date getModified();
 	
 	/**
 	 * Sets the document.

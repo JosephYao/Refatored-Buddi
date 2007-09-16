@@ -22,14 +22,14 @@ public abstract class ModelObjectImpl implements ModelObject {
 	private Document document;
 		
 	public void setChanged(){
-		setModifiedDate(new Date());
+		setModified(new Date());
 		if (document != null)
 			document.setChanged();
 	}
-	public Date getModifiedDate() {
+	public Date getModified() {
 		return modifiedDate;
 	}
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModified(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 	public String getUid() {

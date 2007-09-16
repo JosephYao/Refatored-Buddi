@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.ModelObject;
 
 public interface ImmutableModelObject extends Comparable<ImmutableModelObject> {
@@ -21,4 +23,10 @@ public interface ImmutableModelObject extends Comparable<ImmutableModelObject> {
 	 * @return
 	 */
 	public String getUid();
+	
+	/**
+	 * Returnst he modified date.
+	 * @return
+	 */
+	public Date getModified();
 }

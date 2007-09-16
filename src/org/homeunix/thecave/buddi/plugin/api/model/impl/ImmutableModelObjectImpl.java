@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 
@@ -39,6 +41,10 @@ public abstract class ImmutableModelObjectImpl implements ImmutableModelObject {
 	 */
 	public String getUid(){
 		return getRaw().getUid();
+	}
+	
+	public Date getModified() {
+		return getRaw().getModified();
 	}
 	
 	@Override

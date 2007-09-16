@@ -471,11 +471,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModified(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 	public void setChanged(){
-		setModifiedDate(new Date());
+		setModified(new Date());
 		super.setChanged();
 	}
 	public String getUid() {
@@ -590,6 +590,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		sb.append("--");
 
 		return sb.toString();
+	}
+	
+	public Date getModified() {
+		return modifiedDate;
 	}
 
 	private void checkLists(){
