@@ -73,6 +73,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 				getParent().setDeleted(deleted);
 		}
 		
+		setChanged();
+		
 		super.setDeleted(deleted);
 		if (getDocument() != null)
 			getDocument().finishBatchChange();

@@ -40,12 +40,14 @@ public abstract class ModelObjectImpl implements ModelObject {
 	}
 	public void setUid(String uid) {
 		this.uid = uid;
+		setChanged();
 	}
 	public Document getDocument() {
 		return document;
 	}
 	public void setDocument(Document document) {
 		this.document = document;
+		setChanged();
 	}
 	
 	@Override
