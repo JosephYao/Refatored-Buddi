@@ -10,11 +10,11 @@
 	<property file="${PROJECT_HOME}/version.txt"/>
 
 	<!-- Set up all the project specific properties -->
-	<property name="PROJECT_NAME" value="ImageTagger"/>
-	<property name="PROJECT_UNIX_NAME" value="imagetagger"/>	
-	<property name="BUILD_NAME" value="Image Tagger"/>
-	<property name="PROJECT_DESCRIPTION" value="Metadata editor for digital images"/>
-	<property name="PROJECT_CLASS" value="org.homeunix.thecave.image.tagger.ImageTagger"/>
+	<property name="PROJECT_NAME" value="Buddi"/>
+	<property name="PROJECT_UNIX_NAME" value="buddi"/>	
+	<property name="BUILD_NAME" value="Buddi"/>
+	<property name="PROJECT_DESCRIPTION" value="Simple yet effective budgeting program for home users"/>
+	<property name="PROJECT_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
 	<property name="PROJECT_COPYRIGHT" value="Copyright Wyatt Olson"/>
 
 	<!-- Build the program for all platforms -->
@@ -26,6 +26,7 @@
 
 		<taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer" classpath="${ANTINSTALLER_PATH}/lib/ant-installer.jar:${ANTINSTALLER_PATH}/lib/ant-installer-ext.jar"/>
 		<!-- Make the base .exe -->
+		<echo>${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}.ico</echo>
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
@@ -34,7 +35,7 @@
 				errTitle="${PROJECT_NAME}"
 				chdir="."
 				stayAlive="true"
-				icon="${PROJECT_HOME}/img/${PROJECT_NAME}.ico">
+				icon="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}.ico">
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
@@ -339,6 +340,10 @@
 		
 		<fatjar.build output="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
 			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
+
+			<fatjar.jarsource path="${PROJECT_HOME}/lib">
+				<fatjar.exclude relpath="*quaqua*"/>
+			</fatjar.jarsource>
 			
 			<!-- This is the skinny jar file, just compiled below -->
 			<fatjar.jarsource file="${PROJECT_HOME}/build/${PROJECT_NAME}-base.jar" relpath=""/>
@@ -346,11 +351,12 @@
 			<!-- This is the extra jars, with resources, etc, compiled below -->
 			<fatjar.jarsource file="${PROJECT_HOME}/build/${PROJECT_NAME}-resources.jar" relpath=""/>
 
-			<!-- These are all the included files which normally would go on the classpath -->
+			<!-- These are all the included files which normally would go on the classpath 
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx.jar" relpath=""/>
+			-->
 		</fatjar.build>
 		
 		<delete>
@@ -363,9 +369,9 @@
 	</target>
 
 	<target name="jar" depends="clean,compile">
-		<mkdir dir="${PROJECT_HOME}/build"/>
-		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}-base.jar" basedir="bin" includes="**/*" />
-		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}-resources.jar" basedir="Resources" includes="**/*" />
+		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
+		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-base.jar" basedir="bin" includes="**/*" />
+		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="Resources" includes="**/*" />
 	</target>
 	
 	<target name="clean" >
