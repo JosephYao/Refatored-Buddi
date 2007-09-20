@@ -371,6 +371,12 @@
 	<target name="jar" depends="clean,compile">
 		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
 		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-base.jar" basedir="bin" includes="**/*" />
+		<jar destfile="Buddi-base.jar" basedir="bin" includes="**/*.class" />
+		<jar destfile="Buddi-languages.jar" basedir="." includes="Languages/*.lang" />
+<!--		<jar destfile="Buddi-documents.jar" basedir="." includes="Documents/*.txt" />-->
+		<jar destfile="Buddi-licenses.jar" basedir="." includes="Licenses/*.txt" />
+		<jar destfile="Buddi-resources.jar" basedir="." includes="Resources/*" />
+		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="Resources" includes="**/*" />
 		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="Resources" includes="**/*" />
 	</target>
 	
