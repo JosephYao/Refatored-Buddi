@@ -1,100 +1,381 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="fatjar" name="Buddi">
-	<property environment="env"/>
+<?xml version="1.0"?>
+<project name="ImageTagger" default="all" basedir=".">
 	
-<!--
-	<property name="BUDDI_HOME" value="/Users/wyatt/Documents/Programming/Workplace/Buddi"/>
-	<property name="FATJAR_PATH" value="/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar"/>
+	<!-- Set up all the machine dependent properties in this file.  A sample should be provided 
+		 in the project, called ant.properties.sample.  -->
+	<property file="ant.properties"/>
+	<!-- Grab the version number.  This file should consist of a single line, 
+		 containing the string "VALUE=x.y.r.b" where "x.y.r.b" is the version number.
+		 You must include all four digits, even if they are zero. -->
+	<property file="${PROJECT_HOME}/version.txt"/>
+
+	<!-- Set up all the project specific properties -->
+	<property name="PROJECT_NAME" value="ImageTagger"/>
+	<property name="PROJECT_UNIX_NAME" value="imagetagger"/>	
+	<property name="BUILD_NAME" value="Image Tagger"/>
+	<property name="PROJECT_DESCRIPTION" value="Metadata editor for digital images"/>
+	<property name="PROJECT_CLASS" value="org.homeunix.thecave.image.tagger.ImageTagger"/>
+	<property name="PROJECT_COPYRIGHT" value="Copyright Wyatt Olson"/>
+
+	<!-- Build the program for all platforms -->
+	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" />			
+	
+	<target name="windows" depends="fatjar">
+		<!-- Define the tasks for Launch4J and AntInstaller -->
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
+
+		<taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer" classpath="${ANTINSTALLER_PATH}/lib/ant-installer.jar:${ANTINSTALLER_PATH}/lib/ant-installer-ext.jar"/>
+		<!-- Make the base .exe -->
+		<launch4j>
+			<config 
+				dontWrapJar="false" 
+				jar="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" 
+				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" 
+				errTitle="${PROJECT_NAME}"
+				chdir="."
+				stayAlive="true"
+				icon="${PROJECT_HOME}/img/${PROJECT_NAME}.ico">
+				<jre
+					minVersion="1.5.0"
+					initialHeapSize="2"
+					maxHeapSize="128"/>
+				
+				<versionInfo
+			    	fileVersion="${VERSION}"
+					fileDescription="${PROJECT_DESCRIPTION}"
+			    	txtFileVersion="${VERSION}"
+				    copyright="Wyatt Olson"
+				    productVersion="${VERSION}"
+			    	txtProductVersion="${VERSION}"
+			    	productName="${PROJECT_NAME}"
+			    	companyName="Wyatt Olson"
+			    	internalName="${PROJECT_NAME}"
+			    	originalFilename="${BUILD_NAME}.exe"/>
+				</config>
+		</launch4j>
+		
+		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}.exe"/>
+
+		<!-- Make the installer .jar -->
+<!--		<installer 
+				file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar" 
+				compress="true"
+				extractType="SelfExtractor"
+				installConfig="${PROJECT_HOME}/antinstall-config.xml"
+				buildFile="antinstall-build.xml"
+				antInstallLib="${ANTINSTALLER_PATH}/lib"
+				antLib="${ANTINSTALLER_PATH}/antlib"
+				validateConfig="true"
+				failOnError="true">
+			<fileset dir="img" includes="**/*"/>
+
+			<fileset dir="build" includes="**/*"/>
+
+		</installer>
 -->
+<!--
+		<launch4j>
+			<config 
+				dontWrapJar="false" 
+				jar="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar" 
+				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" 
+				errTitle="${PROJECT_NAME}"
+				chdir="."
+				stayAlive="true"
+				icon="${PROJECT_HOME}/img/${PROJECT_NAME}.ico">
+				<jre
+					minVersion="1.5.0"
+					initialHeapSize="2"
+					maxHeapSize="128"/>
+				
+				<versionInfo
+			    	fileVersion="${VERSION}"
+					fileDescription="${PROJECT_DESCRIPTION}"
+			    	txtFileVersion="${VERSION}"
+				    copyright="Wyatt Olson"
+				    productVersion="${VERSION}"
+			    	txtProductVersion="${VERSION}"
+			    	productName="${PROJECT_NAME}"
+			    	companyName="Wyatt Olson"
+			    	internalName="${PROJECT_NAME}"
+			    	originalFilename="${BUILD_NAME}-${VERSION}-Installer.exe"/>
+				</config>
+		</launch4j>
+-->
+		<!-- Rename the files to make the final installers and standalone binaries -->
+<!--		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-Installer-${VERSION}.exe"/>-->
+		<move file="${PROJECT_HOME}/build/${BUILD_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
+		<delete file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar"/>
+	</target>
 
-	<property name="BUDDI_HOME"  value="${env.BUDDI_HOME}"/>
-	<property name="FATJAR_PATH"  value="${env.FATJAR_PATH}"/>
+	<target name="osx" depends="fatjar">
+		<!-- Define the JarBundler path -->
+		<taskdef name="jarbundler" classpath="${JARBUNDLER_JAR}" classname="net.sourceforge.jarbundler.JarBundler"/>
 
-	<target name="checkProperties" description="Internal target - used to verify properties point at valid files">
-		<available file="${BUDDI_HOME}" type="dir" property="BUDDI_HOME.exists"/>
-		<available file="${FATJAR_PATH}" type="file" property="FATJAR_PATH.exists"/>
-	</target>  
-
-	<target name="no.BUDDI_HOME" unless="BUDDI_HOME.exists" description="internal">
-		<fail>"BUDDI_HOME" must be defined and point to a valid directory.</fail>
-	</target>  
-
-	<target name="no.FATJAR_PATH" unless="FATJAR_PATH.exists" description="internal">
-		<fail>"FATJAR_PATH" must be defined and point to a valid jar file.</fail>
-	</target>  
-
-	<target name="checkForRequiredProperies"  description="Internal target - used to verify configuration" depends="checkProperties,no.BUDDI_HOME,no.FATJAR_PATH">
-	</target>  
-
-	<target name="init"  description="Internal target - used to set up all targets" depends="checkForRequiredProperies">
-	</target>  
-
-	<!-- Define the classpath for this build.  Needed for the jarring. -->
-	<path id="Buddi.classpath">
-		<pathelement location="bin"/>
-		<pathelement location="lib/jfreechart-1.0.1.jar"/>
-		<pathelement location="lib/jcommon-1.0.5.jar"/>
-		<pathelement location="lib/emf.ecore_2.2.2.v200702010000.jar"/>
-		<pathelement location="lib/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
-		<pathelement location="lib/emf.common_2.2.1.v200702010000.jar"/>
-		<pathelement location="lib/quaqua-3.9.2.jar"/>
-		<pathelement location="lib/BrowserLauncher2-10.jar"/>
-		<pathelement location="lib/moss-1.2.0.0.jar"/>
-		<pathelement location="lib/swingx-2007_08_12.jar"/>
-		<pathelement location="lib/SwingWorker.jar"/>
-	</path> 
-
-	<!-- Define the tasks and associated classes for FatJar -->
-	<target depends="init,jar" name="fatjar" description="Create Fat Jar">
-		<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_PATH}" loaderref="${FATJAR_PATH}"/>
-	
-		<fatjar.build output="Buddi.jar">
-			<fatjar.manifest mainclass="org.homeunix.thecave.buddi.Buddi"/>
-			<!-- This is the skinny jar file, just compiled below -->
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-base.jar" relpath=""/>
-
-			<!-- These are the resource jars, containing images, documents, languages, etc -->
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-documents.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-languages.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-licenses.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/Buddi-resources.jar" relpath=""/>
+		<jarbundler dir="${PROJECT_HOME}/build" verbose="true" showPlist="false"
+	        name="${BUILD_NAME}"
+	        shortname="${PROJECT_NAME}"
+	        signature="????"
+	        stubfile="${PROJECT_HOME}/etc/osx/JavaApplicationStub"
+	        mainclass="${PROJECT_CLASS}"
+	        icon="${PROJECT_HOME}/img/${PROJECT_NAME}.icns"
+	        jvmversion="1.5+"
+	        version="${VERSION}"
+	        infostring="${PROJECT_NAME}, ${PROJECT_COPYRIGHT}"
+	        bundleid="${PROJECT_CLASS}">
 			
-			<!-- These are all the included files which normally would go on the classpath -->
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/BrowserLauncher2-10.jar" relpath=""/> 
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/moss-1.2.0.0.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/SwingWorker.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.common_2.2.1.v200702010000.jar" relpath=""/>
-		</fatjar.build>
+			<jarfileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" />
+			<jarfileset file="${PROJECT_HOME}/lib/quaqua-3.6.11.jar" />
+			
+			<!-- Associate document types with this application -->
+<!--			<documenttype name="Buddi Data"
+				extensions="txt text" 
+				ostypes="TEXT sEXT ttro" 
+				iconFile="${PROJECT_HOME}/img/BuddiData.icns"
+				role="Editor"/>
+				                
+			<documenttype name="Hello World HTML document"
+				extensions="html htm" 
+				iconFile="icons/html.icns"
+				role="Editor"/>
+				                 
+			<documenttype name="Hello World RTF document"
+				extensions="rtf" 
+				role="Viewer"/>
+				
+			<documenttype name="Hello World images"
+				mimetypes="image/jpeg image/png" 
+				role="Viewer"/>
+				
+			<documenttype name="Hello project document"
+				extensions="hello"
+				iconFile="icons/Hello Document.icns"
+				bundle="true"
+				role="Editor"/>-->
+      
+		</jarbundler>
+	
+		<exec executable="/usr/bin/hdiutil" os="Mac OS X">
+			<arg line="create -format UDZO -srcfolder '${PROJECT_HOME}/build/${BUILD_NAME}.app' -o '${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.dmg'"/>
+		</exec>
+
+		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}.app"/>
+	
 	</target>
 
-	<target name="compile" description="Compile Buddi">
-		<javac srcdir="src" destdir="bin" classpath=""/>
-	</target>
-
-	<target name="clean" description="Delete Component Jars">
+	<!-- The Unix task will tar the .jar along with a launcher.  The user is responsible for putting
+		 this in the correct location, and modifying the launcher as needed. -->
+	<target name="unix">
+		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.tar">
+			<tarfileset dir="${PROJECT_HOME}/etc/unix" mode="755">
+				<include name="${PROJECT_UNIX_NAME}"/>
+			</tarfileset>
+			<tarfileset dir="${PROJECT_HOME}/etc/unix">
+				<include name="README"/>
+			</tarfileset>		  
+			<tarfileset dir="${PROJECT_HOME}/build">
+				<include name="${PROJECT_NAME}.jar"/>
+			</tarfileset>
+		</tar>
+		<gzip zipfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.tgz" src="${PROJECT_HOME}/build/${PROJECT_NAME}.tar"/>
 		<delete>
-			<fileset dir=".">
-				<include name="*.jar"/>
+			<fileset dir="${PROJECT_HOME}/build">
+				<include name="${PROJECT_NAME}.tar"/>
 			</fileset>
 		</delete>
 	</target>
 	
-	<target name="jar" depends="clean,compile" description="Create Component Jars">
-		<jar destfile="Buddi-base.jar" basedir="bin" includes="**/*.class" />
-		<jar destfile="Buddi-languages.jar" basedir="." includes="Languages/*.lang" />
-		<jar destfile="Buddi-documents.jar" basedir="." includes="Documents/*.txt" />
-		<jar destfile="Buddi-licenses.jar" basedir="." includes="Licenses/*.txt" />
-		<jar destfile="Buddi-resources.jar" basedir="." includes="Resources/*" />
+	
+	<!-- The Debian task. -->
+	<target name="debian" depends="fatjar">
+		
+		<ant target="linuxcommon"/>
+		
+		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
+
+		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/bin"/>
+		<copy todir="${PROJECT_HOME}/build/linux/data/usr/bin">
+			<fileset file="${PROJECT_HOME}/etc/debian/imagetagger"/>
+			<fileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar"/>
+		</copy>
+		
+		<mkdir dir="${PROJECT_HOME}/build/linux/control"/>
+		<copy todir="${PROJECT_HOME}/build/linux/control">
+			<fileset dir="${PROJECT_HOME}/etc/debian">
+				<include name="control"/>
+				<include name="preinst"/>
+				<include name="postinst"/>
+				<include name="postrm"/>
+			</fileset>
+			<filterset begintoken="[[" endtoken="]]">
+				<filter token="version" value="${VERSION}"/>
+			</filterset>
+		</copy>
+		
+		<deb destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.deb" control="${PROJECT_HOME}/build/linux/control">
+			<data src="${PROJECT_HOME}/build/linux/data">
+				<exclude name="**/.svn"/>
+			</data>
+		</deb>
+		
+		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
+	</target>
+	
+	<target name="redhat" depends="fatjar,linuxcommon">
+	
+		<ant target="linuxcommon"/>
+		
+		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
+	</target>
+	
+	<target name="source" depends="clean">
+		<!-- Define the JarBundler path -->
+		<path id="SVNANT_CLASSPATH">
+		    <fileset dir="${SVNANT_PATH}">
+		        <include name="**/*.jar"/>
+		      </fileset>
+		  </path>
+		<taskdef name="svn" classpathref="SVNANT_CLASSPATH" classname="org.tigris.subversion.svnant.SvnTask"/>
+
+		<svn>
+			<export srcPath="${PROJECT_HOME}" destPath="${PROJECT_HOME}/build/src"/>
+		</svn>
+		
+		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar">	  
+			<tarfileset dir="${PROJECT_HOME}/build/src">
+				<include name="**/*"/>
+			</tarfileset>
+		</tar>
+		<gzip zipfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.src.tgz" src="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar"/>
+		<delete includeemptydirs="true">
+			<fileset dir="${PROJECT_HOME}/build">
+				<include name="${PROJECT_NAME}.src.tar"/>
+			</fileset>
+			<fileset dir="${PROJECT_HOME}/build/src"/>
+		</delete>
+	</target>
+	
+	<target name="generic" depends="fatjar">
+		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.jar"/>
+	</target>
+	
+	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
+		
+		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/share/applications"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/mime/packages"/>
+		<copy file="${PROJECT_HOME}/etc/shared/${PROJECT_UNIX_NAME}.desktop" 
+				todir="${PROJECT_HOME}/build/linux/data/usr/share/applications"/>
+		<copy file="${PROJECT_HOME}/etc/shared/mime_package_${PROJECT_UNIX_NAME}.xml"
+				tofile="${PROJECT_HOME}/build/linux/data/usr/share/mime/packages/${PROJECT_UNIX_NAME}.xml"/>
+
+
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/16x16/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/32x32/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/48x48/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/64x64/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/96x96/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/128x128/apps"/>
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/192x192/apps"/>
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-16x16.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/16x16/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-32x32.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/32x32/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-48x48.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/48x48/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-64x64.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/64x64/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-96x96.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/96x96/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-128x128.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/128x128/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-192x192.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/icons/hicolor/192x192/apps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+
+		
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/pixmaps"/>
+		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-48x48.png"
+				tofile="${PROJECT_HOME}/build/linux/usr/share/pixmaps/${PROJECT_UNIX_NAME}.png"
+				failonerror="false" />
+
+		
+		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/doc/${PROJECT_UNIX_NAME}"/>
+		<copy todir="${PROJECT_HOME}/build/linux/usr/share/doc/${PROJECT_UNIX_NAME}">
+			<fileset dir="${PROJECT_HOME}/Documents">
+				<include name="*"/>
+			</fileset>
+		</copy>
+		
+	</target>
+	
+	<target name="javadocs" depends="clean">
+		<mkdir dir="${PROJECT_HOME}/javadocs"/>
+		<javadoc destdir="${PROJECT_HOME}/javadocs" packagenames="org">
+			<packageset dir="${PROJECT_HOME}/src">
+				<include name="**/*"/>
+			</packageset>
+			<!-- Include Moss in Javadocs.  Change this location or remove it as needed. -->
+			<packageset dir="${PROJECT_HOME}/../Moss/src">
+				<include name="**/*"/>
+			</packageset>
+		</javadoc>
+	</target>
+	
+	<target name="fatjar" depends="jar">
+		<!-- Define the tasks and associated classes for FatJar -->
+		<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>		
+		
+		<fatjar.build output="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
+			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
+			
+			<!-- This is the skinny jar file, just compiled below -->
+			<fatjar.jarsource file="${PROJECT_HOME}/build/${PROJECT_NAME}-base.jar" relpath=""/>
+
+			<!-- This is the extra jars, with resources, etc, compiled below -->
+			<fatjar.jarsource file="${PROJECT_HOME}/build/${PROJECT_NAME}-resources.jar" relpath=""/>
+
+			<!-- These are all the included files which normally would go on the classpath -->
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/MRJAdapter-1.0.9.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-10rc4.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx.jar" relpath=""/>
+		</fatjar.build>
+		
+		<delete>
+			<fileset dir="${PROJECT_HOME}/build/" excludes="${PROJECT_NAME}.jar" />
+		</delete>
+	</target>
+
+	<target name="compile">
+        <javac srcdir="src" destdir="bin"/>
+	</target>
+
+	<target name="jar" depends="clean,compile">
+		<mkdir dir="${PROJECT_HOME}/build"/>
+		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}-base.jar" basedir="bin" includes="**/*" />
+		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}-resources.jar" basedir="Resources" includes="**/*" />
+	</target>
+	
+	<target name="clean" >
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${PROJECT_HOME}/build">
+				<include name="**/*"/>
+			</fileset>
+			<fileset dir="${PROJECT_HOME}/javadocs">
+				<include name="**/*"/>
+			</fileset>
+		</delete>
 	</target>
 </project>
