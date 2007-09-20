@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -118,7 +118,7 @@ public class PrefsModel {
 	}
 	
 	public void updateVersion(){
-		prefsModel.setLastVersion(Const.VERSION.toString());
+		prefsModel.setLastVersion(Buddi.getVersion().toString());
 	}
 
 	public String getCurrencySign() {

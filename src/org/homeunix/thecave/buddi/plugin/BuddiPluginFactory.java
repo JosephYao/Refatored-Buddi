@@ -50,7 +50,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiReportPlugin){
 						reports.add((BuddiReportPlugin) plugin);
 					}
@@ -81,7 +81,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiImportPlugin){
 						imports.add((BuddiImportPlugin) plugin);
 					}
@@ -112,7 +112,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiSynchronizePlugin){
 						imports.add((BuddiSynchronizePlugin) plugin);
 					}
@@ -143,7 +143,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiExportPlugin){
 						imports.add((BuddiExportPlugin) plugin);
 					}
@@ -176,7 +176,7 @@ public class BuddiPluginFactory extends PluginFactory {
 //		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 //		if (plugins != null){
 //			for (File pluginFile : plugins){
-//				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+//				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 //					if (plugin instanceof BuddiBudgetPeriodTypePlugin){
 //						budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
 //					}
@@ -208,7 +208,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiPreferencePlugin){
 						preferences.add((BuddiPreferencePlugin) plugin);
 					}
@@ -228,7 +228,7 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Const.VERSION)) {
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
 					if (plugin instanceof BuddiExportPlugin
 							|| plugin instanceof BuddiImportPlugin
 							|| plugin instanceof BuddiPreferencePlugin

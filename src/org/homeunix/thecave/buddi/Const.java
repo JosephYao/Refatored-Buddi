@@ -22,7 +22,6 @@ import org.homeunix.thecave.buddi.view.dialogs.preferences.LocalePreferences;
 import org.homeunix.thecave.buddi.view.dialogs.preferences.NetworkPreferences;
 import org.homeunix.thecave.buddi.view.dialogs.preferences.PluginPreferences;
 import org.homeunix.thecave.buddi.view.dialogs.preferences.ViewPreferences;
-import org.homeunix.thecave.moss.util.Version;
 
 
 /**
@@ -36,7 +35,7 @@ public class Const {
 	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
-	public static final Version VERSION = new Version("2.9.2.0");
+//	public static final Version VERSION = new Version("2.9.2.0");
 	public static final String BRANCH = DEVELOPMENT;
 	public static final boolean DEVEL = true;
 //	public static final Version API_VERSION = new Version("3.0");

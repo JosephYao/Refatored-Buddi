@@ -192,7 +192,7 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 			});
 			jfc.setDialogTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.CHOOSE_PLUGIN_JAR));
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-				List<MossPlugin> plugins = BuddiPluginFactory.getMossPluginsFromJar(jfc.getSelectedFile(), Const.VERSION);
+				List<MossPlugin> plugins = BuddiPluginFactory.getMossPluginsFromJar(jfc.getSelectedFile(), Buddi.getVersion());
 				if (plugins.size() == 0){
 					String[] options = new String[1];
 					options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);

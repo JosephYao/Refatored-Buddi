@@ -89,7 +89,14 @@ public class Buddi {
 	private static Boolean redhat = false;
 	private static Boolean simpleFont = false;
 	private static File logFile = null;
-
+	private static Version version = null;
+	
+	public static Version getVersion() {
+		if (version == null)
+			version = Version.getVersionResource("version.txt");
+		return version;
+	}
+	
 	/**
 	 * Use simple fonts (i.e., no bold or italics) for transaction window.  This 
 	 * allows for better Unicode support on some platforms which do not include
@@ -186,7 +193,8 @@ public class Buddi {
 			System.exit(0);
 
 
-		if (PrefsModel.getInstance().getLastVersion() != null && Const.VERSION.isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
+		if (PrefsModel.getInstance().getLastVersion() != null 
+				&& getVersion().isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
@@ -206,7 +214,9 @@ public class Buddi {
 
 			//Make a backup of the last data file, just to be safe...
 			File file = PrefsModel.getInstance().getLastDataFile();
-			File backupDataFile = new File(file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + "_" + Const.VERSION + "_" + Const.BACKUP_FILE_EXTENSION);
+			File backupDataFile = new File(
+					file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
+					+ "_" + getVersion() + "_" + Const.BACKUP_FILE_EXTENSION);
 			try {
 				FileFunctions.copyFile(file, backupDataFile);
 			}
@@ -546,7 +556,7 @@ public class Buddi {
 		}
 
 		//The version of Buddi.  Useful for diagnostics
-		Log.notice("Running Buddi version " + Const.VERSION);
+		Log.notice("Running Buddi version " + getVersion());
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
@@ -574,7 +584,7 @@ public class Buddi {
 	 */
 	private static void startVersionCheck(final MossFrame frame){
 		if (PrefsModel.getInstance().getLastVersion() == null 
-				|| !PrefsModel.getInstance().getLastVersion().equals(Const.VERSION)){
+				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
 			PrefsModel.getInstance().updateVersion();
 
 			String[] buttons = new String[2];
@@ -635,7 +645,7 @@ public class Buddi {
 						versions.load(is);
 
 						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
-						Version thisVersion = Const.VERSION;
+						Version thisVersion = getVersion();
 
 						Log.debug("This version: " + thisVersion);
 						Log.debug("Available version: " + availableVersion);

@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.AboutFrameKeys;
@@ -62,7 +63,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 		"<html><center><h5>")
 		.append(PrefsModel.getInstance().getTranslator().get(AboutFrameKeys.ABOUT_VERSION))
 		.append(" ")
-		.append(Const.VERSION)
+		.append(Buddi.getVersion())
 		.append("</h5></center></html");
 
 		JLabel version = new JLabel(sbVersion.toString());
