@@ -712,7 +712,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			}
 
 			//The transaction is scheduled for a date before today and before the EndDate 
-			while (tempDate.before(today) && (s.getEndDate() == null || s.getEndDate().after(tempDate))) {
+			while (tempDate.before(today) 
+					&& (s.getEndDate() == null 
+							|| s.getEndDate().after(tempDate)
+							|| (DateFunctions.getDaysBetween(s.getEndDate(), tempDate, false) == 0))) {
 				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
 
 				//We use a Calendar instead of a Date object for comparisons

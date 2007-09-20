@@ -89,11 +89,15 @@ public class FilteredLists {
 
 		@Override
 		public boolean isIncluded(ScheduledTransaction st) {
-			if ((DateFunctions.getDaysBetween(st.getStartDate(), new Date(), false) == 0
+			if ((DateFunctions.getDaysBetween(st.getStartDate(), today, false) == 0
 					|| DateFunctions.getStartOfDay(st.getStartDate()).before(today))
 					&& (st.getLastDayCreated() == null 
 							|| DateFunctions.getStartOfDay(st.getLastDayCreated()).before(today))
-							&& (st.getEndDate() == null || st.getEndDate().after(today)))
+							&& (st.getEndDate() == null 
+									|| st.getEndDate().after(today))
+									|| st.getLastDayCreated() == null
+									|| (DateFunctions.getDaysBetween(st.getEndDate(), st.getLastDayCreated(), false) == 0)
+									|| st.getEndDate().after(st.getLastDayCreated()))
 				return true;
 			return false;
 		}

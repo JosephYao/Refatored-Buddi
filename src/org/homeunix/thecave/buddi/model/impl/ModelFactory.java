@@ -351,8 +351,24 @@ public class ModelFactory {
 	 * @return
 	 * @throws InvalidValueException
 	 */
-	public static ScheduledTransaction createScheduledTransaction() throws InvalidValueException {
+	public static ScheduledTransaction createScheduledTransaction(String name, String message, Date startDate, Date endDate, String frequencyType, int scheduleDay, int scheduleWeek, int scheduleMonth, String description, long amount, Source from, Source to) throws InvalidValueException {
+		
 		ScheduledTransaction st = new ScheduledTransactionImpl();
+
+		st.setScheduleName(name);
+		st.setMessage(message);
+		st.setStartDate(startDate);
+		if (endDate != null)
+			st.setEndDate(endDate);
+		st.setFrequencyType(frequencyType);
+		st.setScheduleDay(scheduleDay);
+		st.setScheduleWeek(scheduleWeek);
+		st.setScheduleMonth(scheduleMonth);
+//		st.setDate(date);
+		st.setDescription(description);
+		st.setAmount(amount);
+		st.setFrom(from);
+		st.setTo(to);
 
 		return st;
 	}

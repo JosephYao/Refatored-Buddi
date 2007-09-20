@@ -165,7 +165,7 @@ function bundle_unix {
 	mkdir -p $UNIX
 	cp Buddi.jar $UNIX
 	cp etc/unix/buddi $UNIX
-	cp etc/unix/readme.unix $UNIX
+	cp etc/unix/README $UNIX
 #	cp -R Documents $UNIX
 #	cp -R Licenses $UNIX
 

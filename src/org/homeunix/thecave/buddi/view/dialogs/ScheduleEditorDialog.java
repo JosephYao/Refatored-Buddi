@@ -334,11 +334,36 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 			//If the currently edited schedule is null, we need to create a new one, and
 			// flag to add it to the model.
 			if (schedule == null) {
-				s = ModelFactory.createScheduledTransaction();
+				Transaction t = transactionEditor.getTransactionNew();
+				s = ModelFactory.createScheduledTransaction(
+						this.scheduleName.getText(),
+						this.message.getText(),
+						
+						startDateChooser.getDate(),
+						endDateChooser.getDate(),
+						frequencyPulldown.getSelectedItem().toString(),
+						getSelectedCard().getScheduleDay(),
+						getSelectedCard().getScheduleWeek(),
+						getSelectedCard().getScheduleMonth(),
+
+						t.getDescription(),
+						t.getAmount(),
+						t.getFrom(),
+						t.getTo());
 				needToAdd = true;
 			}
 			else {
+				Transaction t = transactionEditor.getTransactionUpdated();
 				s = schedule;
+				
+				s.setScheduleName(this.scheduleName.getText());
+				s.setMessage(this.message.getText());
+				s.setAmount(t.getAmount());
+				s.setDescription(t.getDescription());
+				s.setNumber(t.getNumber());
+				s.setTo(t.getTo());
+				s.setFrom(t.getFrom());
+				s.setMemo(t.getMemo());
 				needToAdd = false;
 			}
 
@@ -358,44 +383,16 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 								options,
 								options[0]) == JOptionPane.OK_OPTION){
 
-					Transaction t;
-					if (needToAdd)
-						t = transactionEditor.getTransactionNew();
-					else
-						t = transactionEditor.getTransactionUpdated();
-					
-					String name = this.scheduleName.getText();
-					String message = this.message.getText();
-//					long amount = t.getAmount();
-//					String description = transactionEditor.getDescription();
-//					String number = transactionEditor.getNumber();
-//					Source from = transactionEditor.getFrom();
-//					Source to = transactionEditor.getTo();
-////					boolean cleared = transactionEditor.isCleared();
-////					boolean reconciled = transactionEditor.isReconciled();
-//					String memo = transactionEditor.getMemo();
-
-					s.setScheduleName(name);
-					s.setMessage(message);
-					s.setAmount(t.getAmount());
-					s.setDescription(t.getDescription());
-					s.setNumber(t.getNumber());
-					s.setTo(t.getTo());
-					s.setFrom(t.getFrom());
-//					s.setCleared(cleared);
-//					s.setReconciled(reconciled);
-					s.setMemo(t.getMemo());
-
 					//TODO We should not have to save this, as it cannot be modified.
-					if (needToAdd){
-						s.setStartDate(startDateChooser.getDate());
-						if (endDateChooserEnabled.isSelected())
-							s.setEndDate(endDateChooser.getDate());
-						s.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
-						s.setScheduleDay(getSelectedCard().getScheduleDay());
-						s.setScheduleWeek(getSelectedCard().getScheduleWeek());
-						s.setScheduleMonth(getSelectedCard().getScheduleMonth());
-					}
+//					if (needToAdd){
+//						s.setStartDate(startDateChooser.getDate());
+//						if (endDateChooserEnabled.isSelected())
+//							s.setEndDate(endDateChooser.getDate());
+//						s.setFrequencyType(frequencyPulldown.getSelectedItem().toString());
+//						s.setScheduleDay(getSelectedCard().getScheduleDay());
+//						s.setScheduleWeek(getSelectedCard().getScheduleWeek());
+//						s.setScheduleMonth(getSelectedCard().getScheduleMonth());
+//					}
 
 					//TODO Need to check for 
 					if (needToAdd)
@@ -466,6 +463,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
 			if (saveScheduledTransaction()){
+				model.updateScheduledTransactions();
 				model.updateAllBalances();
 				this.closeWindow();
 			}

@@ -173,28 +173,42 @@ public class ImportLegacyData extends BuddiImportPlugin {
 			for (Object oldScheduledTransactionObject : oldModel.getAllTransactions().getScheduledTransactions()){
 				Schedule oldScheduledTransaction = (Schedule) oldScheduledTransactionObject;
 
-				MutableScheduledTransaction newScheduledTransaction = MutableModelFactory.createMutableScheduledTransaction();
+				MutableScheduledTransaction newScheduledTransaction = 
+					MutableModelFactory.createMutableScheduledTransaction(
+							oldScheduledTransaction.getScheduleName(), 
+							oldScheduledTransaction.getMessage(), 
+							oldScheduledTransaction.getStartDate(), 
+							oldScheduledTransaction.getEndDate(), 
+							oldScheduledTransaction.getFrequencyType(), 
+							oldScheduledTransaction.getScheduleDay(), 
+							oldScheduledTransaction.getScheduleWeek(), 
+							oldScheduledTransaction.getScheduleMonth(), 
+							oldScheduledTransaction.getDate(), 
+							oldScheduledTransaction.getDescription(), 
+							oldScheduledTransaction.getAmount(), 
+							sourceMap.get(oldScheduledTransaction.getFrom()), 
+							sourceMap.get(oldScheduledTransaction.getTo()));
 				newScheduledTransaction.setClearedFrom(oldScheduledTransaction.isCleared());
 				newScheduledTransaction.setClearedTo(oldScheduledTransaction.isCleared());
-				newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
-				newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());
-				newScheduledTransaction.setEndDate(oldScheduledTransaction.getEndDate());
-				newScheduledTransaction.setFrequencyType(oldScheduledTransaction.getFrequencyType());
+//				newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
+//				newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());
+//				newScheduledTransaction.setEndDate(oldScheduledTransaction.getEndDate());
+//				newScheduledTransaction.setFrequencyType(oldScheduledTransaction.getFrequencyType());
 				newScheduledTransaction.setLastDayCreated(oldScheduledTransaction.getLastDateCreated());
 				newScheduledTransaction.setMemo(oldScheduledTransaction.getMemo());
-				newScheduledTransaction.setMessage(oldScheduledTransaction.getMessage());
+//				newScheduledTransaction.setMessage(oldScheduledTransaction.getMessage());
 				newScheduledTransaction.setNumber(oldScheduledTransaction.getNumber());
 				newScheduledTransaction.setReconciledFrom(oldScheduledTransaction.isReconciled());
 				newScheduledTransaction.setReconciledTo(oldScheduledTransaction.isReconciled());
-				newScheduledTransaction.setScheduled(oldScheduledTransaction.isScheduled());
-				newScheduledTransaction.setScheduleDay(oldScheduledTransaction.getScheduleDay());
-				newScheduledTransaction.setScheduleWeek(oldScheduledTransaction.getScheduleWeek());
-				newScheduledTransaction.setScheduleMonth(oldScheduledTransaction.getScheduleMonth());
-				newScheduledTransaction.setScheduleName(oldScheduledTransaction.getScheduleName());
-				newScheduledTransaction.setStartDate(oldScheduledTransaction.getStartDate());
-				newScheduledTransaction.setAmount(oldScheduledTransaction.getAmount());
-				newScheduledTransaction.setFrom(sourceMap.get(oldScheduledTransaction.getFrom()));
-				newScheduledTransaction.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
+//				newScheduledTransaction.setScheduled(oldScheduledTransaction.isScheduled());
+//				newScheduledTransaction.setScheduleDay(oldScheduledTransaction.getScheduleDay());
+//				newScheduledTransaction.setScheduleWeek(oldScheduledTransaction.getScheduleWeek());
+//				newScheduledTransaction.setScheduleMonth(oldScheduledTransaction.getScheduleMonth());
+//				newScheduledTransaction.setScheduleName(oldScheduledTransaction.getScheduleName());
+//				newScheduledTransaction.setStartDate(oldScheduledTransaction.getStartDate());
+//				newScheduledTransaction.setAmount(oldScheduledTransaction.getAmount());
+//				newScheduledTransaction.setFrom(sourceMap.get(oldScheduledTransaction.getFrom()));
+//				newScheduledTransaction.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
 
 				model.addScheduledTransaction(newScheduledTransaction);
 			}

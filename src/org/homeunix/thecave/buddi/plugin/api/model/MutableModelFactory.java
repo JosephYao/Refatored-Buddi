@@ -15,11 +15,11 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 
@@ -90,8 +90,8 @@ public class MutableModelFactory {
 	 * @return
 	 * @throws ModelException
 	 */
-	public static MutableScheduledTransaction createMutableScheduledTransaction() throws ModelException{
-		ScheduledTransaction st = ModelFactory.createScheduledTransaction();
+	public static MutableScheduledTransaction createMutableScheduledTransaction(String name, String message, Date startDate, Date endDate, String frequencyType, int scheduleDay, int scheduleWeek, int scheduleMonth, Date date, String description, long amount, MutableSource from, MutableSource to) throws ModelException{
+		ScheduledTransaction st = ModelFactory.createScheduledTransaction(name, message, startDate, endDate, frequencyType, scheduleDay, scheduleWeek, scheduleMonth, description, amount, from.getSource(), to.getSource());
 		
 		return new MutableScheduledTransactionImpl(st);
 	}

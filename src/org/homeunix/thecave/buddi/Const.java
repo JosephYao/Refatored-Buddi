@@ -36,7 +36,7 @@ public class Const {
 	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
-	public static final Version VERSION = new Version("2.9.1.1");
+	public static final Version VERSION = new Version("2.9.2.0");
 	public static final String BRANCH = DEVELOPMENT;
 	public static final boolean DEVEL = true;
 //	public static final Version API_VERSION = new Version("3.0");

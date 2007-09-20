@@ -1,3 +1,9 @@
+2.9.2.0 (September 19 2007)
+-Added modified date to API model
+-I think that I fixed bug #1790783 - please verify that this is working for everyone
+-Included some missing libraries into the build (for legacy import)
+-Tons of small enhancements and bug fixes
+
 2.9.1.1 (September 13 2007)
 -Fixed a bug with the last version which caused a stack overflow when opening transaction window.
 

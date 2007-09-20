@@ -131,7 +131,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							.append(" ")
 							.append(transaction.getTo().getFullLong());
 
-							if (transaction.getMemo().length() > 0){
+							if (transaction.getMemo() != null 
+									&& transaction.getMemo().length() > 0){
 								sb.append("<br>");
 								sb.append(transaction.getMemo());
 							}
@@ -716,6 +717,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				int position = list.getSelectedIndex();
 				try {
 					((Document) getDocument()).removeTransaction(t);
+					((Document) getDocument()).updateAllBalances();
 //					baseModel.remove(t, listModel);
 
 //					updateAllTransactionWindows();
@@ -734,7 +736,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					}
 
 					transactionEditor.setChanged(false);
-
 				}
 				catch (ModelException me){
 					me.printStackTrace(Log.getPrintStream());

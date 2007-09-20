@@ -496,14 +496,16 @@ public class TransactionEditor extends MossPanel {
 		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
 		t.setNumber(number.getText().toString());
 		t.setMemo(memo.getText().toString());
-		if (associatedAccount.equals(from.getSelectedItem())){
-			t.setClearedFrom(cleared.isSelected());
-			t.setReconciledFrom(reconciled.isSelected());				
+		if (associatedAccount != null){
+			if (associatedAccount.equals(from.getSelectedItem())){
+				t.setClearedFrom(cleared.isSelected());
+				t.setReconciledFrom(reconciled.isSelected());				
+			}
+			else if (associatedAccount.equals(to.getSelectedItem())){
+				t.setClearedTo(cleared.isSelected());
+				t.setReconciledTo(reconciled.isSelected());				
+			}
 		}
-		else if (associatedAccount.equals(to.getSelectedItem())){
-			t.setClearedTo(cleared.isSelected());
-			t.setReconciledTo(reconciled.isSelected());				
-		}		
 		return t;
 	}
 

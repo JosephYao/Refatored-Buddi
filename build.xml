@@ -34,9 +34,9 @@
 		<pathelement location="bin"/>
 		<pathelement location="lib/jfreechart-1.0.1.jar"/>
 		<pathelement location="lib/jcommon-1.0.5.jar"/>
-		<pathelement location="lib/emf/emf.ecore_2.2.2.v200702010000.jar"/>
-		<pathelement location="lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
-		<pathelement location="lib/emf/emf.common_2.2.1.v200702010000.jar"/>
+		<pathelement location="lib/emf.ecore_2.2.2.v200702010000.jar"/>
+		<pathelement location="lib/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
+		<pathelement location="lib/emf.common_2.2.1.v200702010000.jar"/>
 		<pathelement location="lib/quaqua-3.9.2.jar"/>
 		<pathelement location="lib/BrowserLauncher2-10.jar"/>
 		<pathelement location="lib/moss-1.2.0.0.jar"/>
@@ -72,9 +72,9 @@
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/moss-1.2.0.0.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
 			<fatjar.jarsource file="${BUDDI_HOME}/lib/SwingWorker.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf/emf.common_2.2.1.v200702010000.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
+			<fatjar.jarsource file="${BUDDI_HOME}/lib/emf.common_2.2.1.v200702010000.jar" relpath=""/>
 		</fatjar.build>
 	</target>
 
