@@ -211,7 +211,7 @@
 		
 		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
 
-		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/bin"/>
+<!--		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/bin"/>-->
 		<copy todir="${PROJECT_HOME}/build/linux/data/usr/bin">
 			<fileset file="${PROJECT_HOME}/etc/debian/imagetagger"/>
 			<fileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar"/>
