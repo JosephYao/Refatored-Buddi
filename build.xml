@@ -55,58 +55,21 @@
 			</config>
 		</launch4j>
 
-		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}.exe"/>
+		<mkdir dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}/${BUILD_NAME}.exe"/>
+		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
+			<fileset dir="${PROJECT_HOME}/doc">
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
+			</fileset>
+		</copy>		
 
-		<!-- Make the installer .jar -->
-		<!--		<installer 
-				file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar" 
-				compress="true"
-				extractType="SelfExtractor"
-				installConfig="${PROJECT_HOME}/antinstall-config.xml"
-				buildFile="antinstall-build.xml"
-				antInstallLib="${ANTINSTALLER_PATH}/lib"
-				antLib="${ANTINSTALLER_PATH}/antlib"
-				validateConfig="true"
-				failOnError="true">
-			<fileset dir="img" includes="**/*"/>
-
-			<fileset dir="build" includes="**/*"/>
-
-		</installer>
--->
-		<!--
-		<launch4j>
-			<config 
-				dontWrapJar="false" 
-				jar="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar" 
-				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" 
-				errTitle="${PROJECT_NAME}"
-				chdir="."
-				stayAlive="true"
-				icon="${PROJECT_HOME}/img/${PROJECT_NAME}.ico">
-				<jre
-					minVersion="1.5.0"
-					initialHeapSize="2"
-					maxHeapSize="128"/>
-				
-				<versionInfo
-			    	fileVersion="${VERSION}"
-					fileDescription="${PROJECT_DESCRIPTION}"
-			    	txtFileVersion="${VERSION}"
-				    copyright="Wyatt Olson"
-				    productVersion="${VERSION}"
-			    	txtProductVersion="${VERSION}"
-			    	productName="${PROJECT_NAME}"
-			    	companyName="Wyatt Olson"
-			    	internalName="${PROJECT_NAME}"
-			    	originalFilename="${BUILD_NAME}-${VERSION}-Installer.exe"/>
-				</config>
-		</launch4j>
--->
-		<!-- Rename the files to make the final installers and standalone binaries -->
-		<!--		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-Installer-${VERSION}.exe"/>-->
-		<move file="${PROJECT_HOME}/build/${BUILD_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
-		<delete file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar"/>
+		<zip destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}-Windows.zip">
+			<zipfileset dir="${PROJECT_HOME}/build/${BUILD_NAME}" prefix="${BUILD_NAME}"/>
+		</zip>
+		
+		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 	</target>
 
 	<target name="osx" depends="jar" description="Builds an OSX package, using JarBundler.  If on a Mac, will also wrap this in a .dmg; otherwise, will wrap in .zip">
@@ -159,7 +122,9 @@
 		
 		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
 			<fileset dir="${PROJECT_HOME}/doc">
-				<exclude name="Data Model/*"/>
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
 			</fileset>
 		</copy>
 		
@@ -175,7 +140,7 @@
 
 		<ant target="osx_zip"/>
 
-		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}.app"/>
+		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 
 	</target>
 
@@ -240,7 +205,7 @@
 			</data>
 		</deb>
 
-		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
+		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/deb"/>
 	</target>
 
 	<target name="redhat" depends="jar">
@@ -339,6 +304,7 @@
 			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
 			<fileset dir="${PROJECT_HOME}">
 				<include name="Languages/*"/>
+				<include name="version.txt"/>
 				<include name="img/BuddiAboutLogo.png"/>
 				<include name="img/BuddiFrameIcon.gif"/>
 			</fileset>

@@ -8,4 +8,4 @@ Comment=Personal Budget Software
 Terminal=false
 Categories=Application;Office;
 Type=Application
-MimeType=application/x-buddi
+MimeType=application/x-buddi3data,application/x-buddiplugin,text/x-buddilanguage
