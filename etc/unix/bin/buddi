@@ -1,11 +1,11 @@
 #!/bin/sh
-# Buddi launch script.
+# Jar launch script.
 #
 # Run this to launch the Jar file.  You can put this in your path (/usr/local/bin, 
 # or wherever you desire) and it will work fine.
 #
-# If you don't have Java in your path (or if the Java in your path is GNU
-# Java, which will not work with this Java program), you can set the JAVA variable below.
+# If you don't have Java in your path (or if the Java in your path is GNU Java, which 
+# will not work with Swing Java programs), you can set the JAVA variable below.
 #
 # (c) 2007 Wyatt Olson
 #
@@ -21,14 +21,12 @@ JAVA=`which java`
 # If you wish to override the default, uncomment and enter the path here.
 #JAVA='/usr/bin/java'
 
-# The working directory.  This is used to store custom languages, and (if 
-# the data file is within this directory) will be used as a relative path in
-# the preferences file.  If you plan on editing languages, you will need
-# to have write access to this directory.
-WORKING_DIR="${HOME}/.imagetagger"
+# The working directory.  This is what would be used as the root for any
+# relative paths in the program.
+WORKING_DIR="${HOME}/.buddi"
 
-# The location of the .jar file.
-JAR_DIR="/usr/bin"
+# The full path and name of the .jar file.
+JAR="/usr/bin/Buddi.jar"
 
 ####
 # End User Configuration
@@ -54,8 +52,8 @@ if [ ${?} != 0 ]; then
 fi
 
 # Is the .jar installed
-if [ ! -r ${JAR_DIR}/Buddi.jar ]; then
-        echo "I cannot find the .jar file in ${JAR_DIR}.  Please move the .jar to this location, or modify the JAR_DIR variable in this script."
+if [ ! -r ${JAR} ]; then
+        echo "I cannot find ${JAR}.  Please move the .jar to this location, or modify the JAR variable in this script."
         exit 1
 fi 
 
@@ -63,7 +61,7 @@ fi
 
 
 ####
-# Launch Buddi
+# Launch Image Tagger
 ####
 
-${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR_DIR}/Buddi.jar --unix $*
+${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR} $*
