@@ -90,36 +90,23 @@
 	        bundleid="${PROJECT_CLASS}">
 
 			<jarfileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" />
-			<jarfileset file="${PROJECT_HOME}/lib/quaqua-3.6.11.jar" />
+			<jarfileset dir="${PROJECT_HOME}/lib">
+				<include name="*quaqua*"/>
+			</jarfileset>
 
 			<!-- Associate document types with this application -->
-			<!--			<documenttype name="Buddi Data"
-				extensions="txt text" 
-				ostypes="TEXT sEXT ttro" 
-				iconFile="${PROJECT_HOME}/img/BuddiData.icns"
+			<documenttype name="Buddi Data"
+				extensions="buddi3"
+				iconFile="${PROJECT_HOME}/img/osx/BuddiData.icns"
 				role="Editor"/>
 				                
-			<documenttype name="Hello World HTML document"
-				extensions="html htm" 
-				iconFile="icons/html.icns"
-				role="Editor"/>
-				                 
-			<documenttype name="Hello World RTF document"
-				extensions="rtf" 
+			<documenttype name="Buddi Plugin"
+				extensions="buddi3plugin" 
+				iconFile="${PROJECT_HOME}/img/osx/BuddiPlugins.icns"
 				role="Viewer"/>
-				
-			<documenttype name="Hello World images"
-				mimetypes="image/jpeg image/png" 
-				role="Viewer"/>
-				
-			<documenttype name="Hello project document"
-				extensions="hello"
-				iconFile="icons/Hello Document.icns"
-				bundle="true"
-				role="Editor"/>-->
-
 		</jarbundler>
-		
+
+		<!-- Copy documentation -->
 		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
 			<fileset dir="${PROJECT_HOME}/doc">
 				<include name="*.txt"/>
@@ -155,22 +142,38 @@
 
 	<!-- The Unix task will tar the .jar along with a launcher.  The user is responsible for putting
 		 this in the correct location, and modifying the launcher as needed. -->
-	<target name="unix" description="Creates a generic Unix package, with a command line capable launcher.">
-		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.tar">
-			<tarfileset dir="${PROJECT_HOME}/etc/unix" mode="755">
+	<target name="unix" depends="jar" description="Creates a generic Unix package, with a command line capable launcher.">
+		
+		<copy todir="${PROJECT_HOME}/build">
+			<fileset dir="${PROJECT_HOME}/etc/unix/usr/bin"/>
+			<filterset begintoken="[[" endtoken="]]">
+				<filter token="platform" value="unix"/>
+			</filterset>
+		</copy>
+		
+		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.tar" >
+			<tarfileset dir="${PROJECT_HOME}/build" mode="755" prefix="${BUILD_NAME}">
 				<include name="${PROJECT_UNIX_NAME}"/>
 			</tarfileset>
-			<tarfileset dir="${PROJECT_HOME}/etc/unix">
-				<include name="README"/>
-			</tarfileset>
-			<tarfileset dir="${PROJECT_HOME}/build">
+			<tarfileset dir="${PROJECT_HOME}/build" prefix="${BUILD_NAME}">
 				<include name="${PROJECT_NAME}.jar"/>
+			</tarfileset>
+
+			<!-- Copy documentation -->
+			<tarfileset dir="${PROJECT_HOME}/etc/unix" prefix="${BUILD_NAME}">
+				<include name="Readme.unix"/>
+			</tarfileset>
+			<tarfileset dir="${PROJECT_HOME}/doc" prefix="${BUILD_NAME}">
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
 			</tarfileset>
 		</tar>
 		<gzip zipfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.tgz" src="${PROJECT_HOME}/build/${PROJECT_NAME}.tar"/>
 		<delete>
 			<fileset dir="${PROJECT_HOME}/build">
 				<include name="${PROJECT_NAME}.tar"/>
+				<include name="${PROJECT_UNIX_NAME}"/>
 			</fileset>
 		</delete>
 	</target>
@@ -181,9 +184,13 @@
 		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
 
 		<mkdir dir="${PROJECT_HOME}/build/deb/data"/>
+		
 		<!-- Copy all supporting files, for free desktop, scripts, etc -->
 		<copy todir="${PROJECT_HOME}/build/deb/data/usr">
 			<fileset dir="${PROJECT_HOME}/etc/unix/usr"/>
+			<filterset begintoken="[[" endtoken="]]">
+				<filter token="platform" value="debian"/>
+			</filterset>
 		</copy>
 
 		<!-- Copy fat jar file -->

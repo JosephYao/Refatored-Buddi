@@ -64,4 +64,4 @@ fi
 # Launch Image Tagger
 ####
 
-${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR} $*
+${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR} --[[platform]] $*
