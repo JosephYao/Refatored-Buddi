@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="ImageTagger" default="all" basedir=".">
-	
+
 	<!-- Set up all the machine dependent properties in this file.  A sample should be provided 
 		 in the project, called ant.properties.sample.  -->
 	<property file="ant.properties"/>
@@ -11,16 +11,16 @@
 
 	<!-- Set up all the project specific properties -->
 	<property name="PROJECT_NAME" value="Buddi"/>
-	<property name="PROJECT_UNIX_NAME" value="buddi"/>	
+	<property name="PROJECT_UNIX_NAME" value="buddi"/>
 	<property name="BUILD_NAME" value="Buddi"/>
 	<property name="PROJECT_DESCRIPTION" value="Simple yet effective budgeting program for home users"/>
 	<property name="PROJECT_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
 	<property name="PROJECT_COPYRIGHT" value="Copyright Wyatt Olson"/>
 
 	<!-- Build the program for all platforms -->
-	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" description="Builds packages for all available platforms."/>			
-	
-	<target name="windows" depends="fatjar" description="Builds .exe for Windows, using Launch4J">
+	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" description="Builds packages for all available platforms."/>
+
+	<target name="windows" depends="jar" description="Builds .exe for Windows, using Launch4J">
 		<!-- Define the tasks for Launch4J and AntInstaller -->
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
 
@@ -40,7 +40,7 @@
 					minVersion="1.5.0"
 					initialHeapSize="2"
 					maxHeapSize="128"/>
-				
+
 				<versionInfo
 			    	fileVersion="${VERSION}"
 					fileDescription="${PROJECT_DESCRIPTION}"
@@ -52,13 +52,13 @@
 			    	companyName="Wyatt Olson"
 			    	internalName="${PROJECT_NAME}"
 			    	originalFilename="${BUILD_NAME}.exe"/>
-				</config>
+			</config>
 		</launch4j>
-		
+
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}.exe"/>
 
 		<!-- Make the installer .jar -->
-<!--		<installer 
+		<!--		<installer 
 				file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar" 
 				compress="true"
 				extractType="SelfExtractor"
@@ -74,7 +74,7 @@
 
 		</installer>
 -->
-<!--
+		<!--
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
@@ -104,12 +104,12 @@
 		</launch4j>
 -->
 		<!-- Rename the files to make the final installers and standalone binaries -->
-<!--		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-Installer-${VERSION}.exe"/>-->
+		<!--		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-Installer-${VERSION}.exe"/>-->
 		<move file="${PROJECT_HOME}/build/${BUILD_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
 		<delete file="${PROJECT_HOME}/build/${PROJECT_NAME}-installer.jar"/>
 	</target>
 
-	<target name="osx" depends="fatjar" description="Builds an OSX package, using JarBundler.  If on a Mac, will also wrap this in a .dmg; otherwise, will wrap in .zip">
+	<target name="osx" depends="jar" description="Builds an OSX package, using JarBundler.  If on a Mac, will also wrap this in a .dmg; otherwise, will wrap in .zip">
 		<!-- Define the JarBundler path -->
 		<taskdef name="jarbundler" classpath="${JARBUNDLER_JAR}" classname="net.sourceforge.jarbundler.JarBundler"/>
 
@@ -124,12 +124,12 @@
 	        version="${VERSION}"
 	        infostring="${PROJECT_NAME}, ${PROJECT_COPYRIGHT}"
 	        bundleid="${PROJECT_CLASS}">
-			
+
 			<jarfileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" />
 			<jarfileset file="${PROJECT_HOME}/lib/quaqua-3.6.11.jar" />
-			
+
 			<!-- Associate document types with this application -->
-<!--			<documenttype name="Buddi Data"
+			<!--			<documenttype name="Buddi Data"
 				extensions="txt text" 
 				ostypes="TEXT sEXT ttro" 
 				iconFile="${PROJECT_HOME}/img/BuddiData.icns"
@@ -153,23 +153,23 @@
 				iconFile="icons/Hello Document.icns"
 				bundle="true"
 				role="Editor"/>-->
-      
+
 		</jarbundler>
-	
+
 		<exec executable="/usr/bin/hdiutil" os="Mac OS X">
 			<arg line="create -format UDZO -srcfolder '${PROJECT_HOME}/build/${BUILD_NAME}.app' -o '${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.dmg'"/>
 		</exec>
-		
+
 		<condition property="OS_IS_MAC">
 			<os name="Mac OS X"/>
 		</condition>
-		
+
 		<property name="BUILD_OSX_PACKAGE" value="true"/>
-		
+
 		<ant target="osx_zip"/>
 
 		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}.app"/>
-	
+
 	</target>
 
 	<target name="osx_zip"  
@@ -190,7 +190,7 @@
 			</tarfileset>
 			<tarfileset dir="${PROJECT_HOME}/etc/unix">
 				<include name="README"/>
-			</tarfileset>		  
+			</tarfileset>
 			<tarfileset dir="${PROJECT_HOME}/build">
 				<include name="${PROJECT_NAME}.jar"/>
 			</tarfileset>
@@ -202,10 +202,10 @@
 			</fileset>
 		</delete>
 	</target>
-	
-	
+
+
 	<!-- The Debian task. -->
-	<target name="debian" depends="fatjar" description="Creates a Debian .deb file, with entries for FreeDesktop desktops.">		
+	<target name="debian" depends="jar" description="Creates a Debian .deb file, with entries for FreeDesktop desktops.">
 		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
 
 		<mkdir dir="${PROJECT_HOME}/build/deb/data"/>
@@ -213,10 +213,10 @@
 		<copy todir="${PROJECT_HOME}/build/deb/data/usr">
 			<fileset dir="${PROJECT_HOME}/etc/unix/usr"/>
 		</copy>
-		
+
 		<!-- Copy fat jar file -->
 		<copy file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" todir="${PROJECT_HOME}/build/deb/data/usr/bin"/>
-		
+
 		<!-- Create Debian control files -->
 		<mkdir dir="${PROJECT_HOME}/build/deb/control"/>
 		<copy todir="${PROJECT_HOME}/build/deb/control">
@@ -225,35 +225,35 @@
 				<filter token="version" value="${VERSION}"/>
 			</filterset>
 		</copy>
-		
+
 		<!-- Create the .deb file -->
 		<deb destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.deb" control="${PROJECT_HOME}/build/deb/control">
 			<data src="${PROJECT_HOME}/build/deb/data">
 				<exclude name="**/.svn"/>
 			</data>
 		</deb>
-		
+
 		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
 	</target>
-	
-	<target name="redhat" depends="fatjar">
-	
+
+	<target name="redhat" depends="jar">
+
 	</target>
-	
+
 	<target name="source" depends="clean" description="Exports the source and tars the bundle">
 		<!-- Define the JarBundler path -->
 		<path id="SVNANT_CLASSPATH">
-		    <fileset dir="${SVNANT_PATH}">
-		        <include name="**/*.jar"/>
-		      </fileset>
-		  </path>
+			<fileset dir="${SVNANT_PATH}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>
 		<taskdef name="svn" classpathref="SVNANT_CLASSPATH" classname="org.tigris.subversion.svnant.SvnTask"/>
 
 		<svn>
 			<export srcPath="${PROJECT_HOME}" destPath="${PROJECT_HOME}/build/src"/>
 		</svn>
-		
-		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar">	  
+
+		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar">
 			<tarfileset dir="${PROJECT_HOME}/build/src">
 				<include name="**/*"/>
 			</tarfileset>
@@ -266,12 +266,12 @@
 			<fileset dir="${PROJECT_HOME}/build/src"/>
 		</delete>
 	</target>
-	
-	<target name="generic" depends="fatjar" description="Renames the fat jar to the release name (including version number)">
+
+	<target name="generic" depends="jar" description="Renames the fat jar to the release name (including version number)">
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.jar"/>
 	</target>
-	
-<!--	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
+
+	<!--	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
 		
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${PROJECT_HOME}/build/linux"/>
@@ -304,7 +304,7 @@
 		</copy>
 		
 	</target>-->
-	
+
 	<target name="javadocs" depends="clean" description="Creates the javadocs">
 		<mkdir dir="${PROJECT_HOME}/javadocs"/>
 		<javadoc destdir="${PROJECT_HOME}/javadocs" packagenames="org">
@@ -317,16 +317,26 @@
 			</packageset>
 		</javadoc>
 	</target>
-	
+
 	<target name="release" depends="all,javadocs" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.">
 		<scp todir="${WEB_USER}@${WEB_HOST}:${WEB_ROOT}/javadocs"
 				keyfile="${SSH_KEY}"
 				passphrase="${SSH_KEY_PASSPHRASE}">
 			<fileset dir="${PROJECT_HOME}/javadocs"/>
-		</scp>			
+		</scp>
 	</target>
-	
-	<target name="fatjar" depends="jar" description="Creatse a single 'fat' jar, containing all required libraries.">
+
+	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all required libraries.">
+		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
+		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar">
+			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
+			<fileset dir="${PROJECT_HOME}">
+				<include name="Languages/*"/>
+				<include name="img/BuddiAboutLogo.png"/>
+				<include name="img/BuddiFrameIcon.gif"/>
+			</fileset>
+		</jar>
+
 		<!-- Define the tasks and associated classes for FatJar -->
 		<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
 		<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
@@ -334,12 +344,12 @@
 		<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
 		<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
 		<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>		
-		
+		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
+
 		<fatjar.build output="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
 			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
 
-		
+
 			<!-- This is the project jar file, just compiled below -->
 			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar" relpath=""/>
 
@@ -355,33 +365,16 @@
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.common_2.2.1.v200702010000.jar" relpath=""/>
 
 		</fatjar.build>
-		
+
 		<delete includeemptydirs="true">
 			<fileset dir="${PROJECT_HOME}/build/" includes="**/*" excludes="${PROJECT_NAME}.jar" />
 		</delete>
 	</target>
 
 	<target name="compile" description="Builds the project">
-        <javac srcdir="src" destdir="bin"/>
+		<javac srcdir="src" destdir="bin"/>
 	</target>
 
-	<target name="jar" depends="clean,compile" description="Jars the project into multiple component jars.">
-		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
-		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar">
-			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
-			<fileset dir="${PROJECT_HOME}">
-				<include name="Languages/*"/>
-				<include name="img/BuddiAboutLogo.png"/>
-				<include name="img/BuddiFrameIcon.gif"/>				
-			</fileset>
-		</jar>
-		
-<!--		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-languages.jar" basedir="." includes="Languages/*.lang" />-->
-<!--		<jar destfile="Buddi-documents.jar" basedir="." includes="Documents/*.txt" />
-		<jar destfile="Buddi-licenses.jar" basedir="." includes="Licenses/*.txt" />-->
-<!--		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="." includes="res/*" />-->
-	</target>
-	
 	<target name="clean" description="Removes all files from build and javadocs directories">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${PROJECT_HOME}/build">
