@@ -35,7 +35,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	private final JButton cancelButton;
 	
 	public PreferencesFrame() {
-		super("Resources/Buddi.gif");
+		super("img/BuddiFrameIcon.gif");
 		tabs = new JTabbedPane();
 		
 		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		

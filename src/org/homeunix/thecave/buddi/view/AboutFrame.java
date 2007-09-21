@@ -39,7 +39,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 	private final JLabel text;
 
 	public AboutFrame() {
-		super("Resources/Buddi.gif");
+		super("img/BuddiFrameIcon.gif");
 		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		donateButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DONATE));
 
@@ -81,7 +81,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 			cl = MossFrame.class.getClassLoader();
 		}
 
-		URL imageResource = cl.getResource("Buddi.png");
+		URL imageResource = cl.getResource("img/BuddiAboutLogo.png");
 		if (imageResource != null) {
 			title.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageResource)));
 			title.setVerticalTextPosition(JLabel.BOTTOM);

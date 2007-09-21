@@ -205,33 +205,30 @@
 	
 	
 	<!-- The Debian task. -->
-	<target name="debian" depends="fatjar" description="Creates a Debian .deb file, with entries for FreeDesktop desktops.">
-		
-		<ant target="linuxcommon"/>
-		
+	<target name="debian" depends="fatjar" description="Creates a Debian .deb file, with entries for FreeDesktop desktops.">		
 		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
 
-<!--		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/bin"/>-->
-		<copy todir="${PROJECT_HOME}/build/linux/data/usr/bin">
-			<fileset file="${PROJECT_HOME}/etc/debian/imagetagger"/>
-			<fileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar"/>
+		<mkdir dir="${PROJECT_HOME}/build/deb/data"/>
+		<!-- Copy all supporting files, for free desktop, scripts, etc -->
+		<copy todir="${PROJECT_HOME}/build/deb/data/usr">
+			<fileset dir="${PROJECT_HOME}/etc/unix/usr"/>
 		</copy>
 		
-		<mkdir dir="${PROJECT_HOME}/build/linux/control"/>
-		<copy todir="${PROJECT_HOME}/build/linux/control">
-			<fileset dir="${PROJECT_HOME}/etc/debian">
-				<include name="control"/>
-				<include name="preinst"/>
-				<include name="postinst"/>
-				<include name="postrm"/>
-			</fileset>
+		<!-- Copy fat jar file -->
+		<copy file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" todir="${PROJECT_HOME}/build/deb/data/usr/bin"/>
+		
+		<!-- Create Debian control files -->
+		<mkdir dir="${PROJECT_HOME}/build/deb/control"/>
+		<copy todir="${PROJECT_HOME}/build/deb/control">
+			<fileset dir="${PROJECT_HOME}/etc/unix/linux/debian/control"/>
 			<filterset begintoken="[[" endtoken="]]">
 				<filter token="version" value="${VERSION}"/>
 			</filterset>
 		</copy>
 		
-		<deb destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.deb" control="${PROJECT_HOME}/build/linux/control">
-			<data src="${PROJECT_HOME}/build/linux/data">
+		<!-- Create the .deb file -->
+		<deb destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.deb" control="${PROJECT_HOME}/build/deb/control">
+			<data src="${PROJECT_HOME}/build/deb/data">
 				<exclude name="**/.svn"/>
 			</data>
 		</deb>
@@ -239,11 +236,8 @@
 		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
 	</target>
 	
-	<target name="redhat" depends="fatjar,linuxcommon">
+	<target name="redhat" depends="fatjar">
 	
-		<ant target="linuxcommon"/>
-		
-		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/linux"/>
 	</target>
 	
 	<target name="source" depends="clean" description="Exports the source and tars the bundle">
@@ -277,7 +271,7 @@
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.jar"/>
 	</target>
 	
-	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
+<!--	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
 		
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${PROJECT_HOME}/build/linux"/>
@@ -309,7 +303,7 @@
 			</fileset>
 		</copy>
 		
-	</target>
+	</target>-->
 	
 	<target name="javadocs" depends="clean" description="Creates the javadocs">
 		<mkdir dir="${PROJECT_HOME}/javadocs"/>
@@ -346,12 +340,8 @@
 			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
 
 		
-			<!-- This is the skinny jar file, just compiled below -->
-			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-base.jar" relpath=""/>
-
-			<!-- This is the extra jars, with resources, etc, compiled below -->
-			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-languages.jar" relpath=""/>			
+			<!-- This is the project jar file, just compiled below -->
+			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar" relpath=""/>
 
 			<!-- These are all the included files which normally would go on the classpath -->
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-10.jar" relpath=""/>
@@ -377,11 +367,19 @@
 
 	<target name="jar" depends="clean,compile" description="Jars the project into multiple component jars.">
 		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
-		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-base.jar" basedir="bin" includes="**/*" />
-		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-languages.jar" basedir="." includes="Languages/*.lang" />
+		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar">
+			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
+			<fileset dir="${PROJECT_HOME}">
+				<include name="Languages/*"/>
+				<include name="img/BuddiAboutLogo.png"/>
+				<include name="img/BuddiFrameIcon.gif"/>				
+			</fileset>
+		</jar>
+		
+<!--		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-languages.jar" basedir="." includes="Languages/*.lang" />-->
 <!--		<jar destfile="Buddi-documents.jar" basedir="." includes="Documents/*.txt" />
 		<jar destfile="Buddi-licenses.jar" basedir="." includes="Licenses/*.txt" />-->
-		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="." includes="res/*" />
+<!--		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}-resources.jar" basedir="." includes="res/*" />-->
 	</target>
 	
 	<target name="clean" description="Removes all files from build and javadocs directories">

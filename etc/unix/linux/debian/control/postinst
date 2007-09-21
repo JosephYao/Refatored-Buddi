@@ -5,5 +5,5 @@ if [ "$1" = "configure" ]; then
     update-mime-database /usr/share/mime
     update-desktop-database -v /usr/share/applications
 
-
+	chmod 755 /usr/bin/buddi
 fi

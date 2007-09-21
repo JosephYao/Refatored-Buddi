@@ -82,7 +82,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullLong(), "Resources/Buddi.gif");
+		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullLong(), "img/BuddiFrameIcon.gif");
 		this.associatedAccount = account;
 		this.parent = parent;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
