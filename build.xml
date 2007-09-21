@@ -113,7 +113,8 @@
 		<!-- Define the JarBundler path -->
 		<taskdef name="jarbundler" classpath="${JARBUNDLER_JAR}" classname="net.sourceforge.jarbundler.JarBundler"/>
 
-		<jarbundler dir="${PROJECT_HOME}/build" verbose="true" showPlist="false"
+		<mkdir dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<jarbundler dir="${PROJECT_HOME}/build/${BUILD_NAME}" verbose="true" showPlist="false"
 	        name="${BUILD_NAME}"
 	        shortname="${PROJECT_NAME}"
 	        signature="????"
@@ -155,9 +156,15 @@
 				role="Editor"/>-->
 
 		</jarbundler>
-
+		
+		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
+			<fileset dir="${PROJECT_HOME}/doc">
+				<exclude name="Data Model/*"/>
+			</fileset>
+		</copy>
+		
 		<exec executable="/usr/bin/hdiutil" os="Mac OS X">
-			<arg line="create -format UDZO -srcfolder '${PROJECT_HOME}/build/${BUILD_NAME}.app' -o '${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.dmg'"/>
+			<arg line="create -format UDZO -srcfolder '${PROJECT_HOME}/build/${BUILD_NAME}' -o '${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.dmg'"/>
 		</exec>
 
 		<condition property="OS_IS_MAC">
@@ -177,7 +184,7 @@
 			unless="OS_IS_MAC"
 			description="Bundles the Macintosh .app package ina .zip, in case you are not building from a Mac.">
 		<zip destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}-Macintosh.zip">
-			<fileset dir="${PROJECT_HOME}/build/${BUILD_NAME}.app"/>
+			<fileset dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 		</zip>
 	</target>
 
