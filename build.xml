@@ -306,40 +306,6 @@
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.jar"/>
 	</target>
 
-	<!--	<target name="linuxcommon" description="Creates common desktop layout for RPM and Deb files">
-		
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${PROJECT_HOME}/build/linux"/>
-		</delete>
-		
-		<mkdir dir="${PROJECT_HOME}/build/linux/data/usr/share/applications"/>
-		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/mime/packages"/>
-		<copy file="${PROJECT_HOME}/etc/shared/${PROJECT_UNIX_NAME}.desktop" 
-				todir="${PROJECT_HOME}/build/linux/data/usr/share/applications"/>
-		<copy file="${PROJECT_HOME}/etc/shared/mime_package_${PROJECT_UNIX_NAME}.xml"
-				tofile="${PROJECT_HOME}/build/linux/data/usr/share/mime/packages/${PROJECT_UNIX_NAME}.xml"/>
-
-
-		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/icons"/>
-		<copy todir="${PROJECT_HOME}/build/linux/usr/share/icons">
-			<fileset dir="${PROJECT_HOME}/img/linux"/>
-		</copy>
-		
-		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/pixmaps"/>
-		<copy file="${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}-48x48.png"
-				tofile="${PROJECT_HOME}/build/linux/usr/share/pixmaps/${PROJECT_UNIX_NAME}.png"
-				failonerror="false" />
-
-		
-		<mkdir dir="${PROJECT_HOME}/build/linux/usr/share/doc/${PROJECT_UNIX_NAME}"/>
-		<copy todir="${PROJECT_HOME}/build/linux/usr/share/doc/${PROJECT_UNIX_NAME}">
-			<fileset dir="${PROJECT_HOME}/doc">
-				<include name="**/*"/>
-			</fileset>
-		</copy>
-		
-	</target>-->
-
 	<target name="javadocs" depends="clean" description="Creates the javadocs">
 		<mkdir dir="${PROJECT_HOME}/javadocs"/>
 		<javadoc destdir="${PROJECT_HOME}/javadocs" packagenames="org">
@@ -354,11 +320,41 @@
 	</target>
 
 	<target name="release" depends="all,javadocs" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.">
+		<tar destfile="${PROJECT_HOME}/javadocs/javadocs.tar">
+			<tarfileset dir="${PROJECT_HOME}/javadocs">
+			    <exclude name="javadocs.tar"/>
+			</tarfileset>
+		</tar>
+		<gzip zipfile="${PROJECT_HOME}/javadocs/javadocs.tgz" src="${PROJECT_HOME}/javadocs/javadocs.tar"/>
+
+		<!-- Remove existing javadocs on server -->
+		<sshexec 
+			keyfile="${SSH_KEY}"
+			passphrase="${SSH_KEY_PASSPHRASE}"
+			host="${WEB_HOST}" 
+			username="${WEB_USER}" 
+			command="rm -rf ${WEB_ROOT}/javadocs/*"/>
+
+		<!-- Upload new javadocs -->
 		<scp todir="${WEB_USER}@${WEB_HOST}:${WEB_ROOT}/javadocs"
-				keyfile="${SSH_KEY}"
-				passphrase="${SSH_KEY_PASSPHRASE}">
-			<fileset dir="${PROJECT_HOME}/javadocs"/>
-		</scp>
+			file="${PROJECT_HOME}/javadocs/javadocs.tgz"
+			keyfile="${SSH_KEY}"
+			passphrase="${SSH_KEY_PASSPHRASE}"/>
+		<sshexec 
+			keyfile="${SSH_KEY}"
+			passphrase="${SSH_KEY_PASSPHRASE}"
+			host="${WEB_HOST}" 
+			username="${WEB_USER}" 
+			command="tar -C ${WEB_ROOT}/javadocs -zxvf ${WEB_ROOT}/javadocs/javadocs.tgz"/>
+		
+		<!-- Upload to SF.net -->
+		<ftp server="upload.sf.net" 
+				userid="anonymous"
+				password="password" 
+				remotedir="/incoming"
+				action="put">
+			<fileset dir="${PROJECT_HOME}/build"/>
+		</ftp>
 	</target>
 
 	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all required libraries.">
