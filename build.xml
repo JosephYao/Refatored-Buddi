@@ -26,7 +26,6 @@
 
 		<taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer" classpath="${ANTINSTALLER_PATH}/lib/ant-installer.jar:${ANTINSTALLER_PATH}/lib/ant-installer-ext.jar"/>
 		<!-- Make the base .exe -->
-		<echo>${PROJECT_HOME}/img/${PROJECT_UNIX_NAME}.ico</echo>
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
@@ -65,11 +64,58 @@
 			</fileset>
 		</copy>		
 
-		<zip destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}-Windows.zip">
-			<zipfileset dir="${PROJECT_HOME}/build/${BUILD_NAME}" prefix="${BUILD_NAME}"/>
+		<mkdir dir="${PROJECT_HOME}/build"/>
+		<zip destfile="${PROJECT_HOME}/build/package.zip">
+			<zipfileset dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 		</zip>
 		
+		<!-- Make installer -->
+		<copy file="${PROJECT_HOME}/etc/windows/moss-installer.jar" tofile="${PROJECT_HOME}/build/installer.jar"/>
+		<jar destfile="${PROJECT_HOME}/build/installer.jar" update="true">
+			<zipfileset file="${PROJECT_HOME}/build/package.zip" prefix="install"/>
+			<zipfileset file="${PROJECT_HOME}/etc/windows/MossInstaller.properties"/>
+			<zipfileset dir="${PROJECT_HOME}/img">
+				<include name="BuddiAboutLogo.png"/>
+				<include name="BuddiFrameIcon.gif"/>
+			</zipfileset>
+		</jar>
+		
+		<launch4j>
+			<config 
+				dontWrapJar="false" 
+				jar="${PROJECT_HOME}/build/installer.jar" 
+				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}-Installer.exe" 
+				errTitle="${PROJECT_NAME}"
+				chdir="."
+				stayAlive="true"
+				icon="${PROJECT_HOME}/img/win/${PROJECT_UNIX_NAME}.ico">
+				<jre
+					minVersion="1.5.0"
+					initialHeapSize="2"
+					maxHeapSize="128"/>
+
+				<versionInfo
+			    	fileVersion="${VERSION}"
+					fileDescription="${PROJECT_DESCRIPTION}"
+			    	txtFileVersion="${VERSION}"
+				    copyright="Wyatt Olson"
+				    productVersion="${VERSION}"
+			    	txtProductVersion="${VERSION}"
+			    	productName="${PROJECT_NAME}"
+			    	companyName="Wyatt Olson"
+			    	internalName="${PROJECT_NAME}"
+			    	originalFilename="${BUILD_NAME}-${VERSION}.exe"/>
+			</config>
+		</launch4j>
+		
+		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-Installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
+
 		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<delete dir="${PROJECT_HOME}/build/">
+			<include name="installer.jar"/>
+			<include name="package.zip"/>
+			<include name="${BUILD_NAME}"/>
+		</delete>
 	</target>
 
 	<target name="osx" depends="jar" description="Builds an OSX package, using JarBundler.  If on a Mac, will also wrap this in a .dmg; otherwise, will wrap in .zip">
@@ -192,6 +238,16 @@
 				<filter token="platform" value="debian"/>
 			</filterset>
 		</copy>
+		
+		<!-- Copy documentation -->
+		<mkdir dir="${PROJECT_HOME}/build/deb/data/usr/share/doc"/>
+		<copy todir="${PROJECT_HOME}/build/deb/data/usr/share/doc">
+			<fileset dir="${PROJECT_HOME}/doc">
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
+			</fileset>
+		</copy>	
 
 		<!-- Copy fat jar file -->
 		<copy file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" todir="${PROJECT_HOME}/build/deb/data/usr/bin"/>
