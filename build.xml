@@ -57,6 +57,10 @@
 		<mkdir dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}/${BUILD_NAME}.exe"/>
 		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
+			<fileset dir="${PROJECT_HOME}/img/win">
+				<exclude name="${PROJECT_UNIX_NAME}.ico"/>
+				<include name="*.ico"/>
+			</fileset>
 			<fileset dir="${PROJECT_HOME}/doc">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
@@ -74,6 +78,7 @@
 		<jar destfile="${PROJECT_HOME}/build/installer.jar" update="true">
 			<zipfileset file="${PROJECT_HOME}/build/package.zip" prefix="install"/>
 			<zipfileset file="${PROJECT_HOME}/etc/windows/MossInstaller.properties"/>
+			<zipfileset file="${PROJECT_HOME}/etc/windows/postinstall.js"/>			
 			<zipfileset dir="${PROJECT_HOME}/img">
 				<include name="BuddiAboutLogo.png"/>
 				<include name="BuddiFrameIcon.gif"/>
@@ -111,10 +116,12 @@
 		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-Installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
 
 		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
-		<delete dir="${PROJECT_HOME}/build/">
-			<include name="installer.jar"/>
-			<include name="package.zip"/>
-			<include name="${BUILD_NAME}"/>
+		<delete>
+			<fileset dir="${PROJECT_HOME}/build/">
+				<include name="installer.jar"/>
+				<include name="package.zip"/>
+				<include name="${BUILD_NAME}"/>
+			</fileset>
 		</delete>
 	</target>
 
