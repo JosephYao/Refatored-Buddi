@@ -105,10 +105,10 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 
 			//On the bottom line, we allocate 300px for all of the
 			// balances, and 50 for the C R; 
-			// We can take up to (width - 350)px for the toFrom field.
+			// We can take up to (width - 300)px for the toFrom field.
 			//Since we use each of these separately, we divide by two first.
 			test = "XXX";
-			for(; fm.stringWidth(test) < (list.getWidth() - 350); test += "X"){
+			for(; fm.stringWidth(test) < (list.getWidth() - 300); test += "X"){
 				toFromLength = test.length();
 			}
 
@@ -175,9 +175,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 
 			//To / From sources
 			g.setFont(italic);
-			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom().getFullLong() + "       " + transaction.getTo().getFullLong()), 50, bottomRowYPos);
+			g.drawString(Formatter.getLengthFormat(toFromLength).format(transaction.getFrom().getFullName() + "       " + transaction.getTo().getFullName()), 50, bottomRowYPos);
 			fm = this.getGraphics().getFontMetrics();
-			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom().getFullLong() + " ");
+			int arrowOffset = 50 + fm.stringWidth(transaction.getFrom().getFullName() + " ");
 			g.setFont(f);
 			g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TO), arrowOffset, bottomRowYPos);
 

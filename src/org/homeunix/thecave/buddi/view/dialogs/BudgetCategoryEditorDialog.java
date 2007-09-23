@@ -161,7 +161,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 				if (value == null)
 					this.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NO_PARENT));
 				else if (value instanceof BudgetCategory)
-					this.setText(PrefsModel.getInstance().getTranslator().get(((BudgetCategory) value).getFullLong()));
+					this.setText(PrefsModel.getInstance().getTranslator().get(((BudgetCategory) value).getFullName()));
 				else
 					this.setText(" ");
 

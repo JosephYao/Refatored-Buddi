@@ -18,7 +18,7 @@ public class SourceListCellRenderer extends DefaultListCellRenderer {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		
 		if (value instanceof Source)
-			this.setText(((Source) value).getFullLong());
+			this.setText(((Source) value).getFullName());
 		else
 			this.setText(" ");
 		

@@ -36,7 +36,7 @@ public abstract class MutableSourceImpl extends MutableModelObjectImpl implement
 		return getSource().getName();
 	}
 	public String getFullName() {
-		return getSource().getFullLong();
+		return getSource().getFullName();
 	}
 	public String getNotes() {
 		return getSource().getNotes();

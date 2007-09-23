@@ -225,7 +225,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				return a;
 		}
 		for (Account a : getAccounts()) { //Finally try checking full name
-			if (a.getFullLong().equalsIgnoreCase(name))
+			if (a.getFullName().equalsIgnoreCase(name))
 				return a;
 		}
 
@@ -244,11 +244,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public BudgetCategory getBudgetCategory(String fullName) {
 		for (BudgetCategory bc : getBudgetCategories()) {
-			if (bc.getFullLong().equals(fullName))
+			if (bc.getFullName().equals(fullName))
 				return bc;
 		}
 		for (BudgetCategory bc : getBudgetCategories()) {
-			if (bc.getFullLong().equalsIgnoreCase(fullName))
+			if (bc.getFullName().equalsIgnoreCase(fullName))
 				return bc;
 		}
 		return null;
@@ -402,7 +402,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			throw new DocumentSaveException("Error saving data file: specified file is null!");
 
 		try {
-			if ((flags & ENCRYPT_DATA_FILE) != 0){
+			if ((flags & ENCRYPT_DATA_FILE) == 0){
+				password = null;
+			}
+			else {
 				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
 				password = passwordDialog.askForPassword(true, false);
 			}
@@ -634,7 +637,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
-					if (bc.getFullLong().equalsIgnoreCase(((BudgetCategory) object).getFullLong()))
+					if (bc.getFullName().equalsIgnoreCase(((BudgetCategory) object).getFullName()))
 						throw new ModelException("Cannot have multiple budget categories with the same name");
 				}
 			}
