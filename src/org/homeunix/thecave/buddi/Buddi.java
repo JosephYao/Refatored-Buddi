@@ -309,91 +309,99 @@ public class Buddi {
 	}
 
 
-	private static void openFile(File f){
-		//Handle opening files from command line.
-		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
-			try {
-				Document model;
-				model = ModelFactory.createDocument(f);
+	/**
+	 * Opens the given file.  Runs in the event dispatch thread. 
+	 * @param f
+	 */
+	private static void openFile(final File f){
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				//Handle opening files from command line.
+				if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
+					try {
+						Document model;
+						model = ModelFactory.createDocument(f);
 
-				MainFrame mainWndow = new MainFrame(model);
-				try {
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+						MainFrame mainWndow = new MainFrame(model);
+						try {
+							mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+						}
+						catch (WindowOpenException woe){
+							Log.error("Error opening window: ", woe);
+						}
+					}
+					catch (DocumentLoadException lme){
+						lme.printStackTrace(Log.getPrintStream());
+					}
+					catch (OperationCancelledException oce){}  //Do nothing
 				}
-				catch (WindowOpenException woe){
-					Log.error("Error opening window: ", woe);
-				}
-			}
-			catch (DocumentLoadException lme){
-				lme.printStackTrace(Log.getPrintStream());
-			}
-			catch (OperationCancelledException oce){}  //Do nothing
-		}
-		else if (f.getName().endsWith(Const.PLUGIN_EXTENSION)){
-			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
-			if (!Buddi.getPluginsFolder().exists()){
-				if (!Buddi.getPluginsFolder().mkdirs()){
-					Log.error("Error creating Plugins directory!");
-				}
-			}
-			try {
-				File dest = new File(Buddi.getPluginsFolder().getAbsolutePath() + File.separator + f.getName());
-				if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
-					throw new IOException("Cannot copy to the same file.");
-				FileFunctions.copyFile(f, dest);
+				else if (f.getName().endsWith(Const.PLUGIN_EXTENSION)){
+					Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
+					if (!Buddi.getPluginsFolder().exists()){
+						if (!Buddi.getPluginsFolder().mkdirs()){
+							Log.error("Error creating Plugins directory!");
+						}
+					}
+					try {
+						File dest = new File(Buddi.getPluginsFolder().getAbsolutePath() + File.separator + f.getName());
+						if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
+							throw new IOException("Cannot copy to the same file.");
+						FileFunctions.copyFile(f, dest);
 
-				String[] options = new String[1];
-				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+						String[] options = new String[1];
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-				JOptionPane.showOptionDialog(
-						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null,
-						options,
-						options[0]
-				);
-			}
-			catch (IOException ioe){
-				Log.error("Error copying plugin to Plugins directory", ioe);
-			}
-		}
-		else if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
-			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getLanguagesFolder() + File.separator + f.getName());
-			if (!Buddi.getLanguagesFolder().exists()){
-				if (!Buddi.getLanguagesFolder().mkdirs()){
-					Log.error("Error creating Languages directory!");
+						JOptionPane.showOptionDialog(
+								null, 
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]
+						);
+					}
+					catch (IOException ioe){
+						Log.error("Error copying plugin to Plugins directory", ioe);
+					}
+				}
+				else if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
+					Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getLanguagesFolder() + File.separator + f.getName());
+					if (!Buddi.getLanguagesFolder().exists()){
+						if (!Buddi.getLanguagesFolder().mkdirs()){
+							Log.error("Error creating Languages directory!");
+						}
+					}
+					try {
+						File dest = new File(Buddi.getLanguagesFolder().getAbsolutePath() + File.separator + f.getName());
+						if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
+							throw new IOException("Cannot copy to the same file.");
+						FileFunctions.copyFile(f, dest);
+
+						String[] options = new String[1];
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
+								null, 
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
+								TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]
+						);
+
+						PrefsModel.getInstance().setLanguage(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+						PrefsModel.getInstance().save();
+					}
+					catch (IOException ioe){
+						Log.error("Error copying translation to Languages directory", ioe);
+					}
 				}
 			}
-			try {
-				File dest = new File(Buddi.getLanguagesFolder().getAbsolutePath() + File.separator + f.getName());
-				if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
-					throw new IOException("Cannot copy to the same file.");
-				FileFunctions.copyFile(f, dest);
-				
-				String[] options = new String[1];
-				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-
-				JOptionPane.showOptionDialog(
-						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null,
-						options,
-						options[0]
-				);
-				
-				PrefsModel.getInstance().setLanguage(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
-				PrefsModel.getInstance().save();
-			}
-			catch (IOException ioe){
-				Log.error("Error copying translation to Languages directory", ioe);
-			}
-		}
+		});
 	}
 
 
