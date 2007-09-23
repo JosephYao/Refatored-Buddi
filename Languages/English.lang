@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Sat Sep 22 14:11:27 MDT 2007
+#Sat Sep 22 19:02:59 MDT 2007
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUTTON_OK=OK
@@ -245,6 +245,7 @@ CLEAR=Clear
 ABOUT_BUDDI=About Buddi
 SCHEDULE_DATE_THIRTIETH=30th
 NETWORK=Network
+MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED=Some of the modified preferences require Buddi to be\nrestarted before they will take effect.  \n\nPlease save your data and restart Buddi.
 IMPORT_LEGACY_BUDDI_FORMAT=Import Legacy Buddi Files
 MESSAGE_ERROR_INCORRECT_FORMAT=You have entered an incorrect date format
 MENU_FILE_REVERT_TO_SAVED=Revert to Saved
@@ -422,6 +423,7 @@ DELETE_TRANSACTION_LOSE_CHANGES=Are you sure you want to delete this transaction
 ALL=All
 SCHEDULE_DAY_FRIDAY=Friday
 NEW_VERSION_MESSAGE_2=Click Download to get the latest version.\n(You can disable this message in the Preferences screen)
+MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED_TITLE=Restart Required
 LANGUAGE=Language
 SHOW_DELETED=Show Deleted Accounts and Budget Categories
 LINE_OF_CREDIT=Line of Credit

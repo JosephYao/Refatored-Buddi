@@ -10,11 +10,13 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
@@ -93,9 +95,11 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)){
+			boolean restart = false;
 			for (BuddiPreferencePlugin panel : preferencePanels) {
 				try {
-					panel.save();
+					if (panel.save())
+						restart = true;
 				}
 				catch (PluginException pe){
 					pe.printStackTrace(Log.getPrintStream());
@@ -103,6 +107,22 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 			}
 			
 			PrefsModel.getInstance().save();
+
+			if (restart){
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
+						null, 
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED),
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED_TITLE),
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
+				);
+			}
 			
 			this.closeWindow();
 		}
