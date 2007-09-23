@@ -118,10 +118,9 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 		}		
 	}
 
-	public void save() {
+	public boolean save() {
 		//At save time, we actually copy the files over to the new location, and remove ones which
-		// are to be removed.
-
+		// are to be removed.		
 		for (File f : filesToRemove) {
 			f.delete();
 		}
@@ -166,6 +165,7 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 			}
 		}
 
+		return filesToAdd.size() > 0 || filesToRemove.size() > 0;
 	}
 
 	public String getName() {

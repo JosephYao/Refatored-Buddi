@@ -113,7 +113,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 				if (model.getBudgetCategory(oldCategory.getFullName()) == null){
 					MutableBudgetCategory newBudgetCategory = MutableModelFactory.createMutableBudgetCategory(
 							oldCategory.getFullName(), 
-							MutableModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH), 
+							model.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH), 
 							oldCategory.isIncome());
 					newBudgetCategory.setDeleted(oldCategory.isDeleted());
 					newBudgetCategory.setAmount(new Date(), oldCategory.getBudgetedAmount());

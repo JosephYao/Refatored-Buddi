@@ -103,12 +103,14 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());		
 	}
 
-	public void save() {
+	public boolean save() {
 		PrefsModel.getInstance().setAutosaveDelay((Integer) autosavePeriod.getSelectedItem());
 		PrefsModel.getInstance().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
 		PrefsModel.getInstance().setShowPromptAtStartup(showPromptForDataFile.isSelected());
 		PrefsModel.getInstance().setShowUpdateNotifications(showUpdateNotifications.isSelected());
 		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
+		
+		return false;
 	}
 	
 	public String getName() {

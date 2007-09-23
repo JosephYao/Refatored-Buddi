@@ -26,9 +26,10 @@ import org.homeunix.thecave.moss.plugin.MossPlugin;
 public abstract class BuddiPreferencePlugin extends BuddiPluginPreference implements MossPlugin {
 	
 	/**
-	 * Saves the preferences which this panel is responsible for.
+	 * Saves the preferences which this panel is responsible for.  If the changes nessecitate
+	 * a restart, return true; otherwise, return false.
 	 */
-	public abstract void save() throws PluginException;
+	public abstract boolean save() throws PluginException;
 	
 	/**
 	 * Loads the preferences which this panel is responsible for.

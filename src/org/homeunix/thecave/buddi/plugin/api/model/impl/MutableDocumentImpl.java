@@ -166,8 +166,11 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableAccountType, AccountType>(getModel(), getModel().getAccountTypes());		
 	}
 	
+	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name){
+		return getBudgetCategoryType(name.toString());
+	}
 	
-	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name) {
+	public ImmutableBudgetCategoryType getBudgetCategoryType(String name) {
 		BudgetCategoryType type = ModelFactory.getBudgetCategoryType(name);
 		if (type == null)
 			return null;

@@ -50,7 +50,7 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 		port.setEnabled(useProxy.isSelected());
 	}
 	
-	public void save() {
+	public boolean save() {
 		PrefsModel.getInstance().setShowProxySettings(useProxy.isSelected());
 		if (useProxy.isSelected()){
 			PrefsModel.getInstance().setProxyServer(proxy.getText());
@@ -65,6 +65,8 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 			PrefsModel.getInstance().setProxyServer("");
 			PrefsModel.getInstance().setPort(0);
 		}
+		
+		return false;
 	}
 	public Version getMaximumVersion() {
 		return null;

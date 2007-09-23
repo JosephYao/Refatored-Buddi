@@ -63,11 +63,14 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		showReconcile.setSelected(PrefsModel.getInstance().isShowReconciled());
 	}
 	
-	public void save() {
+	public boolean save() {
 		PrefsModel.getInstance().setShowDeleted(showDeleted.isSelected());
 		PrefsModel.getInstance().setShowAutoComplete(showAutoComplete.isSelected());
 		PrefsModel.getInstance().setShowCleared(showClear.isSelected());
 		PrefsModel.getInstance().setShowReconciled(showReconcile.isSelected());
+		
+		//TODO We may need to restart for some of these... 
+		return false;
 	}
 	
 	public String getName() {

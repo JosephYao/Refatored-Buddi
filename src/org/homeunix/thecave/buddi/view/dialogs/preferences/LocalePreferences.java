@@ -194,13 +194,25 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 		language.setSelectedItem(PrefsModel.getInstance().getLanguage());
 	}
 
-	public void save() {
+	public boolean save() {
+		boolean restart = false;
+		if (!PrefsModel.getInstance().getDateFormat().equals(dateFormat.getSelectedItem().toString()))
+			restart = true;
+		if (!PrefsModel.getInstance().getLanguage().equals(language.getSelectedItem().toString()))
+			restart = true;
+		if (!PrefsModel.getInstance().getCurrencySign().equals(currencyFormat.getSelectedItem().toString()))
+			restart = true;
+		if (PrefsModel.getInstance().isShowCurrencyAfterAmount() != currencySymbolAfterAmount.isSelected())
+			restart = true;
+		
 		PrefsModel.getInstance().setDateFormat(dateFormat.getSelectedItem().toString());
 		PrefsModel.getInstance().setCurrencySign(currencyFormat.getSelectedItem().toString());
 		PrefsModel.getInstance().setShowCurrencyAfterAmount(currencySymbolAfterAmount.isSelected());
 		PrefsModel.getInstance().setLanguage(language.getSelectedItem().toString());
 
 		PrefsModel.getInstance().getTranslator().reloadLanguages();
+		
+		return restart;
 	}
 
 	public void actionPerformed(ActionEvent e) {

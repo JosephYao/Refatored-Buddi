@@ -88,7 +88,11 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 		return getUid();
 	}
 	
-	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name) {
+	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name){
+		return getBudgetCategoryType(name.toString());
+	}
+	
+	public ImmutableBudgetCategoryType getBudgetCategoryType(String name) {
 		BudgetCategoryType type = ModelFactory.getBudgetCategoryType(name);
 		if (type == null)
 			return null;

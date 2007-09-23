@@ -101,4 +101,16 @@ public interface ImmutableDocument extends ImmutableModelObject {
 	 * @return
 	 */
 	public ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes name);
+	
+	/**
+	 * Returns an ImmutableBudgetCategoryType object, with the given name.  If the name is
+	 * not a valid one, returns null.
+	 * 
+	 * Although this method gives the same results as the other one, given the same input,
+	 * it is recommeneded to use the one which takes an enum if possible.  That will ensure
+	 * that you do not make any mistakes with spelling, which may cause a null to be returned.
+	 * @param name
+	 * @return
+	 */
+	public ImmutableBudgetCategoryType getBudgetCategoryType(String name);
 }
