@@ -6,14 +6,15 @@ package org.homeunix.thecave.buddi.plugin.api.model;
 import java.io.File;
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableBudgetCategoryTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
@@ -79,8 +80,8 @@ public class MutableModelFactory {
 	 * @return
 	 * @throws ModelException
 	 */
-	public static MutableBudgetCategory createMutableBudgetCategory(String name, BudgetCategoryType periodType, boolean isIncome) throws ModelException {
-		BudgetCategory bc = ModelFactory.createBudgetCategory(name, periodType, isIncome);
+	public static MutableBudgetCategory createMutableBudgetCategory(String name, ImmutableBudgetCategoryType periodType, boolean isIncome) throws ModelException {
+		BudgetCategory bc = ModelFactory.createBudgetCategory(name, periodType.getBudgetCategoryType(), isIncome);
 		
 		return new MutableBudgetCategoryImpl(bc);
 	}
@@ -111,4 +112,28 @@ public class MutableModelFactory {
 		
 		return new MutableTransactionImpl(t);
 	}
+	
+	/**
+	 * Gets the budget category type associated with the given name.  If the type does not exist, 
+	 * it returns null.  It is recommended that, if possible, you use the method which takes
+	 * an enum instead of String, as there is no chance of mis-spelling or something. 
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static ImmutableBudgetCategoryType getBudgetCategoryType(String name){
+		if (ModelFactory.getBudgetCategoryType(name) == null)
+			return null;
+		return new ImmutableBudgetCategoryTypeImpl(ModelFactory.getBudgetCategoryType(name));
+	}
+	
+	/**
+	 * Gets the budget category type associated with the given type.  If the type does not exist, 
+	 * it returns null. 
+	 * @param type
+	 * @return
+	 */
+	public static ImmutableBudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes type){
+		return getBudgetCategoryType(type.toString());
+	}	
 }

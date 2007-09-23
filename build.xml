@@ -13,7 +13,7 @@
 	<property name="PROJECT_NAME" value="Buddi"/>
 	<property name="PROJECT_UNIX_NAME" value="buddi"/>
 	<property name="BUILD_NAME" value="Buddi"/>
-	<property name="PROJECT_DESCRIPTION" value="Simple yet effective budgeting program for home users"/>
+	<property name="PROJECT_DESCRIPTION" value="Buddi (Personal Budget Software)"/>
 	<property name="PROJECT_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
 	<property name="PROJECT_COPYRIGHT" value="Copyright Wyatt Olson"/>
 
@@ -155,8 +155,14 @@
 				                
 			<documenttype name="Buddi Plugin"
 				extensions="buddi3plugin" 
-				iconFile="${PROJECT_HOME}/img/osx/BuddiPlugins.icns"
-				role="Viewer"/>
+				iconFile="${PROJECT_HOME}/img/osx/BuddiPlugin.icns"
+				role="Editor"/>
+			
+			<documenttype name="Buddi Translation"
+				extensions="lang" 
+				iconFile="${PROJECT_HOME}/img/osx/BuddiLanguage.icns"
+				role="Editor"/>
+
 		</jarbundler>
 
 		<!-- Copy documentation -->

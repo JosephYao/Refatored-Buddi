@@ -8,8 +8,9 @@ import org.homeunix.thecave.buddi.model.Source;
 public interface ImmutableSource extends ImmutableModelObject {
 	
 	/**
-	 * Returns the full name of this source.  The full name is the name, plus
-	 * the path to get there (parent categories, etc).
+	 * Returns the full name of this source.  This differs for Account and Budget
+	 * Categories: for Accounts, it returns getName() and getType().getName();
+	 * for Budget Categories, it just returns getName().
 	 * @return
 	 */
 	public String getFullName();

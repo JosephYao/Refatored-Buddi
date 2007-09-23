@@ -90,13 +90,13 @@ public class Buddi {
 	private static Boolean simpleFont = false;
 	private static File logFile = null;
 	private static Version version = null;
-	
+
 	public static Version getVersion() {
 		if (version == null)
 			version = Version.getVersionResource("version.txt");
 		return version;
 	}
-	
+
 	/**
 	 * Use simple fonts (i.e., no bold or italics) for transaction window.  This 
 	 * allows for better Unicode support on some platforms which do not include
@@ -175,6 +175,7 @@ public class Buddi {
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
 			languagesFolder = OperatingSystemUtil.getUserFile("Buddi", Const.LANGUAGE_FOLDER).getAbsolutePath();
+		Log.debug(languagesFolder);
 		return new File(languagesFolder);
 	}
 
@@ -183,140 +184,97 @@ public class Buddi {
 	 */
 	private static void launchGUI(){
 
-		if (JOptionPane.showConfirmDialog(
-				null, 
-				"WARNING:\n\nThis version of Buddi is currently under active development,\nand sould be considered Alpha quality code.  There are many\nfeatures which are not completely implemented, and many\nothers which contain bugs.\n\nFurthermore, the data model currently in place will likely\nchange before this is publicly released.\n\nYou should *NOT* use this version of software for any data\nthat matters - it is only a development preview of\nthe upcoming version.\n\nIf you are looking for stable budgeting software,\nplease use Buddi 2.6, available for free at http://buddi.sourceforge.net.\n\nIf you understand the risk, and still want to run this\nversion, hit OK.  Hit Cancel to exit.",
-				"Warning",
-				JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE
-		) != JOptionPane.OK_OPTION)  //The index of the Cancel button.
-			System.exit(0);
+//		if (JOptionPane.showConfirmDialog(
+//		null, 
+//		"WARNING:\n\nThis version of Buddi is currently under active development,\nand sould be considered Alpha quality code.  There are many\nfeatures which are not completely implemented, and many\nothers which contain bugs.\n\nFurthermore, the data model currently in place will likely\nchange before this is publicly released.\n\nYou should *NOT* use this version of software for any data\nthat matters - it is only a development preview of\nthe upcoming version.\n\nIf you are looking for stable budgeting software,\nplease use Buddi 2.6, available for free at http://buddi.sourceforge.net.\n\nIf you understand the risk, and still want to run this\nversion, hit OK.  Hit Cancel to exit.",
+//		"Warning",
+//		JOptionPane.OK_CANCEL_OPTION,
+//		JOptionPane.WARNING_MESSAGE
+//		) != JOptionPane.OK_OPTION)  //The index of the Cancel button.
+//		System.exit(0);
 
 
-		if (PrefsModel.getInstance().getLastVersion() != null 
-				&& getVersion().isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
-			String[] options = new String[2];
-			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+//		if (PrefsModel.getInstance().getLastVersion() != null 
+//		&& getVersion().isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
+//		String[] options = new String[2];
+//		options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+//		options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-			if (JOptionPane.showOptionDialog(
-					null, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE,
-					null,
-					options,
-					options[0]
-			) == 1)  //The index of the Cancel button.
-				System.exit(0);
+//		if (JOptionPane.showOptionDialog(
+//		null, 
+//		TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
+//		TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
+//		JOptionPane.OK_CANCEL_OPTION,
+//		JOptionPane.WARNING_MESSAGE,
+//		null,
+//		options,
+//		options[0]
+//		) == 1)  //The index of the Cancel button.
+//		System.exit(0);
 
 
-			//Make a backup of the last data file, just to be safe...
-			File file = PrefsModel.getInstance().getLastDataFile();
-			File backupDataFile = new File(
-					file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
-					+ "_" + getVersion() + "_" + Const.BACKUP_FILE_EXTENSION);
-			try {
-				FileFunctions.copyFile(file, backupDataFile);
-			}
-			catch (IOException ioe){
-				Log.warning("Error backing up file: " + ioe);
-			}
-		}
+//		//Make a backup of the last data file, just to be safe...
+//		File file = PrefsModel.getInstance().getLastDataFile();
+//		File backupDataFile = new File(
+//		file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
+//		+ "_" + getVersion() + "_" + Const.BACKUP_FILE_EXTENSION);
+//		try {
+//		FileFunctions.copyFile(file, backupDataFile);
+//		}
+//		catch (IOException ioe){
+//		Log.warning("Error backing up file: " + ioe);
+//		}
+//		}
+
 
 		//If we are on a Mac, open a new Frameless menu bar.
 		if (OperatingSystemUtil.isMac()){
 			Application.getApplication().setFramessMenuBar(new FramelessMenuBar());
 		}
 
-		//Choose which data file to open, or create a new one.
-		try {
-			boolean openedFile = false; //Set to true once we opened a file, to avoid trying to open more.
-
-			MainFrame frameToDisplay = null;
-
-			//Handle opening files from command line.
-			if (!openedFile && filesToLoad.size() > 0){
-				for (File f : filesToLoad) {
-					try {
-						Document model;
-						model = ModelFactory.createDocument(f);
-
-						MainFrame mainWndow = new MainFrame(model);
-						mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-						frameToDisplay = mainWndow;
-
-						openedFile = true;
-					}
-					catch (DocumentLoadException lme){
-						lme.printStackTrace(Log.getPrintStream());
-					}
-					catch (OperationCancelledException oce){}  //Do nothing
-				}
+		//Handle opening files from command line.
+		if (filesToLoad.size() > 0){
+			for (File f : filesToLoad) {
+				openFile(f);
 			}
-
-			//Handle opening the last user file, if available.
-			if (!openedFile) {
-				File file = PrefsModel.getInstance().getLastDataFile();
-				try {
-					Document model;
-					model = ModelFactory.createDocument(file);
-
-					MainFrame mainWndow = new MainFrame(model);
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-					frameToDisplay = mainWndow;
-
-					openedFile = true;
-				}
-				catch (DocumentLoadException lme){
-					lme.printStackTrace(Log.getPrintStream());
-				}
-				catch (OperationCancelledException oce){}  //Do nothing
-			}
-
-			//If no files are available, just create a new one.
-			if (!openedFile){
-				try {
-					Document model = ModelFactory.createDocument();
-					MainFrame mainWndow = new MainFrame(model);
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
-					frameToDisplay = mainWndow;
-
-					openedFile = true;
-				}
-				catch (ModelException me){
-					me.printStackTrace(Log.getPrintStream());
-				}
-			}
-
-			if (frameToDisplay == null)
-				throw new WindowOpenException("Buddi main window did not open!");
-
-			//Start the background startup tasks... 
-			startVersionCheck(frameToDisplay);
-			startUpdateCheck(frameToDisplay, false);
-
 		}
-		catch (WindowOpenException woe){
-			String[] options = new String[1];
-			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-			JOptionPane.showOptionDialog(
-					null, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-					JOptionPane.OK_OPTION,
-					JOptionPane.ERROR_MESSAGE,
-					null,
-					options,
-					options[0]
-			);
-
-			woe.printStackTrace(Log.getPrintStream());
-
-			System.exit(1);
+		//Handle opening the last user file, if available.
+		if (PrefsModel.getInstance().getLastDataFile() != null
+				&& ApplicationModel.getInstance().getOpenFrames().size() == 0) {
+			openFile(PrefsModel.getInstance().getLastDataFile());
 		}
+
+		//If no files are available, just create a new one.
+		if (ApplicationModel.getInstance().getOpenFrames().size() == 0) {
+			try {
+				Document model = ModelFactory.createDocument();
+				MainFrame mainWndow = new MainFrame(model);
+				try{
+					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+				}
+				catch (WindowOpenException woe){
+					Log.error("Error opening window: ", woe);
+				}
+			}
+			catch (ModelException me){
+				me.printStackTrace(Log.getPrintStream());
+			}
+		}
+
+		MainFrame mainFrame = null;
+		for (MossFrame mossFrame : ApplicationModel.getInstance().getOpenFrames()) {
+			if (mossFrame instanceof MainFrame){
+				mainFrame = (MainFrame) mossFrame;
+				break;
+			}
+		}
+		if (mainFrame == null)
+			Log.emergency("No Buddi main windows were able to open!");
+
+		//Start the background startup tasks... 
+		startVersionCheck(mainFrame);
+		startUpdateCheck(mainFrame, false);
 
 
 		//Start the auto save timer
@@ -350,6 +308,95 @@ public class Buddi {
 		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide period
 	}
 
+
+	private static void openFile(File f){
+		//Handle opening files from command line.
+		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
+			try {
+				Document model;
+				model = ModelFactory.createDocument(f);
+
+				MainFrame mainWndow = new MainFrame(model);
+				try {
+					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+				}
+				catch (WindowOpenException woe){
+					Log.error("Error opening window: ", woe);
+				}
+			}
+			catch (DocumentLoadException lme){
+				lme.printStackTrace(Log.getPrintStream());
+			}
+			catch (OperationCancelledException oce){}  //Do nothing
+		}
+		else if (f.getName().endsWith(Const.PLUGIN_EXTENSION)){
+			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
+			if (!Buddi.getPluginsFolder().exists()){
+				if (!Buddi.getPluginsFolder().mkdirs()){
+					Log.error("Error creating Plugins directory!");
+				}
+			}
+			try {
+				File dest = new File(Buddi.getPluginsFolder().getAbsolutePath() + File.separator + f.getName());
+				if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
+					throw new IOException("Cannot copy to the same file.");
+				FileFunctions.copyFile(f, dest);
+
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
+						null, 
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
+				);
+			}
+			catch (IOException ioe){
+				Log.error("Error copying plugin to Plugins directory", ioe);
+			}
+		}
+		else if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
+			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getLanguagesFolder() + File.separator + f.getName());
+			if (!Buddi.getLanguagesFolder().exists()){
+				if (!Buddi.getLanguagesFolder().mkdirs()){
+					Log.error("Error creating Languages directory!");
+				}
+			}
+			try {
+				File dest = new File(Buddi.getLanguagesFolder().getAbsolutePath() + File.separator + f.getName());
+				if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
+					throw new IOException("Cannot copy to the same file.");
+				FileFunctions.copyFile(f, dest);
+				
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(
+						null, 
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
+						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						options,
+						options[0]
+				);
+				
+				PrefsModel.getInstance().setLanguage(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+				PrefsModel.getInstance().save();
+			}
+			catch (IOException ioe){
+				Log.error("Error copying translation to Languages directory", ioe);
+			}
+		}
+	}
+
+
 	/**
 	 * Main method for Buddi.  Can pass certain command line options
 	 * in.  Use --help flag to see complete list.
@@ -369,7 +416,6 @@ public class Buddi {
 			}
 		});
 
-
 		//First thing to do is to catch any open requests from Apple Launchd.
 		if (OperatingSystemUtil.isMac()){
 			Application application = Application.getApplication();
@@ -387,8 +433,9 @@ public class Buddi {
 				@Override
 				public void handleOpenFile(ApplicationEvent arg0) {
 					arg0.setHandled(true);
-
-					filesToLoad.add(new File(arg0.getFilename()));
+					Log.error(arg0);
+					Log.error(arg0.getFilename());
+					openFile(new File(arg0.getFilename()));
 				}
 
 				@Override

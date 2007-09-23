@@ -4,8 +4,9 @@ Macintosh OS X:
 Drag the Buddi.app file into /Applications.
 
 Windows:
-Copy Buddi.exe to a folder of your choice; C:\Program Files\Buddi is 
-recommended.  If desired, make a shortcut to add into the Start menu.
+Run the downloaded Buddi-<version>.exe.  The installer will prompt you for
+an installation location.  The installer will also associate Buddi files
+with Buddi, and set up a start menu icon.
 
 Debian / Ubuntu:
 Double click on the Buddi.deb file.  When prompted, install the package.

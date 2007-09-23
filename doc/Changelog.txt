@@ -1,6 +1,8 @@
 2.9.3.0
 -Completely rebuild the ant build.xml file.  Now we use this file exclusively for building.  This is cleaner, and it also gives us some new features (such as being able to make .rpm files).
 -The Windows .exe is now an installer.  The installer will prompt for a location to install, and extract Buddi there.  It will also set up a shortcut in the start menu.  NOTE: This installer has only been tested on Windows XP.  Any and all testing which can be done would be most appreciated.
+-Fixed bug #1800382 (incorrect object in API)
+-Fixed bug #1800388 (incorrect description in Javadocs for API)
 
 2.9.2.0 (September 19 2007)
 -Added modified date to API model
