@@ -612,7 +612,10 @@ public class TransactionEditor extends MossPanel {
 		//If we lose focus on the description field, we check if
 		// there is something there.  If so, we fill in others with
 		// the dictionary map, but only if they haven't been modified from their default values!
-		if (PrefsModel.getInstance().isShowAutoComplete()){
+		//
+		//We only will auto complete if this is a new transaction - we don't want to change anything
+		// automatically with existing transactions! (Bug #1800429)
+		if (PrefsModel.getInstance().isShowAutoComplete() && transaction == null){
 			if (description != null 
 					&& description.getText() != null 
 					&& description.getText().length() > 0){

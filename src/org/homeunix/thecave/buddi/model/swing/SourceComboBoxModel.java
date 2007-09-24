@@ -16,6 +16,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
+import org.homeunix.thecave.moss.util.Log;
 
 public class SourceComboBoxModel implements ComboBoxModel {
 	private static final long serialVersionUID = 0; 
@@ -33,6 +34,7 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		
 		model.addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
+				Log.debug("Updated SourceComboBoxModel");
 				updateComboBoxModel();	
 			}
 		});
@@ -67,6 +69,8 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	}
 
 	private void updateComboBoxModel(){
+		Object selected = getSelectedItem(); 
+		
 		List<Account> accounts = new LinkedList<Account>(model.getAccounts());
 		List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>(model.getBudgetCategories());
 		
@@ -76,14 +80,19 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		getComboBoxModel().removeAllElements();
 		getComboBoxModel().addElement(null);
 		for (Account a : accounts) {
-			getComboBoxModel().addElement(a);	
+			getComboBoxModel().addElement(a);
+			Log.debug(a);
 		}
 		getComboBoxModel().addElement(null);
 		for (BudgetCategory bc : budgetCategories) {
-			if (bc.isIncome() == includeIncome)
+			if (bc.isIncome() == includeIncome){
 				getComboBoxModel().addElement(bc);
+				Log.debug(bc);	
+			}
 		}
 		
-
+		comboBoxModel.
+		
+		setSelectedItem(selected);
 	}
 }
