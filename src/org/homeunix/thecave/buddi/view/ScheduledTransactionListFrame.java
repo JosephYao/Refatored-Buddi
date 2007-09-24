@@ -26,7 +26,7 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.dialogs.ScheduleEditorDialog;
+import org.homeunix.thecave.buddi.view.dialogs.ScheduledTransactionEditorDialog;
 import org.homeunix.thecave.buddi.view.swing.ScheduledTransactionListCellRenderer;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
@@ -37,7 +37,7 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
-public class ScheduleFrame extends MossAssociatedDocumentFrame implements ActionListener {
+public class ScheduledTransactionListFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
 
 	private final JButton doneButton;
@@ -52,8 +52,8 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	private final BackedListModel<ScheduledTransaction> listModel;
 	private final Document model;
 
-	public ScheduleFrame(MossDocumentFrame parent){
-		super(parent, ScheduleFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
+	public ScheduledTransactionListFrame(MossDocumentFrame parent){
+		super(parent, ScheduledTransactionListFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 
 		this.model = (Document) parent.getDocument();
@@ -140,7 +140,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 			}
 		});
 
-		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_SCHEDULED_ACTIONS));
+		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_EDIT_SCHEDULED_TRANSACTIONS));
 		this.setLayout(new BorderLayout());
 		this.add(scrollPanel, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
@@ -149,7 +149,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newButton)){
-			ScheduleEditorDialog editor = new ScheduleEditorDialog(this, null);
+			ScheduledTransactionEditorDialog editor = new ScheduledTransactionEditorDialog(this, null);
 			try {
 				editor.openWindow();
 			}
@@ -162,7 +162,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 			Object o = list.getSelectedValue();
 
 			if (o instanceof ScheduledTransaction) {
-				ScheduleEditorDialog editor = new ScheduleEditorDialog(this, (ScheduledTransaction) o);
+				ScheduledTransactionEditorDialog editor = new ScheduledTransactionEditorDialog(this, (ScheduledTransaction) o);
 				try {
 					editor.openWindow();
 				}
@@ -185,12 +185,8 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 			deleteButton.setEnabled(false);
 		}
 		else if (e.getSource().equals(doneButton)){
-//			listModel.save();
 			this.closeWindow();
 		}
-//		else if (e.getSource().equals(cancelButton)){
-//		this.closeWindow();
-//		}
 	}
 	
 	@Override

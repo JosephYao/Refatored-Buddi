@@ -27,7 +27,7 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.util.Log;
@@ -48,7 +48,7 @@ public class AccountTypeEditorDialog extends MossDialog implements ActionListene
 	private final Document model;
 
 	@SuppressWarnings("unchecked")
-	public AccountTypeEditorDialog(MainFrame frame, AccountType selected) {
+	public AccountTypeEditorDialog(AccountTypeListFrame frame, AccountType selected) {
 		super(frame);
 
 		this.selected = selected;
@@ -84,6 +84,8 @@ public class AccountTypeEditorDialog extends MossDialog implements ActionListene
 
 		ok.setPreferredSize(InternalFormatter.getButtonSize(ok));
 		cancel.setPreferredSize(InternalFormatter.getButtonSize(cancel));
+		
+		name.setPreferredSize(InternalFormatter.getComponentSize(cancel, 150));
 
 		ok.addActionListener(this);
 		cancel.addActionListener(this);

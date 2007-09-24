@@ -59,7 +59,7 @@ import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
-public class ScheduleEditorDialog extends MossDialog implements ActionListener {
+public class ScheduledTransactionEditorDialog extends MossDialog implements ActionListener {
 	public static final long serialVersionUID = 0;
 
 	private final JButton okButton;
@@ -92,7 +92,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 
 	private final Document model;
 
-	public ScheduleEditorDialog(MossDocumentFrame parentFrame, ScheduledTransaction scheduleToEdit){
+	public ScheduledTransactionEditorDialog(MossDocumentFrame parentFrame, ScheduledTransaction scheduleToEdit){
 		super(parentFrame);
 
 		this.model = (Document) parentFrame.getDocument();
@@ -142,7 +142,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		cancelButton.addActionListener(this);
 
 		JScrollPane messageScroller = new JScrollPane(message);
-		messageScroller.setPreferredSize(new Dimension(300, 100));
+		messageScroller.setPreferredSize(new Dimension(200, 100));
 
 		endDateChooserEnabled.setSelected(true);
 		
@@ -273,7 +273,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 		frequencyPulldown.setRenderer(new TranslatorListCellRenderer());
 		frequencyPulldown.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
-				ScheduleEditorDialog.this.updateSchedulePulldown();
+				ScheduledTransactionEditorDialog.this.updateSchedulePulldown();
 			}
 		});
 
@@ -372,9 +372,9 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-				if (!ScheduleEditorDialog.this.startDateChooser.getDate().before(new Date())
+				if (!ScheduledTransactionEditorDialog.this.startDateChooser.getDate().before(new Date())
 						|| schedule != null		//If the schedule has already been defined, we won't bother people again 
-						|| JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
+						|| JOptionPane.showOptionDialog(ScheduledTransactionEditorDialog.this, 
 								TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST), 
 								TextFormatter.getTranslation(BuddiKeys.START_DATE_IN_THE_PAST_TITLE), 
 								JOptionPane.OK_CANCEL_OPTION,
@@ -407,7 +407,7 @@ public class ScheduleEditorDialog extends MossDialog implements ActionListener {
 				String[] options = new String[1];
 				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-				JOptionPane.showOptionDialog(ScheduleEditorDialog.this, 
+				JOptionPane.showOptionDialog(ScheduledTransactionEditorDialog.this, 
 						TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO),
 						TextFormatter.getTranslation(BuddiKeys.SCHEDULED_NOT_ENOUGH_INFO_TITLE),
 						JOptionPane.DEFAULT_OPTION,

@@ -38,6 +38,8 @@ import org.homeunix.thecave.moss.swing.model.BackedListModel;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.jdesktop.swingx.JXList;
+import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -47,15 +49,13 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 	private final JButton editButton;
 	private final JButton deleteButton;
 
-	private final MainFrame frame;
 	private final Document model;
-	private final JList list;
+	private final JXList list;
 
 	public AccountTypeListFrame(MainFrame parent){
 		super(parent, AccountTypeListFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 
-		this.frame = parent;
 		this.model = (Document) parent.getDocument();
 		
 		doneButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DONE));
@@ -69,7 +69,8 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 				types.fireListChanged();
 			}
 		});
-		list = new JList(types);
+		list = new JXList(types);
+		list.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		Dimension buttonSize = new Dimension(Math.max(100, editButton.getPreferredSize().width), editButton.getPreferredSize().height);
@@ -125,10 +126,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 					
 					this.setText(at.getName());
 					
-					if (isSelected)
-						this.setForeground(Color.WHITE);
-					else
-						this.setForeground((at.isCredit() ? Color.RED : Const.COLOR_JLIST_UNSELECTED_TEXT));
+					this.setForeground((at.isCredit() ? Color.RED : Const.COLOR_JLIST_UNSELECTED_TEXT));
 
 				}
 				
@@ -150,7 +148,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 		}
 		else if (e.getSource().equals(newButton)){
 			try {
-				new AccountTypeEditorDialog(frame, null).openWindow();
+				new AccountTypeEditorDialog(this, null).openWindow();
 				Log.debug("Done creating new Type from TypeModifyDialog");
 				updateContent();
 			}
@@ -163,7 +161,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 			if (o instanceof AccountType){
 				try {
 					AccountType t = (AccountType) o;
-					new AccountTypeEditorDialog(frame, t).openWindow();
+					new AccountTypeEditorDialog(this, t).openWindow();
 					Log.debug("Done editing Type from TypeModifyDialog");
 					updateContent();
 				}

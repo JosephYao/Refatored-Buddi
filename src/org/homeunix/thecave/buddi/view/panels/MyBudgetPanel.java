@@ -97,8 +97,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		if (e.getSource().equals(periodTypeComboBox)){
 			treeTableModel.setSelectedBudgetPeriodType(ModelFactory.getBudgetCategoryType(periodTypeComboBox.getSelectedItem().toString()));
 			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
-			updateContent();
-			fireStructureChanged();
+			this.fireStructureChanged();
+			this.updateContent();
 			parent.updateMenus();
 		}
 	}

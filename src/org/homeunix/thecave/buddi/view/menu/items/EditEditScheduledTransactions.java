@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.buddi.view.ScheduleFrame;
+import org.homeunix.thecave.buddi.view.ScheduledTransactionListFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
@@ -23,7 +23,7 @@ public class EditEditScheduledTransactions extends MossMenuItem{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			ScheduleFrame scheduledTransactionsFrame = new ScheduleFrame((MainFrame) getFrame());
+			ScheduledTransactionListFrame scheduledTransactionsFrame = new ScheduledTransactionListFrame((MainFrame) getFrame());
 			scheduledTransactionsFrame.openWindow(null, PrefsModel.getInstance().getScheduledTransactionWindowLocation());
 		}
 		catch (WindowOpenException foe){
