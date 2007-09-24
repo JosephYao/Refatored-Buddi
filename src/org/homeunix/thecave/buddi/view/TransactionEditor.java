@@ -468,13 +468,15 @@ public class TransactionEditor extends MossPanel {
 		transaction.setTo((Source) to.getSelectedItem());
 		transaction.setNumber(number.getText().toString());
 		transaction.setMemo(memo.getText().toString());
-		if (associatedAccount.equals(from.getSelectedItem())){
-			transaction.setClearedFrom(cleared.isSelected());
-			transaction.setReconciledFrom(reconciled.isSelected());			
-		}
-		else if (associatedAccount.equals(to.getSelectedItem())){
-			transaction.setClearedTo(cleared.isSelected());
-			transaction.setReconciledTo(reconciled.isSelected());	
+		if (associatedAccount != null){
+			if (associatedAccount.equals(from.getSelectedItem())){
+				transaction.setClearedFrom(cleared.isSelected());
+				transaction.setReconciledFrom(reconciled.isSelected());			
+			}
+			else if (associatedAccount.equals(to.getSelectedItem())){
+				transaction.setClearedTo(cleared.isSelected());
+				transaction.setReconciledTo(reconciled.isSelected());	
+			}
 		}
 		return transaction;
 	}

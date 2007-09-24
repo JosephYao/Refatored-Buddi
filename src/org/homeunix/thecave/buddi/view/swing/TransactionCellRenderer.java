@@ -44,22 +44,22 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 	private boolean showCleared = PrefsModel.getInstance().isShowCleared();
 	private boolean showReconciled = PrefsModel.getInstance().isShowReconciled();
 	private final boolean simple;
-	
+
 	private int lastWidth;
 	private int descriptionLength = 50, toFromLength = 40;
 
 	private static Font f;
 	private static Font bold;
 	private static Font italic;
-	
+
 	private static int currentDescriptionLength; //Used by EditableTransaction to format description width.
-	
+
 	private static final Color GREEN = new Color(0, 128, 0);
 
 	public static int getCurrentDescriptionLength(){
 		return currentDescriptionLength;
 	}
-	
+
 	/**
 	 * Creates a new TransactionCellRenderer object
 	 */
@@ -73,7 +73,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		else {
 			this.setOpaque(true);
 		}
-		
+
 		//Make this big enough to have two lines of text.  Since the 
 		// FontMetrics object is not yet initialized, we have to guess
 		// the correct size, based on JLabel size.
@@ -107,8 +107,9 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			// balances, and 50 for the C R; 
 			// We can take up to (width - 300)px for the toFrom field.
 			//Since we use each of these separately, we divide by two first.
+			int widthDifference = (account == null ? 100 : 300);
 			test = "XXX";
-			for(; fm.stringWidth(test) < (list.getWidth() - 300); test += "X"){
+			for(; fm.stringWidth(test) < (list.getWidth() - widthDifference); test += "X"){
 				toFromLength = test.length();
 			}
 
@@ -154,23 +155,26 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				italic = new Font(f.getName(), Font.ITALIC, f.getSize());				
 			}
 			g.setFont(bold);
+			if (account == null)
 			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, topRowYPos);
 			g.setFont(f);
-			
+
 			//Cleared and Reconciled
-			if (showCleared){
-				g.setColor(GREEN);
-				if (account.equals(transaction.getTo()) && transaction.isClearedTo()
-						|| account.equals(transaction.getFrom()) && transaction.isClearedFrom())
-					g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED), 20, bottomRowYPos);
-				g.setColor(textColor);
-			}
-			if (showReconciled){
-				g.setColor(GREEN);
-				if (account.equals(transaction.getTo()) && transaction.isReconciledTo()
-						|| account.equals(transaction.getFrom()) && transaction.isReconciledFrom())
-					g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED), 30, bottomRowYPos);
-				g.setColor(textColor);
+			if (account != null){
+				if (showCleared){
+					g.setColor(GREEN);
+					if (account.equals(transaction.getTo()) && transaction.isClearedTo()
+							|| account.equals(transaction.getFrom()) && transaction.isClearedFrom())
+						g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED), 20, bottomRowYPos);
+					g.setColor(textColor);
+				}
+				if (showReconciled){
+					g.setColor(GREEN);
+					if (account.equals(transaction.getTo()) && transaction.isReconciledTo()
+							|| account.equals(transaction.getFrom()) && transaction.isReconciledFrom())
+						g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED), 30, bottomRowYPos);
+					g.setColor(textColor);
+				}
 			}
 
 			//To / From sources
@@ -183,33 +187,42 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 
 			//Get the font metrics for column alignment
 			fm = this.getGraphics().getFontMetrics();
-			
-			//Left column
-			if (account != null
-					&& transaction.getFrom() != null
-					&& transaction.getFrom().equals(account)){
-				int xPos = width - 220 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false)); 
-				g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
-				g.setColor(textColor);
-			}
-			//Right Column
-			if (account != null
-					&& transaction.getTo() != null
-					&& transaction.getTo().equals(account)){
-				int xPos = width - 120 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false));
-				g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
-				g.setColor(textColor);
-			}
 
-			//Balance
-//			g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
-			g.setFont(bold);
-			fm = this.getGraphics().getFontMetrics();
-			if (transaction != null){
-				long balanceValue;
-				if (account != null){
+			if (account == null){
+				fm = this.getGraphics().getFontMetrics();
+				if (transaction != null){
+
+					long value = transaction.getAmount();
+					int xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(value, false, false));
+					g.setColor(InternalFormatter.isRed(transaction) ? Color.RED : textColor);
+					g.drawString(TextFormatter.getFormattedCurrency(value, false, false), xPos, bottomRowYPos);
+					g.setColor(textColor);
+				}
+			}
+			else {
+				//Left column
+				if (transaction.getFrom() != null
+						&& transaction.getFrom().equals(account)){
+					int xPos = width - 220 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false)); 
+					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+					g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
+					g.setColor(textColor);
+				}
+				//Right Column
+				if (transaction.getTo() != null
+						&& transaction.getTo().equals(account)){
+					int xPos = width - 120 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false));
+					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+					g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
+					g.setColor(textColor);
+				}
+
+				//Balance
+//				g.setFont(new Font(f.getName(), Font.BOLD, f.getSize()));
+				g.setFont(bold);
+				fm = this.getGraphics().getFontMetrics();
+				if (transaction != null){
+					long balanceValue;
 					if (transaction.getFrom() instanceof Account 
 							&& transaction.getFrom().equals(account))
 						balanceValue = transaction.getBalanceFrom();

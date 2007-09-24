@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Sun Sep 23 23:27:53 MDT 2007
+#Mon Sep 24 09:01:47 MDT 2007
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUTTON_OK=OK
@@ -189,8 +189,8 @@ INCORRECT_PASSWORD=Incorrect password.  Please try again.
 MESSAGE_PERMANENT_DELETE_CATEGORY=There are no transactions using the selected category.\nDo you want to permanently delete it?
 BUTTON_RECORD=Record
 NOTHING_TO_PRINT=Nothing to print.
-PREFERENCE_ENTER_CURRENCY_SYMBOL=Please enter your desired currency format\:
 SCHEDULE_DATE_NINETH=9th
+PREFERENCE_ENTER_CURRENCY_SYMBOL=Please enter your desired currency format\:
 MESSAGE_AUTOSAVE_FILE_FOUND=There was an auto save file found.  This could mean that Buddi crashed \nlast time you were working on this file.  You can either load this file,\nand restore the data from the last auto save point, or you can ignore the\nautosave file.  If you ignore the auto save file, it will be deleted the next \ntime you save.\n\nDo you want to load the auto save file?
 TRANSACTION_FILTER_THIS_YEAR=This Year
 PLUGIN_FILTER_LAST_MONTH=Last Month
@@ -328,6 +328,7 @@ MESSAGE_ERROR_READING_FILE=There was a problem reading the data file
 JAR_FILES=Jar Files
 AUTO=Auto
 MESSAGE_ENTER_DATE_FORMAT_TITLE=Enter the Date Format
+ALL_TRANSACTIONS=All Transactions
 PLUGIN_FILTER_SIX_MONTHS=Six Months
 MENU_FILE_SAVE_ALL=Save All
 MENU_WINDOW_LEFT_TAB=Previous Tab
@@ -438,8 +439,8 @@ DELETE_TRANSACTION_LOSE_CHANGES=Are you sure you want to delete this transaction
 ALL=All
 SCHEDULE_DAY_FRIDAY=Friday
 NEW_VERSION_MESSAGE_2=Click Download to get the latest version.\n(You can disable this message in the Preferences screen)
-PREFERENCE_SEND_CRASH_REPORTS=Send Crash Reports to Program Author
 MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED_TITLE=Restart Required
+PREFERENCE_SEND_CRASH_REPORTS=Send Crash Reports to Program Author
 LANGUAGE=Language
 SHOW_DELETED=Show Deleted Accounts and Budget Categories
 LINE_OF_CREDIT=Line of Credit
@@ -514,6 +515,7 @@ MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE=Plugin Added
 ACCOUNT_MODIFY_NEW=Create New Account
 BUTTON_CANCEL=Cancel
 MESSAGE_ERROR_DELETING_PLUGIN=There was an error deleting the plugin.  You\nmay need to manually remove the plugin file.
+MENU_EDIT_EDIT_ALL_TRANSACTIONS=Edit All Transactions
 REPORT_DETAILS=Details
 PLUGIN_FILTER_YESTERDAY=Yesterday
 BUDGET_CATEGORY_TYPE_QUARTER=Quarter

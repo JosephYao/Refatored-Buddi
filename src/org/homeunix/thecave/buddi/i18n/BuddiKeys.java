@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	ALL_TRANSACTIONS,
 	PREFERENCE_SEND_CRASH_REPORTS,
 	PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP,
     PREFERENCE_SHOW_CLEAR,

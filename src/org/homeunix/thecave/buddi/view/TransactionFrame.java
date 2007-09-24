@@ -83,7 +83,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + account.getFullName());
+		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + (account != null ? account.getFullName() : ""));
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		this.associatedAccount = account;
 		this.parent = parent;
@@ -120,11 +120,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							}
 
 							sb.append("<br>");
-							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
-								sb.append("<font color='red'>");
-							sb.append(TextFormatter.getFormattedCurrency(transaction.getAmount()));
-							if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
-								sb.append("</font>");
+							if (TransactionFrame.this.associatedAccount != null){
+								if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
+									sb.append("<font color='red'>");
+								sb.append(TextFormatter.getFormattedCurrency(transaction.getAmount()));
+								if (InternalFormatter.isRed(transaction, transaction.getTo().equals(TransactionFrame.this.associatedAccount)))
+									sb.append("</font>");
+							}
 
 							sb.append("  ");
 							sb.append(transaction.getFrom().getFullName())
@@ -187,12 +189,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	public void initPostPack() {
 		super.initPostPack();
 
-//		if (getDataModel().getTransactions().size() > 0)
-//		list.setPrototypeCellValue(getDataModel().getTransactions().get(0));
-//		Transaction prototype = new Transaction(getDataModel(), new Date(), "Description", 123456, getDataModel().getBudgetCategories().get(0), getDataModel().getBudgetCategories().get(0));
-//		prototype.setNumber("Number");
-//		prototype.setMemo("Testing 1, 2, 3, 4, 5");
-//		list.setPrototypeCellValue(prototype);
 		if (((Document) getDocument()).getBudgetCategories().size() > 0){
 			try {
 				list.setPrototypeCellValue(ModelFactory.createTransaction(new Date(), "Relatively long description", 12345678, ((Document) getDocument()).getBudgetCategories().get(0), ((Document) getDocument()).getBudgetCategories().get(0)));
@@ -400,7 +396,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		});
 
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTIONS) + " - " + associatedAccount.getFullName() + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
+		this.setTitle(TextFormatter.getTranslation((associatedAccount == null ? BuddiKeys.ALL_TRANSACTIONS : BuddiKeys.TRANSACTIONS)) 
+				+ (associatedAccount != null ? " - " + associatedAccount.getFullName() : "") 
+				+ dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setJMenuBar(new BuddiMenuBar(this));
 	}
 

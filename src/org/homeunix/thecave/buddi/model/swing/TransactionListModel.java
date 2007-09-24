@@ -16,7 +16,10 @@ public class TransactionListModel extends AbstractListModel {
 	private final FilteredLists.TransactionListFilteredBySearch transactions;
 	
 	public TransactionListModel(Document model, Account selectedAccount) {
-		this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedAccount));
+		if (selectedAccount == null)
+			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions());
+		else
+			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedAccount));
 	}
 	
 	public Object getElementAt(int index) {
