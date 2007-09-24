@@ -1,3 +1,7 @@
+2.9.4.0
+-Added splash screen for non OS X systems (OS X has user feedback via the bouncing dock icon, and a splash screen would not be needed)
+-Updated Norsk translation (Thanks to Gudbrand Hegge for this)
+
 2.9.3.0 (September 24 2007)
 This version should now be stable enough to be considered a normal Development build.  I am now using it for my production finance data, and it should be considered stable enough for all testers to do the same.  Please treat this as you would any Development software, and back up your data on a regular basis.  If you encounter any problems, please submit a bug report on the website.
 Changes:

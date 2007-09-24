@@ -54,6 +54,7 @@ import org.homeunix.thecave.moss.exception.OperationCancelledException;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
+import org.homeunix.thecave.moss.swing.MossSplashScreen;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.LookAndFeelUtil;
@@ -307,6 +308,9 @@ public class Buddi {
 		}, 
 		10 * 1000, //Save the first one after 10 seconds 
 		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide period
+		
+		//If it has not already been done, disable the splash screen now.
+		MossSplashScreen.hideSplash();
 	}
 
 
@@ -318,6 +322,8 @@ public class Buddi {
 		//Handle opening files from command line.
 		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
 			try {
+				MossSplashScreen.hideSplash();
+				
 				Document model;
 				model = ModelFactory.createDocument(f);
 
@@ -408,6 +414,10 @@ public class Buddi {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		if (!OperatingSystemUtil.isMac())
+			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
+		
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
@@ -477,7 +487,7 @@ public class Buddi {
 				}
 			});
 		}
-
+		
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
 			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
