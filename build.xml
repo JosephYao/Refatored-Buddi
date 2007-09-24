@@ -402,7 +402,7 @@
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/jcommon-1.0.10.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/jfreechart-1.0.6.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx-2007_09_23.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/SwingWorker.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
