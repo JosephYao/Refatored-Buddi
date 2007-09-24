@@ -118,7 +118,7 @@
 		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
 		<delete>
 			<fileset dir="${PROJECT_HOME}/build/">
-				<include name="installer.jar"/>
+<!--				<include name="installer.jar"/>-->
 				<include name="package.zip"/>
 				<include name="${BUILD_NAME}"/>
 			</fileset>
@@ -379,6 +379,9 @@
 				<include name="version.txt"/>
 				<include name="img/BuddiAboutLogo.png"/>
 				<include name="img/BuddiFrameIcon.gif"/>
+				<include name="doc/**.rtf"/>
+				<include name="doc/**.txt"/>
+				<include name="doc/Licenses/**"/>
 			</fileset>
 		</jar>
 
