@@ -106,6 +106,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * constructor.)
 	 */
 	public DocumentImpl() {
+		setMinimumChangeEventPeriod(0);
 		startBatchChange();
 	}
 

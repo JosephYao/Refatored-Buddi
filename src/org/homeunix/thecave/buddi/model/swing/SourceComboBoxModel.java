@@ -91,8 +91,6 @@ public class SourceComboBoxModel implements ComboBoxModel {
 			}
 		}
 		
-		comboBoxModel.
-		
 		setSelectedItem(selected);
 	}
 }
