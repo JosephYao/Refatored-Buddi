@@ -398,6 +398,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		if (resetUid)
 			setUid(ModelFactory.getGeneratedUid(this));
 		
+		//Check if we need to reset the password
+		if ((flags & RESET_PASSWORD) != 0){
+			password = null;
+			setFlag(RESET_PASSWORD, false);
+		}
+
+		
 		//Check if we need to change the password
 		if ((flags & CHANGE_PASSWORD) != 0){
 			BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();

@@ -14,7 +14,8 @@ import org.homeunix.thecave.moss.model.StandardDocument;
 
 public interface Document extends ModelObject, StandardDocument {
 
-	public static final int CHANGE_PASSWORD = 1;
+	public static final int RESET_PASSWORD = 1;  //Should we change the current password?
+	public static final int CHANGE_PASSWORD = 2; //Should we prompt for a password?
 	
 	public void addAccount(Account account) throws ModelException;
 	public void addAccountType(AccountType type) throws ModelException;

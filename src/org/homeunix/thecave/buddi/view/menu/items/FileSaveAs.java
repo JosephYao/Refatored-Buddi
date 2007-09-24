@@ -64,17 +64,20 @@ public class FileSaveAs extends MossMenuItem {
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
 			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
-			if (JOptionPane.showOptionDialog(
-					getFrame(), 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION_TITLE),
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE,
-					null,
-					options,
-					options[0]
-			) == JOptionPane.YES_OPTION)
-				((Document) ((MossDocumentFrame) getFrame()).getDocument()).setFlag(Document.CHANGE_PASSWORD, true);
+			
+			//Set whether we should change the password or not...
+			((Document) ((MossDocumentFrame) getFrame()).getDocument()).setFlag(Document.RESET_PASSWORD, true);
+			((Document) ((MossDocumentFrame) getFrame()).getDocument()).setFlag(Document.CHANGE_PASSWORD, 
+					(JOptionPane.showOptionDialog(
+							getFrame(), 
+							TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION),
+							TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION_TITLE),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							options,
+							options[0]
+					) == JOptionPane.YES_OPTION));
 			
 			((MossDocumentFrame) getFrame()).getDocument().saveAs(f);
 			getFrame().updateContent();
