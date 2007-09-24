@@ -834,7 +834,7 @@ public class Buddi {
 				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---");
 				String temp;
 				while ((temp = logReader.readLine()) != null)
-					crashLog.append(temp);
+					crashLog.append(temp).append("\n");
 				crashLog.append("---Finished Log File---");
 			}
 			catch (IOException ioe){}
@@ -848,7 +848,20 @@ public class Buddi {
 						+ URLEncoder.encode("Buddi Crash Report", "UTF-8").replaceAll("\\+", "%20") 
 						+ "&body="
 						+ URLEncoder.encode(
-								"There has been a serious problem encountered in Buddi, and Buddi has closed.  It is recommended that you send a crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) to help him troubleshoot the problem.  The following components may be included in the crash report:\n\t-Contents of your Preferences file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi log file\n\n.These components included as text in the body below, clearly marked between tags such as '---Starting Preferences---' and '---Finished Preferences---'.  If for privacy or other reasons you wish to remove one or more of these components, feel free to do so.\n\nIf you use a different mail program (such as a Web based email program), plese copy the entire contents of this email to that program, and send it to Wyatt.\n\nIf you do not wish to send this crash report at all, simply close this window.\n\n\n"
+								"There has been a serious problem encountered in Buddi, " +
+								"and Buddi has closed.  It is recommended that you send a " +
+								"crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) " +
+								"to help him troubleshoot the problem.  The following components may " +
+								"be included in the crash report:\n\t-Contents of your Preferences " +
+								"file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi " +
+								"log file\n\nThese components included as text in the body below, " +
+								"clearly marked between tags such as '---Starting Preferences---' " +
+								"and '---Finished Preferences---'.  If for privacy or other reasons you" +
+								" wish to remove one or more of these components, feel free to do so." +
+								"\n\nIf you use a different mail program (such as a Web based email " +
+								"program), plese copy the entire contents of this email to that program, " +
+								"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
+								"all, simply close this window.\n\n\n"
 								+ crashLog.toString()
 
 								, 

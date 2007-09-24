@@ -19,18 +19,13 @@ public class BudgetDateSpinnerModel extends SpinnerDateModel {
 	}
 		
 	public Object getNextValue() {
-//		System.out.println(getDate());
 		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), -1);
 	}
 	
 	public Object getPreviousValue() {
-//		System.out.println(getDate());
 		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), 1);
 	}
 	
 	@Override
-	public void setCalendarField(int calendarField) {
-		// TODO Auto-generated method stub
-//		super.setCalendarField(calendarField);
-	}
+	public void setCalendarField(int calendarField) {}
 }

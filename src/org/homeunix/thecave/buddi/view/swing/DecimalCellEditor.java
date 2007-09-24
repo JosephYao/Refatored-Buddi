@@ -17,24 +17,9 @@ import org.homeunix.thecave.moss.swing.MossDecimalField;
 public class DecimalCellEditor extends AbstractCellEditor implements TableCellEditor {
 	public static final long serialVersionUID = 0;
 
-//	private final JTable table;
 	private final MossDecimalField editor;// = new JDecimalField(0, true, 2);//{
-//		@Override
-//		public void keyPressed(KeyEvent e) {
-//			if (e.getKeyCode() == KeyEvent.VK_UP
-//					|| e.getKeyCode() == KeyEvent.VK_DOWN
-//					|| e.getKeyCode() == KeyEvent.VK_RIGHT
-//					|| e.getKeyCode() == KeyEvent.VK_LEFT){
-//				System.out.println("Arrows");
-//				return;
-//			}
-//
-//			super.keyPressed(e);
-//		}
-//	};
 
 	public DecimalCellEditor(MossDecimalField editor) {
-//		this.table = table;
 		this.editor = editor;
 		this.editor.setBorder(new LineBorder(Color.black));
 	}

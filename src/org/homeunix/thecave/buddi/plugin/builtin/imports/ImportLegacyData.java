@@ -138,8 +138,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 
 				if (oldCategory.getParent() != null){
 					Category oldParent = oldCategory.getParent();
-					if (model.getBudgetCategory(oldCategory.getFullName()) != null){
-						System.out.println(model.getBudgetCategory(oldCategory.getFullName()));						
+					if (model.getBudgetCategory(oldCategory.getFullName()) != null){						
 						((MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName())).setParent((MutableBudgetCategory) model.getBudgetCategory(oldParent.getFullName()));
 					}
 				}

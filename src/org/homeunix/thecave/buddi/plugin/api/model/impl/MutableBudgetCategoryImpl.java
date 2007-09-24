@@ -24,7 +24,6 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	}
 
 	public void setParent(MutableBudgetCategory budgetCategory) throws InvalidValueException{
-		System.out.println(budgetCategory);
 		if (budgetCategory == null)
 			getBudgetCategory().setParent(null);
 		else

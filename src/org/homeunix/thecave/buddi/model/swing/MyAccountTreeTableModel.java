@@ -93,7 +93,6 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
-		System.out.println("Firing 'Structure Changed' for MyAccountsTreeTableModel");
 		modelSupport.fireStructureChanged();
 	}
 

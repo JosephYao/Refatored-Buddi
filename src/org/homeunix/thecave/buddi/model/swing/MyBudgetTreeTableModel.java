@@ -242,7 +242,6 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
-		System.out.println("Firing 'Structure Changed' for MyBudgetTreeTableModel");
 		modelSupport.fireStructureChanged();
 	}
 }
