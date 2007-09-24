@@ -54,6 +54,7 @@ import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossSearchField;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEvent;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEventListener;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
@@ -82,7 +83,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private boolean disableListEvents = false;
 
 	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, "Transactions" + ((Document) parent.getDocument()).getUid() + account.getFullName(), "img/BuddiFrameIcon.gif");
+		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + account.getFullName());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
 		this.associatedAccount = account;
 		this.parent = parent;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);

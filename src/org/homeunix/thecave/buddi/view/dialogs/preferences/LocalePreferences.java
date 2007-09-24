@@ -32,7 +32,6 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor;
 import org.homeunix.thecave.buddi.i18n.BuddiLanguageEditor.BuddiLanguageEditorException;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -62,12 +61,12 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 		language = new MossScrollingComboBox(languageModel);
 		currencyModel = new DefaultComboBoxModel();
 		currencyFormat = new MossScrollingComboBox(currencyModel);
-		currencySymbolAfterAmount = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
+		currencySymbolAfterAmount = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_CURRENCY_SYMBOL_AFTER_AMOUNT));
 		dateFormatModel = new DefaultComboBoxModel();
 		dateFormat = new MossScrollingComboBox(dateFormatModel);
 		otherCurrencyButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
 		otherDateFormatButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OTHER));
-		editLanguagesButton = new JButton(TextFormatter.getTranslation(PreferencesKeys.EDIT_LANGUAGES));
+		editLanguagesButton = new JButton(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_EDIT_LANGUAGES));
 	}
 
 	@Override
@@ -79,9 +78,9 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 		JPanel dateFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel currencyFormatPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		JLabel dateFormatLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.DATE_FORMAT));
-		JLabel currencyFormatLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.CURRENCY));
-		JLabel languageLabel = new JLabel(TextFormatter.getTranslation(PreferencesKeys.LANGUAGE));
+		JLabel dateFormatLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_DATE_FORMAT));
+		JLabel currencyFormatLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_CURRENCY));
+		JLabel languageLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_LANGUAGE));
 
 		//Set up the language pulldown
 		language.setRenderer(new DefaultListCellRenderer(){
@@ -219,8 +218,8 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 		if (e.getSource().equals(otherCurrencyButton)){
 			String newCurrency = JOptionPane.showInputDialog(
 					null, 
-					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL), 
-					TextFormatter.getTranslation(PreferencesKeys.ENTER_CURRENCY_SYMBOL_TITLE), 
+					TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENTER_CURRENCY_SYMBOL), 
+					TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENTER_CURRENCY_SYMBOL_TITLE), 
 					JOptionPane.PLAIN_MESSAGE);
 
 			if (newCurrency != null && newCurrency.length() > 0){
@@ -248,8 +247,8 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 		else if (e.getSource().equals(otherDateFormatButton)){
 			String newDateFormat = JOptionPane.showInputDialog(
 					null, 
-					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT), 
-					TextFormatter.getTranslation(PreferencesKeys.ENTER_DATE_FORMAT_TITLE), 
+					TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENTER_DATE_FORMAT), 
+					TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENTER_DATE_FORMAT_TITLE), 
 					JOptionPane.PLAIN_MESSAGE);
 
 			if (newDateFormat != null 
@@ -266,7 +265,7 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 
 					JOptionPane.showOptionDialog(
 							null, 
-							TextFormatter.getTranslation(PreferencesKeys.ERROR_INCORRECT_FORMAT), 
+							TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ERROR_INCORRECT_FORMAT), 
 							TextFormatter.getTranslation(BuddiKeys.ERROR),
 							JOptionPane.DEFAULT_OPTION,
 							JOptionPane.ERROR_MESSAGE,

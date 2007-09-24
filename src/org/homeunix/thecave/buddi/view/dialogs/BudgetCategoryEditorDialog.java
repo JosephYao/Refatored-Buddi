@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,11 +15,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,9 +27,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
+import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
@@ -44,6 +43,8 @@ import org.homeunix.thecave.moss.data.list.CompositeList;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
+import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
+import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -61,12 +62,11 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	private final JButton ok;
 	private final JButton cancel;
 
-	private final ParentComboBoxModel parentComboBoxModel;
-
 	private final BudgetCategory selected;
 
 	private final Document model;
 
+	@SuppressWarnings("unchecked")
 	public BudgetCategoryEditorDialog(MainFrame frame, Document model, BudgetCategory selected) {
 		super(frame);
 
@@ -74,11 +74,12 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		this.model = model;
 
 		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
-		parentComboBoxModel = new ParentComboBoxModel(model);
-		parent = new JComboBox(parentComboBoxModel);
+		parent = new MossScrollingComboBox(new BackedComboBoxModel<BudgetCategory>(new CompositeList<BudgetCategory>(true, true, Arrays.asList(new BudgetCategory[]{null}), model.getBudgetCategories())));
+		if (parent.getModel().getSize() > 0)
+			parent.setSelectedIndex(0);
 		budgetCategoryType = new JComboBox(BudgetCategoryTypes.values()); 
-		income = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_INCOME));
-		expense = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_EXPENSE));
+		income = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_INCOME));
+		expense = new JRadioButton(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_EXPENSE));
 		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
@@ -93,12 +94,12 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		textPanel.add(textPanelLeft, BorderLayout.WEST);
 		textPanel.add(textPanelRight, BorderLayout.EAST);
 
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NAME)));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_PARENT)));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_BUDGET_PERIOD_TYPE)));		
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_TYPE)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_NAME)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_PARENT)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_BUDGET_PERIOD_TYPE)));		
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(""));
-//		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BudgetFrameKeys.BUDGET_EDITOR_NOTES)));
+//		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDGET_EDITOR_NOTES)));
 
 		textPanelRight.add(name);
 		textPanelRight.add(parent);
@@ -160,8 +161,15 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 				if (value == null)
 					this.setText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.NO_PARENT));
-				else if (value instanceof BudgetCategory)
-					this.setText(PrefsModel.getInstance().getTranslator().get(((BudgetCategory) value).getFullName()));
+				else if (value instanceof BudgetCategory){
+					BudgetCategory bc = (BudgetCategory) value;
+					this.setText(PrefsModel.getInstance().getTranslator().get(bc.getFullName()));
+
+					if (isSelected)
+						this.setForeground(Color.WHITE);
+					else
+						this.setForeground((bc.isIncome() ? Const.COLOR_JLIST_UNSELECTED_TEXT : Color.RED));
+				}
 				else
 					this.setText(" ");
 
@@ -256,38 +264,6 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		}
 		else if (e.getSource().equals(parent)){
 			updateButtons();
-		}
-	}
-
-	private class ParentComboBoxModel extends DefaultComboBoxModel {
-		private static final long serialVersionUID = 0; 
-
-		private final List<BudgetCategory> availableParents;
-		private int selectedIndex = 0;
-
-		public ParentComboBoxModel(Document model) {
-			List<BudgetCategory> blank = new LinkedList<BudgetCategory>();
-			blank.add(null);
-			List<List<? extends BudgetCategory>> allLists = new LinkedList<List<? extends BudgetCategory>>();
-			allLists.add(blank);
-			allLists.add(model.getBudgetCategories());
-			availableParents = new CompositeList<BudgetCategory>(true, true, allLists);
-		}
-
-		public Object getSelectedItem() {
-			return availableParents.get(selectedIndex);
-		}
-
-		public void setSelectedItem(Object arg0) {
-			selectedIndex = availableParents.indexOf(arg0);
-		}
-
-		public Object getElementAt(int arg0) {
-			return availableParents.get(arg0);
-		}
-
-		public int getSize() {
-			return availableParents.size();
 		}
 	}
 }

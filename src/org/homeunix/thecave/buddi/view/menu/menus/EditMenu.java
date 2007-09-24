@@ -13,6 +13,7 @@ import org.homeunix.thecave.buddi.view.menu.items.EditCopyBudgetCategoryValuesFo
 import org.homeunix.thecave.buddi.view.menu.items.EditDeleteAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditDeleteBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditDeleteTransaction;
+import org.homeunix.thecave.buddi.view.menu.items.EditEditAccountTypes;
 import org.homeunix.thecave.buddi.view.menu.items.EditModifyAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
@@ -21,8 +22,8 @@ import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.EditRecordTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteBudgetCategory;
-import org.homeunix.thecave.buddi.view.menu.items.EditViewScheduledTransactions;
-import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
+import org.homeunix.thecave.buddi.view.menu.items.EditEditScheduledTransactions;
+import org.homeunix.thecave.buddi.view.menu.items.EditEditTransactions;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
@@ -49,7 +50,9 @@ public class EditMenu extends MossMenu {
 				this.add(new EditDeleteAccount(frame));
 				this.add(new EditUndeleteAccount(frame));
 				this.addSeparator();
-				this.add(new EditViewTransactions(frame));
+				this.add(new EditEditAccountTypes(frame));
+				this.addSeparator();
+				this.add(new EditEditTransactions(frame));
 			}
 			else if (frame.isMyBudgetTabSelected()){
 				this.add(new EditNewBudgetCategory(frame));
@@ -62,7 +65,8 @@ public class EditMenu extends MossMenu {
 				this.addSeparator();
 			}
 
-			this.add(new EditViewScheduledTransactions(frame));
+			this.add(new EditEditScheduledTransactions(frame));
+			
 			if (!OperatingSystemUtil.isMac()){
 				this.addSeparator();
 				this.add(new EditPreferences(frame));

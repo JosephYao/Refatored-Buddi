@@ -28,7 +28,7 @@ public class EditNewBudgetCategory extends MossMenuItem{
 		}
 		catch (WindowOpenException woe){}
 		
-		((MainFrame) getFrame()).updateContent();
 		((MainFrame) getFrame()).fireStructureChanged();
+		((MainFrame) getFrame()).updateContent();
 	}
 }

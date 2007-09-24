@@ -11,7 +11,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -26,10 +25,10 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 	private final JCheckBox showReconcile;
 
 	public ViewPreferences() {
-		showDeleted = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_DELETED));
-		showAutoComplete = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.AUTO_COMPLETE_TRANSACTION_INFORMATION));
-		showClear = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_CLEAR));
-		showReconcile = new JCheckBox(TextFormatter.getTranslation(PreferencesKeys.SHOW_RECONCILE));
+		showDeleted = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_DELETED));
+		showAutoComplete = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_AUTO_COMPLETE_TRANSACTION_INFORMATION));
+		showClear = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_CLEAR));
+		showReconcile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_RECONCILE));
 	}
 
 	@Override

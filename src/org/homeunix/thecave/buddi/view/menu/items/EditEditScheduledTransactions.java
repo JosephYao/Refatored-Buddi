@@ -12,11 +12,11 @@ import org.homeunix.thecave.buddi.view.ScheduleFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
-public class EditViewScheduledTransactions extends MossMenuItem{
+public class EditEditScheduledTransactions extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
 	//This has to be a AccountFrame, as we need to get selected accounts.
-	public EditViewScheduledTransactions(MainFrame frame) {
+	public EditEditScheduledTransactions(MainFrame frame) {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_EDIT_SCHEDULED_TRANSACTIONS));
 	}
 

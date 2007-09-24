@@ -3,16 +3,16 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="junit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jcommon-1.0.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/BrowserLauncher2-10.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/SwingWorker.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Moss"/>
 	<classpathentry exported="true" kind="lib" path="lib/quaqua-3.9.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/swingx-2007_08_12.jar"/>
 	<classpathentry kind="lib" path="lib/emf.ecore.xmi_2.2.2.v200702010000.jar"/>
 	<classpathentry kind="lib" path="lib/emf.ecore_2.2.2.v200702010000.jar"/>
 	<classpathentry kind="lib" path="lib/emf.common_2.2.1.v200702010000.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.10.jar"/>
+	<classpathentry kind="lib" path="lib/BrowserLauncher2-1_3.jar"/>
+	<classpathentry kind="lib" path="lib/swingx-2007_08_12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

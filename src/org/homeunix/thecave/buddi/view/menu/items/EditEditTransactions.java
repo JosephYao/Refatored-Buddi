@@ -17,12 +17,12 @@ import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 
-public class EditViewTransactions extends MossMenuItem{
+public class EditEditTransactions extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 	
 	//This has to be a AccountFrame, as we need to get selected accounts.
-	public EditViewTransactions(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_VIEW_TRANSACTIONS),
+	public EditEditTransactions(MainFrame frame) {
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_EDIT_TRANSACTIONS),
 				KeyStroke.getKeyStroke(KeyEvent.VK_T, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 	}
 	

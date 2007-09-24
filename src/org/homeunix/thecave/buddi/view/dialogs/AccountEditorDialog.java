@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,9 +15,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,8 +24,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
@@ -40,6 +39,7 @@ import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
+import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
@@ -55,7 +55,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	private final JButton ok;
 	private final JButton cancel;
 
-	private final TypeComboBoxModel typeComboBoxModel;
+//	private final TypeComboBoxModel typeComboBoxModel;
 
 	private final Account selected;
 
@@ -68,8 +68,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		this.model = model;
 
 		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
-		typeComboBoxModel = new TypeComboBoxModel(model);
-		type = new JComboBox(typeComboBoxModel);
+		type = new JComboBox(new BackedComboBoxModel<AccountType>(model.getAccountTypes()));
+		if (type.getModel().getSize() > 0)
+			type.setSelectedIndex(0);
 		startingBalance = new MossDecimalField(true);
 		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
@@ -86,9 +87,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		textPanel.add(textPanelLeft, BorderLayout.WEST);
 		textPanel.add(textPanelRight, BorderLayout.EAST);
 
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_NAME)));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_TYPE)));
-		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(AccountFrameKeys.ACCOUNT_EDITOR_STARTING_BALANCE)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_NAME)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_TYPE)));
+		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_STARTING_BALANCE)));
 		
 		textPanelRight.add(name);
 		textPanelRight.add(type);
@@ -113,11 +114,19 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-				if (value instanceof AccountType)
-					this.setText(PrefsModel.getInstance().getTranslator().get(((AccountType) value).getName()));
+				if (value instanceof AccountType){
+					AccountType at = (AccountType) value;
+					this.setText(PrefsModel.getInstance().getTranslator().get(at.getName()));
+					
+					if (isSelected)
+						this.setForeground(Color.WHITE);
+					else
+						this.setForeground((at.isCredit() ? Color.RED : Const.COLOR_JLIST_UNSELECTED_TEXT));
+
+				}
 				else
 					this.setText(" ");
-
+				
 				return this;
 			}
 		});
@@ -217,33 +226,6 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		}
 		else if (e.getSource().equals(type)){
 			updateButtons();
-		}
-	}
-
-	private class TypeComboBoxModel extends DefaultComboBoxModel {
-		private static final long serialVersionUID = 0; 
-
-		private final List<AccountType> availableParents;
-		private int selectedIndex = 0;
-
-		public TypeComboBoxModel(Document model) {
-			availableParents = model.getAccountTypes();
-		}
-
-		public Object getSelectedItem() {
-			return availableParents.get(selectedIndex);
-		}
-
-		public void setSelectedItem(Object arg0) {
-			selectedIndex = availableParents.indexOf(arg0);
-		}
-
-		public Object getElementAt(int arg0) {
-			return availableParents.get(arg0);
-		}
-
-		public int getSize() {
-			return availableParents.size();
 		}
 	}
 }

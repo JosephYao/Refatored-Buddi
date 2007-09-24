@@ -5,10 +5,24 @@ package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
 
+/**
+ * Abstract definition of BudgetCategoryType.  Extend this object to define new 
+ * BudgetCategoryType classes.  (Note that it is highly recommended to not create
+ * new classes of this type yourself, as it will render data files which use it
+ * incompatible with other Buddi versions.  If you wish to define a new budget
+ * period type, please send the resulting class to Wyatt Olson to add into a future
+ * Buddi version)
+ * 
+ * @author wyatt
+ *
+ */
 public abstract class BudgetCategoryType {
+	
 	@Override
 	public boolean equals(Object obj) {
-		return toString().equals(obj.toString());
+		if (obj == null)
+			return false;
+		return this.toString().equals(obj.toString());
 	}
 	
 	/**

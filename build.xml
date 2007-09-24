@@ -394,16 +394,15 @@
 		<fatjar.build output="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
 			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
 
-
 			<!-- This is the project jar file, just compiled below -->
 			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar" relpath=""/>
 
 			<!-- These are all the included files which normally would go on the classpath -->
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-10.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/jcommon-1.0.5.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/jfreechart-1.0.1.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss-1.2.0.0.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-1_3.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/jcommon-1.0.10.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/jfreechart-1.0.6.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss.jar" relpath=""/>
+			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx-2007_09_23.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/SwingWorker.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
 			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>

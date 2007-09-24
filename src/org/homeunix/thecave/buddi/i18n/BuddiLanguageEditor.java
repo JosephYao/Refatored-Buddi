@@ -13,18 +13,14 @@ import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
-import org.homeunix.thecave.buddi.i18n.keys.AboutFrameKeys;
-import org.homeunix.thecave.buddi.i18n.keys.AccountFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
-import org.homeunix.thecave.buddi.i18n.keys.BudgetFrameKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MonthKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
-import org.homeunix.thecave.buddi.i18n.keys.PreferencesKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfMonth;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfWeek;
@@ -95,18 +91,14 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		// not automated, but the convenience of having multiple smaler key files
 		// makes up for it.
 		this.loadKeys((Enum[]) BuddiKeys.values());
-		this.loadKeys((Enum[]) AboutFrameKeys.values());
-		this.loadKeys((Enum[]) AccountFrameKeys.values());
 		this.loadKeys((Enum[]) BudgetCategoryTypes.values());
 		this.loadKeys((Enum[]) BudgetExpenseDefaultKeys.values());
-		this.loadKeys((Enum[]) BudgetFrameKeys.values());
 		this.loadKeys((Enum[]) BudgetIncomeDefaultKeys.values());
 		this.loadKeys((Enum[]) ButtonKeys.values());
 		this.loadKeys((Enum[]) MenuKeys.values());
 		this.loadKeys((Enum[]) MessageKeys.values());
 		this.loadKeys((Enum[]) MonthKeys.values());		
 		this.loadKeys((Enum[]) PluginRangeFilters.values());
-		this.loadKeys((Enum[]) PreferencesKeys.values());
 		this.loadKeys((Enum[]) ScheduleFrequency.values());
 		this.loadKeys((Enum[]) ScheduleFrequencyDayOfMonth.values());
 		this.loadKeys((Enum[]) ScheduleFrequencyDayOfWeek.values());

@@ -23,9 +23,13 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
+import org.homeunix.thecave.buddi.view.panels.MyAccountsPanel;
+import org.homeunix.thecave.buddi.view.panels.MyBudgetPanel;
+import org.homeunix.thecave.buddi.view.panels.MyReportsPanel;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;
@@ -37,8 +41,8 @@ public class MainFrame extends MossDocumentFrame {
 	private final JTabbedPane tabs;
 	
 	public MainFrame(Document model) {
-		super(model, "MainWindow_" + model.getUid() + "_" + (model.getFile() != null ? model.getFile().getAbsolutePath() : ""), "img/BuddiFrameIcon.gif");
-		
+		super(model, MainFrame.class.getName() + model.getUid() + "_" + model.getFile());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
 		myAccounts = new MyAccountsPanel(this);
 		myBudget = new MyBudgetPanel(this);
 		myReports = new MyReportsPanel(this);

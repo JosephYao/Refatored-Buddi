@@ -32,6 +32,7 @@ import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.model.BackedListModel;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
@@ -51,10 +52,11 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 	private final BackedListModel<ScheduledTransaction> listModel;
 	private final Document model;
 
-	public ScheduleFrame(MossDocumentFrame frame){
-		super(frame, "ScheduledTransactionFrame" + ((Document) frame.getDocument()).getUid(), "img/BuddiFrameIcon.gif");
+	public ScheduleFrame(MossDocumentFrame parent){
+		super(parent, ScheduleFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
 
-		this.model = (Document) frame.getDocument();
+		this.model = (Document) parent.getDocument();
 		
 //		scheduleEditor = new ScheduleEditorDialog(frame);
 

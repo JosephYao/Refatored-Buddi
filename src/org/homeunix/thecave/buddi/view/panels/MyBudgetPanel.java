@@ -1,7 +1,7 @@
 /*
  * Created on Jul 30, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view;
+package org.homeunix.thecave.buddi.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -38,6 +38,7 @@ import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTreeNameCellRenderer;

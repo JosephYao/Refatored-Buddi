@@ -98,12 +98,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	/**
 	 * By default, we start with one batch change enabled.  This is because, otherwise,
 	 * the XMLDecoder will cause many model change events to be fired, which will result in
-	 * much longer load times.  You must call finisheBatchChange() before any change 
+	 * much longer load times.  You must call finishBatchChange() before any change 
 	 * events will be sent!  ModelFactory does this for you automatically; as such,
 	 * you are much better off to use that to create Document objects.
 	 * 
 	 * (In fact, this constructor would be private, except for XMLDecoder's need for a public
-	 * constructor.)
+	 * constructor.  Don't use this unless you know exactly what you are doing!)
 	 */
 	public DocumentImpl() {
 		setMinimumChangeEventPeriod(0);

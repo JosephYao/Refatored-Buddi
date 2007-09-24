@@ -3,9 +3,6 @@
  */
 package org.homeunix.thecave.buddi.i18n.keys;
 
-
-
-
 /**
  * This class defines all months.
  * 

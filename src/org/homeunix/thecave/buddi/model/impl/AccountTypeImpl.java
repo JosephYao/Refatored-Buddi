@@ -48,6 +48,8 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 					return -1;
 				return 1;
 			}
+			
+			return this.getName().compareTo(t.getName());
 		}
 		return super.compareTo(o);
 	}

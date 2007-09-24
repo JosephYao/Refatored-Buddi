@@ -1,7 +1,7 @@
 /*
  * Created on Jul 30, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.view;
+package org.homeunix.thecave.buddi.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -29,7 +29,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.MyAccountTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.buddi.view.menu.items.EditViewTransactions;
+import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.menu.items.EditEditTransactions;
 import org.homeunix.thecave.buddi.view.swing.MyAccountTableAmountCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.MyAccountTreeNameCellRenderer;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -151,7 +152,7 @@ public class MyAccountsPanel extends MossPanel {
 		tree.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getClickCount() >= 2)
-					new EditViewTransactions(parent).doClick();
+					new EditEditTransactions(parent).doClick();
 				super.mouseClicked(arg0);
 			}
 		});

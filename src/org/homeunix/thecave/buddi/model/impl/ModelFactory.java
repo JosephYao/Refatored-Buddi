@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -199,6 +200,13 @@ public class ModelFactory {
 		//Update all balances...
 		document.updateAllBalances();
 
+		//Sort lists...
+		Collections.sort(document.getAccounts());
+		Collections.sort(document.getAccountTypes());
+		Collections.sort(document.getBudgetCategories());
+		Collections.sort(document.getTransactions());
+		Collections.sort(document.getScheduledTransactions());
+		
 		//Allow changes to start firing
 		document.finishBatchChange();
 		
@@ -302,6 +310,13 @@ public class ModelFactory {
 
 					//Check for scheduled transactions
 					document.updateScheduledTransactions();
+					
+					//Sort lists...
+					Collections.sort(document.getAccounts());
+					Collections.sort(document.getAccountTypes());
+					Collections.sort(document.getBudgetCategories());
+					Collections.sort(document.getTransactions());
+					Collections.sort(document.getScheduledTransactions());
 					
 					//Allow changes to start firing
 					document.finishBatchChange();

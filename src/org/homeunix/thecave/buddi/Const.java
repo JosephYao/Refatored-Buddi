@@ -129,9 +129,13 @@ public class Const {
 	public final static String LOG_FILE = "Buddi.log";
 	
 	//Colors
-	public final static Color COLOR_SELECTED = new JList().getSelectionBackground(); // new Color(181, 213, 255);
-	public final static Color COLOR_SELECTED_TEXT = new JList().getSelectionForeground();
-	public final static Color COLOR_UNSELECTED_TEXT = new JList().getForeground();
+	public final static Color COLOR_JLIST_SELECTED_BACKGROUND = new JList().getSelectionBackground(); // new Color(181, 213, 255);
+	public final static Color COLOR_JLIST_SELECTED_TEXT = new JList().getSelectionForeground();
+	public final static Color COLOR_JLIST_UNSELECTED_TEXT = new JList().getForeground();
+
+//	public final static Color COLOR_JCOMBOBOX_SELECTED_TEXT = new DefaultListCellRenderer().getListCellRendererComponent(new JList(), "Test", 0, true, false).getForeground();
+//	public final static Color COLOR_JCOMBOBOX_UNSELECTED_TEXT = new DefaultListCellRenderer().getListCellRendererComponent(new JList(), "Test", 0, false, false).getForeground();	
+	
 	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);
 	public final static Color COLOR_EVEN_ROW = new Color(237, 243, 254);
 	public final static Color COLOR_ODD_ROW = Color.WHITE;

@@ -25,6 +25,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
@@ -37,7 +38,8 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	private final JButton cancelButton;
 	
 	public PreferencesFrame() {
-		super("img/BuddiFrameIcon.gif");
+		super("Preferences");
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
 		tabs = new JTabbedPane();
 		
 		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		
