@@ -6,12 +6,10 @@ package org.homeunix.thecave.buddi.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -40,8 +38,8 @@ public class AboutFrame extends MossFrame implements ActionListener {
 
 	public AboutFrame() {
 		super("AboutFrame");
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
-		
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
+
 		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		donateButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DONATE));
 
@@ -56,9 +54,9 @@ public class AboutFrame extends MossFrame implements ActionListener {
 
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
-				"<html><center><h1>")
-				.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI))
-				.append("</h1></center></html>");
+		"<html><center><h1>")
+		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI))
+		.append("</h1></center></html>");
 
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
@@ -83,27 +81,25 @@ public class AboutFrame extends MossFrame implements ActionListener {
 			cl = MossFrame.class.getClassLoader();
 		}
 
-		URL imageResource = cl.getResource("img/BuddiAboutLogo.png");
-		if (imageResource != null) {
-			title.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageResource)));
-			title.setVerticalTextPosition(JLabel.BOTTOM);
-		}
+
+		title.setIcon(new ImageIcon(ClassLoaderFunctions.getImageFromClasspath("img/BuddiAboutLogo.png")));
+		title.setVerticalTextPosition(JLabel.BOTTOM);
 
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(
-				"<html><center>")
-				.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_TEXT))
-				.append("<br><br>")
-				.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_COPYRIGHT))
-				.append("<br>&lt;")
-				.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_EMAIL))
-				.append("&gt;<br><a href='")
-				.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
-				.append("'>")
-				.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
-				.append("</a><br><br>")
-				.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_GPL))
-				.append("</center></html>");
+		"<html><center>")
+		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_TEXT))
+		.append("<br><br>")
+		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_COPYRIGHT))
+		.append("<br>&lt;")
+		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_EMAIL))
+		.append("&gt;<br><a href='")
+		.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
+		.append("'>")
+		.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
+		.append("</a><br><br>")
+		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_GPL))
+		.append("</center></html>");
 
 		text = new JLabel(sbText.toString());
 
@@ -124,7 +120,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 
 	public void init() {
 		super.init();
-		
+
 		okButton.addActionListener(this);
 		donateButton.addActionListener(this);
 

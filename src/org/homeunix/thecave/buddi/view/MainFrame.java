@@ -42,7 +42,7 @@ public class MainFrame extends MossDocumentFrame {
 	
 	public MainFrame(Document model) {
 		super(model, MainFrame.class.getName() + model.getUid() + "_" + model.getFile());
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		myAccounts = new MyAccountsPanel(this);
 		myBudget = new MyBudgetPanel(this);
 		myReports = new MyReportsPanel(this);

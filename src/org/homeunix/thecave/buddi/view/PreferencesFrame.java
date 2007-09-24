@@ -39,7 +39,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	public PreferencesFrame() {
 		super("Preferences");
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		tabs = new JTabbedPane();
 		
 		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		

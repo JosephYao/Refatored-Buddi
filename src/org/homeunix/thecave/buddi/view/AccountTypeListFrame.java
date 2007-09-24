@@ -53,7 +53,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 
 	public AccountTypeListFrame(MainFrame parent){
 		super(parent, AccountTypeListFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 
 		this.frame = parent;
 		this.model = (Document) parent.getDocument();

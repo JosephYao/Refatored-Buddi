@@ -84,7 +84,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	public TransactionFrame(MainFrame parent, Account account){
 		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + account.getFullName());
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		this.associatedAccount = account;
 		this.parent = parent;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);

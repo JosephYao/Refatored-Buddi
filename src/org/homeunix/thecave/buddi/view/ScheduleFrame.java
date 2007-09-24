@@ -54,7 +54,7 @@ public class ScheduleFrame extends MossAssociatedDocumentFrame implements Action
 
 	public ScheduleFrame(MossDocumentFrame parent){
 		super(parent, ScheduleFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
-		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif").getImage());
+		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 
 		this.model = (Document) parent.getDocument();
 		
