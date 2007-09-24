@@ -38,7 +38,6 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.TransactionEditor;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.BiWeeklyCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.DailyCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.MonthlyByDateCard;
@@ -48,6 +47,7 @@ import org.homeunix.thecave.buddi.view.dialogs.schedule.OneDayEveryMonthCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.ScheduleCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.WeekdayCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.WeeklyCard;
+import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
@@ -73,7 +73,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 	private final JXDatePicker startDateChooser;
 	private final JXDatePicker endDateChooser;
 	private final JCheckBox endDateChooserEnabled;
-	private final TransactionEditor transactionEditor;
+	private final TransactionEditorPanel transactionEditor;
 
 	//Each card
 	private final MonthlyByDateCard monthly;
@@ -105,7 +105,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		startDateChooser = new JXDatePicker();
 		endDateChooser = new JXDatePicker();
 		endDateChooserEnabled = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.ENDING_ON));
-		transactionEditor = new TransactionEditor((Document) parentFrame.getDocument(), null, true);
+		transactionEditor = new TransactionEditorPanel((Document) parentFrame.getDocument(), null, true);
 
 		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
 
@@ -157,6 +157,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		endDateChooser.setPreferredSize(textSize);
 		scheduleName.setPreferredSize(textSize);
 
+		transactionEditor.setPreferredSize(new Dimension(10, transactionEditor.getPreferredSize().height));
 
 
 		//The top part of the schedule information

@@ -27,6 +27,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.ScheduledTransactionEditorDialog;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.swing.ScheduledTransactionListCellRenderer;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
@@ -141,6 +142,7 @@ public class ScheduledTransactionListFrame extends MossAssociatedDocumentFrame i
 		});
 
 		this.setTitle(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_EDIT_SCHEDULED_TRANSACTIONS));
+		this.setJMenuBar(new BuddiMenuBar(this));
 		this.setLayout(new BorderLayout());
 		this.add(scrollPanel, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);

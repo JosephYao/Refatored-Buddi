@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -30,6 +32,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.AccountTypeEditorDialog;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -139,6 +142,16 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 				AccountTypeListFrame.this.updateButtons();
 			}
 		});
+		
+		list.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= 2)
+					editButton.doClick();
+			}
+		});
+		
+		this.setJMenuBar(new BuddiMenuBar(this));
 	}
 
 	public void actionPerformed(ActionEvent e) {

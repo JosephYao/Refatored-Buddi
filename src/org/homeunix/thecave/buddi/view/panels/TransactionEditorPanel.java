@@ -3,7 +3,7 @@
  * 
  * A utility class which allows editing of transactions.
  */
-package org.homeunix.thecave.buddi.view;
+package org.homeunix.thecave.buddi.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -71,7 +71,7 @@ import org.jdesktop.swingx.JXDatePicker;
  * @author wyatt
  *
  */
-public class TransactionEditor extends MossPanel {
+public class TransactionEditorPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
 
 	private final Vector<JComponent> components;
@@ -98,7 +98,7 @@ public class TransactionEditor extends MossPanel {
 
 	private boolean changed;
 
-	public TransactionEditor(Document model, Account associatedAccount, boolean scheduledTransactionPane){
+	public TransactionEditorPanel(Document model, Account associatedAccount, boolean scheduledTransactionPane){
 		super(true);
 		this.model = model;
 		this.associatedAccount = associatedAccount;
@@ -251,7 +251,7 @@ public class TransactionEditor extends MossPanel {
 		for (JComponent component : components) {
 			component.addKeyListener(new KeyAdapter(){
 				public void keyTyped(KeyEvent arg0) {
-					TransactionEditor.this.setChanged(true);
+					TransactionEditorPanel.this.setChanged(true);
 					super.keyTyped(arg0);
 				}
 			});
@@ -361,13 +361,13 @@ public class TransactionEditor extends MossPanel {
 
 		reconciled.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				TransactionEditor.this.setChanged(true);
+				TransactionEditorPanel.this.setChanged(true);
 			}
 		});
 
 		cleared.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				TransactionEditor.this.setChanged(true);
+				TransactionEditorPanel.this.setChanged(true);
 			}
 		});
 

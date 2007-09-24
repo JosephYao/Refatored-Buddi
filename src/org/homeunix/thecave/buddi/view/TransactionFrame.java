@@ -46,6 +46,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
+import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
 import org.homeunix.thecave.buddi.view.swing.TransactionCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -68,7 +69,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	private final JXList list;
 
-	private final TransactionEditor transactionEditor;
+	private final TransactionEditorPanel transactionEditor;
 	private final JButton recordButton;
 	private final JButton clearButton;
 	private final JButton deleteButton;
@@ -154,7 +155,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 
 		//Set up the editing portion
-		transactionEditor = new TransactionEditor((Document) parent.getDocument(), associatedAccount, false);
+		transactionEditor = new TransactionEditorPanel((Document) parent.getDocument(), associatedAccount, false);
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));

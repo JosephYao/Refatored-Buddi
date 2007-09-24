@@ -22,6 +22,7 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -121,6 +122,8 @@ public class AboutFrame extends MossFrame implements ActionListener {
 	public void init() {
 		super.init();
 
+		this.setJMenuBar(new BuddiMenuBar(this));
+		
 		okButton.addActionListener(this);
 		donateButton.addActionListener(this);
 

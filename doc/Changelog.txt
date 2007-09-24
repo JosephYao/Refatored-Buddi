@@ -1,4 +1,6 @@
-2.9.3.0
+2.9.3.0 (September 24 2007)
+This version should now be stable enough to be considered a normal Development build.  I am now using it for my production finance data, and it should be considered stable enough for all testers to do the same.  Please treat this as you would any Development software, and back up your data on a regular basis.  If you encounter any problems, please submit a bug report on the website.
+Changes:
 -Created a custom installer for Windows; the basic Windows .exe is now this installer.  If there is demand for it, I can make the standalone .exe available as well, but I think the installer is much nicer.  The installer will prompt for a location to install, and extract Buddi there.  It will also set up a shortcut in the start menu, and associate Buddi data, plugin, and language files to Buddi.  NOTE: This installer has only been tested on Windows XP.  Any and all testing which can be done would be most appreciated.
 -Completely rebuild the ant build.xml file.  Now we use this file exclusively for building.  This is cleaner, and it also gives us some new features (such as being able to make .rpm files, at least in the near future).
 -Fixed bug #1800382 (incorrect object in API)
@@ -6,6 +8,7 @@
 -Fixed bug #1800417
 -Fixed bug #1800429
 -Fixed bug #1800825
+-Fixed numerous small UI issues
 -Fixed user-reported Null Pointer Exception bug.
 
 2.9.2.0 (September 19 2007)

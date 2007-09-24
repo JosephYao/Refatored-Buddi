@@ -57,7 +57,7 @@ public class MainFrame extends MossDocumentFrame {
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_BUDGET), myBudget);
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_REPORTS), myReports);
 
-		MainFrame.this.setJMenuBar(new BuddiMenuBar(MainFrame.this));
+		this.setJMenuBar(new BuddiMenuBar(this));
 		
 		ComponentAdapter tabSelectListener = new ComponentAdapter(){
 			@Override
