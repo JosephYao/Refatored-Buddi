@@ -290,10 +290,6 @@ public class ModelFactory {
 					}
 					is.close();
 					
-//					//If this is not a backup restore file, do a backup
-//					if (!fileToLoad.getName().endsWith(Const.BACKUP_FILE_EXTENSION))
-//						document.doBackupDataFile();
-
 					//Refresh the UID Map...
 					document.refreshUidMap();
 

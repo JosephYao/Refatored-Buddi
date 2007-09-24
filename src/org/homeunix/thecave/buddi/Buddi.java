@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -822,9 +823,20 @@ public class Buddi {
 
 		if (models != null){
 			for (Document m : models) {
-				crashLog.append("---Starting Data File---\n");
-				crashLog.append(m.saveToString());
-				crashLog.append("---Finished Data File---\n\n");
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				try {
+					m.saveToStream(baos);
+
+					crashLog.append("---Starting Data File---\n");
+					crashLog.append(baos.toString());
+					crashLog.append("---Finished Data File---\n\n");
+				}
+				catch (DocumentSaveException dse){
+					crashLog.append("---Starting Data File---\n");
+					crashLog.append("Error: Could not save to stream:");
+					crashLog.append(dse.getMessage());
+					crashLog.append("---Finished Data File---\n\n");					
+				}
 			}
 		}
 

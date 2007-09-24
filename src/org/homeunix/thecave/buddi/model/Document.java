@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.homeunix.thecave.moss.model.StandardDocument;
 
 public interface Document extends ModelObject, StandardDocument {
 
+	public static final int CHANGE_PASSWORD = 1;
+	
 	public void addAccount(Account account) throws ModelException;
 	public void addAccountType(AccountType type) throws ModelException;
 	public void addBudgetCategory(BudgetCategory budgetCategory) throws ModelException;
@@ -38,8 +41,9 @@ public interface Document extends ModelObject, StandardDocument {
 	public void removeScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException;
 	public void removeTransaction(Transaction transaction) throws ModelException;
 	public void save() throws DocumentSaveException;
-	public void saveAs(File file, int flags) throws DocumentSaveException;
-	public String saveToString();
+	public void saveAs(File file) throws DocumentSaveException;
+	public void saveToStream(OutputStream os) throws DocumentSaveException;
+	public void setFlag(int flag, boolean set);
 	public void updateAllBalances();
 	public void updateScheduledTransactions();
 

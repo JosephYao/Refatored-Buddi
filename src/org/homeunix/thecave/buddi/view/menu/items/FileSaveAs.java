@@ -16,7 +16,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
-import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -64,7 +64,6 @@ public class FileSaveAs extends MossMenuItem {
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
 			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
-			int flags = 0;
 			if (JOptionPane.showOptionDialog(
 					getFrame(), 
 					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION),
@@ -75,9 +74,9 @@ public class FileSaveAs extends MossMenuItem {
 					options,
 					options[0]
 			) == JOptionPane.YES_OPTION)
-				flags = flags | DocumentImpl.ENCRYPT_DATA_FILE;
+				((Document) ((MossDocumentFrame) getFrame()).getDocument()).setFlag(Document.CHANGE_PASSWORD, true);
 			
-			((MossDocumentFrame) getFrame()).getDocument().saveAs(f, flags);
+			((MossDocumentFrame) getFrame()).getDocument().saveAs(f);
 			getFrame().updateContent();
 		}
 		catch (DocumentSaveException dse){

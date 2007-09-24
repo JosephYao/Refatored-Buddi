@@ -7,7 +7,6 @@ import java.beans.Encoder;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLEncoder;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,8 +68,6 @@ import org.homeunix.thecave.moss.util.crypto.CipherException;
  * @author wyatt
  */
 public class DocumentImpl extends AbstractDocument implements ModelObject, Document {
-	public static final int ENCRYPT_DATA_FILE = 1;
-
 	//Store the password when loaded, and use the same one for save().
 	// This is obviously not the best practice to use 
 	// from a security point of view.  However, if a malicious
@@ -79,7 +76,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	// we call MossCryptoFactory anyways - the password is handed 
 	// there in plain text as well.  The window is already there - this
 	// just increases the time it is available for.
-	private char[] password; 	
+	private char[] password;
+	private int flags;
 
 	//Convenience class for checking if objects are already entered.
 	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
@@ -180,6 +178,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 
 
+
+	public void setFlag(int flag, boolean set) {
+		if (set)
+			this.flags |= flag;
+		else
+			this.flags = this.flags & ~flag;
+	}
 
 	public void addAccount(Account account) throws ModelException {
 		account.setDocument(this);
@@ -333,7 +338,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @throws SaveModelException
 	 */
 	public void save() throws DocumentSaveException {
-		saveWrapper(getFile(), 0, false);
+		saveWrapper(getFile(), false);
 	}
 
 	/**
@@ -343,12 +348,36 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @param flags.  Flags to set for saving.  AND together for multiple flags.
 	 * @throws SaveModelException
 	 */
-	public void saveAs(File file, int flags) throws DocumentSaveException {
-		saveWrapper(file, flags, true);
+	public void saveAs(File file) throws DocumentSaveException {
+		saveWrapper(file, true);
 	}
 
+	/**
+	 * Saves the autosave file, bypassing backups, etc.
+	 * @param file
+	 * @throws DocumentSaveException
+	 */
 	public void saveAuto(File file) throws DocumentSaveException {
-		saveInternal(file, 0);
+		//Save the file
+		try {
+			BuddiCryptoFactory factory = new BuddiCryptoFactory();
+			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+
+			saveToStream(os);
+
+		}
+		catch (CipherException ce){
+			//This means that there is something seriously wrong with the encryption methods.
+			// Perhaps the user's platform does not support the given methods.
+			// Notify the user, and cancel the save.
+			throw new DocumentSaveException(ce);
+		}
+		catch (IOException ioe){
+			//This means taht there was something wrong with the given file, or writing to
+			// it.  Perhaps the user does not have write access, the folder does not exist,
+			// or something similar.  Notify the user, and cancel the save.
+			throw new DocumentSaveException(ioe);
+		}
 	}
 
 	/**
@@ -360,7 +389,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @param resetUid
 	 * @throws DocumentSaveException
 	 */
-	private void saveWrapper(File file, int flags, boolean resetUid) throws DocumentSaveException {
+	private void saveWrapper(File file, boolean resetUid) throws DocumentSaveException {
 		//Do a rotating backup before saving
 		doBackupDataFile();
 		
@@ -369,8 +398,34 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		if (resetUid)
 			setUid(ModelFactory.getGeneratedUid(this));
 		
+		//Check if we need to change the password
+		if ((flags & CHANGE_PASSWORD) != 0){
+			BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+			password = passwordDialog.askForPassword(true, false);
+			setFlag(CHANGE_PASSWORD, false);
+		}
+		
 		//Save the file
-		saveInternal(file, flags);
+		try {
+			BuddiCryptoFactory factory = new BuddiCryptoFactory();
+			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+
+			saveToStream(os);
+
+		}
+		catch (CipherException ce){
+			//This means that there is something seriously wrong with the encryption methods.
+			// Perhaps the user's platform does not support the given methods.
+			// Notify the user, and cancel the save.
+			throw new DocumentSaveException(ce);
+		}
+		catch (IOException ioe){
+			//This means taht there was something wrong with the given file, or writing to
+			// it.  Perhaps the user does not have write access, the folder does not exist,
+			// or something similar.  Notify the user, and cancel the save.
+			throw new DocumentSaveException(ioe);
+		}
+
 
 		//Save where we last saved this file.
 		setFile(file);
@@ -388,78 +443,46 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 
 	/**
-	 * Very simple save method.  Will do the following:
-	 * 
-	 * 1) Prompt for password if the encryption flag is set.
-	 * 2) Stream the document to XML using the XMLEncoder, optionally using an encrypted 
-	 * output stream if the password is set.
+	 * Very simple save method.  Streams the document to XML using the 
+	 * XMLEncoder, optionally using an encrypted output stream if the password is set.
 	 * 
 	 * @param file
 	 * @param flags
 	 * @throws DocumentSaveException
 	 */
-	private void saveInternal(File file, int flags) throws DocumentSaveException {
-		if (file == null)
-			throw new DocumentSaveException("Error saving data file: specified file is null!");
+	public void saveToStream(OutputStream os) throws DocumentSaveException {
+		//We don't want to be firing change events in the middle of a save
+		startBatchChange();
 
-		try {
-			if ((flags & ENCRYPT_DATA_FILE) == 0){
-				password = null;
+		XMLEncoder encoder = new XMLEncoder(os);
+		encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
+			protected Expression instantiate(Object oldInstance, Encoder out ){
+				File file = (File) oldInstance;
+				String filePath = file.getAbsolutePath();
+				return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
 			}
-			else {
-				BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-				password = passwordDialog.askForPassword(true, false);
-			}
+		});
 
-			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+		encoder.writeObject(this);
+		encoder.flush();
+		encoder.close();
 
-			//We don't want to be firing change events in the middle of a save
-			startBatchChange();
-
-			XMLEncoder encoder = new XMLEncoder(os);
-			encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
-				protected Expression instantiate(Object oldInstance, Encoder out ){
-					File file = (File) oldInstance;
-					String filePath = file.getAbsolutePath();
-					return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
-				}
-			});
-
-			encoder.writeObject(this);
-			encoder.flush();
-			encoder.close();
-
-			finishBatchChange();
-		}
-		catch (CipherException ce){
-			//This means that there is something seriously wrong with the encryption methods.
-			// Perhaps the user's platform does not support the given methods.
-			// Notify the user, and cancel the save.
-			throw new DocumentSaveException(ce);
-		}
-		catch (IOException ioe){
-			//This means taht there was something wrong with the given file, or writing to
-			// it.  Perhaps the user does not have write access, the folder does not exist,
-			// or something similar.  Notify the user, and cancel the save.
-			throw new DocumentSaveException(ioe);
-		}
-
+		finishBatchChange();
 	}
 	/**
 	 * Streams the current Data Model object as an XML encoded string.  This is primarily meant
 	 * for troubleshooting crashes. 
 	 * @return
 	 */
-	public String saveToString(){
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		XMLEncoder encoder = new XMLEncoder(baos);
-		encoder.writeObject(this);
-		encoder.flush();
-		encoder.close();
-
-		return baos.toString();
-	}
+//	public String saveToString(){
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		XMLEncoder encoder = new XMLEncoder(baos);
+//		encoder.writeObject(this);
+//		encoder.flush();
+//		encoder.close();
+//
+//		return baos.toString();
+//	}
 	/**
 	 * Updates the balances of all accounts.  Iterates through all accounts, and
 	 * calls the updateBalance() method for each. 
