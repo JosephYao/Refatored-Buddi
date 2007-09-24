@@ -6,10 +6,12 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.Log;
@@ -18,7 +20,7 @@ public class EditCopyBudgetCategoryValuesForward extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
 	public EditCopyBudgetCategoryValuesForward(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_COPY_VALUES_TO_PREVIOUS_BUDGET_PERIOD));
+		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_PREVIOUS_BUDGET_PERIOD));
 	}
 
 	@Override
@@ -39,6 +41,12 @@ public class EditCopyBudgetCategoryValuesForward extends MossMenuItem{
 	@Override
 	public void updateMenus() {
 		super.updateMenus();
+		
+		MyBudgetTreeTableModel treeTableModel = ((MainFrame) getFrame()).getMyBudgetPanel().getTreeTableModel();
+		this.setText(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD) 
+				+ " (" + treeTableModel.getColumnName(2) + " "
+				+ TextFormatter.getTranslation(BuddiKeys.TO)
+				+ " " + treeTableModel.getColumnName(1) + ")");
 		
 		this.setEnabled(((MainFrame) getFrame()).getSelectedBudgetCategories().size() > 0);
 	}

@@ -132,6 +132,14 @@ public class MainFrame extends MossDocumentFrame {
 		return new LinkedList<BudgetCategory>();
 	}
 	
+	public MyAccountsPanel getMyAccountsPanel(){
+		return myAccounts;
+	}
+	
+	public MyBudgetPanel getMyBudgetPanel(){
+		return myBudget;
+	}
+	
 	public List<Account> getSelectedAccounts(){
 		if (isMyAccountsTabSelected())
 			return myAccounts.getSelectedAccounts();

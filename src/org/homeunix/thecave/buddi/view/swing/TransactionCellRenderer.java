@@ -188,18 +188,18 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			if (account != null
 					&& transaction.getFrom() != null
 					&& transaction.getFrom().equals(account)){
-				int xPos = width - 220 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount())); 
+				int xPos = width - 220 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false)); 
 				g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount()), xPos, bottomRowYPos);
+				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
 				g.setColor(textColor);
 			}
 			//Right Column
 			if (account != null
 					&& transaction.getTo() != null
 					&& transaction.getTo().equals(account)){
-				int xPos = width - 120 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount()));
+				int xPos = width - 120 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false));
 				g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
-				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount()), xPos, bottomRowYPos);
+				g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
 				g.setColor(textColor);
 			}
 
