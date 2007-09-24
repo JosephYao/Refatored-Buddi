@@ -50,8 +50,13 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		super.init();
 
 		//Load each plugin into the Preferences panel
-		for (BuddiPreferencePlugin panel : preferencePanels) {
-			tabs.addTab(PrefsModel.getInstance().getTranslator().get(panel.getName()), getWrapperPanel(panel.getPreferencesPanel()));
+		for (BuddiPreferencePlugin preferencePlugin : preferencePanels) {
+			JPanel panel;
+			if (preferencePlugin.isUseWrapper())
+				panel = getWrapperPanel(preferencePlugin.getPreferencesPanel());
+			else
+				panel = preferencePlugin.getPreferencesPanel();
+			tabs.addTab(PrefsModel.getInstance().getTranslator().get(preferencePlugin.getName()), panel);
 			
 		}
 		

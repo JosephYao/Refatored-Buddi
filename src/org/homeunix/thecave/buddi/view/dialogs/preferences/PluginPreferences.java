@@ -221,6 +221,10 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 					filesToRemove.add((File) o);
 				}
 			}
+			
+			for (File f : filesToRemove) {
+				pluginListModel.removeElement(f);
+			}
 		}
 	}
 
@@ -230,5 +234,10 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 
 	public Version getMinimumVersion() {
 		return null;
+	}
+	
+	@Override
+	public boolean isUseWrapper() {
+		return false;
 	}
 }
