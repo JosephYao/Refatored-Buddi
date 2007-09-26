@@ -61,6 +61,7 @@ public class PrefsModel {
 		prefsModel.setShowAutoComplete(true);
 		prefsModel.setShowDeleted(true);
 		prefsModel.setSendCrashReports(true);
+		prefsModel.setShowUpdateNotifications(true);
 
 		//Save the file
 		save();
@@ -109,6 +110,19 @@ public class PrefsModel {
 
 	public void setAutosaveDelay(int autosaveDelay) {
 		prefsModel.setAutosaveDelay(autosaveDelay);
+	}
+	
+	public boolean isShowFlatAccounts() {
+		return prefsModel.isShowFlatAccounts();
+	}
+	public void setShowFlatAccounts(boolean showFlatAccounts) {
+		prefsModel.setShowFlatAccounts(showFlatAccounts);
+	}
+	public boolean isShowFlatBudget() {
+		return prefsModel.isShowFlatBudget();
+	}
+	public void setShowFlatBudget(boolean showFlatBudget) {
+		prefsModel.setShowFlatBudget(showFlatBudget);
 	}
 	
 	public Version getLastVersion(){

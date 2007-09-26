@@ -11,6 +11,8 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	PREFERENCE_SHOW_FLAT_BUDGET,
+	PREFERENCE_SHOW_FLAT_ACCOUNTS,
 	ABOUT_BUDDI,
 	ABOUT_COPYRIGHT,
 	ABOUT_EMAIL,

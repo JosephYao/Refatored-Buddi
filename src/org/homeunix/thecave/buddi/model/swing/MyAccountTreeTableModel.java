@@ -23,13 +23,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	public MyAccountTreeTableModel(Document model) {
 		super(new Object());
 		this.model = model;
-		this.root = getRoot();
-		
-//		this.model.addDocumentChangeListener(new DocumentChangeListener(){
-//			public void documentChange(DocumentChangeEvent event) {
-//				fireStructureChanged();
-//			}
-//		});
+		this.root = getRoot();		
 	}
 
 	public int getColumnCount() {
@@ -51,9 +45,14 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
-			List<AccountType> types = new TypeListFilteredByAccounts(model);
-			if (childIndex < types.size())
-				return types.get(childIndex);
+			if (PrefsModel.getInstance().isShowFlatAccounts()){
+				return model.getAccounts().get(childIndex);
+			}
+			else{
+				List<AccountType> types = new TypeListFilteredByAccounts(model);
+				if (childIndex < types.size())
+					return types.get(childIndex);
+			}
 		}
 		if (parent instanceof AccountType){
 			List<Account> accounts = new AccountListFilteredByDeleted(model, new AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
@@ -65,8 +64,13 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
-			List<AccountType> types = new TypeListFilteredByAccounts(model);
-			return types.size();
+			if (PrefsModel.getInstance().isShowFlatAccounts()){
+				return model.getAccounts().size();
+			}
+			else{
+				List<AccountType> types = new TypeListFilteredByAccounts(model);
+				return types.size();
+			}
 		}
 		if (parent instanceof AccountType){
 			List<Account> accounts = new AccountListFilteredByDeleted(model, new AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
@@ -80,9 +84,15 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 		if (parent == null || child == null)
 			return -1;
 
-		if (parent.equals(root) && child instanceof AccountType){
-			List<AccountType> types = new TypeListFilteredByAccounts(model);
-			return types.indexOf(child);
+//		if (parent.equals(root) && child instanceof AccountType){
+		if (parent.equals(root)){
+			if (PrefsModel.getInstance().isShowFlatAccounts()){
+				return model.getAccounts().indexOf(child);
+			}
+			else{
+				List<AccountType> types = new TypeListFilteredByAccounts(model);
+				return types.indexOf(child);
+			}
 		}
 
 		if (parent instanceof AccountType && child instanceof Account){

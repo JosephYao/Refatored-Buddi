@@ -24,6 +24,7 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
+import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -129,6 +130,15 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 						options,
 						options[0]
 				);
+			}
+			
+			for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
+				if (frame instanceof MainFrame){
+					MainFrame main = (MainFrame) frame;
+					main.fireStructureChanged();
+					main.updateContent();
+					main.updateMenus();
+				}
 			}
 			
 			this.closeWindow();

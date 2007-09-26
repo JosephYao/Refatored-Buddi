@@ -44,7 +44,11 @@ public class PrefsModelBean {
 	private boolean showAutoComplete;
 	private boolean showCleared;
 	private boolean showReconciled;
-	private int numberOfBudgetColumns;
+	private boolean showFlatAccounts;
+	private boolean showFlatBudget;
+	//Currently hard coded to 4.  If we change this, we will need to change the menu item code
+	// which displays the dates to copy to / from, as well as other things.
+	private int numberOfBudgetColumns; 
 	
 	//Network Options
 	private boolean showProxySettings;
@@ -69,6 +73,21 @@ public class PrefsModelBean {
 			numberOfBudgetColumns = 4;
 		
 		return numberOfBudgetColumns;
+	}
+	
+	public boolean isShowFlatAccounts() {
+		System.out.println("Flat Accounts == " + showFlatAccounts);
+		return showFlatAccounts;
+	}
+	public void setShowFlatAccounts(boolean showFlatAccounts) {
+		System.out.println("Flat Accounts = " + showFlatAccounts);
+		this.showFlatAccounts = showFlatAccounts;
+	}
+	public boolean isShowFlatBudget() {
+		return showFlatBudget;
+	}
+	public void setShowFlatBudget(boolean showFlatBudget) {
+		this.showFlatBudget = showFlatBudget;
 	}
 
 	public void setNumberOfBudgetColumns(int numberOfBudgetColumns) {
