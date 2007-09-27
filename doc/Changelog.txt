@@ -1,4 +1,5 @@
 2.9.4.0 (September 26 2007)
+-Fixed bug which delayed the view updating of copied Budget Category values when copied back / forward a month
 -Added splash screen for non OS X systems (OS X has user feedback via the bouncing dock icon, and a splash screen would not be needed)
 -Updated Norsk translation (Thanks to Gudbrand Hegge for this)
 -Updated Nederlands translation (Thanks to Brent Huisman for this)

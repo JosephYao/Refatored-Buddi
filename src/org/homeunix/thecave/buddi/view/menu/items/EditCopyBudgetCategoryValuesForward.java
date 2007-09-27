@@ -35,6 +35,7 @@ public class EditCopyBudgetCategoryValuesForward extends MossMenuItem{
 			}
 		}
 
+		((MainFrame) getFrame()).fireStructureChanged();
 		((MainFrame) getFrame()).updateContent();
 	}
 	
