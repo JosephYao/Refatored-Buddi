@@ -1,3 +1,6 @@
+2.9.5.0
+-Implemented feature request #1800526 (Browse transactions by Category)
+
 2.9.4.0 (September 26 2007)
 -Fixed bug which delayed the view updating of copied Budget Category values when copied back / forward a month
 -Added splash screen for non OS X systems (OS X has user feedback via the bouncing dock icon, and a splash screen would not be needed)

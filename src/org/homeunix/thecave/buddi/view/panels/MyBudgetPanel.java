@@ -10,6 +10,8 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +41,7 @@ import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.menu.items.EditEditTransactions;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTreeNameCellRenderer;
@@ -158,6 +161,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 					BudgetCategory bc = (BudgetCategory) o;
 					bc.setExpanded(true);
 				}				
+			}
+		});
+		
+		tree.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+				if (arg0.getClickCount() >= 2)
+					new EditEditTransactions(parent).doClick();
+				super.mouseClicked(arg0);
 			}
 		});
 

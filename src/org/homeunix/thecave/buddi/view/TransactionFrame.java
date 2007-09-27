@@ -37,6 +37,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -79,16 +80,22 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final TransactionListModel listModel;
 
 	private final Account associatedAccount;
+	private final Source associatedSource; //Only used for updating title.
 	private final MainFrame parent;
 
 	private boolean disableListEvents = false;
 
-	public TransactionFrame(MainFrame parent, Account account){
-		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + (account != null ? account.getFullName() : ""));
+	public TransactionFrame(MainFrame parent, Source source){
+		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + (source != null ? source.getFullName() : ""));
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
-		this.associatedAccount = account;
+		this.associatedSource = source;
+		if (source instanceof Account)
+			this.associatedAccount = (Account) source;
+		else
+			this.associatedAccount = null;
+		this.listModel = new TransactionListModel((Document) parent.getDocument(), source);
 		this.parent = parent;
-		this.listModel = new TransactionListModel((Document) parent.getDocument(), account);
+		
 
 		dateFilterComboBox = new JComboBox();
 
@@ -165,11 +172,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	/**
 	 * Opens the window, and selects the given transaction.
-	 * @param account
+	 * @param source
 	 * @param transaction
 	 */
-	public TransactionFrame(MainFrame parent, Account account, Transaction transaction) {
-		this(parent, account);
+	public TransactionFrame(MainFrame parent, Source source, Transaction transaction) {
+		this(parent, source);
 
 		// Iterate backwards through the list of transacations, looking for the transaction
 		// which was just passed in.
@@ -397,8 +404,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		});
 
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-		this.setTitle(TextFormatter.getTranslation((associatedAccount == null ? BuddiKeys.ALL_TRANSACTIONS : BuddiKeys.TRANSACTIONS)) 
-				+ (associatedAccount != null ? " - " + associatedAccount.getFullName() : "") 
+		this.setTitle(TextFormatter.getTranslation((associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS : BuddiKeys.TRANSACTIONS)) 
+				+ (associatedSource != null ? " - " + associatedSource.getFullName() : "") 
 				+ dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 		this.setJMenuBar(new BuddiMenuBar(this));
 	}

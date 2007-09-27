@@ -6,16 +6,18 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.util.Log;
 
 public class EditEditTransactions extends MossMenuItem{
 	public static final long serialVersionUID = 0;
@@ -30,13 +32,31 @@ public class EditEditTransactions extends MossMenuItem{
 	public void updateMenus() {
 		super.updateMenus();
 		
-		this.setEnabled(((MainFrame) getFrame()).getSelectedAccounts().size() > 0);
+		if (((MainFrame) getFrame()).isMyAccountsTabSelected())
+			this.setEnabled(((MainFrame) getFrame()).getSelectedAccounts().size() > 0);
+		else if (((MainFrame) getFrame()).isMyBudgetTabSelected())
+			this.setEnabled(((MainFrame) getFrame()).getSelectedBudgetCategories().size() > 0);
+		else {
+			this.setEnabled(false);
+		}
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		((MainFrame) getFrame()).getDocument().startBatchChange();
-		for (Account a : ((MainFrame) getFrame()).getSelectedAccounts()) {
+		List<? extends Source> selectedSources;
+		
+		if (((MainFrame) getFrame()).isMyAccountsTabSelected())
+			selectedSources = ((MainFrame) getFrame()).getSelectedAccounts();
+		else if (((MainFrame) getFrame()).isMyBudgetTabSelected())
+			selectedSources = ((MainFrame) getFrame()).getSelectedBudgetCategories();
+		else {
+			Log.error("EditEditTransactions called from a menu other than MyAccounts or MyBudget!");
+			return;
+		}
+		
+		for (Source a : selectedSources) {
 			try {
 				TransactionFrame transactionsFrame = new TransactionFrame((MainFrame) getFrame(), a);
 				transactionsFrame.openWindow(PrefsModel.getInstance().getTransactionWindowSize(), PrefsModel.getInstance().getTransactionWindowLocation());

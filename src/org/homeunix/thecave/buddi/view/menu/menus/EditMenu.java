@@ -65,6 +65,8 @@ public class EditMenu extends MossMenu {
 				this.add(new EditCopyBudgetCategoryValuesBackwards(frame));
 				this.add(new EditCopyBudgetCategoryValuesForward(frame));
 				this.addSeparator();
+				this.add(new EditEditTransactions(frame));
+				this.add(new EditEditAllTransactions(frame));
 			}
 
 			this.add(new EditEditScheduledTransactions(frame));

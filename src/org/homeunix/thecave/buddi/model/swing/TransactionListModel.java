@@ -6,8 +6,8 @@ package org.homeunix.thecave.buddi.model.swing;
 import javax.swing.AbstractListModel;
 
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
-import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 
 public class TransactionListModel extends AbstractListModel {
@@ -15,11 +15,11 @@ public class TransactionListModel extends AbstractListModel {
 	
 	private final FilteredLists.TransactionListFilteredBySearch transactions;
 	
-	public TransactionListModel(Document model, Account selectedAccount) {
-		if (selectedAccount == null)
+	public TransactionListModel(Document model, Source selectedSource) {
+		if (selectedSource == null)
 			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions());
 		else
-			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedAccount));
+			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedSource));
 	}
 	
 	public Object getElementAt(int index) {
