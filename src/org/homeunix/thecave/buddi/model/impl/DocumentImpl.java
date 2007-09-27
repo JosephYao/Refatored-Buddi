@@ -361,7 +361,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//Save the file
 		try {
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+			OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
 			saveToStream(os);
 
@@ -415,7 +415,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//Save the file
 		try {
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			OutputStream os = factory.getCipherOutputStream(new FileOutputStream(file), password);
+			OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
 			saveToStream(os);
 

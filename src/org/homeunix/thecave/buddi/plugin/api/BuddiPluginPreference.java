@@ -4,6 +4,8 @@
 package org.homeunix.thecave.buddi.plugin.api;
 
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
+import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 
 /**
  * An abstract class which provides plugins the functionality of storing and
@@ -23,6 +25,7 @@ public abstract class BuddiPluginPreference {
 	}
 	
 	/**
+	 * Stores the value associated with a given key.
 	 * @param key The key to save.  In order to ensure that you do not
 	 * overwrite the preferences for another plugin, you must use
 	 * the key format as follows:
@@ -35,5 +38,44 @@ public abstract class BuddiPluginPreference {
 	 */
 	public void putPreference(String key, String value){
 		PrefsModel.getInstance().putPluginPreference(key, value);
+	}
+	
+	/**
+	 * Loads the value which is associated with the given key, after decrypting 
+	 * the value using the given password.
+	 * @param key
+	 * @param password
+	 * @return
+	 */
+	public String getSecurePreference(String key, char[] password) throws PluginException {
+		try {
+			BuddiCryptoFactory crypto = new BuddiCryptoFactory();
+			String ciphertext = PrefsModel.getInstance().getPluginPreference(key);
+			if (ciphertext == null)
+				return null;
+			return crypto.getDecryptedString(ciphertext, password);
+			
+		}
+		catch (Exception e){
+			throw new PluginException("Error getting encrypted preference from key " + key, e);
+		}
+	}
+	
+	/**
+	 * Stores the value, encrypted using the given password, into the preferences
+	 * file using the given key.
+	 * @param key
+	 * @param value
+	 * @param password
+	 */
+	public void putSecurePreference(String key, String value, char[] password) throws PluginException {
+		try {
+			BuddiCryptoFactory crypto = new BuddiCryptoFactory();
+			String encrypted = crypto.getEncryptedString(value, password);
+			PrefsModel.getInstance().putPluginPreference(key, encrypted);
+		}
+		catch (Exception e){
+			throw new PluginException("Error putting encrypted preference to key " + key, e);
+		}
 	}
 }

@@ -277,7 +277,7 @@ public class ModelFactory {
 			// or some other error occurs.
 			while (true) {
 				try {
-					is = factory.getCipherInputStream(new FileInputStream(fileToLoad), password);
+					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
 
 					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
 					XMLDecoder decoder = new XMLDecoder(is);
