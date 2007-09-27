@@ -76,11 +76,9 @@ public class PrefsModelBean {
 	}
 	
 	public boolean isShowFlatAccounts() {
-		System.out.println("Flat Accounts == " + showFlatAccounts);
 		return showFlatAccounts;
 	}
 	public void setShowFlatAccounts(boolean showFlatAccounts) {
-		System.out.println("Flat Accounts = " + showFlatAccounts);
 		this.showFlatAccounts = showFlatAccounts;
 	}
 	public boolean isShowFlatBudget() {
