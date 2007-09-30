@@ -4,7 +4,7 @@
 -Added Swedish (Svenska) translation  (Thanks to Ramon Radnoci for this)
 -Added ABOUT_TRANSLATION key for translators to include their name, email, and any comments.
 -Fixed bug #1804985 (Description missing in transaction window)
--Fixed bug which would let duplicate account / budget category / account type names be entered, in certain situations.
+-Fixed bug #1804989 (Under certain conditions, duplicate account / budget category / account type names would not be caught)
 
 2.9.4.0 (September 26 2007)
 -Fixed bug which delayed the view updating of copied Budget Category values when copied back / forward a month
