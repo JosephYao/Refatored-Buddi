@@ -21,7 +21,7 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
@@ -41,8 +41,8 @@ public class AboutFrame extends MossFrame implements ActionListener {
 		super("AboutFrame");
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 
-		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
-		donateButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DONATE));
+		okButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_OK));
+		donateButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE));
 
 		Dimension buttonSize = new Dimension(Math.max(100, donateButton.getPreferredSize().width), donateButton.getPreferredSize().height);
 
@@ -56,13 +56,13 @@ public class AboutFrame extends MossFrame implements ActionListener {
 		StringBuffer sbTitle = new StringBuffer();
 		sbTitle.append(
 		"<html><center><h1>")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI))
+		.append(TextFormatter.getTranslation(BuddiKeys.BUDDI))
 		.append("</h1></center></html>");
 
 		StringBuffer sbVersion = new StringBuffer();
 		sbVersion.append(
 		"<html><center><h5>")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_VERSION))
+		.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_VERSION))
 		.append(" ")
 		.append(Buddi.getVersion())
 		.append("</h5></center></html");
@@ -89,17 +89,21 @@ public class AboutFrame extends MossFrame implements ActionListener {
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(
 		"<html><center>")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_TEXT))
+		.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_TEXT))
 		.append("<br><br>")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_COPYRIGHT))
+		.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_COPYRIGHT))
 		.append("<br>&lt;")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_EMAIL))
+		.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_EMAIL))
 		.append("&gt;<br><a href='")
-		.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
+		.append(TextFormatter.getTranslation(Const.PROJECT_URL))
 		.append("'>")
-		.append(PrefsModel.getInstance().getTranslator().get(Const.PROJECT_URL))
-		.append("</a><br><br>")
-		.append(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_GPL))
+		.append(TextFormatter.getTranslation(Const.PROJECT_URL))
+		.append("</a><br><br>");
+		if (!TextFormatter.getTranslation(BuddiKeys.ABOUT_TRANSLATION).equals(BuddiKeys.ABOUT_TRANSLATION.toString())){
+			sbText.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_TRANSLATION))
+			.append("<br><br>");
+		}
+		sbText.append(TextFormatter.getTranslation(BuddiKeys.ABOUT_GPL))
 		.append("</center></html>");
 
 		text = new JLabel(sbText.toString());
@@ -114,7 +118,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 
 		this.setLayout(new BorderLayout());
 		this.getRootPane().setDefaultButton(okButton);
-		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ABOUT_BUDDI));
+		this.setTitle(TextFormatter.getTranslation(BuddiKeys.ABOUT_BUDDI));
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(inlayPanel, BorderLayout.CENTER);
 	}
