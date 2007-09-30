@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
@@ -240,9 +242,9 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 					bc = ModelFactory.createBudgetCategory(name.getText(), ModelFactory.getBudgetCategoryType(budgetCategoryType.getSelectedItem().toString()), income.isSelected());
 					bc.setParent((BudgetCategory) parent.getSelectedItem());
 					bc.setNotes(notes.getText());
-					Log.debug("Created new BudgetCategory " + bc);
-
 					model.addBudgetCategory(bc);
+					
+					Log.debug("Created new BudgetCategory " + bc);
 				}
 				else {
 					bc = selected;
@@ -251,13 +253,26 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 					bc.setPeriodType(ModelFactory.getBudgetCategoryType(budgetCategoryType.getSelectedItem().toString()));
 					bc.setIncome(income.isSelected());
 					bc.setNotes(notes.getText());
+					
+					Log.debug("Updated BudgetCategory " + bc);
 				}
+				
+				closeWindow();
 			}
 			catch (ModelException me){
-				Log.error("Error creating budget category", me);
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(this, 
+								TextFormatter.getTranslation(BuddiKeys.BUDGET_EDITOR_ERROR_UPDATING_CATEGORY), 
+								TextFormatter.getTranslation(BuddiKeys.ERROR), 
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]);
 			}
 
-			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){
 			closeWindow();

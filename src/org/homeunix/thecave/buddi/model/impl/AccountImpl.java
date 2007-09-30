@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -53,6 +54,16 @@ public class AccountImpl extends SourceImpl implements Account {
 	public void setAccountType(AccountType type) {
 		this.type = type;
 		setChanged();
+	}
+	@Override
+	public void setName(String name) throws InvalidValueException {
+		if (getDocument() != null){
+			for (Account a : ((Document) getDocument()).getAccounts()) {
+				if (a.getName().equals(name) && !a.equals(this))
+					throw new InvalidValueException("The account name must be unique");
+			}
+		}
+		super.setName(name);
 	}
 	public void updateBalance(){
 		if (getDocument() == null)

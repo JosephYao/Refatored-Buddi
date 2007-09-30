@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -26,6 +27,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
 import org.homeunix.thecave.moss.swing.MossDialog;
@@ -165,12 +167,23 @@ public class AccountTypeEditorDialog extends MossDialog implements ActionListene
 					at.setName(name.getText());
 					at.setCredit(credit.isSelected());
 				}
+				
+				closeWindow();
 			}
 			catch (ModelException me){
-				Log.error("Error creating budget category", me);
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(this, 
+								TextFormatter.getTranslation(BuddiKeys.ACCOUNT_TYPE_EDITOR_ERROR_UPDATING_ACCOUNT_TYPE), 
+								TextFormatter.getTranslation(BuddiKeys.ERROR), 
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]);
 			}
 
-			closeWindow();
 		}
 		else if (e.getSource().equals(cancel)){
 			closeWindow();

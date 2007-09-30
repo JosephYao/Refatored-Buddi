@@ -4,7 +4,9 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 /**
@@ -29,7 +31,13 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 	public String getName() {
 		return TextFormatter.getTranslation(name);
 	}
-	public void setName(String name) {
+	public void setName(String name) throws InvalidValueException {
+		if (getDocument() != null){
+			for (AccountType at : ((Document) getDocument()).getAccountTypes()) {
+				if (at.getName().equals(name) && !at.equals(this))
+					throw new InvalidValueException("The budget category name must be unique");
+			}
+		}
 		this.name = name;
 		setChanged();
 	}

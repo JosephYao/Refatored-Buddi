@@ -33,7 +33,7 @@ public abstract class SourceImpl extends ModelObjectImpl implements Source {
 		this.deleted = deleted;
 		setChanged();
 	}
-	public void setName(String name) {
+	public void setName(String name) throws InvalidValueException {
 		this.name = name;
 		setChanged();
 	}

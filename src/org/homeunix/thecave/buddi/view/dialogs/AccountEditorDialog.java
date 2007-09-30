@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -33,6 +34,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
@@ -217,8 +219,17 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 				closeWindow();
 			}
 			catch (ModelException me){
-				//TODO Check for valid before sending to model
-				Log.error("Error adding account", me);
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+				JOptionPane.showOptionDialog(this, 
+								TextFormatter.getTranslation(BuddiKeys.ACCOUNT_EDITOR_ERROR_UPDATING_ACCOUNT), 
+								TextFormatter.getTranslation(BuddiKeys.ERROR), 
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]);
 			}
 		}
 		else if (e.getSource().equals(cancel)){

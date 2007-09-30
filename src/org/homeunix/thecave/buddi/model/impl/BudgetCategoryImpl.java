@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
@@ -178,6 +179,16 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	public void setIncome(boolean income) {
 		this.income = income;
 		setChanged();
+	}
+	@Override
+	public void setName(String name) throws InvalidValueException {
+		if (getDocument() != null){
+			for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
+				if (bc.getName().equals(name) && !bc.equals(this))
+					throw new InvalidValueException("The budget category name must be unique");
+			}
+		}
+		super.setName(name);
 	}
 	public BudgetCategory getParent() {
 		return parent;

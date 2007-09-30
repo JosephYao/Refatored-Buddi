@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.sourceforge.net
-#Tue Sep 25 20:02:19 MDT 2007
+#Sun Sep 30 10:43:43 MDT 2007
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUTTON_OK=OK
@@ -121,6 +121,7 @@ SCHEDULE_DATE_TWENTYSIXTH=26th
 SCHEDULE_FREQUENCY_BIWEEKLY=Bi-Weekly
 ACCOUNT_EDITOR_INCOME=Income
 MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION_TITLE=Encrypt Data File
+ACCOUNT_EDITOR_ERROR_UPDATING_ACCOUNT=There was an error creating or updating this account.  This \nhappened because one of the fields was not valid.  \n\nThe usual cause of this error is if the account name has \nalready been used for a different account.  Make sure that \neach account name is unique.
 AUTO_COMPLETE_TRANSACTION_INFORMATION=Auto Complete Transaction Information
 SCHEDULE_MONTH_SEPTEMBER=September
 GROCERIES=Groceries
@@ -396,6 +397,7 @@ TOOLTIP_NUMBER=<html>Transaction number, such as cheque<br>number.  This field i
 LOAD_BACKUP_FILE=Load Backup File...
 MENU_FILE_BACKUP_MANAGER=Manage Backups...
 MENU_FILE_EXPORT=Export
+BUDGET_EDITOR_ERROR_UPDATING_CATEGORY=There was an error creating or updating this budget category.\nThis happened because one of the fields was not valid.  \n\nThe usual cause of this error is if the budget category name \nhas already been used.  Make sure that each budget category\nname is unique.
 BUDGET_EDITOR_EXPENSE=Expense
 CHEQUING=Chequing
 SCHEDULE_DATE_SECOND=2nd
@@ -572,13 +574,14 @@ MESSAGE_PLUGIN_ADDED_RESTART_NEEDED=You have just added a new translation to Bud
 MESSAGE_PERMANENT_DELETE_CATEGORY_TITLE=Permanently delete category?
 TYPE_MODIFY_EDIT=Edit Existing Type
 BUDDI=Buddi
-PLUGIN_FILTER_YEAR=Year
 MONTH_JUNE=June
+PLUGIN_FILTER_YEAR=Year
 ENTER_ACCOUNT_TYPE_NAME=You must enter the account type name
 SCHEDULE_DAY_TUESDAY=Tuesday
 HTML_TO=&rarr;
 TRANSACTIONS=Transactions
 INVESTMENT_INCOME=Investment Income
+ACCOUNT_TYPE_EDITOR_ERROR_UPDATING_ACCOUNT_TYPE=There was an error creating or updating the account \ntype.  Make sure that each account type name is unique.
 PROMPT_FOR_DATA_FILE_AT_STARTUP=Prompt for data file at startup
 MENU_WINDOW_MINIMIZE=Minimize
 MESSAGE_EMPTY_PASSWORD=You didn't specify a password.\nCannot open the encrypted data file.

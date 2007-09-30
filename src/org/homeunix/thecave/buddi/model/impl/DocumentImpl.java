@@ -665,6 +665,14 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 						throw new ModelException("Cannot have multiple accounts with the same name");
 				}
 			}
+			
+			if (object instanceof AccountType){
+				for (AccountType at : getAccountTypes()) {
+					if (at.getName().equalsIgnoreCase(((AccountType) object).getName()))
+						throw new ModelException("Cannot have multiple accounts types with the same name");
+				}
+			}
+
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
