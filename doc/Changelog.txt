@@ -1,6 +1,7 @@
 2.9.5.0
 -Implemented feature request #1800526 (Browse transactions by Category)
 -Implemented feature request #1803631 (Better spacing for transaction editor on non-Macintosh operating systems)
+-Added Swedish (Svenska) translation  (Thanks to Ramon Radnoci for this)
 -Added ABOUT_TRANSLATION key for translators to include their name, email, and any comments.
 -Fixed bug #1804985 (Description missing in transaction window)
 

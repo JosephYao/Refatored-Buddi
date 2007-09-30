@@ -158,6 +158,7 @@ public class Const {
 		"Portugues",
 		"Russian",
 		"Serbian",
+		"Svenska",
 	};
 	
 	public final static String[] BUNDLED_DOCUMENTS = {
