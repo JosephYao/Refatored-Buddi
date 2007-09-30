@@ -1,4 +1,4 @@
-2.9.5.0
+2.9.5.0 (September 30 2007)
 -Implemented feature request #1800526 (Browse transactions by Category)
 -Implemented feature request #1803631 (Better spacing for transaction editor on non-Macintosh operating systems)
 -Added Swedish (Svenska) translation  (Thanks to Ramon Radnoci for this)
