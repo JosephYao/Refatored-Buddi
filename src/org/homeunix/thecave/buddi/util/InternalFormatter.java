@@ -196,10 +196,7 @@ public class InternalFormatter {
 	}
 
 	public static boolean isRed(Account a, long value){
-		if (a.getAccountType().isCredit())
-			return value >= 0;
-		else
-			return value < 0;
+		return value < 0;
 	}
 	
 	public static boolean isRed(BudgetCategory c, long value){
@@ -214,12 +211,7 @@ public class InternalFormatter {
 	}
 
 	public static boolean isRed(AccountType t, long value){
-		if (t.isCredit()){
-			return value >= 0;	
-		}
-		else {
-			return value < 0;
-		}
+		return value < 0;
 	}
 	
 	public static boolean isRed(Transaction t){

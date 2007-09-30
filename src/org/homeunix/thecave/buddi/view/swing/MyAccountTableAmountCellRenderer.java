@@ -33,14 +33,11 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 
 		if (value instanceof Account){
 			Account a = (Account) value;
-			boolean red = InternalFormatter.isRed(a, a.getBalance());
-			if (a.getAccountType().isCredit())
-				red = !red;
 			this.setText(TextFormatter.getHtmlWrapper(
 					TextFormatter.getDeletedWrapper(
 							TextFormatter.getFormattedCurrency(
 									a.getBalance(), 
-									red, 
+									InternalFormatter.isRed(a, a.getBalance()), 
 									a.getAccountType().isCredit()
 							), a)));
 		}
@@ -50,11 +47,11 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 			for (Account a : new AccountListFilteredByType(document, document.getAccounts(), t)) {
 				amount += a.getBalance();
 			}
-			boolean red = InternalFormatter.isRed(t, amount);
-			if (t.isCredit())
-				red = !red;
 			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getFormattedCurrency(amount, red, t.isCredit())));
+					TextFormatter.getFormattedCurrency(
+							amount, 
+							InternalFormatter.isRed(t, amount), 
+							t.isCredit())));
 		}
 
 
