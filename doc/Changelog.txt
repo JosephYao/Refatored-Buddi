@@ -1,5 +1,7 @@
 2.9.5.0
 -Implemented feature request #1800526 (Browse transactions by Category)
+-Implemented feature request #1803631 (Better spacing for transaction editor on non-Macintosh operating systems)
+-Fixed bug #1804985 (Description missing in transaction window)
 
 2.9.4.0 (September 26 2007)
 -Fixed bug which delayed the view updating of copied Budget Category values when copied back / forward a month

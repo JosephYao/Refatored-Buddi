@@ -190,22 +190,36 @@ public class TransactionEditorPanel extends MossPanel {
 		cTop.gridx = 0;
 		topPanel.add(date, cTop);
 
+		if (!OperatingSystemUtil.isMac()){
+			cTop.weightx = 0.0;
+			cTop.ipadx = 5;
+			cTop.gridx = 1;
+			topPanel.add(new JLabel(), cTop);
+		}
+		
 		cTop.weightx = 0.5;
-		cTop.gridx = 1;
+		cTop.gridx = 2;
 		topPanel.add(description, cTop);
+		
+		if (!OperatingSystemUtil.isMac()){
+			cTop.weightx = 0.0;
+			cTop.ipadx = 5;
+			cTop.gridx = 3;
+			topPanel.add(new JLabel(), cTop);
+		}
 
 		cTop.weightx = 0.4;
-		cTop.gridx = 2;
+		cTop.gridx = 4;
 		topPanel.add(number, cTop);
 
 		if (PrefsModel.getInstance().isShowCleared()){
 			cTop.weightx = 0.0;
-			cTop.gridx = 3;
+			cTop.gridx = 5;
 			topPanel.add(cleared, cTop);
 		}
 		if (PrefsModel.getInstance().isShowReconciled()){	
 			cTop.weightx = 0.0;
-			cTop.gridx = 4;
+			cTop.gridx = 6;
 			topPanel.add(reconciled, cTop);
 		}
 
@@ -218,19 +232,26 @@ public class TransactionEditorPanel extends MossPanel {
 		cBottom.gridx = 0;
 		bottomPanel.add(amount, cBottom);
 
+		if (!OperatingSystemUtil.isMac()){
+			cBottom.weightx = 0.0;
+			cBottom.ipadx = 5;
+			cBottom.gridx = 1;
+			bottomPanel.add(new JLabel(), cBottom);
+		}
+		
 		cBottom.weightx = 0.5;
 		cBottom.ipadx = 0;
-		cBottom.gridx = 1;
+		cBottom.gridx = 2;
 		bottomPanel.add(from, cBottom);
 
 		cBottom.weightx = 0.0;
 		cBottom.ipadx = 0;
-		cBottom.gridx = 2;
+		cBottom.gridx = 3;
 		bottomPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.TO)), cBottom);
 
 		cBottom.weightx = 0.5;
 		cBottom.ipadx = 0;
-		cBottom.gridx = 3;
+		cBottom.gridx = 4;
 		bottomPanel.add(to, cBottom);
 
 		JPanel centerPanel = new JPanel();

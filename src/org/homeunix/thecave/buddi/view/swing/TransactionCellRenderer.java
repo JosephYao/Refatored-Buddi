@@ -155,7 +155,6 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				italic = new Font(f.getName(), Font.ITALIC, f.getSize());				
 			}
 			g.setFont(bold);
-			if (account == null)
 			g.drawString(Formatter.getLengthFormat(descriptionLength).format(transaction.getDescription()), 150, topRowYPos);
 			g.setFont(f);
 
