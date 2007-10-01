@@ -143,7 +143,7 @@ public class TransactionEditorPanel extends MossPanel {
 
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
-
+		
 		date.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
 		date.setDate(new Date());
 

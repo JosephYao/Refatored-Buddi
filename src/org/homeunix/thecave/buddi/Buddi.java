@@ -627,8 +627,13 @@ public class Buddi {
 //		Log.notice("Set working directory to " + userDir);
 
 		//Set Buddi-specific LnF options.
-		//This one removes the width limitation for dialogs.  Since we already 
+		//This one removes the width limitation for dialogs.  Since we already will
+		// wrap for other OS's, there is no need to have Quaqua do this for you.
 		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
+		//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
+		// so we must set it here manually. 
+		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
+		
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Buddi");
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.

@@ -78,16 +78,14 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		Collections.sort(budgetCategories);		
 		
 		getComboBoxModel().removeAllElements();
-		getComboBoxModel().addElement(null);
+//		getComboBoxModel().addElement(null);
 		for (Account a : accounts) {
 			getComboBoxModel().addElement(a);
-			Log.debug(a);
 		}
 		getComboBoxModel().addElement(null);
 		for (BudgetCategory bc : budgetCategories) {
 			if (bc.isIncome() == includeIncome){
 				getComboBoxModel().addElement(bc);
-				Log.debug(bc);	
 			}
 		}
 		
