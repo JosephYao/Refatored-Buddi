@@ -709,8 +709,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void updateScheduledTransactions(){
 		startBatchChange();
 
-		boolean changed = false;  //Set to true if we do anything.  If we do, we will set the model to changed when done.
-
 		//Update any scheduled transactions
 		final Date today = DateFunctions.getEndOfDay(new Date());
 		//We specify a GregorianCalendar because we make some assumptions
@@ -915,7 +913,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 							this.addTransaction(t);
 							if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
-							changed = true;
 						}
 					}
 					else {
@@ -935,11 +932,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		}
 
 		finishBatchChange();
-
 		updateAllBalances();
-
-		if (changed)
-			setChanged();
 	}
 
 	public void setPassword(char[] password) {

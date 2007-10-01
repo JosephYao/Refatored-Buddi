@@ -858,11 +858,11 @@ public class Buddi {
 		if (logFile != null){
 			try{
 				BufferedReader logReader = new BufferedReader(new FileReader(logFile));
-				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---");
+				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
 				String temp;
 				while ((temp = logReader.readLine()) != null)
 					crashLog.append(temp).append("\n");
-				crashLog.append("---Finished Log File---");
+				crashLog.append("---Finished Log File---\n");
 			}
 			catch (IOException ioe){}
 		}

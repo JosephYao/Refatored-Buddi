@@ -161,6 +161,9 @@ public class MainFrame extends MossDocumentFrame {
 		return tabs.getSelectedIndex() == 2;
 	}
 	
+	/**
+	 * Calls updateContent() for each open MainFrame object.
+	 */
 	public static void updateAllContent(){
 		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			frame.updateContent();
