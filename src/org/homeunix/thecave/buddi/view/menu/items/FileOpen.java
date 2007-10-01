@@ -24,6 +24,7 @@ import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
+import org.homeunix.thecave.moss.util.Log;
 
 public class FileOpen extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -53,7 +54,9 @@ public class FileOpen extends MossMenuItem {
 			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
 		}
 		catch (OperationCancelledException oce){}  //Do nothing
-		catch (DocumentLoadException dle){}
+		catch (DocumentLoadException dle){
+			Log.error("Error loading file", dle);
+		}
 		catch (WindowOpenException foe){}
 	}
 }

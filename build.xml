@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="ImageTagger" default="all" basedir=".">
+<project name="Buddi" default="jar" basedir=".">
 
 	<!-- Set up all the machine dependent properties in this file.  A sample should be provided 
 		 in the project, called ant.properties.sample.  -->
@@ -288,7 +288,7 @@
 
 	</target>
 
-	<target name="source" depends="clean" description="Exports the source and tars the bundle">
+	<target name="source" depends="clean" description="Exports the source and tars the bundle.  Requires the SVN Ant path to be set up in the ant.properties file.">
 		<!-- Define the JarBundler path -->
 		<path id="SVNANT_CLASSPATH">
 			<fileset dir="${SVNANT_PATH}">
@@ -332,7 +332,11 @@
 		</javadoc>
 	</target>
 
-	<target name="release" depends="all,javadocs" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.">
+	<target name="release" depends="scp_javadocs,ftp" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.  Convenience class for doing these steps manually.">
+	
+	</target>
+
+	<target name="scp_javadocs" depends="javadocs" description="Uploads Javadocs to web server, using SCP.  Uses SSHExec and SCP tasks, and thus requires jsch to be in the Ant classpath.">
 		<tar destfile="${PROJECT_HOME}/javadocs/javadocs.tar">
 			<tarfileset dir="${PROJECT_HOME}/javadocs">
 			    <exclude name="javadocs.tar"/>
@@ -359,18 +363,19 @@
 			host="${WEB_HOST}" 
 			username="${WEB_USER}" 
 			command="tar -C ${WEB_ROOT}/javadocs -zxvf ${WEB_ROOT}/javadocs/javadocs.tgz"/>
-		
-		<!-- Upload to SF.net -->
-		<ftp server="upload.sf.net" 
-				userid="anonymous"
-				password="password" 
-				remotedir="/incoming"
+	</target>
+	
+	<target name="ftp" depends="all" description="Uploads all the build files to an FTP account">
+		<ftp server="${FTP_HOST}" 
+				userid="${FTP_USER}"
+				password="${FTP_PASSWORD}" 
+				remotedir="${FTP_DIRECTORY}"
 				action="put">
 			<fileset dir="${PROJECT_HOME}/build"/>
-		</ftp>
+		</ftp>		
 	</target>
 
-	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all required libraries.">
+	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all required libraries.  Some items are hardcoded in this target (such as images, libraries, etc), and must be modified for different projects.">
 		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
 		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar">
 			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>

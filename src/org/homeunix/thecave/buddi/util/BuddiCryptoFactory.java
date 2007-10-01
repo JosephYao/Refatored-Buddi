@@ -27,4 +27,9 @@ public class BuddiCryptoFactory  extends MossCryptoFactory {
 	public boolean isSaveDate() {
 		return true;
 	}
+	
+	@Override
+	public boolean isCompressData() {
+		return true;
+	}
 }

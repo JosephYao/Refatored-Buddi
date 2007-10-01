@@ -3,7 +3,22 @@
 ########################
 
 #Location of project, used as the base of building
-PROJECT_HOME=/Users/Wyatt/Documents/Programming/Workplace/Image_Tagger
+PROJECT_HOME=/path/to/workplace/buddi
+
+#Web configuration for uploading to the web site
+WEB_USER=web
+WEB_HOST=www.example.com
+WEB_ROOT=/var/www
+
+#SSH Configuration
+SSH_KEY=/home/user/.ssh/id_dsa
+SSH_KEY_PASSPHRASE=password
+
+#FTP Configuration
+FTP_HOST=upload.sourceforge.net
+FTP_USER=anonymous
+FTP_PASSWORD=password
+FTP_DIRECTORY=/incoming
 
 #Launch4J (http://launch4j.sourceforge.net/) - Creates Windows .exe files as a wrapper for Java .jar
 LAUNCH4J_PATH=/Users/Wyatt/Documents/Programming/Workplace/build_tools/launch4j

@@ -315,7 +315,7 @@ public class Buddi {
 
 
 	/**
-	 * Opens the given file.  Runs in the event dispatch thread. 
+	 * Opens the given file.  Must be run in the event dispatch thread. 
 	 * @param f
 	 */
 	private static void openFile(File f){
