@@ -24,7 +24,6 @@ import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -104,7 +103,6 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a source");
 				}
 			}
 			else if (transaction.getTo() instanceof ImmutableBudgetCategory){
@@ -113,11 +111,8 @@ public class ExpenseBudgetedVsActual extends BuddiReportPlugin {
 					Long l = categories.get(c);
 					l += transaction.getAmount();
 					categories.put(c, l);
-					Log.debug("Added a destination");
 				}
 			}
-			else
-				Log.debug("Didn't add anything...");
 		}
 				
 		return categories;
