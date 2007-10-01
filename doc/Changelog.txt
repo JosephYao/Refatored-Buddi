@@ -1,3 +1,6 @@
+2.9.6.0
+-Fixed bug #1805345 (Poor save algorithm)
+
 2.9.5.0 (September 30 2007)
 -Implemented feature request #1800526 (Browse transactions by Category)
 -Implemented feature request #1803631 (Better spacing for transaction editor on non-Macintosh operating systems)

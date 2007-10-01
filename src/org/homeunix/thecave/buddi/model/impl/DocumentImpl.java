@@ -415,10 +415,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//Save the file
 		try {
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
+			File tempFile = new File(file.getAbsolutePath() + ".temp");
+			OutputStream os = factory.getEncryptedStream(new FileOutputStream(tempFile), password);
 
 			saveToStream(os);
 
+			if (!tempFile.renameTo(file))
+				throw new IOException("Unable to save data file: could not copy temp file to data file");
 		}
 		catch (CipherException ce){
 			//This means that there is something seriously wrong with the encryption methods.
@@ -427,7 +430,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			throw new DocumentSaveException(ce);
 		}
 		catch (IOException ioe){
-			//This means taht there was something wrong with the given file, or writing to
+			//This means that there was something wrong with the given file, or writing to
 			// it.  Perhaps the user does not have write access, the folder does not exist,
 			// or something similar.  Notify the user, and cancel the save.
 			throw new DocumentSaveException(ioe);
