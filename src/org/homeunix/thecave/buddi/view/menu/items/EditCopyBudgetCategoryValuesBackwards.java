@@ -20,7 +20,7 @@ public class EditCopyBudgetCategoryValuesBackwards extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
 	public EditCopyBudgetCategoryValuesBackwards(MainFrame frame) {
-		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD));
+		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_PREVIOUS_BUDGET_PERIOD));
 	}
 
 	@Override
