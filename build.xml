@@ -332,9 +332,7 @@
 		</javadoc>
 	</target>
 
-	<target name="release" depends="scp_javadocs,ftp" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.  Convenience class for doing these steps manually.">
-	
-	</target>
+	<target name="release" depends="scp_javadocs,ftp" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.  Convenience class for doing these steps manually."/>
 
 	<target name="scp_javadocs" depends="javadocs" description="Uploads Javadocs to web server, using SCP.  Uses SSHExec and SCP tasks, and thus requires jsch to be in the Ant classpath.">
 		<tar destfile="${PROJECT_HOME}/javadocs/javadocs.tar">
