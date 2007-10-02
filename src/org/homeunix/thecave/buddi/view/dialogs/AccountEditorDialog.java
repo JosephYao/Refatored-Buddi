@@ -53,11 +53,11 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	private final JComboBox type;
 	private final MossDecimalField startingBalance;
 	private final MossHintTextArea notes;
+	private final MossDecimalField overdraftCreditLimit;
+	private final JLabel overdraftCreditLimitLabel;
 
 	private final JButton ok;
 	private final JButton cancel;
-
-//	private final TypeComboBoxModel typeComboBoxModel;
 
 	private final Account selected;
 
@@ -74,6 +74,8 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		if (type.getModel().getSize() > 0)
 			type.setSelectedIndex(0);
 		startingBalance = new MossDecimalField(true);
+		overdraftCreditLimit = new MossDecimalField(false);
+		overdraftCreditLimitLabel = new JLabel();
 		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
@@ -92,10 +94,12 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_NAME)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_STARTING_BALANCE)));
+		textPanelLeft.add(overdraftCreditLimitLabel);
 		
 		textPanelRight.add(name);
 		textPanelRight.add(type);
 		textPanelRight.add(startingBalance);
+		textPanelRight.add(overdraftCreditLimit);
 		
 		JScrollPane notesScroller = new JScrollPane(notes);
 		notesScroller.setPreferredSize(new Dimension(150, 75));		
@@ -176,6 +180,31 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		super.updateButtons();
 
 		ok.setEnabled(name.getText() != null && name.getText().length() > 0);
+		
+		if (((AccountType) type.getSelectedItem()).isCredit()){
+			if (PrefsModel.getInstance().isShowCreditRemaining()){
+				overdraftCreditLimitLabel.setText(TextFormatter.getTranslation(BuddiKeys.CREDIT_LIMIT));
+				
+				overdraftCreditLimit.setVisible(true);
+				overdraftCreditLimitLabel.setVisible(true);
+			}
+			else {
+				overdraftCreditLimit.setVisible(false);
+				overdraftCreditLimitLabel.setVisible(false);				
+			}
+		}
+		else {
+			if (PrefsModel.getInstance().isShowOverdraft()){
+				overdraftCreditLimitLabel.setText(TextFormatter.getTranslation(BuddiKeys.OVERDRAFT_LIMIT));
+				
+				overdraftCreditLimit.setVisible(true);
+				overdraftCreditLimitLabel.setVisible(true);
+			}
+			else {
+				overdraftCreditLimit.setVisible(false);
+				overdraftCreditLimitLabel.setVisible(false);				
+			}
+		}
 	}
 
 	public void updateContent() {
@@ -186,12 +215,14 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 //			type.setSelectedItem(null);
 			startingBalance.setValue(0l);
 			notes.setText("");
+			overdraftCreditLimit.setValue(0l);
 		}
 		else {
 			name.setText(PrefsModel.getInstance().getTranslator().get(selected.getName()));
 			type.setSelectedItem(selected.getAccountType());
 			startingBalance.setValue(selected.getStartingBalance() * (selected.getAccountType().isCredit() ? -1 : 1));
 			notes.setText(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
+			overdraftCreditLimit.setValue(selected.getOverdraftCreditLimit());
 		}
 	}
 
@@ -203,6 +234,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a = ModelFactory.createAccount(name.getText(), (AccountType) type.getSelectedItem());
 					a.setStartingBalance(startingBalance.getValue() * (((AccountType) type.getSelectedItem()).isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
+					a.setOverdraftCreditLimit(overdraftCreditLimit.getValue());
 					Log.debug("Created new Account " + a);
 
 					model.addAccount(a);
@@ -213,6 +245,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a.setAccountType((AccountType) type.getSelectedItem());
 					a.setStartingBalance(startingBalance.getValue() * (a.getAccountType().isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
+					a.setOverdraftCreditLimit(overdraftCreditLimit.getValue());
 				}
 				a.updateBalance();
 								

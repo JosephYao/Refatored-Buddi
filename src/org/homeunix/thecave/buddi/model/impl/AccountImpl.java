@@ -24,6 +24,7 @@ import org.homeunix.thecave.moss.util.Log;
 public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
+	private long overdraftCreditLimit;
 	private AccountType type;
 
 	public long getStartingBalance() {
@@ -125,5 +126,15 @@ public class AccountImpl extends SourceImpl implements Account {
 			}
 		}
 		return super.compareTo(arg0);
+	}
+	
+	public long getOverdraftCreditLimit() {
+		return overdraftCreditLimit;
+	}
+	
+	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException {
+		if (overdraftCreditLimit < 0)
+			throw new InvalidValueException("Overdraft limit must be positive");
+		this.overdraftCreditLimit = overdraftCreditLimit;
 	}
 }

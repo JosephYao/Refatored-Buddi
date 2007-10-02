@@ -16,8 +16,6 @@ import java.awt.event.MouseEvent;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -57,6 +55,7 @@ import org.homeunix.thecave.moss.swing.MossSearchField;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEvent;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEventListener;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
@@ -76,7 +75,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JButton deleteButton;
 	private final MossSearchField searchField;
 	private final JComboBox dateFilterComboBox;
-
+	private final JLabel overdraftCreditLimit;
+	
 	private final TransactionListModel listModel;
 
 	private final Account associatedAccount;
@@ -95,7 +95,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			this.associatedAccount = null;
 		this.listModel = new TransactionListModel((Document) parent.getDocument(), source);
 		this.parent = parent;
-		
+		overdraftCreditLimit = new JLabel();
 
 		dateFilterComboBox = new JComboBox();
 
@@ -224,16 +224,22 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
 		searchField.setMaximumSize(searchField.getPreferredSize());
 		dateFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(dateFilterComboBox));
-//		dateFilterComboBox.setMaximumSize(dateFilterComboBox.getPreferredSize());
 
-
-		JPanel topPanel = new JPanel();//new FlowLayout(FlowLayout.RIGHT));
-		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-		topPanel.add(Box.createHorizontalGlue());
-		topPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTION_FILTER)));
-		topPanel.add(dateFilterComboBox);
-		topPanel.add(searchField);
+		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+//		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+//		topPanel.setBorder(null);
+//		topPanel.add(Box.createHorizontalGlue());
+		topRightPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTION_FILTER)));
+		topRightPanel.add(dateFilterComboBox);
+		topRightPanel.add(searchField);
+		
+		JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		topLeftPanel.add(overdraftCreditLimit);
+		
+		JPanel topPanel = new JPanel(new BorderLayout());
+		topPanel.add(topLeftPanel, BorderLayout.WEST);
+		topPanel.add(topRightPanel, BorderLayout.EAST);
 
 		this.getRootPane().setDefaultButton(recordButton);
 
@@ -251,13 +257,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JScrollPane listScroller = new JScrollPane(list);
 
 		JPanel scrollPanel = new JPanel(new BorderLayout());
-		scrollPanel.add(topPanel, BorderLayout.NORTH);
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(transactionEditor, BorderLayout.SOUTH);
 
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 
+		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -295,7 +301,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					if (e.getItem().equals(dateFilterComboBox.getItemAt(0))){
 						dateFilterComboBox.setSelectedIndex(1);
 					}
-					Log.debug("null; e.getItem == " + e.getItem());
 					dateFilterComboBox.setSelectedIndex(0);
 				}
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -417,6 +422,49 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		PrefsModel.getInstance().save();
 
 		super.closeWindowWithoutPrompting();
+	}
+	
+	@Override
+	public void updateContent() {
+		super.updateContent();
+		
+		if (associatedAccount != null
+				&& associatedAccount.getOverdraftCreditLimit() > 0
+				&& ((PrefsModel.getInstance().isShowOverdraft() 
+						&& !associatedAccount.getAccountType().isCredit())
+				|| (PrefsModel.getInstance().isShowCreditRemaining() 
+						&& associatedAccount.getAccountType().isCredit()))){
+			long amountLeft;
+			amountLeft = (associatedAccount.getOverdraftCreditLimit() + associatedAccount.getBalance());
+			double percentLeft = ((double) amountLeft) / associatedAccount.getOverdraftCreditLimit() * 100.0;
+
+			StringBuffer sb = new StringBuffer();
+			sb.append("<html>");
+			sb.append(
+					TextFormatter.getTranslation(
+							(associatedAccount.getAccountType().isCredit() ? 
+									BuddiKeys.AVAILABLE_CREDIT 
+									: BuddiKeys.AVAILABLE_FUNDS)))
+			.append(": ")
+			.append(InternalFormatter.isRed(associatedAccount, amountLeft) ? "<font color='red'>" : "")
+			.append(TextFormatter.getFormattedCurrency(amountLeft))
+			.append(InternalFormatter.isRed(associatedAccount, (long) percentLeft) ? "</font>" : "");
+			if (associatedAccount.getAccountType().isCredit()){
+				sb.append(" (")
+				.append(Formatter.getDecimalFormat().format(percentLeft))
+				.append("%)");
+			}
+			if (amountLeft < 0)
+				sb.append("</font></html>");
+
+			overdraftCreditLimit.setText(sb.toString());
+			if (!associatedAccount.getAccountType().isCredit())
+				overdraftCreditLimit.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_AVAILABLE_FUNDS));
+		}
+		else {
+			overdraftCreditLimit.setText("");
+			overdraftCreditLimit.setToolTipText("");
+		}
 	}
 
 	public void updateButtons(){

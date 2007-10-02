@@ -56,4 +56,16 @@ public interface Account extends Source{
 	 * each transaction, representing the balance at the time of that transaction.
 	 */
 	public void updateBalance();
+	
+	/**
+	 * Sets the overdraft limit for debit accounts, or the credit limit for credit accounts.
+	 * @param overdraftLimit
+	 */
+	public void setOverdraftCreditLimit(long overdraftLimit) throws InvalidValueException;
+	
+	/**
+	 * Returns the overdraft limit for Debit accounts, or Credit Limit for Credit accounts.  
+	 * @return
+	 */
+	public long getOverdraftCreditLimit();
 }

@@ -425,4 +425,20 @@ public class PrefsModel {
 	public void putPluginPreference(String key, String value){
 		prefsModel.getPluginPreferences().put(key, value);
 	}
+	
+	public boolean isShowCreditRemaining() {
+		return prefsModel.isShowCreditRemaining();
+	}
+
+	public void setShowCreditRemaining(boolean showCreditRemaining) {
+		prefsModel.setShowCreditRemaining(showCreditRemaining);
+	}
+
+	public boolean isShowOverdraft() {
+		return prefsModel.isShowOverdraft();
+	}
+
+	public void setShowOverdraft(boolean showOverdraft) {
+		prefsModel.setShowOverdraft(showOverdraft);
+	}
 }

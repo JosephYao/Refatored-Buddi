@@ -46,6 +46,8 @@ public class PrefsModelBean {
 	private boolean showReconciled;
 	private boolean showFlatAccounts;
 	private boolean showFlatBudget;
+	private boolean showOverdraft;
+	private boolean showCreditRemaining;
 	//Currently hard coded to 4.  If we change this, we will need to change the menu item code
 	// which displays the dates to copy to / from, as well as other things.
 	private int numberOfBudgetColumns; 
@@ -118,6 +120,22 @@ public class PrefsModelBean {
 
 	public void setDateFormat(String dateFormat) {
 		this.dateFormat = dateFormat;
+	}
+	
+	public boolean isShowCreditRemaining() {
+		return showCreditRemaining;
+	}
+
+	public void setShowCreditRemaining(boolean showCreditRemaining) {
+		this.showCreditRemaining = showCreditRemaining;
+	}
+
+	public boolean isShowOverdraft() {
+		return showOverdraft;
+	}
+
+	public void setShowOverdraft(boolean showOverdraft) {
+		this.showOverdraft = showOverdraft;
 	}
 
 	public String getLanguage() {
