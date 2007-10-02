@@ -55,4 +55,12 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	public String toString() {
 		return getFullName();
 	}
+	
+	public long getOverdraftCreditLimit() {
+		return getAccount().getOverdraftCreditLimit();
+	}
+	
+	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException {
+		getAccount().setOverdraftCreditLimit(overdraftCreditLimit);
+	}
 }

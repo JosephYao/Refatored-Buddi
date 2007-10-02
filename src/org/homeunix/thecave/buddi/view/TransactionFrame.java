@@ -822,7 +822,28 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		parent.fireStructureChanged();
 	}
 	
+	/**
+	 * Returns the associated account.  If this transaction frame was opened 
+	 * by double clicking on an account, this will be the account which was
+	 * clicked on.  If this transaction frame was opened by double clicking
+	 * on a budget category, or by using the 'All Transactions' menu item,
+	 * this will return null.
+	 * @return
+	 */
 	public Account getAssociatedAccount(){
 		return associatedAccount;
+	}
+	
+	/**
+	 * Returns the associated source.  If this transaction frame was opened 
+	 * by double clicking on an account, this will be the account which was
+	 * clicked on.  If this transaction frame was opened by double clicking
+	 * on a budget category, this will be the budget category which was clicked
+	 * on.  If this was opened by using the 'All Transactions' menu item (and
+	 * thus is not associated with any source), this will return null.
+	 * @return
+	 */
+	public Source getAssociatedSource(){
+		return associatedSource;
 	}
 }

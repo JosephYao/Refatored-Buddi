@@ -23,4 +23,10 @@ public interface MutableAccount extends ImmutableAccount, MutableSource {
 	 * @return
 	 */
 	public MutableAccountType getAccountType();
+	
+	/**
+	 * Sets the Overdraft Limit (for debit accounts) or Credit Limit (for credit accounts)
+	 * @param overdraftCreditLimit
+	 */
+	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException;
 }

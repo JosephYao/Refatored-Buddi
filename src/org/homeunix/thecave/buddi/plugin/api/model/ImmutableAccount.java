@@ -49,4 +49,11 @@ public interface ImmutableAccount extends ImmutableSource {
 	 * @return
 	 */
 	public long getStartingBalance();
+	
+	
+	/**
+	 * Returns the Overdraft Limit (for debit accounts) or Credit Limit (for credit accounts)
+	 * @return
+	 */
+	public long getOverdraftCreditLimit();
 }

@@ -39,4 +39,8 @@ public class ImmutableAccountImpl extends ImmutableSourceImpl implements Immutab
 	public long getBalance(Date d) {
 		return getAccount().getBalance(d);
 	}
+	
+	public long getOverdraftCreditLimit() {
+		return getAccount().getOverdraftCreditLimit();
+	}
 }
