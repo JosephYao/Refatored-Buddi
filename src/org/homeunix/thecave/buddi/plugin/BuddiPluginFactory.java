@@ -275,6 +275,7 @@ public class BuddiPluginFactory extends PluginFactory {
 				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiExportPlugin
 							|| plugin instanceof BuddiImportPlugin
+							|| plugin instanceof BuddiSynchronizePlugin
 							|| plugin instanceof BuddiPreferencePlugin
 							|| plugin instanceof BuddiReportPlugin
 							|| plugin instanceof BuddiRunnablePlugin){
