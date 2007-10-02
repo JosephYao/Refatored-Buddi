@@ -1,6 +1,7 @@
 2.9.6.0
 -Added compression to the data files.  We are still backwards compatible with the old (uncompressed) files, but all new files will be written with compression.  This results in drasitcally smaller files, as most of the data was plain text - one of my data files was reduced from 1.2 MB to 52 KB.  This is especially useful for USB keys, which may have limited space.
--Added option to run from USB drive.  Use --usb, to put preferences, languages, and plugins into the current working directory.
+-Added option to run from USB drive.  Use --usb, to put preferences, languages, and plugins into the current working directory.  We do not use the old way of doing this (i.e., checking for working directory, and automatically adjusting paths) since we now make more intelligent decisions about folders for Languages, Plugins, etc, and making assumpions about the USB option would break that.
+-Added getAssociatedAccount() method to TransactionFrame.
 -Implemented Feature Request #1805196 (Re-implement Overdraft Feature)
 -Implemented Feature Request #1805197 (Re-implement Credit Limit Feature)
 -Fixed bug #1805345 (Poor save algorithm)

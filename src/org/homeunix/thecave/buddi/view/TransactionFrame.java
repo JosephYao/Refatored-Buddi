@@ -821,4 +821,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	public void fireStructureChanged(){
 		parent.fireStructureChanged();
 	}
+	
+	public Account getAssociatedAccount(){
+		return associatedAccount;
+	}
 }
