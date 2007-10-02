@@ -11,10 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
@@ -111,21 +109,6 @@ public class Buddi {
 		return simpleFont;
 	}
 
-	/**
-	 * Gets the current working directory.  This should be the same directory
-	 * that the Buddi.{exe|jar} is in or the Buddi.app/Contents/Resources/Java/ 
-	 * folder on a Mac.  This will determine what a relative path is, which
-	 * is useful for running on a thumb drive.
-	 * @return
-	 */
-//	public static String getUserDir(){
-//	if (userDir == null){
-//	userDir = "";
-//	}
-
-//	return userDir;
-//	}
-
 	/** 
 	 * @return True if running on Slackware, false otherwise.  This is 
 	 * obtained through the startup flag --debian, so it can be 
@@ -185,50 +168,6 @@ public class Buddi {
 	 * Method to start the GUI.  Should be run from the AWT Dispatch thread.
 	 */
 	private static void launchGUI(){
-
-//		if (JOptionPane.showConfirmDialog(
-//		null, 
-//		"WARNING:\n\nThis version of Buddi is currently under active development,\nand sould be considered Alpha quality code.  There are many\nfeatures which are not completely implemented, and many\nothers which contain bugs.\n\nFurthermore, the data model currently in place will likely\nchange before this is publicly released.\n\nYou should *NOT* use this version of software for any data\nthat matters - it is only a development preview of\nthe upcoming version.\n\nIf you are looking for stable budgeting software,\nplease use Buddi 2.6, available for free at http://buddi.sourceforge.net.\n\nIf you understand the risk, and still want to run this\nversion, hit OK.  Hit Cancel to exit.",
-//		"Warning",
-//		JOptionPane.OK_CANCEL_OPTION,
-//		JOptionPane.WARNING_MESSAGE
-//		) != JOptionPane.OK_OPTION)  //The index of the Cancel button.
-//		System.exit(0);
-
-
-//		if (PrefsModel.getInstance().getLastVersion() != null 
-//		&& getVersion().isGreaterMinor(PrefsModel.getInstance().getLastVersion())){
-//		String[] options = new String[2];
-//		options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-//		options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
-
-//		if (JOptionPane.showOptionDialog(
-//		null, 
-//		TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE),
-//		TextFormatter.getTranslation(MessageKeys.MESSAGE_UPGRADE_NOTICE_TITLE),
-//		JOptionPane.OK_CANCEL_OPTION,
-//		JOptionPane.WARNING_MESSAGE,
-//		null,
-//		options,
-//		options[0]
-//		) == 1)  //The index of the Cancel button.
-//		System.exit(0);
-
-
-//		//Make a backup of the last data file, just to be safe...
-//		File file = PrefsModel.getInstance().getLastDataFile();
-//		File backupDataFile = new File(
-//		file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") 
-//		+ "_" + getVersion() + "_" + Const.BACKUP_FILE_EXTENSION);
-//		try {
-//		FileFunctions.copyFile(file, backupDataFile);
-//		}
-//		catch (IOException ioe){
-//		Log.warning("Error backing up file: " + ioe);
-//		}
-//		}
-
-
 		//If we are on a Mac, open a new Frameless menu bar.
 		if (OperatingSystemUtil.isMac()){
 			Application.getApplication().setFramessMenuBar(new FramelessMenuBar());
@@ -488,7 +427,8 @@ public class Buddi {
 			});
 		}
 		
-		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n" 
+		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
+			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
 			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
 			+ "--languages\tFolder\tFolder to store custom languages (should be writable)"
@@ -502,6 +442,7 @@ public class Buddi {
 		// Undocumented flag --unix will specify a .tgz download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
+		variables.add(new ParseVariable("--usb", Boolean.class, false));
 		variables.add(new ParseVariable("--prefs", String.class, false));
 		variables.add(new ParseVariable("--verbosity", Integer.class, false));
 		variables.add(new ParseVariable("--plugins", String.class, false));
@@ -576,8 +517,11 @@ public class Buddi {
 			Log.setLogLevel(Log.DEBUG);
 		}
 
+		//Prints the version of Buddi to the logs
+		Log.notice("Running Buddi version: " + getVersion());
 
-
+		//Parse all the remaining options
+		Boolean usbKey = results.getBoolean("--usb");
 		String prefsLocation = results.getString("--prefs");
 		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
@@ -593,8 +537,19 @@ public class Buddi {
 			filesToLoad.add(new File(s));
 		}
 
-		Log.debug("File to Load == " + filesToLoad);
+		Log.debug("Files to load: " + filesToLoad);
 
+		String currentWorkingDir = System.getProperty("user.dir") + File.separator;
+		
+		//Set some directories if USB mode is enabled.
+		if (usbKey != null){
+			if (languagesFolder == null)
+				languagesFolder = currentWorkingDir + Const.LANGUAGE_FOLDER;
+			if (pluginsFolder == null)
+				pluginsFolder = currentWorkingDir + Const.PLUGIN_FOLDER;
+			if (prefsLocation == null)
+				prefsLocation = currentWorkingDir + Const.PREFERENCE_FILE_NAME;
+		}
 
 		//Override the location of the Prefs file, if the -p flag is set.
 		// This MUST be called before the first PrefsMode.getInstance() 
@@ -602,7 +557,6 @@ public class Buddi {
 		if (prefsLocation != null){
 			PrefsModel.setPrefsFile(new File(prefsLocation));
 		}
-
 
 		//If we specify a different font, replace all font instances with it.
 		// This is useful for some locales, in which the default font
@@ -619,12 +573,9 @@ public class Buddi {
 			}  
 		}
 
-		//The version of Buddi.  Useful for diagnostics
-		Log.notice("Running Buddi version " + getVersion());
-
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
-//		Log.notice("Set working directory to " + userDir);
+		Log.notice("Working directory: " + currentWorkingDir);
 
 		//Set Buddi-specific LnF options.
 		//This one removes the width limitation for dialogs.  Since we already will
@@ -634,7 +585,7 @@ public class Buddi {
 		// so we must set it here manually. 
 		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
 		
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Buddi");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel(lnf);
@@ -721,17 +672,6 @@ public class Buddi {
 
 						if (thisVersion.compareTo(availableVersion) < 0)
 							return availableVersion;
-					}
-					catch (ConnectException ce){
-						//TODO Show warning dialog.
-						Log.error(ce);
-					}
-					catch (IllegalArgumentException iae){
-						//TODO Show warning dialog.
-						Log.error(iae);
-					}
-					catch (MalformedURLException mue){
-						Log.error(mue);
 					}
 					catch (IOException ioe){
 						Log.error(ioe);

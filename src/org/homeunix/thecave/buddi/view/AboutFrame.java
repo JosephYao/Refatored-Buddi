@@ -85,6 +85,8 @@ public class AboutFrame extends MossFrame implements ActionListener {
 
 		title.setIcon(new ImageIcon(ClassLoaderFunctions.getImageFromClasspath("img/BuddiAboutLogo.png")));
 		title.setVerticalTextPosition(JLabel.BOTTOM);
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setHorizontalTextPosition(JLabel.CENTER);
 
 		StringBuffer sbText = new StringBuffer();
 		sbText.append(

@@ -33,13 +33,11 @@ import org.homeunix.thecave.moss.swing.MossPanel;
 public class MyReportsPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
 	
-//	private final DataModel model;
 	private final MainFrame parent;
 	
 	public MyReportsPanel(MainFrame parent){
 		super(true);
 		this.parent = parent;
-//		this.model = model;
 		
 		open();
 	}
@@ -49,7 +47,6 @@ public class MyReportsPanel extends MossPanel {
 		
 		JPanel pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
-//		pluginsPanel.setBorder(BorderFactory.createTitledBorder(""));
 						
 		for (BuddiReportPlugin report : BuddiPluginFactory.getReportPlugins()) {
 			//Select the correct options for the dropdown, based on the plugin
@@ -115,8 +112,5 @@ public class MyReportsPanel extends MossPanel {
 		
 		this.setLayout(new BorderLayout());
 		this.add(scrollPane, BorderLayout.CENTER);
-//		this.setJMenuBar(new ReportFrameMenuBar(this));
-//		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
-//		this.setTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.MY_REPORTS) + dataFile + " - " + PrefsModel.getInstance().getTranslator().get(BuddiKeys.BUDDI));
 	}
 }

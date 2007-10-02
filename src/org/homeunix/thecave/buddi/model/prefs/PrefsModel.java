@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.homeunix.thecave.buddi.Buddi;
+import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
@@ -35,7 +36,7 @@ public class PrefsModel {
 	
 	//If you want to load from a custom location, set this static variable 
 	// before you call the singleton getInstance() method. 
-	private static File prefsFile = OperatingSystemUtil.getUserFile("Buddi", "Buddi3_Prefs.xml");
+	private static File prefsFile = OperatingSystemUtil.getUserFile(Const.PROJECT_NAME, Const.PREFERENCE_FILE_NAME);
 
 	private PrefsModel() {
 		try {

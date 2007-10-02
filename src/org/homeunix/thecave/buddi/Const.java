@@ -31,14 +31,14 @@ import org.homeunix.thecave.buddi.view.dialogs.preferences.ViewPreferences;
  *
  */
 public class Const {
+	public static final String PROJECT_NAME = "Buddi";
+	
 	public static final String STABLE = "STABLE";
 	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
-//	public static final Version VERSION = new Version("2.9.2.0");
 	public static final String BRANCH = DEVELOPMENT;
 	public static final boolean DEVEL = true;
-//	public static final Version API_VERSION = new Version("3.0");
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
@@ -49,20 +49,15 @@ public class Const {
 	public final static String DATA_FILE_EXTENSION = ".buddi3";
 	public final static String BACKUP_FILE_EXTENSION = ".buddi3bak";
 	public final static String AUTOSAVE_FILE_EXTENSION = ".buddi3autosave";
-//	public final static String DATA_FILE_EXTENSION_OLD = ".buddi";
-//	public final static String BACKUP_FILE_EXTENSION_OLD = ".buddi.bak";
 	
+	//Preference file constants
+	public static final String PREFERENCE_FILE_NAME = "Buddi3_Prefs.xml"; 
+		
 	//Plugin Constants
 	public static final String PLUGIN_FOLDER = "Plugins";
 	public static final String PLUGIN_EXTENSION = ".buddi3plugin";
 	
-	//Data file encryption constants (This is now taken care of in the CipherStreamFactory -- Wyatt)
-//	public final static String DATA_FILE_ENCRYPTION = "AES/CBC/PKCS5Padding";
-//	public final static String KEY_ALGORITHM = "AES";
-//	public final static int SALT_LENGTH = 16;
-//	public final static String XML_PROLOGUE = "<?xml"; //Tests if the file is encrypted
-//	public final static String DATA_DEFAULT_FILENAME = "Data";
-	
+	//File filter for loading / saving data files
 	public static final FileFilter FILE_FILTER_DATA = new FileFilter(){
 		@Override
 		public boolean accept(File f) {
@@ -78,6 +73,8 @@ public class Const {
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILE_DESCRIPTION_BUDDI_DATA_FILES);
 		}
 	};
+	
+	//File filter for loading backup files
 	public static final FileFilter FILE_FILTER_BACKUP = new FileFilter(){
 		@Override
 		public boolean accept(File f) {
@@ -113,18 +110,6 @@ public class Const {
 	public final static String HELP_FOLDER = "Help";
 	public final static String HELP_FILE = "index.html";
 	
-	//Local listener configuration -- Removed in 2.5.9.0
-//	public final static int LISTEN_PORT = 4331;
-//	public final static String SEPARATOR = "&";
-//	public final static String ACCOUNT = "acct";
-//	public final static String DESCRIPTION = "desc";
-//	public final static String DATE = "date";
-//	public final static String NUMBER = "num";
-//	public final static String AMOUNT = "amt";
-//	public final static String MEMO = "memo";
-//	public final static String TO = "to";
-//	public final static String FROM = "from";
-	
 	//File names
 	public final static String LOG_FILE = "Buddi.log";
 	
@@ -132,10 +117,6 @@ public class Const {
 	public final static Color COLOR_JLIST_SELECTED_BACKGROUND = new JList().getSelectionBackground(); // new Color(181, 213, 255);
 	public final static Color COLOR_JLIST_SELECTED_TEXT = new JList().getSelectionForeground();
 	public final static Color COLOR_JLIST_UNSELECTED_TEXT = new JList().getForeground();
-
-//	public final static Color COLOR_JCOMBOBOX_SELECTED_TEXT = new DefaultListCellRenderer().getListCellRendererComponent(new JList(), "Test", 0, true, false).getForeground();
-//	public final static Color COLOR_JCOMBOBOX_UNSELECTED_TEXT = new DefaultListCellRenderer().getListCellRendererComponent(new JList(), "Test", 0, false, false).getForeground();	
-	
 	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);
 	public final static Color COLOR_EVEN_ROW = new Color(237, 243, 254);
 	public final static Color COLOR_ODD_ROW = Color.WHITE;
@@ -207,6 +188,7 @@ public class Const {
 		"Kc"	//Something else; requested by a user
 	};
 	
+	//Built in Preference Panes 
 	public final static String[] BUILT_IN_PREFERENCE_PANELS = {
 		ViewPreferences.class.getCanonicalName(),
 		PluginPreferences.class.getCanonicalName(),
@@ -215,7 +197,7 @@ public class Const {
 		AdvancedPreferences.class.getCanonicalName(),
 	};
 	
-	//The report plugins which are included in the main Buddi jar.
+	//Built in Reports
 	public final static String[] BUILT_IN_REPORTS = {
 		IncomeExpenseReportByCategory.class.getCanonicalName(),
 		AverageIncomeExpenseByCategory.class.getCanonicalName(),
@@ -224,12 +206,15 @@ public class Const {
 		NetWorthOverTime.class.getCanonicalName(),
 	};
 	
+	//Built in Imports
 	public static final String[] BUILT_IN_IMPORTS = {
 		ImportLegacyData.class.getCanonicalName(),
 	};
 	
+	//Built in Exports
 	public static final String[] BUILT_IN_EXPORTS = {};
 	
+	//Built in Synchronizes
 	public static final String[] BUILT_IN_SYNCHRONIZES = {};
 		
 	private Const(){}
