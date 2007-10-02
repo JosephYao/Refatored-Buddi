@@ -56,6 +56,8 @@ public class Const {
 	//Plugin Constants
 	public static final String PLUGIN_FOLDER = "Plugins";
 	public static final String PLUGIN_EXTENSION = ".buddi3plugin";
+	public static final String PLUGIN_PROPERTIES = "plugin.properties";
+	public static final String PLUGIN_PROPERTIES_ROOT = "PLUGIN_ROOT";  //Used for plugins to define where to look for plugin classes
 	
 	//File filter for loading / saving data files
 	public static final FileFilter FILE_FILTER_DATA = new FileFilter(){

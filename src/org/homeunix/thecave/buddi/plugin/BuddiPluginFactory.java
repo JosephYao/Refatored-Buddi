@@ -5,8 +5,11 @@ package org.homeunix.thecave.buddi.plugin;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
@@ -18,6 +21,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 
 public class BuddiPluginFactory extends PluginFactory {
 
@@ -50,7 +54,12 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					props.load(ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, Const.PLUGIN_PROPERTIES));
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiReportPlugin){
 						reports.add((BuddiReportPlugin) plugin);
 					}
@@ -81,7 +90,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiImportPlugin){
 						imports.add((BuddiImportPlugin) plugin);
 					}
@@ -112,7 +128,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiSynchronizePlugin){
 						imports.add((BuddiSynchronizePlugin) plugin);
 					}
@@ -143,7 +166,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiExportPlugin){
 						imports.add((BuddiExportPlugin) plugin);
 					}
@@ -208,7 +238,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiPreferencePlugin){
 						preferences.add((BuddiPreferencePlugin) plugin);
 					}
@@ -228,7 +265,14 @@ public class BuddiPluginFactory extends PluginFactory {
 		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
 		if (plugins != null){
 			for (File pluginFile : plugins){
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiExportPlugin
 							|| plugin instanceof BuddiImportPlugin
 							|| plugin instanceof BuddiPreferencePlugin

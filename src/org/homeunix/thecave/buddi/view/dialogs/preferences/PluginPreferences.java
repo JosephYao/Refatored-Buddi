@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -36,6 +37,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.model.DefaultGenericListModel;
+import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Version;
 
@@ -192,7 +194,12 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 			});
 			jfc.setDialogTitle(PrefsModel.getInstance().getTranslator().get(BuddiKeys.CHOOSE_PLUGIN_JAR));
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-				List<MossPlugin> plugins = BuddiPluginFactory.getMossPluginsFromJar(jfc.getSelectedFile(), Buddi.getVersion());
+				Properties props = new Properties();
+				try {
+					props.load(ClassLoaderFunctions.getResourceAsStreamFromJar(jfc.getSelectedFile(), Const.PLUGIN_PROPERTIES));
+				}
+				catch (IOException ioe){}				
+				List<MossPlugin> plugins = BuddiPluginFactory.getMossPluginsFromJar(jfc.getSelectedFile(), Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT));
 				if (plugins.size() == 0){
 					String[] options = new String[1];
 					options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
