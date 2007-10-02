@@ -111,6 +111,7 @@ public class TransactionEditorPanel extends MossPanel {
 		to = new MossScrollingComboBox();
 		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
 		description = new MossHintComboBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
+		description.setMaximumRowCount(5);
 
 		if (PrefsModel.getInstance().isShowAutoComplete())
 			description.setModel(new AutoCompleteMossHintComboBoxModel<String>(description, new DescriptionList(this.model)));
