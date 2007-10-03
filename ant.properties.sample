@@ -22,12 +22,8 @@ FTP_DIRECTORY=/incoming
 
 #Launch4J (http://launch4j.sourceforge.net/) - Creates Windows .exe files as a wrapper for Java .jar
 LAUNCH4J_PATH=/Users/Wyatt/Documents/Programming/Workplace/build_tools/launch4j
-#Fat Jar Eclipse Plugin (http://fjep.sourceforge.net/) - Combines library .jar files into single main executable .jar
-FATJAR_JAR=/Applications/Eclipse/plugins/net.sf.fjep.fatjar_0.1.0/fatjar.jar
 #JarBundler (http://fjep.sourceforge.net/) - Creates OS X application bundles
 JARBUNDLER_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jarbundler/jarbundler-1.9.jar
-#AntInstaller (http://antinstaller.sourceforge.net/) - Creates installers (specifically used for Windows, but can be cross platform)
-ANTINSTALLER_PATH=/Users/Wyatt/Documents/Programming/Workplace/build_tools/antinstaller
 #JDeb (http://vafer.org/projects/jdeb) - Create Debian packages
 JDEB_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jdeb/jdeb-0.3.jar
 #SVN Ant (http://vafer.org/projects/jdeb) - Include SVN abilities in Ant

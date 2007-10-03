@@ -373,10 +373,21 @@
 		</ftp>		
 	</target>
 
-	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all required libraries.  Some items are hardcoded in this target (such as images, libraries, etc), and must be modified for different projects.">
+	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all jars in the lib directory.">		
 		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
-		<jar destfile="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar">
+		<unzip dest="${PROJECT_HOME}/build/tmp">
+			<fileset dir="${PROJECT_HOME}/lib">
+				<include name="*.jar"/>
+				<exclude name="quaqua*"/>			
+			</fileset>
+		</unzip>
+		
+		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${PROJECT_CLASS}"/>
+			</manifest>
 			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
+			<fileset dir="${PROJECT_HOME}/build/tmp" includes="**/*"/>
 			<fileset dir="${PROJECT_HOME}">
 				<include name="Languages/*"/>
 				<include name="version.txt"/>
@@ -388,46 +399,27 @@
 				<include name="doc/Licenses/**"/>
 			</fileset>
 		</jar>
-
-		<!-- Define the tasks and associated classes for FatJar -->
-		<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.autojar" classname="net.sf.fjep.anttask.FJAutoJarType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-		<typedef name="fatjar.class" classname="net.sf.fjep.anttask.FJClassType" classpath="${FATJAR_JAR}" loaderref="${FATJAR_JAR}"/>
-
-		<fatjar.build output="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
-			<fatjar.manifest mainclass="${PROJECT_CLASS}"/>
-
-			<!-- This is the project jar file, just compiled below -->
-			<fatjar.jarsource file="${PROJECT_HOME}/build/tmp/${PROJECT_NAME}.jar" relpath=""/>
-
-			<!-- These are all the included files which normally would go on the classpath -->
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/BrowserLauncher2-1_3.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/jcommon-1.0.10.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/jfreechart-1.0.6.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/moss.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/swingx-2007_08_12.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/SwingWorker.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.ecore.xmi_2.2.2.v200702010000.jar" relpath=""/>
-			<fatjar.jarsource file="${PROJECT_HOME}/lib/emf.common_2.2.1.v200702010000.jar" relpath=""/>
-
-		</fatjar.build>
-
+		
 		<delete includeemptydirs="true">
-			<fileset dir="${PROJECT_HOME}/build/" includes="**/*" excludes="${PROJECT_NAME}.jar" />
+			<fileset dir="${PROJECT_HOME}/build/tmp"/>
 		</delete>
 	</target>
 
 	<target name="compile" description="Builds the project">
-		<javac srcdir="src" destdir="bin"/>
+		<javac srcdir="src" destdir="bin">
+			<classpath>
+				<fileset dir="${PROJECT_HOME}/lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
 	</target>
 
-	<target name="clean" description="Removes all files from build and javadocs directories">
+	<target name="clean" description="Removes all files from bin, build, and javadocs directories">
 		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${PROJECT_HOME}/bin">
+				<include name="**/*"/>
+			</fileset>
 			<fileset dir="${PROJECT_HOME}/build">
 				<include name="**/*"/>
 			</fileset>
