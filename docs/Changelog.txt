@@ -1,3 +1,6 @@
+2.9.8.0
+-Fixed bug #1807276 (Unable to Save existing data files in Windows)
+
 2.9.7.0 (October 3 2007)
 -Added support for plugins using the Translation framework.  Plugin authors should include a folder Languages in the root of the .jar file.  See http://devel.buddi.thecave.homeunix.org/en/bundling.php for more details, and an example plugin with ant build script.
 -Implemented Feature Request #1806525 (Provide option to remove Tooltips)

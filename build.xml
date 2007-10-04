@@ -60,7 +60,7 @@
 				<exclude name="${PROJECT_UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
 			</fileset>
-			<fileset dir="${PROJECT_HOME}/doc">
+			<fileset dir="${PROJECT_HOME}/docs">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -166,7 +166,7 @@
 
 		<!-- Copy documentation -->
 		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
-			<fileset dir="${PROJECT_HOME}/doc">
+			<fileset dir="${PROJECT_HOME}/docs">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -221,7 +221,7 @@
 			<tarfileset dir="${PROJECT_HOME}/etc/unix" prefix="${BUILD_NAME}">
 				<include name="Readme.unix"/>
 			</tarfileset>
-			<tarfileset dir="${PROJECT_HOME}/doc" prefix="${BUILD_NAME}">
+			<tarfileset dir="${PROJECT_HOME}/docs" prefix="${BUILD_NAME}">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -254,7 +254,7 @@
 		<!-- Copy documentation -->
 		<mkdir dir="${PROJECT_HOME}/build/deb/data/usr/share/doc"/>
 		<copy todir="${PROJECT_HOME}/build/deb/data/usr/share/doc">
-			<fileset dir="${PROJECT_HOME}/doc">
+			<fileset dir="${PROJECT_HOME}/docs">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -393,9 +393,9 @@
 				<include name="img/BuddiSplashScreen.jpg"/>				
 				<include name="img/BuddiAboutLogo.png"/>
 				<include name="img/BuddiFrameIcon.gif"/>
-				<include name="doc/**.rtf"/>
-				<include name="doc/**.txt"/>
-				<include name="doc/Licenses/**"/>
+				<include name="docs/**.rtf"/>
+				<include name="docs/**.txt"/>
+				<include name="docs/Licenses/**"/>
 			</fileset>
 		</jar>
 		
