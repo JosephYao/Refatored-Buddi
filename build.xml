@@ -24,7 +24,6 @@
 		<!-- Define the tasks for Launch4J and AntInstaller -->
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
 
-		<taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer" classpath="${ANTINSTALLER_PATH}/lib/ant-installer.jar:${ANTINSTALLER_PATH}/lib/ant-installer-ext.jar"/>
 		<!-- Make the base .exe -->
 		<launch4j>
 			<config 
