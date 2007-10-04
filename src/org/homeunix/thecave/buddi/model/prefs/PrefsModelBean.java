@@ -48,8 +48,10 @@ public class PrefsModelBean {
 	private boolean showFlatBudget;
 	private boolean showOverdraft;
 	private boolean showCreditRemaining;
-	//Currently hard coded to 4.  If we change this, we will need to change the menu item code
-	// which displays the dates to copy to / from, as well as other things.
+	private boolean showTooltips;
+	//Currently must be set to 4.  If we change this, we will need to change 
+	// the menu item code which displays the dates to copy to / from, as well 
+	// as other things.
 	private int numberOfBudgetColumns; 
 	
 	//Network Options
@@ -77,6 +79,14 @@ public class PrefsModelBean {
 		return numberOfBudgetColumns;
 	}
 	
+	public boolean isShowTooltips() {
+		return showTooltips;
+	}
+
+	public void setShowTooltips(boolean showTooltips) {
+		this.showTooltips = showTooltips;
+	}
+
 	public boolean isShowFlatAccounts() {
 		return showFlatAccounts;
 	}
@@ -90,6 +100,13 @@ public class PrefsModelBean {
 		this.showFlatBudget = showFlatBudget;
 	}
 
+	/**
+	 * Sets the number of columns in the My Budget window.  For now, do 
+	 * not change this, as we make certain assumptions about the number 
+	 * of visible columns.  If we find a need to change this in the future,
+	 * we may do so.  
+	 * @param numberOfBudgetColumns
+	 */
 	public void setNumberOfBudgetColumns(int numberOfBudgetColumns) {
 		if (numberOfBudgetColumns < MIN_BUDGET_COLUMNS)
 			numberOfBudgetColumns = MIN_BUDGET_COLUMNS;

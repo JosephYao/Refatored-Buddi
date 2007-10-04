@@ -133,7 +133,8 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 	}
 
 	public void init() {
-		message.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_SCHEDULED_MESSAGE));
+		if (PrefsModel.getInstance().isShowTooltips())
+			message.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_SCHEDULED_MESSAGE));
 
 		okButton.setPreferredSize(InternalFormatter.getButtonSize(okButton));
 		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));

@@ -149,15 +149,17 @@ public class TransactionEditorPanel extends MossPanel {
 		date.setDate(new Date());
 
 		//Add the tooltips
-		date.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DATE));
-		amount.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_AMOUNT));
-		from.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_FROM));
-		to.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_TO));
-		number.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_NUMBER));
-		description.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DESC));
-		memo.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_MEMO));
-		cleared.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_CLEARED));
-		reconciled.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_RECONCILED));
+		if (PrefsModel.getInstance().isShowTooltips()){
+			date.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DATE));
+			amount.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_AMOUNT));
+			from.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_FROM));
+			to.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_TO));
+			number.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_NUMBER));
+			description.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DESC));
+			memo.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_MEMO));
+			cleared.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_CLEARED));
+			reconciled.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_RECONCILED));
+		}
 
 		JScrollPane memoScroller = new JScrollPane(memo);
 		memo.setWrapStyleWord(true);

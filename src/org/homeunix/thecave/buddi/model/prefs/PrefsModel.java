@@ -63,6 +63,7 @@ public class PrefsModel {
 		prefsModel.setShowDeleted(true);
 		prefsModel.setSendCrashReports(true);
 		prefsModel.setShowUpdateNotifications(true);
+		prefsModel.setShowTooltips(true);
 
 		//Save the file
 		save();
@@ -441,4 +442,13 @@ public class PrefsModel {
 	public void setShowOverdraft(boolean showOverdraft) {
 		prefsModel.setShowOverdraft(showOverdraft);
 	}
+	
+	public boolean isShowTooltips() {
+		return prefsModel.isShowTooltips();
+	}
+
+	public void setShowTooltips(boolean showTooltips) {
+		prefsModel.setShowTooltips(showTooltips);
+	}
+
 }

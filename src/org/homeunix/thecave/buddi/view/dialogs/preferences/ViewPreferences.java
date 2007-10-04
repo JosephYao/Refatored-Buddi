@@ -27,6 +27,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 	private final JCheckBox showFlatBudget;
 	private final JCheckBox showOverdraftLimit;
 	private final JCheckBox showCreditLimit;
+	private final JCheckBox showTooltips;
 
 	public ViewPreferences() {
 		showDeleted = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_DELETED));
@@ -37,6 +38,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		showFlatBudget = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_FLAT_BUDGET));
 		showOverdraftLimit = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_OVERDRAFT_LIMIT));
 		showCreditLimit = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_CREDIT_LIMIT));
+		showTooltips = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_TOOLTIPS));
 	}
 
 	@Override
@@ -52,6 +54,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		JPanel flatBudgetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel overdraftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel tooltipPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		deletePanel.add(showDeleted);
 		autoCompletePanel.add(showAutoComplete);
@@ -61,15 +64,17 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		flatBudgetPanel.add(showFlatBudget);
 		overdraftPanel.add(showOverdraftLimit);
 		creditLimitPanel.add(showCreditLimit);
+		tooltipPanel.add(showTooltips);
 		
 		panel.add(autoCompletePanel);
-		panel.add(deletePanel);
 		panel.add(clearPanel);
 		panel.add(reconcilePanel);
+		panel.add(deletePanel);
 		panel.add(flatAccountsPanel);
 		panel.add(flatBudgetPanel);
 		panel.add(overdraftPanel);
 		panel.add(creditLimitPanel);
+		panel.add(tooltipPanel);
 		panel.add(Box.createVerticalGlue());
 		
 		return panel;
@@ -84,6 +89,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		showFlatBudget.setSelected(PrefsModel.getInstance().isShowFlatBudget());
 		showOverdraftLimit.setSelected(PrefsModel.getInstance().isShowOverdraft());
 		showCreditLimit.setSelected(PrefsModel.getInstance().isShowCreditRemaining());
+		showTooltips.setSelected(PrefsModel.getInstance().isShowTooltips());
 	}
 	
 	public boolean save() {
@@ -99,6 +105,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		PrefsModel.getInstance().setShowFlatBudget(showFlatBudget.isSelected());
 		PrefsModel.getInstance().setShowOverdraft(showOverdraftLimit.isSelected());
 		PrefsModel.getInstance().setShowCreditRemaining(showCreditLimit.isSelected());
+		PrefsModel.getInstance().setShowTooltips(showTooltips.isSelected());
 		
 		return restart;
 	}

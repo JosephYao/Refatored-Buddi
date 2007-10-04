@@ -458,7 +458,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				sb.append("</font></html>");
 
 			overdraftCreditLimit.setText(sb.toString());
-			if (!associatedAccount.getAccountType().isCredit())
+			if (!associatedAccount.getAccountType().isCredit() && PrefsModel.getInstance().isShowTooltips())
 				overdraftCreditLimit.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_AVAILABLE_FUNDS));
 		}
 		else {
