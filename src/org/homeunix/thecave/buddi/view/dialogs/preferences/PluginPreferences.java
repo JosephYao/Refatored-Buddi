@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.DefaultListCellRenderer;
@@ -87,17 +90,33 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 
 		pluginList.setCellRenderer(new DefaultListCellRenderer(){
 			public static final long serialVersionUID = 0;
+			private final Map<File, String> fileToVersionMap = new HashMap<File, String>();
+			private final Map<File, String> fileToNameMap = new HashMap<File, String>();
 
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				if (value instanceof File && ((File) value).getName().endsWith(Const.PLUGIN_EXTENSION)){
-					//TODO Read the plugin, and list the names of all valid plugins in the .jar file.
-//					PluginInfo info = (PluginInfo) value;
-//					this.setText(info.getName() + " (" + info.getJarFile() + ")");
 					File file = (File) value;
-					this.setText(file.getName());
+					if (fileToVersionMap.get(file) == null){
+						String version = "  ?"; 
+						Properties p = new Properties();
+						InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(file, Const.PLUGIN_PROPERTIES);
+						if (is != null) {
+							try {
+								p.load(is);
+								version = "  (" + p.getProperty(Const.PLUGIN_PROPERTIES_VERSION) + ")";
+								fileToVersionMap.put(file, version);
+							}
+							catch (IOException ioe){}
+						}
+					}
+					if (fileToNameMap.get(file) == null){
+						fileToNameMap.put(file, file.getName().replaceAll(Const.PLUGIN_EXTENSION, ""));
+					}
+					
+					this.setText(fileToNameMap.get(file) + fileToVersionMap.get(file));
 				}
 				else 
 					this.setText("Not of correct file type");
