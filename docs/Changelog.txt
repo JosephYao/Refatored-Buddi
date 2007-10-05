@@ -1,3 +1,6 @@
+2.9.9.0
+-Removed --lnf option, as it was only useful when using the .jar version.  The new recommended form of settting Look and Feel is by using the Skin Chooser plugin.
+
 2.9.8.1 (October 4 2007)
 -Fixed bug #1807860 (Main frame not updated until mouse over)
 -Fixed another bug with saving (related to bug #1807276).  This one caused a Save As to fail, with a DataFile.buddi3.temp file to remain.  I think that I am just about getting the bugs out of this new saving system - it really is better than before, trust me!  ;-)

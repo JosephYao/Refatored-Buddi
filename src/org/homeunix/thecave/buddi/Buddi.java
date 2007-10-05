@@ -38,6 +38,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -353,6 +355,18 @@ public class Buddi {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//Set Buddi-specific LnF options.
+		//This one removes the width limitation for dialogs.  Since we already will
+		// wrap for other OS's, there is no need to have Quaqua do this for you.
+		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
+		//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
+		// so we must set it here manually. 
+		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
+		
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
+
+		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
+		LookAndFeelUtil.setLookAndFeel();
 		
 		if (!OperatingSystemUtil.isMac())
 			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
@@ -370,7 +384,7 @@ public class Buddi {
 			}
 		});
 
-		//First thing to do is to catch any open requests from Apple Launchd.
+		//Early on, we need to catch any open requests from Apple Launchd.
 		if (OperatingSystemUtil.isMac()){
 			Application application = Application.getApplication();
 			application.addAboutMenuItem();
@@ -433,7 +447,6 @@ public class Buddi {
 			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
 			+ "--languages\tFolder\tFolder to store custom languages (should be writable)"
 			+ "--plugins\tFolder\tFolder to store plugins (should be writable)"
-			+ "--lnf\tclassName\tJava Look and Feel to use\n"
 			+ "--simpleFont\t\tDon't use bold or italic fonts (better support for special characters on Windows)\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --font	<fontName> will specifya font to use by default
@@ -447,7 +460,6 @@ public class Buddi {
 		variables.add(new ParseVariable("--verbosity", Integer.class, false));
 		variables.add(new ParseVariable("--plugins", String.class, false));
 		variables.add(new ParseVariable("--languages", String.class, false));
-		variables.add(new ParseVariable("--lnf", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
 		variables.add(new ParseVariable("--simpleFont", Boolean.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
@@ -523,7 +535,6 @@ public class Buddi {
 		//Parse all the remaining options
 		Boolean usbKey = results.getBoolean("--usb");
 		String prefsLocation = results.getString("--prefs");
-		String lnf = results.getString("--lnf");
 		String font = results.getString("--font");
 		languagesFolder = results.getString("--languages");
 		pluginsFolder = results.getString("--plugins");
@@ -577,19 +588,11 @@ public class Buddi {
 		// we have set up logging properly.
 		Log.notice("Working directory: " + currentWorkingDir);
 
-		//Set Buddi-specific LnF options.
-		//This one removes the width limitation for dialogs.  Since we already will
-		// wrap for other OS's, there is no need to have Quaqua do this for you.
-		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
-		//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
-		// so we must set it here manually. 
-		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
+		//Run any RunnablePlugins which we may have here.
+		for (BuddiRunnablePlugin plugin : BuddiPluginFactory.getRunnablePlugins()) {
+			plugin.run();
+		}
 		
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
-
-		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-		LookAndFeelUtil.setLookAndFeel(lnf);
-
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -729,7 +732,7 @@ public class Buddi {
 								if (Buddi.isDebian())
 									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
 								else if (Buddi.isSlackware())
-									fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+									fileLocation += Const.DOWNLOAD_TYPE_UNIX;
 								else if (Buddi.isRedhat())
 									fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
 								else

@@ -107,7 +107,7 @@ public class Const {
 	public final static String DOWNLOAD_TYPE_GENERIC = ".jar";
 	public final static String DOWNLOAD_TYPE_DEBIAN = ".deb";
 	public final static String DOWNLOAD_TYPE_REDHAT = ".rpm";
-	public final static String DOWNLOAD_TYPE_SLACKWARE = ".tgz";
+	public final static String DOWNLOAD_TYPE_UNIX = ".tgz";
 	
 	//Local help paths
 	public final static String HELP_FOLDER = "Help";
@@ -143,17 +143,6 @@ public class Const {
 		"Russian",
 		"Serbian",
 		"Svenska",
-	};
-	
-	public final static String[] BUNDLED_DOCUMENTS = {
-		"Changelog.txt",
-		"License.txt",
-		"Readme.txt"
-	};
-	
-	public final static String[] BUNDLED_LICENSES = {
-		"GNU General Public License.txt",
-		"GNU Lesser General Public License.txt",
 	};
 	
 	//Date formats to appear in Preferences.
@@ -219,6 +208,9 @@ public class Const {
 	
 	//Built in Synchronizes
 	public static final String[] BUILT_IN_SYNCHRONIZES = {};
+	
+	//Built in Runnable plugins
+	public static final String[] BUILT_IN_RUNNABLES = {};
 		
 	private Const(){}
 }

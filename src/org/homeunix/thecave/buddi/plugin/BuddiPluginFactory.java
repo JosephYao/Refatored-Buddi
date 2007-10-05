@@ -114,13 +114,13 @@ public class BuddiPluginFactory extends PluginFactory {
 	 * @return
 	 */
 	public static List<BuddiSynchronizePlugin> getSynchronizePlugins(){
-		List<BuddiSynchronizePlugin> imports = new LinkedList<BuddiSynchronizePlugin>();
+		List<BuddiSynchronizePlugin> synchs = new LinkedList<BuddiSynchronizePlugin>();
 
 		//Load built in plugins
 		for (String className : Const.BUILT_IN_SYNCHRONIZES){
 			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
 			if (plugin instanceof BuddiSynchronizePlugin){
-				imports.add((BuddiSynchronizePlugin) plugin);
+				synchs.add((BuddiSynchronizePlugin) plugin);
 			}
 		}
 
@@ -137,13 +137,13 @@ public class BuddiPluginFactory extends PluginFactory {
 				catch (IOException ioe){}
 				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
 					if (plugin instanceof BuddiSynchronizePlugin){
-						imports.add((BuddiSynchronizePlugin) plugin);
+						synchs.add((BuddiSynchronizePlugin) plugin);
 					}
 				}
 			}
 		}
 
-		return imports;
+		return synchs;
 	}
 	
 	/**
@@ -182,6 +182,39 @@ public class BuddiPluginFactory extends PluginFactory {
 		}
 
 		return imports;
+	}
+	
+	public static List<BuddiRunnablePlugin> getRunnablePlugins(){
+		List<BuddiRunnablePlugin> synchs = new LinkedList<BuddiRunnablePlugin>();
+
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_RUNNABLES){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiRunnablePlugin){
+				synchs.add((BuddiRunnablePlugin) plugin);
+			}
+		}
+
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
+					if (plugin instanceof BuddiRunnablePlugin){
+						synchs.add((BuddiRunnablePlugin) plugin);
+					}
+				}
+			}
+		}
+
+		return synchs;
 	}
 	
 //	/**
