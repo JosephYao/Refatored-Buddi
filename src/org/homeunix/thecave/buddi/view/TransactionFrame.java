@@ -465,6 +465,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setText("");
 			overdraftCreditLimit.setToolTipText("");
 		}
+		
+		this.repaint();
 	}
 
 	public void updateButtons(){
