@@ -428,11 +428,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			File oldFile = new File(file.getAbsolutePath() + ".old");
 			if (oldFile.exists() && !oldFile.delete())
 				throw new IOException("Unable to delete existing file '" + oldFile + "' in preparation for moving temp file.");
-			if (!file.renameTo(oldFile))
+			if (file.exists() && !file.renameTo(oldFile))
 				throw new IOException("Unable to rename existing data file '" + file + "' to '" + oldFile + "'.");
 			if (!tempFile.renameTo(file))
 				throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
-			if (!oldFile.delete())
+			if (oldFile.exists() && !oldFile.delete())
 				Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
 		}
 		catch (CipherException ce){

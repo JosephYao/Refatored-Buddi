@@ -85,6 +85,8 @@ public class MainFrame extends MossDocumentFrame {
 		myAccounts.updateContent();
 		myBudget.updateContent();
 		myReports.updateContent();
+		
+		this.repaint();
 	}
 	
 	@Override
