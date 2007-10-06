@@ -2,9 +2,6 @@
 #  modify the paths as needed to reflect your project.
 ########################
 
-#Location of project, used as the base of building
-PROJECT_HOME=/path/to/workplace/buddi
-
 #Web configuration for uploading to the web site
 WEB_USER=web
 WEB_HOST=www.example.com

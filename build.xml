@@ -1,21 +1,24 @@
 <?xml version="1.0"?>
 <project name="Buddi" default="jar" basedir=".">
 
-	<!-- Set up all the machine dependent properties in this file.  A sample should be provided 
-		 in the project, called ant.properties.sample.  -->
-	<property file="ant.properties"/>
-	<!-- Grab the version number.  This file should consist of a single line, 
-		 containing the string "VALUE=x.y.r.b" where "x.y.r.b" is the version number.
-		 You must include all four digits, even if they are zero. -->
-	<property file="${PROJECT_HOME}/version.txt"/>
+	<!-- Set up all the project specific properties -->	
+	<property name="ROOT" value="."/>
+	<property name="BIN" value="${ROOT}/bin"/>
+	<property name="BUILD" value="${ROOT}/build"/>
+	<property name="DOCS" value="${ROOT}/docs"/>
+	<property name="ETC" value="${ROOT}/etc"/>
+	<property name="JAVADOCS" value="${ROOT}/javadocs"/>
+	<property name="LIB" value="${ROOT}/lib"/>
+	<property name="SRC" value="${ROOT}/src"/>
 
-	<!-- Set up all the project specific properties -->
-	<property name="PROJECT_NAME" value="Buddi"/>
-	<property name="PROJECT_UNIX_NAME" value="buddi"/>
-	<property name="BUILD_NAME" value="Buddi"/>
-	<property name="PROJECT_DESCRIPTION" value="Buddi (Personal Budget Software)"/>
-	<property name="PROJECT_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
-	<property name="PROJECT_COPYRIGHT" value="Copyright Wyatt Olson"/>
+	<property file="${ETC}/version.txt"/>
+	<property file="${ETC}/ant.properties"/>
+
+	<property name="FULL_NAME" value="Buddi"/>
+	<property name="UNIX_NAME" value="buddi"/>
+	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)"/>
+	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
+	<property name="COPYRIGHT" value="Copyright Wyatt Olson"/>
 
 	<!-- Build the program for all platforms -->
 	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" description="Builds packages for all available platforms."/>
@@ -23,17 +26,17 @@
 	<target name="windows" depends="jar" description="Builds .exe for Windows, using Launch4J">
 		<!-- Define the tasks for Launch4J and AntInstaller -->
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
-
+		
 		<!-- Make the base .exe -->
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
-				jar="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" 
-				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" 
-				errTitle="${PROJECT_NAME}"
+				jar="${BUILD}/${FULL_NAME}.jar" 
+				outfile="${BUILD}/${FULL_NAME}.exe" 
+				errTitle="${FULL_NAME}"
 				chdir="."
 				stayAlive="true"
-				icon="${PROJECT_HOME}/img/win/${PROJECT_UNIX_NAME}.ico">
+				icon="${ROOT}/img/win/${UNIX_NAME}.ico">
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
@@ -41,58 +44,60 @@
 
 				<versionInfo
 			    	fileVersion="${VERSION}"
-					fileDescription="${PROJECT_DESCRIPTION}"
+					fileDescription="${DESCRIPTION}"
 			    	txtFileVersion="${VERSION}"
 				    copyright="Wyatt Olson"
 				    productVersion="${VERSION}"
 			    	txtProductVersion="${VERSION}"
-			    	productName="${PROJECT_NAME}"
+			    	productName="${FULL_NAME}"
 			    	companyName="Wyatt Olson"
-			    	internalName="${PROJECT_NAME}"
-			    	originalFilename="${BUILD_NAME}.exe"/>
+			    	internalName="${FULL_NAME}"
+			    	originalFilename="${FULL_NAME}.exe"/>
 			</config>
 		</launch4j>
 
-		<mkdir dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
-		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}/${BUILD_NAME}.exe"/>
-		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
-			<fileset dir="${PROJECT_HOME}/img/win">
-				<exclude name="${PROJECT_UNIX_NAME}.ico"/>
+		<mkdir dir="${BUILD}/${FULL_NAME}"/>
+		<move file="${BUILD}/${FULL_NAME}.exe" tofile="${BUILD}/${FULL_NAME}/${FULL_NAME}.exe"/>
+		<copy todir="${BUILD}/${FULL_NAME}">
+			<fileset dir="${ROOT}/img/win">
+				<exclude name="${UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
 			</fileset>
-			<fileset dir="${PROJECT_HOME}/docs">
+			<fileset dir="${ROOT}/docs">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
 			</fileset>
 		</copy>		
 
-		<mkdir dir="${PROJECT_HOME}/build"/>
-		<zip destfile="${PROJECT_HOME}/build/package.zip">
-			<zipfileset dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<mkdir dir="${BUILD}"/>
+		<zip destfile="${BUILD}/package.zip">
+			<zipfileset dir="${BUILD}/${FULL_NAME}"/>
 		</zip>
 		
 		<!-- Make installer -->
-		<copy file="${PROJECT_HOME}/etc/windows/moss-installer.jar" tofile="${PROJECT_HOME}/build/installer.jar"/>
-		<jar destfile="${PROJECT_HOME}/build/installer.jar" update="true">
-			<zipfileset file="${PROJECT_HOME}/build/package.zip" prefix="install"/>
-			<zipfileset file="${PROJECT_HOME}/etc/windows/MossInstaller.properties"/>
-			<zipfileset file="${PROJECT_HOME}/etc/windows/postinstall.js"/>			
-			<zipfileset dir="${PROJECT_HOME}/img">
+		<copy file="${ETC}/windows/moss-installer.jar" tofile="${BUILD}/installer.jar"/>
+		<jar destfile="${BUILD}/installer.jar" update="true">
+			<zipfileset file="${BUILD}/package.zip" prefix="install"/>
+			<zipfileset file="${ETC}/windows/MossInstaller.properties"/>
+			<zipfileset file="${ETC}/windows/postinstall.js"/>			
+			<zipfileset dir="${ROOT}/img">
 				<include name="BuddiAboutLogo.png"/>
 				<include name="BuddiFrameIcon.gif"/>
 			</zipfileset>
 		</jar>
 		
+		<echo>${ROOT}/img/win/${UNIX_NAME}.ico</echo>
+		
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
-				jar="${PROJECT_HOME}/build/installer.jar" 
-				outfile="${PROJECT_HOME}/build/${PROJECT_NAME}-Installer.exe" 
-				errTitle="${PROJECT_NAME}"
+				jar="${BUILD}/installer.jar" 
+				outfile="${BUILD}/${FULL_NAME}-${VERSION}.exe" 
+				errTitle="${FULL_NAME}"
 				chdir="."
 				stayAlive="true"
-				icon="${PROJECT_HOME}/img/win/${PROJECT_UNIX_NAME}.ico">
+				icon="${ROOT}/img/win/${UNIX_NAME}.ico">
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
@@ -100,26 +105,24 @@
 
 				<versionInfo
 			    	fileVersion="${VERSION}"
-					fileDescription="${PROJECT_DESCRIPTION}"
+					fileDescription="${DESCRIPTION}"
 			    	txtFileVersion="${VERSION}"
 				    copyright="Wyatt Olson"
 				    productVersion="${VERSION}"
 			    	txtProductVersion="${VERSION}"
-			    	productName="${PROJECT_NAME}"
+			    	productName="${FULL_NAME}"
 			    	companyName="Wyatt Olson"
-			    	internalName="${PROJECT_NAME}"
-			    	originalFilename="${BUILD_NAME}-${VERSION}.exe"/>
+			    	internalName="${FULL_NAME}"
+			    	originalFilename="${FULL_NAME}-${VERSION}.exe"/>
 			</config>
 		</launch4j>
-		
-		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}-Installer.exe" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.exe"/>
 
-		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
-		<delete>
-			<fileset dir="${PROJECT_HOME}/build/">
+		<delete dir="${BUILD}/${FULL_NAME}"/>
+		<delete includeemptydirs="true">
+			<fileset dir="${BUILD}">
 				<include name="installer.jar"/>
 				<include name="package.zip"/>
-				<include name="${BUILD_NAME}"/>
+				<include name="${FULL_NAME}"/>
 			</fileset>
 		</delete>
 	</target>
@@ -128,45 +131,45 @@
 		<!-- Define the JarBundler path -->
 		<taskdef name="jarbundler" classpath="${JARBUNDLER_JAR}" classname="net.sourceforge.jarbundler.JarBundler"/>
 
-		<mkdir dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
-		<jarbundler dir="${PROJECT_HOME}/build/${BUILD_NAME}" verbose="true" showPlist="false"
-	        name="${BUILD_NAME}"
-	        shortname="${PROJECT_NAME}"
+		<mkdir dir="${BUILD}/${FULL_NAME}"/>
+		<jarbundler dir="${BUILD}/${FULL_NAME}" verbose="true" showPlist="false"
+	        name="${FULL_NAME}"
+	        shortname="${FULL_NAME}"
 	        signature="????"
-	        stubfile="${PROJECT_HOME}/etc/osx/JavaApplicationStub"
-	        mainclass="${PROJECT_CLASS}"
-	        icon="${PROJECT_HOME}/img/osx/${PROJECT_NAME}.icns"
+	        stubfile="${ETC}/osx/JavaApplicationStub"
+	        mainclass="${MAIN_CLASS}"
+	        icon="${ROOT}/img/osx/${FULL_NAME}.icns"
 	        jvmversion="1.5+"
 	        version="${VERSION}"
-	        infostring="${PROJECT_NAME}, ${PROJECT_COPYRIGHT}"
-	        bundleid="${PROJECT_CLASS}">
+	        infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
+	        bundleid="${MAIN_CLASS}">
 
-			<jarfileset file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" />
-			<jarfileset dir="${PROJECT_HOME}/lib">
+			<jarfileset file="${BUILD}/${FULL_NAME}.jar" />
+			<jarfileset dir="${LIB}">
 				<include name="*quaqua*"/>
 			</jarfileset>
 
 			<!-- Associate document types with this application -->
 			<documenttype name="Buddi Data"
 				extensions="buddi3"
-				iconFile="${PROJECT_HOME}/img/osx/BuddiData.icns"
+				iconFile="${ROOT}/img/osx/BuddiData.icns"
 				role="Editor"/>
 				                
 			<documenttype name="Buddi Plugin"
 				extensions="buddi3plugin" 
-				iconFile="${PROJECT_HOME}/img/osx/BuddiPlugin.icns"
+				iconFile="${ROOT}/img/osx/BuddiPlugin.icns"
 				role="Editor"/>
 			
 			<documenttype name="Buddi Translation"
 				extensions="lang" 
-				iconFile="${PROJECT_HOME}/img/osx/BuddiLanguage.icns"
+				iconFile="${ROOT}/img/osx/BuddiLanguage.icns"
 				role="Editor"/>
 
 		</jarbundler>
 
 		<!-- Copy documentation -->
-		<copy todir="${PROJECT_HOME}/build/${BUILD_NAME}">
-			<fileset dir="${PROJECT_HOME}/docs">
+		<copy todir="${BUILD}/${FULL_NAME}">
+			<fileset dir="${DOCS}">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -174,7 +177,7 @@
 		</copy>
 		
 		<exec executable="/usr/bin/hdiutil" os="Mac OS X">
-			<arg line="create -format UDZO -srcfolder '${PROJECT_HOME}/build/${BUILD_NAME}' -o '${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.dmg'"/>
+			<arg line="create -format UDZO -srcfolder '${BUILD}/${FULL_NAME}' -o '${BUILD}/${FULL_NAME}-${VERSION}.dmg'"/>
 		</exec>
 
 		<condition property="OS_IS_MAC">
@@ -185,7 +188,7 @@
 
 		<ant target="osx_zip"/>
 
-		<delete dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<delete dir="${BUILD}/${FULL_NAME}"/>
 
 	</target>
 
@@ -193,8 +196,8 @@
 			if="BUILD_OSX_PACKAGE"
 			unless="OS_IS_MAC"
 			description="Bundles the Macintosh .app package ina .zip, in case you are not building from a Mac.">
-		<zip destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}-Macintosh.zip">
-			<fileset dir="${PROJECT_HOME}/build/${BUILD_NAME}"/>
+		<zip destfile="${BUILD}/${FULL_NAME}-OSX-${VERSION}.zip">
+			<fileset dir="${BUILD}/${FULL_NAME}"/>
 		</zip>
 	</target>
 
@@ -202,36 +205,36 @@
 		 this in the correct location, and modifying the launcher as needed. -->
 	<target name="unix" depends="jar" description="Creates a generic Unix package, with a command line capable launcher.">
 		
-		<copy todir="${PROJECT_HOME}/build">
-			<fileset dir="${PROJECT_HOME}/etc/unix/usr/bin"/>
+		<copy todir="${BUILD}">
+			<fileset dir="${ETC}/unix/usr/bin"/>
 			<filterset begintoken="[[" endtoken="]]">
 				<filter token="platform" value="unix"/>
 			</filterset>
 		</copy>
 		
-		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.tar" >
-			<tarfileset dir="${PROJECT_HOME}/build" mode="755" prefix="${BUILD_NAME}">
-				<include name="${PROJECT_UNIX_NAME}"/>
+		<tar destfile="${BUILD}/${FULL_NAME}.tar" >
+			<tarfileset dir="${BUILD}" mode="755" prefix="${FULL_NAME}">
+				<include name="${UNIX_NAME}"/>
 			</tarfileset>
-			<tarfileset dir="${PROJECT_HOME}/build" prefix="${BUILD_NAME}">
-				<include name="${PROJECT_NAME}.jar"/>
+			<tarfileset dir="${BUILD}" prefix="${FULL_NAME}">
+				<include name="${FULL_NAME}.jar"/>
 			</tarfileset>
 
 			<!-- Copy documentation -->
-			<tarfileset dir="${PROJECT_HOME}/etc/unix" prefix="${BUILD_NAME}">
+			<tarfileset dir="${ETC}/unix" prefix="${FULL_NAME}">
 				<include name="Readme.unix"/>
 			</tarfileset>
-			<tarfileset dir="${PROJECT_HOME}/docs" prefix="${BUILD_NAME}">
+			<tarfileset dir="${DOCS}" prefix="${FULL_NAME}">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
 			</tarfileset>
 		</tar>
-		<gzip zipfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.tgz" src="${PROJECT_HOME}/build/${PROJECT_NAME}.tar"/>
+		<gzip zipfile="${BUILD}/${FULL_NAME}-${VERSION}.tgz" src="${BUILD}/${FULL_NAME}.tar"/>
 		<delete>
-			<fileset dir="${PROJECT_HOME}/build">
-				<include name="${PROJECT_NAME}.tar"/>
-				<include name="${PROJECT_UNIX_NAME}"/>
+			<fileset dir="${BUILD}">
+				<include name="${FULL_NAME}.tar"/>
+				<include name="${UNIX_NAME}"/>
 			</fileset>
 		</delete>
 	</target>
@@ -241,20 +244,20 @@
 	<target name="debian" depends="jar" description="Creates a Debian .deb file, with entries for FreeDesktop desktops.">
 		<taskdef name="deb" classpath="${JDEB_JAR}" classname="org.vafer.jdeb.ant.DebAntTask"/>
 
-		<mkdir dir="${PROJECT_HOME}/build/deb/data"/>
+		<mkdir dir="${BUILD}/deb/data"/>
 		
 		<!-- Copy all supporting files, for free desktop, scripts, etc -->
-		<copy todir="${PROJECT_HOME}/build/deb/data/usr">
-			<fileset dir="${PROJECT_HOME}/etc/unix/usr"/>
+		<copy todir="${BUILD}/deb/data/usr">
+			<fileset dir="${ETC}/unix/usr"/>
 			<filterset begintoken="[[" endtoken="]]">
 				<filter token="platform" value="debian"/>
 			</filterset>
 		</copy>
 		
 		<!-- Copy documentation -->
-		<mkdir dir="${PROJECT_HOME}/build/deb/data/usr/share/doc"/>
-		<copy todir="${PROJECT_HOME}/build/deb/data/usr/share/doc">
-			<fileset dir="${PROJECT_HOME}/docs">
+		<mkdir dir="${BUILD}/deb/data/usr/share/doc"/>
+		<copy todir="${BUILD}/deb/data/usr/share/doc">
+			<fileset dir="${DOCS}">
 				<include name="*.txt"/>
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
@@ -262,25 +265,25 @@
 		</copy>	
 
 		<!-- Copy fat jar file -->
-		<copy file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" todir="${PROJECT_HOME}/build/deb/data/usr/bin"/>
+		<copy file="${BUILD}/${FULL_NAME}.jar" todir="${BUILD}/deb/data/usr/bin"/>
 
 		<!-- Create Debian control files -->
-		<mkdir dir="${PROJECT_HOME}/build/deb/control"/>
-		<copy todir="${PROJECT_HOME}/build/deb/control">
-			<fileset dir="${PROJECT_HOME}/etc/unix/linux/debian/control"/>
+		<mkdir dir="${BUILD}/deb/control"/>
+		<copy todir="${BUILD}/deb/control">
+			<fileset dir="${ETC}/unix/linux/debian/control"/>
 			<filterset begintoken="[[" endtoken="]]">
 				<filter token="version" value="${VERSION}"/>
 			</filterset>
 		</copy>
 
 		<!-- Create the .deb file -->
-		<deb destfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.deb" control="${PROJECT_HOME}/build/deb/control">
-			<data src="${PROJECT_HOME}/build/deb/data">
+		<deb destfile="${BUILD}/${FULL_NAME}-${VERSION}.deb" control="${BUILD}/deb/control">
+			<data src="${BUILD}/deb/data">
 				<exclude name="**/.svn"/>
 			</data>
 		</deb>
 
-		<delete includeemptydirs="true" dir="${PROJECT_HOME}/build/deb"/>
+		<delete includeemptydirs="true" dir="${BUILD}/deb"/>
 	</target>
 
 	<target name="redhat" depends="jar">
@@ -297,35 +300,35 @@
 		<taskdef name="svn" classpathref="SVNANT_CLASSPATH" classname="org.tigris.subversion.svnant.SvnTask"/>
 
 		<svn>
-			<export srcPath="${PROJECT_HOME}" destPath="${PROJECT_HOME}/build/src"/>
+			<export srcPath="${ROOT}" destPath="${BUILD}/src"/>
 		</svn>
 
-		<tar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar">
-			<tarfileset dir="${PROJECT_HOME}/build/src">
+		<tar destfile="${BUILD}/${FULL_NAME}.src.tar">
+			<tarfileset dir="${BUILD}/src">
 				<include name="**/*"/>
 			</tarfileset>
 		</tar>
-		<gzip zipfile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.src.tgz" src="${PROJECT_HOME}/build/${PROJECT_NAME}.src.tar"/>
+		<gzip zipfile="${BUILD}/${FULL_NAME}-${VERSION}.src.tgz" src="${BUILD}/${FULL_NAME}.src.tar"/>
 		<delete includeemptydirs="true">
-			<fileset dir="${PROJECT_HOME}/build">
-				<include name="${PROJECT_NAME}.src.tar"/>
+			<fileset dir="${BUILD}">
+				<include name="${FULL_NAME}.src.tar"/>
 			</fileset>
-			<fileset dir="${PROJECT_HOME}/build/src"/>
+			<fileset dir="${BUILD}/src"/>
 		</delete>
 	</target>
 
 	<target name="generic" depends="jar" description="Renames the fat jar to the release name (including version number)">
-		<move file="${PROJECT_HOME}/build/${PROJECT_NAME}.jar" tofile="${PROJECT_HOME}/build/${BUILD_NAME}-${VERSION}.jar"/>
+		<move file="${BUILD}/${FULL_NAME}.jar" tofile="${BUILD}/${FULL_NAME}-${VERSION}.jar"/>
 	</target>
 
 	<target name="javadocs" depends="clean" description="Creates the javadocs">
-		<mkdir dir="${PROJECT_HOME}/javadocs"/>
-		<javadoc destdir="${PROJECT_HOME}/javadocs" packagenames="org">
-			<packageset dir="${PROJECT_HOME}/src">
+		<mkdir dir="${JAVADOCS}"/>
+		<javadoc destdir="${JAVADOCS}" packagenames="org">
+			<packageset dir="${SRC}">
 				<include name="**/*"/>
 			</packageset>
 			<!-- Include Moss in Javadocs.  Change this location or remove it as needed. -->
-			<packageset dir="${PROJECT_HOME}/../Moss/src">
+			<packageset dir="${ROOT}/../Moss/src">
 				<include name="**/*"/>
 			</packageset>
 		</javadoc>
@@ -338,12 +341,12 @@
 	</target>
 
 	<target name="scp_javadocs" depends="javadocs" description="Uploads Javadocs to web server, using SCP.  Uses SSHExec and SCP tasks, and thus requires jsch to be in the Ant classpath.">
-		<tar destfile="${PROJECT_HOME}/javadocs/javadocs.tar">
-			<tarfileset dir="${PROJECT_HOME}/javadocs">
+		<tar destfile="${JAVADOCS}/javadocs.tar">
+			<tarfileset dir="${JAVADOCS}">
 			    <exclude name="javadocs.tar"/>
 			</tarfileset>
 		</tar>
-		<gzip zipfile="${PROJECT_HOME}/javadocs/javadocs.tgz" src="${PROJECT_HOME}/javadocs/javadocs.tar"/>
+		<gzip zipfile="${JAVADOCS}/javadocs.tgz" src="${JAVADOCS}/javadocs.tar"/>
 
 		<!-- Remove existing javadocs on server -->
 		<sshexec 
@@ -355,7 +358,7 @@
 
 		<!-- Upload new javadocs -->
 		<scp todir="${WEB_USER}@${WEB_HOST}:${WEB_ROOT}/javadocs"
-			file="${PROJECT_HOME}/javadocs/javadocs.tgz"
+			file="${JAVADOCS}/javadocs.tgz"
 			keyfile="${SSH_KEY}"
 			passphrase="${SSH_KEY_PASSPHRASE}"/>
 		<sshexec 
@@ -372,27 +375,29 @@
 				password="${FTP_PASSWORD}" 
 				remotedir="${FTP_DIRECTORY}"
 				action="put">
-			<fileset dir="${PROJECT_HOME}/build"/>
+			<fileset dir="${BUILD}"/>
 		</ftp>		
 	</target>
 
 	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all jars in the lib directory.">		
-		<mkdir dir="${PROJECT_HOME}/build/tmp"/>
-		<unzip dest="${PROJECT_HOME}/build/tmp">
-			<fileset dir="${PROJECT_HOME}/lib">
+		<mkdir dir="${BUILD}/tmp"/>
+		<unzip dest="${BUILD}/tmp">
+			<fileset dir="${LIB}">
 				<include name="*.jar"/>
 				<exclude name="quaqua*"/>			
 			</fileset>
 		</unzip>
 		
-		<jar destfile="${PROJECT_HOME}/build/${PROJECT_NAME}.jar">
+		<jar destfile="${BUILD}/${FULL_NAME}.jar">
 			<manifest>
-				<attribute name="Main-Class" value="${PROJECT_CLASS}"/>
+				<attribute name="Main-Class" value="${MAIN_CLASS}"/>
 			</manifest>
-			<fileset dir="${PROJECT_HOME}/bin" includes="**/*"/>
-			<fileset dir="${PROJECT_HOME}/build/tmp" includes="**/*"/>
-			<fileset dir="${PROJECT_HOME}">
+			<fileset dir="${BIN}" includes="**/*"/>
+			<fileset dir="${BUILD}/tmp" includes="**/*"/>
+			<fileset dir="${ETC}">
 				<include name="Languages/*"/>
+			</fileset>
+			<fileset dir="${ROOT}">
 				<include name="version.txt"/>
 				<include name="img/BuddiSplashScreen.jpg"/>				
 				<include name="img/BuddiAboutLogo.png"/>
@@ -404,14 +409,14 @@
 		</jar>
 		
 		<delete includeemptydirs="true">
-			<fileset dir="${PROJECT_HOME}/build/tmp"/>
+			<fileset dir="${BUILD}/tmp"/>
 		</delete>
 	</target>
 
 	<target name="compile" description="Builds the project">
 		<javac srcdir="src" destdir="bin">
 			<classpath>
-				<fileset dir="${PROJECT_HOME}/lib">
+				<fileset dir="${LIB}">
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
@@ -420,13 +425,13 @@
 
 	<target name="clean" description="Removes all files from bin, build, and javadocs directories">
 		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${PROJECT_HOME}/bin">
+			<fileset dir="${BIN}">
 				<include name="**/*"/>
 			</fileset>
-			<fileset dir="${PROJECT_HOME}/build">
+			<fileset dir="${BUILD}">
 				<include name="**/*"/>
 			</fileset>
-			<fileset dir="${PROJECT_HOME}/javadocs">
+			<fileset dir="${FULL_NAME}/javadocs">
 				<include name="**/*"/>
 			</fileset>
 		</delete>
