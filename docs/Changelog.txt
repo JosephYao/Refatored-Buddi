@@ -1,4 +1,6 @@
-2.9.9.0
+2.9.9.0 (October 6 2007)
+-Updated the build script again, to make it easier to build.  Now, you should be able to build the .jar without any extra properties files or third party ant plugins.
+-Updated splash screen to look nicer (the old one was pretty ugly!)
 -Fixed bug #1808426 (Fixed possible null pointer when loading plugins)
 -Removed --lnf option, as it was only useful when using the .jar version.  The new recommended form of settting Look and Feel is by using the Skin Chooser plugin.
 

@@ -11,7 +11,7 @@
 	<property name="LIB" value="${ROOT}/lib"/>
 	<property name="SRC" value="${ROOT}/src"/>
 
-	<property file="${ETC}/version.txt"/>
+	<property file="${ROOT}/version.txt"/>
 	<property file="${ETC}/ant.properties"/>
 
 	<property name="FULL_NAME" value="Buddi"/>
