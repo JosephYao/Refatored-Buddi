@@ -1,4 +1,5 @@
 2.9.9.0
+-Fixed bug #1808426 (Fixed possible null pointer when loading plugins)
 -Removed --lnf option, as it was only useful when using the .jar version.  The new recommended form of settting Look and Feel is by using the Skin Chooser plugin.
 
 2.9.8.1 (October 4 2007)

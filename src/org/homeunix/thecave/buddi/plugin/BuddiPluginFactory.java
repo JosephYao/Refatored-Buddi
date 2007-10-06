@@ -56,7 +56,9 @@ public class BuddiPluginFactory extends PluginFactory {
 			for (File pluginFile : plugins){
 				Properties props = new Properties();
 				try {
-					props.load(ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, Const.PLUGIN_PROPERTIES));
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
 				}
 				catch (IOException ioe){}
 				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {

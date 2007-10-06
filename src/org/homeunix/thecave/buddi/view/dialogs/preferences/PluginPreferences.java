@@ -115,6 +115,9 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 					if (fileToNameMap.get(file) == null){
 						fileToNameMap.put(file, file.getName().replaceAll(Const.PLUGIN_EXTENSION, ""));
 					}
+					if (fileToVersionMap.get(file) == null){
+						fileToVersionMap.put(file, "");
+					}
 					
 					this.setText(fileToNameMap.get(file) + fileToVersionMap.get(file));
 				}
@@ -215,7 +218,9 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 			if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 				Properties props = new Properties();
 				try {
-					props.load(ClassLoaderFunctions.getResourceAsStreamFromJar(jfc.getSelectedFile(), Const.PLUGIN_PROPERTIES));
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(jfc.getSelectedFile(), Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
 				}
 				catch (IOException ioe){}				
 				List<MossPlugin> plugins = BuddiPluginFactory.getMossPluginsFromJar(jfc.getSelectedFile(), Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT));
