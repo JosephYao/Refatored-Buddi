@@ -36,7 +36,7 @@
 				errTitle="${FULL_NAME}"
 				chdir="."
 				stayAlive="true"
-				icon="${ROOT}/img/win/${UNIX_NAME}.ico">
+				icon="${ROOT}/img/windows/${UNIX_NAME}.ico">
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
@@ -59,7 +59,7 @@
 		<mkdir dir="${BUILD}/${FULL_NAME}"/>
 		<move file="${BUILD}/${FULL_NAME}.exe" tofile="${BUILD}/${FULL_NAME}/${FULL_NAME}.exe"/>
 		<copy todir="${BUILD}/${FULL_NAME}">
-			<fileset dir="${ROOT}/img/win">
+			<fileset dir="${ROOT}/img/windows">
 				<exclude name="${UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
 			</fileset>
@@ -87,8 +87,6 @@
 			</zipfileset>
 		</jar>
 		
-		<echo>${ROOT}/img/win/${UNIX_NAME}.ico</echo>
-		
 		<launch4j>
 			<config 
 				dontWrapJar="false" 
@@ -97,7 +95,7 @@
 				errTitle="${FULL_NAME}"
 				chdir="."
 				stayAlive="true"
-				icon="${ROOT}/img/win/${UNIX_NAME}.ico">
+				icon="${ROOT}/img/windows/${UNIX_NAME}.ico">
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
