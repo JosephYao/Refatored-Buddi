@@ -38,7 +38,7 @@ public class Const {
 	
 	//Version variables
 	public static final String BRANCH = DEVELOPMENT;
-	public static final boolean DEVEL = true;
+	public static final boolean DEVEL = BRANCH.equals(DEVELOPMENT);
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";
@@ -187,6 +187,7 @@ public class Const {
 		LocalePreferences.class.getCanonicalName(),
 		NetworkPreferences.class.getCanonicalName(),
 		AdvancedPreferences.class.getCanonicalName(),
+//		SkinChooserPreferencePane.class.getCanonicalName(),
 	};
 	
 	//Built in Reports
@@ -210,7 +211,9 @@ public class Const {
 	public static final String[] BUILT_IN_SYNCHRONIZES = {};
 	
 	//Built in Runnable plugins
-	public static final String[] BUILT_IN_RUNNABLES = {};
+	public static final String[] BUILT_IN_RUNNABLES = {
+//		SkinChangerPlugin.class.getCanonicalName(),
+	};
 		
 	private Const(){}
 }

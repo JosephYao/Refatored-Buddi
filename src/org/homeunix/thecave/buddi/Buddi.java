@@ -368,19 +368,25 @@ public class Buddi {
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel();
 		
-		if (!OperatingSystemUtil.isMac())
+		splash: if (!OperatingSystemUtil.isMac()){
+			for (String string : args) {
+				if (string.equals("--nosplash"))
+					break splash;
+			}
 			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
+		}
 		
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
 				arg1.printStackTrace(Log.getPrintStream());
-				if (arg1 instanceof DataModelProblemException)
-					sendBugReport(((DataModelProblemException) arg1).getDataModel());
-				else
-					sendBugReport();
-
-				arg1.printStackTrace(Log.getPrintStream());
+				if (!Log.getPrintStream().equals(System.err)
+						&& !Log.getPrintStream().equals(System.out)){
+					if (arg1 instanceof DataModelProblemException)
+						sendBugReport(((DataModelProblemException) arg1).getDataModel());
+					else
+						sendBugReport();
+				}
 			}
 		});
 
@@ -445,8 +451,9 @@ public class Buddi {
 			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
 			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
-			+ "--languages\tFolder\tFolder to store custom languages (should be writable)"
-			+ "--plugins\tFolder\tFolder to store plugins (should be writable)"
+			+ "--languages\tFolder\tFolder to store custom languages (should be writable)\n"
+			+ "--plugins\tFolder\tFolder to store plugins (should be writable)\n"
+			+ "--nosplash\t\tDon't show splash screen on startup\n"
 			+ "--simpleFont\t\tDon't use bold or italic fonts (better support for special characters on Windows)\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --font	<fontName> will specifya font to use by default
@@ -466,28 +473,9 @@ public class Buddi {
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--unix", Boolean.class, false));
+		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 
 		ParseResults results = ParseCommands.parse(args, help, variables);
-
-		//Set the working path.  If we save files (plugins, data files) 
-		// within this path, we remove this parent path.  This allows
-		// us to use relative paths for such things as running from
-		// USB drives, from remote shares (which would not always have
-		// the same path), etc.
-		//Removed in 3.0, as there are stricter definitions for file locations than before.
-//		try {
-//		if (System.getProperty("user.dir").length() > 0)
-//		userDir = new File(System.getProperty("user.dir")).getCanonicalPath() + File.separator;
-
-//		//If we did not set it via user.dir, we set it here.
-//		if (userDir.length() == 0)
-//		userDir = new File("").getCanonicalPath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-//		}
-//		catch (IOException ioe){
-//		//Fallback which does not throw IOException, but may get drive case incorrect on Windows.
-//		userDir = new File("").getAbsolutePath() + File.separator; // + (!OperatingSystemUtil.isWindows() ? File.separator : "");
-//		}
-
 
 		//Set up the logging system.  If we have specified --log, we first
 		// try using that file.  If that is not specified, on the Mac
@@ -525,12 +513,17 @@ public class Buddi {
 			Log.setLogLevel(verbosity);
 			Log.debug("Setting log level to " + verbosity);
 		}
-		else if (Const.DEVEL){
-			Log.setLogLevel(Log.DEBUG);
+		else {
+			if (Const.DEVEL)
+				Log.setLogLevel(Log.DEBUG);
+			else
+				Log.setLogLevel(Log.INFO);
 		}
 
 		//Prints the version of Buddi to the logs
 		Log.notice("Running Buddi version: " + getVersion());
+		Log.notice("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
+		Log.notice("Java VM version: " + System.getProperty("java.version"));
 
 		//Parse all the remaining options
 		Boolean usbKey = results.getBoolean("--usb");
@@ -842,6 +835,6 @@ public class Buddi {
 			}
 		}
 
-		Log.critical(crashLog.toString());
+//		Log.critical(crashLog.toString());
 	}
 }

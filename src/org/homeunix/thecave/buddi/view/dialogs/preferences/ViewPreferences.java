@@ -93,8 +93,6 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 	}
 	
 	public boolean save() {
-		System.out.println("Saving");
-		
 		boolean restart = false;
 		
 		PrefsModel.getInstance().setShowDeleted(showDeleted.isSelected());

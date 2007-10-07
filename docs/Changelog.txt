@@ -1,4 +1,5 @@
 2.9.10.0
+-Added command line option --nosplash to disable the splash screen
 -Updated Spanish translation (Thanks to Rafael Rodriguez and Ignacio Baca for this)
 
 2.9.9.0 (October 6 2007)
