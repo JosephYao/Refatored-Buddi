@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.model.prefs;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,6 +27,7 @@ public class PrefsModelBean {
 	// to create standard getters and setters for all data you wish
 	// to save.
 	private Map<String, String> pluginPreferences;
+	private Map<String, List<String>> pluginListPreferences;
 	
 	//Data file information
 	private String lastDataFile;
@@ -79,6 +81,15 @@ public class PrefsModelBean {
 		return numberOfBudgetColumns;
 	}
 	
+	public Map<String, List<String>> getPluginListPreferences() {
+		return pluginListPreferences;
+	}
+
+	public void setPluginListPreferences(
+			Map<String, List<String>> pluginListPreferences) {
+		this.pluginListPreferences = pluginListPreferences;
+	}
+
 	public boolean isShowTooltips() {
 		return showTooltips;
 	}

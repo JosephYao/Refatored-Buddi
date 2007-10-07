@@ -24,7 +24,7 @@ import org.homeunix.thecave.moss.swing.MossDocumentFrame;
  * @author wyatt
  *
  */
-public abstract class BuddiReportPlugin extends BuddiPluginPreference implements MossPlugin {
+public abstract class BuddiReportPlugin extends PreferenceAccess implements MossPlugin {
 	/**
 	 * Returns an in-memory version of the printed page, as an HTML
 	 * file.  An HtmlPage object is just a small class containing a string

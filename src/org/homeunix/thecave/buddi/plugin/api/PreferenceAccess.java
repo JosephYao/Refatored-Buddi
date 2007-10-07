@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api;
 
+import java.util.List;
+
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
@@ -13,7 +15,7 @@ import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
  * @author wyatt
  *
  */
-public abstract class BuddiPluginPreference {
+public abstract class PreferenceAccess {
 	/**
 	 * Loads the value which is associated with the given key.
 	 * @param key The key to read.
@@ -38,6 +40,40 @@ public abstract class BuddiPluginPreference {
 	 */
 	public void putPreference(String key, String value){
 		PrefsModel.getInstance().putPluginPreference(key, value);
+	}
+	
+	/**
+	 * Sets the given list of strings in the preferences map, using the given key.
+	 * 
+	 * @param key The key to save.  In order to ensure that you do not
+	 * overwrite the preferences for another plugin, you must use
+	 * the key format as follows:
+	 * 
+	 * "package.Plugin.property"
+	 * 
+	 * For instance, use the key "com.example.buddi.ImportFoo.LAST_EXECUTE_DAY" 
+	 * instead of the key "LAST_EXECUTE_DAY".
+	 * @param values The list of values to store
+	 */
+	public void putListPreference(String key, List<String> values){
+		PrefsModel.getInstance().putPluginListPreference(key, values);
+	}
+	
+	/**
+	 * Returns the list associated with the given key.
+	 * @param key The key to save.  In order to ensure that you do not
+	 * overwrite the preferences for another plugin, you must use
+	 * the key format as follows:
+	 * 
+	 * "package.Plugin.property"
+	 * 
+	 * For instance, use the key "com.example.buddi.ImportFoo.LAST_EXECUTE_DAY" 
+	 * instead of the key "LAST_EXECUTE_DAY".
+
+	 * @return
+	 */
+	public List<String> getListPreference(String key){
+		return PrefsModel.getInstance().getPluginListPreference(key);
 	}
 	
 	/**

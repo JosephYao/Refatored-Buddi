@@ -21,6 +21,6 @@ import org.homeunix.thecave.moss.plugin.MossRunnablePlugin;
  * 
  * @author wyatt
  */
-public abstract class BuddiRunnablePlugin extends BuddiPluginPreference implements MossRunnablePlugin {
+public abstract class BuddiRunnablePlugin extends PreferenceAccess implements MossRunnablePlugin {
 
 }

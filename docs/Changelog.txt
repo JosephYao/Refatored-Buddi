@@ -1,4 +1,5 @@
 2.9.9.0 (October 6 2007)
+-Added support for Lists of Strings in plugin preferences.  You can access this with the getListPreference() / putListPreference() methods, accessible from the super class of any plugin.
 -Updated the build script again, to make it easier to build.  Now, you should be able to build the .jar without any extra properties files or third party ant plugins.
 -Updated splash screen to look nicer (the old one was pretty ugly!)
 -Fixed bug #1808426 (Fixed possible null pointer when loading plugins)

@@ -22,7 +22,7 @@ import org.homeunix.thecave.moss.swing.MossDocumentFrame;
  * @author wyatt
  *
  */
-public abstract class BuddiExportPlugin extends BuddiPluginPreference implements MossPlugin {
+public abstract class BuddiExportPlugin extends PreferenceAccess implements MossPlugin {
 
 	/**
 	 * Exports data as required.  The plugin launch code will prompt for a file

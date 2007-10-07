@@ -23,7 +23,7 @@ import org.homeunix.thecave.moss.plugin.MossPlugin;
  * @author wyatt
  * 
  */
-public abstract class BuddiPreferencePlugin extends BuddiPluginPreference implements MossPlugin {
+public abstract class BuddiPreferencePlugin extends PreferenceAccess implements MossPlugin {
 	
 	/**
 	 * Saves the preferences which this panel is responsible for.  If the changes nessecitate

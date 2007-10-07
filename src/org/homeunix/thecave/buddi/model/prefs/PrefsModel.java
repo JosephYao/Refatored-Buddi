@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
@@ -425,6 +427,18 @@ public class PrefsModel {
 	
 	public void putPluginPreference(String key, String value){
 		prefsModel.getPluginPreferences().put(key, value);
+	}
+	
+	public List<String> getPluginListPreference(String key){
+		if (prefsModel.getPluginListPreferences() == null)
+			prefsModel.setPluginListPreferences(new HashMap<String, List<String>>());
+		return prefsModel.getPluginListPreferences().get(key);
+	}
+	
+	public void putPluginListPreference(String key, List<String> value){
+		if (prefsModel.getPluginListPreferences() == null)
+			prefsModel.setPluginListPreferences(new HashMap<String, List<String>>());
+		prefsModel.getPluginListPreferences().put(key, value);
 	}
 	
 	public boolean isShowCreditRemaining() {
