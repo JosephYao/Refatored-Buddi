@@ -128,7 +128,7 @@ public class PluginImportEntry extends MossMenuItem {
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
-								null, 
+								getFrame(), 
 								TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECK_LOGS_FOR_DETAILS), 
 								TextFormatter.getTranslation(BuddiKeys.ERROR), 
 								JOptionPane.DEFAULT_OPTION,
@@ -143,7 +143,7 @@ public class PluginImportEntry extends MossMenuItem {
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
-								null, 
+								getFrame(), 
 								get(), 
 								"", 
 								JOptionPane.DEFAULT_OPTION,
@@ -163,28 +163,5 @@ public class PluginImportEntry extends MossMenuItem {
 		catch (Exception ex){
 			Log.error("Error encountered in plugin: " + ex);
 		}
-//		
-//		
-//		
-//		Log.debug("Calling importData()");
-//		try {
-//			plugin.importData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
-//		}
-//		catch (PluginException pe){
-//			pe.printStackTrace(Log.getPrintStream());
-//		}
-//		Log.debug("Finished importData(); updating balances");
-//		((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
-//		Log.debug("Finished updating balances");
-//		
-//		((MossDocumentFrame) getFrame()).getDocument().finishBatchChange();
-//		
-//		if (getFrame() instanceof MainFrame)
-//			((MainFrame) getFrame()).fireStructureChanged();
-//		if (getFrame() instanceof TransactionFrame)
-//			((TransactionFrame) getFrame()).fireStructureChanged();
-//		
-//		//Update all windows when done
-//		MainFrame.updateAllContent();
 	}
 }

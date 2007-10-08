@@ -129,7 +129,7 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
-								null, 
+								getFrame(), 
 								TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECK_LOGS_FOR_DETAILS), 
 								TextFormatter.getTranslation(BuddiKeys.ERROR), 
 								JOptionPane.DEFAULT_OPTION,
@@ -144,7 +144,7 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
-								null, 
+								getFrame(), 
 								get(), 
 								"", 
 								JOptionPane.DEFAULT_OPTION,

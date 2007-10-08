@@ -376,7 +376,7 @@
 			<fileset dir="${BUILD}"/>
 		</ftp>		
 	</target>
-
+	
 	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all jars in the lib directory.">		
 		<mkdir dir="${BUILD}/tmp"/>
 		<unzip dest="${BUILD}/tmp">
