@@ -17,6 +17,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -97,6 +98,9 @@ public class PluginImportEntry extends MossMenuItem {
 					try {
 						plugin.importData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
+					catch (PluginMessage pm){
+						return pm.getMessage();
+					}
 					catch (PluginException pe){
 						Log.error("Error processing data in plugin: ", pe);
 						return null;
@@ -129,6 +133,21 @@ public class PluginImportEntry extends MossMenuItem {
 								TextFormatter.getTranslation(BuddiKeys.ERROR), 
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.ERROR_MESSAGE,
+								null,
+								options,
+								options[0]
+						);
+					}
+					else if (get() instanceof String){
+						String[] options = new String[1];
+						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
+								null, 
+								get(), 
+								"", 
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE,
 								null,
 								options,
 								options[0]

@@ -17,6 +17,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
@@ -93,6 +94,9 @@ public class PluginExportEntry extends MossMenuItem {
 					try {
 						plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
+					catch (PluginMessage pm){
+						return pm.getMessage();
+					}
 					catch (PluginException pe){
 						Log.error("Error processing data in plugin: ", pe);
 						return null;
@@ -118,6 +122,21 @@ public class PluginExportEntry extends MossMenuItem {
 								options,
 								options[0]
 						);						
+					}
+					else if (get() instanceof String){
+						String[] options = new String[1];
+						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
+								null, 
+								get(), 
+								"", 
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.PLAIN_MESSAGE,
+								null,
+								options,
+								options[0]
+						);
 					}
 					
 					super.finished();

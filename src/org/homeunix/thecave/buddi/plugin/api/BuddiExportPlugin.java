@@ -9,6 +9,7 @@ import java.io.File;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
@@ -41,7 +42,7 @@ public abstract class BuddiExportPlugin extends PreferenceAccess implements Moss
 	 * all.  If you do need to display some Swing objects, you can do so using the 
 	 * SwingUtilities.invokeLater() method.
 	 */
-	public abstract void exportData(ImmutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException;
+	public abstract void exportData(ImmutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException, PluginMessage;
 	
 	public String getDescription() {
 		return BuddiKeys.FILE_DESCRIPTION_BUDDI_EXPORT_FILES.toString();
