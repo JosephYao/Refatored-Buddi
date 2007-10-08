@@ -23,8 +23,16 @@ public interface FileAccess {
 	
 	/**
 	 * Returns the message which should show when processing the data.  Defaults
-	 * to "Processing File..."; override if needed.
+	 * to "Processing File..."; override if needed.  This value is filtered through
+	 * the translator before being displayed.
 	 * @return
 	 */
 	public String getProcessingMessage();
+	
+	/**
+	 * Return the description which shows up in the file chooser.  By default, this 
+	 * is set to "Buddi [Import|Export|Synchronize] Files".  This value is filtered 
+	 * through the translator before being displayed.
+	 */
+	public String getDescription();
 }

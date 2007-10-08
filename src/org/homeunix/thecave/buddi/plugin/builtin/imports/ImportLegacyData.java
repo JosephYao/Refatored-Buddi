@@ -31,10 +31,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Version;
 
 public class ImportLegacyData extends BuddiImportPlugin {
 
@@ -53,16 +51,23 @@ public class ImportLegacyData extends BuddiImportPlugin {
 		}
 	}
 
-	public Version getMaximumVersion() {
-		return null;
-	}
-
-	public Version getMinimumVersion() {
-		return null;
-	}
-
 	public String getName() {
 		return BuddiKeys.IMPORT_LEGACY_BUDDI_FORMAT.toString();
+	}
+	
+	@Override
+	public String[] getFileExtensions() {
+		return new String[]{".buddi"};
+	}
+	
+	@Override
+	public String getProcessingMessage() {
+		return BuddiKeys.MESSAGE_CONVERTING_LEGACY_DATA_FILE.toString();
+	}
+	
+	@Override
+	public String getDescription() {
+		return BuddiKeys.LEGACY_BUDDI_FILES.toString();
 	}
 	
 	public void convert(MutableDocument model, DataModelImpl oldModel) throws DocumentLoadException {
@@ -188,25 +193,11 @@ public class ImportLegacyData extends BuddiImportPlugin {
 							sourceMap.get(oldScheduledTransaction.getTo()));
 				newScheduledTransaction.setClearedFrom(oldScheduledTransaction.isCleared());
 				newScheduledTransaction.setClearedTo(oldScheduledTransaction.isCleared());
-//				newScheduledTransaction.setDate(oldScheduledTransaction.getDate());
-//				newScheduledTransaction.setDescription(oldScheduledTransaction.getDescription());
-//				newScheduledTransaction.setEndDate(oldScheduledTransaction.getEndDate());
-//				newScheduledTransaction.setFrequencyType(oldScheduledTransaction.getFrequencyType());
 				newScheduledTransaction.setLastDayCreated(oldScheduledTransaction.getLastDateCreated());
 				newScheduledTransaction.setMemo(oldScheduledTransaction.getMemo());
-//				newScheduledTransaction.setMessage(oldScheduledTransaction.getMessage());
 				newScheduledTransaction.setNumber(oldScheduledTransaction.getNumber());
 				newScheduledTransaction.setReconciledFrom(oldScheduledTransaction.isReconciled());
 				newScheduledTransaction.setReconciledTo(oldScheduledTransaction.isReconciled());
-//				newScheduledTransaction.setScheduled(oldScheduledTransaction.isScheduled());
-//				newScheduledTransaction.setScheduleDay(oldScheduledTransaction.getScheduleDay());
-//				newScheduledTransaction.setScheduleWeek(oldScheduledTransaction.getScheduleWeek());
-//				newScheduledTransaction.setScheduleMonth(oldScheduledTransaction.getScheduleMonth());
-//				newScheduledTransaction.setScheduleName(oldScheduledTransaction.getScheduleName());
-//				newScheduledTransaction.setStartDate(oldScheduledTransaction.getStartDate());
-//				newScheduledTransaction.setAmount(oldScheduledTransaction.getAmount());
-//				newScheduledTransaction.setFrom(sourceMap.get(oldScheduledTransaction.getFrom()));
-//				newScheduledTransaction.setTo(sourceMap.get(oldScheduledTransaction.getTo()));
 
 				model.addScheduledTransaction(newScheduledTransaction);
 			}
@@ -234,15 +225,5 @@ public class ImportLegacyData extends BuddiImportPlugin {
 		catch (ModelException me){
 			throw new DocumentLoadException(me);
 		}
-	}
-	
-	@Override
-	public String[] getFileExtensions() {
-		return new String[]{".buddi"};
-	}
-	
-	@Override
-	public String getProcessingMessage() {
-		return TextFormatter.getTranslation(BuddiKeys.MESSAGE_CONVERTING_LEGACY_DATA_FILE);
 	}
 }

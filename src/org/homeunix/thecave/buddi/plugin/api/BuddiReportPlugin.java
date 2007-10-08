@@ -13,6 +13,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.util.Version;
 
 
 /**
@@ -49,4 +50,12 @@ public abstract class BuddiReportPlugin extends PreferenceAccess implements Moss
 	 * @return A constant enum value which determines how the plugin loader should display this plugin.
 	 */
 	public abstract PluginReportDateRangeChoices getDateRangeChoice();
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+
+	public Version getMinimumVersion() {
+		return null;
+	}
 }

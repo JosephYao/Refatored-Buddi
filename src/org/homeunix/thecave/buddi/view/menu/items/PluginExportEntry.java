@@ -82,7 +82,7 @@ public class PluginExportEntry extends MossMenuItem {
 			final File fFinal = f;
 			final MossStatusDialog status = new MossStatusDialog(
 					getFrame(),
-					plugin.getProcessingMessage());
+					TextFormatter.getTranslation(plugin.getProcessingMessage()));
 
 			if (plugin.getProcessingMessage() != null)
 				status.openWindow();

@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	LEGACY_BUDDI_FILES,
 	MESSAGE_PROCESSING_FILE,
 	MESSAGE_ERROR_CHECK_LOGS_FOR_DETAILS,
 	MESSAGE_CONVERTING_LEGACY_DATA_FILE,

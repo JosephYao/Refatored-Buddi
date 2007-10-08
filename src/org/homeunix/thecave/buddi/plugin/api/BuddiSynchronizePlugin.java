@@ -10,9 +10,9 @@ import java.io.File;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * The abstract class to extend when creating a synchronize plugin.  The method synchronizeData() 
@@ -28,14 +28,21 @@ public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements
 	/**
 	 * Imports data as required.  The plugin launch code will prompt for a file
 	 * and pass it in (unless you override the isPromptForFile() method to return false).
+	 * 
+	 * This method is executed from the launch code within a SwingWorker thread.  Once this
+	 * method is completed, the launch code will update all windows with any new information
+	 * which may have come from this plugin.  Thus, it is not a good idea to use any threads
+	 * in this method, unless you can guarantee that this method will not complete until 
+	 * all data processing is completed.
+	 * 
+	 * As well, since this method is not run from the AWT Event thread, you should not display
+	 * any Swing objects here, as it can potentially cause deadlocks in some situations.  This
+	 * should not be a problem for most plugins, as they just need a file (provided), and that is
+	 * all.  If you do need to display some Swing objects, you can do so using the 
+	 * SwingUtilities.invokeLater() method.
 	 */
 	public abstract void synchronizeData(MutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException;
 	
-	/**
-	 * Return the description which shows up in the file chooser.  By default, this 
-	 * is set to "Buddi Import Files".  This value is filtered through the translator
-	 * before being displayed.
-	 */
 	public String getDescription() {
 		return BuddiKeys.FILE_DESCRIPTION_BUDDI_SYNCHRONIZE_FILES.toString();
 	}
@@ -53,6 +60,14 @@ public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements
 	}
 	
 	public String getProcessingMessage() {
-		return TextFormatter.getTranslation(BuddiKeys.MESSAGE_PROCESSING_FILE);
+		return BuddiKeys.MESSAGE_PROCESSING_FILE.toString();
+	}
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+
+	public Version getMinimumVersion() {
+		return null;
 	}
 }

@@ -6,6 +6,7 @@
 package org.homeunix.thecave.buddi.plugin.api;
 
 import org.homeunix.thecave.moss.plugin.MossRunnablePlugin;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * A generic Buddi plugin, which will be loaded at the beginning of 
@@ -23,4 +24,11 @@ import org.homeunix.thecave.moss.plugin.MossRunnablePlugin;
  */
 public abstract class BuddiRunnablePlugin extends PreferenceAccess implements MossRunnablePlugin {
 
+	public Version getMaximumVersion() {
+		return null;
+	}
+
+	public Version getMinimumVersion() {
+		return null;
+	}
 }

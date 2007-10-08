@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.moss.util.Version;
 
 /**
  * A Buddi plugin which will be loaded into the Preferences screen.  If your plugin needs
@@ -68,6 +69,14 @@ public abstract class BuddiPreferencePlugin extends PreferenceAccess implements 
 	 * Not used in PreferencePlugin
 	 */
 	public String getDescription() {
+		return null;
+	}
+	
+	public Version getMaximumVersion() {
+		return null;
+	}
+
+	public Version getMinimumVersion() {
 		return null;
 	}
 }

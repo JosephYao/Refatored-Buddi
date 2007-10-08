@@ -183,7 +183,7 @@ public class ScheduleController {
 
 			//The transaction is scheduled for a date before today and before the EndDate 
 			while (tempDate.before(today)) {
-				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
+//				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
 
 				//We use a Calendar instead of a Date object for comparisons
 				// because the Calendar interface is much nicer.
