@@ -107,7 +107,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		endDateChooserEnabled = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.ENDING_ON));
 		transactionEditor = new TransactionEditorPanel((Document) parentFrame.getDocument(), null, true);
 
-		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_ACTION_NAME));
+		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.HINT_SCHEDULED_TRANSACTION_NAME));
 
 		message = new MossHintTextArea(TextFormatter.getTranslation(BuddiKeys.HINT_MESSAGE));
 
@@ -192,7 +192,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		scheduleDetailsPanel.add(cardHolderPanel, BorderLayout.SOUTH);
 
 		JPanel scheduleNamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		scheduleNamePanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SCHEDULE_NAME)));
+		scheduleNamePanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_TRANSACTION_NAME)));
 		scheduleNamePanel.add(scheduleName);
 
 		//The namePanel is where we keep the Schedule Name.
@@ -236,6 +236,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(okButton);
 
+		this.setTitle(TextFormatter.getTranslation(BuddiKeys.SCHEDULED_TRANSACTION));
 		this.getRootPane().setDefaultButton(okButton);
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);

@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import net.java.dev.SwingWorker;
 
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
@@ -27,7 +27,7 @@ public class BuddiPluginHelper {
 	public static void openReport(final MainFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
 		final MossStatusDialog status = new MossStatusDialog(
 				frame,
-				TextFormatter.getTranslation(MessageKeys.MESSAGE_GENERATING_REPORT));
+				TextFormatter.getTranslation(BuddiKeys.MESSAGE_GENERATING_REPORT));
 
 		try {
 			status.openWindow();

@@ -14,7 +14,6 @@ import javax.swing.JTabbedPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
@@ -99,8 +98,8 @@ public class MainFrame extends MossDocumentFrame {
 
 			int reply = JOptionPane.showOptionDialog(
 					this, 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_FOR_SAVE),
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_FOR_SAVE_TITLE),
+					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_FOR_SAVE),
+					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_FOR_SAVE_TITLE),
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,

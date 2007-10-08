@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.AboutFrame;
@@ -21,7 +22,9 @@ public class HelpAbout extends MossMenuItem {
 
 	public void actionPerformed(ActionEvent e) {
 		try {
-			new AboutFrame().openWindow();
+			new AboutFrame().openWindow(
+					null, 
+					PrefsModel.getInstance().getWindowLocation(BuddiKeys.ABOUT_BUDDI.toString()));
 		}
 		catch (WindowOpenException foe){}
 	}

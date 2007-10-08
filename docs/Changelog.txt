@@ -1,6 +1,7 @@
 2.9.10.0
 -Added command line option --nosplash to disable the splash screen
 -Added support to store the locations and sizes of multiple windows in Preferences.  If you quit with three Main Frames open, you will have the same files stored on startup.
+-Improved execution of menu based plugins.  When Import, Export, and Synchronize plugins are run, they are now wrapped within a SwingWorker.  A notification message is shown while the plugins are being run, so that the user does not think that the program has hung.  Any exceptions will show up in the logs, as well as a Message Box dialog.  This should make the plugins simpler to implement (these features are a common request from developers), and can ensure a uniform look to users.
 -Updated Spanish translation (Thanks to Rafael Rodriguez and Ignacio Baca for this)
 
 2.9.9.0 (October 6 2007)

@@ -33,7 +33,6 @@ import net.java.dev.SwingWorker;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
@@ -315,8 +314,8 @@ public class Buddi {
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
 						null,
@@ -346,8 +345,8 @@ public class Buddi {
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
 						null,
@@ -627,8 +626,8 @@ public class Buddi {
 
 			int reply = JOptionPane.showOptionDialog(
 					frame, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DONATION),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.INFORMATION_MESSAGE,
 					null,
@@ -695,7 +694,7 @@ public class Buddi {
 
 						JOptionPane.showOptionDialog(
 								frame, 
-								TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
 								TextFormatter.getTranslation(BuddiKeys.ERROR), 
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.ERROR_MESSAGE,
@@ -766,8 +765,8 @@ public class Buddi {
 
 						JOptionPane.showOptionDialog(
 								frame, 
-								TextFormatter.getTranslation(MessageKeys.MESSAGE_NO_NEW_VERSION), 
-								TextFormatter.getTranslation(MessageKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION), 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.INFORMATION_MESSAGE,
 								null,

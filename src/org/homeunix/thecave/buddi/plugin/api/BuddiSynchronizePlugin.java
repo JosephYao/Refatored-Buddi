@@ -10,6 +10,7 @@ import java.io.File;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
@@ -22,7 +23,7 @@ import org.homeunix.thecave.moss.swing.MossDocumentFrame;
  * @author wyatt
  *
  */
-public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements MossPlugin {
+public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements MossPlugin, FileAccess {
 	
 	/**
 	 * Imports data as required.  The plugin launch code will prompt for a file
@@ -43,24 +44,15 @@ public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements
 		return true;
 	}
 	
-	/**
-	 * Should Buddi prompt for a file to synchronize?  Defaults to true.  If you know what
-	 * the file name is (or you are importing from a different source, such as the 
-	 * network), you should override this method and return false. 
-	 * @return
-	 */
 	public boolean isPromptForFile(){
 		return true;
 	}
 	
-	/**
-	 * Override to specify that Buddi should only include certain file types in 
-	 * the file chooser.  This only has an effect if isPromptForFile() is true.  If
-	 * you want to do this, return a String array of the file extensions which you wish
-	 * to match.  The plugin loader will create a FileFilter for this.
-	 * @return
-	 */
 	public String[] getFileExtensions(){
 		return null;
+	}
+	
+	public String getProcessingMessage() {
+		return TextFormatter.getTranslation(BuddiKeys.MESSAGE_PROCESSING_FILE);
 	}
 }

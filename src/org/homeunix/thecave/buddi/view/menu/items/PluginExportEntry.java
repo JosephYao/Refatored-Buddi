@@ -6,11 +6,13 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
+
+import net.java.dev.SwingWorker;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
@@ -20,6 +22,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
+import org.homeunix.thecave.moss.swing.MossStatusDialog;
 import org.homeunix.thecave.moss.util.Log;
 
 public class PluginExportEntry extends MossMenuItem {
@@ -67,8 +70,8 @@ public class PluginExportEntry extends MossMenuItem {
 					filter, 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_EXPORT_FILE_TITLE), 
 					PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE), 
-					PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE), 
+					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE), 
+					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE), 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR));
 
 			if (f == null)
@@ -76,11 +79,55 @@ public class PluginExportEntry extends MossMenuItem {
 		}
 
 		try {
-			plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), f);
-		}
-		catch (PluginException pe){
-			pe.printStackTrace(Log.getPrintStream());
-		}
+			final File fFinal = f;
+			final MossStatusDialog status = new MossStatusDialog(
+					getFrame(),
+					plugin.getProcessingMessage());
 
+			if (plugin.getProcessingMessage() != null)
+				status.openWindow();
+
+			SwingWorker worker = new SwingWorker(){
+				@Override
+				public Object construct() {
+					try {
+						plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
+					}
+					catch (PluginException pe){
+						Log.error("Error processing data in plugin: ", pe);
+						return null;
+					}
+
+					return new Object();
+				}
+
+				@Override
+				public void finished() {
+					status.closeWindow();
+					if (get() == null){
+						String[] options = new String[1];
+						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(
+								null, 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECK_LOGS_FOR_DETAILS), 
+								TextFormatter.getTranslation(BuddiKeys.ERROR), 
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE,
+								null,
+								options,
+								options[0]
+						);						
+					}
+					
+					super.finished();
+				}
+			};
+
+			worker.start();
+		}
+		catch (Exception ex){
+			Log.error("Error encountered in plugin: " + ex);
+		}
 	}
 }

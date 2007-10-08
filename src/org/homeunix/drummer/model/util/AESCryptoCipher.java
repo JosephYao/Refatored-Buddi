@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossPasswordInputDialog;
 import org.homeunix.thecave.moss.util.Log;
@@ -105,13 +104,13 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 		if (this.key == null) {
 			MossPasswordInputDialog jpid = new MossPasswordInputDialog(
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ENTER_PASSWORD),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ENTER_PASSWORD_TITLE),
 					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),
 					TextFormatter.getTranslation(BuddiKeys.HINT_CONFIRM_PASSWORD),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
 					TextFormatter.getTranslation(BuddiKeys.ERROR),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
 					TextFormatter.getTranslation(BuddiKeys.ERROR),
 					TextFormatter.getTranslation(ButtonKeys.BUTTON_OK),
 					TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL)
@@ -196,13 +195,13 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 		do {
 			// ask for the password, which we use to generate the AES key
 			MossPasswordInputDialog jpid = new MossPasswordInputDialog(
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ENTER_PASSWORD_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ENTER_PASSWORD),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ENTER_PASSWORD_TITLE),
 					TextFormatter.getTranslation(BuddiKeys.HINT_PASSWORD),
 					TextFormatter.getTranslation(BuddiKeys.HINT_CONFIRM_PASSWORD),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_PASSWORDS_DONT_MATCH),
 					TextFormatter.getTranslation(BuddiKeys.ERROR),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED),
 					TextFormatter.getTranslation(BuddiKeys.ERROR),
 					TextFormatter.getTranslation(ButtonKeys.BUTTON_OK),
 					TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL)
@@ -218,8 +217,8 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_EMPTY_PASSWORD), 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_EMPTY_PASSWORD), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_EMPTY_PASSWORD_TITLE), 
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
 						null,
@@ -227,7 +226,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 						options[0]
 				);
 
-				throw new IncorrectPasswordException(TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
+				throw new IncorrectPasswordException(TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_NO_PASSWORD_ENTERED));
 			}
 			//If the password is empty, it is not correct.
 			else if (!password.equals("")){

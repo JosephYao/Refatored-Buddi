@@ -16,7 +16,6 @@ import javax.swing.JTabbedPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
@@ -93,7 +92,6 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().putWindowSize(BuddiKeys.PREFERENCES.toString(), this.getSize());
 		PrefsModel.getInstance().putWindowLocation(BuddiKeys.PREFERENCES.toString(), this.getLocation());
 		PrefsModel.getInstance().save();
 
@@ -123,8 +121,8 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED),
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED_TITLE),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED),
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PREFERENCES_CHANGED_RESTART_NEEDED_TITLE),
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.INFORMATION_MESSAGE,
 						null,

@@ -25,7 +25,7 @@ public class EditPreferences extends MossMenuItem{
 		PreferencesFrame prefs = new PreferencesFrame();
 		try {
 			prefs.openWindow(
-					PrefsModel.getInstance().getWindowSize(BuddiKeys.PREFERENCES.toString()), 
+					null, 
 					PrefsModel.getInstance().getWindowLocation(BuddiKeys.PREFERENCES.toString()));
 		}
 		catch (WindowOpenException woe){}

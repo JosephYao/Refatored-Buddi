@@ -15,7 +15,6 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -51,10 +50,10 @@ public class FileSaveAs extends MossMenuItem {
 				PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
 				PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL), 
 				PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_REPLACE), 
-				PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
+				PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
-				PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_OVERWRITE_FILE), 
-				PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_PROMPT_OVERWRITE_FILE_TITLE)
+				PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE), 
+				PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE_TITLE)
 		);
 		
 		//User hit cancel
@@ -72,8 +71,8 @@ public class FileSaveAs extends MossMenuItem {
 			((Document) ((MossDocumentFrame) getFrame()).getDocument()).setFlag(Document.CHANGE_PASSWORD, 
 					(JOptionPane.showOptionDialog(
 							getFrame(), 
-							TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION),
-							TextFormatter.getTranslation(MessageKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION_TITLE),
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION),
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DATA_FILE_ENCRYPTION_TITLE),
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.INFORMATION_MESSAGE,
 							null,

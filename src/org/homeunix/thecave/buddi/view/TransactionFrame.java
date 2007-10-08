@@ -31,7 +31,6 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
@@ -669,8 +668,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 				int ret = JOptionPane.showOptionDialog(
 						null, 
-						PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION),
-						PrefsModel.getInstance().getTranslator().get(MessageKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION_TITLE),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_CHANGE_EXISTING_TRANSACTION_TITLE),
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.WARNING_MESSAGE,
 						null,

@@ -26,7 +26,6 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
@@ -197,7 +196,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 
 					JOptionPane.showOptionDialog(
 							this,
-							TextFormatter.getTranslation(MessageKeys.MESSAGE_CANNOT_DELETE_TYPE),
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_CANNOT_DELETE_TYPE),
 							TextFormatter.getTranslation(BuddiKeys.ERROR),
 							JOptionPane.DEFAULT_OPTION,
 							JOptionPane.ERROR_MESSAGE,

@@ -33,7 +33,6 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
@@ -156,8 +155,8 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_DELETING_PLUGIN), 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_DELETING_PLUGIN_TITLE), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_DELETING_PLUGIN), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_DELETING_PLUGIN_TITLE), 
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.ERROR_MESSAGE,
 						null,
@@ -178,8 +177,8 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 
 				JOptionPane.showOptionDialog(
 						null, 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_DELETING_PLUGIN), 
-						TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_DELETING_PLUGIN_TITLE), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_COPYING_PLUGIN), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_COPYING_PLUGIN_TITLE), 
 						JOptionPane.DEFAULT_OPTION,
 						JOptionPane.ERROR_MESSAGE,
 						null,

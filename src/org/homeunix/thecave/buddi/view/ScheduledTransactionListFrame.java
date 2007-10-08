@@ -194,8 +194,7 @@ public class ScheduledTransactionListFrame extends MossAssociatedDocumentFrame i
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().putWindowSize(BuddiKeys.SCHEDULED_ACTION.toString(), this.getSize());
-		PrefsModel.getInstance().putWindowLocation(BuddiKeys.SCHEDULED_ACTION.toString(), this.getLocation());
+		PrefsModel.getInstance().putWindowLocation(BuddiKeys.SCHEDULED_TRANSACTION.toString(), this.getLocation());
 		PrefsModel.getInstance().save();
 		
 		super.closeWindowWithoutPrompting();

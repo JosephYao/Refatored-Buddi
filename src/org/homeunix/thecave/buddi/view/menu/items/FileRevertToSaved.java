@@ -7,9 +7,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -38,8 +38,8 @@ public class FileRevertToSaved extends MossMenuItem {
 
 		if (JOptionPane.showOptionDialog(
 				null, 
-				TextFormatter.getTranslation(MessageKeys.MESSAGE_REVERT_TO_SAVED),
-				TextFormatter.getTranslation(MessageKeys.MESSAGE_REVERT_TO_SAVED_TITLE),
+				TextFormatter.getTranslation(BuddiKeys.MESSAGE_REVERT_TO_SAVED),
+				TextFormatter.getTranslation(BuddiKeys.MESSAGE_REVERT_TO_SAVED_TITLE),
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE,
 				null,

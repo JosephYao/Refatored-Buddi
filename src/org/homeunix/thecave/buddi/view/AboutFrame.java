@@ -21,6 +21,7 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.moss.swing.MossFrame;
@@ -161,5 +162,13 @@ public class AboutFrame extends MossFrame implements ActionListener {
 				Log.error(ex);
 			}
 		}
+	}
+
+	@Override
+	public void closeWindowWithoutPrompting() {
+		PrefsModel.getInstance().putWindowLocation(BuddiKeys.ABOUT_BUDDI.toString(), this.getLocation());
+		PrefsModel.getInstance().save();
+		
+		super.closeWindowWithoutPrompting();
 	}
 }

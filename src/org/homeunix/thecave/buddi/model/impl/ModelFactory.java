@@ -16,11 +16,11 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetExpenseDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetIncomeDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.Account;
@@ -148,8 +148,8 @@ public class ModelFactory {
 
 			if (JOptionPane.showOptionDialog(
 					null, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,
@@ -250,8 +250,8 @@ public class ModelFactory {
 
 			if (JOptionPane.showOptionDialog(
 					null, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_AUTOSAVE_FILE_FOUND),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_AUTOSAVE_FILE_FOUND_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.QUESTION_MESSAGE,
 					null,

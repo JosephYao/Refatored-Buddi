@@ -24,7 +24,6 @@ import javax.swing.event.ListSelectionListener;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -133,8 +132,8 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 
 			if (JOptionPane.showOptionDialog(
 					null, 
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_RESTORE_FROM_BACKUP),
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_RESTORE_FROM_BACKUP_TITLE),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_RESTORE_FROM_BACKUP),
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_RESTORE_FROM_BACKUP_TITLE),
 					JOptionPane.YES_NO_OPTION,
 					JOptionPane.WARNING_MESSAGE,
 					null,

@@ -21,7 +21,6 @@ import org.homeunix.drummer.controller.TransactionController;
 import org.homeunix.drummer.model.util.AESCryptoCipher;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
-import org.homeunix.thecave.buddi.i18n.keys.MessageKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
@@ -92,11 +91,11 @@ public class DataInstance {
 
 			JOptionPane.showOptionDialog(
 					null,
-					TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_READING_FILE)
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_READING_FILE)
 					+ "\n"
 					+ ( locationFile == null ? locationFile : locationFile.getAbsolutePath() )
 					+ "\n"
-					+ TextFormatter.getTranslation(MessageKeys.MESSAGE_ERROR_READING_FILE_NOT_EXIST),
+					+ TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_READING_FILE_NOT_EXIST),
 					TextFormatter.getTranslation(BuddiKeys.MISSING_DATA_FILE),
 					JOptionPane.DEFAULT_OPTION,
 					JOptionPane.ERROR_MESSAGE,
