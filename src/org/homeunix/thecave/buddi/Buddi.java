@@ -513,8 +513,12 @@ public class Buddi {
 			else
 				logFile = OperatingSystemUtil.getLogFile("Buddi", Const.LOG_FILE);
 
-			if (logFile != null)
-				logStream = new PrintStream(logFile);
+			if (logFile != null){
+				if (!logFile.getParentFile().exists())
+					logFile.getParentFile().mkdirs();
+				if (logFile.getParentFile().exists())
+					logStream = new PrintStream(logFile);
+			}
 
 			//Set the log stream
 			Log.setPrintStream(logStream);

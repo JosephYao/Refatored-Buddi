@@ -333,7 +333,7 @@ public class PrefsModelBean {
 	}
 
 	public Map<String, Dimension> getWindowSize() {
-		if (windowLocation == null)
+		if (windowSize == null)
 			windowSize = new HashMap<String, Dimension>();
 		return windowSize;
 	}
