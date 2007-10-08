@@ -412,7 +412,7 @@
 	</target>
 
 	<target name="compile" description="Builds the project">
-		<javac srcdir="src" destdir="bin">
+		<javac srcdir="src" destdir="bin" debug="true" debuglevel="lines, vars, source">
 			<classpath>
 				<fileset dir="${LIB}">
 					<include name="**/*.jar"/>
