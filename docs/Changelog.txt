@@ -1,5 +1,6 @@
 2.9.10.0
 -Added command line option --nosplash to disable the splash screen
+-Added support to store the locations and sizes of multiple windows in Preferences.  If you quit with three Main Frames open, you will have the same files stored on startup.
 -Updated Spanish translation (Thanks to Rafael Rodriguez and Ignacio Baca for this)
 
 2.9.9.0 (October 6 2007)

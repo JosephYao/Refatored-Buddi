@@ -6,11 +6,15 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
@@ -25,6 +29,18 @@ public class FileQuit extends MossMenuItem {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		
+		List<MossFrame> frames = ApplicationModel.getInstance().getOpenFrames();
+		List<File> openFiles = new LinkedList<File>();
+		for (MossFrame frame : frames) {
+			if (frame instanceof MainFrame){
+				openFiles.add(((MainFrame) frame).getDocument().getFile());
+			}
+		}
+			PrefsModel.getInstance().setLastOpenedDataFile(openFiles);
+		
+		PrefsModel.getInstance().save();
+		
 		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			if (!frame.canClose()){
 				Log.debug("Frame " + frame.getTitle() + " refused to quit; cancelling quit request.");

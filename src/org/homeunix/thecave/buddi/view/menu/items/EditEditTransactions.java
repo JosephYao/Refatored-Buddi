@@ -59,7 +59,9 @@ public class EditEditTransactions extends MossMenuItem{
 		for (Source a : selectedSources) {
 			try {
 				TransactionFrame transactionsFrame = new TransactionFrame((MainFrame) getFrame(), a);
-				transactionsFrame.openWindow(PrefsModel.getInstance().getTransactionWindowSize(), PrefsModel.getInstance().getTransactionWindowLocation());
+				transactionsFrame.openWindow(
+						PrefsModel.getInstance().getWindowSize(((MainFrame) getFrame()).getDocument().getFile() + a.getFullName()), 
+						PrefsModel.getInstance().getWindowLocation(((MainFrame) getFrame()).getDocument().getFile() + a.getFullName()));
 			}
 			catch (WindowOpenException foe){
 				foe.printStackTrace();

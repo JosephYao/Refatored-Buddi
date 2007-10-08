@@ -63,7 +63,9 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 			};
 			f = MossSmartFileChooser.showSmartOpenDialog(
 					getFrame(), 
-					PrefsModel.getInstance().getLastDataFile(), 
+					PrefsModel.getInstance().getLastDataFiles() != null 
+					&& PrefsModel.getInstance().getLastDataFiles().size() > 0 ? 
+							PrefsModel.getInstance().getLastDataFiles().get(0) : null, 
 					filter, 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_SYNCHRONIZE_FILE_TITLE), 
 					PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 

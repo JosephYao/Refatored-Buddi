@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -24,7 +25,9 @@ public class EditEditScheduledTransactions extends MossMenuItem{
 	public void actionPerformed(ActionEvent e) {
 		try {
 			ScheduledTransactionListFrame scheduledTransactionsFrame = new ScheduledTransactionListFrame((MainFrame) getFrame());
-			scheduledTransactionsFrame.openWindow(null, PrefsModel.getInstance().getScheduledTransactionWindowLocation());
+			scheduledTransactionsFrame.openWindow(
+					PrefsModel.getInstance().getWindowSize(BuddiKeys.SCHEDULED_ACTION.toString()), 
+					PrefsModel.getInstance().getWindowLocation(BuddiKeys.SCHEDULED_ACTION.toString()));
 		}
 		catch (WindowOpenException foe){
 			foe.printStackTrace();

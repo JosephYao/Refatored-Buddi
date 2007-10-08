@@ -38,7 +38,9 @@ public class FileOpen extends MossMenuItem {
 	public void actionPerformed(ActionEvent e) {
 		File f = MossSmartFileChooser.showSmartOpenDialog(
 				getFrame(), 
-				PrefsModel.getInstance().getLastDataFile(), 
+				PrefsModel.getInstance().getLastDataFiles() != null 
+					&& PrefsModel.getInstance().getLastDataFiles().size() > 0 ? 
+							PrefsModel.getInstance().getLastDataFiles().get(0) : null, 
 				Const.FILE_FILTER_DATA, 
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), 
 				PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
@@ -51,7 +53,9 @@ public class FileOpen extends MossMenuItem {
 		
 		try {
 			MainFrame mainFrame = new MainFrame(ModelFactory.createDocument(f));
-			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
+			mainFrame.openWindow(
+					PrefsModel.getInstance().getWindowSize(f + ""), 
+					PrefsModel.getInstance().getWindowLocation(f + ""));
 		}
 		catch (OperationCancelledException oce){}  //Do nothing
 		catch (DocumentLoadException dle){

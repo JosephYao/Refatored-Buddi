@@ -154,7 +154,10 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 					newDoc.setFile(document.getFile());
 					
 					MainFrame mainWndow = new MainFrame(newDoc);
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation(), true);
+					mainWndow.openWindow(
+							PrefsModel.getInstance().getWindowSize(newDoc.getFile() + ""), 
+							PrefsModel.getInstance().getWindowLocation(newDoc.getFile() + ""), 
+							true);
 					
 					Log.info("User restored file " + ((File) backupList.getSelectedValue()).getName() + " to " + document.getFile().getAbsolutePath());
 					closeWindow();

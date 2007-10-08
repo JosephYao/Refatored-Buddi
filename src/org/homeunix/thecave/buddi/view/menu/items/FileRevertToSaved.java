@@ -51,7 +51,10 @@ public class FileRevertToSaved extends MossMenuItem {
 				Document newDoc = ModelFactory.createDocument(((MossDocumentFrame) getFrame()).getDocument().getFile());
 				
 				MainFrame mainWndow = new MainFrame(newDoc);
-				mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation(), true);
+				mainWndow.openWindow(
+						PrefsModel.getInstance().getWindowSize(((MainFrame) getFrame()).getDocument().getFile() + ""), 
+						PrefsModel.getInstance().getWindowLocation(((MainFrame) getFrame()).getDocument().getFile() + ""), 
+						true);
 			}
 			catch (OperationCancelledException oce){}
 			catch (WindowOpenException woe){

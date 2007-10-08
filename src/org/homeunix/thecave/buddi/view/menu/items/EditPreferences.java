@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.PreferencesFrame;
@@ -23,7 +24,9 @@ public class EditPreferences extends MossMenuItem{
 	public void actionPerformed(ActionEvent e) {
 		PreferencesFrame prefs = new PreferencesFrame();
 		try {
-			prefs.openWindow(null, PrefsModel.getInstance().getPreferencesWindowLocation());
+			prefs.openWindow(
+					PrefsModel.getInstance().getWindowSize(BuddiKeys.PREFERENCES.toString()), 
+					PrefsModel.getInstance().getWindowLocation(BuddiKeys.PREFERENCES.toString()));
 		}
 		catch (WindowOpenException woe){}
 	}

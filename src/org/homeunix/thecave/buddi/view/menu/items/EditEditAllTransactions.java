@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -25,7 +26,9 @@ public class EditEditAllTransactions extends MossMenuItem{
 		((MainFrame) getFrame()).getDocument().startBatchChange();
 		try {
 			TransactionFrame transactionsFrame = new TransactionFrame((MainFrame) getFrame(), null);
-			transactionsFrame.openWindow(PrefsModel.getInstance().getTransactionWindowSize(), PrefsModel.getInstance().getTransactionWindowLocation());
+			transactionsFrame.openWindow(
+					PrefsModel.getInstance().getWindowSize(((MainFrame) getFrame()).getDocument().getFile() + BuddiKeys.ALL_TRANSACTIONS.toString()), 
+					PrefsModel.getInstance().getWindowLocation(((MainFrame) getFrame()).getDocument().getFile() + BuddiKeys.ALL_TRANSACTIONS.toString()));
 		}
 		catch (WindowOpenException foe){
 			foe.printStackTrace();

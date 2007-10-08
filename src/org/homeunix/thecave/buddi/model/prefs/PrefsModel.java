@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.Buddi;
@@ -66,6 +67,7 @@ public class PrefsModel {
 		prefsModel.setSendCrashReports(true);
 		prefsModel.setShowUpdateNotifications(true);
 		prefsModel.setShowTooltips(true);
+//		prefsModel.setMainWindowSize(new Dimension(640, 480));
 
 		//Save the file
 		save();
@@ -170,99 +172,108 @@ public class PrefsModel {
 			prefsModel.setLanguage(language);
 	}
 
-	public File getLastDataFile() {
-		if (prefsModel.getLastDataFile() == null)
+	public List<File> getLastDataFiles() {
+		if (prefsModel.getLastDataFiles() == null || prefsModel.getLastDataFiles().size() == 0)
 			return null;
-		return new File(prefsModel.getLastDataFile());
+		List<File> files = new LinkedList<File>();
+		for (String s : prefsModel.getLastDataFiles()) {
+			files.add(new File(s));
+		}
+		return files;
 	}
 
-	public void setLastOpenedDataFile(File lastOpenedDataFile) {
-		if (lastOpenedDataFile != null)
-			prefsModel.setLastDataFile(lastOpenedDataFile.getAbsolutePath());
+	public void setLastOpenedDataFile(List<File> lastDataFiles) {
+		if (lastDataFiles != null){
+			List<String> strings = new LinkedList<String>();
+			for (File file : lastDataFiles) {
+				strings.add(file + "");
+			}
+			prefsModel.setLastDataFiles(strings);
+		}
 	}
 
-	public Dimension getMainWindowSize() {
-		return (prefsModel.getMainWindowSize() != null
-				? prefsModel.getMainWindowSize() 
-						: new Dimension(500, 300));
-	}
-
-	public Dimension getTransactionWindowSize() {
-		return (prefsModel.getTransactionWindowSize() != null
-				? prefsModel.getTransactionWindowSize() 
-						: new Dimension(600, 400));
-	}
-
-
+//	public Dimension getMainWindowSize() {
+//		return (prefsModel.getMainWindowSize() != null
+//				? prefsModel.getMainWindowSize() 
+//						: new Dimension(500, 300));
+//	}
+//
+//	public Dimension getTransactionWindowSize() {
+//		return (prefsModel.getTransactionWindowSize() != null
+//				? prefsModel.getTransactionWindowSize() 
+//						: new Dimension(600, 400));
+//	}
+//
+//
 //	public Dimension getScheduledTransactionWindowSize() {
 //		return (prefsModel.getScheduledPlacement().getSize() != null
 //				? prefsModel.getScheduledPlacement().getSize() 
 //						: new Dimension(600, 400));
 //	}
-	
+//	
 //	public Dimension getReportWindowSize() {
 //		return (prefsModel.getReportsPlacement().getSize() != null
 //				? prefsModel.getReportsPlacement().getSize() 
 //						: new Dimension(800, 400));
 //	}
-
+//
 //	public Dimension getPreferencesWindowSize() {
 //		return (prefsModel.getPrefsPlacement().getSize() != null
 //				? prefsModel.getPrefsPlacement().getSize() 
 //						: new Dimension(400, 300));
 //	}
-
-	public Point getMainWindowLocation() {
-		return (prefsModel.getMainWindowLocation() != null
-				? prefsModel.getMainWindowLocation() 
-						: new Point(100, 100));
-	}
-
+//
+//	public Point getMainWindowLocation() {
+//		return (prefsModel.getMainWindowLocation() != null
+//				? prefsModel.getMainWindowLocation() 
+//						: new Point(100, 100));
+//	}
+//
 //	public Point getBudgetWindowLocation() {
 //		return (prefsModel.getBudgetPlacement().getLocation() != null
 //				? prefsModel.getBudgetPlacement().getLocation() 
 //						: new Point(100, 100));
 //	}
-
-	public Point getTransactionWindowLocation() {
-		return (prefsModel.getTransactionWindowLocation() != null
-				? prefsModel.getTransactionWindowLocation() 
-						: new Point(100, 100));
-	}
-
-	public Point getScheduledTransactionWindowLocation() {
-		return (prefsModel.getScheduledWindowLocation() != null
-				? prefsModel.getScheduledWindowLocation() 
-						: new Point(100, 100));
-	}
-
+//
+//	public Point getTransactionWindowLocation() {
+//		return (prefsModel.getTransactionWindowLocation() != null
+//				? prefsModel.getTransactionWindowLocation() 
+//						: new Point(100, 100));
+//	}
+//
+//	public Point getScheduledTransactionWindowLocation() {
+//		return (prefsModel.getScheduledWindowLocation() != null
+//				? prefsModel.getScheduledWindowLocation() 
+//						: new Point(100, 100));
+//	}
+//
 //	public Point getReportWindowLocation() {
 //		return (prefsModel.getReportsPlacement().getLocation() != null
 //				? prefsModel.getReportsPlacement().getLocation() 
 //						: new Point(100, 100));
 //	}
-	
-	public Point getPreferencesWindowLocation() {
-		return (prefsModel.getPreferencesWindowLocation() != null
-				? prefsModel.getPreferencesWindowLocation() 
-						: new Point(100, 100));
-	}
-
-	public void setMainWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.setMainWindowSize(size);
-	}
-
+//	
+//	public Point getPreferencesWindowLocation() {
+//		return (prefsModel.getPreferencesWindowLocation() != null
+//				? prefsModel.getPreferencesWindowLocation() 
+//						: new Point(100, 100));
+//	}
+//
+//	public void setMainWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.setMainWindowSize(size);
+//	}
+//
 //	public void setBudgetWindowSize(Dimension size){
 //		if (size != null)
 //			prefsModel.getBudgetPlacement().setSize(size);
 //	}
-
-	public void setTransactionWindowSize(Dimension size){
-		if (size != null)
-			prefsModel.setTransactionWindowSize(size);
-	}
-	
+//
+//	public void setTransactionWindowSize(Dimension size){
+//		if (size != null)
+//			prefsModel.setTransactionWindowSize(size);
+//	}
+//	
 //	public void setScheduledTransactionWindowSize(Dimension size){
 //		if (size != null)
 //			prefsModel.getScheduledPlacement().setSize(size);
@@ -277,38 +288,38 @@ public class PrefsModel {
 //		if (size != null)
 //			prefsModel.getPrefsPlacement().setSize(size);
 //	}
-
-
-	public void setMainWindowLocation(Point location){
-		if (location != null)
-			prefsModel.setMainWindowLocation(location);
-	}
-
+//
+//
+//	public void setMainWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.setMainWindowLocation(location);
+//	}
+//
 //	public void setBudgetWindowLocation(Point location){
 //		if (location != null)
 //			prefsModel.getBudgetPlacement().setLocation(location);
 //	}
-
-	public void setTransactionWindowLocation(Point location){
-		if (location != null)
-			prefsModel.setTransactionWindowLocation(location);
-	}
-
-	public void setScheduledTransactionWindowLocation(Point location){
-		if (location != null)
-			prefsModel.setScheduledWindowLocation(location);
-	}
-
+//
+//	public void setTransactionWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.setTransactionWindowLocation(location);
+//	}
+//
+//	public void setScheduledTransactionWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.setScheduledWindowLocation(location);
+//	}
+//
 //	public void setReportWindowLocation(Point location){
 //		if (location != null)
 //			prefsModel.getReportsPlacement().setLocation(location);
 //	}
-	
-	public void setPreferencesWindowLocation(Point location){
-		if (location != null)
-			prefsModel.setPreferencesWindowLocation(location);
-	}
-
+//	
+//	public void setPreferencesWindowLocation(Point location){
+//		if (location != null)
+//			prefsModel.setPreferencesWindowLocation(location);
+//	}
+//
 	public int getNumberOfBackups() {
 		return prefsModel.getNumberOfBackups();
 	}
@@ -465,4 +476,64 @@ public class PrefsModel {
 		prefsModel.setShowTooltips(showTooltips);
 	}
 
+	/**
+	 * Associates a certain location with the given UID.  The UID will differ by window type, as
+	 * defined below:
+	 * 
+	 * MainFrame: File.getAbsolutePath()
+	 * TransactionFrame: File.getAbsolutePath() + Account.getFullName()
+	 * Other: Window Name (About, Scheduled Transactions, etc).
+	 * @param uid
+	 * @param location
+	 */
+	public void putWindowLocation(String uid, Point location){
+		prefsModel.getWindowLocation().put(uid, location);
+	}
+	
+	/**
+	 * Returns the window location associated with the given UID.  UID should be as follows:
+	 * 
+	 * MainFrame: File.getAbsolutePath()
+	 * TransactionFrame: File.getAbsolutePath() + Account.getFullName()
+	 * Other: Window Name (About, Scheduled Transactions, etc).
+	 * @param uid
+	 * @return
+	 */
+	public Point getWindowLocation(String uid){
+		Point p = prefsModel.getWindowLocation().get(uid);
+		if (p != null)
+			return p;
+		return new Point(10, 10);
+	}
+	
+	/**
+	 * Associates a certain size with the given UID.  The UID will differ by window type, as
+	 * defined below:
+	 * 
+	 * MainFrame: File.getAbsolutePath()
+	 * TransactionFrame: File.getAbsolutePath() + Account.getFullName()
+	 * Other: Window Name (About, Scheduled Transactions, etc).
+	 * @param uid
+	 * @param size
+	 */
+	public void putWindowSize(String uid, Dimension size){
+		prefsModel.getWindowSize().put(uid, size);
+	}
+	
+	/**
+	 * Returns the window size associated with the given UID.  UID should be as follows:
+	 * 
+	 * MainFrame: File.getAbsolutePath()
+	 * TransactionFrame: File.getAbsolutePath() + Account.getFullName()
+	 * Other: Window Name (About, Scheduled Transactions, etc).
+	 * @param uid
+	 * @return
+	 */
+	public Dimension getWindowSize(String uid){
+		Dimension d = prefsModel.getWindowSize().get(uid);
+		if (d != null)
+			return d;
+		return new Dimension(640, 480);
+	}
 }
+

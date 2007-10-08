@@ -46,6 +46,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.bars.FramelessMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
+import org.homeunix.thecave.buddi.view.menu.items.FileOpen;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
@@ -182,10 +183,20 @@ public class Buddi {
 			}
 		}
 
+		//If we have specified that we want to prompt for a data file at startup,
+		// do so (assuming that we have not already opened one from the command
+		// line, or Mac Application listeners.
+		if (PrefsModel.getInstance().isShowPromptAtStartup()
+				&& ApplicationModel.getInstance().getOpenFrames().size() == 0){
+			new FileOpen(null).doClick();
+		}
+		
 		//Handle opening the last user file, if available.
-		if (PrefsModel.getInstance().getLastDataFile() != null
+		if (PrefsModel.getInstance().getLastDataFiles() != null
 				&& ApplicationModel.getInstance().getOpenFrames().size() == 0) {
-			openFile(PrefsModel.getInstance().getLastDataFile());
+			for (File f : PrefsModel.getInstance().getLastDataFiles()) {
+				openFile(f);				
+			}
 		}
 
 		//If no files are available, just create a new one.
@@ -194,7 +205,9 @@ public class Buddi {
 				Document model = ModelFactory.createDocument();
 				MainFrame mainWndow = new MainFrame(model);
 				try{
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+					mainWndow.openWindow(
+							PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
+							PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 				}
 				catch (WindowOpenException woe){
 					Log.error("Error opening window: ", woe);
@@ -205,6 +218,7 @@ public class Buddi {
 			}
 		}
 
+		//Check if we have opened at least one window...
 		MainFrame mainFrame = null;
 		for (MossFrame mossFrame : ApplicationModel.getInstance().getOpenFrames()) {
 			if (mossFrame instanceof MainFrame){
@@ -270,7 +284,9 @@ public class Buddi {
 
 				MainFrame mainWndow = new MainFrame(model);
 				try {
-					mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+					mainWndow.openWindow(
+							PrefsModel.getInstance().getWindowSize(model.getFile().getAbsolutePath()), 
+							PrefsModel.getInstance().getWindowLocation(model.getFile().getAbsolutePath()));
 				}
 				catch (WindowOpenException woe){
 					Log.error("Error opening window: ", woe);
@@ -422,7 +438,9 @@ public class Buddi {
 						try {
 							Document model = ModelFactory.createDocument();
 							MainFrame mainWndow = new MainFrame(model);
-							mainWndow.openWindow(PrefsModel.getInstance().getMainWindowSize(), PrefsModel.getInstance().getMainWindowLocation());
+							mainWndow.openWindow(
+									PrefsModel.getInstance().getWindowSize(model.getFile().getAbsolutePath()), 
+									PrefsModel.getInstance().getWindowLocation(model.getFile().getAbsolutePath()));
 						}
 						catch (ModelException me){
 							me.printStackTrace(Log.getPrintStream());

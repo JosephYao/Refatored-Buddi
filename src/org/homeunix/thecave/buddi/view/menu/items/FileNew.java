@@ -31,7 +31,9 @@ public class FileNew extends MossMenuItem {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			MainFrame mainFrame = new MainFrame(ModelFactory.createDocument());
-			mainFrame.openWindow(PrefsModel.getInstance().getMainWindowSize(), null);
+			mainFrame.openWindow(
+					PrefsModel.getInstance().getWindowSize(mainFrame.getDocument().getFile() + ""), 
+					PrefsModel.getInstance().getWindowLocation(mainFrame.getDocument().getFile() + ""));
 		}
 		catch (ModelException me){
 			Log.error(me);

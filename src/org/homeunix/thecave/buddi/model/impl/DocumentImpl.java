@@ -451,7 +451,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		//Save where we last saved this file.
 		setFile(file);
-		PrefsModel.getInstance().setLastOpenedDataFile(file);
+//		PrefsModel.getInstance().setLastOpenedDataFile(file);
 
 		//Reset the changed flag.
 		resetChanged();

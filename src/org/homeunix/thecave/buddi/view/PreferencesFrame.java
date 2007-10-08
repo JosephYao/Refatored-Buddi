@@ -93,7 +93,8 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().setPreferencesWindowLocation(this.getLocation());
+		PrefsModel.getInstance().putWindowSize(BuddiKeys.PREFERENCES.toString(), this.getSize());
+		PrefsModel.getInstance().putWindowLocation(BuddiKeys.PREFERENCES.toString(), this.getLocation());
 		PrefsModel.getInstance().save();
 
 		MainFrame.updateAllContent();

@@ -417,8 +417,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().setTransactionWindowSize(this.getSize());
-		PrefsModel.getInstance().setTransactionWindowLocation(this.getLocation());
+		PrefsModel.getInstance().putWindowSize(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getSize());
+		PrefsModel.getInstance().putWindowLocation(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getLocation());
 		PrefsModel.getInstance().save();
 
 		super.closeWindowWithoutPrompting();

@@ -121,9 +121,20 @@ public class MainFrame extends MossDocumentFrame {
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().setLastOpenedDataFile(this.getDocument().getFile());
-		PrefsModel.getInstance().setMainWindowSize(this.getSize());
-		PrefsModel.getInstance().setMainWindowLocation(this.getLocation());
+//		List<MossFrame> frames = ApplicationModel.getInstance().getOpenFrames();
+//		List<File> openFiles = new LinkedList<File>();
+//		boolean thisIsTheLastMainFrameOpen = true;
+//		for (MossFrame frame : frames) {
+//			if (frame instanceof MainFrame){
+//				if (!frame.equals(this))
+//					thisIsTheLastMainFrameOpen = false;
+//				openFiles.add(((MainFrame) frame).getDocument().getFile());
+//			}
+//		}
+//		if (thisIsTheLastMainFrameOpen)
+//			PrefsModel.getInstance().setLastOpenedDataFile(openFiles);
+		PrefsModel.getInstance().putWindowSize(this.getDocument().getFile() + "", this.getSize());
+		PrefsModel.getInstance().putWindowLocation(this.getDocument().getFile() + "", this.getLocation());
 		PrefsModel.getInstance().save();
 		
 		ModelFactory.getAutoSaveLocation(getDocument().getFile()).delete();

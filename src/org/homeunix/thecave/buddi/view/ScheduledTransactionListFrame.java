@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.homeunix.thecave.buddi.Const;
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Document;
@@ -193,7 +194,8 @@ public class ScheduledTransactionListFrame extends MossAssociatedDocumentFrame i
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
-		PrefsModel.getInstance().setScheduledTransactionWindowLocation(this.getLocation());
+		PrefsModel.getInstance().putWindowSize(BuddiKeys.SCHEDULED_ACTION.toString(), this.getSize());
+		PrefsModel.getInstance().putWindowLocation(BuddiKeys.SCHEDULED_ACTION.toString(), this.getLocation());
 		PrefsModel.getInstance().save();
 		
 		super.closeWindowWithoutPrompting();

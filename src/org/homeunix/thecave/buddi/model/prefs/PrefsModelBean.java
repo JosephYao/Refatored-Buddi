@@ -13,12 +13,12 @@ import java.util.Map;
 
 public class PrefsModelBean {
 	//Window location, size
-	private Dimension mainWindowSize;
-	private Point mainWindowLocation;
-	private Dimension transactionWindowSize;
-	private Point transactionWindowLocation;
-	private Point scheduledWindowLocation;
-	private Point preferencesWindowLocation;
+//	private Dimension mainWindowSize;
+//	private Point mainWindowLocation;
+//	private Dimension transactionWindowSize;
+//	private Point transactionWindowLocation;
+//	private Point scheduledWindowLocation;
+//	private Point preferencesWindowLocation;
 	
 	//Plugin-saved information.  The plugin author will access this
 	// via a string key.  The current implementation of
@@ -30,7 +30,9 @@ public class PrefsModelBean {
 	private Map<String, List<String>> pluginListPreferences;
 	
 	//Data file information
-	private String lastDataFile;
+	private List<String> lastDataFiles;
+	private Map<String, Dimension> windowSize;
+	private Map<String, Point> windowLocation;
 	
 	//State
 	private String lastVersion;
@@ -174,12 +176,12 @@ public class PrefsModelBean {
 		this.language = language;
 	}
 
-	public String getLastDataFile() {
-		return lastDataFile;
+	public List<String> getLastDataFiles() {
+		return lastDataFiles;
 	}
 
-	public void setLastDataFile(String lastOpenedDataFile) {
-		this.lastDataFile = lastOpenedDataFile;
+	public void setLastDataFiles(List<String> lastDataFiles) {
+		this.lastDataFiles = lastDataFiles;
 	}
 
 	public int getNumberOfBackups() {
@@ -294,21 +296,21 @@ public class PrefsModelBean {
 		this.sendCrashReports = sendCrashReports;
 	}
 
-	public Point getMainWindowLocation() {
-		return mainWindowLocation;
-	}
-
-	public void setMainWindowLocation(Point mainWindowLocation) {
-		this.mainWindowLocation = mainWindowLocation;
-	}
-
-	public Dimension getMainWindowSize() {
-		return mainWindowSize;
-	}
-
-	public void setMainWindowSize(Dimension mainWindowSize) {
-		this.mainWindowSize = mainWindowSize;
-	}
+//	public Point getMainWindowLocation() {
+//		return mainWindowLocation;
+//	}
+//
+//	public void setMainWindowLocation(Point mainWindowLocation) {
+//		this.mainWindowLocation = mainWindowLocation;
+//	}
+//
+//	public Dimension getMainWindowSize() {
+//		return mainWindowSize;
+//	}
+//
+//	public void setMainWindowSize(Dimension mainWindowSize) {
+//		this.mainWindowSize = mainWindowSize;
+//	}
 
 	public Map<String, String> getPluginPreferences() {
 		if (pluginPreferences == null)
@@ -320,35 +322,57 @@ public class PrefsModelBean {
 		this.pluginPreferences = pluginPreferences;
 	}
 
-	public Point getPreferencesWindowLocation() {
-		return preferencesWindowLocation;
+	public Map<String, Point> getWindowLocation() {
+		if (windowLocation == null)
+			windowLocation = new HashMap<String, Point>();
+		return windowLocation;
 	}
 
-	public void setPreferencesWindowLocation(Point prefsWindowLocation) {
-		this.preferencesWindowLocation = prefsWindowLocation;
+	public void setWindowLocation(Map<String, Point> windowLocation) {
+		this.windowLocation = windowLocation;
 	}
 
-	public Point getScheduledWindowLocation() {
-		return scheduledWindowLocation;
+	public Map<String, Dimension> getWindowSize() {
+		if (windowLocation == null)
+			windowSize = new HashMap<String, Dimension>();
+		return windowSize;
 	}
 
-	public void setScheduledWindowLocation(Point scheduledWindowLocation) {
-		this.scheduledWindowLocation = scheduledWindowLocation;
+	public void setWindowSize(Map<String, Dimension> windowSize) {
+		this.windowSize = windowSize;
 	}
 
-	public Point getTransactionWindowLocation() {
-		return transactionWindowLocation;
-	}
-
-	public void setTransactionWindowLocation(Point transactionWindowLocation) {
-		this.transactionWindowLocation = transactionWindowLocation;
-	}
-
-	public Dimension getTransactionWindowSize() {
-		return transactionWindowSize;
-	}
-
-	public void setTransactionWindowSize(Dimension transactionWindowSize) {
-		this.transactionWindowSize = transactionWindowSize;
-	}
+//	public Point getPreferencesWindowLocation() {
+//		return preferencesWindowLocation;
+//	}
+//
+//	public void setPreferencesWindowLocation(Point prefsWindowLocation) {
+//		this.preferencesWindowLocation = prefsWindowLocation;
+//	}
+//
+//	public Point getScheduledWindowLocation() {
+//		return scheduledWindowLocation;
+//	}
+//
+//	public void setScheduledWindowLocation(Point scheduledWindowLocation) {
+//		this.scheduledWindowLocation = scheduledWindowLocation;
+//	}
+//
+//	public Point getTransactionWindowLocation() {
+//		return transactionWindowLocation;
+//	}
+//
+//	public void setTransactionWindowLocation(Point transactionWindowLocation) {
+//		this.transactionWindowLocation = transactionWindowLocation;
+//	}
+//
+//	public Dimension getTransactionWindowSize() {
+//		return transactionWindowSize;
+//	}
+//
+//	public void setTransactionWindowSize(Dimension transactionWindowSize) {
+//		this.transactionWindowSize = transactionWindowSize;
+//	}
+	
+	
 }
