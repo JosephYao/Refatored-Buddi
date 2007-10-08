@@ -65,9 +65,6 @@ public class PluginExportEntry extends MossMenuItem {
 			};
 			f = MossSmartFileChooser.showSmartOpenDialog(
 					getFrame(), 
-					PrefsModel.getInstance().getLastDataFiles() != null 
-					&& PrefsModel.getInstance().getLastDataFiles().size() > 0 ? 
-							PrefsModel.getInstance().getLastDataFiles().get(0) : null,
 					filter, 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_EXPORT_FILE_TITLE), 
 					PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 

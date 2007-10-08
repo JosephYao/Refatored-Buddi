@@ -41,9 +41,6 @@ public class FileSaveAs extends MossMenuItem {
 		
 		File f = MossSmartFileChooser.showSaveFileDialog(
 				getFrame(), 
-				PrefsModel.getInstance().getLastDataFiles() != null 
-				&& PrefsModel.getInstance().getLastDataFiles().size() > 0 ? 
-						PrefsModel.getInstance().getLastDataFiles().get(0) : null, 
 				Const.FILE_FILTER_DATA, 
 				Const.DATA_FILE_EXTENSION, 
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_SAVE_DATA_FILE_TITLE), 

@@ -66,10 +66,7 @@ public class PluginImportEntry extends MossMenuItem {
 				}
 			};
 			f = MossSmartFileChooser.showSmartOpenDialog(
-					getFrame(), 
-					PrefsModel.getInstance().getLastDataFiles() != null 
-					&& PrefsModel.getInstance().getLastDataFiles().size() > 0 ? 
-							PrefsModel.getInstance().getLastDataFiles().get(0) : null, 
+					getFrame(),  
 					filter, 
 					PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_IMPORT_FILE_TITLE), 
 					PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
