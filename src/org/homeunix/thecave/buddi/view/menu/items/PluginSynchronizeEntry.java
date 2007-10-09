@@ -97,7 +97,7 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 						plugin.synchronizeData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
 					catch (PluginMessage pm){
-						return pm.getMessage();
+						return pm;
 					}
 					catch (PluginException pe){
 						Log.error("Error processing data in plugin: ", pe);
@@ -136,15 +136,16 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 								options[0]
 						);
 					}
-					else if (get() instanceof String){
+					else if (get() instanceof PluginMessage){
+						PluginMessage message = (PluginMessage) get();
 						String[] options = new String[1];
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
 						JOptionPane.showOptionDialog(
 								getFrame(), 
-								get(), 
-								"", 
-								JOptionPane.DEFAULT_OPTION,
+								message.getMessage(), 
+								message.getTitle(), 
+								message.getType(),
 								JOptionPane.PLAIN_MESSAGE,
 								null,
 								options,

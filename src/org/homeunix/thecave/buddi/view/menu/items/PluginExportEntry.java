@@ -3,10 +3,16 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileFilter;
 
 import net.java.dev.SwingWorker;
@@ -92,7 +98,7 @@ public class PluginExportEntry extends MossMenuItem {
 						plugin.exportData(new ImmutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
 					catch (PluginMessage pm){
-						return pm.getMessage();
+						return pm;
 					}
 					catch (PluginException pe){
 						Log.error("Error processing data in plugin: ", pe);
@@ -120,20 +126,24 @@ public class PluginExportEntry extends MossMenuItem {
 								options[0]
 						);						
 					}
-					else if (get() instanceof String){
+					else if (get() instanceof PluginMessage){
 						String[] options = new String[1];
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
-
-						JOptionPane.showOptionDialog(
-								getFrame(), 
-								get(), 
-								"", 
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE,
-								null,
-								options,
-								options[0]
-						);
+						
+						PluginMessage message = (PluginMessage) get();
+				        JOptionPane optionPane = new JOptionPane("Foo", message.getType(), JOptionPane.OK_OPTION, null, options, options[0]);
+				        JDialog dial = optionPane.createDialog(null, message.getTitle());
+				        dial.setModal(true);
+				        JTextArea text = new JTextArea();
+				        text.setEditable(false);
+				        text.setText("Message");
+				        JScrollPane scroller = new JScrollPane(text);
+				        scroller.setPreferredSize(new Dimension(350, 200));
+				        dial.getContentPane().add(scroller, java.awt.BorderLayout.SOUTH);
+				        
+				        dial.pack();
+				        dial.setVisible(true);
+				        optionPane.getValue();
 					}
 					
 					super.finished();

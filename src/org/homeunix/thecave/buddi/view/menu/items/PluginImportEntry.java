@@ -3,10 +3,15 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileFilter;
 
 import net.java.dev.SwingWorker;
@@ -96,7 +101,7 @@ public class PluginImportEntry extends MossMenuItem {
 						plugin.importData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
 					catch (PluginMessage pm){
-						return pm.getMessage();
+						return pm;
 					}
 					catch (PluginException pe){
 						Log.error("Error processing data in plugin: ", pe);
@@ -135,20 +140,29 @@ public class PluginImportEntry extends MossMenuItem {
 								options[0]
 						);
 					}
-					else if (get() instanceof String){
+					else if (get() instanceof PluginMessage){
 						String[] options = new String[1];
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
-
-						JOptionPane.showOptionDialog(
-								getFrame(), 
-								get(), 
-								"", 
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.PLAIN_MESSAGE,
-								null,
-								options,
-								options[0]
-						);
+						
+						PluginMessage message = (PluginMessage) get();
+				        JOptionPane optionPane = new JOptionPane(message.getMessage(), message.getType(), JOptionPane.OK_OPTION, null, options, options[0]);
+				        JDialog dial = optionPane.createDialog(null, message.getTitle());
+				        dial.setModal(true);
+				        if (message.getLongMessage() != null){
+				        	JTextArea text = new JTextArea();
+				        	text.setEditable(false);
+				        	text.setBorder(null);
+				        	text.setText(message.getLongMessage());
+				        	JScrollPane scroller = new JScrollPane(text);
+				        	scroller.setPreferredSize(new Dimension(350, 200));
+				        	scroller.getVerticalScrollBar().setValue(0);
+				        	scroller.getHorizontalScrollBar().setValue(0);
+				        	dial.getContentPane().add(scroller, BorderLayout.SOUTH);
+				        }
+				        
+				        dial.pack();
+				        dial.setVisible(true);
+				        optionPane.getValue();
 					}
 					
 					super.finished();
