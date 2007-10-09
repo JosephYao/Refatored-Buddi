@@ -18,11 +18,12 @@ import org.homeunix.drummer.model.Source;
 import org.homeunix.drummer.model.Transaction;
 import org.homeunix.drummer.model.Type;
 import org.homeunix.drummer.model.impl.DataModelImpl;
-import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
+import org.homeunix.thecave.buddi.i18n.keys.ImportLegacyDataKeys;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
+import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
@@ -31,20 +32,24 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 
 public class ImportLegacyData extends BuddiImportPlugin {
 
 	@Override
-	public void importData(final MutableDocument model, final MossDocumentFrame callingFrame, final File file) throws PluginException {
+	public void importData(final MutableDocument model, final MossDocumentFrame callingFrame, final File file) throws PluginException, PluginMessage {
 		try {
 			DataInstance.getInstance().loadDataFile(file);
 			final DataModelImpl oldModel = (DataModelImpl) DataInstance.getInstance().getDataModel();
 			if (file == null)
 				return;
 
-			convert(model, oldModel);
+			String message = convert(model, oldModel);
+			if (message.length() > 0){
+				throw new PluginMessage(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_POTENTIAL_WARNINGS) + "\n\n" + message);
+			}
 		}
 		catch (DocumentLoadException dle){
 			throw new PluginException(dle);
@@ -52,7 +57,7 @@ public class ImportLegacyData extends BuddiImportPlugin {
 	}
 
 	public String getName() {
-		return BuddiKeys.IMPORT_LEGACY_BUDDI_FORMAT.toString();
+		return ImportLegacyDataKeys.IMPORT_LEGACY_BUDDI_FORMAT.toString();
 	}
 	
 	@Override
@@ -62,15 +67,17 @@ public class ImportLegacyData extends BuddiImportPlugin {
 	
 	@Override
 	public String getProcessingMessage() {
-		return BuddiKeys.MESSAGE_CONVERTING_LEGACY_DATA_FILE.toString();
+		return ImportLegacyDataKeys.IMPORT_LEGACY_MESSAGE_CONVERTING_LEGACY_DATA_FILE.toString();
 	}
 	
 	@Override
 	public String getDescription() {
-		return BuddiKeys.LEGACY_BUDDI_FILES.toString();
+		return ImportLegacyDataKeys.IMPORT_LEGACY_BUDDI_FILES.toString();
 	}
 	
-	public void convert(MutableDocument model, DataModelImpl oldModel) throws DocumentLoadException {
+	public String convert(MutableDocument model, DataModelImpl oldModel) throws DocumentLoadException {
+		StringBuilder sb = new StringBuilder();
+		
 		try {
 			Map<Type, MutableAccountType> typeMap = new HashMap<Type, MutableAccountType>();
 			Map<MutableAccountType, List<MutableAccount>> typeAccountMap = new HashMap<MutableAccountType, List<MutableAccount>>();
@@ -107,7 +114,22 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					sourceMap.put(oldAccount, newAccount);
 				}
 				else {
-					sourceMap.put(oldAccount, (MutableAccount) model.getAccount(oldAccount.getName()));
+					MutableAccount newAccount = (MutableAccount) model.getAccount(oldAccount.getName());
+					if (newAccount.getStartingBalance() != oldAccount.getStartingBalance()){
+							//Include in the message that this budget category's deleted status differs.
+							sb.append(newAccount.getFullName());
+							sb.append(": ");
+							sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_STARTING_BALANCE_DIFFERS));
+							sb.append("\n");
+					}
+					if (newAccount.isDeleted() != oldAccount.isDeleted()){
+						//Include in the message that this budget category's deleted status differs.
+						sb.append(newAccount.getFullName());
+						sb.append(": ");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_DELETE_STATUS_DIFFERS));
+						sb.append("\n");
+					}
+					sourceMap.put(oldAccount, newAccount);
 				}
 			}
 
@@ -132,6 +154,20 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					MutableBudgetCategory newBudgetCategory = (MutableBudgetCategory) model.getBudgetCategory(oldCategory.getFullName());
 					if (newBudgetCategory.getAmount(new Date()) == 0)
 						newBudgetCategory.setAmount(new Date(), oldCategory.getBudgetedAmount());
+					if (newBudgetCategory.isDeleted() != oldCategory.isDeleted()){
+						//Include in the message that this budget category's deleted status differs.
+						sb.append(newBudgetCategory.getFullName());
+						sb.append(": ");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_BUDGET_CATEGORY_DELETE_STATUS_DIFFERS));
+						sb.append("\n");
+					}
+					if (newBudgetCategory.isIncome() != oldCategory.isIncome()){
+						//Include in the message that this budget category's deleted status differs.
+						sb.append(newBudgetCategory.getFullName());
+						sb.append(": ");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_BUDGET_CATEGORY_TYPE_DIFFERS));
+						sb.append("\n");
+					}
 					categoryMap.put(oldCategory, newBudgetCategory);
 					sourceMap.put(oldCategory, newBudgetCategory);
 				}
@@ -221,6 +257,8 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					}
 				}
 			}
+			
+			return sb.toString();
 		}
 		catch (ModelException me){
 			throw new DocumentLoadException(me);

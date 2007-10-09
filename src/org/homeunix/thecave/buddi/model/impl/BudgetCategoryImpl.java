@@ -62,21 +62,28 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			getDocument().startBatchChange();
 		//We need to delete / undelete ancestors / descendents as needed.  The rule to follow is that
 		// we cannot have any account which is not deleted which has a parent which is deleted.
-		if (deleted){
-			//If we delete this one, we must also delete all children.
-			for (BudgetCategory bc : getChildren()) {
-				bc.setDeleted(deleted);
+		//We also cannot set any children deleted if the document is not set.  This should be fine
+		// for almost all operations - the only potential problem would be if you create a budget
+		// category, add some children to it, delete the parent, and then add the parent.  
+		// TODO Check for this condition
+		if (getDocument() != null){
+			if (deleted){
+				//If we delete this one, we must also delete all children.
+				for (BudgetCategory bc : getChildren()) {
+					bc.setDeleted(deleted);
+				}
 			}
-		}
-		else {
-			//If we undelete this one, we must also undelete all ancestors.  
-			if (getParent() != null)
-				getParent().setDeleted(deleted);
+			else {
+				//If we undelete this one, we must also undelete all ancestors.  
+				if (getParent() != null)
+					getParent().setDeleted(deleted);
+			}
 		}
 		
 		setChanged();
 		
 		super.setDeleted(deleted);
+		
 		if (getDocument() != null)
 			getDocument().finishBatchChange();
 	}

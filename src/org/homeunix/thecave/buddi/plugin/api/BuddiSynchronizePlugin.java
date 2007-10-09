@@ -61,7 +61,7 @@ public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements
 	}
 	
 	public String getProcessingMessage() {
-		return BuddiKeys.MESSAGE_PROCESSING_FILE.toString();
+		return BuddiKeys.MESSAGE_SYNCHRONIZING_FILES.toString();
 	}
 	
 	public Version getMaximumVersion() {

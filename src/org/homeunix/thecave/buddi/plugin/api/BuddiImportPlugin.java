@@ -61,7 +61,7 @@ public abstract class BuddiImportPlugin extends PreferenceAccess implements Moss
 	}
 	
 	public String getProcessingMessage() {
-		return BuddiKeys.MESSAGE_PROCESSING_FILE.toString();
+		return BuddiKeys.MESSAGE_IMPORTING_FILE.toString();
 	}
 	
 	public Version getMaximumVersion() {

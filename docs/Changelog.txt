@@ -1,3 +1,8 @@
+2.9.11.0
+-Fixed bug #1809188 (Import from Legacy file crashing)
+-Related to bug #1809188, I now pass a warning back from the Legacy import if there are any ambiguous conditions.  For instance, assume you import from a file which includes an account "Test", and you already have an account "Test" defined in the new file.  If the starting balances for the two different "Test" accounts do not match, we will prompt the user of this, and that they should verify that we have the correct one.
+-The Language Editor now prompts for save if you have not already done so.
+
 2.9.10.0 (October 8 2007)
 -Added command line option --nosplash to disable the splash screen
 -Added support to store the locations and sizes of multiple windows in Preferences.  If you quit with three Main Frames open, you will have the same files stored on startup.
