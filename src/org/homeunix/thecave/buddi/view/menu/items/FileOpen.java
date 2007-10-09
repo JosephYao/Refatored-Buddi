@@ -35,7 +35,7 @@ public class FileOpen extends MossMenuItem {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		File f = MossSmartFileChooser.showSmartOpenDialog(
+		File f = MossSmartFileChooser.showOpenDialog(
 				getFrame(), 
 				Const.FILE_FILTER_DATA, 
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_OPEN_DATA_FILE_TITLE), 

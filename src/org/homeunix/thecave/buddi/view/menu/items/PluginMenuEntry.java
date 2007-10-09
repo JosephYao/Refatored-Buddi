@@ -3,10 +3,15 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileFilter;
 
 import net.java.dev.SwingWorker;
@@ -15,7 +20,10 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
+import org.homeunix.thecave.buddi.plugin.api.MenuPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
@@ -28,12 +36,12 @@ import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
 import org.homeunix.thecave.moss.swing.MossStatusDialog;
 import org.homeunix.thecave.moss.util.Log;
 
-public class PluginSynchronizeEntry extends MossMenuItem {
+public class PluginMenuEntry extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 
-	private final BuddiSynchronizePlugin plugin;
+	private final MenuPlugin plugin;
 
-	public PluginSynchronizeEntry(MossDocumentFrame parentFrame, BuddiSynchronizePlugin plugin) {
+	public PluginMenuEntry(MossDocumentFrame parentFrame, MenuPlugin plugin) {
 		super(parentFrame, TextFormatter.getTranslation(plugin.getName()));
 
 		this.plugin = plugin;
@@ -65,22 +73,47 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 					return TextFormatter.getTranslation(plugin.getDescription());
 				}
 			};
-			f = MossSmartFileChooser.showSmartOpenDialog(
-					getFrame(), 
-					filter, 
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_SYNCHRONIZE_FILE_TITLE), 
-					PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE), 
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE), 
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR));
+
+			String title = "Unknown Plugin Type";
+			if (plugin instanceof BuddiExportPlugin)
+				title = PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_EXPORT_FILE_TITLE);
+			else if (plugin instanceof BuddiImportPlugin)
+				title = PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_IMPORT_FILE_TITLE);
+			else if (plugin instanceof BuddiSynchronizePlugin)
+				title = PrefsModel.getInstance().getTranslator().get(BuddiKeys.FILECHOOSER_SYNCHRONIZE_FILE_TITLE);
+
+			if (plugin.isFileChooserSave())
+				f = MossSmartFileChooser.showSaveFileDialog(
+						getFrame(),  
+						filter,
+						plugin.getFileExtensions() == null || plugin.getFileExtensions().length == 0 ? 
+								null : 
+									plugin.getFileExtensions()[0],
+						title, 
+						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK),
+						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL),
+						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_REPLACE),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),  
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE_TITLE));
+
+			else 
+				f = MossSmartFileChooser.showOpenDialog(
+						getFrame(),  
+						filter, 
+						title, 
+						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK), 
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE), 
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_READ_DATA_FILE), 
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR));
 
 			if (f == null)
 				return;
 		}
-		
-		
+
 		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
-		
+
 		try {
 			final File fFinal = f;
 			final MossStatusDialog status = new MossStatusDialog(
@@ -94,7 +127,7 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 				@Override
 				public Object construct() {
 					try {
-						plugin.synchronizeData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
+						plugin.processData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
 					}
 					catch (PluginMessage pm){
 						return pm;
@@ -110,17 +143,17 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 				@Override
 				public void finished() {
 					status.closeWindow();
-					
+
 					((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
 					((MossDocumentFrame) getFrame()).getDocument().finishBatchChange();
-					
+
 					if (getFrame() instanceof MainFrame)
 						((MainFrame) getFrame()).fireStructureChanged();
 					if (getFrame() instanceof TransactionFrame)
 						((TransactionFrame) getFrame()).fireStructureChanged();
 
 					MainFrame.updateAllContent();
-					
+
 					if (get() == null){
 						String[] options = new String[1];
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
@@ -137,22 +170,34 @@ public class PluginSynchronizeEntry extends MossMenuItem {
 						);
 					}
 					else if (get() instanceof PluginMessage){
-						PluginMessage message = (PluginMessage) get();
 						String[] options = new String[1];
 						options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
-						JOptionPane.showOptionDialog(
-								getFrame(), 
-								message.getMessage(), 
-								message.getTitle(), 
-								message.getType(),
-								JOptionPane.PLAIN_MESSAGE,
-								null,
-								options,
-								options[0]
-						);
+						PluginMessage message = (PluginMessage) get();
+						JOptionPane optionPane = new JOptionPane(message.getMessage(), message.getType(), JOptionPane.OK_OPTION, null, options, options[0]);
+						JDialog dial = optionPane.createDialog(null, message.getTitle());
+						dial.setModal(true);
+						JTextArea text = new JTextArea();
+						JScrollPane scroller = new JScrollPane(text);
+						if (message.getLongMessage() != null){
+							text.setEditable(false);
+							text.setWrapStyleWord(true);
+							text.setLineWrap(true);
+							text.setText(message.getLongMessage());
+							scroller.setPreferredSize(new Dimension(350, 200));
+							scroller.setBorder(null);
+							dial.getContentPane().add(scroller, BorderLayout.SOUTH);
+						}
+
+						dial.pack();
+
+						scroller.getVerticalScrollBar().setValue(0);
+						scroller.getHorizontalScrollBar().setValue(0);
+
+						dial.setVisible(true);
+						optionPane.getValue();
 					}
-					
+
 					super.finished();
 				}
 			};

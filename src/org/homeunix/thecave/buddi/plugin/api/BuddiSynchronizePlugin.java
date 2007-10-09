@@ -13,7 +13,6 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Version;
 
 /**
  * The abstract class to extend when creating a synchronize plugin.  The method synchronizeData() 
@@ -24,10 +23,10 @@ import org.homeunix.thecave.moss.util.Version;
  * @author wyatt
  *
  */
-public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements MossPlugin, FileAccess {
+public abstract class BuddiSynchronizePlugin extends MenuPlugin implements MossPlugin, FileAccess {
 	
 	/**
-	 * Imports data as required.  The plugin launch code will prompt for a file
+	 * Synchronizes data as required.  The plugin launch code will prompt for a file
 	 * and pass it in (unless you override the isPromptForFile() method to return false).
 	 * 
 	 * This method is executed from the launch code within a SwingWorker thread.  Once this
@@ -44,31 +43,21 @@ public abstract class BuddiSynchronizePlugin extends PreferenceAccess implements
 	 */
 	public abstract void synchronizeData(MutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException, PluginMessage;
 	
+	@Override
+	public void processData(MutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException, PluginMessage {
+		synchronizeData(model, callingFrame, file);
+	}
+	
 	public String getDescription() {
 		return BuddiKeys.FILE_DESCRIPTION_BUDDI_SYNCHRONIZE_FILES.toString();
-	}
-	
-	public boolean isPluginActive() {
-		return true;
-	}
-	
-	public boolean isPromptForFile(){
-		return true;
-	}
-	
-	public String[] getFileExtensions(){
-		return null;
 	}
 	
 	public String getProcessingMessage() {
 		return BuddiKeys.MESSAGE_SYNCHRONIZING_FILES.toString();
 	}
 	
-	public Version getMaximumVersion() {
-		return null;
-	}
-
-	public Version getMinimumVersion() {
-		return null;
+	@Override
+	public boolean isFileChooserSave() {
+		return false;
 	}
 }

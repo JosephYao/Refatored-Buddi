@@ -11,9 +11,9 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Version;
 
 /**
  * The abstract class to extend when creating an export plugin.  The method exportData() 
@@ -24,7 +24,7 @@ import org.homeunix.thecave.moss.util.Version;
  * @author wyatt
  *
  */
-public abstract class BuddiExportPlugin extends PreferenceAccess implements MossPlugin, FileAccess {
+public abstract class BuddiExportPlugin extends MenuPlugin implements MossPlugin, FileAccess {
 
 	/**
 	 * Exports data as required.  The plugin launch code will prompt for a file
@@ -44,31 +44,21 @@ public abstract class BuddiExportPlugin extends PreferenceAccess implements Moss
 	 */
 	public abstract void exportData(ImmutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException, PluginMessage;
 	
+	@Override
+	public void processData(MutableDocument model, MossDocumentFrame callingFrame, File file) throws PluginException, PluginMessage {
+		exportData(model, callingFrame, file);
+	}
+	
 	public String getDescription() {
 		return BuddiKeys.FILE_DESCRIPTION_BUDDI_EXPORT_FILES.toString();
-	}
-	
-	public boolean isPluginActive() {
-		return true;
-	}
-	
-	public boolean isPromptForFile(){
-		return true;
-	}
-	
-	public String[] getFileExtensions(){
-		return null;
 	}
 	
 	public String getProcessingMessage() {
 		return BuddiKeys.MESSAGE_EXPORTING_FILE.toString();
 	}
 	
-	public Version getMaximumVersion() {
-		return null;
-	}
-
-	public Version getMinimumVersion() {
-		return null;
+	@Override
+	public boolean isFileChooserSave() {
+		return true;
 	}
 }

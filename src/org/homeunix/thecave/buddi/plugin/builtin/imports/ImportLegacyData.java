@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.homeunix.drummer.model.Account;
 import org.homeunix.drummer.model.Category;
 import org.homeunix.drummer.model.DataInstance;
@@ -35,6 +37,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+import org.homeunix.thecave.moss.util.Log;
 
 public class ImportLegacyData extends BuddiImportPlugin {
 
@@ -48,7 +51,15 @@ public class ImportLegacyData extends BuddiImportPlugin {
 
 			String message = convert(model, oldModel);
 			if (message.length() > 0){
-				throw new PluginMessage(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_POTENTIAL_WARNINGS) + "\n\n" + message);
+				Log.warning(
+						TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_POTENTIAL_WARNINGS) 
+						+ "\n" 
+						+ message);
+				throw new PluginMessage(
+						TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_POTENTIAL_WARNINGS),  
+						message,
+						TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_POTENTIAL_WARNINGS_TITLE),
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		catch (DocumentLoadException dle){
@@ -109,25 +120,36 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					MutableAccount newAccount = MutableModelFactory.createMutableAccount(oldAccount.getName(), oldAccount.getStartingBalance(), typeMap.get(oldAccount.getAccountType()));
 					newAccount.setStartingBalance(oldAccount.getStartingBalance());
 					newAccount.setDeleted(oldAccount.isDeleted());
+					newAccount.setOverdraftCreditLimit(oldAccount.getCreditLimit());
 					
 					model.addAccount(newAccount);
 					sourceMap.put(oldAccount, newAccount);
 				}
 				else {
 					MutableAccount newAccount = (MutableAccount) model.getAccount(oldAccount.getName());
+					if (!newAccount.getAccountType().getName().equals(oldAccount.getAccountType().getName())){
+						sb.append(newAccount.getFullName());
+						sb.append(":\n ");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_TYPE_DIFFERS));
+						sb.append("\n\n");						
+					}
 					if (newAccount.getStartingBalance() != oldAccount.getStartingBalance()){
-							//Include in the message that this budget category's deleted status differs.
-							sb.append(newAccount.getFullName());
-							sb.append(": ");
-							sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_STARTING_BALANCE_DIFFERS));
-							sb.append("\n");
+						sb.append(newAccount.getFullName());
+						sb.append(":\n");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_STARTING_BALANCE_DIFFERS));
+						sb.append("\n\n");
 					}
 					if (newAccount.isDeleted() != oldAccount.isDeleted()){
-						//Include in the message that this budget category's deleted status differs.
 						sb.append(newAccount.getFullName());
-						sb.append(": ");
+						sb.append(":\n");
 						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_DELETE_STATUS_DIFFERS));
-						sb.append("\n");
+						sb.append("\n\n");
+					}
+					if (newAccount.getOverdraftCreditLimit() != oldAccount.getCreditLimit()){
+						sb.append(newAccount.getFullName());
+						sb.append(":\n");
+						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_ACCOUNT_OVERDRAFT_CREDIT_VALUE_DIFFERS));
+						sb.append("\n\n");						
 					}
 					sourceMap.put(oldAccount, newAccount);
 				}
@@ -157,16 +179,16 @@ public class ImportLegacyData extends BuddiImportPlugin {
 					if (newBudgetCategory.isDeleted() != oldCategory.isDeleted()){
 						//Include in the message that this budget category's deleted status differs.
 						sb.append(newBudgetCategory.getFullName());
-						sb.append(": ");
+						sb.append(":\n");
 						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_BUDGET_CATEGORY_DELETE_STATUS_DIFFERS));
-						sb.append("\n");
+						sb.append("\n\n");
 					}
 					if (newBudgetCategory.isIncome() != oldCategory.isIncome()){
 						//Include in the message that this budget category's deleted status differs.
 						sb.append(newBudgetCategory.getFullName());
-						sb.append(": ");
+						sb.append(":\n");
 						sb.append(TextFormatter.getTranslation(ImportLegacyDataKeys.IMPORT_LEGACY_BUDGET_CATEGORY_TYPE_DIFFERS));
-						sb.append("\n");
+						sb.append("\n\n");
 					}
 					categoryMap.put(oldCategory, newBudgetCategory);
 					sourceMap.put(oldCategory, newBudgetCategory);

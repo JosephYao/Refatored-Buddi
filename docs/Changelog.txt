@@ -2,6 +2,7 @@
 -Fixed bug #1809188 (Import from Legacy file crashing)
 -Related to bug #1809188, I now pass a warning back from the Legacy import if there are any ambiguous conditions.  For instance, assume you import from a file which includes an account "Test", and you already have an account "Test" defined in the new file.  If the starting balances for the two different "Test" accounts do not match, we will prompt the user of this, and that they should verify that we have the correct one.
 -The Language Editor now prompts for save if you have not already done so.
+-Improved on the Menu Plugin's return message MessageBox, as implemented in 2.9.10.0.  Now, you can include a 'longMessage', which will be displayed in a JTextArea below the main message.  This can be useful for long status messages.  For instance, I use this when importing from legacy data files to show all potential conflicts between the files.
 
 2.9.10.0 (October 8 2007)
 -Added command line option --nosplash to disable the splash screen

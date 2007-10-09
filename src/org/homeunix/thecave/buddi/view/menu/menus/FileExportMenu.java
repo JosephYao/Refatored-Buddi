@@ -7,7 +7,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
-import org.homeunix.thecave.buddi.view.menu.items.PluginExportEntry;
+import org.homeunix.thecave.buddi.view.menu.items.PluginMenuEntry;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
@@ -25,7 +25,7 @@ public class FileExportMenu extends MossMenu {
 		
 		for (BuddiExportPlugin plugin : BuddiPluginFactory.getExportPlugins()) {
 			if (getFrame() instanceof MossDocumentFrame)
-				this.add(new PluginExportEntry((MossDocumentFrame) getFrame(), plugin));
+				this.add(new PluginMenuEntry((MossDocumentFrame) getFrame(), plugin));
 		}
 		
 		this.setEnabled(getFrame() instanceof MossDocumentFrame && this.getComponentCount() > 0);
