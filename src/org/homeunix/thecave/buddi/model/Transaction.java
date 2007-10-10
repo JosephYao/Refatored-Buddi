@@ -66,8 +66,4 @@ public interface Transaction extends ModelObject {
 	public void setScheduled(boolean scheduled) throws InvalidValueException;
 	
 	public void setTo(Source to) throws InvalidValueException;
-	
-	public String getDateString();
-	
-	public void setDateString(String dateString);
 }

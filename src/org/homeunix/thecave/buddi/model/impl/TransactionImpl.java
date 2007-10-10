@@ -20,7 +20,7 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  */
 public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private Date date;
-	private String dateString;
+//	private String dateString;
 	private String description;
 	private String number;
 	private long amount;
@@ -72,12 +72,15 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public long getBalanceTo() {
 		return balanceTo;
 	}
-	public Date getDate() {
-		if (getDateString() == null){
-			setDate(date);
-		}
-		
-		return stringToDate(getDateString());
+//	public Date getDate() {
+//		if (getDateString() == null){
+//			setDate(date);
+//		}
+//		
+//		return stringToDate(getDateString());
+//	}
+	public Date getDate(){
+		return date;
 	}
 	public String getDescription() {
 		return description;
@@ -141,12 +144,17 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			setChanged();
 		this.clearedTo = cleared;
 	}
+//	public void setDate(Date date) {
+//		String dateString = dateToString(date);
+//		if (getDateString() != null && !getDateString().equals(dateString))
+//			setChanged();
+//		setDateString(dateString);
+//		this.date = null;
+//	}
 	public void setDate(Date date) {
-		String dateString = dateToString(date);
-		if (getDateString() != null && !getDateString().equals(dateString))
+		if (this.date != null && this.date.equals(date))
 			setChanged();
-		setDateString(dateString);
-		this.date = null;
+		this.date = date;
 	}
 	public void setDescription(String description) {
 		if (this.description != null && !this.description.equals(description))
@@ -184,35 +192,10 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		setChanged();
 		this.to = to;
 	}
-	public String getDateString() {
-		return dateString;
-	}
-	public void setDateString(String newDate) {
-		this.dateString = newDate;
-	}
-	
-	
-	private Date stringToDate(String strDate){
-		if (strDate == null)
-			return null;
-		String[] split = strDate.split(":");
-		if (split.length == 3){
-			int year = Integer.parseInt(split[0]);
-			int month = Integer.parseInt(split[1]);
-			int day = Integer.parseInt(split[2]);
-			return DateFunctions.getDate(year, month, day);
-		}
-		
-		return null;
-	}
-	private String dateToString(Date date){
-		if (date == null)
-			return null;
-		
-		int year = DateFunctions.getYear(date);
-		int month = DateFunctions.getMonth(date);
-		int day = DateFunctions.getDay(date);
-		
-		return year + ":" + month + ":" + day;
-	}
+//	public String getDateString() {
+//		return dateString;
+//	}
+//	public void setDateString(String newDate) {
+//		this.dateString = newDate;
+//	}
 }

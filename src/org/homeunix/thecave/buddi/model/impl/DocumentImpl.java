@@ -91,7 +91,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private List<ScheduledTransaction> scheduledTransactions = new LinkedList<ScheduledTransaction>();
 
 	//Model object data
-	private Date modifiedDate;
+	private Time modifiedTime;
 	private String uid;
 
 	/**
@@ -480,6 +480,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		XMLEncoder encoder = new XMLEncoder(os);
 		encoder.setExceptionListener(new ExceptionListener(){
 			public void exceptionThrown(Exception e) {
+				Log.error(e.getMessage());
 				e.printStackTrace(Log.getPrintStream());
 			}
 		});
@@ -488,6 +489,17 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				File file = (File) oldInstance;
 				String filePath = file.getAbsolutePath();
 				return new Expression(file, file.getClass(), "new", new Object[]{filePath} );
+			}
+		});
+		encoder.setPersistenceDelegate(Date.class, new PersistenceDelegate(){
+			@Override
+			protected Expression instantiate(Object oldInstance, Encoder out) {
+				Date date = (Date) oldInstance;
+				return new Expression(
+						date,
+						DateFunctions.class, 
+						"getDate",
+						new Object[]{DateFunctions.getYear(date), DateFunctions.getMonth(date), DateFunctions.getDay(date)});
 			}
 		});
 
@@ -524,10 +536,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 
 	public Date getModifiedDate() {
-		return modifiedDate;
+		return modifiedTime;
 	}
 	public void setModified(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+		this.modifiedTime = new Time(modifiedDate);
+	}
+	public void setModified(Time modifiedTime){
+		this.modifiedTime = modifiedTime;
 	}
 	public void setChanged(){
 		setModified(new Date());
@@ -647,8 +662,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return sb.toString();
 	}
 	
-	public Date getModified() {
-		return modifiedDate;
+	public Time getModified() {
+		return modifiedTime;
 	}
 
 	private void checkLists(){

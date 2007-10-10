@@ -18,20 +18,23 @@ import org.homeunix.thecave.moss.model.AbstractDocument;
  */
 public abstract class ModelObjectImpl implements ModelObject {
 	
-	private Date modifiedDate;
+	private Time modifiedTime;
 	private String uid;
 	private Document document;
 		
 	public void setChanged(){
-		setModified(new Date());
+		setModified(new Time());
 		if (document != null)
 			document.setChanged();
 	}
-	public Date getModified() {
-		return modifiedDate;
+	public Time getModified() {
+		return modifiedTime;
+	}
+	public void setModified(Time modifiedTime){
+		this.modifiedTime = modifiedTime;
 	}
 	public void setModified(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+		this.modifiedTime = new Time(modifiedDate);
 	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
