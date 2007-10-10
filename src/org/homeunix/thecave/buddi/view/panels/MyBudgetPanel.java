@@ -13,8 +13,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -33,6 +35,7 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
@@ -63,6 +66,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	private final JComboBox periodTypeComboBox;
 
 	private final MyBudgetTreeTableModel treeTableModel;
+	
+	private final Map<BudgetCategoryType, Date> periodDateMap = new HashMap<BudgetCategoryType, Date>();
 
 	private final MainFrame parent;
 
@@ -93,13 +98,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource().equals(monthComboBox)){
-//		treeTableModel.setMonth(monthComboBox.getSelectedIndex());
-//		updateContent();
-//		}
 		if (e.getSource().equals(periodTypeComboBox)){
+			periodDateMap.put(treeTableModel.getSelectedBudgetPeriodType(), (Date) dateSpinnerModel.getValue());
 			treeTableModel.setSelectedBudgetPeriodType(ModelFactory.getBudgetCategoryType(periodTypeComboBox.getSelectedItem().toString()));
-			dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
+			
+			if (periodDateMap.get(treeTableModel.getSelectedBudgetPeriodType()) == null)
+				dateSpinnerModel.setValue(treeTableModel.getSelectedBudgetPeriodType().getStartOfBudgetPeriod(dateSpinnerModel.getDate()));
+			else
+				dateSpinnerModel.setValue(periodDateMap.get(treeTableModel.getSelectedBudgetPeriodType()));
 			this.fireStructureChanged();
 			this.updateContent();
 			parent.updateMenus();
@@ -181,6 +187,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			public void stateChanged(ChangeEvent arg0) {
 				if (dateSpinner.getValue() instanceof Date)
 					treeTableModel.setSelectedDate((Date) dateSpinner.getValue());
+				fireStructureChanged();
 				updateContent();
 			}
 		});
