@@ -396,7 +396,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		//Reset the document's UID.  This needs to be done when saving to a different file,
 		// or else you cannot have multiple files open at the same time.
 		if (resetUid)
-			setUid(ModelFactory.getGeneratedUid(this));
+			setUid(getGeneratedUid(this));
 		
 		//Check if we need to reset the password
 		if ((flags & RESET_PASSWORD) != 0){
@@ -529,7 +529,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
-			setUid(ModelFactory.getGeneratedUid(this));
+			setUid(getGeneratedUid(this));
 		}
 		return uid;
 	}

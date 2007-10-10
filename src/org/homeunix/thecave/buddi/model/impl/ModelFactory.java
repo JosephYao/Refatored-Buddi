@@ -28,7 +28,6 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
@@ -406,29 +405,6 @@ public class ModelFactory {
 		return t;
 	}
 
-
-
-	/**
-	 * Generate a UID string for a particular object.  This is guaranteed to be unique
-	 * for each call to this method, even if the object is the same.  It is generated 
-	 * by concatinating the following information, separated by the dash (-):
-	 * 
-	 * 1) The canonical name of the object (e.g. org.homeunix.thecave.buddi.model3.Account).
-	 * 2) A hexadecimal representation of the current system time in milliseconds
-	 * 3) A hexadecimal representation of a 16 bit random number
-	 * 4) A hexadecimal representation of the 16 least significant bits of this object's hash code (object.hashCode()).
-	 * @param object
-	 * @return
-	 */
-	public static String getGeneratedUid(ModelObject object){
-		long time = System.currentTimeMillis();
-		int random = (int) (Math.random() * 0xFFFF);
-		int hash = object.hashCode() & 0xFFFF;
-
-		String uid = object.getClass().getCanonicalName() + "-" + Long.toHexString(time) + "-" + Integer.toHexString(random) + "-" + Integer.toHexString(hash);
-
-		return uid;
-	}
 	
 	/**
 	 * Returns the auto save file locaton for the given base file.  If the base file

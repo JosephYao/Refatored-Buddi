@@ -12,16 +12,16 @@ import javax.swing.filechooser.FileFilter;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.builtin.imports.ImportLegacyData;
+import org.homeunix.thecave.buddi.plugin.builtin.preference.AdvancedPreferences;
+import org.homeunix.thecave.buddi.plugin.builtin.preference.LocalePreferences;
+import org.homeunix.thecave.buddi.plugin.builtin.preference.NetworkPreferences;
+import org.homeunix.thecave.buddi.plugin.builtin.preference.PluginPreferences;
+import org.homeunix.thecave.buddi.plugin.builtin.preference.ViewPreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime;
-import org.homeunix.thecave.buddi.view.dialogs.preferences.AdvancedPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.preferences.LocalePreferences;
-import org.homeunix.thecave.buddi.view.dialogs.preferences.NetworkPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.preferences.PluginPreferences;
-import org.homeunix.thecave.buddi.view.dialogs.preferences.ViewPreferences;
 
 
 /**

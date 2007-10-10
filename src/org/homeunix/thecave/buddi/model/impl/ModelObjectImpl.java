@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.moss.model.AbstractDocument;
 
 /**
  * The class from which most other model objects descend from.  You should not 
@@ -34,7 +35,7 @@ public abstract class ModelObjectImpl implements ModelObject {
 	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
-			setUid(ModelFactory.getGeneratedUid(this));
+			setUid(AbstractDocument.getGeneratedUid(this));
 		}
 		return uid;
 	}
