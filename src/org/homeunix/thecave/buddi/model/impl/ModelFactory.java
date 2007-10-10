@@ -38,6 +38,8 @@ import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
+import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.crypto.CipherException;
@@ -240,6 +242,37 @@ public class ModelFactory {
 		if (!file.canRead())
 			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
+		//Copy to a backup if there is no backup currently.  This is especially important for
+		// 2.9.11.0, which includes several major changes to the data format.
+		File backupFile = new File(file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + " (2.9.11.0)" + Const.BACKUP_FILE_EXTENSION);
+		if (!backupFile.exists()){
+			try {
+				FileFunctions.copyFile(file, backupFile);
+				JOptionPane.showMessageDialog(
+						null,
+						"Due to changes in the data model in version 2.9.11.0, it is recommended that\n"
+						+ "you back up any data files before opening in the new version.  Buddi has\n"
+						+ "backed up the file '" + file.getName() + "' to '" + backupFile.getName() + "'.\n"
+						+ "If you experience any problems, you can restore from this backup.",
+						"Backup Data File",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			catch (IOException ioe){
+				JOptionPane.showMessageDialog(
+						null, 
+						"Error backing up data file" 
+						+ file.getAbsolutePath() 
+						+ "\nto " + backupFile.getAbsolutePath() 
+						+ ".\n\nDue to changes in the file format in version 2.9.11.0, it is\n"
+						+ "highly recommended that you backup your files before opening them in\n"
+						+ "the new version.  If you wish backup this file manually (recommended),\n"
+						+ "please do so now, before you click OK.  Once you click OK, the file will\n"
+						+ "be loaded.",
+						"Error backing up file", 
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
 		if (getAutoSaveLocation(file).exists() && getAutoSaveLocation(file).canRead()){
 			Log.info("Autosave file found; prompting user if we should use it or not");
 			
@@ -305,6 +338,63 @@ public class ModelFactory {
 
 					//Check for scheduled transactions
 					document.updateScheduledTransactions();
+					
+					
+					
+					
+					//The old data format (before 2.9.11.0) used a string representation of a date
+					// object as the key to the Budget Category amount map.  Unfortunately, this
+					// meant that in different time zones, you would have different start dates
+					// for budget periods!
+					//We fix this in 2.9.11.0.  For backwards compatibility (to make sure that 
+					// you can still load all the old format of date), we have to convert them
+					// here at file load.
+					//We should be able to remove this early in the 3.0 branch (or possible even 
+					// at 3.0.0.0 itself, depending on how long it stays in Dev branch).
+					for (BudgetCategory bc : document.getBudgetCategories()) {
+						boolean changed = false;
+						Map<String, Long> newAmountMap = new HashMap<String, Long>();
+						
+						//Iterate through all budget periods, and check the 
+						// 
+						for (String key : ((BudgetCategoryImpl) bc).getAmounts().keySet()) {
+							String[] splitKey = key.split(":");
+							if (splitKey.length == 2){
+								changed = true;
+								Date dateKey = new Date(Long.parseLong(splitKey[1]));
+								Log.debug("dateKey: " + dateKey);
+								long amount = ((BudgetCategoryImpl) bc).getAmounts().get(key);
+								String newDateKey = 
+									bc.getBudgetPeriodType().getName() 
+									+ ":" + DateFunctions.getYear(dateKey)
+									+ ":" + DateFunctions.getMonth(dateKey)
+									+ ":" + DateFunctions.getDay(dateKey);
+								newAmountMap.put(newDateKey, amount);
+							}
+							else if (splitKey.length == 4){
+								newAmountMap.put(key, ((BudgetCategoryImpl) bc).getAmounts().get(key));
+							}
+						}
+						
+						if (changed){
+							Log.warning("Your data file has been updated to address bug #1811038.  Included inline are the details of the changes:\n\n"
+									+ "New Map:\n" + newAmountMap + "\n\n"
+									+ "Old Map:\n" + ((BudgetCategoryImpl) bc).getAmounts());
+							
+							((BudgetCategoryImpl) bc).setAmounts(newAmountMap);
+						}
+					}
+					
+					
+					
+					//As a precaution for the bug fix above, we are also changing our internal 
+					// representation of Date objects for Transactions to Strings.  This is done
+					// automatically when a date is read; to force this, we read every date here.
+					for (Transaction t : document.getTransactions()) {
+						t.getDate();
+					}
+					
+					
 					
 					//Sort lists...
 					Collections.sort(document.getAccounts());

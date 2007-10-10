@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.beans.Encoder;
+import java.beans.ExceptionListener;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLEncoder;
@@ -477,6 +478,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		startBatchChange();
 
 		XMLEncoder encoder = new XMLEncoder(os);
+		encoder.setExceptionListener(new ExceptionListener(){
+			public void exceptionThrown(Exception e) {
+				e.printStackTrace(Log.getPrintStream());
+			}
+		});
 		encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
 			protected Expression instantiate(Object oldInstance, Encoder out ){
 				File file = (File) oldInstance;

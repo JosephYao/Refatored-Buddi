@@ -3,10 +3,13 @@
  */
 package org.homeunix.thecave.buddi;
 
+import java.beans.XMLDecoder;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +45,9 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.buddi.view.menu.bars.FramelessMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileOpen;
@@ -66,6 +71,8 @@ import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
 import org.homeunix.thecave.moss.util.apple.Application;
 import org.homeunix.thecave.moss.util.apple.ApplicationAdapter;
 import org.homeunix.thecave.moss.util.apple.ApplicationEvent;
+import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
+import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -473,7 +480,8 @@ public class Buddi {
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
 			+ "--simpleFont\t\tDon't use bold or italic fonts (better support for special characters on Windows)\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
-		// Undocumented flag --font	<fontName> will specifya font to use by default
+		// Undocumented flag --extract <filename> will extract the given file to stdout, and exit.  Useful for debugging.
+		// Undocumented flag --font	<fontName> will specify a font to use by default
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --unix will specify a .tgz download for new versions.
@@ -491,9 +499,16 @@ public class Buddi {
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--unix", Boolean.class, false));
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
+		variables.add(new ParseVariable("--extract", String.class, false));
 
 		ParseResults results = ParseCommands.parse(args, help, variables);
 
+		//Extract file to stdout, and exit.
+		if (results.getString("--extract") != null){
+			extractFile(new File(results.getString("--extract")));
+			System.exit(0);
+		}
+		
 		//Set up the logging system.  If we have specified --log, we first
 		// try using that file.  If that is not specified, on the Mac
 		// we just use stderr (since Console.app provides an easy way
@@ -857,5 +872,55 @@ public class Buddi {
 		}
 
 //		Log.critical(crashLog.toString());
+	}
+	
+	private static void extractFile(File fileToLoad){
+		try {
+			InputStream is;
+			BuddiCryptoFactory factory = new BuddiCryptoFactory();
+			char[] password = null;
+
+			//Loop until the user gets the password correct, hits cancel, 
+			// or some other error occurs.
+			while (true) {
+				try {
+					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
+
+					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
+					XMLDecoder decoder = new XMLDecoder(is);
+					Object o = decoder.readObject();
+					if (o instanceof DocumentImpl){
+						DocumentImpl document = (DocumentImpl) o;
+						FileOutputStream fos = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".raw_output"));
+						document.saveToStream(fos);
+						fos.close();
+					}
+					else {
+						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
+					}
+					is.close();
+					System.exit(0);
+				}
+				catch (IncorrectPasswordException ipe){
+					//The password was not correct.  Prompt for a new one.
+					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+					password = passwordDialog.askForPassword(false, true);
+
+					//User hit cancel.  Exit.
+					if (password == null)
+						System.exit(0);
+				}
+				catch (Exception e){
+					e.printStackTrace();
+					System.exit(1);
+				}
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		System.exit(0);
 	}
 }

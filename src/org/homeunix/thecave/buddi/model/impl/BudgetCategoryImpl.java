@@ -104,8 +104,6 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (startDate.after(endDate))
 			throw new RuntimeException("Start date cannot be before End Date!");
 		
-//		DataModel model = getBudgetCategory().getModel(); 
-		
 		//If Start and End are in the same budget period
 		if (getBudgetPeriodType().getStartOfBudgetPeriod(startDate).equals(
 				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
@@ -220,7 +218,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	 * @return
 	 */
 	private String getPeriodKey(Date periodDate){
-		return getBudgetPeriodType().getName() + ":" + getBudgetPeriodType().getStartOfBudgetPeriod(periodDate).getTime();
+		Date d = getBudgetPeriodType().getStartOfBudgetPeriod(periodDate); 
+		return getBudgetPeriodType().getName() + ":" + DateFunctions.getYear(d) + ":" + DateFunctions.getMonth(d) + ":" + DateFunctions.getDay(d);
 	}
 	/**
 	 * Parses a periodKey to get the date 
@@ -229,9 +228,11 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	 */
 	private Date getPeriodDate(String periodKey){
 		String[] splitKey = periodKey.split(":");
-		if (splitKey.length > 1){
-			long l = Long.parseLong(splitKey[1]);
-			return getBudgetPeriodType().getStartOfBudgetPeriod(new Date(l));
+		if (splitKey.length == 4){
+			int year = Integer.parseInt(splitKey[1]);
+			int month = Integer.parseInt(splitKey[2]);
+			int day = Integer.parseInt(splitKey[3]);
+			return getBudgetPeriodType().getStartOfBudgetPeriod(DateFunctions.getDate(year, month, day));
 		}
 
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey);

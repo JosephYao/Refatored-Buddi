@@ -53,10 +53,14 @@ public class FileOpen extends MossMenuItem {
 					PrefsModel.getInstance().getWindowSize(f + ""), 
 					PrefsModel.getInstance().getWindowLocation(f + ""));
 		}
-		catch (OperationCancelledException oce){}  //Do nothing
+		catch (OperationCancelledException oce){
+			Log.debug("User cancelled open operation");
+		}  //Do nothing
 		catch (DocumentLoadException dle){
 			Log.error("Error loading file", dle);
 		}
-		catch (WindowOpenException foe){}
+		catch (WindowOpenException woe){
+			Log.error("Error opening window", woe);
+		}
 	}
 }
