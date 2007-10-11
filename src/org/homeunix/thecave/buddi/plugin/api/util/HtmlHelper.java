@@ -92,14 +92,14 @@ public class HtmlHelper {
 		sb.append("table.main td { border-bottom: 0.01cm solid black; border-right: 0.01cm solid black; background-color: #EEF}\n");
 		sb.append("</style>\n");
 
-		sb.append("<SCRIPT LANGUAGE=\"JavaScript\">\n");
-		sb.append("<!--\n");
-		sb.append("function launchTransactions(link) {\n");
-		sb.append("window.open(link, \"\", \"height=1,width=1\");\n");
-		sb.append("return false;\n");
-		sb.append("}\n");
-		sb.append("//-->\n");
-		sb.append("</SCRIPT>\n");
+//		sb.append("<SCRIPT LANGUAGE=\"JavaScript\">\n");
+//		sb.append("<!--\n");
+//		sb.append("function launchTransactions(link) {\n");
+//		sb.append("window.open(link, \"\", \"height=1,width=1\");\n");
+//		sb.append("return false;\n");
+//		sb.append("}\n");
+//		sb.append("//-->\n");
+//		sb.append("</SCRIPT>\n");
 
 		sb.append("</head>\n");
 		sb.append("<body>\n<div class='separator'></div>\n");
