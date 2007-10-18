@@ -245,26 +245,30 @@ public class Buddi {
 		t.schedule(new TimerTask(){
 			@Override
 			public void run() {
-				for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
-					if (frame instanceof MainFrame){
-						MainFrame mainFrame = (MainFrame) frame;
-						if (mainFrame.getDocument().isChanged()){
-							File autoSaveLocation = ModelFactory.getAutoSaveLocation(mainFrame.getDocument().getFile());
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run() {	
+						for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
+							if (frame instanceof MainFrame){
+								MainFrame mainFrame = (MainFrame) frame;
+								if (mainFrame.getDocument().isChanged()){
+									File autoSaveLocation = ModelFactory.getAutoSaveLocation(mainFrame.getDocument().getFile());
 
-							try {
-								((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
-								Log.debug("Auto saved file to " + autoSaveLocation);
-							}
-							catch (DocumentSaveException dse){
-								Log.critical("Error saving autosave file:");
-								dse.printStackTrace(Log.getPrintStream());
+									try {
+										((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
+										Log.debug("Auto saved file to " + autoSaveLocation);
+									}
+									catch (DocumentSaveException dse){
+										Log.critical("Error saving autosave file:");
+										dse.printStackTrace(Log.getPrintStream());
+									}
+								}
+								else {
+									Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
+								}		
 							}
 						}
-						else {
-							Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
-						}		
-					}
-				}
+					};
+				});
 			}
 		}, 
 		10 * 1000, //Save the first one after 10 seconds 

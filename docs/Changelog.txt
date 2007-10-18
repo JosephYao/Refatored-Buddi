@@ -1,3 +1,9 @@
+2.9.12.0 Pre-release
+-Working on bug #1812875
+-Fixed bug #1812906 (Incorrect sorting of accounts)
+-Fixed bug #1812917 (Budget view too busy)
+
+
 2.9.11.0 (October 11 2007)
 -Fixed bug #1811038 (Cannot transfer data files between time zones).  I changed the format of the HashMap key from "<BUDGET_CATEGORY_TYPE>:<Date as Long>" to "<BUDGET_CATEGORY_TYPE>:<year>:<month>:<day>".  This will eliminate the problems with time zones.  I included a converter function to automatically convert old data files to the new format.  Unfortunately, this means that the newly saved data files from 2.9.11.0 cannot be opened in previous versions.
 -Related to bug #1811038, I changed Transactions to store only the year, month, and day as integers in the XML file.  When loading, they automatically are created via DateFunctions to be the very start of the day (0:00).  This is a preemptive measure to prevent similar timezone issues from happening to Transactions.

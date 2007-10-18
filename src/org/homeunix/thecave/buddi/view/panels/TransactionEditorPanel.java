@@ -418,7 +418,12 @@ public class TransactionEditorPanel extends MossPanel {
 		if (!force && this.transaction != null && this.transaction.equals(transaction))
 			return;
 		if (transaction != null){
-			date.setDate(transaction.getDate());			
+			//If the date is null, we should create a new date.  This should really only
+			// happen in scheduled transactions, where the date is set to null.  In this
+			// case, it does not matter that we set a new date.  In the erroneous case
+			// where a real transaction has an invalid date, we should probably set it
+			// to a valid date as well - today is as good as any!
+			date.setDate(transaction.getDate() == null ? new Date() : transaction.getDate());
 			number.setText(transaction.getNumber());
 			description.setText(transaction.getDescription());
 			memo.setText(transaction.getMemo());

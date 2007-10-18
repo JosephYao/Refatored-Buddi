@@ -18,7 +18,8 @@
 	<property name="UNIX_NAME" value="buddi"/>
 	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)"/>
 	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi"/>
-	<property name="COPYRIGHT" value="Copyright Wyatt Olson"/>
+	<property name="COPYRIGHT_HOLDER" value="Wyatt Olson"/>
+	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}"/>
 
 	<!-- Build the program for all platforms -->
 	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" description="Builds packages for all available platforms."/>
@@ -46,11 +47,11 @@
 			    	fileVersion="${VERSION}"
 					fileDescription="${DESCRIPTION}"
 			    	txtFileVersion="${VERSION}"
-				    copyright="Wyatt Olson"
+				    copyright="${COPYRIGHT}"
 				    productVersion="${VERSION}"
 			    	txtProductVersion="${VERSION}"
 			    	productName="${FULL_NAME}"
-			    	companyName="Wyatt Olson"
+			    	companyName="${COPYRIGHT_HOLDER}"
 			    	internalName="${FULL_NAME}"
 			    	originalFilename="${FULL_NAME}.exe"/>
 			</config>

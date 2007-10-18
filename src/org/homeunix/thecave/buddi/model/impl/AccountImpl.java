@@ -124,6 +124,7 @@ public class AccountImpl extends SourceImpl implements Account {
 					return -1;
 				return 1;
 			}
+			return this.getName().compareTo(a.getName());
 		}
 		return super.compareTo(arg0);
 	}

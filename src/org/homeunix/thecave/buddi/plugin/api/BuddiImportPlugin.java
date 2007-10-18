@@ -60,4 +60,15 @@ public abstract class BuddiImportPlugin extends MenuPlugin implements MossPlugin
 	public boolean isFileChooserSave() {
 		return false;
 	}
+	
+	/**
+	 * If set to true, we will force the creation of a new file here.  Most people will want to
+	 * leave this as false (the default); only people who are importing a complete file from
+	 * another source (e.g. Legacy Buddi files) will want to set it to true.
+	 *  
+	 * @return
+	 */
+	public boolean isCreateNewFile(){
+		return false;
+	}
 }

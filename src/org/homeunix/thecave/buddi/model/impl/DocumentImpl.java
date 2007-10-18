@@ -135,7 +135,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			ioe.printStackTrace(Log.getPrintStream());
 		}
 		catch (RuntimeException re){
-			Log.emergency("Runtime Exception encountered when backuing up data file!");
+			Log.emergency("Runtime Exception encountered when backing up data file!");
 			re.printStackTrace(Log.getPrintStream());
 		}
 	}

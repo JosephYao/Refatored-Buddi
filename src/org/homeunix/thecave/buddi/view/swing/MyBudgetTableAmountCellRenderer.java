@@ -38,12 +38,14 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 						InternalFormatter.isRed((BudgetCategory) values[0], (Long) values[1]), false);
 				
 				//If there is anything in sub categories, add it in brackets.
-				sb.append(" (");
-				TextFormatter.appendFormattedCurrency(sb,
-									(Long) values[2], 
-									InternalFormatter.isRed((BudgetCategory) values[0], (Long) values[2]),
-									false);
-				sb.append(")");
+				if (!((Long) values[2]).equals((Long) values[1]) && (Long) values[2] != 0){
+					sb.append(" (");
+					TextFormatter.appendFormattedCurrency(sb,
+							(Long) values[2], 
+							InternalFormatter.isRed((BudgetCategory) values[0], (Long) values[2]),
+							false);
+					sb.append(")");
+				}
 			}
 			
 			for (int i = 0; i < ((Integer) values[3]); i++){

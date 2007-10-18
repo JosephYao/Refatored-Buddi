@@ -397,7 +397,6 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 //						s.setScheduleMonth(getSelectedCard().getScheduleMonth());
 //					}
 
-					//TODO Need to check for 
 					if (needToAdd)
 						model.addScheduledTransaction(s);
 
