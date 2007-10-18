@@ -286,4 +286,9 @@ public class ImportLegacyData extends BuddiImportPlugin {
 			throw new DocumentLoadException(me);
 		}
 	}
+	
+	@Override
+	public boolean isCreateNewFile() {
+		return true;
+	}
 }

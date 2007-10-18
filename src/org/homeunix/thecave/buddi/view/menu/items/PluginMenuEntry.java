@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -18,18 +20,22 @@ import net.java.dev.SwingWorker;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
 import org.homeunix.thecave.buddi.plugin.api.MenuPlugin;
+import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
+import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
@@ -49,6 +55,23 @@ public class PluginMenuEntry extends MossMenuItem {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		final Document d;
+		if (plugin instanceof BuddiImportPlugin && ((BuddiImportPlugin) plugin).isCreateNewFile()){
+			try {
+				d = ModelFactory.createDocument();
+				List<BudgetCategory> bcs = new LinkedList<BudgetCategory>(d.getBudgetCategories());
+				for (BudgetCategory bc : bcs) {
+					d.removeBudgetCategory(bc);
+				}
+			}
+			catch (ModelException me){
+				Log.error("Could not create a new document!", me);
+				return;	
+			}
+		}
+		else
+			d = (Document) ((MossDocumentFrame) getFrame()).getDocument();
+
 		File f = null;
 
 		if (plugin.isPromptForFile()){
@@ -89,14 +112,14 @@ public class PluginMenuEntry extends MossMenuItem {
 						plugin.getFileExtensions() == null || plugin.getFileExtensions().length == 0 ? 
 								null : 
 									plugin.getFileExtensions()[0],
-						title, 
-						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK),
-						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL),
-						PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_REPLACE),
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),  
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE),
-						PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE_TITLE));
+									title, 
+									PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK),
+									PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL),
+									PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_REPLACE),
+									PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_ERROR_CANNOT_WRITE_DATA_FILE),  
+									PrefsModel.getInstance().getTranslator().get(BuddiKeys.ERROR),
+									PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE),
+									PrefsModel.getInstance().getTranslator().get(BuddiKeys.MESSAGE_PROMPT_OVERWRITE_FILE_TITLE));
 
 			else 
 				f = MossSmartFileChooser.showOpenDialog(
@@ -112,7 +135,7 @@ public class PluginMenuEntry extends MossMenuItem {
 				return;
 		}
 
-		((MossDocumentFrame) getFrame()).getDocument().startBatchChange();
+		d.startBatchChange();
 
 		try {
 			final File fFinal = f;
@@ -127,7 +150,7 @@ public class PluginMenuEntry extends MossMenuItem {
 				@Override
 				public Object construct() {
 					try {
-						plugin.processData(new MutableDocumentImpl((Document) ((MossDocumentFrame) getFrame()).getDocument()), ((MossDocumentFrame) getFrame()), fFinal);
+						plugin.processData(new MutableDocumentImpl(d), ((MossDocumentFrame) getFrame()), fFinal);
 					}
 					catch (PluginMessage pm){
 						return pm;
@@ -143,15 +166,28 @@ public class PluginMenuEntry extends MossMenuItem {
 				@Override
 				public void finished() {
 					status.closeWindow();
+					
+					d.updateAllBalances();
+					d.finishBatchChange();
 
-					((Document) ((MossDocumentFrame) getFrame()).getDocument()).updateAllBalances();
-					((MossDocumentFrame) getFrame()).getDocument().finishBatchChange();
-
-					if (getFrame() instanceof MainFrame)
-						((MainFrame) getFrame()).fireStructureChanged();
-					if (getFrame() instanceof TransactionFrame)
-						((TransactionFrame) getFrame()).fireStructureChanged();
-
+					if (plugin instanceof BuddiImportPlugin && ((BuddiImportPlugin) plugin).isCreateNewFile()){
+						try {
+							MainFrame mainWndow = new MainFrame(d);
+							mainWndow.openWindow(
+									PrefsModel.getInstance().getWindowSize(d.getFile() + ""), 
+									PrefsModel.getInstance().getWindowLocation(d.getFile() + ""));
+						}
+						catch (WindowOpenException woe){
+							Log.error("Error opening window", woe);
+						}
+					}
+					else {
+						if (getFrame() instanceof MainFrame)
+							((MainFrame) getFrame()).fireStructureChanged();
+						if (getFrame() instanceof TransactionFrame)
+							((TransactionFrame) getFrame()).fireStructureChanged();
+					}
+					
 					MainFrame.updateAllContent();
 
 					if (get() == null){

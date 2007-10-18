@@ -121,8 +121,8 @@ public class AccountImpl extends SourceImpl implements Account {
 			AccountImpl a = (AccountImpl) arg0;
 			if (this.getAccountType().isCredit() != a.getAccountType().isCredit()){
 				if (this.getAccountType().isCredit())
-					return -1;
-				return 1;
+					return 1;
+				return -1;
 			}
 			return this.getName().compareTo(a.getName());
 		}
