@@ -1,5 +1,5 @@
 2.9.12.0
--Working on bug #1812875
+-Fixed bug #1812875 (Incorrect values in reports during daylight saving time months)
 -Fixed bug #1812906 (Incorrect sorting of accounts)
 -Fixed bug #1812917 (Budget view too busy)
 -Fixed bug #1812911 (Create new data file on Legacy Buddi file import; also included option in BuddiImportPlugin for plugin authors to use this feature as well)
