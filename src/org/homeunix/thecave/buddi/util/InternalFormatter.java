@@ -10,10 +10,10 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.AccountType;
 
 public class InternalFormatter {
 //	public static DateFormat getDateFormat(){
@@ -232,7 +232,13 @@ public class InternalFormatter {
 		else
 			return false;
 	}
-	
+//	WMO - Moved to Moss
+//	public static String formatStringToMaxSize(String value, int maxPixelWidth, FontMetrics fm){
+//		int width;
+//		for(width = 5; width <= value.length() && fm.stringWidth(value.substring(0, width)) < maxPixelWidth; width++);
+//		return Formatter.getStringLengthFormat(width).format(value);
+//	}
+//	
 //	public static String getHtmlWrapper(String htmlToWrap){
 //		return "<html>" + htmlToWrap + "</html>";
 //	}

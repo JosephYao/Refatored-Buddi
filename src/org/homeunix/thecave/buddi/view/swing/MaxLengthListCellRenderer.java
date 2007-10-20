@@ -34,13 +34,13 @@ public class MaxLengthListCellRenderer extends DefaultListCellRenderer {
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-		if (computedLength == -1)
+//		if (computedLength == -1)
 			computeLength();
 
 		if (value != null){
 			String s = value.toString();
 			if (s.length() > computedLength)
-				this.setText(Formatter.getLengthFormat(computedLength).format(s));
+				this.setText(Formatter.getStringLengthFormat(computedLength).format(s));
 			else
 				this.setText(s);
 		}

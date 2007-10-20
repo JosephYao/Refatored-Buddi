@@ -139,8 +139,8 @@ public class TransactionEditorPanel extends MossPanel {
 		from.setModel(new SourceComboBoxModel(this.model, true));
 		to.setModel(new SourceComboBoxModel(this.model, false));
 
-		from.setRenderer(new SourceListCellRenderer());
-		to.setRenderer(new SourceListCellRenderer());
+		from.setRenderer(new SourceListCellRenderer(from));
+		to.setRenderer(new SourceListCellRenderer(to));
 
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
@@ -268,9 +268,6 @@ public class TransactionEditorPanel extends MossPanel {
 		this.add(memoScroller, BorderLayout.EAST);		
 		if (OperatingSystemUtil.isMac())
 			this.setBorder(BorderFactory.createTitledBorder((String) null));
-
-
-//		AutoCompleteDecorator.decorate(description);
 
 		for (JComponent component : components) {
 			component.addKeyListener(new KeyAdapter(){
