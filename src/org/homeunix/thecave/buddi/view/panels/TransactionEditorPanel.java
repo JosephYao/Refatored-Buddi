@@ -293,7 +293,7 @@ public class TransactionEditorPanel extends MossPanel {
 
 		description.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent arg0) {
-				fillInOtherFields(true);
+				fillInOtherFields(); //true
 			}
 		});
 
@@ -301,7 +301,7 @@ public class TransactionEditorPanel extends MossPanel {
 		((JTextComponent) description.getEditor().getEditorComponent()).addFocusListener(new FocusAdapter(){
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				fillInOtherFields(false);
+				fillInOtherFields(); //false
 			}
 		});
 
@@ -310,7 +310,7 @@ public class TransactionEditorPanel extends MossPanel {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				super.keyReleased(e);
-				fillInOtherFields(false);
+				fillInOtherFields(); //false
 			}
 
 //			@Override
@@ -639,7 +639,7 @@ public class TransactionEditorPanel extends MossPanel {
 		}
 	}
 
-	private void fillInOtherFields(boolean forceAll){		
+	private void fillInOtherFields(){		
 		//If we lose focus on the description field, we check if
 		// there is something there.  If so, we fill in others with
 		// the dictionary map, but only if they haven't been modified from their default values!
@@ -655,7 +655,7 @@ public class TransactionEditorPanel extends MossPanel {
 					//We don't do the numbers any more, as this tends to be unique to one transaction.
 //					if (forceAll || (ace.getNumber() != null && number.isHintShowing()))
 //					number.setValue(ace.getNumber());
-					if (forceAll || amount.getValue() == 0)
+					if (amount.getValue() == 0)
 						amount.setValue(ace.getAmount());
 
 					//We don't do the memos any more, as this tends to be unique to one transaction.
@@ -665,7 +665,7 @@ public class TransactionEditorPanel extends MossPanel {
 					//This doesn't always work when you go to a different account; it should
 					// be good enough for the vast majorty of cases, though, and does a pretty
 					// good job at guessing which account is the correct one..
-					if (ace.getFrom() != null){
+					if (ace.getFrom() != null && from.getSelectedItem() == null){
 						for (int i = 0; i < from.getModel().getSize(); i++){
 							if (from.getModel().getElementAt(i) != null
 									&& from.getModel().getElementAt(i).equals(ace.getFrom())){
@@ -674,7 +674,7 @@ public class TransactionEditorPanel extends MossPanel {
 							}
 						}
 					}
-					if (ace.getTo() != null){
+					if (ace.getTo() != null && to.getSelectedItem() == null){
 						for (int i = 0; i < to.getModel().getSize(); i++){
 							if (to.getModel().getElementAt(i) != null
 									&& to.getModel().getElementAt(i).equals(ace.getTo())){
@@ -684,15 +684,15 @@ public class TransactionEditorPanel extends MossPanel {
 						}
 					}
 				}
-				else {
-					if (forceAll){
-//						number.setValue("");
-						amount.setValue(0);
-//						memo.setValue("");
-						from.setSelectedItem(null);
-						to.setSelectedItem(null);
-					}
-				}
+//				else {
+//					if (forceAll){
+////						number.setValue("");
+//						amount.setValue(0);
+////						memo.setValue("");
+//						from.setSelectedItem(null);
+//						to.setSelectedItem(null);
+//					}
+//				}
 			}
 		}
 	}
