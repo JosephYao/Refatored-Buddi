@@ -135,10 +135,10 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			Log.info("Days in Start Period = " + daysInStartPeriod);
 			long daysAfterStartDateInStartPeriod = DateFunctions.getDaysBetween(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate), true);
 			Log.info("Days After Start Date in Start Period = " + daysAfterStartDateInStartPeriod);
-			long totalStartPeriod = (long) (((double) amountStartPeriod / (double) daysInStartPeriod) * daysAfterStartDateInStartPeriod);
+			double totalStartPeriod = (((double) amountStartPeriod / (double) daysInStartPeriod) * daysAfterStartDateInStartPeriod);
 			Log.info("Total in Start Period = " + totalStartPeriod);
 			
-			long totalInMiddle = 0;
+			double totalInMiddle = 0;
 			for (String periodKey : getBudgetPeriods(
 					getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1),
 					getBudgetPeriodType().getBudgetPeriodOffset(endDate, -1))) {
@@ -149,16 +149,16 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			
 			long amountEndPeriod = getAmount(endDate);
 			Log.info("Amount End Period = " + amountEndPeriod);
-			long daysInEndPeriod = getBudgetPeriodType().getDaysInPeriod(startDate);
+			long daysInEndPeriod = getBudgetPeriodType().getDaysInPeriod(endDate);
 			Log.info("Days in End Period = " + daysInEndPeriod);
-			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate), true);
+			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(getBudgetPeriodType().getStartOfBudgetPeriod(endDate), endDate, true);
 			Log.info("Days before End Period = " + daysBeforeEndDateInEndPeriod);
-			long totalEndPeriod = (long) (((double) amountEndPeriod / (double) daysInEndPeriod) * daysBeforeEndDateInEndPeriod); 
+			double totalEndPeriod = (long) (((double) amountEndPeriod / (double) daysInEndPeriod) * daysBeforeEndDateInEndPeriod); 
 			Log.info("Total in End Period = " + totalEndPeriod);
 			
 			Log.info("Sum of Start Period, Middle, and End Period = " + (totalStartPeriod + totalInMiddle + totalEndPeriod));
 			Log.info("Finished Calculating the Budget Amount\n\n");
-			return totalStartPeriod + totalInMiddle + totalEndPeriod;
+			return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
 		}
 
 		throw new RuntimeException("You should not be here.  We have returned all legitimate numbers from getAmount(Date, Date) in BudgetCategoryImpl.  Please contact Wyatt Olson with details on how you got here (what steps did you perform in Buddi to get this error message).");

@@ -5,6 +5,7 @@
 -Fixed bug #1812911 (Create new data file on Legacy Buddi file import; also included option in BuddiImportPlugin for plugin authors to use this feature as well)
 -Fixed bug #1812907 (Sort transaction combo box accounts)
 -Fixed bug #1812923 (Filled field values in transaction frame are lost when using auto complete)
+-Fixed bug #1816743 (Incorrect balance for some weekly budget intervals)
 
 2.9.11.0 (October 11 2007)
 -Fixed bug #1811038 (Cannot transfer data files between time zones).  I changed the format of the HashMap key from "<BUDGET_CATEGORY_TYPE>:<Date as Long>" to "<BUDGET_CATEGORY_TYPE>:<year>:<month>:<day>".  This will eliminate the problems with time zones.  I included a converter function to automatically convert old data files to the new format.  Unfortunately, this means that the newly saved data files from 2.9.11.0 cannot be opened in previous versions.
