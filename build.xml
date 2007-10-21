@@ -22,7 +22,7 @@
 	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}"/>
 
 	<!-- Build the program for all platforms -->
-	<target name="all" depends="windows,osx,unix,debian,redhat,source,generic" description="Builds packages for all available platforms."/>
+	<target name="all" depends="windows,osx,unix,slackware,debian,redhat,source,generic" description="Builds packages for all available platforms."/>
 
 	<target name="windows" depends="jar" description="Builds .exe for Windows, using Launch4J">
 		<!-- Define the tasks for Launch4J and AntInstaller -->
@@ -76,6 +76,8 @@
 			<zipfileset dir="${BUILD}/${FULL_NAME}"/>
 		</zip>
 		
+		<copy file="${BUILD}/${FULL_NAME}/${FULL_NAME}.exe" tofile="${BUILD}/${FULL_NAME}-${VERSION}.exe" />
+		
 		<!-- Make installer -->
 		<copy file="${ETC}/windows/moss-installer.jar" tofile="${BUILD}/installer.jar"/>
 		<jar destfile="${BUILD}/installer.jar" update="true">
@@ -92,7 +94,7 @@
 			<config 
 				dontWrapJar="false" 
 				jar="${BUILD}/installer.jar" 
-				outfile="${BUILD}/${FULL_NAME}-${VERSION}.exe" 
+				outfile="${BUILD}/${FULL_NAME}-${VERSION}-Installer.exe" 
 				errTitle="${FULL_NAME}"
 				chdir="."
 				stayAlive="true"
@@ -199,9 +201,50 @@
 			<fileset dir="${BUILD}/${FULL_NAME}"/>
 		</zip>
 	</target>
+	
+	<target name="slackware" depends="jar" description="Creates a Slackware package, with a command line capable launcher.">		
 
-	<!-- The Unix task will tar the .jar along with a launcher.  The user is responsible for putting
-		 this in the correct location, and modifying the launcher as needed. -->
+		<mkdir dir="${BUILD}/usr/bin"/>
+		<mkdir dir="${BUILD}/usr/doc"/>
+		<mkdir dir="${BUILD}/install"/>
+		
+		<copy todir="${BUILD}/usr/bin">
+			<fileset dir="${ETC}/unix/usr/bin"/>
+			<filterset begintoken="[[" endtoken="]]">
+				<filter token="platform" value="slackware"/>
+			</filterset>
+		</copy>
+		
+		<copy todir="${BUILD}/usr/doc">
+			<fileset dir="${DOCS}">
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${BUILD}/install">
+			<fileset dir="${ETC}/unix/linux/slackware/install" />
+		</copy>
+		
+		<copy todir="${BUILD}/usr/bin">
+			<fileset file="${BUILD}/${FULL_NAME}.jar"/>
+		</copy>
+		
+		<tar destfile="${BUILD}/${FULL_NAME}.tar">
+			<tarfileset dir="${BUILD}">
+				<include name="usr/**"/>
+				<include name="install/**"/>
+			</tarfileset>
+		</tar>
+		
+		<gzip zipfile="${BUILD}/${FULL_NAME}-${VERSION}-Slackware.tgz" src="${BUILD}/${FULL_NAME}.tar"/>
+		
+		<delete dir="${BUILD}/usr"/>
+		<delete dir="${BUILD}/install"/>
+		<delete file="${BUILD}/${FULL_NAME}.tar"/>
+	</target>
+
 	<target name="unix" depends="jar" description="Creates a generic Unix package, with a command line capable launcher.">
 		
 		<copy todir="${BUILD}">
@@ -430,7 +473,7 @@
 			<fileset dir="${BUILD}">
 				<include name="**/*"/>
 			</fileset>
-			<fileset dir="${FULL_NAME}/javadocs">
+			<fileset dir="${BUILD}/javadocs">
 				<include name="**/*"/>
 			</fileset>
 		</delete>

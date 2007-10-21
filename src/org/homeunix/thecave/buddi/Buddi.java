@@ -20,6 +20,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
@@ -94,7 +95,9 @@ public class Buddi {
 	private static String languagesFolder;
 	private static List<File> filesToLoad;
 	private static Boolean debian = false;
+	private static Boolean windowsInstaller = false;
 	private static Boolean genericUnix = false;
+	private static Boolean slackware = false;
 	private static Boolean redhat = false;
 	private static Boolean simpleFont = false;
 	private static File logFile = null;
@@ -119,18 +122,47 @@ public class Buddi {
 	}
 
 	/** 
+	 * @return True if running on generic Unix, false otherwise.  This is 
+	 * obtained through the startup flag --unix, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on Linux - if the flag is set, we will download
+	 * a .deb when a new version is released, otherwise we will
+	 * download a .jar.
+	 */
+	public static boolean isUnix(){
+		if (genericUnix == null)
+			genericUnix = false;
+		return genericUnix;
+	}
+	
+	/** 
 	 * @return True if running on Slackware, false otherwise.  This is 
-	 * obtained through the startup flag --debian, so it can be 
+	 * obtained through the startup flag --slackware, so it can be 
 	 * faked if desired.  This is used to determine which download
 	 * to use on Linux - if the flag is set, we will download
 	 * a .deb when a new version is released, otherwise we will
 	 * download a .jar.
 	 */
 	public static boolean isSlackware(){
-		if (genericUnix == null)
-			genericUnix = false;
-		return genericUnix;
+		if (slackware == null)
+			slackware = false;
+		return slackware;
 	}
+	
+	/**
+	 * @return True if running from a Windows Installer installed .exe, false
+	 * otherwise.  This is obtained through the startup flag --windows-installer, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on Windows - if the flag is set, we will download
+	 * the installer version when a new version is released, otherwise we will
+	 * download the standalone .exe.
+	 */
+	public static boolean isWindowsInstaller(){
+		if (windowsInstaller == null)
+			windowsInstaller = false;
+		return windowsInstaller;
+	}
+
 
 	/** 
 	 * @return True if running on Redhat, false otherwise.  This is 
@@ -486,8 +518,10 @@ public class Buddi {
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --extract <filename> will extract the given file to stdout, and exit.  Useful for debugging.
 		// Undocumented flag --font	<fontName> will specify a font to use by default
+		// Undocumented flag --windows-installer will specify a -Installer.exe download for new versions.
 		// Undocumented flag --debian will specify a .deb download for new versions.
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
+		// Undocumented flag --slackware will specify a -Slackware.tgz download for new versions.
 		// Undocumented flag --unix will specify a .tgz download for new versions.
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
@@ -499,11 +533,14 @@ public class Buddi {
 		variables.add(new ParseVariable("--font", String.class, false));
 		variables.add(new ParseVariable("--simpleFont", Boolean.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
-		variables.add(new ParseVariable("--debian", Boolean.class, false));
-		variables.add(new ParseVariable("--redhat", Boolean.class, false));
-		variables.add(new ParseVariable("--unix", Boolean.class, false));
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
+		
+		variables.add(new ParseVariable("--debian", Boolean.class, false));
+		variables.add(new ParseVariable("--redhat", Boolean.class, false));
+		variables.add(new ParseVariable("--slackware", Boolean.class, false));
+		variables.add(new ParseVariable("--unix", Boolean.class, false));
+		variables.add(new ParseVariable("--windows-installer", Boolean.class, false));
 
 		ParseResults results = ParseCommands.parse(args, help, variables);
 
@@ -561,7 +598,8 @@ public class Buddi {
 		}
 
 		//Prints the version of Buddi to the logs
-		Log.info("Running Buddi version: " + getVersion());
+		Log.info("Buddi version: " + getVersion());
+		Log.info("Buddi command line arguments: " + Arrays.toString(args));
 		Log.info("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
 		Log.info("Java VM version: " + System.getProperty("java.version"));
 
@@ -572,6 +610,9 @@ public class Buddi {
 		languagesFolder = results.getString("--languages");
 		pluginsFolder = results.getString("--plugins");
 		simpleFont = results.getBoolean("--simpleFont");
+		
+		windowsInstaller = results.getBoolean("--windows-installer");
+		slackware = results.getBoolean("--slackware");
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		genericUnix = results.getBoolean("--unix");
@@ -758,16 +799,25 @@ public class Buddi {
 							//Link to the correct download by default.
 							if (OperatingSystemUtil.isMac())
 								fileLocation += Const.DOWNLOAD_TYPE_OSX;
-							else if (OperatingSystemUtil.isWindows())
-								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+							else if (OperatingSystemUtil.isWindows()){
+								//TODO As of version 2.9.13.0, we honour the --windows-installer 
+								// option, and only download the installer version if we are
+								// currently running the installer version.
+//								if (isWindowsInstaller())
+									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
+//								else
+//									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+							}
 							else {
 								//Check for any specific distributions here
 								if (Buddi.isDebian())
 									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
 								else if (Buddi.isSlackware())
-									fileLocation += Const.DOWNLOAD_TYPE_UNIX;
+									fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
 								else if (Buddi.isRedhat())
 									fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
+								else if (Buddi.isUnix())
+									fileLocation += Const.DOWNLOAD_TYPE_UNIX;
 								else
 									fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
 							}

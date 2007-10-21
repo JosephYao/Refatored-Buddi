@@ -18,6 +18,7 @@ var objArgs = WScript.Arguments;
 var strPrograms = objShell.SpecialFolders("Programs");
 var objShellLink = objShell.CreateShortcut(strPrograms + "\\Buddi.lnk");
 objShellLink.TargetPath = objArgs(0) + "\\Buddi.exe";
+objShellLink.Arguments = "--windows-installer";
 objShellLink.Description = "Personal Budgeting Program";
 objShellLink.WorkingDirectory = objArgs(0);
 objShellLink.Save();
@@ -27,7 +28,7 @@ objShellLink.Save();
 objShell.regwrite("HKCR\\.buddi3\\", "BuddiData");
 objShell.regwrite("HKCR\\BuddiData\\", "Buddi Data File");
 objShell.regwrite("HKCR\\BuddiData\\DefaultIcon\\", objArgs(0) + "\\BuddiData.ico");
-objShell.regwrite("HKCR\\BuddiData\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" \"%1\"");
+objShell.regwrite("HKCR\\BuddiData\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" --windows-installer \"%1\"");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.buddi3\\Application", objArgs(0) + "\\Buddi.exe");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.buddi3\\OpenWithList\\a", objArgs(0) + "\\Buddi.exe");
 
@@ -35,7 +36,7 @@ objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\
 objShell.regwrite("HKCR\\.buddi3plugin\\", "BuddiPlugin");
 objShell.regwrite("HKCR\\BuddiPlugin\\", "Buddi Plugin");
 objShell.regwrite("HKCR\\BuddiPlugin\\DefaultIcon\\", objArgs(0) + "\\BuddiPlugin.ico");
-objShell.regwrite("HKCR\\BuddiPlugin\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" \"%1\"");
+objShell.regwrite("HKCR\\BuddiData\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" --windows-installer \"%1\"");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.buddi3plugin\\Application", objArgs(0) + "\\Buddi.exe");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.buddi3plugin\\OpenWithList\\a", objArgs(0) + "\\Buddi.exe");
 
@@ -43,6 +44,6 @@ objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\
 objShell.regwrite("HKCR\\.lang\\", "BuddiLang");
 objShell.regwrite("HKCR\\BuddiLang\\", "Buddi Translation");
 objShell.regwrite("HKCR\\BuddiLang\\DefaultIcon\\", objArgs(0) + "\\BuddiLanguage.ico");
-objShell.regwrite("HKCR\\BuddiLang\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" \"%1\"");
+objShell.regwrite("HKCR\\BuddiData\\shell\\open\\command\\", "\"" + objArgs(0) + "\\Buddi.exe\" --windows-installer \"%1\"");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.lang\\Application", objArgs(0) + "\\Buddi.exe");
 objShell.regwrite("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.lang\\OpenWithList\\a", objArgs(0) + "\\Buddi.exe");
