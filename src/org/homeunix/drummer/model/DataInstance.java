@@ -139,12 +139,12 @@ public class DataInstance {
 			// remove it after version 2.4 or so...
 			if (s.getFrequencyType().equals("WEEK")){
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY.toString());
-				Log.notice("Changing schedule frequency from WEEK to " + ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY + " for " + s.getScheduleName());
+				Log.info("Changing schedule frequency from WEEK to " + ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY + " for " + s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("MONTH")){
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
 				s.setScheduleDay(s.getScheduleDay() + 1); //Before, we had the first of the month represented by 0.  Now it is 1.
-				Log.notice("Changing schedule frequency from MONTH to " + ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for " + s.getScheduleName());
+				Log.info("Changing schedule frequency from MONTH to " + ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for " + s.getScheduleName());
 			}
 			
 			
@@ -153,49 +153,49 @@ public class DataInstance {
 			// 2.8 or later.
 			if (s.getFrequencyType().equals("MONTHLY_BY_DATE")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString());
-				Log.notice("Changing schedule frequency from MONTHLY_BY_DATE to "
+				Log.info("Changing schedule frequency from MONTHLY_BY_DATE to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("BIWEEKLY")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString());
-				Log.notice("Changing schedule frequency from BIWEEKLY to "
+				Log.info("Changing schedule frequency from BIWEEKLY to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("EVERY_DAY")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString());
-				Log.notice("Changing schedule frequency from EVERY_DAY to "
+				Log.info("Changing schedule frequency from EVERY_DAY to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("EVERY_WEEKDAY")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString());
-				Log.notice("Changing schedule frequency from EVERY_WEEKDAY to "
+				Log.info("Changing schedule frequency from EVERY_WEEKDAY to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("MONTHLY_BY_DAY_OF_WEEK")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK.toString());
-				Log.notice("Changing schedule frequency from MONTHLY_BY_DAY_OF_WEEK to "
+				Log.info("Changing schedule frequency from MONTHLY_BY_DAY_OF_WEEK to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DAY_OF_WEEK + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("MULTIPLE_MONTHS_EVERY_YEAR")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
-				Log.notice("Changing schedule frequency from MULTIPLE_MONTHS_EVERY_YEAR to "
+				Log.info("Changing schedule frequency from MULTIPLE_MONTHS_EVERY_YEAR to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("MULTIPLE_WEEKS_EVERY_MONTH")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
-				Log.notice("Changing schedule frequency from MULTIPLE_WEEKS_EVERY_MONTH to "
+				Log.info("Changing schedule frequency from MULTIPLE_WEEKS_EVERY_MONTH to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH + " for "
 						+ s.getScheduleName());
 			}
 			if (s.getFrequencyType().equals("WEEKLY")) {
 				s.setFrequencyType(ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY.toString());
-				Log.notice("Changing schedule frequency from WEEKLY to "
+				Log.info("Changing schedule frequency from WEEKLY to "
 						+ ScheduleFrequency.SCHEDULE_FREQUENCY_WEEKLY + " for "
 						+ s.getScheduleName());
 			}

@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -75,6 +76,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final MossSearchField searchField;
 	private final JComboBox dateFilterComboBox;
 	private final JLabel overdraftCreditLimit;
+	private final JLabel clearedInformation;
+	private final JLabel reconciledInformation;
+	private final JLabel notClearedInformation;
+	private final JLabel notReconciledInformation;
 	
 	private final TransactionListModel listModel;
 
@@ -97,6 +102,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		overdraftCreditLimit = new JLabel();
 
 		dateFilterComboBox = new JComboBox();
+		
+		clearedInformation = new JLabel("Clear");
+		notClearedInformation = new JLabel("Not Clear");
+		reconciledInformation = new JLabel("Reconciled");
+		notReconciledInformation = new JLabel("Not Reconclied");
 
 		//Set up the transaction list.  We don't set the model here, for performance reasons.
 		// We set it after we have already established the prototype value.
@@ -258,16 +268,24 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel scrollPanel = new JPanel(new BorderLayout());
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(transactionEditor, BorderLayout.SOUTH);
-
+		
+		JPanel clearReconcileInformation = new JPanel(new GridLayout(0, 2));
+		clearReconcileInformation.add(clearedInformation);
+		clearReconcileInformation.add(reconciledInformation);
+		clearReconcileInformation.add(notClearedInformation);
+		clearReconcileInformation.add(notReconciledInformation);
+		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
-
-		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+		mainPanel.add(clearReconcileInformation, BorderLayout.SOUTH);
 
 		this.setLayout(new BorderLayout());
+		this.add(topPanel, BorderLayout.NORTH);
 		this.add(mainPanel, BorderLayout.CENTER);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+
+//		this.add(mainPanel, BorderLayout.CENTER);
 
 		recordButton.addActionListener(this);
 		clearButton.addActionListener(this);
@@ -464,6 +482,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setText("");
 			overdraftCreditLimit.setToolTipText("");
 		}
+		
+		
 		
 		this.repaint();
 	}

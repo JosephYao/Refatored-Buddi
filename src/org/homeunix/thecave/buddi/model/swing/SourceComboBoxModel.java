@@ -11,9 +11,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataListener;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 import org.homeunix.thecave.moss.util.Log;
@@ -78,11 +80,14 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		Collections.sort(budgetCategories);		
 		
 		getComboBoxModel().removeAllElements();
-//		getComboBoxModel().addElement(null);
+		getComboBoxModel().addElement(null);
+		getComboBoxModel().addElement("&nbsp;");
+		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.ACCOUNTS_COMBOBOX_HEADER));
 		for (Account a : accounts) {
 			getComboBoxModel().addElement(a);
 		}
-		getComboBoxModel().addElement(null);
+		getComboBoxModel().addElement("&nbsp;");
+		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.BUDGET_CATEGORIES_COMBOBOX_HEADER));
 		for (BudgetCategory bc : budgetCategories) {
 			if (bc.isIncome() == includeIncome){
 				getComboBoxModel().addElement(bc);

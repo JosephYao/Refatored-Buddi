@@ -139,8 +139,8 @@ public class TransactionEditorPanel extends MossPanel {
 		from.setModel(new SourceComboBoxModel(this.model, true));
 		to.setModel(new SourceComboBoxModel(this.model, false));
 
-		from.setRenderer(new SourceListCellRenderer(from));
-		to.setRenderer(new SourceListCellRenderer(to));
+		from.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_FROM), from));
+		to.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_TO), to));
 
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
@@ -346,6 +346,9 @@ public class TransactionEditorPanel extends MossPanel {
 						}
 					}
 				}
+				else {
+					from.setSelectedItem(null);
+				}
 			}
 		});
 
@@ -375,7 +378,9 @@ public class TransactionEditorPanel extends MossPanel {
 							from.setSelectedItem(null);
 						}
 					}
-
+				}
+				else {
+					to.setSelectedItem(null);
 				}
 			}
 		});

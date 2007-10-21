@@ -258,7 +258,7 @@ public class Buddi {
 										Log.debug("Auto saved file to " + autoSaveLocation);
 									}
 									catch (DocumentSaveException dse){
-										Log.critical("Error saving autosave file:");
+										Log.emergency("Error saving autosave file:");
 										dse.printStackTrace(Log.getPrintStream());
 									}
 								}
@@ -561,9 +561,9 @@ public class Buddi {
 		}
 
 		//Prints the version of Buddi to the logs
-		Log.notice("Running Buddi version: " + getVersion());
-		Log.notice("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
-		Log.notice("Java VM version: " + System.getProperty("java.version"));
+		Log.info("Running Buddi version: " + getVersion());
+		Log.info("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
+		Log.info("Java VM version: " + System.getProperty("java.version"));
 
 		//Parse all the remaining options
 		Boolean usbKey = results.getBoolean("--usb");
@@ -619,7 +619,7 @@ public class Buddi {
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
-		Log.notice("Working directory: " + currentWorkingDir);
+		Log.info("Working directory: " + currentWorkingDir);
 
 		//Run any RunnablePlugins which we may have here.
 		for (BuddiRunnablePlugin plugin : BuddiPluginFactory.getRunnablePlugins()) {
@@ -871,7 +871,7 @@ public class Buddi {
 						"UTF-8").replaceAll("\\+", "%20"));
 			}
 			catch (Exception e){
-				Log.critical("Unable to send crash email.");
+				Log.emergency("Unable to send crash email.");
 			}
 		}
 

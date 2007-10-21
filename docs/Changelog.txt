@@ -1,5 +1,7 @@
-2.9.12.0
+2.9.12.0 (October 20 2007)
 -Improved transaction cell renderer to not overlap values, and to display as much of a description and from / to as possible.
+-Implemented feature request #1816525 (Add "Select..." and "<To>" / "<From>" labels to empty combo boxes)
+-Added color to transaction frame source selectors.  This feature may change in future versions, as I am not yet sure if I like how it looks or not... if anyone has any comments on it, please let me know.
 -Fixed bug #1812875 (Incorrect values in reports during daylight saving time months)
 -Fixed bug #1812906 (Incorrect sorting of accounts)
 -Fixed bug #1812917 (Budget view too busy)

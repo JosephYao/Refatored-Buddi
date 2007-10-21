@@ -4,23 +4,28 @@
 package org.homeunix.thecave.buddi.view.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper.DateChoice;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.CustomDateDialog;
@@ -64,6 +69,17 @@ public class MyReportsPanel extends MossPanel {
 			final JLabel label = new JLabel(PrefsModel.getInstance().getTranslator().get(report.getDescription()));
 			final JComboBox dateChooser = new JComboBox(dateChoices);
 			dateChooser.setPreferredSize(InternalFormatter.getComboBoxSize(dateChooser));
+			dateChooser.setRenderer(new DefaultListCellRenderer(){
+				public static final long serialVersionUID = 0;
+				
+				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					if (value == null)
+						this.setText(TextFormatter.getTranslation(BuddiKeys.REPORTS_SELECT_DATE_RANGE));
+					
+					return this;
+				}
+			});
 				
 			panel.add(label);
 			panel.add(dateChooser);
