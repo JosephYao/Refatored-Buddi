@@ -327,8 +327,8 @@ public class Buddi {
 				MainFrame mainWndow = new MainFrame(model);
 				try {
 					mainWndow.openWindow(
-							PrefsModel.getInstance().getWindowSize(model.getFile().getAbsolutePath()), 
-							PrefsModel.getInstance().getWindowLocation(model.getFile().getAbsolutePath()));
+							PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
+							PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 				}
 				catch (WindowOpenException woe){
 					Log.error("Error opening window: ", woe);
@@ -481,8 +481,8 @@ public class Buddi {
 							Document model = ModelFactory.createDocument();
 							MainFrame mainWndow = new MainFrame(model);
 							mainWndow.openWindow(
-									PrefsModel.getInstance().getWindowSize(model.getFile().getAbsolutePath()), 
-									PrefsModel.getInstance().getWindowLocation(model.getFile().getAbsolutePath()));
+									PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
+									PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 						}
 						catch (ModelException me){
 							me.printStackTrace(Log.getPrintStream());
