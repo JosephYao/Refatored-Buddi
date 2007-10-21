@@ -1,3 +1,6 @@
+2.9.13.0
+-Cleaned up the report pulldowns to remove the "Select..." string, as added in 2.9.12.0.  Now you can see this string in the combo box when you don't click on it, but you don't see it in the popup list as well.
+
 2.9.12.0 (October 20 2007)
 -Improved transaction cell renderer to not overlap values, and to display as much of a description and from / to as possible.
 -Implemented feature request #1816525 (Add "Select..." and "<To>" / "<From>" labels to empty combo boxes)

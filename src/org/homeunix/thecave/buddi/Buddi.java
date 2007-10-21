@@ -800,13 +800,10 @@ public class Buddi {
 							if (OperatingSystemUtil.isMac())
 								fileLocation += Const.DOWNLOAD_TYPE_OSX;
 							else if (OperatingSystemUtil.isWindows()){
-								//TODO As of version 2.9.13.0, we honour the --windows-installer 
-								// option, and only download the installer version if we are
-								// currently running the installer version.
-//								if (isWindowsInstaller())
+								if (isWindowsInstaller())
 									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
-//								else
-//									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+								else
+									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
 							}
 							else {
 								//Check for any specific distributions here

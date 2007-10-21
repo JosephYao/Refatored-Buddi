@@ -67,7 +67,7 @@ public class BuddiPluginHelper {
 	public static Vector<DateChoice> getInterval() {
 		Vector<DateChoice> intervals = new Vector<DateChoice>();
 
-		intervals.add(null);
+//		intervals.add(null);
 		intervals.add(new DateChoice(
 				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), -7)),
 				DateFunctions.getEndOfDay(new Date()),
@@ -125,7 +125,7 @@ public class BuddiPluginHelper {
 	public static Vector<DateChoice> getEndOnly() {
 		Vector<DateChoice> endDates = new Vector<DateChoice>();
 
-		endDates.add(null);
+//		endDates.add(null);
 		endDates.add(new DateChoice(
 				null,
 				DateFunctions.getEndOfDay(new Date()),
@@ -163,7 +163,7 @@ public class BuddiPluginHelper {
 		Vector<DateChoice> startDates = new Vector<DateChoice>();
 
 
-		startDates.add(null);
+//		startDates.add(null);
 		startDates.add(new DateChoice(
 				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -1),
 				null,
