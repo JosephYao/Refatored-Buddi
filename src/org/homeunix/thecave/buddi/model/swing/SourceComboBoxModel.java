@@ -80,8 +80,7 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		Collections.sort(budgetCategories);		
 		
 		getComboBoxModel().removeAllElements();
-		getComboBoxModel().addElement(null);
-		getComboBoxModel().addElement("&nbsp;");
+//		getComboBoxModel().addElement(null);  //Does not seem to be needed...
 		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.ACCOUNTS_COMBOBOX_HEADER));
 		for (Account a : accounts) {
 			getComboBoxModel().addElement(a);

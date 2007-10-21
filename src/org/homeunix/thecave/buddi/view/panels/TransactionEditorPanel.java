@@ -17,8 +17,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -141,7 +139,7 @@ public class TransactionEditorPanel extends MossPanel {
 
 		from.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_FROM), from));
 		to.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_TO), to));
-
+		
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
 		
@@ -231,7 +229,7 @@ public class TransactionEditorPanel extends MossPanel {
 		cBottom.fill = GridBagConstraints.HORIZONTAL;
 
 		cBottom.weightx = 0.2;
-		cBottom.ipadx = 150;
+		cBottom.ipadx = 100;
 		cBottom.gridx = 0;
 		bottomPanel.add(amount, cBottom);
 
@@ -399,11 +397,6 @@ public class TransactionEditorPanel extends MossPanel {
 
 		final MaxLengthListCellRenderer renderer = new MaxLengthListCellRenderer(description);
 		description.setRenderer(renderer);
-		description.addPropertyChangeListener(new PropertyChangeListener(){
-			public void propertyChange(PropertyChangeEvent evt) {
-				renderer.computeLength();
-			}
-		});
 	}
 
 	public void setTransaction(Transaction transaction, boolean force){

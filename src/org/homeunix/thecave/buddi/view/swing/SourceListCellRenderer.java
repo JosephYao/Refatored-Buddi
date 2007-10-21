@@ -8,19 +8,31 @@ import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
-import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Source;
 
 public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 	public static final long serialVersionUID = 0;
 	private final String nullLabel; 
 	
-	public SourceListCellRenderer(String nullLabel, int maxLength) {
-		super(maxLength);
-		this.nullLabel = nullLabel;
-	}
+	/**
+	 * Creates a new Source list renderer, using the given string
+	 * as the label when a source is not selected, with each item having
+	 * a maximum length as specified.
+	 * @param nullLabel
+	 * @param maxLength
+	 */
+//	public SourceListCellRenderer(String nullLabel, int maxLength) {
+//		super(maxLength);
+//		this.nullLabel = nullLabel;
+//	}
 	
+	/**
+	 * Creates a new Source list renderer, using the given string
+	 * as the label when a source is not selected, with each item having
+	 * a maximum length conputed from the specified component.
+	 * @param nullLabel
+	 * @param component
+	 */
 	public SourceListCellRenderer(String nullLabel, JComponent component) {
 		super(component);
 		this.nullLabel = nullLabel;
@@ -33,7 +45,7 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 		Object newValue = "";
 		if (value instanceof Source)
 			newValue = (((Source) value).getFullName());
-		else if (value == null)
+		else if (index == -1)
 			newValue = nullLabel;
 		else
 			newValue = value;
@@ -43,9 +55,10 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 		
 		//Color items correctly
 		if (value instanceof Source){
-			if ((value instanceof Account && ((Account) value).getAccountType().isCredit())
-					|| (value instanceof BudgetCategory && !((BudgetCategory) value).isIncome()))
-				this.setText("<font color='red'>" + this.getText() + "</font>");
+			//This will make the credit / expense sources red.  I don't really like this...
+//			if ((value instanceof Account && ((Account) value).getAccountType().isCredit())
+//					|| (value instanceof BudgetCategory && !((BudgetCategory) value).isIncome()))
+//				this.setText("<font color='red'>" + this.getText() + "</font>");
 			if (((Source) value).isDeleted())
 				this.setText("<strike>" + this.getText() + "</strike>");
 			this.setText("<html>" + this.getText() + "</html>");

@@ -278,7 +278,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-		mainPanel.add(clearReconcileInformation, BorderLayout.SOUTH);
+//		mainPanel.add(clearReconcileInformation, BorderLayout.SOUTH);
 
 		this.setLayout(new BorderLayout());
 		this.add(topPanel, BorderLayout.NORTH);
