@@ -33,7 +33,7 @@ public class MaxLengthListCellRenderer extends DefaultListCellRenderer {
 
 		if (value != null){
 			String s = value.toString();
-			if (s.length() > computedLength)
+			if (s.length() > computedLength && component != null && component.getGraphics() != null)
 				this.setText(Formatter.getStringToLength(s, component.getWidth(), component.getGraphics().getFontMetrics()));
 			else
 				this.setText(s);

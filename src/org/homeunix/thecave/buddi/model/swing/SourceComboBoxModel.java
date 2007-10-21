@@ -18,7 +18,6 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
-import org.homeunix.thecave.moss.util.Log;
 
 public class SourceComboBoxModel implements ComboBoxModel {
 	private static final long serialVersionUID = 0; 
@@ -36,7 +35,6 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		
 		model.addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
-				Log.debug("Updated SourceComboBoxModel");
 				updateComboBoxModel();	
 			}
 		});

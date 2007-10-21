@@ -76,7 +76,6 @@ public class MyReportsPanel extends MossPanel {
 					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 					if (index == -1)
 						this.setText(TextFormatter.getTranslation(BuddiKeys.REPORTS_SELECT_DATE_RANGE));
-					
 					return this;
 				}
 			});
