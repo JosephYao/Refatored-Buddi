@@ -37,7 +37,8 @@ public class FileQuit extends MossMenuItem {
 				openFiles.add(((MainFrame) frame).getDocument().getFile());
 			}
 		}
-			PrefsModel.getInstance().setLastOpenedDataFile(openFiles);
+		if (openFiles.size() > 0)
+			PrefsModel.getInstance().setLastDataFiles(openFiles);
 		
 		PrefsModel.getInstance().save();
 		

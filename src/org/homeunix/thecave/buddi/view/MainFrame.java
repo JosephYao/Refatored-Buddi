@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.view;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,19 +120,27 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	@Override
+	public Object closeWindow() {
+		super.closeWindow();
+		List<MossFrame> frames = ApplicationModel.getInstance().getOpenFrames();
+		List<File> openFiles = new LinkedList<File>();
+		for (MossFrame frame : frames) {
+			if (frame instanceof MainFrame){
+				openFiles.add(((MainFrame) frame).getDocument().getFile());
+			}
+		}
+		if (openFiles.size() > 0)
+			PrefsModel.getInstance().setLastDataFiles(openFiles);
+		
+		System.out.println(PrefsModel.getInstance().getLastDataFiles());
+		
+		PrefsModel.getInstance().save();
+		
+		return null;
+	}
+	
+	@Override
 	public void closeWindowWithoutPrompting() {
-//		List<MossFrame> frames = ApplicationModel.getInstance().getOpenFrames();
-//		List<File> openFiles = new LinkedList<File>();
-//		boolean thisIsTheLastMainFrameOpen = true;
-//		for (MossFrame frame : frames) {
-//			if (frame instanceof MainFrame){
-//				if (!frame.equals(this))
-//					thisIsTheLastMainFrameOpen = false;
-//				openFiles.add(((MainFrame) frame).getDocument().getFile());
-//			}
-//		}
-//		if (thisIsTheLastMainFrameOpen)
-//			PrefsModel.getInstance().setLastOpenedDataFile(openFiles);
 		PrefsModel.getInstance().putWindowSize(this.getDocument().getFile() + "", this.getSize());
 		PrefsModel.getInstance().putWindowLocation(this.getDocument().getFile() + "", this.getLocation());
 		PrefsModel.getInstance().save();
