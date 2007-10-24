@@ -19,7 +19,6 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.Version;
 
 public class NetworkPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
@@ -67,13 +66,6 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 		}
 		
 		return false;
-	}
-	public Version getMaximumVersion() {
-		return null;
-	}
-	
-	public Version getMinimumVersion() {
-		return null;
 	}
 	
 	@Override

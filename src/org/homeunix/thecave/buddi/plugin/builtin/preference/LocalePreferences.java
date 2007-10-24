@@ -39,7 +39,6 @@ import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.Version;
 
 public class LocalePreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0; 
@@ -310,12 +309,5 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 
 	public String getName() {
 		return BuddiKeys.LOCALE.toString();
-	}
-	
-	public Version getMaximumVersion() {
-		return null;
-	}
-	public Version getMinimumVersion() {
-		return null;
 	}
 }

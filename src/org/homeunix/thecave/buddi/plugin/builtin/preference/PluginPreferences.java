@@ -41,7 +41,6 @@ import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.model.DefaultGenericListModel;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Version;
 
 public class PluginPreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -258,14 +257,6 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 		}
 	}
 
-	public Version getMaximumVersion() {
-		return null;
-	}
-
-	public Version getMinimumVersion() {
-		return null;
-	}
-	
 	@Override
 	public boolean isUseWrapper() {
 		return false;

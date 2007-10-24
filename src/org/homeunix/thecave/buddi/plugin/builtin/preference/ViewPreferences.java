@@ -14,7 +14,6 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.util.Version;
 
 public class ViewPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
@@ -28,7 +27,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 	private final JCheckBox showOverdraftLimit;
 	private final JCheckBox showCreditLimit;
 	private final JCheckBox showTooltips;
-	private final JCheckBox dontShowNegativeSign;
+	
 
 	public ViewPreferences() {
 		showDeleted = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_DELETED));
@@ -40,7 +39,6 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		showOverdraftLimit = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_OVERDRAFT_LIMIT));
 		showCreditLimit = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_CREDIT_LIMIT));
 		showTooltips = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SHOW_TOOLTIPS));
-		dontShowNegativeSign = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_DONT_SHOW_NEGATIVE_SIGNS));
 	}
 
 	@Override
@@ -57,7 +55,6 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		JPanel overdraftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel creditLimitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel tooltipPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel negativePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		deletePanel.add(showDeleted);
 		autoCompletePanel.add(showAutoComplete);
@@ -68,7 +65,6 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		overdraftPanel.add(showOverdraftLimit);
 		creditLimitPanel.add(showCreditLimit);
 		tooltipPanel.add(showTooltips);
-		negativePanel.add(dontShowNegativeSign);
 		
 		panel.add(autoCompletePanel);
 		panel.add(clearPanel);
@@ -76,7 +72,6 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		panel.add(deletePanel);
 		panel.add(flatAccountsPanel);
 		panel.add(flatBudgetPanel);
-		panel.add(negativePanel);
 		panel.add(overdraftPanel);
 		panel.add(creditLimitPanel);
 		panel.add(tooltipPanel);
@@ -94,8 +89,7 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		showFlatBudget.setSelected(PrefsModel.getInstance().isShowFlatBudget());
 		showOverdraftLimit.setSelected(PrefsModel.getInstance().isShowOverdraft());
 		showCreditLimit.setSelected(PrefsModel.getInstance().isShowCreditRemaining());
-		showTooltips.setSelected(PrefsModel.getInstance().isShowTooltips());
-		dontShowNegativeSign.setSelected(PrefsModel.getInstance().isDontShowNegativeSign());
+		showTooltips.setSelected(PrefsModel.getInstance().isShowTooltips());	
 	}
 	
 	public boolean save() {
@@ -110,20 +104,11 @@ public class ViewPreferences extends BuddiPreferencePlugin {
 		PrefsModel.getInstance().setShowOverdraft(showOverdraftLimit.isSelected());
 		PrefsModel.getInstance().setShowCreditRemaining(showCreditLimit.isSelected());
 		PrefsModel.getInstance().setShowTooltips(showTooltips.isSelected());
-		PrefsModel.getInstance().setShowNegativeSign(dontShowNegativeSign.isSelected());
 		
 		return restart;
 	}
 	
 	public String getName() {
 		return BuddiKeys.VIEW.toString();
-	}
-	
-	public Version getMaximumVersion() {
-		return null;
-	}
-	
-	public Version getMinimumVersion() {
-		return null;
 	}
 }

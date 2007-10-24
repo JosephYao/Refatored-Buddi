@@ -18,7 +18,6 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.util.Version;
 
 public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
@@ -28,6 +27,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	private final JCheckBox showPromptForDataFile;
 	private final JCheckBox sendCrashReport;
 	private final JCheckBox showUpdateNotifications;
+	private final JCheckBox hideNegativeSign;
 
 	
 	public AdvancedPreferences() {
@@ -36,6 +36,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP));
 		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
 		showUpdateNotifications = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENABLE_UPDATE_NOTIFICATIONS));
+		hideNegativeSign = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_HIDE_NEGATIVE_SIGNS));
 	}
 
 	@Override
@@ -68,6 +69,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		JPanel promptForDataFilePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel checkForUpdatesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel hideNegativePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		JLabel autosavePeriodLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.AUTOSAVE_PERIOD));
 		JLabel numberOfBackupsLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.NUMBER_OF_BACKUPS));
@@ -81,6 +83,8 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		promptForDataFilePanel.add(showPromptForDataFile);
 		checkForUpdatesPanel.add(showUpdateNotifications);
 		sendCrashReportPanel.add(sendCrashReport);
+		
+		hideNegativePanel.add(hideNegativeSign);
 				
 		panel.add(autosavePeriodPanel);
 		panel.add(numberOfBackupsPanel);
@@ -88,6 +92,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		panel.add(editTypesPanel);
 		panel.add(updatePanel);
 		panel.add(promptForDataFilePanel);
+		panel.add(hideNegativePanel);
 		panel.add(checkForUpdatesPanel);
 		panel.add(sendCrashReportPanel);
 		
@@ -99,7 +104,8 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		numberOfBackups.setSelectedItem(PrefsModel.getInstance().getNumberOfBackups());
 		showPromptForDataFile.setSelected(PrefsModel.getInstance().isShowPromptAtStartup());
 		showUpdateNotifications.setSelected(PrefsModel.getInstance().isShowUpdateNotifications());
-		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());		
+		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());
+		hideNegativeSign.setSelected(PrefsModel.getInstance().isDontShowNegativeSign());
 	}
 
 	public boolean save() {
@@ -108,6 +114,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		PrefsModel.getInstance().setShowPromptAtStartup(showPromptForDataFile.isSelected());
 		PrefsModel.getInstance().setShowUpdateNotifications(showUpdateNotifications.isSelected());
 		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
+		PrefsModel.getInstance().setShowNegativeSign(hideNegativeSign.isSelected());
 		
 		return false;
 	}
@@ -115,13 +122,4 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public String getName() {
 		return BuddiKeys.ADVANCED.toString();
 	}
-	
-	public Version getMaximumVersion() {
-		return null;
-	}
-	
-	public Version getMinimumVersion() {
-		return null;
-	}
-	
 }
