@@ -182,7 +182,7 @@ public class PrefsModel {
 		return files;
 	}
 
-	public void setLastOpenedDataFile(List<File> lastDataFiles) {
+	public void setLastDataFiles(List<File> lastDataFiles) {
 		if (lastDataFiles != null){
 			List<String> strings = new LinkedList<String>();
 			for (File file : lastDataFiles) {
@@ -450,6 +450,14 @@ public class PrefsModel {
 		if (prefsModel.getPluginListPreferences() == null)
 			prefsModel.setPluginListPreferences(new HashMap<String, List<String>>());
 		prefsModel.getPluginListPreferences().put(key, value);
+	}
+	
+	public boolean isDontShowNegativeSign() {
+		return prefsModel.isShowNegativeSign();
+	}
+
+	public void setShowNegativeSign(boolean showNegativeSign) {
+		prefsModel.setShowNegativeSign(showNegativeSign);
 	}
 	
 	public boolean isShowCreditRemaining() {

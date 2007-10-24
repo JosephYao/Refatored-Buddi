@@ -53,6 +53,7 @@ public class PrefsModelBean {
 	private boolean showOverdraft;
 	private boolean showCreditRemaining;
 	private boolean showTooltips;
+	private boolean showNegativeSign;
 	//Currently must be set to 4.  If we change this, we will need to change 
 	// the menu item code which displays the dates to copy to / from, as well 
 	// as other things.
@@ -342,6 +343,14 @@ public class PrefsModelBean {
 		this.windowSize = windowSize;
 	}
 
+	public boolean isShowNegativeSign() {
+		return showNegativeSign;
+	}
+
+	public void setShowNegativeSign(boolean showNegativeSign) {
+		this.showNegativeSign = showNegativeSign;
+	}
+	
 //	public Point getPreferencesWindowLocation() {
 //		return preferencesWindowLocation;
 //	}

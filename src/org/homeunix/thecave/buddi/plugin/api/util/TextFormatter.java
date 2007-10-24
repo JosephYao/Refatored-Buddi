@@ -127,6 +127,8 @@ public class TextFormatter {
 		boolean symbolAfterAmount = PrefsModel.getInstance().isShowCurrencyAfterAmount();
 		String symbol = PrefsModel.getInstance().getCurrencySign();
 
+		if (PrefsModel.getInstance().isDontShowNegativeSign())
+			value = Math.abs(value);
 
 		String formatted = 
 			(isRed ? "<font color='red'>" : "")

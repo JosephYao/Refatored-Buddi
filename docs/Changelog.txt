@@ -1,4 +1,6 @@
-2.9.12.2
+2.9.13.0
+-Added option to remove negative signs from displaying on currencies.  This option is currently experimental.
+-Fixed bug in saving last opened data file(s)
 -Fixed Null Pointer Exception in OS X when relaunching application after all windows were closed.
 
 2.9.12.1 (October 21 2007)

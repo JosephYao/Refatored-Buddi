@@ -1,14 +1,22 @@
 <?xml version="1.0"?>
 <project name="Buddi" default="jar" basedir=".">
 
-	<property name="FULL_NAME" value="Buddi" description="The full project name.  This can include any character which is valid on the filesystem."/>
-	<property name="SAFE_NAME" value="Buddi" description="The safe project name.  This must only include alphabetic characters, numbers, period, dash, and underscore."/>
-	<property name="UNIX_NAME" value="buddi" description="The unix project name.  This must only include lower case characters, numbers, period, dash, and underscore."/>
-	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)" description="The project description.  This is used on the Start menu in Windows, among other places."/>
-	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi" description="The package and class name of the .class file which contains the main method."/>
-	<property name="COPYRIGHT_HOLDER" value="Wyatt Olson" description="The copyright holder."/>
-	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}" description="The copyright message"/>
-	<property name="SVN_ROOT" value="https://buddi.svn.sourceforge.net/svnroot/buddi" description="The path to the head of the SVN repository.  The folders trunk, tags, and branches must be immediately below this location."/>
+	<property name="FULL_NAME" value="Buddi" 
+		description="The full project name.  This can include any character which is valid on the filesystem."/>
+	<property name="SAFE_NAME" value="Buddi" 
+		description="The safe project name.  This must only include alphabetic characters, numbers, period, dash, and underscore."/>
+	<property name="UNIX_NAME" value="buddi" 
+		description="The unix project name.  This must only include lower case characters, numbers, period, dash, and underscore."/>
+	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)" 
+		description="The project description.  This is used on the Start menu in Windows, among other places."/>
+	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi" 
+		description="The package and class name of the .class file which contains the main method."/>
+	<property name="COPYRIGHT_HOLDER" value="Wyatt Olson" 
+		description="The copyright holder."/>
+	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}" 
+		description="The copyright message"/>
+	<property name="SVN_ROOT" value="https://buddi.svn.sourceforge.net/svnroot/buddi" 
+		description="The path to the head of the SVN repository.  The folders trunk, tags, and branches must be immediately below this location."/>
 	
 	<property name="ROOT" value="."/>
 	<property name="BIN" value="${ROOT}/bin"/>
@@ -472,35 +480,70 @@
 		</delete>
 	</target>
 	
-	<target name="init" description="Creates the directory layout for a new project.  Has no effect on existing projects.">
+	<target name="init" description="Creates the directory layout for a new project.  Do not run in existing projects, or you may lose data.">
 		<mkdir dir="${SRC}"/>
 		<mkdir dir="${BIN}"/>
 
 		<mkdir dir="${ETC}"/>
 		<mkdir dir="${ETC}/Languages"/>
+		<echo file="${ETC}/ant.properties.sample">
+# Sample properties file for building the project.  Ensure you have all needed tools, and 
+#  modify the paths as needed to reflect your project.
+########################
+
+#Web configuration for uploading to the web site
+WEB_USER=web
+WEB_HOST=www.example.com
+WEB_ROOT=/var/www
+
+#SSH Configuration
+SSH_KEY=/home/user/.ssh/id_dsa
+SSH_KEY_PASSPHRASE=password
+
+#FTP Configuration
+FTP_HOST=upload.sourceforge.net
+FTP_USER=anonymous
+FTP_PASSWORD=password
+FTP_DIRECTORY=/incoming
+
+#Launch4J (http://launch4j.sourceforge.net/) - Creates Windows .exe files as a wrapper for Java .jar
+LAUNCH4J_PATH=/Users/Wyatt/Documents/Programming/Workplace/build_tools/launch4j
+#SVN Ant (http://vafer.org/projects/jdeb) - Include SVN abilities in Ant
+SVNANT_PATH=/Users/wyatt/Documents/Programming/Workplace/build_tools/svnant/lib
+
+#JarBundler (http://fjep.sourceforge.net/) - Creates OS X application bundles
+JARBUNDLER_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jarbundler/jarbundler-1.9.jar
+#JDeb (http://vafer.org/projects/jdeb) - Create Debian packages
+JDEB_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jdeb/jdeb-0.3.jar
+		</echo>
 
 		<mkdir dir="${ETC}/osx"/>
 		<echo file="${ETC}/osx/TODO_JavaApplicationStub"/>
 			
 		<mkdir dir="${ETC}/windows"/>
-		<echo file="${ETC}/windows/TODO_moss-installer.jar"/>
-		<echo file="${ETC}/windows/TODO_MossInstaller.properties"/>
-		<echo file="${ETC}/windows/TODO_postInstall.js"/>
+		<echo file="${ETC}/windows/TODO_Moss-Installer.txt">You should copy the MossInstaller.jar file here, and create a postInstall.jar and MossInstaller.properties files here</echo>
 		
 		<mkdir dir="${ETC}/unix/linux/debian/control"/>
 		<echo file="${ETC}/unix/linux/debian/control/TODO_control"/>
 		<echo file="${ETC}/unix/linux/debian/control/TODO_postinst"/>
 		<echo file="${ETC}/unix/linux/debian/control/TODO_postrm"/>
 		<echo file="${ETC}/unix/linux/debian/control/TODO_preinst"/>
+		
+		<mkdir dir="${ETC}/unix/linux/slackware/install"/>
 		<echo file="${ETC}/unix/linux/slackware/install/TODO_slack-desc"/>
 		
 		<mkdir dir="${ETC}/unix/usr/bin"/>
 		<echo file="${ETC}/unix/usr/bin/TODO_${UNIX_NAME}"/>
 		
 		<mkdir dir="${LIB}"/>
+		<echo file="${LIB}/Readme_Library.txt">All files of type .jar located in this directory will be extracted, and included in a 'fat jar' style compilation of the project.</echo>
 		
+		<mkdir dir="${IMG}"/>
+		<echo file="${IMG}/Readme_Images.txt">All images of type .png, .gif, and .jpg included in the root of img/ will be included in the .jar file by default.</echo>
 		<mkdir dir="${IMG}/osx"/>
+		<echo file="${IMG}/osx/TODO_${FULL_NAME}.icns">You should create an icon set for your project</echo>
 		<mkdir dir="${IMG}/windows"/>
+		<echo file="${IMG}/windows/TODO_${SAFE_NAME}.ico">You should create an icon file for your project</echo>
 		<mkdir dir="${IMG}/unix/usr/share/icons/hicolor/16x16/apps"/>
 		<mkdir dir="${IMG}/unix/usr/share/icons/hicolor/32x32/apps"/>
 		<mkdir dir="${IMG}/unix/usr/share/icons/hicolor/48x48/apps"/>
@@ -509,7 +552,6 @@
 		<mkdir dir="${IMG}/unix/usr/share/icons/hicolor/128x128/apps"/>
 		<mkdir dir="${IMG}/unix/usr/share/icons/hicolor/192x192/apps"/>
 		<mkdir dir="${IMG}/unix/usr/share/pixmaps"/>
-		<echo file="${IMG}/Readme_Images.txt">All images of type .png, .gif, and .jpg included in the root of img/ will be included in the .jar file by default.</echo>
 		<echo file="${IMG}/unix/usr/share/pixmaps/TODO_${UNIX_NAME}.png">You should create an image here of size 48x48, for use in the menu system.</echo>
 		<echo file="${IMG}/unix/usr/share/icons/hicolor/TODO_${UNIX_NAME}.png">You should create an image here for each of the sizes listed below.</echo>
 		

@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.thecave.homeunix.org
-#Sat Oct 20 18:58:12 MDT 2007
+#Tue Oct 23 18:52:59 MDT 2007
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUDGET_CATEGORIES_COMBOBOX_HEADER=--Budget Categories--
@@ -587,6 +587,7 @@ BUTTON_EDIT=Edit
 SCHEDULE_MONTH_MAY=May
 GRAPH_TITLE_INCOME_PIE_GRAPH=Income Breakdown
 BUDGET_EDITOR_TYPE=Type
+PREFERENCE_DONT_SHOW_NEGATIVE_SIGNS=Don't Show Negative Signs in Currencies
 EXPENSES=Expenses
 MENU_EDIT_VIEW_REPORTS=View My Reports
 MESSAGE_REVERT_TO_SAVED_TITLE=Revert to Last Saved Version
@@ -630,6 +631,7 @@ MESSAGE_RESTORE_FROM_BACKUP=Are you sure you want to restore from backup?  All c
 ERROR_INCORRECT_FORMAT=Incorrect Document Format
 SCHEDULE_DATE_TWENTYEIGHTH=28th
 START_DATE_IN_THE_PAST=You have set the Start Date to be a date in the past.  All scheduled\nactions between that day and today will be added, and cannot\nautomatically be undone.\n\nDo you want to continue?
+PREFERENCE_SHOW_NEGATIVE_SIGNS=Don't Show Negative Signs
 MONTH_AUGUST=August
 REPORT_TRANSACTIONS_NOT_CLEARED=Transactions which have not been Cleared
 AVAILABLE_CREDIT=Available Credit
