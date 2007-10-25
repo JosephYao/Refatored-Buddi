@@ -3,6 +3,7 @@
 -Fixed bug #1818423 (Log file not using %APPDATA% variable)
 -Fixed bug in saving last opened data file(s)
 -Fixed Null Pointer Exception in OS X when relaunching application after all windows were closed.
+-Fixed bug #1819679 (Amounts not showing in Pie graph labels)
 
 2.9.12.1 (October 21 2007)
 -Fixed a bug in 2.9.12.0 which caused null pointer exceptions in the Transaction frame source cell renderers under some situations

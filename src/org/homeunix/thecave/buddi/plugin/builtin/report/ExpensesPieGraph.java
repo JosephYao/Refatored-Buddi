@@ -27,6 +27,7 @@ import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class ExpensesPieGraph extends BuddiReportPlugin {
@@ -47,7 +48,7 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 		for (ImmutableBudgetCategory c : cats) {
 			totalExpenses += categories.get(c);
 			if (categories.get(c) > 0)
-				pieData.setValue(TextFormatter.getTranslation(c.toString()), new Double((double) categories.get(c) / 100.0));
+				pieData.setValue(TextFormatter.getTranslation(c.toString()), (double) categories.get(c));
 		}
 				
 		JFreeChart chart = ChartFactory.createPieChart(
@@ -60,6 +61,7 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 		
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.setBorderStroke(new BasicStroke(0));
+		((PiePlot) chart.getPlot()).setLabelGenerator(new BuddiPieSectionLabelGenerator());
 				
 		StringBuilder sb = HtmlHelper.getHtmlHeader(
 				TextFormatter.getTranslation(BuddiKeys.GRAPH_TITLE_EXPENSE_PIE_GRAPH), 
