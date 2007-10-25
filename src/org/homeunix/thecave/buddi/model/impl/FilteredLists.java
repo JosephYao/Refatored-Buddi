@@ -206,7 +206,7 @@ public class FilteredLists {
 		}
 		
 		private boolean acceptReconciled(Transaction t){
-			if (reconciledFilter == null || TransactionClearedFilterKeys.TRANSACTION_FILTER_ALL_CLEARED.equals(clearedFilter))
+			if (reconciledFilter == null || TransactionReconciledFilterKeys.TRANSACTION_FILTER_ALL_RECONCILED.equals(reconciledFilter))
 				return true;
 			
 			if (associatedSource == null){
@@ -215,10 +215,10 @@ public class FilteredLists {
 			}
 			else if (t.getFrom().equals(associatedSource)){
 				if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_RECONCILED.equals(reconciledFilter)){
-					return t.isClearedFrom();
+					return t.isReconciledFrom();
 				}	
 				else if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_NOT_RECONCILED.equals(reconciledFilter)){
-					return !t.isClearedFrom();
+					return !t.isReconciledFrom();
 				}
 				else {
 					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + reconciledFilter);
@@ -226,10 +226,10 @@ public class FilteredLists {
 			}
 			else if (associatedSource.equals(t.getTo())){
 				if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_RECONCILED.equals(reconciledFilter)){
-					return t.isClearedTo();
+					return t.isReconciledTo();
 				}	
 				else if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_NOT_RECONCILED.equals(reconciledFilter)){
-					return !t.isClearedTo();
+					return !t.isReconciledTo();
 				}
 				else {
 					Log.emergency("Unknown value in Transaction Reconciled Filter Keys: " + reconciledFilter);
