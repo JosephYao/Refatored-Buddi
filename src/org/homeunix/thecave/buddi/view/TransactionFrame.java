@@ -13,11 +13,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -32,7 +35,9 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionReconciledFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
@@ -58,6 +63,7 @@ import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Formatter;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
@@ -75,6 +81,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JButton deleteButton;
 	private final MossSearchField searchField;
 	private final JComboBox dateFilterComboBox;
+	private final JComboBox clearedFilterComboBox;
+	private final JComboBox reconciledFilterComboBox;
 	private final JLabel overdraftCreditLimit;
 	private final JLabel clearedInformation;
 	private final JLabel reconciledInformation;
@@ -102,11 +110,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		overdraftCreditLimit = new JLabel();
 
 		dateFilterComboBox = new JComboBox();
+		clearedFilterComboBox = new JComboBox();
+		reconciledFilterComboBox = new JComboBox();
 		
-		clearedInformation = new JLabel("Clear");
-		notClearedInformation = new JLabel("Not Clear");
-		reconciledInformation = new JLabel("Reconciled");
-		notReconciledInformation = new JLabel("Not Reconclied");
+		clearedInformation = new JLabel("Cleared Total (Request #1808451)");
+		notClearedInformation = new JLabel("Not Cleared Total");
+		reconciledInformation = new JLabel("Reconciled Total");
+		notReconciledInformation = new JLabel("Not Reconciled Total");
 
 		//Set up the transaction list.  We don't set the model here, for performance reasons.
 		// We set it after we have already established the prototype value.
@@ -233,22 +243,92 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
 		searchField.setMaximumSize(searchField.getPreferredSize());
 		dateFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(dateFilterComboBox));
+		clearedFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(clearedFilterComboBox));
+		reconciledFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(reconciledFilterComboBox));
 
-		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 //		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 //		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 //		topPanel.setBorder(null);
 //		topPanel.add(Box.createHorizontalGlue());
-		topRightPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTION_FILTER)));
+//		topRightPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTION_FILTER)));		
+		topRightPanel.add(clearedFilterComboBox);
+		topRightPanel.add(reconciledFilterComboBox);
 		topRightPanel.add(dateFilterComboBox);
 		topRightPanel.add(searchField);
 		
-		JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		topLeftPanel.add(overdraftCreditLimit);
 		
+		JPanel topPanelHolder = new JPanel(new BorderLayout());
+//		topPanelHolder.add(topLeftPanel, BorderLayout.NORTH);
+		topPanelHolder.add(topRightPanel, BorderLayout.SOUTH);
+		
+		final JXCollapsiblePane topCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
+		topCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isSearchPaneVisible());
+		topCollapsiblePanel.add(topPanelHolder, BorderLayout.CENTER);
+		
+		final Icon collapsed = UIManager.getIcon("Tree.collapsedIcon");
+		final Icon expanded = UIManager.getIcon("Tree.expandedIcon");
+		final JLabel searchCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
+		searchCheck.setVerticalAlignment(JLabel.TOP);
+		searchCheck.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				if (searchCheck.getIcon().equals(expanded))
+					searchCheck.setIcon(collapsed);
+				else
+					searchCheck.setIcon(expanded);
+				boolean hide = searchCheck.getIcon().equals(collapsed);
+				topCollapsiblePanel.setCollapsed(hide);
+				
+				PrefsModel.getInstance().setSearchPaneVisible(!hide);
+			}
+		});
+		
+		JPanel spacerPanel = new JPanel(new BorderLayout());
+		spacerPanel.add(topCollapsiblePanel, BorderLayout.NORTH);
+		
 		JPanel topPanel = new JPanel(new BorderLayout());
-		topPanel.add(topLeftPanel, BorderLayout.WEST);
-		topPanel.add(topRightPanel, BorderLayout.EAST);
+		topPanel.add(searchCheck, BorderLayout.WEST);
+		topPanel.add(topLeftPanel, BorderLayout.NORTH);
+		topPanel.add(spacerPanel, BorderLayout.CENTER);
+		
+		
+		
+		
+		JPanel clearReconcileInformation = new JPanel(new GridLayout(0, 2));
+		clearReconcileInformation.add(clearedInformation);
+		clearReconcileInformation.add(reconciledInformation);
+		clearReconcileInformation.add(notClearedInformation);
+		clearReconcileInformation.add(notReconciledInformation);
+		
+		final JXCollapsiblePane bottomCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
+		bottomCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isTotalPaneVisible());
+		bottomCollapsiblePanel.add(clearReconcileInformation, BorderLayout.CENTER);
+		
+		final JLabel totalCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
+		totalCheck.setVerticalAlignment(JLabel.TOP);
+		totalCheck.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				if (totalCheck.getIcon().equals(expanded))
+					totalCheck.setIcon(collapsed);
+				else
+					totalCheck.setIcon(expanded);
+				boolean hide = totalCheck.getIcon().equals(collapsed);
+				bottomCollapsiblePanel.setCollapsed(hide);
+				
+				PrefsModel.getInstance().setTotalPaneVisible(!hide);
+			}
+		});
+		
+		JPanel totalSpacerPanel = new JPanel(new BorderLayout());
+		totalSpacerPanel.add(bottomCollapsiblePanel, BorderLayout.NORTH);
+		
+		JPanel totalPanel = new JPanel(new BorderLayout());
+		totalPanel.add(totalCheck, BorderLayout.WEST);
+		totalPanel.add(totalSpacerPanel, BorderLayout.CENTER);
+		
+		
 
 		this.getRootPane().setDefaultButton(recordButton);
 
@@ -269,16 +349,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(transactionEditor, BorderLayout.SOUTH);
 		
-		JPanel clearReconcileInformation = new JPanel(new GridLayout(0, 2));
-		clearReconcileInformation.add(clearedInformation);
-		clearReconcileInformation.add(reconciledInformation);
-		clearReconcileInformation.add(notClearedInformation);
-		clearReconcileInformation.add(notReconciledInformation);
-		
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
-//		mainPanel.add(clearReconcileInformation, BorderLayout.SOUTH);
+		mainPanel.add(totalPanel, BorderLayout.SOUTH);
 
 		this.setLayout(new BorderLayout());
 		this.add(topPanel, BorderLayout.NORTH);
@@ -311,6 +385,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		dateFilterComboBox.setModel(new DefaultComboBoxModel(TransactionDateFilterKeys.values()));
 		dateFilterComboBox.setRenderer(new TranslatorListCellRenderer());
+		
+		clearedFilterComboBox.setModel(new DefaultComboBoxModel(TransactionClearedFilterKeys.values()));
+		clearedFilterComboBox.setRenderer(new TranslatorListCellRenderer());
+		
+		reconciledFilterComboBox.setModel(new DefaultComboBoxModel(TransactionReconciledFilterKeys.values()));
+		reconciledFilterComboBox.setRenderer(new TranslatorListCellRenderer());
 
 		dateFilterComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -322,6 +402,32 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					listModel.setDateFilter((TransactionDateFilterKeys) dateFilterComboBox.getSelectedItem());
+				}
+			}			
+		});
+		clearedFilterComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (clearedFilterComboBox.getSelectedItem() == null){
+					if (e.getItem().equals(clearedFilterComboBox.getItemAt(0))){
+						clearedFilterComboBox.setSelectedIndex(1);
+					}
+					clearedFilterComboBox.setSelectedIndex(0);
+				}
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					listModel.setClearedFilter((TransactionClearedFilterKeys) clearedFilterComboBox.getSelectedItem());
+				}
+			}			
+		});
+		reconciledFilterComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (reconciledFilterComboBox.getSelectedItem() == null){
+					if (e.getItem().equals(reconciledFilterComboBox.getItemAt(0))){
+						reconciledFilterComboBox.setSelectedIndex(1);
+					}
+					reconciledFilterComboBox.setSelectedIndex(0);
+				}
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					listModel.setReconciledFilter((TransactionReconciledFilterKeys) reconciledFilterComboBox.getSelectedItem());
 				}
 			}			
 		});
@@ -477,13 +583,16 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setText(sb.toString());
 			if (!associatedAccount.getAccountType().isCredit() && PrefsModel.getInstance().isShowTooltips())
 				overdraftCreditLimit.setToolTipText(TextFormatter.getTranslation(BuddiKeys.TOOLTIP_AVAILABLE_FUNDS));
+			overdraftCreditLimit.setVisible(true);
 		}
 		else {
 			overdraftCreditLimit.setText("");
 			overdraftCreditLimit.setToolTipText("");
+			overdraftCreditLimit.setVisible(false);
 		}
 		
-		
+		clearedFilterComboBox.setVisible(PrefsModel.getInstance().isShowCleared());
+		reconciledFilterComboBox.setVisible(PrefsModel.getInstance().isShowReconciled());
 		
 		this.repaint();
 	}

@@ -72,6 +72,9 @@ public class PrefsModelBean {
 	private boolean showUpdateNotifications;
 	private boolean showPromptAtStartup;
 	
+	//Transaction Pane collapsible panes
+	private boolean searchPaneVisible;
+	private boolean totalPaneVisible;
 	
 	//Define the max / min number of budget columns visible.
 	private int MIN_BUDGET_COLUMNS = 2;
@@ -350,38 +353,21 @@ public class PrefsModelBean {
 	public void setShowNegativeSign(boolean showNegativeSign) {
 		this.showNegativeSign = showNegativeSign;
 	}
-	
-//	public Point getPreferencesWindowLocation() {
-//		return preferencesWindowLocation;
-//	}
-//
-//	public void setPreferencesWindowLocation(Point prefsWindowLocation) {
-//		this.preferencesWindowLocation = prefsWindowLocation;
-//	}
-//
-//	public Point getScheduledWindowLocation() {
-//		return scheduledWindowLocation;
-//	}
-//
-//	public void setScheduledWindowLocation(Point scheduledWindowLocation) {
-//		this.scheduledWindowLocation = scheduledWindowLocation;
-//	}
-//
-//	public Point getTransactionWindowLocation() {
-//		return transactionWindowLocation;
-//	}
-//
-//	public void setTransactionWindowLocation(Point transactionWindowLocation) {
-//		this.transactionWindowLocation = transactionWindowLocation;
-//	}
-//
-//	public Dimension getTransactionWindowSize() {
-//		return transactionWindowSize;
-//	}
-//
-//	public void setTransactionWindowSize(Dimension transactionWindowSize) {
-//		this.transactionWindowSize = transactionWindowSize;
-//	}
-	
+
+	public boolean isSearchPaneVisible() {
+		return searchPaneVisible;
+	}
+
+	public void setSearchPaneVisible(boolean searchPaneVisible) {
+		this.searchPaneVisible = searchPaneVisible;
+	}
+
+	public boolean isTotalPaneVisible() {
+		return totalPaneVisible;
+	}
+
+	public void setTotalPaneVisible(boolean totalPaneVisible) {
+		this.totalPaneVisible = totalPaneVisible;
+	}
 	
 }

@@ -21,7 +21,9 @@ import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyDayOfWeek;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyFirstWeekOfMonth;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyMonth;
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequencyWeek;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionReconciledFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeCreditDefaultKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TypeDebitDefaultKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -97,7 +99,9 @@ public class BuddiLanguageEditor extends LanguageEditor {
 		this.loadKeys((Enum[]) ScheduleFrequencyFirstWeekOfMonth.values());
 		this.loadKeys((Enum[]) ScheduleFrequencyMonth.values());
 		this.loadKeys((Enum[]) ScheduleFrequencyWeek.values());
+		this.loadKeys((Enum[]) TransactionClearedFilterKeys.values());
 		this.loadKeys((Enum[]) TransactionDateFilterKeys.values());
+		this.loadKeys((Enum[]) TransactionReconciledFilterKeys.values());
 		this.loadKeys((Enum[]) TypeCreditDefaultKeys.values());
 		this.loadKeys((Enum[]) TypeDebitDefaultKeys.values());
 		

@@ -543,5 +543,21 @@ public class PrefsModel {
 			return d;
 		return new Dimension(640, 480);
 	}
+	
+	public boolean isSearchPaneVisible() {
+		return prefsModel.isSearchPaneVisible();
+	}
+
+	public void setSearchPaneVisible(boolean searchPaneVisible) {
+		prefsModel.setSearchPaneVisible(searchPaneVisible);
+	}
+
+	public boolean isTotalPaneVisible() {
+		return prefsModel.isTotalPaneVisible();
+	}
+
+	public void setTotalPaneVisible(boolean totalPaneVisible) {
+		prefsModel.setTotalPaneVisible(totalPaneVisible);
+	}
 }
 

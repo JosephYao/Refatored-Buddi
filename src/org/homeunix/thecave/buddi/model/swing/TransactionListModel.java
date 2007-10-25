@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.model.swing;
 
 import javax.swing.AbstractListModel;
 
+import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionReconciledFilterKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
@@ -17,9 +19,9 @@ public class TransactionListModel extends AbstractListModel {
 	
 	public TransactionListModel(Document model, Source selectedSource) {
 		if (selectedSource == null)
-			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions());
+			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions());
 		else
-			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, model.getTransactions(selectedSource));
+			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions(selectedSource));
 	}
 	
 	public Object getElementAt(int index) {
@@ -38,6 +40,18 @@ public class TransactionListModel extends AbstractListModel {
 	
 	public void setDateFilter(TransactionDateFilterKeys key){
 		transactions.setDateFilter(key);
+		transactions.updateFilteredList();
+		update();
+	}
+	
+	public void setClearedFilter(TransactionClearedFilterKeys key){
+		transactions.setClearedFilter(key);
+		transactions.updateFilteredList();
+		update();
+	}
+	
+	public void setReconciledFilter(TransactionReconciledFilterKeys key){
+		transactions.setReconciledFilter(key);
 		transactions.updateFilteredList();
 		update();
 	}

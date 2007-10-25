@@ -6,7 +6,9 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
+import org.homeunix.thecave.buddi.i18n.keys.TransactionReconciledFilterKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
@@ -137,13 +139,23 @@ public class FilteredLists {
 	 */
 	public static class TransactionListFilteredBySearch extends BuddiFilteredList<Transaction> {
 		private String searchText;
-		private TransactionDateFilterKeys dateFilter; 
+		private TransactionDateFilterKeys dateFilter;
+		private TransactionClearedFilterKeys clearedFilter;
+		private TransactionReconciledFilterKeys reconciledFilter;
+		private final Source associatedSource;
 
-		public TransactionListFilteredBySearch(Document model, List<Transaction> transactions){
+		public TransactionListFilteredBySearch(Document model, Source associatedSource, List<Transaction> transactions){
 			super(model, transactions);
+			this.associatedSource = associatedSource;
 		}
 		public void setDateFilter(TransactionDateFilterKeys dateFilter) {
 			this.dateFilter = dateFilter;
+		}
+		public void setClearedFilter(TransactionClearedFilterKeys clearedFilter){
+			this.clearedFilter = clearedFilter;
+		}
+		public void setReconciledFilter(TransactionReconciledFilterKeys reconciledFilter){
+			this.reconciledFilter = reconciledFilter;
 		}
 		public void setSearchText(String searchText) {
 			this.searchText = searchText;
@@ -155,28 +167,107 @@ public class FilteredLists {
 				return false;				
 			}
 
-			return acceptDate(t) && acceptText(t);
+			return acceptDate(t) && acceptText(t) && acceptCleared(t) && acceptReconciled(t);
+		}
+		
+		private boolean acceptCleared(Transaction t){
+			if (clearedFilter == null || TransactionClearedFilterKeys.TRANSACTION_FILTER_ALL_CLEARED.equals(clearedFilter))
+				return true;
+			
+			if (associatedSource == null){
+				//No concept of cleared when source is null.  Return true.  We should probably not even show the dropdown in this situation.
+				return true;
+			}
+			else if (t.getFrom().equals(associatedSource)){
+				if (TransactionClearedFilterKeys.TRANSACTION_FILTER_CLEARED.equals(clearedFilter)){
+					return t.isClearedFrom();
+				}	
+				else if (TransactionClearedFilterKeys.TRANSACTION_FILTER_NOT_CLEARED.equals(clearedFilter)){
+					return !t.isClearedFrom();
+				}
+				else {
+					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
+				}
+			}
+			else if (associatedSource.equals(t.getTo())){
+				if (TransactionClearedFilterKeys.TRANSACTION_FILTER_CLEARED.equals(clearedFilter)){
+					return t.isClearedTo();
+				}	
+				else if (TransactionClearedFilterKeys.TRANSACTION_FILTER_NOT_CLEARED.equals(clearedFilter)){
+					return !t.isClearedTo();
+				}
+				else {
+					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
+				}
+			}
+				
+			//If in doubt, we return true.  Is this correct behaviour?
+			return true;
+		}
+		
+		private boolean acceptReconciled(Transaction t){
+			if (reconciledFilter == null || TransactionClearedFilterKeys.TRANSACTION_FILTER_ALL_CLEARED.equals(clearedFilter))
+				return true;
+			
+			if (associatedSource == null){
+				//No concept of reconciled when source is null.  Return true.  We should probably not even show the dropdown in this situation.
+				return true;
+			}
+			else if (t.getFrom().equals(associatedSource)){
+				if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_RECONCILED.equals(reconciledFilter)){
+					return t.isClearedFrom();
+				}	
+				else if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_NOT_RECONCILED.equals(reconciledFilter)){
+					return !t.isClearedFrom();
+				}
+				else {
+					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + reconciledFilter);
+				}
+			}
+			else if (associatedSource.equals(t.getTo())){
+				if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_RECONCILED.equals(reconciledFilter)){
+					return t.isClearedTo();
+				}	
+				else if (TransactionReconciledFilterKeys.TRANSACTION_FILTER_NOT_RECONCILED.equals(reconciledFilter)){
+					return !t.isClearedTo();
+				}
+				else {
+					Log.emergency("Unknown value in Transaction Reconciled Filter Keys: " + reconciledFilter);
+				}
+			}
+				
+			//If in doubt, we return true.  Is this correct behaviour?
+			return true;
 		}
 
 		private boolean acceptDate(Transaction t) {
-			if (null == dateFilter || TransactionDateFilterKeys.TRANSACTION_FILTER_ALL == dateFilter) {
+			if (null == dateFilter || TransactionDateFilterKeys.TRANSACTION_FILTER_ALL_DATES == dateFilter) {
 				return true;
 			}
 
 			Date today = new Date();
 
 			if (TransactionDateFilterKeys.TRANSACTION_FILTER_TODAY == dateFilter) {
-				return DateFunctions.getEndOfDay(today).equals(DateFunctions.getEndOfDay(t.getDate()));
+				return DateFunctions.isSameDay(today, t.getDate());
+			}
+			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_YESTERDAY == dateFilter) {
+				return DateFunctions.isSameDay(DateFunctions.addDays(today, -1), t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_WEEK == dateFilter) {
 				return DateFunctions.getStartOfDay(DateFunctions.addDays(today, -7)).before(t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_MONTH == dateFilter) {
-				return DateFunctions.getStartOfMonth(today).before(t.getDate());
+				return DateFunctions.isSameMonth(today, t.getDate());
+			}
+			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_MONTH == dateFilter) {
+				return DateFunctions.isSameMonth(DateFunctions.addMonths(today, -1), t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_QUARTER == dateFilter) {
 				return DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(today)).before(t.getDate());
-			} 
+			}
+			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_QUARTER == dateFilter) {
+				return DateFunctions.isSameDay(DateFunctions.getStartOfQuarter(DateFunctions.addQuarters(today, -1)), DateFunctions.getStartOfQuarter(t.getDate()));
+			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_YEAR == dateFilter) {
 				return DateFunctions.getStartOfYear(today).before(t.getDate());				
 			}
