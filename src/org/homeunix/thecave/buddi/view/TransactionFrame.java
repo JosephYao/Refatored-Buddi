@@ -88,6 +88,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JLabel reconciledInformation;
 	private final JLabel notClearedInformation;
 	private final JLabel notReconciledInformation;
+	private final JPanel totalPanel;
 	
 	private final TransactionListModel listModel;
 
@@ -109,6 +110,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		this.parent = parent;
 		overdraftCreditLimit = new JLabel();
 
+		totalPanel = new JPanel(new BorderLayout());
+		
 		dateFilterComboBox = new JComboBox();
 		clearedFilterComboBox = new JComboBox();
 		reconciledFilterComboBox = new JComboBox();
@@ -324,11 +327,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel totalSpacerPanel = new JPanel(new BorderLayout());
 		totalSpacerPanel.add(bottomCollapsiblePanel, BorderLayout.NORTH);
 		
-		JPanel totalPanel = new JPanel(new BorderLayout());
 		totalPanel.add(totalCheck, BorderLayout.WEST);
 		totalPanel.add(totalSpacerPanel, BorderLayout.CENTER);
-		
-		
 
 		this.getRootPane().setDefaultButton(recordButton);
 
@@ -593,6 +593,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		
 		clearedFilterComboBox.setVisible(PrefsModel.getInstance().isShowCleared());
 		reconciledFilterComboBox.setVisible(PrefsModel.getInstance().isShowReconciled());
+		totalPanel.setVisible(PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled());
+//		totalPanel.setVisible(false);
 		
 		this.repaint();
 	}
