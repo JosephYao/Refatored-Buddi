@@ -334,6 +334,8 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 			ScheduledTransaction s;
 			final boolean needToAdd;
 
+			model.startBatchChange();
+			
 			//If the currently edited schedule is null, we need to create a new one, and
 			// flag to add it to the model.
 			if (schedule == null) {
@@ -400,6 +402,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 					if (needToAdd)
 						model.addScheduledTransaction(s);
 
+					model.finishBatchChange();
 					return true;
 				}
 				else
@@ -421,6 +424,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		}
 		catch (ModelException me){}
 
+		model.finishBatchChange();
 		return false;
 	}
 
