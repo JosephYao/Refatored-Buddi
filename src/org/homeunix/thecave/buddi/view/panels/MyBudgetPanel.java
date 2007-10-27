@@ -132,15 +132,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 							&& MyBudgetPanel.this.parent.isMyBudgetTabSelected()
 							&& MyBudgetPanel.this.tree.getSelectedRow() != -1
 							&& MyBudgetPanel.this.tree.getSelectedColumn() != -1
+							&& e.getModifiers() == 0
 							&& (e.getKeyCode() == KeyEvent.VK_UP
 									|| e.getKeyCode() == KeyEvent.VK_DOWN
 									|| e.getKeyCode() == KeyEvent.VK_RIGHT
 									|| e.getKeyCode() == KeyEvent.VK_LEFT)){
 						manager.redispatchEvent(tree, e);
+						e.consume();
 						return true;
-					}
-					if ((OperatingSystemUtil.isMac() && e.isMetaDown()) || (!OperatingSystemUtil.isMac() && e.isControlDown())){
-						manager.redispatchEvent(parent, e);
 					}
 					return false;
 				}

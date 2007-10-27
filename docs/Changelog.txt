@@ -1,14 +1,16 @@
-2.9.13.0
+2.9.13.0 (October 27 2007)
 -Added option to remove negative signs from displaying on currencies.  This option is currently experimental.
 -Added two new filters in Transaction screen: Cleared and Reconciled.  These only show up if you have enabled Cleared and Reconciled entry, respectively.  These work in conjunction with the free form search and the date filter, using an AND condition - all displayed transactions must match all of the conditions.
 -Added collapsible area for searching in transaction frame.  Collapsed state is saved between sessions.
 -Added Feature Request #1808451 (Cleared total).  Added collabsible area in transaction frame for showing totals of Cleared and Reconciled transactions.
 -Fixed bug #1812298 (Cannot modify scheduled transaction)
 -Fixed bug #1818423 (Log file not using %APPDATA% variable)
--Fixed bug in saving last opened data file(s)
--Fixed Null Pointer Exception in OS X when relaunching application after all windows were closed.
 -Fixed bug #1819679 (Amounts not showing in Pie graph labels)
 -Fixed bug #1819678 (Cleared / Recociled filters not in Transaction Frame).  I moved these from being options in the Date selection to being in their own pulldowns.  See above for details.
+-Fixed bug in saving last opened data file(s)
+-Fixed bug which prevented saving using Ctrl / Cmd + S when editing budget values.  (The MossDecimalField consume()'d the key stroke before it could be passed to the parent).  Now we explicitly make a new key event to pass to the parent container, if the situation merits it.
+-Fixed Null Pointer Exception in OS X when relaunching application after all windows were closed.
+-Fixed Null Pointer Exception introduced from 2.9.12.1, in DateFunctions.getDaysBetween().
 
 2.9.12.1 (October 21 2007)
 -Fixed a bug in 2.9.12.0 which caused null pointer exceptions in the Transaction frame source cell renderers under some situations

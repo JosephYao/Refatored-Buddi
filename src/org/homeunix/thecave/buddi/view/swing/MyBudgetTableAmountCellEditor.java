@@ -26,7 +26,6 @@ public class MyBudgetTableAmountCellEditor extends AbstractCellEditor implements
 
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		if (value instanceof Object[]){
-//			long l = Long.parseLong(value.toString().replaceAll("[^0-9-]", ""));
 			Object[] values = (Object[]) value;
 			editor.setValue((Long) values[1]);
 		}
