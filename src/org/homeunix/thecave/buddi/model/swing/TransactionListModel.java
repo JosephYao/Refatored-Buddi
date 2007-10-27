@@ -3,33 +3,35 @@
  */
 package org.homeunix.thecave.buddi.model.swing;
 
-import javax.swing.AbstractListModel;
-
 import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionReconciledFilterKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredBySearch;
+import org.homeunix.thecave.moss.swing.model.BackedListModel;
 
-public class TransactionListModel extends AbstractListModel {
+/**
+ * The transaction list model.  Implements List interface to ease navigation,
+ * but only the read-only methods are implemented.  This list model is backed
+ * by a 
+ * 
+ * @author wyatt
+ *
+ */
+public class TransactionListModel extends BackedListModel<Transaction> {
 	public static final long serialVersionUID = 0;
 	
 	private final FilteredLists.TransactionListFilteredBySearch transactions;
 	
 	public TransactionListModel(Document model, Source selectedSource) {
-		if (selectedSource == null)
-			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions());
-		else
-			this.transactions = new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions(selectedSource));
-	}
-	
-	public Object getElementAt(int index) {
-		return transactions.get(index);
-	}
-
-	public int getSize() {
-		return transactions.size();
+		super(selectedSource == null ? 
+				new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions()) :
+					new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions(selectedSource)));
+		
+		this.transactions = (TransactionListFilteredBySearch) listModel;
 	}
 	
 	public void setSearchText(String text){
@@ -54,6 +56,10 @@ public class TransactionListModel extends AbstractListModel {
 		transactions.setReconciledFilter(key);
 		transactions.updateFilteredList();
 		update();
+	}
+	
+	public boolean isListFiltered(){
+		return (transactions.isFiltered());
 	}
 	
 	public void update(){

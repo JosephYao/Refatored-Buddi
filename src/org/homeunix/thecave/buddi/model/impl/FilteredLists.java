@@ -138,6 +138,7 @@ public class FilteredLists {
 	 *
 	 */
 	public static class TransactionListFilteredBySearch extends BuddiFilteredList<Transaction> {
+		private final Document model;
 		private String searchText;
 		private TransactionDateFilterKeys dateFilter;
 		private TransactionClearedFilterKeys clearedFilter;
@@ -146,6 +147,7 @@ public class FilteredLists {
 
 		public TransactionListFilteredBySearch(Document model, Source associatedSource, List<Transaction> transactions){
 			super(model, transactions);
+			this.model = model;
 			this.associatedSource = associatedSource;
 		}
 		public void setDateFilter(TransactionDateFilterKeys dateFilter) {
@@ -160,11 +162,34 @@ public class FilteredLists {
 		public void setSearchText(String searchText) {
 			this.searchText = searchText;
 		}
-
+		
+		/**
+		 * Is the current list filtered?  This is a relatively expensive operation, as
+		 * we need to get the list of transactions associated with the given source
+		 * from the model, and compare the size of it to the size of the current list.
+		 * Try to avoid using this in loops, or other frequently called code.
+		 * @return
+		 */
+		public boolean isFiltered(){
+			return model.getTransactions(associatedSource).size() != this.size();
+		}
+//		public TransactionClearedFilterKeys getClearedFilter() {
+//			return clearedFilter;
+//		}
+//		public TransactionDateFilterKeys getDateFilter() {
+//			return dateFilter;
+//		}
+//		public TransactionReconciledFilterKeys getReconciledFilter() {
+//			return reconciledFilter;
+//		}
+//		public String getSearchText() {
+//			return searchText;
+//		}
+		
 		@Override
 		public boolean isIncluded(Transaction t) {
 			if (t == null || t.getTo() == null | t.getFrom() == null){
-				return false;				
+				return false;		
 			}
 
 			return acceptDate(t) && acceptText(t) && acceptCleared(t) && acceptReconciled(t);
@@ -276,14 +301,6 @@ public class FilteredLists {
 				Date endOfLastYear = DateFunctions.getEndOfYear(startOfLastYear);
 				return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
 			}
-
-			//TODO Include this in a different filter
-//			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_NOT_RECONCILED == dateFilter) {
-//			return !t.isReconciled();
-//			}
-//			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_NOT_CLEARED == dateFilter) {
-//			return !t.isCleared();
-//			}
 			else {
 				Log.error("Unknown filter pulldown: " + dateFilter);
 				return false;

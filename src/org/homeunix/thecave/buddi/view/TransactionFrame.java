@@ -116,10 +116,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		clearedFilterComboBox = new JComboBox();
 		reconciledFilterComboBox = new JComboBox();
 		
-		clearedInformation = new JLabel("Cleared Total (Request #1808451)");
-		notClearedInformation = new JLabel("Not Cleared Total");
-		reconciledInformation = new JLabel("Reconciled Total");
-		notReconciledInformation = new JLabel("Not Reconciled Total");
+		clearedInformation = new JLabel();
+		notClearedInformation = new JLabel();
+		reconciledInformation = new JLabel();
+		notReconciledInformation = new JLabel();
 
 		//Set up the transaction list.  We don't set the model here, for performance reasons.
 		// We set it after we have already established the prototype value.
@@ -249,12 +249,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		clearedFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(clearedFilterComboBox));
 		reconciledFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(reconciledFilterComboBox));
 
+		clearedInformation.setHorizontalAlignment(JLabel.RIGHT);
+		notClearedInformation.setHorizontalAlignment(JLabel.RIGHT);
+		reconciledInformation.setHorizontalAlignment(JLabel.RIGHT);
+		notReconciledInformation.setHorizontalAlignment(JLabel.RIGHT);
+		
+		
 		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-//		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-//		topPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-//		topPanel.setBorder(null);
-//		topPanel.add(Box.createHorizontalGlue());
-//		topRightPanel.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TRANSACTION_FILTER)));		
 		topRightPanel.add(clearedFilterComboBox);
 		topRightPanel.add(reconciledFilterComboBox);
 		topRightPanel.add(dateFilterComboBox);
@@ -294,20 +295,23 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel topPanel = new JPanel(new BorderLayout());
 		topPanel.add(searchCheck, BorderLayout.WEST);
 		topPanel.add(topLeftPanel, BorderLayout.NORTH);
-		topPanel.add(spacerPanel, BorderLayout.CENTER);
+		topPanel.add(spacerPanel, BorderLayout.CENTER);		
 		
+		JPanel clearedInformationPanel = new JPanel(new GridLayout(0, 1));
+		clearedInformationPanel.add(clearedInformation);
+		clearedInformationPanel.add(notClearedInformation);
 		
+		JPanel reconciledInformationPanel = new JPanel(new GridLayout(0, 1));
+		reconciledInformationPanel.add(reconciledInformation);
+		reconciledInformationPanel.add(notReconciledInformation);
 		
-		
-		JPanel clearReconcileInformation = new JPanel(new GridLayout(0, 2));
-		clearReconcileInformation.add(clearedInformation);
-		clearReconcileInformation.add(reconciledInformation);
-		clearReconcileInformation.add(notClearedInformation);
-		clearReconcileInformation.add(notReconciledInformation);
+		JPanel clearedReconcileInformationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		clearedReconcileInformationPanel.add(reconciledInformationPanel);
+		clearedReconcileInformationPanel.add(clearedInformationPanel);
 		
 		final JXCollapsiblePane bottomCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
 		bottomCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isTotalPaneVisible());
-		bottomCollapsiblePanel.add(clearReconcileInformation, BorderLayout.CENTER);
+		bottomCollapsiblePanel.add(clearedReconcileInformationPanel, BorderLayout.CENTER);
 		
 		final JLabel totalCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
 		totalCheck.setVerticalAlignment(JLabel.TOP);
@@ -403,6 +407,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					listModel.setDateFilter((TransactionDateFilterKeys) dateFilterComboBox.getSelectedItem());
 				}
+				TransactionFrame.this.updateContent();
 			}			
 		});
 		clearedFilterComboBox.addItemListener(new ItemListener() {
@@ -416,6 +421,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					listModel.setClearedFilter((TransactionClearedFilterKeys) clearedFilterComboBox.getSelectedItem());
 				}
+				TransactionFrame.this.updateContent();
 			}			
 		});
 		reconciledFilterComboBox.addItemListener(new ItemListener() {
@@ -429,12 +435,14 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					listModel.setReconciledFilter((TransactionReconciledFilterKeys) reconciledFilterComboBox.getSelectedItem());
 				}
+				TransactionFrame.this.updateContent();
 			}			
 		});
 
 		searchField.addSearchTextChangedEventListener(new SearchTextChangedEventListener(){
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
 				listModel.setSearchText(searchField.getText());
+				TransactionFrame.this.updateContent();
 			}
 		});
 
@@ -590,6 +598,81 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setToolTipText("");
 			overdraftCreditLimit.setVisible(false);
 		}
+		
+		//Update the cleared totals at the bottom
+		if (PrefsModel.getInstance().isShowCleared() && associatedAccount != null){
+			long clearedTotal, notClearedTotal = 0;
+			String clearedTotalType;
+			
+			//If the list is filtered, we will show the SUM of cleared.
+			if (listModel.isListFiltered()){
+				clearedTotalType = TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_CLEARED);
+				clearedTotal = 0;
+			}
+			//If the list is not filtered, we will show the BALANCE of cleared.
+			else {
+				clearedTotalType = TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_CLEARED);
+				clearedTotal = associatedAccount.getStartingBalance();
+			}
+			for (Transaction t : listModel) {
+				if (t.getFrom().equals(associatedAccount)){
+					if (t.isClearedFrom())
+						clearedTotal += t.getAmount();
+					else
+						notClearedTotal += t.getAmount();
+				}
+				else if (t.getTo().equals(associatedAccount)){
+					if (t.isClearedTo())
+						clearedTotal += t.getAmount();						
+					else
+						notClearedTotal += t.getAmount();
+				}
+				else {
+					Log.emergency("Neither TO nor FROM equals the associated account.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedAccount is " + associatedAccount);
+				}
+			}
+			
+			clearedInformation.setText(clearedTotalType + " " + TextFormatter.getFormattedCurrency(clearedTotal));
+			notClearedInformation.setText(TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_CLEARED) + " " + TextFormatter.getFormattedCurrency(notClearedTotal));
+		}
+		
+		
+		//Update the reconciled totals at the bottom
+		if (PrefsModel.getInstance().isShowReconciled() && associatedAccount != null){
+			long reconciledTotal, notReconciledTotal = 0;
+			String reconciledTotalType;
+			
+			//If the list is filtered, we will show the SUM of reconciled.
+			if (listModel.isListFiltered()){
+				reconciledTotalType = TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_RECONCILED);
+				reconciledTotal = 0;
+			}
+			//If the list is not filtered, we will show the BALANCE of reconciled.
+			else {
+				reconciledTotalType = TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_RECONCILED);
+				reconciledTotal = associatedAccount.getStartingBalance();
+			}
+			for (Transaction t : listModel) {
+				if (t.getFrom().equals(associatedAccount)){
+					if (t.isReconciledFrom())
+						reconciledTotal += t.getAmount();
+					else
+						notReconciledTotal += t.getAmount();
+				}
+				else if (t.getTo().equals(associatedAccount)){
+					if (t.isReconciledTo())
+						reconciledTotal += t.getAmount();						
+					else
+						notReconciledTotal += t.getAmount();
+				}
+				else {
+					Log.emergency("Neither TO nor FROM equals the associated account.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedAccount is " + associatedAccount);
+				}
+			}
+			
+			reconciledInformation.setText(reconciledTotalType + " " + TextFormatter.getFormattedCurrency(reconciledTotal));
+			notReconciledInformation.setText(TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_RECONCILED) + " " + TextFormatter.getFormattedCurrency(notReconciledTotal));
+		}		
 		
 		clearedFilterComboBox.setVisible(PrefsModel.getInstance().isShowCleared());
 		reconciledFilterComboBox.setVisible(PrefsModel.getInstance().isShowReconciled());
@@ -822,6 +905,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 			}
 			catch (ModelException me){
+				Log.emergency("Error in record button in Transaction frame", me);
 				return;
 			}
 
@@ -860,6 +944,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			transactionEditor.resetSelection();
 			transactionEditor.setChanged(false);
 			
+			this.updateContent();
 			parent.updateContent();
 
 //			DocumentController.saveFileSoon();
