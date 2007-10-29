@@ -102,7 +102,11 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (getDocument() == null)
 			return 0; //Document not set; not valid.  Possibly throw exception?
 		if (d.before(getStartDate()))
-			return getStartingBalance(); //This is poorly defined... we could argue to return the starting balance or 0.  I decided to return SB.
+			//This used to be defined to return starting balance... I think that it makes more
+			// sense to return 0, though - if the account has not been defined, there is by
+			// definition, no balance.
+//			return getStartingBalance();
+			return 0;
 		List<Transaction> ts = getDocument().getTransactions(this, getStartDate(), d);
 		if (ts.size() > 0){
 			Transaction t = ts.get(ts.size() - 1);
@@ -110,6 +114,10 @@ public class AccountImpl extends SourceImpl implements Account {
 				return t.getBalanceFrom();
 			else if (t.getTo().equals(this))
 				return t.getBalanceTo();
+		}
+		else {
+			//If there are no transactions, return the starting balance.
+			return getStartingBalance();
 		}
 
 //		Log.error("AccountImpl.getBalance(Date) - Something is wrong... we should not be here.");

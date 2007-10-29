@@ -1,3 +1,6 @@
+2.9.14.0
+-Changed the implementation of Account to return 0 if you get the balance before the starting date.  Before it was set to return the starting balance, but this just does not make sense in the reports.  If anyone has a problem with this change, please email me and let me know your situation.
+
 2.9.13.0 (October 27 2007)
 -Added option to remove negative signs from displaying on currencies.  This option is currently experimental.
 -Added two new filters in Transaction screen: Cleared and Reconciled.  These only show up if you have enabled Cleared and Reconciled entry, respectively.  These work in conjunction with the free form search and the date filter, using an AND condition - all displayed transactions must match all of the conditions.
