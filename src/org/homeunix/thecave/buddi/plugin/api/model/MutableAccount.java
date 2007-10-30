@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model;
 
+import java.util.Date;
+
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
 public interface MutableAccount extends ImmutableAccount, MutableSource {
@@ -29,4 +31,10 @@ public interface MutableAccount extends ImmutableAccount, MutableSource {
 	 * @param overdraftCreditLimit
 	 */
 	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException;
+	
+	/**
+	 * Sets the starting date for the account.
+	 * @param startDate
+	 */
+	public void setStartDate(Date startDate);
 }

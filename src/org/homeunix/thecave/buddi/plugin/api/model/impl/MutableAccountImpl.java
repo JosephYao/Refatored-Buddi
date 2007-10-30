@@ -63,4 +63,8 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException {
 		getAccount().setOverdraftCreditLimit(overdraftCreditLimit);
 	}
+	
+	public void setStartDate(Date startDate) {
+		getAccount().setStartDate(startDate);
+	}
 }
