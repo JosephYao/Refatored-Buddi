@@ -435,7 +435,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="${MAIN_CLASS}"/>
 			</manifest>
-			<fileset dir="${BIN}" includes="**/*"/>
+			<fileset dir="${BUILD}/classes" includes="**/*"/>
 			<fileset dir="${BUILD}/tmp" includes="**/*"/>
 			<fileset dir="${ETC}">
 				<include name="Languages/*"/>
@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="compile" description="Builds the project">
-		<javac srcdir="src" destdir="bin" debug="true" debuglevel="lines,vars,source">
+		<javac srcdir="${SRC}" destdir="${BUILD}/classes" debug="true" debuglevel="lines,vars,source">
 			<classpath>
 				<fileset dir="${LIB}">
 					<include name="**/*.jar"/>

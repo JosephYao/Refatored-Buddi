@@ -25,6 +25,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private long overdraftCreditLimit;
+	private Date startDate;
 	private AccountType type;
 
 	public long getStartingBalance() {
@@ -37,9 +38,18 @@ public class AccountImpl extends SourceImpl implements Account {
 	}
 	public Date getStartDate() {
 		List<Transaction> ts = getDocument().getTransactions(this);
-		if (getDocument() != null && ts.size() > 0)
-			return ts.get(0).getDate();
-		return new Date();
+		if (ts.size() > 0){
+			if (startDate == null || startDate.after(ts.get(0).getDate()))
+				return ts.get(0).getDate();
+			else 
+				return startDate;
+		}
+		if (startDate == null)
+			return new Date();
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	public long getBalance() {
 		return balance;

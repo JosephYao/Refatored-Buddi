@@ -27,12 +27,15 @@ public interface Account extends Source{
 	 */
 	public long getBalance(Date d);
 	/**
-	 * Returns the starting date of this account.  This is defined as the earliest
-	 * date referenced by one of the associated transactions.  This is a volatile
-	 * value, and is generated on the fly when calling this methd.
+	 * Returns the starting date of this account.
 	 * @return
 	 */
 	public Date getStartDate();
+	/**
+	 * Sets the starting date of this account. 
+	 * @param startDate
+	 */
+	public void setStartDate(Date startDate);
 	/**
 	 * Returns the starting balance associated with this account.
 	 * @return
