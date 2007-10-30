@@ -453,10 +453,12 @@
 		
 		<delete includeemptydirs="true">
 			<fileset dir="${BUILD}/tmp"/>
+			<fileset dir="${BUILD}/classes"/>
 		</delete>
 	</target>
 
 	<target name="compile" description="Builds the project">
+		<mkdir dir="${BUILD}/classes"/>
 		<javac srcdir="${SRC}" destdir="${BUILD}/classes" debug="true" debuglevel="lines,vars,source">
 			<classpath>
 				<fileset dir="${LIB}">
