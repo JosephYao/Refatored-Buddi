@@ -26,6 +26,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	private long amount;
 	private Source from;
 	private Source to;
+	private boolean deleted;
 	private boolean clearedFrom;
 	private boolean clearedTo;
 	private boolean reconciledFrom;
@@ -198,4 +199,12 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 //	public void setDateString(String newDate) {
 //		this.dateString = newDate;
 //	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+	
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }

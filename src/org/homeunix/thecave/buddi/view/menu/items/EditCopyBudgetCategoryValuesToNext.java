@@ -16,19 +16,19 @@ import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.util.Log;
 
-public class EditCopyBudgetCategoryValuesForward extends MossMenuItem{
+public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
-	public EditCopyBudgetCategoryValuesForward(MainFrame frame) {
-		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_PREVIOUS_BUDGET_PERIOD));
+	public EditCopyBudgetCategoryValuesToNext(MainFrame frame) {
+		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (BudgetCategory bc : ((MainFrame) getFrame()).getSelectedBudgetCategories()) {
+		for (BudgetCategory bc : ((MainFrame) getFrame()).getBudgetCategoriesInSelectedPeriod()) {
 			long amount = bc.getAmount(new Date());
 			try {
-				bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), -1), amount);
+				bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1), amount);
 			}
 			catch (InvalidValueException ive){
 				Log.error(ive);
@@ -47,8 +47,8 @@ public class EditCopyBudgetCategoryValuesForward extends MossMenuItem{
 		this.setText(TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD) 
 				+ " (" + treeTableModel.getColumnName(2) + " "
 				+ TextFormatter.getTranslation(BuddiKeys.TO)
-				+ " " + treeTableModel.getColumnName(1) + ")");
+				+ " " + treeTableModel.getColumnName(3) + ")");
 		
-		this.setEnabled(((MainFrame) getFrame()).getSelectedBudgetCategories().size() > 0);
+		this.setEnabled(((MainFrame) getFrame()).getBudgetCategoriesInSelectedPeriod().size() > 0);
 	}
 }

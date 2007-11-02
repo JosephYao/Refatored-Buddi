@@ -470,9 +470,6 @@
 
 	<target name="clean" description="Removes all files from bin, build, and javadocs directories">
 		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${BIN}">
-				<include name="**/*"/>
-			</fileset>
 			<fileset dir="${BUILD}">
 				<include name="**/*"/>
 			</fileset>

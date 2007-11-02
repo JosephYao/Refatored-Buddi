@@ -17,6 +17,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -155,6 +156,25 @@ public class MainFrame extends MossDocumentFrame {
 			return myBudget.getSelectedBudgetCategories();
 			
 		return new LinkedList<BudgetCategory>();
+	}
+	
+	/**
+	 * Returns all budget categories associated with the currently selected 
+	 * budget period type.  List does not dynamically update, so you should
+	 * not cache the results and expect them to change; call this method 
+	 * again if you need to access the data again.
+	 * @return
+	 */
+	public List<BudgetCategory> getBudgetCategoriesInSelectedPeriod(){
+		List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>();
+		BudgetCategoryType periodType = myBudget.getTreeTableModel().getSelectedBudgetPeriodType();
+		
+		for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
+			if (bc.getBudgetPeriodType().equals(periodType))
+				budgetCategories.add(bc);
+		}
+		
+		return budgetCategories;
 	}
 	
 	public MyAccountsPanel getMyAccountsPanel(){

@@ -85,16 +85,18 @@ public class AccountImpl extends SourceImpl implements Account {
 		List<Transaction> transactions = getDocument().getTransactions(this);
 
 		for (Transaction transaction : transactions) {
-			try {
+			try {				
 				//We are moving money *to* this account
 				if (transaction.getTo().equals(this)){
-					balance = balance + transaction.getAmount();
+					if (!transaction.isDeleted())
+						balance = balance + transaction.getAmount();
 					transaction.setBalanceTo(balance);
 				}
 
 				//We are moving money *from* this account
 				else{
-					balance = balance - transaction.getAmount();
+					if (!transaction.isDeleted())
+						balance = balance - transaction.getAmount();
 					transaction.setBalanceFrom(balance);
 				}
 			}

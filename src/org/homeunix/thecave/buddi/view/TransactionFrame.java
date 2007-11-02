@@ -84,9 +84,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JComboBox clearedFilterComboBox;
 	private final JComboBox reconciledFilterComboBox;
 	private final JLabel overdraftCreditLimit;
-	
-	private final JLabel balancesLabel;
-	private final JLabel filteredSumsLabel;
+
+	private final JLabel balancesAndSumsLabel;
 	private final JLabel accountBalance;
 	private final JLabel clearedBalance;
 	private final JLabel reconciledBalance;
@@ -95,7 +94,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JLabel notClearedSum;
 	private final JLabel notReconciledSum;
 	private final JPanel totalPanel;
-	
+
 	private final TransactionListModel listModel;
 
 	private final Account associatedAccount;
@@ -117,13 +116,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		overdraftCreditLimit = new JLabel();
 
 		totalPanel = new JPanel(new BorderLayout());
-		
+
 		dateFilterComboBox = new JComboBox();
 		clearedFilterComboBox = new JComboBox();
 		reconciledFilterComboBox = new JComboBox();
-		
-		balancesLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.BALANCE_LABEL));
-		filteredSumsLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.FILTERED_SUM_LABEL));
+
+		balancesAndSumsLabel = new JLabel();
 		accountBalance = new JLabel();
 		clearedBalance = new JLabel();
 		reconciledBalance = new JLabel();
@@ -267,25 +265,25 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		notClearedSum.setHorizontalAlignment(JLabel.RIGHT);
 		reconciledSum.setHorizontalAlignment(JLabel.RIGHT);
 		notReconciledSum.setHorizontalAlignment(JLabel.RIGHT);
-		
-		
+
+
 		JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		topRightPanel.add(clearedFilterComboBox);
 		topRightPanel.add(reconciledFilterComboBox);
 		topRightPanel.add(dateFilterComboBox);
 		topRightPanel.add(searchField);
-		
+
 		JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		topLeftPanel.add(overdraftCreditLimit);
-		
+
 		JPanel topPanelHolder = new JPanel(new BorderLayout());
 //		topPanelHolder.add(topLeftPanel, BorderLayout.NORTH);
 		topPanelHolder.add(topRightPanel, BorderLayout.SOUTH);
-		
+
 		final JXCollapsiblePane topCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
 		topCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isSearchPaneVisible());
 		topCollapsiblePanel.add(topPanelHolder, BorderLayout.CENTER);
-		
+
 		final Icon collapsed = UIManager.getIcon("Tree.collapsedIcon");
 		final Icon expanded = UIManager.getIcon("Tree.expandedIcon");
 		final JLabel searchCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
@@ -298,50 +296,49 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					searchCheck.setIcon(expanded);
 				boolean hide = searchCheck.getIcon().equals(collapsed);
 				topCollapsiblePanel.setCollapsed(hide);
-				
+
 				PrefsModel.getInstance().setSearchPaneVisible(!hide);
 			}
 		});
-		
+
 		JPanel spacerPanel = new JPanel(new BorderLayout());
 		spacerPanel.add(topCollapsiblePanel, BorderLayout.NORTH);
-		
+
 		JPanel topPanel = new JPanel(new BorderLayout());
 		topPanel.add(searchCheck, BorderLayout.WEST);
 		topPanel.add(topLeftPanel, BorderLayout.NORTH);
 		topPanel.add(spacerPanel, BorderLayout.CENTER);		
-		
+
 		JPanel informationLabelsPanel = new JPanel(new VerticalLayout());
-		informationLabelsPanel.add(balancesLabel);
-		informationLabelsPanel.add(filteredSumsLabel);
-		informationLabelsPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
-		
+		informationLabelsPanel.add(balancesAndSumsLabel);
+//		informationLabelsPanel.add(new JLabel(" "));
+
 		JPanel accountInformationPanel = new JPanel(new VerticalLayout());
 		accountInformationPanel.add(accountBalance);
-		accountInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
-		
+//		accountInformationPanel.add(new JLabel(" "));
+
 		JPanel clearedInformationPanel = new JPanel(new VerticalLayout());
 		clearedInformationPanel.add(clearedBalance);
 		clearedInformationPanel.add(clearedSum);
 		clearedInformationPanel.add(notClearedSum);
-		clearedInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
-		
+
 		JPanel reconciledInformationPanel = new JPanel(new VerticalLayout());
 		reconciledInformationPanel.add(reconciledBalance);
 		reconciledInformationPanel.add(reconciledSum);
 		reconciledInformationPanel.add(notReconciledSum);
-		reconciledInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
-		
+
 		JPanel clearedReconcileInformationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		clearedReconcileInformationPanel.add(informationLabelsPanel);
-		clearedReconcileInformationPanel.add(accountInformationPanel);
 		clearedReconcileInformationPanel.add(reconciledInformationPanel);
 		clearedReconcileInformationPanel.add(clearedInformationPanel);
-		
+		clearedReconcileInformationPanel.add(accountInformationPanel);
+		clearedReconcileInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
+		clearedReconcileInformationPanel.setAlignmentX(JLabel.TOP_ALIGNMENT);
+
 		final JXCollapsiblePane bottomCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
 		bottomCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isTotalPaneVisible());
 		bottomCollapsiblePanel.add(clearedReconcileInformationPanel, BorderLayout.CENTER);
-		
+
 		final JLabel totalCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
 		totalCheck.setVerticalAlignment(JLabel.TOP);
 		totalCheck.addMouseListener(new MouseAdapter(){
@@ -352,14 +349,14 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					totalCheck.setIcon(expanded);
 				boolean hide = totalCheck.getIcon().equals(collapsed);
 				bottomCollapsiblePanel.setCollapsed(hide);
-				
+
 				PrefsModel.getInstance().setTotalPaneVisible(!hide);
 			}
 		});
-		
+
 		JPanel totalSpacerPanel = new JPanel(new BorderLayout());
 		totalSpacerPanel.add(bottomCollapsiblePanel, BorderLayout.NORTH);
-		
+
 		totalPanel.add(totalCheck, BorderLayout.WEST);
 		totalPanel.add(totalSpacerPanel, BorderLayout.CENTER);
 
@@ -381,7 +378,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel scrollPanel = new JPanel(new BorderLayout());
 		scrollPanel.add(listScroller, BorderLayout.CENTER);
 		scrollPanel.add(transactionEditor, BorderLayout.SOUTH);
-		
+
 		JPanel mainPanel = new JPanel(); 
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(scrollPanel, BorderLayout.CENTER);
@@ -418,10 +415,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		dateFilterComboBox.setModel(new DefaultComboBoxModel(TransactionDateFilterKeys.values()));
 		dateFilterComboBox.setRenderer(new TranslatorListCellRenderer());
-		
+
 		clearedFilterComboBox.setModel(new DefaultComboBoxModel(TransactionClearedFilterKeys.values()));
 		clearedFilterComboBox.setRenderer(new TranslatorListCellRenderer());
-		
+
 		reconciledFilterComboBox.setModel(new DefaultComboBoxModel(TransactionReconciledFilterKeys.values()));
 		reconciledFilterComboBox.setRenderer(new TranslatorListCellRenderer());
 
@@ -583,17 +580,17 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		super.closeWindowWithoutPrompting();
 	}
-	
+
 	@Override
 	public void updateContent() {
 		super.updateContent();
-		
+
 		if (associatedAccount != null
 				&& associatedAccount.getOverdraftCreditLimit() > 0
 				&& ((PrefsModel.getInstance().isShowOverdraft() 
 						&& !associatedAccount.getAccountType().isCredit())
-				|| (PrefsModel.getInstance().isShowCreditRemaining() 
-						&& associatedAccount.getAccountType().isCredit()))){
+						|| (PrefsModel.getInstance().isShowCreditRemaining() 
+								&& associatedAccount.getAccountType().isCredit()))){
 			long amountLeft;
 			amountLeft = (associatedAccount.getOverdraftCreditLimit() + associatedAccount.getBalance());
 			double percentLeft = ((double) amountLeft) / associatedAccount.getOverdraftCreditLimit() * 100.0;
@@ -605,10 +602,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							(associatedAccount.getAccountType().isCredit() ? 
 									BuddiKeys.AVAILABLE_CREDIT 
 									: BuddiKeys.AVAILABLE_FUNDS)))
-			.append(": ")
-			.append(InternalFormatter.isRed(associatedAccount, amountLeft) ? "<font color='red'>" : "")
-			.append(TextFormatter.getFormattedCurrency(amountLeft))
-			.append(InternalFormatter.isRed(associatedAccount, (long) percentLeft) ? "</font>" : "");
+									.append(": ")
+									.append(InternalFormatter.isRed(associatedAccount, amountLeft) ? "<font color='red'>" : "")
+									.append(TextFormatter.getFormattedCurrency(amountLeft))
+									.append(InternalFormatter.isRed(associatedAccount, (long) percentLeft) ? "</font>" : "");
 			if (associatedAccount.getAccountType().isCredit()){
 				sb.append(" (")
 				.append(Formatter.getDecimalFormat().format(percentLeft))
@@ -627,68 +624,72 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setToolTipText("");
 			overdraftCreditLimit.setVisible(false);
 		}
-		
+
 		//Update the cleared totals at the bottom
-		if (associatedAccount != null){
+		if (associatedSource != null){
 			long clearedTotal, notClearedTotal = 0;
-			
+
 			//If the list is filtered, we will show the SUM of cleared.
-			if (listModel.isListFiltered())
+			if (associatedAccount == null || listModel.isListFiltered())
 				clearedTotal = 0;
 			//If the list is not filtered, we will show the BALANCE of cleared.
 			else
 				clearedTotal = associatedAccount.getStartingBalance();
 
 			for (Transaction t : listModel) {
-				if (t.getFrom().equals(associatedAccount)){
-					if (t.isClearedFrom())
-						clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-					else
-						notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-				}
-				else if (t.getTo().equals(associatedAccount)){
-					if (t.isClearedTo())
-						clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));						
-					else
-						notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-				}
-				else {
-					Log.emergency("Neither TO nor FROM equals the associated account.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedAccount is " + associatedAccount);
+				if (!t.isDeleted()){
+					if (t.getFrom().equals(associatedSource)){
+						if (t.isClearedFrom())
+							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+						else
+							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+					}
+					else if (t.getTo().equals(associatedSource)){
+						if (t.isClearedTo())
+							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));						
+						else
+							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+					}
+					else {
+						Log.emergency("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
+					}
 				}
 			}
-			
+
 			clearedBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedTotal) + "</html>");
 			clearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedTotal) + "</html>");
 			notClearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_CLEARED) + " " + TextFormatter.getFormattedCurrency(notClearedTotal) + "</html>");
 		}
-		
-		
+
+
 		//Update the reconciled totals at the bottom
-		if (associatedAccount != null){
+		if (associatedSource != null){
 			long reconciledTotal, notReconciledTotal = 0;
-			
+
 			//If the list is filtered, we will show the SUM of reconciled.
-			if (listModel.isListFiltered())
+			if (associatedAccount == null || listModel.isListFiltered())
 				reconciledTotal = 0;
 			//If the list is not filtered, we will show the BALANCE of reconciled.
 			else
 				reconciledTotal = associatedAccount.getStartingBalance();
-			
+
 			for (Transaction t : listModel) {
-				if (t.getFrom().equals(associatedAccount)){
-					if (t.isReconciledFrom())
-						reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-					else
-						notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-				}
-				else if (t.getTo().equals(associatedAccount)){
-					if (t.isReconciledTo())
-						reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-					else
-						notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-				}
-				else {
-					Log.emergency("Neither TO nor FROM equals the associated account.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedAccount is " + associatedAccount);
+				if (!t.isDeleted()){
+					if (t.getFrom().equals(associatedSource)){
+						if (t.isReconciledFrom())
+							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+						else
+							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+					}
+					else if (t.getTo().equals(associatedSource)){
+						if (t.isReconciledTo())
+							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+						else
+							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+					}
+					else {
+						Log.emergency("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
+					}
 				}
 			}
 
@@ -696,35 +697,49 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			reconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledTotal) + "</html>");
 			notReconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_RECONCILED) + " " + TextFormatter.getFormattedCurrency(notReconciledTotal) + "</html>");
 		}		
-		
-		accountBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_ACCOUNT) + " " + TextFormatter.getFormattedCurrency(associatedAccount.getBalance()) + "</html>");
-		
+
+		if (associatedAccount != null)
+			accountBalance.setText("<html><b>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_ACCOUNT) + " " + TextFormatter.getFormattedCurrency(associatedAccount.getBalance()) + "</b></html>");
+
 		//Set visibility of totals
 
 		//Labels
-		balancesLabel.setVisible(!listModel.isListFiltered());
-		filteredSumsLabel.setVisible((PrefsModel.getInstance().isShowReconciled() || PrefsModel.getInstance().isShowCleared()) && listModel.isListFiltered());
+		boolean sum = false, balance = false;
+		if (listModel.isListFiltered()){
+			balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.FILTERED_SUM_LABEL));
+			sum = true;
+		}
+		else{
+			if (associatedAccount == null){
+				balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.SUM_LABEL));
+				sum = true;
+			}
+			else{
+				balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.BALANCE_LABEL));
+				balance = true;
+			}
+		}
 
 		//Account
-		accountBalance.setVisible(!listModel.isListFiltered());
+		accountBalance.setVisible(balance);
 
 		//Reconciled
-		reconciledBalance.setVisible(PrefsModel.getInstance().isShowReconciled() && !listModel.isListFiltered());
-		reconciledSum.setVisible(PrefsModel.getInstance().isShowReconciled() && listModel.isListFiltered());
-		notReconciledSum.setVisible(PrefsModel.getInstance().isShowReconciled() && listModel.isListFiltered());
+		reconciledBalance.setVisible(balance);
+		reconciledSum.setVisible(sum);
+		notReconciledSum.setVisible(sum);
 
 		//Cleared
-		clearedBalance.setVisible(PrefsModel.getInstance().isShowCleared() && !listModel.isListFiltered());
-		clearedSum.setVisible(PrefsModel.getInstance().isShowCleared() && listModel.isListFiltered());
-		notClearedSum.setVisible(PrefsModel.getInstance().isShowCleared() && listModel.isListFiltered());
+		clearedBalance.setVisible(balance);
+		clearedSum.setVisible(sum);
+		notClearedSum.setVisible(sum);
 
 		//Everything
-		totalPanel.setVisible(associatedAccount != null);
-		
+		totalPanel.setVisible(sum || balance);
+
 		//Set visibility of filters
 		clearedFilterComboBox.setVisible(PrefsModel.getInstance().isShowCleared());
 		reconciledFilterComboBox.setVisible(PrefsModel.getInstance().isShowReconciled());
-		
+
 		this.repaint();
 	}
 
@@ -741,6 +756,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			recordButton.setText(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_UPDATE));
 			clearButton.setText(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NEW));
 			deleteButton.setEnabled(true);
+		}
+		
+		if (list.getSelectedValue() instanceof Transaction){
+			if (((Transaction) list.getSelectedValue()).isDeleted())
+				deleteButton.setText(TextFormatter.getTranslation(ButtonKeys.BUTTON_UNDELETE));
+			else
+				deleteButton.setText(TextFormatter.getTranslation(ButtonKeys.BUTTON_DELETE));
 		}
 	}
 
@@ -989,7 +1011,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			transactionEditor.resetSelection();
 			transactionEditor.setChanged(false);
-			
+
 			this.updateContent();
 			parent.updateContent();
 
@@ -1020,49 +1042,96 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			}
 		}
 		else if (e.getSource().equals(deleteButton)){
-			String[] options = new String[2];
-			options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_YES);
-			options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
-
-			if (JOptionPane.showOptionDialog(
-					TransactionFrame.this, 
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION_LOSE_CHANGES),
-					PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION),
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					options,
-					options[0]) == JOptionPane.YES_OPTION){
-
+			if (deleteButton.getText().equals(TextFormatter.getTranslation(ButtonKeys.BUTTON_UNDELETE))){
 				Transaction t = (Transaction) list.getSelectedValue();
-				int position = list.getSelectedIndex();
 				try {
-					((Document) getDocument()).removeTransaction(t);
-					((Document) getDocument()).updateAllBalances();
-//					baseModel.remove(t, listModel);
+					t.setDeleted(false);
+				}
+				catch (InvalidValueException ive){
+					Log.error(ive);
+				}
+				
+				((Document) getDocument()).updateAllBalances();
+				updateContent();
+				this.repaint();
+			}
+			else if (deleteButton.getText().equals(TextFormatter.getTranslation(ButtonKeys.BUTTON_DELETE))){
+				String[] options = new String[3];
+				options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_VOID);
+				options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_DELETE);
+				options[2] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL);
 
-//					updateAllTransactionWindows();
-					updateButtons();
-//					MainFrame.getInstance().getAccountListPanel().updateContent();
+				int deleteVoid = JOptionPane.showOptionDialog(
+						TransactionFrame.this, 
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION_OR_VOID_TRANSACTION),
+						PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION),
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						options,
+						options[0]);
 
-					list.setSelectedIndex(position);
+				//No means to Delete
+				if (deleteVoid == JOptionPane.NO_OPTION){
+					options = new String[2];
+					options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_YES);
+					options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
+
+					if (JOptionPane.showOptionDialog(
+							TransactionFrame.this, 
+							PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION_LOSE_CHANGES),
+							PrefsModel.getInstance().getTranslator().get(BuddiKeys.DELETE_TRANSACTION),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							options,
+							options[0]) == JOptionPane.YES_OPTION){
+
+						Transaction t = (Transaction) list.getSelectedValue();
+						int position = list.getSelectedIndex();
+						try {
+							((Document) getDocument()).removeTransaction(t);
+							((Document) getDocument()).updateAllBalances();
+//							baseModel.remove(t, listModel);
+
+//							updateAllTransactionWindows();
+							updateButtons();
+//							MainFrame.getInstance().getAccountListPanel().updateContent();
+
+							list.setSelectedIndex(position);
+							if (list.getSelectedValue() instanceof Transaction){
+								t = (Transaction) list.getSelectedValue();
+								transactionEditor.setTransaction(t, true);
+								list.ensureIndexIsVisible(position);
+							}
+							else{
+								transactionEditor.setTransaction(null, true);
+								list.clearSelection();
+							}
+
+							transactionEditor.setChanged(false);
+						}
+						catch (ModelException me){
+							me.printStackTrace(Log.getPrintStream());
+						}
+					}
+				}
+				//Yes is to Void.
+				else if (deleteVoid == JOptionPane.YES_OPTION){
 					if (list.getSelectedValue() instanceof Transaction){
-						t = (Transaction) list.getSelectedValue();
-						transactionEditor.setTransaction(t, true);
-						list.ensureIndexIsVisible(position);
+						Transaction t = (Transaction) list.getSelectedValue();
+						try {
+							t.setDeleted(true);
+						}
+						catch (InvalidValueException ive){
+							Log.error(ive);
+						}
+						
+						((Document) getDocument()).updateAllBalances();
+						updateContent();
+						this.repaint();
 					}
-					else{
-						transactionEditor.setTransaction(null, true);
-						list.clearSelection();
-					}
-
-					transactionEditor.setChanged(false);
 				}
-				catch (ModelException me){
-					me.printStackTrace(Log.getPrintStream());
-				}
-
-//				DocumentController.saveFileSoon();
 			}
 		}
 	}
@@ -1082,11 +1151,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private Document getDataModel(){
 		return (Document) getDocument();
 	}
-	
+
 	public void fireStructureChanged(){
 		parent.fireStructureChanged();
 	}
-	
+
 	/**
 	 * Returns the associated account.  If this transaction frame was opened 
 	 * by double clicking on an account, this will be the account which was
@@ -1098,7 +1167,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	public Account getAssociatedAccount(){
 		return associatedAccount;
 	}
-	
+
 	/**
 	 * Returns the associated source.  If this transaction frame was opened 
 	 * by double clicking on an account, this will be the account which was

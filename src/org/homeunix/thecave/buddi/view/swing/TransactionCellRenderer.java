@@ -79,67 +79,8 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		else {
 			transaction = null;
 		}
-
-//		//If the size has changed, adjust the allowed lengths of strings
-//		// We do this by creating a 'worst case' string, consisting of
-//		// X's.  We measure the length of this string, in the current
-//		// font and size, against the available width which we have.
-//		if (this.lastWidth != list.getWidth() && this.getGraphics() != null){
-//			//On the top line, we allocate 150px for date; the description
-//			// can take up to (width - 150)px.
-//			FontMetrics fm = this.getGraphics().getFontMetrics();
-//			String test = "XXXXX";
-//			for(; fm.stringWidth(test) < (list.getWidth() - 150); test += "X"){
-//				descriptionLength = test.length() / 2;
-//				currentDescriptionLength = descriptionLength;
-//			}
-//
-//			//On the bottom line, we allocate 300px for all of the
-//			// balances, and 50 for the C R; 
-//			// We can take up to (width - 300)px for the toFrom field.
-//			//Since we use each of these separately, we divide by two first.
-//			int widthDifference = (account == null ? 100 : 300);
-//			test = "XXX";
-//			for(; fm.stringWidth(test) < (list.getWidth() - widthDifference); test += "X"){
-//				toFromLength = test.length();
-//			}
-//
-//			if (Const.DEVEL) Log.debug("Recalculated string sizes to " + descriptionLength + " and " + toFromLength);
-//
-//			lastWidth = list.getWidth();
-//
-//			//Make this big enough to have two lines of text.
-////			this.setPreferredSize(new Dimension(200, (this.getGraphics() != null ? (int) (this.getGraphics().getFontMetrics().getHeight() * 2.2) : 40)));
-//		}
 		
 		maxDescriptionLength = list.getWidth() - 230;
-//		maxToFromLength = list.getWidth() - (account == null ? 150 : 400);
-		
-		//Calculate the size every time... this will get as many characters into the description
-		// as possible, with the possible problem of slowing down execution a little bit...
-//		if (this.getGraphics() != null){
-//			//On the top line, we allocate 150px for date; the description
-//			// can take up to (width - 150)px.
-//			FontMetrics fm = this.getGraphics().getFontMetrics();
-//			int widthDifference = 230;
-//			String test = transaction.getDescription();
-//			for(int i = 5; i <= test.length() && fm.stringWidth(test.substring(0, i)) < list.getWidth() - widthDifference; i++){				
-//				descriptionLength = i;
-//			}
-//
-//			//On the bottom line, we allocate 350px for all of the
-//			// balances, and 50 for the C R; 
-//			// We can take up to (width - 400)px for the toFrom field.
-//			widthDifference = (account == null ? 150 : 400);
-//			test = transaction.getFrom().getFullName() + "       " + transaction.getTo().getFullName();
-//			for(int i = 10; i <= test.length() && fm.stringWidth(test.substring(0, i)) < (list.getWidth() - widthDifference); i++){
-//				toFromLength = i;
-//			}
-//		}
-//		else {
-//			descriptionLength = 100;
-//			toFromLength = 100;
-//		}
 
 		return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
 	}
@@ -272,6 +213,11 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			g.setFont(f);
 			g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TO), arrowOffset, bottomRowYPos);
 
+			if (transaction.isDeleted()){
+				g.setFont(new Font(f.getName(), Font.BOLD, (int) (f.getSize() * 2.5)));
+				g.setColor(new Color(0, 0, 0, 64));
+				g.drawString(TextFormatter.getTranslation(BuddiKeys.VOID_TRANSACTION), maxDescriptionLength / 2, (int) (f.getSize() * 2.5 + 2));
+			}
 		}
 	}
 }

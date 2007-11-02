@@ -39,6 +39,8 @@ public interface Transaction extends ModelObject {
 	
 	public boolean isScheduled();
 	
+	public boolean isDeleted();
+	
 	public void setAmount(long amount);
 	
 	void setBalanceFrom(long balanceFrom) throws InvalidValueException;
@@ -66,4 +68,6 @@ public interface Transaction extends ModelObject {
 	public void setScheduled(boolean scheduled) throws InvalidValueException;
 	
 	public void setTo(Source to) throws InvalidValueException;
+	
+	public void setDeleted(boolean deleted) throws InvalidValueException;
 }
