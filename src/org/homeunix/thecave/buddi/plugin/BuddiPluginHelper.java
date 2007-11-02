@@ -69,14 +69,14 @@ public class BuddiPluginHelper {
 
 //		intervals.add(null);
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), -7)),
-				DateFunctions.getEndOfDay(new Date()),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_PAST_WEEK)
+				DateFunctions.getStartOfWeek(new Date()),
+				DateFunctions.getEndOfWeek(new Date()),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_WEEK)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), -14)),
-				DateFunctions.getStartOfDay(DateFunctions.addDays(new Date(), 0)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_PAST_FORTNIGHT)
+				DateFunctions.getStartOfWeek(DateFunctions.addDays(new Date(), -7)),
+				DateFunctions.getEndOfWeek(DateFunctions.addDays(new Date(), -7)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_WEEK)
 		));
 		intervals.add(new DateChoice(
 				DateFunctions.getStartOfDay(DateFunctions.getStartOfMonth(new Date())),
@@ -108,8 +108,6 @@ public class BuddiPluginHelper {
 				DateFunctions.getEndOfDay(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_YEAR_TO_DATE)
 		));
-
-
 		intervals.add(new DateChoice(
 				DateFunctions.addYears(DateFunctions.getStartOfYear(new Date()), -1),
 				DateFunctions.addYears(DateFunctions.getEndOfYear(new Date()), -1),
@@ -138,18 +136,18 @@ public class BuddiPluginHelper {
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -8)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_WEEK)
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -7)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -30)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_MONTH)
+				DateFunctions.addMonths(new Date(), -1),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_MONTH_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -365)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_YEAR)
+				DateFunctions.addYears(new Date(), -1),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_YEAR_AGO)
 		));
 		endDates.add(new DateChoice(
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_OTHER)
