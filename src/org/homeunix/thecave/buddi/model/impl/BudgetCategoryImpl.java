@@ -212,8 +212,10 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	public void setName(String name) throws InvalidValueException {
 		if (getDocument() != null){
 			for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
-				if (bc.getName().equals(name) && !bc.equals(this))
-					throw new InvalidValueException("The budget category name must be unique");
+				if (bc.getName().equalsIgnoreCase(this.getName())
+						&& ((bc.getParent() == null && this.getParent() == null)
+								|| (bc.getParent() != null && this.getParent() != null && bc.getParent().equals(this.getParent()))))
+					throw new InvalidValueException("The budget category name must be unique for nodes which share the same parent");
 			}
 		}
 		super.setName(name);
@@ -261,6 +263,12 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		throw new DataModelProblemException("Cannot parse date from key " + periodKey);
 	}
 	public String getFullName(){
+		if (getDocument() != null && getParent() != null){
+			for (BudgetCategory bc : getDocument().getBudgetCategories()) {
+				if (bc.getName().equals(this.getName()))
+					return this.getName() + " (" + this.getParent().getFullName() + ")";
+			}
+		}
 		return this.getName();
 	}
 	/**

@@ -712,8 +712,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 			if (object instanceof BudgetCategory){
 				for (BudgetCategory bc : getBudgetCategories()) {
-					if (bc.getFullName().equalsIgnoreCase(((BudgetCategory) object).getFullName()))
-						throw new ModelException("Cannot have multiple budget categories with the same name");
+					//If the two budget categories are both children of the same node (which can be null), 
+					// and the name is the same, throw an exception.
+					if (bc.getName().equalsIgnoreCase(((BudgetCategory) object).getName())
+							&& ((bc.getParent() == null && ((BudgetCategory) object).getParent() == null)
+									|| (bc.getParent() != null && ((BudgetCategory) object).getParent() != null && bc.getParent().equals(((BudgetCategory) object).getParent()))))
+						throw new ModelException("Cannot have multiple budget categories with the same name as children of the same node");
 				}
 			}
 
