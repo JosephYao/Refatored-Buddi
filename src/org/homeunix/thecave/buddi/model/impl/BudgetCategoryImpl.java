@@ -212,7 +212,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	public void setName(String name) throws InvalidValueException {
 		if (getDocument() != null){
 			for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
-				if (bc.getName().equalsIgnoreCase(this.getName())
+				if (bc.getName().equalsIgnoreCase(name)
+						&& !bc.equals(this)
 						&& ((bc.getParent() == null && this.getParent() == null)
 								|| (bc.getParent() != null && this.getParent() != null && bc.getParent().equals(this.getParent()))))
 					throw new InvalidValueException("The budget category name must be unique for nodes which share the same parent");

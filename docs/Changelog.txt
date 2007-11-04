@@ -2,6 +2,7 @@
 -Added feature request #1821378 (Void transactions)
 -Changed the implementation of Account to return 0 if you get the balance before the starting date.  Before it was set to return the starting balance, but this just does not make sense in the reports.  If anyone has a problem with this change, please email me and let me know your situation.
 -Fixed bug #1823787 (Changing transaction dates)
+-Fixed bug #1825143 (Cannot change Budget Category names)
 -Fixed bug #1821626 (Incorrect interval for "This Week" in report pulldown)
 -Fixed bug #1821645 (Incorrect addition of cleared / reconciled)
 -Fixed bug #1823188 (Category duplicate name checks ignore hierarchy)
