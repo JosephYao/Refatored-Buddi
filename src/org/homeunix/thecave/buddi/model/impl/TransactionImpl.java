@@ -19,7 +19,7 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  *
  */
 public class TransactionImpl extends ModelObjectImpl implements Transaction {
-	private Date date;
+	private Day date;
 //	private String dateString;
 	private String description;
 	private String number;
@@ -155,7 +155,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public void setDate(Date date) {
 		if (this.date != null && this.date.equals(date))
 			setChanged();
-		this.date = date;
+		this.date = new Day(date);
 	}
 	public void setDescription(String description) {
 		if (this.description != null && !this.description.equals(description))

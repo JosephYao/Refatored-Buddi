@@ -25,7 +25,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private long overdraftCreditLimit;
-	private Date startDate;
+	private Day startDate;
 	private AccountType type;
 
 	public long getStartingBalance() {
@@ -49,7 +49,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		return startDate;
 	}
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		this.startDate = new Day(startDate);
 	}
 	public long getBalance() {
 		return balance;

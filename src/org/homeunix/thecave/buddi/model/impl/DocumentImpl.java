@@ -502,6 +502,29 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 						new Object[]{DateFunctions.getYear(date), DateFunctions.getMonth(date), DateFunctions.getDay(date)});
 			}
 		});
+		encoder.setPersistenceDelegate(Day.class, new PersistenceDelegate(){
+			@Override
+			protected Expression instantiate(Object oldInstance, Encoder out) {
+				Day date = (Day) oldInstance;
+				return new Expression(
+						date,
+						Day.class,
+						"new",
+						new Object[]{DateFunctions.getYear(date), DateFunctions.getMonth(date), DateFunctions.getDay(date)});
+			}
+		});
+		encoder.setPersistenceDelegate(Time.class, new PersistenceDelegate(){
+			@Override
+			protected Expression instantiate(Object oldInstance, Encoder out) {
+				Time time = (Time) oldInstance;
+				return new Expression(
+						time,
+						Time.class, 
+						"new",
+						new Object[]{time.getTime()});
+			}
+		});
+		
 
 		encoder.writeObject(this);
 		encoder.flush();

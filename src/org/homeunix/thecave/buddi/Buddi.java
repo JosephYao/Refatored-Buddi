@@ -3,7 +3,6 @@
  */
 package org.homeunix.thecave.buddi;
 
-import java.beans.XMLDecoder;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -66,13 +66,13 @@ import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.LookAndFeelUtil;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.ParseCommands;
+import org.homeunix.thecave.moss.util.StreamFunctions;
 import org.homeunix.thecave.moss.util.Version;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
 import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
 import org.homeunix.thecave.moss.util.apple.Application;
 import org.homeunix.thecave.moss.util.apple.ApplicationAdapter;
 import org.homeunix.thecave.moss.util.apple.ApplicationEvent;
-import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
 import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -936,20 +936,13 @@ public class Buddi {
 			while (true) {
 				try {
 					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
+					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".raw_output"));
+					StreamFunctions.copyInputStreamToOutputStream(is, os);
+					
+					os.flush();
+					os.close();
+					is.close();					
 
-					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
-					XMLDecoder decoder = new XMLDecoder(is);
-					Object o = decoder.readObject();
-					if (o instanceof DocumentImpl){
-						DocumentImpl document = (DocumentImpl) o;
-						FileOutputStream fos = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".raw_output"));
-						document.saveToStream(fos);
-						fos.close();
-					}
-					else {
-						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
-					}
-					is.close();
 					System.exit(0);
 				}
 				catch (IncorrectPasswordException ipe){

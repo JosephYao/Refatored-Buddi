@@ -19,9 +19,9 @@ import org.homeunix.thecave.buddi.model.Transaction;
 public class ScheduledTransactionImpl extends TransactionImpl implements ScheduledTransaction {
 	
 	//Scheduling Information
-	private Date startDate;
-	private Date endDate;
-	private Date lastDayCreated;
+	private Day startDate;
+	private Day endDate;
+	private Day lastDayCreated;
 
 	//Frequency and timing
 	private String frequencyType;
@@ -71,7 +71,7 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 		return startDate;
 	}
 	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+		this.endDate = new Day(endDate);
 		setChanged();
 	}
 	public void setFrequencyType(String frequencyType) {
@@ -79,7 +79,7 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 		setChanged();
 	}
 	public void setLastDayCreated(Date lastDayCreated) {
-		this.lastDayCreated = lastDayCreated;
+		this.lastDayCreated = new Day(lastDayCreated);
 		setChanged();
 	}
 	public void setMessage(String message) {
@@ -103,7 +103,7 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 		setChanged();
 	}
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		this.startDate = new Day(startDate);
 		setChanged();
 	}
 }
