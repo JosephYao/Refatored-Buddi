@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	BALANCES_LABEL,
 	DELETE_TRANSACTION_OR_VOID_TRANSACTION,
 	VOID_TRANSACTION,
 	SUM_LABEL,

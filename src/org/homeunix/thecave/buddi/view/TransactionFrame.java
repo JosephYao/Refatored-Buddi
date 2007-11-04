@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -64,7 +66,6 @@ import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXList;
-import org.jdesktop.swingx.VerticalLayout;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
 public class TransactionFrame extends MossAssociatedDocumentFrame implements ActionListener {
@@ -85,7 +86,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final JComboBox reconciledFilterComboBox;
 	private final JLabel overdraftCreditLimit;
 
-	private final JLabel balancesAndSumsLabel;
+	private final JLabel balancesLabel;
+	private final JLabel sumsLabel;
 	private final JLabel accountBalance;
 	private final JLabel clearedBalance;
 	private final JLabel reconciledBalance;
@@ -121,7 +123,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		clearedFilterComboBox = new JComboBox();
 		reconciledFilterComboBox = new JComboBox();
 
-		balancesAndSumsLabel = new JLabel();
+		balancesLabel = new JLabel();
+		sumsLabel = new JLabel();
 		accountBalance = new JLabel();
 		clearedBalance = new JLabel();
 		reconciledBalance = new JLabel();
@@ -258,6 +261,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		clearedFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(clearedFilterComboBox));
 		reconciledFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(reconciledFilterComboBox));
 
+		balancesLabel.setHorizontalAlignment(JLabel.RIGHT);
+		sumsLabel.setHorizontalAlignment(JLabel.RIGHT);
 		accountBalance.setHorizontalAlignment(JLabel.RIGHT);
 		clearedBalance.setHorizontalAlignment(JLabel.RIGHT);
 		reconciledBalance.setHorizontalAlignment(JLabel.RIGHT);
@@ -304,42 +309,90 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		JPanel spacerPanel = new JPanel(new BorderLayout());
 		spacerPanel.add(topCollapsiblePanel, BorderLayout.NORTH);
 
+		JPanel informationPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		
+		gbc.gridx = 0;
+		informationPanel.add(sumsLabel, gbc);
+		
+		gbc.gridx = 1;
+		informationPanel.add(clearedSum, gbc);
+		
+		gbc.gridx = 2;
+		informationPanel.add(reconciledSum, gbc);
+
+		//Second row
+		gbc.gridy = 1;
+		
+		gbc.gridx = 1;
+		informationPanel.add(notClearedSum, gbc);
+		
+		gbc.gridx = 2;
+		informationPanel.add(notReconciledSum, gbc);
+
+		//Third row
+		gbc.gridy = 2;
+		
+		gbc.gridx = 0;
+		informationPanel.add(balancesLabel, gbc);
+		
+		gbc.gridx = 1;
+		informationPanel.add(clearedBalance, gbc);
+		
+		gbc.gridx = 2;
+		informationPanel.add(reconciledBalance, gbc);
+
+		gbc.gridx = 3;
+		informationPanel.add(accountBalance, gbc);
+
+
+
+		
 		JPanel topPanel = new JPanel(new BorderLayout());
 		topPanel.add(searchCheck, BorderLayout.WEST);
 		topPanel.add(topLeftPanel, BorderLayout.NORTH);
 		topPanel.add(spacerPanel, BorderLayout.CENTER);		
 
-		JPanel informationLabelsPanel = new JPanel(new VerticalLayout());
-		informationLabelsPanel.add(balancesAndSumsLabel);
-//		informationLabelsPanel.add(new JLabel(" "));
+//		JPanel informationLabelsPanel = new JPanel(new BorderLayout());
+//		informationLabelsPanel.add(sumsLabel, BorderLayout.NORTH);
+////		informationLabelsPanel.add(new JLabel(" "));
+//		informationLabelsPanel.add(balancesLabel, BorderLayout.SOUTH);
+//
+//		JPanel accountInformationPanel = new JPanel(new BorderLayout());
+////		accountInformationPanel.add(new JLabel(" "));
+////		accountInformationPanel.add(new JLabel(" "));
+//		accountInformationPanel.add(accountBalance, BorderLayout.SOUTH);
+//
+//		JPanel clearedInformationPanel = new JPanel(new VerticalLayout());
+//		clearedInformationPanel.add(clearedSum);
+//		clearedInformationPanel.add(notClearedSum);
+//		clearedInformationPanel.add(clearedBalance);
+//
+//		JPanel reconciledInformationPanel = new JPanel(new VerticalLayout());
+//		reconciledInformationPanel.add(reconciledSum);
+//		reconciledInformationPanel.add(notReconciledSum);
+//		reconciledInformationPanel.add(reconciledBalance);
+//
+//		JPanel clearedReconcileInformationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//		clearedReconcileInformationPanel.add(informationLabelsPanel);
+//		clearedReconcileInformationPanel.add(reconciledInformationPanel);
+//		clearedReconcileInformationPanel.add(clearedInformationPanel);
+//		clearedReconcileInformationPanel.add(accountInformationPanel);
+//		clearedReconcileInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
+//		clearedReconcileInformationPanel.setAlignmentX(JLabel.TOP_ALIGNMENT);
 
-		JPanel accountInformationPanel = new JPanel(new VerticalLayout());
-		accountInformationPanel.add(accountBalance);
-//		accountInformationPanel.add(new JLabel(" "));
-
-		JPanel clearedInformationPanel = new JPanel(new VerticalLayout());
-		clearedInformationPanel.add(clearedBalance);
-		clearedInformationPanel.add(clearedSum);
-		clearedInformationPanel.add(notClearedSum);
-
-		JPanel reconciledInformationPanel = new JPanel(new VerticalLayout());
-		reconciledInformationPanel.add(reconciledBalance);
-		reconciledInformationPanel.add(reconciledSum);
-		reconciledInformationPanel.add(notReconciledSum);
-
-		JPanel clearedReconcileInformationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		clearedReconcileInformationPanel.add(informationLabelsPanel);
-		clearedReconcileInformationPanel.add(reconciledInformationPanel);
-		clearedReconcileInformationPanel.add(clearedInformationPanel);
-		clearedReconcileInformationPanel.add(accountInformationPanel);
-		clearedReconcileInformationPanel.setAlignmentY(JLabel.TOP_ALIGNMENT);
-		clearedReconcileInformationPanel.setAlignmentX(JLabel.TOP_ALIGNMENT);
-
+		JPanel informationPanelHolder = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		informationPanelHolder.add(informationPanel);
+		
 		final JXCollapsiblePane bottomCollapsiblePanel = new JXCollapsiblePane(new BorderLayout());
 		bottomCollapsiblePanel.setCollapsed(!PrefsModel.getInstance().isTotalPaneVisible());
-		bottomCollapsiblePanel.add(clearedReconcileInformationPanel, BorderLayout.CENTER);
+		bottomCollapsiblePanel.add(informationPanelHolder, BorderLayout.CENTER);
 
-		final JLabel totalCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
+		final JLabel totalCheck = new JLabel(PrefsModel.getInstance().isTotalPaneVisible() ? expanded : collapsed);
 		totalCheck.setVerticalAlignment(JLabel.TOP);
 		totalCheck.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
@@ -627,26 +680,30 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		//Update the cleared totals at the bottom
 		if (associatedSource != null){
-			long clearedTotal, notClearedTotal = 0;
+			long clearedBalanceTotal = 0, clearedTotal = 0, notClearedTotal = 0;
 
 			//If the list is filtered, we will show the SUM of cleared.
-			if (associatedAccount == null || listModel.isListFiltered())
-				clearedTotal = 0;
+//			if (associatedAccount == null || listModel.isListFiltered())
+//				clearedTotal = 0;
 			//If the list is not filtered, we will show the BALANCE of cleared.
-			else
-				clearedTotal = associatedAccount.getStartingBalance();
+			if (associatedAccount != null)
+				clearedBalanceTotal = associatedAccount.getStartingBalance();
 
 			for (Transaction t : listModel) {
 				if (!t.isDeleted()){
 					if (t.getFrom().equals(associatedSource)){
-						if (t.isClearedFrom())
+						if (t.isClearedFrom()){
 							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							clearedBalanceTotal -= t.getAmount();
+						}
 						else
 							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
 					else if (t.getTo().equals(associatedSource)){
-						if (t.isClearedTo())
-							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));						
+						if (t.isClearedTo()){
+							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							clearedBalanceTotal += t.getAmount();
+						}
 						else
 							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
@@ -656,7 +713,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 			}
 
-			clearedBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedTotal) + "</html>");
+			clearedBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedBalanceTotal) + "</html>");
 			clearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedTotal) + "</html>");
 			notClearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_CLEARED) + " " + TextFormatter.getFormattedCurrency(notClearedTotal) + "</html>");
 		}
@@ -664,26 +721,26 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		//Update the reconciled totals at the bottom
 		if (associatedSource != null){
-			long reconciledTotal, notReconciledTotal = 0;
+			long reconciledBalanceTotal = 0, reconciledTotal = 0, notReconciledTotal = 0;
 
-			//If the list is filtered, we will show the SUM of reconciled.
-			if (associatedAccount == null || listModel.isListFiltered())
-				reconciledTotal = 0;
-			//If the list is not filtered, we will show the BALANCE of reconciled.
-			else
-				reconciledTotal = associatedAccount.getStartingBalance();
+			if (associatedAccount != null)
+				reconciledBalanceTotal = associatedAccount.getStartingBalance();
 
 			for (Transaction t : listModel) {
 				if (!t.isDeleted()){
 					if (t.getFrom().equals(associatedSource)){
-						if (t.isReconciledFrom())
+						if (t.isReconciledFrom()){
 							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							reconciledBalanceTotal -= t.getAmount();
+						}
 						else
 							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
 					else if (t.getTo().equals(associatedSource)){
-						if (t.isReconciledTo())
+						if (t.isReconciledTo()){
 							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							reconciledBalanceTotal += t.getAmount();
+						}
 						else
 							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
@@ -693,48 +750,47 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 			}
 
-			reconciledBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledTotal) + "</html>");
+			reconciledBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledBalanceTotal) + "</html>");
 			reconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledTotal) + "</html>");
 			notReconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_RECONCILED) + " " + TextFormatter.getFormattedCurrency(notReconciledTotal) + "</html>");
 		}		
 
-		if (associatedAccount != null)
-			accountBalance.setText("<html><b>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_ACCOUNT) + " " + TextFormatter.getFormattedCurrency(associatedAccount.getBalance()) + "</b></html>");
 
 		//Set visibility of totals
 
 		//Labels
-		boolean sum = false, balance = false;
-		if (listModel.isListFiltered()){
-			balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.FILTERED_SUM_LABEL));
-			sum = true;
-		}
-		else{
-			if (associatedAccount == null){
-				balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.SUM_LABEL));
-				sum = true;
-			}
-			else{
-				balancesAndSumsLabel.setText(TextFormatter.getTranslation(BuddiKeys.BALANCE_LABEL));
-				balance = true;
-			}
-		}
+		boolean accountNotFiltered = associatedAccount != null && !listModel.isListFiltered(); 
+		boolean listFiltered = listModel.isListFiltered();
+		boolean clearedOrReconciled = PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled();
+		
+		if (associatedAccount != null)
+			accountBalance.setText("<html><b>" + (clearedOrReconciled ? TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_ACCOUNT) : "") + " " + TextFormatter.getFormattedCurrency(associatedAccount.getBalance()) + "</b></html>");
+		
+		//Labels
+		if (listFiltered)
+			sumsLabel.setText("<html><b>" + TextFormatter.getTranslation(BuddiKeys.FILTERED_SUM_LABEL) + "</b></html>");
+		else
+			sumsLabel.setText("<html><b>" + TextFormatter.getTranslation(BuddiKeys.SUM_LABEL) + "</b></html>");
+		balancesLabel.setText("<html><b>" + TextFormatter.getTranslation((clearedOrReconciled ? BuddiKeys.BALANCES_LABEL : BuddiKeys.BALANCE_LABEL)) + "</b></html>");
 
+		balancesLabel.setVisible(accountNotFiltered);
+		sumsLabel.setVisible(PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled());
+		
 		//Account
-		accountBalance.setVisible(balance);
+		accountBalance.setVisible(accountNotFiltered);
 
 		//Reconciled
-		reconciledBalance.setVisible(balance);
-		reconciledSum.setVisible(sum);
-		notReconciledSum.setVisible(sum);
+		reconciledBalance.setVisible(accountNotFiltered && PrefsModel.getInstance().isShowReconciled());
+		reconciledSum.setVisible(PrefsModel.getInstance().isShowReconciled());
+		notReconciledSum.setVisible(PrefsModel.getInstance().isShowReconciled());
 
 		//Cleared
-		clearedBalance.setVisible(balance);
-		clearedSum.setVisible(sum);
-		notClearedSum.setVisible(sum);
+		clearedBalance.setVisible(accountNotFiltered && PrefsModel.getInstance().isShowCleared());
+		clearedSum.setVisible(PrefsModel.getInstance().isShowCleared());
+		notClearedSum.setVisible(PrefsModel.getInstance().isShowCleared());
 
 		//Everything
-		totalPanel.setVisible(sum || balance);
+		totalPanel.setVisible(accountNotFiltered || PrefsModel.getInstance().isShowCleared() || PrefsModel.getInstance().isShowReconciled());
 
 		//Set visibility of filters
 		clearedFilterComboBox.setVisible(PrefsModel.getInstance().isShowCleared());
