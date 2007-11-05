@@ -1,3 +1,7 @@
+2.9.15.0
+-Updated Spanish translation (thanks to Rafael Rodriguez and Ignacio Baca for this)
+-Fixed bug #1825681 (Problems with duplicate budget category names, even with different parents)
+
 2.9.14.0 (November 4 2007)
 -Added feature request #1821378 (Void transactions)
 -Changed the implementation of Account to return 0 if you get the balance before the starting date.  Before it was set to return the starting balance, but this just does not make sense in the reports.  If anyone has a problem with this change, please email me and let me know your situation.

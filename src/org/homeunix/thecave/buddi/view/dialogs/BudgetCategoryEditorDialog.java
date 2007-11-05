@@ -236,6 +236,33 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(ok)){
+			
+			for (BudgetCategory oldBudgetCategory : model.getBudgetCategories()) {
+				Object[] options = new Object[2];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+				
+				if (oldBudgetCategory.getName().equals(name.getText())
+						&& (selected == null 
+								|| !selected.equals(oldBudgetCategory))){
+					int reply = JOptionPane.showOptionDialog(
+							this, 
+							TextFormatter.getTranslation(BuddiKeys.DUPLICATE_BUDGET_CATEGORY_NAMES),
+							TextFormatter.getTranslation(BuddiKeys.WARNING),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							options,
+							options[0]);
+					
+					//Give the option to cancel save operation
+					if (reply == JOptionPane.NO_OPTION)
+						return;
+					else if (reply ==JOptionPane.YES_OPTION)
+						break;
+				}
+			}
+			
 			BudgetCategory bc;
 			try {
 				if (selected == null){

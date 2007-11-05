@@ -228,6 +228,33 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(ok)){
+			
+			for (Account oldAccount : model.getAccounts()) {
+				Object[] options = new Object[2];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+				
+				if (oldAccount.getName().equals(name.getText())
+						&& (selected == null 
+								|| !selected.equals(oldAccount))){
+					int reply = JOptionPane.showOptionDialog(
+							this, 
+							TextFormatter.getTranslation(BuddiKeys.DUPLICATE_ACCOUNT_NAMES),
+							TextFormatter.getTranslation(BuddiKeys.WARNING),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							options,
+							options[0]);
+					
+					//Give the option to cancel save operation
+					if (reply == JOptionPane.NO_OPTION)
+						return;
+					else if (reply ==JOptionPane.YES_OPTION)
+						break;
+				}
+			}
+			
 			Account a;
 			try {
 				if (selected == null){

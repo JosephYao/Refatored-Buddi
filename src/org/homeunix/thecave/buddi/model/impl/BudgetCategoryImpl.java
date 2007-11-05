@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
@@ -210,15 +209,15 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	}
 	@Override
 	public void setName(String name) throws InvalidValueException {
-		if (getDocument() != null){
-			for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
-				if (bc.getName().equalsIgnoreCase(name)
-						&& !bc.equals(this)
-						&& ((bc.getParent() == null && this.getParent() == null)
-								|| (bc.getParent() != null && this.getParent() != null && bc.getParent().equals(this.getParent()))))
-					throw new InvalidValueException("The budget category name must be unique for nodes which share the same parent");
-			}
-		}
+//		if (getDocument() != null){
+//			for (BudgetCategory bc : ((Document) getDocument()).getBudgetCategories()) {
+//				if (bc.getName().equalsIgnoreCase(name)
+//						&& !bc.equals(this)
+//						&& ((bc.getParent() == null && this.getParent() == null)
+//								|| (bc.getParent() != null && this.getParent() != null && bc.getParent().equals(this.getParent()))))
+//					throw new InvalidValueException("The budget category name must be unique for nodes which share the same parent");
+//			}
+//		}
 		super.setName(name);
 	}
 	public BudgetCategory getParent() {
