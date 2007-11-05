@@ -1,6 +1,7 @@
 2.9.15.0
 -Updated Spanish translation (thanks to Rafael Rodriguez and Ignacio Baca for this)
 -Fixed bug #1825681 (Problems with duplicate budget category names, even with different parents)
+-Fixed bug #1821645 (Incorrect addition of cleared / reconciled)
 
 2.9.14.0 (November 4 2007)
 -Added feature request #1821378 (Void transactions)
