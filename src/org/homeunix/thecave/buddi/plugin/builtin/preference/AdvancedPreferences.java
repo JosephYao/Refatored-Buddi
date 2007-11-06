@@ -16,21 +16,27 @@ import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
+import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
+import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 
 public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
 
 	private final JComboBox numberOfBackups;
+	private final JComboBox transactionCellRenderer;
 	private final JComboBox autosavePeriod;
 	private final JCheckBox showPromptForDataFile;
 	private final JCheckBox sendCrashReport;
 	private final JCheckBox showUpdateNotifications;
 	private final JCheckBox hideNegativeSign;
-
+	
 	
 	public AdvancedPreferences() {
+		transactionCellRenderer = new JComboBox(new BackedComboBoxModel<BuddiTransactionCellRendererPlugin>(BuddiPluginFactory.getTransactionCellRendererPlugins()));
 		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
 		autosavePeriod = new JComboBox(new Integer[]{15, 30, 60, 120, 300});
 		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP));
@@ -58,6 +64,24 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 			}
 		});
 		
+		transactionCellRenderer.setRenderer(new DefaultListCellRenderer(){
+			public static final long serialVersionUID = 0;
+			
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				
+				if (value instanceof BuddiTransactionCellRendererPlugin){
+					this.setText(((BuddiTransactionCellRendererPlugin) value).getName());
+				}
+				else {
+					this.setText(" ");
+				}
+				
+				return this;
+			}
+		});
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
@@ -70,15 +94,23 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		JPanel checkForUpdatesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel hideNegativePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel transactionCellRendererPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		JLabel autosavePeriodLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.AUTOSAVE_PERIOD));
 		JLabel numberOfBackupsLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.NUMBER_OF_BACKUPS));
+		JLabel transactionCellRendererLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.TRANSACTION_CELL_RENDERER));
+
+		transactionCellRendererPanel.add(transactionCellRendererLabel);
+		transactionCellRendererPanel.add(transactionCellRenderer);
 		
 		autosavePeriodPanel.add(autosavePeriodLabel);
 		autosavePeriodPanel.add(autosavePeriod);
 		
 		numberOfBackupsPanel.add(numberOfBackupsLabel);
 		numberOfBackupsPanel.add(numberOfBackups);
+		
+		transactionCellRendererPanel.add(transactionCellRendererLabel);
+		transactionCellRendererPanel.add(transactionCellRenderer);
 		
 		promptForDataFilePanel.add(showPromptForDataFile);
 		checkForUpdatesPanel.add(showUpdateNotifications);
@@ -88,6 +120,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 				
 		panel.add(autosavePeriodPanel);
 		panel.add(numberOfBackupsPanel);
+		panel.add(transactionCellRendererPanel);
 		panel.add(editLanguagesPanel);
 		panel.add(editTypesPanel);
 		panel.add(updatePanel);
@@ -100,6 +133,15 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	}
 	
 	public void load() {
+		BuddiTransactionCellRendererPlugin renderer = new DefaultTransactionCellRenderer();
+		for (BuddiTransactionCellRendererPlugin r : BuddiPluginFactory.getTransactionCellRendererPlugins()) {
+			if (r.getClass().getCanonicalName().equals(PrefsModel.getInstance().getTransactionCellRenderer())){
+				renderer = r;
+				break;
+			}
+		}
+		
+		transactionCellRenderer.setSelectedItem(renderer);
 		autosavePeriod.setSelectedItem(PrefsModel.getInstance().getAutosaveDelay());
 		numberOfBackups.setSelectedItem(PrefsModel.getInstance().getNumberOfBackups());
 		showPromptForDataFile.setSelected(PrefsModel.getInstance().isShowPromptAtStartup());
@@ -109,6 +151,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	}
 
 	public boolean save() {
+		PrefsModel.getInstance().setTransactionCellRenderer(transactionCellRenderer.getSelectedItem().getClass().getCanonicalName());
 		PrefsModel.getInstance().setAutosaveDelay((Integer) autosavePeriod.getSelectedItem());
 		PrefsModel.getInstance().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
 		PrefsModel.getInstance().setShowPromptAtStartup(showPromptForDataFile.isSelected());

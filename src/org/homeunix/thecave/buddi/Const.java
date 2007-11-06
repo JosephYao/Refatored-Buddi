@@ -11,6 +11,8 @@ import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
+import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.SimpleTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.imports.ImportLegacyData;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.AdvancedPreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.LocalePreferences;
@@ -216,6 +218,15 @@ public class Const {
 	public static final String[] BUILT_IN_RUNNABLES = {
 //		SkinChangerPlugin.class.getCanonicalName(),
 	};
-		
+	
+	//Built in transaction cell renderers
+	public static final String[] BUILT_IN_TRANSACTION_CELL_RENDERERS = {
+		DefaultTransactionCellRenderer.class.getCanonicalName(),
+		SimpleTransactionCellRenderer.class.getCanonicalName(),
+	};
+	
+	//Built in main screen tabs
+	public static final String[] BUILT_IN_MAIN_FRAME_TABS = {};
+	
 	private Const(){}
 }

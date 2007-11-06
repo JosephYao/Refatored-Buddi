@@ -19,6 +19,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
+import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
@@ -291,6 +292,44 @@ public class BuddiPluginFactory extends PluginFactory {
 		return preferences;
 	}
 	
+	/**
+	 * Returns a list of valid plugin objects, both built-in and user-defined.
+	 * This method returns only plugins of type BuddiExportPlugin. 
+	 * @return
+	 */
+	public static List<BuddiTransactionCellRendererPlugin> getTransactionCellRendererPlugins(){
+		List<BuddiTransactionCellRendererPlugin> transactionCellRenderers = new LinkedList<BuddiTransactionCellRendererPlugin>();
+
+		//Load built in plugins
+		for (String className : Const.BUILT_IN_TRANSACTION_CELL_RENDERERS){
+			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+			if (plugin instanceof BuddiTransactionCellRendererPlugin){
+				transactionCellRenderers.add((BuddiTransactionCellRendererPlugin) plugin);
+			}
+		}
+
+		//Load user defined plugins
+		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+		if (plugins != null){
+			for (File pluginFile : plugins){
+				Properties props = new Properties();
+				try {
+					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+					if (is != null)
+						props.load(is);
+				}
+				catch (IOException ioe){}
+				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
+					if (plugin instanceof BuddiTransactionCellRendererPlugin){
+						transactionCellRenderers.add((BuddiTransactionCellRendererPlugin) plugin);
+					}
+				}
+			}
+		}
+		
+		return transactionCellRenderers;
+	}
+	
 	public static List<File> getPluginFiles(){
 		List<File> pluginFiles = new LinkedList<File>();
 		
@@ -313,7 +352,8 @@ public class BuddiPluginFactory extends PluginFactory {
 							|| plugin instanceof BuddiSynchronizePlugin
 							|| plugin instanceof BuddiPreferencePlugin
 							|| plugin instanceof BuddiReportPlugin
-							|| plugin instanceof BuddiRunnablePlugin){
+							|| plugin instanceof BuddiRunnablePlugin
+							|| plugin instanceof BuddiTransactionCellRendererPlugin){
 						pluginFiles.add(pluginFile);
 						break;
 					}

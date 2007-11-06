@@ -1,7 +1,7 @@
 /*
  * Created on Sep 8, 2006 by wyatt
  */
-package org.homeunix.thecave.buddi.view.swing;
+package org.homeunix.thecave.buddi.plugin.builtin.cellrenderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,7 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
@@ -21,6 +20,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.util.Formatter;
@@ -34,14 +34,13 @@ import org.homeunix.thecave.moss.util.OperatingSystemUtil;
  * @author wyatt
  *
  */
-public class TransactionCellRenderer extends DefaultListCellRenderer {
+public class DefaultTransactionCellRenderer extends BuddiTransactionCellRendererPlugin {
 	public static final long serialVersionUID = 0;
-	private final Account account;
 	private Transaction transaction;
 
 	private boolean showCleared = PrefsModel.getInstance().isShowCleared();
 	private boolean showReconciled = PrefsModel.getInstance().isShowReconciled();
-	private final boolean simple;
+	protected boolean simple = false;
 
 	private int maxDescriptionLength = 50;//, maxToFromLength = 40;
 
@@ -54,10 +53,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 	/**
 	 * Creates a new TransactionCellRenderer object
 	 */
-	public TransactionCellRenderer(Account account, boolean simple){
-		this.account = account;
-		this.simple = simple;
-
+	public DefaultTransactionCellRenderer(){
 		if (OperatingSystemUtil.isMac()){
 			this.putClientProperty("Quaqua.Component.visualMargin", new Insets(0,0,0,0));
 		}
@@ -70,7 +66,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 		// the correct size, based on JLabel size.
 		this.setPreferredSize(new Dimension(200, (int) new JLabel("<html>A<br>B</html>").getPreferredSize().getHeight()));
 	}
-
+	
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		if (value instanceof Transaction){
@@ -128,18 +124,18 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			g.setFont(f);
 
 			//Cleared and Reconciled
-			if (account != null){
+			if (getAccount() != null){
 				if (showCleared){
 					g.setColor(GREEN);
-					if (account.equals(transaction.getTo()) && transaction.isClearedTo()
-							|| account.equals(transaction.getFrom()) && transaction.isClearedFrom())
+					if (getAccount().equals(transaction.getTo()) && transaction.isClearedTo()
+							|| getAccount().equals(transaction.getFrom()) && transaction.isClearedFrom())
 						g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_CLEARED), 20, bottomRowYPos);
 					g.setColor(textColor);
 				}
 				if (showReconciled){
 					g.setColor(GREEN);
-					if (account.equals(transaction.getTo()) && transaction.isReconciledTo()
-							|| account.equals(transaction.getFrom()) && transaction.isReconciledFrom())
+					if (getAccount().equals(transaction.getTo()) && transaction.isReconciledTo()
+							|| getAccount().equals(transaction.getFrom()) && transaction.isReconciledFrom())
 						g.drawString(PrefsModel.getInstance().getTranslator().get(BuddiKeys.SHORT_RECONCILED), 30, bottomRowYPos);
 					g.setColor(textColor);
 				}
@@ -147,7 +143,7 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 
 			//Amount renderer when account is null
 			int xPos = 0, minXPos = Integer.MAX_VALUE;
-			if (account == null){
+			if (getAccount() == null){
 				fm = this.getGraphics().getFontMetrics();
 				if (transaction != null){
 
@@ -162,19 +158,19 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 			else {
 				//Left column - max 100 px
 				if (transaction.getFrom() != null
-						&& transaction.getFrom().equals(account)){
+						&& transaction.getFrom().equals(getAccount())){
 					xPos = width - 220 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false)); 
 					if (xPos < minXPos) minXPos = xPos;
-					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(getAccount())) ? Color.RED : textColor);
 					g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
 					g.setColor(textColor);
 				}
 				//Right Column - max 100 px
 				if (transaction.getTo() != null
-						&& transaction.getTo().equals(account)){
+						&& transaction.getTo().equals(getAccount())){
 					xPos = width - 120 - fm.stringWidth(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false));
 					if (xPos < minXPos) minXPos = xPos;
-					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(account)) ? Color.RED : textColor);
+					g.setColor(InternalFormatter.isRed(transaction, transaction.getTo().equals(getAccount())) ? Color.RED : textColor);
 					g.drawString(TextFormatter.getFormattedCurrency(transaction.getAmount(), false, false), xPos, bottomRowYPos);
 					g.setColor(textColor);
 				}
@@ -185,15 +181,15 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				if (transaction != null){
 					long balanceValue;
 					if (transaction.getFrom() instanceof Account 
-							&& transaction.getFrom().equals(account))
+							&& transaction.getFrom().equals(getAccount()))
 						balanceValue = transaction.getBalanceFrom();
 					else
 						balanceValue = transaction.getBalanceTo();
 
-					xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, account.getAccountType().isCredit()));
+					xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, getAccount().getAccountType().isCredit()));
 					if (xPos < minXPos) minXPos = xPos;
-					g.setColor(InternalFormatter.isRed(account, balanceValue) ? Color.RED : textColor);
-					g.drawString(TextFormatter.getFormattedCurrency(balanceValue, false, account.getAccountType().isCredit()), xPos, bottomRowYPos);
+					g.setColor(InternalFormatter.isRed(getAccount(), balanceValue) ? Color.RED : textColor);
+					g.drawString(TextFormatter.getFormattedCurrency(balanceValue, false, getAccount().getAccountType().isCredit()), xPos, bottomRowYPos);
 					g.setColor(textColor);
 				}
 			}
@@ -219,5 +215,10 @@ public class TransactionCellRenderer extends DefaultListCellRenderer {
 				g.drawString(TextFormatter.getTranslation(BuddiKeys.VOID_TRANSACTION), maxDescriptionLength / 2, (int) (f.getSize() * 2.5 + 2));
 			}
 		}
+	}
+	
+	@Override
+	public String getName() {
+		return TextFormatter.getTranslation(BuddiKeys.DEFAULT_TRANSLATION_CELL_RENDERER);
 	}
 }

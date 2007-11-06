@@ -99,7 +99,6 @@ public class Buddi {
 	private static Boolean genericUnix = false;
 	private static Boolean slackware = false;
 	private static Boolean redhat = false;
-	private static Boolean simpleFont = false;
 	private static File logFile = null;
 	private static Version version = null;
 
@@ -107,18 +106,6 @@ public class Buddi {
 		if (version == null)
 			version = Version.getVersionResource("version.txt");
 		return version;
-	}
-
-	/**
-	 * Use simple fonts (i.e., no bold or italics) for transaction window.  This 
-	 * allows for better Unicode support on some platforms which do not include
-	 * good support for Unicode fonts, such as Windows.
-	 * @return
-	 */
-	public static Boolean isSimpleFont(){
-		if (simpleFont == null)
-			simpleFont = false;
-		return simpleFont;
 	}
 
 	/** 
@@ -514,7 +501,6 @@ public class Buddi {
 			+ "--languages\tFolder\tFolder to store custom languages (should be writable)\n"
 			+ "--plugins\tFolder\tFolder to store plugins (should be writable)\n"
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
-			+ "--simpleFont\t\tDon't use bold or italic fonts (better support for special characters on Windows)\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --extract <filename> will extract the given file to stdout, and exit.  Useful for debugging.
 		// Undocumented flag --font	<fontName> will specify a font to use by default
@@ -531,7 +517,6 @@ public class Buddi {
 		variables.add(new ParseVariable("--plugins", String.class, false));
 		variables.add(new ParseVariable("--languages", String.class, false));
 		variables.add(new ParseVariable("--font", String.class, false));
-		variables.add(new ParseVariable("--simpleFont", Boolean.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
@@ -609,7 +594,6 @@ public class Buddi {
 		String font = results.getString("--font");
 		languagesFolder = results.getString("--languages");
 		pluginsFolder = results.getString("--plugins");
-		simpleFont = results.getBoolean("--simpleFont");
 		
 		windowsInstaller = results.getBoolean("--windows-installer");
 		slackware = results.getBoolean("--slackware");

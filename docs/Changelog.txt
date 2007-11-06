@@ -1,4 +1,6 @@
 2.9.15.0
+-Added new plugin type: BuddiTransactionCellRendererPlugin.  This allows third parties to override the default Transaction list cell renderer, and provides a simple method to allow the end user to select their preferred renderer.
+-Changed command line option --simple to be a separate Transaction Cell renderer, selectable from the Advanced preference pane.
 -Updated Spanish translation (thanks to Rafael Rodriguez and Ignacio Baca for this)
 -Fixed bug #1825681 (Problems with duplicate budget category names, even with different parents)
 -Fixed bug #1821645 (Incorrect addition of cleared / reconciled)

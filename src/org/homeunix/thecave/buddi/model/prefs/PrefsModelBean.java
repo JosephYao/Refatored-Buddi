@@ -71,6 +71,7 @@ public class PrefsModelBean {
 	private boolean sendCrashReports;
 	private boolean showUpdateNotifications;
 	private boolean showPromptAtStartup;
+	private String transactionCellRenderer; 
 	
 	//Transaction Pane collapsible panes
 	private boolean searchPaneVisible;
@@ -368,6 +369,14 @@ public class PrefsModelBean {
 
 	public void setTotalPaneVisible(boolean totalPaneVisible) {
 		this.totalPaneVisible = totalPaneVisible;
+	}
+
+	public String getTransactionCellRenderer() {
+		return transactionCellRenderer;
+	}
+
+	public void setTransactionCellRenderer(String transactionCellRenderer) {
+		this.transactionCellRenderer = transactionCellRenderer;
 	}
 	
 }

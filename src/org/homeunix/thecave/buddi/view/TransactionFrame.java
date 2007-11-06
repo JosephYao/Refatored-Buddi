@@ -32,7 +32,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
@@ -46,13 +45,15 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
-import org.homeunix.thecave.buddi.view.swing.TransactionCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -250,7 +251,16 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		((Document) getDocument()).updateAllBalances();
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setCellRenderer(new TransactionCellRenderer(associatedAccount, Buddi.isSimpleFont()));
+		BuddiTransactionCellRendererPlugin renderer = new DefaultTransactionCellRenderer();
+		for (BuddiTransactionCellRendererPlugin r : BuddiPluginFactory.getTransactionCellRendererPlugins()) {
+			if (r.getClass().getCanonicalName().equals(PrefsModel.getInstance().getTransactionCellRenderer())){
+				renderer = r;
+				break;
+			}
+		}
+		
+		renderer.setAccount(associatedAccount);
+		list.setCellRenderer(renderer);
 
 		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
 		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));

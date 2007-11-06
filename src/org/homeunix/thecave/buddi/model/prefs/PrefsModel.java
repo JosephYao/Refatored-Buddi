@@ -559,5 +559,13 @@ public class PrefsModel {
 	public void setTotalPaneVisible(boolean totalPaneVisible) {
 		prefsModel.setTotalPaneVisible(totalPaneVisible);
 	}
+	
+	public String getTransactionCellRenderer() {
+		return prefsModel.getTransactionCellRenderer();
+	}
+
+	public void setTransactionCellRenderer(String transactionCellRenderer) {
+		prefsModel.setTransactionCellRenderer(transactionCellRenderer);
+	}
 }
 
