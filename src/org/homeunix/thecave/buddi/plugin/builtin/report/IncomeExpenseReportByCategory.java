@@ -20,7 +20,6 @@ import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.Version;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -164,14 +163,6 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 	@Override
 	public PluginReportDateRangeChoices getDateRangeChoice() {
 		return PluginReportDateRangeChoices.INTERVAL;
-	}
-	
-	public Version getMaximumVersion() {
-		return null;
-	}
-	
-	public Version getMinimumVersion() {
-		return null;
 	}
 	
 	public boolean isPluginActive() {
