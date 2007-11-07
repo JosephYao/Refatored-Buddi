@@ -75,16 +75,18 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 			List<ImmutableTransaction> transactions = model.getImmutableTransactions(c, startDate, endDate);
 			long actual = 0;
 			for (ImmutableTransaction transaction : transactions) {
-				actual += transaction.getAmount();
-				
-				if (transaction.getTo() instanceof ImmutableBudgetCategory){
-					totalActual -= transaction.getAmount();
-				}
-				else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
-					totalActual += transaction.getAmount();
-				}
-				else {
-					if (Const.DEVEL) Log.debug("For transaction " + transaction + ", neither " + transaction.getTo() + " nor " + transaction.getFrom() + " are of type Category.");
+				if (!transaction.isDeleted()){
+					actual += transaction.getAmount();
+
+					if (transaction.getTo() instanceof ImmutableBudgetCategory){
+						totalActual -= transaction.getAmount();
+					}
+					else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
+						totalActual += transaction.getAmount();
+					}
+					else {
+						if (Const.DEVEL) Log.debug("For transaction " + transaction + ", neither " + transaction.getTo() + " nor " + transaction.getFrom() + " are of type Category.");
+					}
 				}
 			}
 			
@@ -141,7 +143,9 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 				sb.append(HtmlHelper.getHtmlTransactionHeader());
 
 				for (ImmutableTransaction t : transactions) {
-					sb.append(HtmlHelper.getHtmlTransactionRow(t, c));
+					if (!t.isDeleted()){
+						sb.append(HtmlHelper.getHtmlTransactionRow(t, c));
+					}
 				}
 
 				sb.append(HtmlHelper.getHtmlTransactionFooter());

@@ -92,21 +92,23 @@ public class IncomePieGraph extends BuddiReportPlugin {
 		}
 		
 		for (ImmutableTransaction transaction : transactions) {
-			//Sum up the amounts for each category.
-			if (transaction.getFrom() instanceof ImmutableBudgetCategory){
-				ImmutableBudgetCategory c = (ImmutableBudgetCategory) transaction.getFrom();
-				if (c.isIncome()){
-					Long l = categories.get(c);
-					l += transaction.getAmount();
-					categories.put(c, l);
+			if (!transaction.isDeleted()){
+				//Sum up the amounts for each category.
+				if (transaction.getFrom() instanceof ImmutableBudgetCategory){
+					ImmutableBudgetCategory c = (ImmutableBudgetCategory) transaction.getFrom();
+					if (c.isIncome()){
+						Long l = categories.get(c);
+						l += transaction.getAmount();
+						categories.put(c, l);
+					}
 				}
-			}
-			else if (transaction.getTo() instanceof ImmutableBudgetCategory){
-				ImmutableBudgetCategory c = (ImmutableBudgetCategory) transaction.getTo();
-				if (c.isIncome()){
-					Long l = categories.get(c);
-					l += transaction.getAmount();
-					categories.put(c, l);
+				else if (transaction.getTo() instanceof ImmutableBudgetCategory){
+					ImmutableBudgetCategory c = (ImmutableBudgetCategory) transaction.getTo();
+					if (c.isIncome()){
+						Long l = categories.get(c);
+						l += transaction.getAmount();
+						categories.put(c, l);
+					}
 				}
 			}
 		}

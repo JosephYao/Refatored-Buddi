@@ -138,4 +138,12 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	public void setScheduled(boolean scheduled) throws InvalidValueException{
 		getTransaction().setScheduled(scheduled);
 	}
+	
+	public boolean isDeleted() {
+		return getTransaction().isDeleted();
+	}
+	
+	public void setDeleted(boolean deleted) throws InvalidValueException {
+		getTransaction().setDeleted(deleted);
+	}
 }

@@ -88,13 +88,15 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			List<ImmutableTransaction> transactions = model.getImmutableTransactions(c, startDate, endDate);
 			long actual = 0;
 			for (ImmutableTransaction transaction : transactions) {
-				actual += transaction.getAmount();
-				
-				if (transaction.getTo() instanceof ImmutableBudgetCategory){
-					totalActual -= transaction.getAmount();
-				}
-				else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
-					totalActual += transaction.getAmount();
+				if (!transaction.isDeleted()){
+					actual += transaction.getAmount();
+
+					if (transaction.getTo() instanceof ImmutableBudgetCategory){
+						totalActual -= transaction.getAmount();
+					}
+					else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
+						totalActual += transaction.getAmount();
+					}
 				}
 			}
 
@@ -146,7 +148,8 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 
 
 				for (ImmutableTransaction t : transactions) {
-					sb.append(HtmlHelper.getHtmlTransactionRow(t, bc));
+					if (!t.isDeleted())
+						sb.append(HtmlHelper.getHtmlTransactionRow(t, bc));
 				}
 
 				sb.append(HtmlHelper.getHtmlTransactionFooter());

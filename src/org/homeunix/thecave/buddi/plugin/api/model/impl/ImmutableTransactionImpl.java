@@ -81,4 +81,8 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 			return getUid().equals(((ImmutableTransaction) obj).getUid());
 		return false;
 	}
+	
+	public boolean isDeleted() {
+		return getTransaction().isDeleted();
+	}
 }

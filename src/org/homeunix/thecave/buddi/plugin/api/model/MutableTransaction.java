@@ -94,4 +94,10 @@ public interface MutableTransaction extends ImmutableTransaction {
 	 * @return
 	 */
 	public MutableSource getTo();
+	
+	/**
+	 * Sets the deleted state of the transaction
+	 * @param deleted
+	 */
+	public void setDeleted(boolean deleted) throws InvalidValueException;
 }

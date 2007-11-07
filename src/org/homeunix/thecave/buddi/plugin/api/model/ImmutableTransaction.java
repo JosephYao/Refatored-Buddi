@@ -107,4 +107,10 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * @return
 	 */
 	public boolean isScheduled();
+	
+	/**
+	 * Is the transaction marked as deleted?
+	 * @return
+	 */
+	public boolean isDeleted();
 }
