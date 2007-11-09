@@ -688,34 +688,47 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			overdraftCreditLimit.setVisible(false);
 		}
 
-		//Update the cleared totals at the bottom
+		//Update the cleared and reconciled totals at the bottom
 		if (associatedSource != null){
 			long clearedBalanceTotal = 0, clearedTotal = 0, notClearedTotal = 0;
+			long reconciledBalanceTotal = 0, reconciledTotal = 0, notReconciledTotal = 0;
 
-			//If the list is filtered, we will show the SUM of cleared.
-//			if (associatedAccount == null || listModel.isListFiltered())
-//				clearedTotal = 0;
-			//If the list is not filtered, we will show the BALANCE of cleared.
-			if (associatedAccount != null)
+			if (associatedAccount != null){
 				clearedBalanceTotal = associatedAccount.getStartingBalance();
+				reconciledBalanceTotal = associatedAccount.getStartingBalance();
+			}
 
 			for (Transaction t : listModel) {
 				if (!t.isDeleted()){
 					if (t.getFrom().equals(associatedSource)){
 						if (t.isClearedFrom()){
-							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							clearedTotal -= t.getAmount();
 							clearedBalanceTotal -= t.getAmount();
 						}
 						else
-							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							notClearedTotal -= t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+						
+						if (t.isReconciledFrom()){
+							reconciledTotal -= t.getAmount();
+							reconciledBalanceTotal -= t.getAmount();
+						}
+						else
+							notReconciledTotal -= t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
 					else if (t.getTo().equals(associatedSource)){
 						if (t.isClearedTo()){
-							clearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							clearedTotal += t.getAmount();
 							clearedBalanceTotal += t.getAmount();
 						}
 						else
-							notClearedTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
+							notClearedTotal += t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+
+						if (t.isReconciledTo()){
+							reconciledTotal += t.getAmount();
+							reconciledBalanceTotal += t.getAmount();
+						}
+						else
+							notReconciledTotal += t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
 					else {
 						Log.emergency("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
@@ -726,44 +739,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			clearedBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedBalanceTotal) + "</html>");
 			clearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_CLEARED) + " " + TextFormatter.getFormattedCurrency(clearedTotal) + "</html>");
 			notClearedSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_CLEARED) + " " + TextFormatter.getFormattedCurrency(notClearedTotal) + "</html>");
-		}
-
-
-		//Update the reconciled totals at the bottom
-		if (associatedSource != null){
-			long reconciledBalanceTotal = 0, reconciledTotal = 0, notReconciledTotal = 0;
-
-			if (associatedAccount != null)
-				reconciledBalanceTotal = associatedAccount.getStartingBalance();
-
-			for (Transaction t : listModel) {
-				if (!t.isDeleted()){
-					if (t.getFrom().equals(associatedSource)){
-						if (t.isReconciledFrom()){
-							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-							reconciledBalanceTotal -= t.getAmount();
-						}
-						else
-							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-					}
-					else if (t.getTo().equals(associatedSource)){
-						if (t.isReconciledTo()){
-							reconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-							reconciledBalanceTotal += t.getAmount();
-						}
-						else
-							notReconciledTotal += (t.getAmount() * (t.isInflow() ? 1 : -1));
-					}
-					else {
-						Log.emergency("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
-					}
-				}
-			}
-
+			
 			reconciledBalance.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.BALANCE_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledBalanceTotal) + "</html>");
 			reconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_RECONCILED) + " " + TextFormatter.getFormattedCurrency(reconciledTotal) + "</html>");
-			notReconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_RECONCILED) + " " + TextFormatter.getFormattedCurrency(notReconciledTotal) + "</html>");
-		}		
+			notReconciledSum.setText("<html>" + TextFormatter.getTranslation(BuddiKeys.SUM_OF_TRANSACTIONS_NOT_RECONCILED) + " " + TextFormatter.getFormattedCurrency(notReconciledTotal) + "</html>");			
+		}
 
 
 		//Set visibility of totals
