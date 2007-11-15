@@ -1,7 +1,8 @@
-2.9.15.0
+2.9.15.0 (November 14 2007)
 -Added new plugin type: BuddiTransactionCellRendererPlugin.  This allows third parties to override the default Transaction list cell renderer, and provides a simple method to allow the end user to select their preferred renderer.
--Changed command line option --simple to be a separate Transaction Cell renderer, selectable from the Advanced preference pane.
+-Removed command line option --simple.  You can now replicate this behaviour through Preferences -> Advanced.
 -Updated Spanish translation (thanks to Rafael Rodriguez and Ignacio Baca for this)
+-Fixed bug #1830078 (Do not copy over existing values when duplicating budget category values)
 -Fixed bug #1825681 (Problems with duplicate budget category names, even with different parents)
 -Fixed bug #1821645 (Incorrect addition of cleared / reconciled)
 -Fixed bug #1827036 (Honour isDeleted() flag on transactions in built in reports)

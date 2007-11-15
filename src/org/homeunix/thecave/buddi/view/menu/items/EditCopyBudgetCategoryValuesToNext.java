@@ -28,7 +28,8 @@ public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getBudgetCategoriesInSelectedPeriod()) {
 			long amount = bc.getAmount(new Date());
 			try {
-				bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1), amount);
+				if (bc.getAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1)) == 0)
+					bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1), amount);
 			}
 			catch (InvalidValueException ive){
 				Log.error(ive);
