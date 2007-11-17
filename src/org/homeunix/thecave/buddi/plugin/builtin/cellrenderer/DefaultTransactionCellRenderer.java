@@ -41,6 +41,7 @@ public class DefaultTransactionCellRenderer extends BuddiTransactionCellRenderer
 	private boolean showCleared = PrefsModel.getInstance().isShowCleared();
 	private boolean showReconciled = PrefsModel.getInstance().isShowReconciled();
 	protected boolean simple = false;
+	protected boolean cheques = false;
 
 	private int maxDescriptionLength = 50;//, maxToFromLength = 40;
 
@@ -118,7 +119,8 @@ public class DefaultTransactionCellRenderer extends BuddiTransactionCellRenderer
 			g.setFont(bold);
 			g.drawString(
 					Formatter.getStringToLength(
-					transaction.getDescription(), maxDescriptionLength, fm), 
+					transaction.getDescription() + (cheques && transaction.getNumber() != null && transaction.getNumber().trim().length() > 0 ? "     #" + transaction.getNumber(): ""),
+					maxDescriptionLength, fm), 
 					150, 
 					topRowYPos);
 			g.setFont(f);
