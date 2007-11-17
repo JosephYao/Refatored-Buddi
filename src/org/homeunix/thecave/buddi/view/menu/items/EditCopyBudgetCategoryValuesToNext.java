@@ -25,11 +25,12 @@ public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Date currentlySelectedDate = ((MainFrame) getFrame()).getMyBudgetPanel().getTreeTableModel().getSelectedDate();
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getBudgetCategoriesInSelectedPeriod()) {
-			long amount = bc.getAmount(new Date());
+			long amount = bc.getAmount(currentlySelectedDate);
 			try {
-				if (bc.getAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1)) == 0)
-					bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(new Date(), 1), amount);
+				if (bc.getAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, 1)) == 0)
+					bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, 1), amount);
 			}
 			catch (InvalidValueException ive){
 				Log.error(ive);

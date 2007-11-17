@@ -325,6 +325,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
+		gbc.ipadx = 10;
 		
 		gbc.gridx = 0;
 		informationPanel.add(sumsLabel, gbc);

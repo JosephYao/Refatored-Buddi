@@ -42,6 +42,7 @@ import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilter
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredBySource;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
@@ -928,11 +929,40 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					}
 				}
 
+				//Check that there has not already been a scheduled transaction with identical
+				// paramters for this day.  This is in response to a potential bug where
+				// the last scheduled day is missing (happened once in development 
+				// version, but may not be a repeating problem).
+				//This has the potential to skip scheduled transactions, if there
+				// are multiple scheduled transactions which go to and from the 
+				// same accounts / categories on the same day.  If this proves to
+				// be a problem, we may make the checks more specific.
+				if (todayIsTheDay){
+					for (Transaction t : getTransactions(tempDate, tempDate)) {
+						System.out.println(t.getDate() + ", " + t.getAmount() + ", " + t.getFrom().getName() + ", " + t.getTo().getName());
+						if (DateFunctions.isSameDay(t.getDate(), tempDate)
+								&& t.isScheduled()
+								&& t.getFrom().equals(s.getFrom())
+								&& t.getTo().equals(s.getTo())
+								&& t.getDescription().equals(s.getDescription())){
+							todayIsTheDay = false;
+							try {
+								s.setLastDayCreated(tempDate);
+							}
+							catch (InvalidValueException ive){
+								Log.error("Error setting last created date");
+							}
+						}
+					}
+				}
+				
+				
 				try {
 					//If one of the above rules matches, we will copy the
 					// scheduled transaction into the transactions list
 					// at the given day.
 					if (todayIsTheDay){
+						
 						if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
 						s.setLastDayCreated(DateFunctions.getEndOfDay(tempDate));
 						if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDayCreated());

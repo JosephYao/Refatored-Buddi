@@ -1,3 +1,8 @@
+2.9.16.0
+-Added more padding to Transaction cell sum / balance formats.
+-Added a check for the last day of scheduled transactions.  During development, I had found an instance where the last scheduled day was deleted from scheduled transactions, which resulted in duplicates.  I don't think that this is a common occurrance, and I could not reproduce it, but I added code to double check this regardless.
+-Fixed bug #1830078 (Problems copying budget categories)
+
 2.9.15.0 (November 14 2007)
 -Added new plugin type: BuddiTransactionCellRendererPlugin.  This allows third parties to override the default Transaction list cell renderer, and provides a simple method to allow the end user to select their preferred renderer.
 -Removed command line option --simple.  You can now replicate this behaviour through Preferences -> Advanced.

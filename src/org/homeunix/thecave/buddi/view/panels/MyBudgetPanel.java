@@ -276,6 +276,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			else
 				tree.collapsePath(path);
 		}
+		
+		//Update the menus (especially to get correct Copy From / To dates)
+		parent.updateMenus();
 	}
 	
 	public MyBudgetTreeTableModel getTreeTableModel(){
