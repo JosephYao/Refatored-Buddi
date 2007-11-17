@@ -103,7 +103,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
-		modelSupport.fireStructureChanged();
+		modelSupport.fireNewRoot();
 	}
 
 	@Override

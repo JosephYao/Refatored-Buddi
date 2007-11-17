@@ -247,6 +247,6 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
-		modelSupport.fireStructureChanged();
+		modelSupport.fireNewRoot();
 	}
 }

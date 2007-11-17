@@ -939,7 +939,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				// be a problem, we may make the checks more specific.
 				if (todayIsTheDay){
 					for (Transaction t : getTransactions(tempDate, tempDate)) {
-						System.out.println(t.getDate() + ", " + t.getAmount() + ", " + t.getFrom().getName() + ", " + t.getTo().getName());
 						if (DateFunctions.isSameDay(t.getDate(), tempDate)
 								&& t.isScheduled()
 								&& t.getFrom().equals(s.getFrom())

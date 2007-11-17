@@ -11,8 +11,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.10.jar"/>
+	<classpathentry kind="lib" path="lib/quaqua-3.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/BrowserLauncher2-1_3.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-2007_08_12.jar"/>
-	<classpathentry kind="lib" path="lib/quaqua-3.9.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
