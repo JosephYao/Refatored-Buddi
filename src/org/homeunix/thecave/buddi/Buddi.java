@@ -290,8 +290,8 @@ public class Buddi {
 				});
 			}
 		}, 
-		10 * 1000, //Save the first one after 10 seconds 
-		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide period
+		PrefsModel.getInstance().getAutosaveDelay() * 1000, 
+		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide save period
 		
 		//If it has not already been done, disable the splash screen now.
 		MossSplashScreen.hideSplash();
