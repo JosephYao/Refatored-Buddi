@@ -567,5 +567,37 @@ public class PrefsModel {
 	public void setTransactionCellRenderer(String transactionCellRenderer) {
 		prefsModel.setTransactionCellRenderer(transactionCellRenderer);
 	}
+	
+	public String getClearedFilter() {
+		return prefsModel.getClearedFilter();
+	}
+
+	public void setClearedFilter(String clearedFilter) {
+		prefsModel.setClearedFilter(clearedFilter);
+	}
+
+	public String getDateFilter() {
+		return prefsModel.getDateFilter();
+	}
+
+	public void setDateFilter(String dateFilter) {
+		prefsModel.setDateFilter(dateFilter);
+	}
+
+	public String getReconciledFilter() {
+		return prefsModel.getReconciledFilter();
+	}
+
+	public void setReconciledFilter(String reconciledFilter) {
+		prefsModel.setReconciledFilter(reconciledFilter);
+	}
+
+	public String getSearchText() {
+		return prefsModel.getSearchText();
+	}
+
+	public void setSearchText(String searchText) {
+		prefsModel.setSearchText(searchText);
+	}
 }
 

@@ -623,6 +623,16 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			}
 		});
 
+		//Load state of filters
+		if (PrefsModel.getInstance().getSearchText() != null)
+			searchField.setText(PrefsModel.getInstance().getSearchText());
+		if (PrefsModel.getInstance().getDateFilter() != null)
+			dateFilterComboBox.setSelectedItem(TransactionDateFilterKeys.valueOf(PrefsModel.getInstance().getDateFilter()));
+		if (PrefsModel.getInstance().getReconciledFilter() != null)
+			reconciledFilterComboBox.setSelectedItem(TransactionReconciledFilterKeys.valueOf(PrefsModel.getInstance().getReconciledFilter()));
+		if (PrefsModel.getInstance().getClearedFilter() != null)
+			clearedFilterComboBox.setSelectedItem(TransactionClearedFilterKeys.valueOf(PrefsModel.getInstance().getClearedFilter()));		
+		
 		getDocument().addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				listModel.update();
@@ -638,6 +648,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	@Override
 	public void closeWindowWithoutPrompting() {
+		PrefsModel.getInstance().setSearchText(searchField.getText());
+		PrefsModel.getInstance().setDateFilter(dateFilterComboBox.getSelectedItem().toString());
+		PrefsModel.getInstance().setReconciledFilter(reconciledFilterComboBox.getSelectedItem().toString());
+		PrefsModel.getInstance().setClearedFilter(clearedFilterComboBox.getSelectedItem().toString());
+		
 		PrefsModel.getInstance().putWindowSize(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getSize());
 		PrefsModel.getInstance().putWindowLocation(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getLocation());
 		PrefsModel.getInstance().save();

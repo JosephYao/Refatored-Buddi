@@ -76,8 +76,12 @@ public class PrefsModelBean {
 	//Transaction Pane collapsible panes
 	private boolean searchPaneVisible;
 	private boolean totalPaneVisible;
+	private String searchText;
+	private String dateFilter;
+	private String clearedFilter;
+	private String reconciledFilter;
 	
-	//Define the max / min number of budget columns visible.
+	//Define the max / min number of budget columns visible (not currently used)
 	private int MIN_BUDGET_COLUMNS = 2;
 	private int MAX_BUDGET_COLUMNS = 13;
 	
@@ -378,5 +382,36 @@ public class PrefsModelBean {
 	public void setTransactionCellRenderer(String transactionCellRenderer) {
 		this.transactionCellRenderer = transactionCellRenderer;
 	}
-	
+
+	public String getClearedFilter() {
+		return clearedFilter;
+	}
+
+	public void setClearedFilter(String clearedFilter) {
+		this.clearedFilter = clearedFilter;
+	}
+
+	public String getDateFilter() {
+		return dateFilter;
+	}
+
+	public void setDateFilter(String dateFilter) {
+		this.dateFilter = dateFilter;
+	}
+
+	public String getReconciledFilter() {
+		return reconciledFilter;
+	}
+
+	public void setReconciledFilter(String reconciledFilter) {
+		this.reconciledFilter = reconciledFilter;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
 }
