@@ -362,11 +362,12 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void saveAuto(File file) throws DocumentSaveException {
 		//Save the file
 		try {
-			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
+			if (!isBatchChange()){
+				BuddiCryptoFactory factory = new BuddiCryptoFactory();
+				OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
-			saveToStream(os);
-
+				saveToStream(os);
+			}
 		}
 		catch (CipherException ce){
 			//This means that there is something seriously wrong with the encryption methods.
