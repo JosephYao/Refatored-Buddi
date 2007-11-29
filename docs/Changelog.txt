@@ -1,4 +1,4 @@
-2.9.17.0 (3.0 RC 2)
+2.9.17.0 (3.0 RC 2) (November 28 2007)
 -Ran through YourKit profiler, and optimized some parameters to make UI faster
 -Fixed bug #1838237 (Transaction filters should persist, as an option)
 -Fixed bug #1838240 (Transaction filter list after changing sort order)
