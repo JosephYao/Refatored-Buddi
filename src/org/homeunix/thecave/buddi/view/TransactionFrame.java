@@ -498,6 +498,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					listModel.setDateFilter((TransactionDateFilterKeys) dateFilterComboBox.getSelectedItem());
 				}
 				TransactionFrame.this.updateContent();
+				list.ensureIndexIsVisible(listModel.getSize() - 1);
 			}			
 		});
 		clearedFilterComboBox.addItemListener(new ItemListener() {
@@ -512,6 +513,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					listModel.setClearedFilter((TransactionClearedFilterKeys) clearedFilterComboBox.getSelectedItem());
 				}
 				TransactionFrame.this.updateContent();
+				list.ensureIndexIsVisible(listModel.getSize() - 1);
 			}			
 		});
 		reconciledFilterComboBox.addItemListener(new ItemListener() {
@@ -526,6 +528,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					listModel.setReconciledFilter((TransactionReconciledFilterKeys) reconciledFilterComboBox.getSelectedItem());
 				}
 				TransactionFrame.this.updateContent();
+				list.ensureIndexIsVisible(listModel.getSize() - 1);
 			}			
 		});
 
@@ -533,6 +536,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			public void searchTextChangedEventOccurred(SearchTextChangedEvent evt) {
 				listModel.setSearchText(searchField.getText());
 				TransactionFrame.this.updateContent();
+				list.ensureIndexIsVisible(listModel.getSize() - 1);
 			}
 		});
 
@@ -1058,7 +1062,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				// with the most recently inserted date, and scroll to that transaction's index.
 				// For the common case of inserted new transactions near the current day, this
 				// will be almost as fast as just scrolling to the end of the list, but always correct.
-
 				for (int index = listModel.getSize() - 1; index >= 0; --index) {
 					Transaction transactionToCheck = (Transaction) listModel.getElementAt(index);
 					if (transactionToCheck.getDate().equals(currentTransactionDate)) {

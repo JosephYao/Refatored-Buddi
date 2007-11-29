@@ -24,7 +24,7 @@ public class EditModifyBudgetCategory extends MossMenuItem{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getSelectedBudgetCategories()) {
-			BudgetCategoryEditorDialog editor = new BudgetCategoryEditorDialog((MainFrame) getFrame(), (Document) ((MainFrame) getFrame()).getDocument(), bc);
+			BudgetCategoryEditorDialog editor = new BudgetCategoryEditorDialog((MainFrame) getFrame(), (Document) ((MainFrame) getFrame()).getDocument(), bc, null);
 			try {
 				editor.openWindow();
 			}

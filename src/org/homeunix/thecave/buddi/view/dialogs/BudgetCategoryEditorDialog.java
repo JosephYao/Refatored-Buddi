@@ -65,14 +65,16 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 	private final JButton cancel;
 
 	private final BudgetCategory selected;
+	private final BudgetCategory newParent;
 
 	private final Document model;
 
 	@SuppressWarnings("unchecked")
-	public BudgetCategoryEditorDialog(MainFrame frame, Document model, BudgetCategory selected) {
+	public BudgetCategoryEditorDialog(MainFrame frame, Document model, BudgetCategory selected, BudgetCategory newParent) {
 		super(frame);
 
 		this.selected = selected;
+		this.newParent = newParent;
 		this.model = model;
 
 		name = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NAME));
@@ -179,6 +181,16 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 			}
 		});
 
+//		if (selected != null){
+//			for (int i = 0; i < parent.getModel().getSize(); i++){
+//				if (parent.getModel().getElementAt(i) != null
+//						&& parent.getModel().getElementAt(i).equals(selected)){
+//					parent.setSelectedIndex(i);
+//					break;
+//				}
+//			}
+//		}
+		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		if (OperatingSystemUtil.isMac()){
 			buttonPanel.add(cancel);			
@@ -218,7 +230,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 		if (selected == null){
 			name.setText("");
 			expense.setSelected(true);
-			parent.setSelectedItem(null);
+			parent.setSelectedItem(newParent);
 			budgetCategoryType.setSelectedItem(ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH));
 			notes.setText("");
 		}
