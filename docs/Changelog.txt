@@ -1,5 +1,6 @@
 2.9.18.0 (3.0 RC 3)
 -Fixed bug which could potentially autosave when the model was in an inconsistent state, during a batch change.  Added a check to autosave which only saves if the batch change is complete.
+-Updated the Help -> Tutorial link to the new tutorial page on the website
 
 2.9.17.0 (3.0 RC 2) (November 28 2007)
 -Ran through YourKit profiler, and optimized some parameters to make UI faster
