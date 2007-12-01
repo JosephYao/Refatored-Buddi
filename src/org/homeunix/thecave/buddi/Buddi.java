@@ -497,12 +497,12 @@ public class Buddi {
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
 			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
-			+ "--verbosity\t0-7\tVerbosity Level (0 = Emergency, 7 = Debug)\n"
-			+ "--languages\tFolder\tFolder to store custom languages (should be writable)\n"
-			+ "--plugins\tFolder\tFolder to store plugins (should be writable)\n"
+			+ "--verbosity\t0-5\tVerbosity Level (0 = Emergency, 5 = Verbose)\n"
+			+ "--languages\tFolder\tFolder to store custom languages (should be writable; default varies by platform)\n"
+			+ "--plugins\tFolder\tFolder to store plugins (should be writable; default varies by platform)\n"
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
+			+ "--extract\tData File\tExtracts the XML contents of the given file, to Filename.xml.  Used for debugging.\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
-		// Undocumented flag --extract <filename> will extract the given file to stdout, and exit.  Useful for debugging.
 		// Undocumented flag --font	<fontName> will specify a font to use by default
 		// Undocumented flag --windows-installer will specify a -Installer.exe download for new versions.
 		// Undocumented flag --debian will specify a .deb download for new versions.
@@ -516,10 +516,11 @@ public class Buddi {
 		variables.add(new ParseVariable("--verbosity", Integer.class, false));
 		variables.add(new ParseVariable("--plugins", String.class, false));
 		variables.add(new ParseVariable("--languages", String.class, false));
-		variables.add(new ParseVariable("--font", String.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
+		
+		variables.add(new ParseVariable("--font", String.class, false));
 		
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
@@ -920,7 +921,7 @@ public class Buddi {
 			while (true) {
 				try {
 					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
-					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".raw_output"));
+					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".xml"));
 					StreamFunctions.copyInputStreamToOutputStream(is, os);
 					
 					os.flush();

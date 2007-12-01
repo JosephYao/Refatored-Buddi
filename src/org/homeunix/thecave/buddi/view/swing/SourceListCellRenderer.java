@@ -17,18 +17,6 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 	/**
 	 * Creates a new Source list renderer, using the given string
 	 * as the label when a source is not selected, with each item having
-	 * a maximum length as specified.
-	 * @param nullLabel
-	 * @param maxLength
-	 */
-//	public SourceListCellRenderer(String nullLabel, int maxLength) {
-//		super(maxLength);
-//		this.nullLabel = nullLabel;
-//	}
-	
-	/**
-	 * Creates a new Source list renderer, using the given string
-	 * as the label when a source is not selected, with each item having
 	 * a maximum length conputed from the specified component.
 	 * @param nullLabel
 	 * @param component

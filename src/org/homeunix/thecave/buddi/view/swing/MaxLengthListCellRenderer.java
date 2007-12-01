@@ -22,19 +22,19 @@ public class MaxLengthListCellRenderer extends DefaultListCellRenderer {
 		this.component = component;
 	}
 
-//	public MaxLengthListCellRenderer(int maxLength) {
-//		this.maxLength = maxLength;
-//		this.component = null;
-//	}
-
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 		if (value != null){
 			String s = value.toString();
-			if (s.length() > computedLength && component != null && component.getGraphics() != null)
-				this.setText(Formatter.getStringToLength(s, component.getWidth(), component.getGraphics().getFontMetrics()));
+			if (index == -1 && s.length() > computedLength && component != null && component.getGraphics() != null)
+				//The width - 55 is obtained by trial and error on the Mac.  In general, the Mac LnF
+				// has more padding than most others, so this should be more than enough for others.
+				// This offset prevents the combo box button from interfering with the display
+				// of oversized values, by making the value wrap at the word level, and remove the
+				// "..." at the end of long values.
+				this.setText(Formatter.getStringToLength(s, component.getWidth() - 55, component.getGraphics().getFontMetrics()));
 			else
 				this.setText(s);
 		}

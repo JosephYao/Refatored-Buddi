@@ -307,14 +307,6 @@ public class TransactionEditorPanel extends MossPanel {
 				super.keyReleased(e);
 				fillInOtherFields(); //false
 			}
-
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-////			if (e.getKeyCode() == KeyEvent.VK_ENTER){
-//			fillInOtherFields(false);
-////			}
-//			super.keyPressed(e);
-//			}
 		});
 
 		// When you select one source, automatically select the other if possible
