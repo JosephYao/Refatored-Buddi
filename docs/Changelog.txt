@@ -1,4 +1,7 @@
-2.9.18.0 (3.0 RC 3)
+2.9.19.0 (3.0 RC 4)
+-Fixed a few more potential performance issues (thanks to Andrew Nichols for pointing these out)
+
+2.9.18.0 (3.0 RC 3) (December 1 2007)
 -Fixed bug which could potentially autosave when the model was in an inconsistent state, during a batch change.  Added a check to autosave which only saves if the batch change is complete.
 -Updated the Help -> Tutorial link to the new tutorial page on the website
 -Fixed bug which did not show ellipses (...) for oversized text in the Account / Category pulldown boxes on the transaction screen.

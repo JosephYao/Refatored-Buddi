@@ -88,7 +88,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 		//This map is where we store the totals for this time period.
 		for (ImmutableBudgetCategory category : model.getImmutableBudgetCategories()) {
 			if (category.isIncome())
-				categories.put(category, new Long(0));
+				categories.put(category, Long.valueOf(0));
 		}
 		
 		for (ImmutableTransaction transaction : transactions) {

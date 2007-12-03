@@ -318,13 +318,13 @@ public class AccountImpl extends SourceImpl implements Account {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.ACCOUNT__BALANCE:
-				return new Long(getBalance());
+				return Long.valueOf(getBalance());
 			case ModelPackage.ACCOUNT__STARTING_BALANCE:
-				return new Long(getStartingBalance());
+				return Long.valueOf(getStartingBalance());
 			case ModelPackage.ACCOUNT__CREDIT_LIMIT:
-				return new Long(getCreditLimit());
+				return Long.valueOf(getCreditLimit());
 			case ModelPackage.ACCOUNT__INTEREST_RATE:
-				return new Long(getInterestRate());
+				return Long.valueOf(getInterestRate());
 			case ModelPackage.ACCOUNT__DUE_DATE:
 				return getDueDate();
 			case ModelPackage.ACCOUNT__ACCOUNT_TYPE:
@@ -480,7 +480,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (arg0 instanceof Account){
 			Account a = (Account) arg0;
 			if (this.isCredit() != a.isCredit()){
-				return new Boolean(this.isCredit()).compareTo(new Boolean(a.isCredit()));
+				return Boolean.valueOf(this.isCredit()).compareTo(Boolean.valueOf(a.isCredit()));
 			}
 		}
 		return super.compareTo(arg0);

@@ -286,7 +286,7 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (arg0 instanceof BudgetCategoryImpl){
 			BudgetCategoryImpl c = (BudgetCategoryImpl) arg0;
 			if (this.isIncome() != c.isIncome())
-				return -1 * new Boolean(this.isIncome()).compareTo(new Boolean(c.isIncome()));
+				return -1 * Boolean.valueOf(this.isIncome()).compareTo(Boolean.valueOf(c.isIncome()));
 			return this.getFullName().compareTo(c.getFullName());
 		}
 		return super.compareTo(arg0);

@@ -95,7 +95,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 					null,
 					options,
 					options[0]);
-			this.encrypted = new Boolean(JOptionPane.YES_OPTION == choice);
+			this.encrypted = Boolean.valueOf(JOptionPane.YES_OPTION == choice);
 		}
 
 		if (!this.encrypted.booleanValue()) {
@@ -172,7 +172,7 @@ public class AESCryptoCipher implements URIConverter.Cipher {
 			// TODO - we should probably create this string using the same
 			// encoding as EMF - how to figure this out?
 			String testStr = new String(test);
-			this.encrypted = new Boolean(!XML_PROLOGUE.equals(testStr));
+			this.encrypted = Boolean.valueOf(!XML_PROLOGUE.equals(testStr));
 		}
 
 		buffered.reset();		

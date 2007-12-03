@@ -215,7 +215,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ModelPackage.CATEGORY__BUDGETED_AMOUNT:
-				return new Long(getBudgetedAmount());
+				return Long.valueOf(getBudgetedAmount());
 			case ModelPackage.CATEGORY__INCOME:
 				return isIncome() ? Boolean.TRUE : Boolean.FALSE;
 			case ModelPackage.CATEGORY__PARENT:
@@ -323,7 +323,7 @@ public class CategoryImpl extends SourceImpl implements Category {
 		if (arg0 instanceof Category){
 			Category c = (Category) arg0;
 			if (this.isIncome() != c.isIncome()){
-				return -1 * new Boolean(this.isIncome()).compareTo(new Boolean(c.isIncome()));
+				return -1 * Boolean.valueOf(this.isIncome()).compareTo(Boolean.valueOf(c.isIncome()));
 			}
 		}
 		return super.compareTo(arg0);

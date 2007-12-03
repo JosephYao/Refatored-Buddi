@@ -435,7 +435,7 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 			case ModelPackage.SCHEDULE__FREQUENCY_TYPE:
 				return getFrequencyType();
 			case ModelPackage.SCHEDULE__SCHEDULE_DAY:
-				return new Integer(getScheduleDay());
+				return Integer.valueOf(getScheduleDay());
 			case ModelPackage.SCHEDULE__LAST_DATE_CREATED:
 				return getLastDateCreated();
 			case ModelPackage.SCHEDULE__END_DATE:
@@ -443,9 +443,9 @@ public class ScheduleImpl extends TransactionImpl implements Schedule {
 			case ModelPackage.SCHEDULE__SCHEDULE_NAME:
 				return getScheduleName();
 			case ModelPackage.SCHEDULE__SCHEDULE_WEEK:
-				return new Integer(getScheduleWeek());
+				return Integer.valueOf(getScheduleWeek());
 			case ModelPackage.SCHEDULE__SCHEDULE_MONTH:
-				return new Integer(getScheduleMonth());
+				return Integer.valueOf(getScheduleMonth());
 			case ModelPackage.SCHEDULE__MESSAGE:
 				return getMessage();
 		}

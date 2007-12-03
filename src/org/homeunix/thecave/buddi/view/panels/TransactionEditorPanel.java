@@ -512,8 +512,8 @@ public class TransactionEditorPanel extends MossPanel {
 			throw new InvalidValueException("New transaction is not completely filled in");
 
 		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
-		t.setNumber(number.getText().toString());
-		t.setMemo(memo.getText().toString());
+		t.setNumber(number.getText());
+		t.setMemo(memo.getText());
 		if (associatedAccount != null){
 			if (associatedAccount.equals(from.getSelectedItem())){
 				t.setClearedFrom(cleared.isSelected());
