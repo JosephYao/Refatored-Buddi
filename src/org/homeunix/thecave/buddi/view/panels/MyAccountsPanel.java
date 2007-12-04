@@ -146,6 +146,7 @@ public class MyAccountsPanel extends MossPanel {
 		tree.addTreeSelectionListener(new TreeSelectionListener(){
 			public void valueChanged(TreeSelectionEvent arg0) {
 				parent.updateButtons();
+				System.out.println("Tree Selection Changed");
 			}
 		});
 		
@@ -154,6 +155,7 @@ public class MyAccountsPanel extends MossPanel {
 				if (arg0.getClickCount() >= 2)
 					new EditEditTransactions(parent).doClick();
 				super.mouseClicked(arg0);
+				System.out.println("Tree Mouse Click");
 			}
 		});
 		

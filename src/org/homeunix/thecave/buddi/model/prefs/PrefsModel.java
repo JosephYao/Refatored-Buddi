@@ -511,7 +511,7 @@ public class PrefsModel {
 		Point p = prefsModel.getWindowLocation().get(uid);
 		if (p != null)
 			return p;
-		return new Point(10, 10);
+		return new Point(100, 100);
 	}
 	
 	/**
