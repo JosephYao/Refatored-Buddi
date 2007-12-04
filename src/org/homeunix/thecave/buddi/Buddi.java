@@ -94,6 +94,7 @@ public class Buddi {
 	private static String pluginsFolder;
 	private static String languagesFolder;
 	private static List<File> filesToLoad;
+	private static Boolean noAutoSave = false;
 	private static Boolean debian = false;
 	private static Boolean windowsInstaller = false;
 	private static Boolean genericUnix = false;
@@ -178,6 +179,12 @@ public class Buddi {
 			debian = false;
 		return debian;
 	}
+	
+	private static boolean isAutoSave(){
+		if (noAutoSave == null)
+			noAutoSave = false;
+		return !noAutoSave;
+	}
 
 	public static File getPluginsFolder(){
 		if (pluginsFolder == null)
@@ -260,38 +267,40 @@ public class Buddi {
 
 
 		//Start the auto save timer
-		Timer t = new Timer();
-		t.schedule(new TimerTask(){
-			@Override
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable(){
-					public void run() {	
-						for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
-							if (frame instanceof MainFrame){
-								MainFrame mainFrame = (MainFrame) frame;
-								if (mainFrame.getDocument().isChanged()){
-									File autoSaveLocation = ModelFactory.getAutoSaveLocation(mainFrame.getDocument().getFile());
+		if (isAutoSave()){
+			Timer t = new Timer();
+			t.schedule(new TimerTask(){
+				@Override
+				public void run() {
+					SwingUtilities.invokeLater(new Runnable(){
+						public void run() {	
+							for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
+								if (frame instanceof MainFrame){
+									MainFrame mainFrame = (MainFrame) frame;
+									if (mainFrame.getDocument().isChanged()){
+										File autoSaveLocation = ModelFactory.getAutoSaveLocation(mainFrame.getDocument().getFile());
 
-									try {
-										((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
-										Log.debug("Auto saved file to " + autoSaveLocation);
+										try {
+											((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
+											Log.debug("Auto saved file to " + autoSaveLocation);
+										}
+										catch (DocumentSaveException dse){
+											Log.emergency("Error saving autosave file:");
+											dse.printStackTrace(Log.getPrintStream());
+										}
 									}
-									catch (DocumentSaveException dse){
-										Log.emergency("Error saving autosave file:");
-										dse.printStackTrace(Log.getPrintStream());
-									}
+									else {
+										Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
+									}		
 								}
-								else {
-									Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
-								}		
 							}
-						}
-					};
-				});
-			}
-		}, 
-		PrefsModel.getInstance().getAutosaveDelay() * 1000, 
-		PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide save period
+						};
+					});
+				}
+			}, 
+			PrefsModel.getInstance().getAutosaveDelay() * 1000, 
+			PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide save period
+		}
 		
 		//If it has not already been done, disable the splash screen now.
 		MossSplashScreen.hideSplash();
@@ -509,6 +518,7 @@ public class Buddi {
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --slackware will specify a -Slackware.tgz download for new versions.
 		// Undocumented flag --unix will specify a .tgz download for new versions.
+		// Undocumented flag --noautosave will disable auto save (for development testing).
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
 		variables.add(new ParseVariable("--usb", Boolean.class, false));
@@ -518,6 +528,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--languages", String.class, false));
 		variables.add(new ParseVariable("--log", String.class, false));
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
+		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
 		
 		variables.add(new ParseVariable("--font", String.class, false));
@@ -596,11 +607,14 @@ public class Buddi {
 		languagesFolder = results.getString("--languages");
 		pluginsFolder = results.getString("--plugins");
 		
+		noAutoSave = results.getBoolean("--noautosave");
 		windowsInstaller = results.getBoolean("--windows-installer");
 		slackware = results.getBoolean("--slackware");
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		genericUnix = results.getBoolean("--unix");
+		
+		
 
 		filesToLoad = new LinkedList<File>();
 		for (String s : results.getCommands()) {

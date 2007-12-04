@@ -197,7 +197,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 
 		//Set up the editing portion
-		transactionEditor = new TransactionEditorPanel((Document) parent.getDocument(), associatedAccount, false);
+		transactionEditor = new TransactionEditorPanel((Document) parent.getDocument(), associatedSource, false);
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
@@ -977,7 +977,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(recordButton)){
-			if (!transactionEditor.isTransactionValid(this.associatedAccount)){
+			if (!transactionEditor.isTransactionValid(this.associatedSource)){
 				String[] options = new String[1];
 				options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
 
@@ -1000,9 +1000,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			Transaction t;
 			boolean isUpdate;
 
-			if (recordButton.getText().equals(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_UPDATE)))
+			if (recordButton.getText().equals(TextFormatter.getTranslation(ButtonKeys.BUTTON_UPDATE)))
 				isUpdate = true;
-			else if (recordButton.getText().equals(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD)))
+			else if (recordButton.getText().equals(TextFormatter.getTranslation(ButtonKeys.BUTTON_RECORD)))
 				isUpdate = false;
 			else {
 				Log.error("Unknown record button state: " + recordButton.getText());

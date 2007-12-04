@@ -35,7 +35,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.JTextComponent;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
@@ -90,16 +89,16 @@ public class TransactionEditorPanel extends MossPanel {
 
 
 	private final Document model;
-	private final Account associatedAccount;
+	private final Source associatedSource;
 
 	private final AutoCompleteEntryModel autoCompleteEntries;
 
 	private boolean changed;
 
-	public TransactionEditorPanel(Document model, Account associatedAccount, boolean scheduledTransactionPane){
+	public TransactionEditorPanel(Document model, Source associatedAccount, boolean scheduledTransactionPane){
 		super(true);
 		this.model = model;
-		this.associatedAccount = associatedAccount;
+		this.associatedSource = associatedAccount;
 
 		autoCompleteEntries = new AutoCompleteEntryModel(model);
 
@@ -313,13 +312,13 @@ public class TransactionEditorPanel extends MossPanel {
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (from.getSelectedItem() instanceof Source) {
-					if (associatedAccount != null){
-						if (!associatedAccount.equals(from.getSelectedItem())){
-							to.setSelectedItem(associatedAccount);
+					if (associatedSource != null){
+						if (!associatedSource.equals(from.getSelectedItem())){
+							to.setSelectedItem(associatedSource);
 						}
 
-						if (associatedAccount.equals(from.getSelectedItem())
-								&& associatedAccount.equals(to.getSelectedItem())){
+						if (associatedSource.equals(from.getSelectedItem())
+								&& associatedSource.equals(to.getSelectedItem())){
 							to.setSelectedItem(null);
 						}
 					}
@@ -346,13 +345,13 @@ public class TransactionEditorPanel extends MossPanel {
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				if (to.getSelectedItem() instanceof Source) {
-					if (associatedAccount != null){
-						if (!associatedAccount.equals(to.getSelectedItem())){
-							from.setSelectedItem(associatedAccount);
+					if (associatedSource != null){
+						if (!associatedSource.equals(to.getSelectedItem())){
+							from.setSelectedItem(associatedSource);
 						}
 
-						if (associatedAccount.equals(from.getSelectedItem())
-								&& associatedAccount.equals(to.getSelectedItem())){
+						if (associatedSource.equals(from.getSelectedItem())
+								&& associatedSource.equals(to.getSelectedItem())){
 							from.setSelectedItem(null);
 						}
 					}
@@ -417,12 +416,12 @@ public class TransactionEditorPanel extends MossPanel {
 			amount.setValue(transaction.getAmount());
 			from.setSelectedItem(transaction.getFrom());
 			to.setSelectedItem(transaction.getTo());
-			if (associatedAccount != null){
-				if (associatedAccount.equals(from.getSelectedItem())){
+			if (associatedSource != null){
+				if (associatedSource.equals(from.getSelectedItem())){
 					cleared.setSelected(transaction.isClearedFrom());
 					reconciled.setSelected(transaction.isReconciledFrom());				
 				}
-				else if (associatedAccount.equals(to.getSelectedItem())){
+				else if (associatedSource.equals(to.getSelectedItem())){
 					cleared.setSelected(transaction.isClearedTo());
 					reconciled.setSelected(transaction.isReconciledTo());
 				}
@@ -484,12 +483,12 @@ public class TransactionEditorPanel extends MossPanel {
 		transaction.setTo((Source) to.getSelectedItem());
 		transaction.setNumber(number.getText().toString());
 		transaction.setMemo(memo.getText().toString());
-		if (associatedAccount != null){
-			if (associatedAccount.equals(from.getSelectedItem())){
+		if (associatedSource != null){
+			if (associatedSource.equals(from.getSelectedItem())){
 				transaction.setClearedFrom(cleared.isSelected());
 				transaction.setReconciledFrom(reconciled.isSelected());			
 			}
-			else if (associatedAccount.equals(to.getSelectedItem())){
+			else if (associatedSource.equals(to.getSelectedItem())){
 				transaction.setClearedTo(cleared.isSelected());
 				transaction.setReconciledTo(reconciled.isSelected());	
 			}
@@ -514,12 +513,12 @@ public class TransactionEditorPanel extends MossPanel {
 		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
 		t.setNumber(number.getText());
 		t.setMemo(memo.getText());
-		if (associatedAccount != null){
-			if (associatedAccount.equals(from.getSelectedItem())){
+		if (associatedSource != null){
+			if (associatedSource.equals(from.getSelectedItem())){
 				t.setClearedFrom(cleared.isSelected());
 				t.setReconciledFrom(reconciled.isSelected());				
 			}
-			else if (associatedAccount.equals(to.getSelectedItem())){
+			else if (associatedSource.equals(to.getSelectedItem())){
 				t.setClearedTo(cleared.isSelected());
 				t.setReconciledTo(reconciled.isSelected());				
 			}
@@ -550,7 +549,7 @@ public class TransactionEditorPanel extends MossPanel {
 		return this.isTransactionValid(null);
 	}
 
-	public boolean isTransactionValid(Account thisAccount){
+	public boolean isTransactionValid(Source thisSource){
 		if (description.getText().length() == 0)
 			return false;
 		if (date.getDate() == null)
@@ -559,8 +558,8 @@ public class TransactionEditorPanel extends MossPanel {
 			return false;
 		if (from.getSelectedItem() == null)
 			return false;
-		if (thisAccount != null){
-			if (!from.getSelectedItem().equals(thisAccount) && !to.getSelectedItem().equals(thisAccount))
+		if (thisSource != null){
+			if (!from.getSelectedItem().equals(thisSource) && !to.getSelectedItem().equals(thisSource))
 				return false;
 		}
 
@@ -616,11 +615,11 @@ public class TransactionEditorPanel extends MossPanel {
 	 * Clear / Reconcile shortcuts. 
 	 */
 	public void updateClearedAndReconciled(){
-		if (associatedAccount.equals(from.getSelectedItem())){
+		if (associatedSource.equals(from.getSelectedItem())){
 			cleared.setSelected(transaction.isClearedFrom());
 			reconciled.setSelected(transaction.isReconciledFrom());				
 		}
-		else if (associatedAccount.equals(to.getSelectedItem())){
+		else if (associatedSource.equals(to.getSelectedItem())){
 			cleared.setSelected(transaction.isClearedTo());
 			reconciled.setSelected(transaction.isReconciledTo());
 		}

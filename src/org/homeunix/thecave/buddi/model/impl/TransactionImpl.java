@@ -5,10 +5,13 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
 /**
@@ -139,19 +142,34 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		if (this.clearedFrom != cleared)
 			setChanged();
 		this.clearedFrom = cleared;
+		//If one of the To / From source is either
+		// a budget category or a Prepaid account,
+		// we set both of the flags to the same value.
+		if (this.getTo() != null
+				&& this.getFrom() != null
+				&& (this.getTo() instanceof BudgetCategory
+						|| this.getFrom() instanceof BudgetCategory
+						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+			this.clearedTo = cleared;
+		}
 	}
 	public void setClearedTo(boolean cleared) {
 		if (this.clearedTo != cleared)
 			setChanged();
 		this.clearedTo = cleared;
+		//If one of the To / From source is either
+		// a budget category or a Prepaid account,
+		// we set both of the flags to the same value.
+		if (this.getTo() != null
+				&& this.getFrom() != null
+				&& (this.getTo() instanceof BudgetCategory
+						|| this.getFrom() instanceof BudgetCategory
+						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+			this.clearedFrom = cleared;
+		}
 	}
-//	public void setDate(Date date) {
-//		String dateString = dateToString(date);
-//		if (getDateString() != null && !getDateString().equals(dateString))
-//			setChanged();
-//		setDateString(dateString);
-//		this.date = null;
-//	}
 	public void setDate(Date date) {
 		if (this.date != null && this.date.equals(date))
 			setChanged();
@@ -180,11 +198,33 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		if (this.reconciledFrom != reconciled)
 			setChanged();
 		this.reconciledFrom = reconciled;
+		//If one of the To / From source is either
+		// a budget category or a Prepaid account,
+		// we set both of the flags to the same value.
+		if (this.getTo() != null
+				&& this.getFrom() != null
+				&& (this.getTo() instanceof BudgetCategory
+						|| this.getFrom() instanceof BudgetCategory
+						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+			this.reconciledTo = reconciled;
+		}
 	}
 	public void setReconciledTo(boolean reconciled) {
 		if (this.reconciledTo != reconciled)
 			setChanged();
 		this.reconciledTo = reconciled;
+		//If one of the To / From source is either
+		// a budget category or a Prepaid account,
+		// we set both of the flags to the same value.
+		if (this.getTo() != null
+				&& this.getFrom() != null
+				&& (this.getTo() instanceof BudgetCategory
+						|| this.getFrom() instanceof BudgetCategory
+						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+			this.reconciledFrom = reconciled;
+		}
 	}
 	public void setScheduled(boolean scheduled) {
 		this.scheduled = scheduled;
@@ -193,13 +233,6 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		setChanged();
 		this.to = to;
 	}
-//	public String getDateString() {
-//		return dateString;
-//	}
-//	public void setDateString(String newDate) {
-//		this.dateString = newDate;
-//	}
-	
 	public boolean isDeleted() {
 		return deleted;
 	}
