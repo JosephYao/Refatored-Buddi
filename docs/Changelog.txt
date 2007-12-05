@@ -1,4 +1,4 @@
-2.9.19.0 (3.0 RC 4)
+2.9.19.0 (3.0 RC 4) (December 4 2007)
 -Fixed a few more potential performance issues (thanks to Andrew Nichols for pointing these out)
 -Fixed bug #1843584 (Set both C / R when one of the To / From sources is a Budget Category or Prepaid account.  These sources do not logically have their own separate cleared / reconciled flag, so it makes no sense to include that it in the model.)
 -Fixed bug #1843332 (Revert to Saved in Windows with one data file open exits Buddi)
