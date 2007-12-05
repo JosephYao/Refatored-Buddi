@@ -29,6 +29,7 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.TableModel;
 import javax.swing.tree.TreePath;
 
 import org.homeunix.thecave.buddi.Const;
@@ -54,6 +55,8 @@ import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.table.ColumnFactory;
+import org.jdesktop.swingx.table.TableColumnExt;
 
 public class MyBudgetPanel extends MossPanel implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -75,7 +78,18 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		super(true);
 		this.parent = parent;
 		this.treeTableModel = new MyBudgetTreeTableModel((Document) parent.getDocument());
-		tree = new JXTreeTable(treeTableModel);
+		tree = new JXTreeTable();
+		tree.setColumnFactory(new ColumnFactory(){
+			@Override
+			public void configureTableColumn(TableModel arg0, TableColumnExt arg1) {
+				super.configureTableColumn(arg0, arg1);
+				
+				MossDecimalField editor = new MossDecimalField(0, true, 2);
+				arg1.setCellRenderer(new MyBudgetTableAmountCellRenderer());
+				arg1.setCellEditor(new MyBudgetTableAmountCellEditor(editor));
+			}
+		});
+		tree.setTreeTableModel(treeTableModel);
 
 		balanceLabel = new JLabel();
 		dateSpinnerModel = new BudgetDateSpinnerModel(treeTableModel);
@@ -122,8 +136,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setLeafIcon(null);
 		tree.setTreeCellRenderer(new MyBudgetTreeNameCellRenderer());
 
-		for (int i = 1; i < treeTableModel.getColumnCount(); i++){
-			MossDecimalField editor = new MossDecimalField(0, true, 2);
+		for (int i = 1; i < treeTableModel.getColumnCount(); i++){			
 			final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 			//This passes arrow keys on to the table, to allow cell navigation.
 			manager.addKeyEventDispatcher(new KeyEventDispatcher(){
@@ -144,8 +157,8 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 					return false;
 				}
 			});
-			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
-			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
+//			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
+//			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
 		}
 //		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

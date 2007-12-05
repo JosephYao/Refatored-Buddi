@@ -18,6 +18,7 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.TableModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -39,6 +40,8 @@ import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.table.ColumnFactory;
+import org.jdesktop.swingx.table.TableColumnExt;
 
 public class MyAccountsPanel extends MossPanel {
 	public static final long serialVersionUID = 0;
@@ -52,11 +55,19 @@ public class MyAccountsPanel extends MossPanel {
 	
 	public MyAccountsPanel(MainFrame parent) {
 		super(true);
-//		this.model = model;
 		this.parent = parent;
 		this.treeTableModel = new MyAccountTreeTableModel((Document) parent.getDocument());
 		
-		tree = new JXTreeTable(treeTableModel);
+		tree = new JXTreeTable();
+		tree.setColumnFactory(new ColumnFactory(){
+			@Override
+			public void configureTableColumn(TableModel arg0, TableColumnExt arg1) {
+				super.configureTableColumn(arg0, arg1);
+				
+				arg1.setCellRenderer(new MyAccountTableAmountCellRenderer((Document) MyAccountsPanel.this.parent.getDocument()));
+			}
+		});
+		tree.setTreeTableModel(treeTableModel);
 		balanceLabel = new JLabel("Change Me");
 		
 		open();
@@ -109,7 +120,6 @@ public class MyAccountsPanel extends MossPanel {
 //		tree.getColumn(0).setPreferredWidth(treeColumnWidth);
 
 		tree.setTreeCellRenderer(new MyAccountTreeNameCellRenderer());
-		tree.getColumn(1).setCellRenderer(new MyAccountTableAmountCellRenderer((Document) parent.getDocument()));
 		
 		parent.getDocument().addDocumentChangeListener(new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {

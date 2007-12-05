@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="lib/jcommon-1.0.10.jar"/>
 	<classpathentry kind="lib" path="lib/quaqua-3.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/BrowserLauncher2-1_3.jar"/>
-	<classpathentry kind="lib" path="lib/swingx-2007_08_12.jar"/>
+	<classpathentry kind="lib" path="lib/swingx-0.9.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
