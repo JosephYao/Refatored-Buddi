@@ -4,9 +4,9 @@
 package org.homeunix.thecave.buddi.model.swing;
 
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,10 +20,11 @@ public class DescriptionList extends AbstractList<String> {
 
 	private Document model;
 	private final List<String> descriptionList;
+	private final Set<String> descriptions = new HashSet<String>();
 
 	public DescriptionList(Document model) {
 		this.model = model;
-		this.descriptionList = new LinkedList<String>();
+		this.descriptionList = new ArrayList<String>();
 		updateAutoCompleteList();
 
 		model.addDocumentChangeListener(new DocumentChangeListener(){
@@ -45,7 +46,7 @@ public class DescriptionList extends AbstractList<String> {
 	}
 
 	private void updateAutoCompleteList(){
-		Set<String> descriptions = new HashSet<String>();
+		descriptions.clear();
 		for (Transaction t : model.getTransactions()) {
 			descriptions.add(t.getDescription());
 		}

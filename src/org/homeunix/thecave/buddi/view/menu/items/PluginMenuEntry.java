@@ -159,6 +159,14 @@ public class PluginMenuEntry extends MossMenuItem {
 						Log.error("Error processing data in plugin: ", pe);
 						return null;
 					}
+					catch (RuntimeException re){
+						Log.emergency("Runtime exception processing data in plugin: ", re);
+						return null;
+					}
+					catch (Error e){
+						Log.emergency("Error processing data in plugin: ", e);
+						return null;						
+					}
 
 					return new Object();
 				}
