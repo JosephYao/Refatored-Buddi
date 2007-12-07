@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -48,6 +47,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.data.list.CompositeList;
+import org.homeunix.thecave.moss.data.list.SortedArrayList;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.AbstractDocument;
 import org.homeunix.thecave.moss.util.DateFunctions;
@@ -85,11 +85,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private final Map<String, ModelObject> uidMap = new HashMap<String, ModelObject>();
 
 	//User data objects
-	private List<Account> accounts = new LinkedList<Account>();
-	private List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>();
-	private List<AccountType> accountTypes = new LinkedList<AccountType>();
-	private List<Transaction> transactions = new LinkedList<Transaction>();
-	private List<ScheduledTransaction> scheduledTransactions = new LinkedList<ScheduledTransaction>();
+	private List<Account> accounts = new SortedArrayList<Account>();
+	private List<BudgetCategory> budgetCategories = new SortedArrayList<BudgetCategory>();
+	private List<AccountType> accountTypes = new SortedArrayList<AccountType>();
+	private List<Transaction> transactions = new SortedArrayList<Transaction>();
+	private List<ScheduledTransaction> scheduledTransactions = new SortedArrayList<ScheduledTransaction>();
 
 	//Model object data
 	private Time modifiedTime;
@@ -146,40 +146,41 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return accounts;
 	}
 	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+		this.accounts.clear();
+		this.accounts.addAll(accounts);
 	}
 
 	public List<BudgetCategory> getBudgetCategories() {
 		return budgetCategories;
 	}
 	public void setBudgetCategories(List<BudgetCategory> budgetCategories) {
-		this.budgetCategories = budgetCategories;
+		this.budgetCategories.clear();
+		this.budgetCategories.addAll(budgetCategories);
 	}
 	public List<ScheduledTransaction> getScheduledTransactions() {
 		checkLists();
 		return scheduledTransactions;
 	}
 	public void setScheduledTransactions(List<ScheduledTransaction> scheduledTransactions) {
-		this.scheduledTransactions = scheduledTransactions;
+		this.scheduledTransactions.clear();
+		this.scheduledTransactions.addAll(scheduledTransactions);
 	}
 	public List<Transaction> getTransactions() {
 		checkLists();
 		return transactions;
 	}
 	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-		Collections.sort(transactions);
+		this.transactions.clear();
+		this.transactions.addAll(transactions);
 	}
 	public List<AccountType> getAccountTypes() {
 		checkLists();
 		return accountTypes;
 	}
 	public void setAccountTypes(List<AccountType> types) {
-		this.accountTypes = types;
+		this.accountTypes.clear();
+		this.accountTypes.addAll(types);
 	}
-
-
-
 
 	public void setFlag(int flag, boolean set) {
 		if (set)
@@ -192,35 +193,35 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		account.setDocument(this);
 		checkValid(account, true, false);
 		accounts.add(account);
-		Collections.sort(accounts);
+//		Collections.sort(accounts);
 		setChanged();
 	}
 	public void addAccountType(AccountType type) throws ModelException {
 		type.setDocument(this);
 		checkValid(type, true, false);
 		accountTypes.add(type);
-		Collections.sort(budgetCategories);
+//		Collections.sort(budgetCategories);
 		setChanged();
 	}
 	public void addBudgetCategory(BudgetCategory budgetCategory) throws ModelException {
 		budgetCategory.setDocument(this);
 		checkValid(budgetCategory, true, false);
 		budgetCategories.add(budgetCategory);
-		Collections.sort(budgetCategories);
+//		Collections.sort(budgetCategories);
 		setChanged();
 	}
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException {
 		scheduledTransaction.setDocument(this);
 		checkValid(scheduledTransaction, true, false);
 		scheduledTransactions.add(scheduledTransaction);
-		Collections.sort(scheduledTransactions);
+//		Collections.sort(scheduledTransactions);
 		setChanged();
 	}
 	public void addTransaction(Transaction transaction) throws ModelException {
 		transaction.setDocument(this);
 		checkValid(transaction, true, false);
 		transactions.add(transaction);
-		Collections.sort(transactions);
+//		Collections.sort(transactions);
 		setChanged();
 	}
 	public Account getAccount(String name) {

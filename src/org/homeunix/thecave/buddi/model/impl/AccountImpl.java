@@ -48,7 +48,10 @@ public class AccountImpl extends SourceImpl implements Account {
 		return startDate;
 	}
 	public void setStartDate(Date startDate) {
-		this.startDate = new Day(startDate);
+		if (startDate != null)
+			this.startDate = new Day(startDate);
+		else
+			this.startDate = null;
 	}
 	public long getBalance() {
 		return balance;
