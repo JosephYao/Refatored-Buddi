@@ -37,12 +37,13 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 	private final JButton okButton;
 	private final JButton cancelButton;
 	
+	@SuppressWarnings("unchecked")
 	public PreferencesFrame() {
 		super("Preferences");
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		tabs = new JTabbedPane();
 		
-		preferencePanels = BuddiPluginFactory.getPreferencePlugins();		
+		preferencePanels = (List<BuddiPreferencePlugin>) BuddiPluginFactory.getPlugins(BuddiPreferencePlugin.class);		
 		okButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
 		cancelButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL));
 	}

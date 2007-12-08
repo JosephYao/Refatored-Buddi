@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.view.menu.menus;
 
+import java.util.List;
+
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
@@ -19,11 +21,12 @@ public class FileSynchronizeMenu extends MossMenu {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_SYNCHRONIZE));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void updateMenus() {
 		this.removeAll();
 		
-		for (BuddiSynchronizePlugin plugin : BuddiPluginFactory.getSynchronizePlugins()) {
+		for (BuddiSynchronizePlugin plugin : (List<BuddiSynchronizePlugin>) BuddiPluginFactory.getPlugins(BuddiSynchronizePlugin.class)) {
 			if (getFrame() instanceof MossDocumentFrame)
 				this.add(new PluginMenuEntry((MossDocumentFrame) getFrame(), plugin));
 		}

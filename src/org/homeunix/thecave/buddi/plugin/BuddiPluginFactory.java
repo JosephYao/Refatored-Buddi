@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.homeunix.thecave.buddi.Buddi;
@@ -23,9 +25,80 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.moss.plugin.MossPlugin;
 import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.util.Log;
 
 public class BuddiPluginFactory extends PluginFactory {
+	
+	private static final Map<Class<? extends MossPlugin>, List<MossPlugin>> pluginMap = new HashMap<Class<? extends MossPlugin>, List<MossPlugin>>();
 
+	/**
+	 * Removes all the plugins from the cache.  Next time the plugins are
+	 * accessed, we will reload from disk.
+	 */
+	public static void forcePluginRefresh(){
+		pluginMap.clear();
+	}
+	
+	/**
+	 * Returns all plugins, both in the classpath and in plugin dirs, of the given type.
+	 * @param pluginType
+	 * @return
+	 */
+	public static List<? extends MossPlugin> getPlugins(Class<? extends MossPlugin> pluginType){
+		if (pluginMap.get(pluginType) == null){
+			pluginMap.put(pluginType, new LinkedList<MossPlugin>());
+			
+			//Load built in plugins
+			String[] builtIn;
+			if (pluginType.getName().equals(BuddiReportPlugin.class.getName()))
+				builtIn = Const.BUILT_IN_REPORTS;
+			else if (pluginType.getName().equals(BuddiImportPlugin.class.getName()))
+				builtIn = Const.BUILT_IN_IMPORTS;
+			else if (pluginType.getName().equals(BuddiExportPlugin.class.getName()))
+				builtIn = Const.BUILT_IN_EXPORTS;
+			else if (pluginType.getName().equals(BuddiPreferencePlugin.class.getName()))
+				builtIn = Const.BUILT_IN_PREFERENCE_PANELS;
+			else if (pluginType.getName().equals(BuddiRunnablePlugin.class.getName()))
+				builtIn = Const.BUILT_IN_RUNNABLES;
+			else if (pluginType.getName().equals(BuddiSynchronizePlugin.class.getName()))
+				builtIn = Const.BUILT_IN_SYNCHRONIZES;
+			else if (pluginType.getName().equals(BuddiTransactionCellRendererPlugin.class.getName()))
+				builtIn = Const.BUILT_IN_TRANSACTION_CELL_RENDERERS;
+			else {
+				builtIn = new String[0];
+				Log.warning("Unknown plugin type: " + pluginType.getName());
+			}
+			
+			for (String className : builtIn){
+				MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
+				if (pluginType.isInstance(plugin)){
+					pluginMap.get(pluginType).add(plugin);
+				}
+			}
+
+			//Load user defined plugins
+			File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
+			if (plugins != null){
+				for (File pluginFile : plugins){
+					Properties props = new Properties();
+					try {
+						InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
+						if (is != null)
+							props.load(is);
+					}
+					catch (IOException ioe){}
+					for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
+						if (pluginType.isInstance(plugin)){
+							pluginMap.get(pluginType).add((MossPlugin) plugin);
+						}
+					}
+				}
+			}
+		}
+		
+		return pluginMap.get(pluginType);
+	}
+	
 	public static final FileFilter pluginFilter = new FileFilter(){
 		public boolean accept(File pathname) {
 			if (pathname.getName().endsWith(Const.PLUGIN_EXTENSION)
@@ -34,301 +107,6 @@ public class BuddiPluginFactory extends PluginFactory {
 			return false;
 		}
 	};
-
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiReportPlugin. 
-	 * @return
-	 */
-	public static List<BuddiReportPlugin> getReportPlugins(){
-		List<BuddiReportPlugin> reports = new LinkedList<BuddiReportPlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_REPORTS){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiReportPlugin){
-				reports.add((BuddiReportPlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiReportPlugin){
-						reports.add((BuddiReportPlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return reports;
-	}
-	
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiImportPlugin. 
-	 * @return
-	 */
-	public static List<BuddiImportPlugin> getImportPlugins(){
-		List<BuddiImportPlugin> imports = new LinkedList<BuddiImportPlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_IMPORTS){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiImportPlugin){
-				imports.add((BuddiImportPlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiImportPlugin){
-						imports.add((BuddiImportPlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return imports;
-	}
-	
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiSynchronizePlugin. 
-	 * @return
-	 */
-	public static List<BuddiSynchronizePlugin> getSynchronizePlugins(){
-		List<BuddiSynchronizePlugin> synchs = new LinkedList<BuddiSynchronizePlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_SYNCHRONIZES){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiSynchronizePlugin){
-				synchs.add((BuddiSynchronizePlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiSynchronizePlugin){
-						synchs.add((BuddiSynchronizePlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return synchs;
-	}
-	
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiExportPlugin. 
-	 * @return
-	 */
-	public static List<BuddiExportPlugin> getExportPlugins(){
-		List<BuddiExportPlugin> imports = new LinkedList<BuddiExportPlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_EXPORTS){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiExportPlugin){
-				imports.add((BuddiExportPlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiExportPlugin){
-						imports.add((BuddiExportPlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return imports;
-	}
-	
-	public static List<BuddiRunnablePlugin> getRunnablePlugins(){
-		List<BuddiRunnablePlugin> synchs = new LinkedList<BuddiRunnablePlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_RUNNABLES){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiRunnablePlugin){
-				synchs.add((BuddiRunnablePlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiRunnablePlugin){
-						synchs.add((BuddiRunnablePlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return synchs;
-	}
-	
-//	/**
-//	 * Returns a list of all BudgetPeriodType plugins, including both built in 
-//	 * ones and user-defined ones from Plugins. 
-//	 * @return
-//	 */
-//	public static List<BuddiBudgetPeriodTypePlugin> getBudgetPeriodTypePlugins(){
-//		List<BuddiBudgetPeriodTypePlugin> budgetPeriodTypes = new LinkedList<BuddiBudgetPeriodTypePlugin>();
-//		
-//		//Load built in plugins
-//		budgetPeriodTypes.add(new BudgetPeriodMonthly());
-//		budgetPeriodTypes.add(new BudgetPeriodWeekly());
-////		for (String className : Const.BUILT_IN_BUDGET_PERIOD_TYPES){
-////			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-////			if (plugin instanceof BuddiBudgetPeriodTypePlugin){
-////				budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
-////			}
-////		}
-//		
-//		//Load user defined plugins
-//		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-//		if (plugins != null){
-//			for (File pluginFile : plugins){
-//				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion())) {
-//					if (plugin instanceof BuddiBudgetPeriodTypePlugin){
-//						budgetPeriodTypes.add((BuddiBudgetPeriodTypePlugin) plugin);
-//					}
-//				}
-//			}
-//		}
-//		
-//		return budgetPeriodTypes;
-//	}
-
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiPreferencePlugin.
-	 * @return
-	 */
-	public static List<BuddiPreferencePlugin> getPreferencePlugins(){
-		List<BuddiPreferencePlugin> preferences = new LinkedList<BuddiPreferencePlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_PREFERENCE_PANELS){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiPreferencePlugin){
-				preferences.add((BuddiPreferencePlugin) plugin);
-			}
-		}
-
-
-		//Load user defined plugins.
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiPreferencePlugin){
-						preferences.add((BuddiPreferencePlugin) plugin);
-					}
-				}
-			}
-		}
-
-		return preferences;
-	}
-	
-	/**
-	 * Returns a list of valid plugin objects, both built-in and user-defined.
-	 * This method returns only plugins of type BuddiExportPlugin. 
-	 * @return
-	 */
-	public static List<BuddiTransactionCellRendererPlugin> getTransactionCellRendererPlugins(){
-		List<BuddiTransactionCellRendererPlugin> transactionCellRenderers = new LinkedList<BuddiTransactionCellRendererPlugin>();
-
-		//Load built in plugins
-		for (String className : Const.BUILT_IN_TRANSACTION_CELL_RENDERERS){
-			MossPlugin plugin = BuddiPluginFactory.getValidPluginFromClasspath(className);
-			if (plugin instanceof BuddiTransactionCellRendererPlugin){
-				transactionCellRenderers.add((BuddiTransactionCellRendererPlugin) plugin);
-			}
-		}
-
-		//Load user defined plugins
-		File[] plugins = Buddi.getPluginsFolder().listFiles(pluginFilter); 
-		if (plugins != null){
-			for (File pluginFile : plugins){
-				Properties props = new Properties();
-				try {
-					InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(pluginFile, "/" + Const.PLUGIN_PROPERTIES);
-					if (is != null)
-						props.load(is);
-				}
-				catch (IOException ioe){}
-				for (MossPlugin plugin : getMossPluginsFromJar(pluginFile, Buddi.getVersion(), props.getProperty(Const.PLUGIN_PROPERTIES_ROOT))) {
-					if (plugin instanceof BuddiTransactionCellRendererPlugin){
-						transactionCellRenderers.add((BuddiTransactionCellRendererPlugin) plugin);
-					}
-				}
-			}
-		}
-		
-		return transactionCellRenderers;
-	}
 	
 	public static List<File> getPluginFiles(){
 		List<File> pluginFiles = new LinkedList<File>();

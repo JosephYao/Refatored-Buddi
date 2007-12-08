@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -47,13 +48,14 @@ public class MyReportsPanel extends MossPanel {
 		open();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void init() {
 		super.init();
 		
 		JPanel pluginsPanel = new JPanel();
 		pluginsPanel.setLayout(new BoxLayout(pluginsPanel, BoxLayout.Y_AXIS));
 						
-		for (BuddiReportPlugin report : BuddiPluginFactory.getReportPlugins()) {
+		for (BuddiReportPlugin report : (List<BuddiReportPlugin>) BuddiPluginFactory.getPlugins(BuddiReportPlugin.class)) {
 			//Select the correct options for the dropdown, based on the plugin
 			Vector<DateChoice> dateChoices;
 			if (report.getDateRangeChoice().equals(PluginReportDateRangeChoices.INTERVAL))

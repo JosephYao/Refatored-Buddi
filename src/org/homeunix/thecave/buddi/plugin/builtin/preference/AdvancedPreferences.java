@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.plugin.builtin.preference;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -35,8 +36,9 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	private final JCheckBox hideNegativeSign;
 	
 	
+	@SuppressWarnings("unchecked")
 	public AdvancedPreferences() {
-		transactionCellRenderer = new JComboBox(new BackedComboBoxModel<BuddiTransactionCellRendererPlugin>(BuddiPluginFactory.getTransactionCellRendererPlugins()));
+		transactionCellRenderer = new JComboBox(new BackedComboBoxModel<BuddiTransactionCellRendererPlugin>((List<BuddiTransactionCellRendererPlugin>) BuddiPluginFactory.getPlugins(BuddiTransactionCellRendererPlugin.class)));
 		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
 		autosavePeriod = new JComboBox(new Integer[]{15, 30, 60, 120, 300});
 		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP));
@@ -132,9 +134,10 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		return panel;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void load() {
 		BuddiTransactionCellRendererPlugin renderer = new DefaultTransactionCellRenderer();
-		for (BuddiTransactionCellRendererPlugin r : BuddiPluginFactory.getTransactionCellRendererPlugins()) {
+		for (BuddiTransactionCellRendererPlugin r : (List<BuddiTransactionCellRendererPlugin>) BuddiPluginFactory.getPlugins(BuddiTransactionCellRendererPlugin.class)) {
 			if (r.getClass().getCanonicalName().equals(PrefsModel.getInstance().getTransactionCellRenderer())){
 				renderer = r;
 				break;

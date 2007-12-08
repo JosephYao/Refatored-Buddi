@@ -17,6 +17,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -244,6 +245,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(){
 		super.init();
@@ -252,7 +254,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		BuddiTransactionCellRendererPlugin renderer = new DefaultTransactionCellRenderer();
-		for (BuddiTransactionCellRendererPlugin r : BuddiPluginFactory.getTransactionCellRendererPlugins()) {
+		for (BuddiTransactionCellRendererPlugin r : (List<BuddiTransactionCellRendererPlugin>) BuddiPluginFactory.getPlugins(BuddiTransactionCellRendererPlugin.class)) {
 			if (r.getClass().getCanonicalName().equals(PrefsModel.getInstance().getTransactionCellRenderer())){
 				renderer = r;
 				break;

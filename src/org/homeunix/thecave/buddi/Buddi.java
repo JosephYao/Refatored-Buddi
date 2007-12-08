@@ -408,6 +408,7 @@ public class Buddi {
 	 * in.  Use --help flag to see complete list.
 	 * @param args
 	 */
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		//Set Buddi-specific LnF options.
 		//This one removes the width limitation for dialogs.  Since we already will
@@ -662,7 +663,7 @@ public class Buddi {
 		Log.info("Working directory: " + currentWorkingDir);
 
 		//Run any RunnablePlugins which we may have here.
-		for (BuddiRunnablePlugin plugin : BuddiPluginFactory.getRunnablePlugins()) {
+		for (BuddiRunnablePlugin plugin : (List<BuddiRunnablePlugin>) BuddiPluginFactory.getPlugins(BuddiRunnablePlugin.class)) {
 			plugin.run();
 		}
 		

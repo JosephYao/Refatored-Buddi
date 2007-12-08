@@ -187,6 +187,8 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 			}
 		}
 
+		BuddiPluginFactory.forcePluginRefresh();
+		
 		return filesToAdd.size() > 0 || filesToRemove.size() > 0;
 	}
 

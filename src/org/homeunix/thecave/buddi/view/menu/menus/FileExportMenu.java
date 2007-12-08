@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.view.menu.menus;
 
+import java.util.List;
+
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
@@ -19,11 +21,12 @@ public class FileExportMenu extends MossMenu {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_FILE_EXPORT));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void updateMenus() {
 		this.removeAll();
 		
-		for (BuddiExportPlugin plugin : BuddiPluginFactory.getExportPlugins()) {
+		for (BuddiExportPlugin plugin : (List<BuddiExportPlugin>) BuddiPluginFactory.getPlugins(BuddiExportPlugin.class)) {
 			if (getFrame() instanceof MossDocumentFrame)
 				this.add(new PluginMenuEntry((MossDocumentFrame) getFrame(), plugin));
 		}
