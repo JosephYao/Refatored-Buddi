@@ -1,3 +1,6 @@
+2.9.20.1 (2.0 RC 5.1) (December 8 2007)
+-Fixed bug #1847095 (RC 5 does not save files correctly)
+
 2.9.20.0 (3.0 RC 5) (December 6 2007)
 -Fixed bug #1837673 (Massive performance enhancements to transactions screen.  The delay when adding transactions, as well as the auto complete box with lots of transactions, have been improved considerably as far as performance goes.  Also I now cache the plugins, which greatly speeds the program up in the event of many active plugins)
 -Fixed bug #1845864 (About window should be centered)

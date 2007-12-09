@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.AccountListFilteredByType;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 
@@ -44,7 +44,7 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 		if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
 			int amount = 0;
-			for (Account a : new AccountListFilteredByType(document, document.getAccounts(), t)) {
+			for (Account a : FilteredLists.getAccountsByType(document, document.getAccounts(), t)) {
 				amount += a.getBalance();
 			}
 			this.setText(TextFormatter.getHtmlWrapper(

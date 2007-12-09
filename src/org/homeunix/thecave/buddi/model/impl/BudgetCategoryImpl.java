@@ -12,8 +12,6 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ModelObject;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.moss.util.DateFunctions;
@@ -90,13 +88,13 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	
 	public List<BudgetCategory> getChildren() {
 		if (children == null)
-			children = new BudgetCategoryListFilteredByDeleted(getDocument(), new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this));
+			children = FilteredLists.getBudgetCategoriesByDeleted(getDocument(), FilteredLists.getBudgetCategoriesByParent(getDocument(), getDocument().getBudgetCategories(), this));
 		return children;
 	}
 	
 	public List<BudgetCategory> getAllChildren() {
 		if (allChildren == null)
-			allChildren = new BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this);
+			allChildren = FilteredLists.getBudgetCategoriesByParent(getDocument(), getDocument().getBudgetCategories(), this);
 		return allChildren;
 	}	
 	

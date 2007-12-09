@@ -4,7 +4,9 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
@@ -51,7 +53,16 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
-	public static class TransactionListFilteredBySource extends BuddiFilteredList<Transaction> {
+	private final static Map<String, List<Transaction>> transactionsBySourceMap = new HashMap<String, List<Transaction>>();
+	public static List<Transaction> getTransactionsBySource(Document model, List<Transaction> transactions, Source source) {
+		String key = model.getUid() + transactions.hashCode() + source.getUid();
+		if (transactionsBySourceMap.get(key) == null){
+			transactionsBySourceMap.put(key, new TransactionListFilteredBySource(model, transactions, source));
+		}
+		
+		return transactionsBySourceMap.get(key);
+	}
+	private static class TransactionListFilteredBySource extends BuddiFilteredList<Transaction> {
 		private final Source source;
 
 		public TransactionListFilteredBySource(Document model, List<Transaction> transactions, Source source){
@@ -82,7 +93,16 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
-	public static class ScheduledTransactionListFilteredByBeforeToday extends BuddiFilteredList<ScheduledTransaction> {
+	private final static Map<String, List<ScheduledTransaction>> scheduledTransactionsBeforeTodayMap = new HashMap<String, List<ScheduledTransaction>>();
+	public static List<ScheduledTransaction> getScheduledTransactionsBeforeToday(Document model, List<ScheduledTransaction> transactions) {
+		String key = model.getUid() + transactions.hashCode();
+		if (scheduledTransactionsBeforeTodayMap.get(key) == null){
+			scheduledTransactionsBeforeTodayMap.put(key, new ScheduledTransactionListFilteredByBeforeToday(model, transactions));
+		}
+		
+		return scheduledTransactionsBeforeTodayMap.get(key);
+	}
+	private static class ScheduledTransactionListFilteredByBeforeToday extends BuddiFilteredList<ScheduledTransaction> {
 		private Date today = DateFunctions.getStartOfDay(new Date());
 		
 		public ScheduledTransactionListFilteredByBeforeToday(Document model, List<ScheduledTransaction> transactions){
@@ -110,7 +130,16 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
-	public static class TransactionListFilteredByDate extends BuddiFilteredList<Transaction> {
+	private final static Map<String, List<Transaction>> transactionsByDateMap = new HashMap<String, List<Transaction>>();
+	public static List<Transaction> getTransactionsByDate(Document model, List<Transaction> transactions, Date startDate, Date endDate) {
+		String key = model.getUid() + transactions.hashCode() + startDate + endDate;
+		if (transactionsByDateMap.get(key) == null){
+			transactionsByDateMap.put(key, new TransactionListFilteredByDate(model, transactions, startDate, endDate));
+		}
+		
+		return transactionsByDateMap.get(key);
+	}
+	private static class TransactionListFilteredByDate extends BuddiFilteredList<Transaction> {
 		private final Date startDate;
 		private final Date endDate;
 
@@ -137,6 +166,16 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
+	private final static Map<String, List<Transaction>> transactionsBySearchMap = new HashMap<String, List<Transaction>>();
+	public static List<Transaction> getTransactionsBySearch(Document model, Source associatedSource, List<Transaction> transactions) {
+		String key = model.getUid() + transactions.hashCode() + associatedSource.getUid();
+		System.out.println(key);
+		if (transactionsBySearchMap.get(key) == null){
+			transactionsBySearchMap.put(key, new TransactionListFilteredBySearch(model, associatedSource, transactions));
+		}
+		
+		return transactionsBySearchMap.get(key);
+	}
 	public static class TransactionListFilteredBySearch extends BuddiFilteredList<Transaction> {
 		private final Document model;
 		private String searchText;
@@ -145,7 +184,7 @@ public class FilteredLists {
 		private TransactionReconciledFilterKeys reconciledFilter;
 		private final Source associatedSource;
 
-		public TransactionListFilteredBySearch(Document model, Source associatedSource, List<Transaction> transactions){
+		private TransactionListFilteredBySearch(Document model, Source associatedSource, List<Transaction> transactions){
 			super(model, transactions);
 			this.model = model;
 			this.associatedSource = associatedSource;
@@ -329,7 +368,16 @@ public class FilteredLists {
 	 * Returns a list of all the Accounts associated with the given type. 
 	 * @author wyatt
 	 */
-	public static class AccountListFilteredByType extends BuddiFilteredList<Account> {
+	private final static Map<String, List<Account>> accountsByTypeMap = new HashMap<String, List<Account>>();
+	public static List<Account> getAccountsByType(Document model, List<Account> accounts, AccountType type) {
+		String key = model.getUid() + type.getName() + accounts.hashCode();
+		if (accountsByTypeMap.get(key) == null){
+			accountsByTypeMap.put(key, new AccountListFilteredByType(model, accounts, type));
+		}
+		
+		return accountsByTypeMap.get(key);
+	}
+	private static class AccountListFilteredByType extends BuddiFilteredList<Account> {
 		private final AccountType type;
 
 		public AccountListFilteredByType(Document model, List<Account> accounts, AccountType type) {
@@ -352,7 +400,16 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
-	public static class AccountListFilteredByDeleted extends BuddiFilteredList<Account> {
+	private final static Map<String, List<Account>> accountsByDeletedMap = new HashMap<String, List<Account>>();
+	public static List<Account> getAccountsByDeleted(Document model, List<Account> accounts) {
+		String key = model.getUid() + accounts.hashCode();
+		if (accountsByDeletedMap.get(key) == null){
+			accountsByDeletedMap.put(key, new AccountListFilteredByDeleted(model, accounts));
+		}
+		
+		return accountsByDeletedMap.get(key);
+	}
+	private static class AccountListFilteredByDeleted extends BuddiFilteredList<Account> {
 		public AccountListFilteredByDeleted(Document model, List<Account> accounts) {
 			super(model, accounts);
 		}
@@ -370,7 +427,16 @@ public class FilteredLists {
 	 * Returns a list of all the type objects which have Accounts associated with them.
 	 * @author wyatt
 	 */
-	public static class TypeListFilteredByAccounts extends BuddiFilteredList<AccountType> {
+	private final static Map<String, List<AccountType>> typesByAccountsMap = new HashMap<String, List<AccountType>>();
+	public static List<AccountType> getTypesByAccounts(Document model) {
+		String key = model.getUid();
+		if (typesByAccountsMap.get(key) == null){
+			typesByAccountsMap.put(key, new TypeListFilteredByAccounts(model));
+		}
+		
+		return typesByAccountsMap.get(key);
+	}
+	private static class TypeListFilteredByAccounts extends BuddiFilteredList<AccountType> {
 		private final Document model;
 
 		public TypeListFilteredByAccounts(Document model) {
@@ -390,7 +456,16 @@ public class FilteredLists {
 		}
 	}
 
-	public static class BudgetCategoryListFilteredByChildren extends BuddiFilteredList<BudgetCategory> {
+	private final static Map<String, List<BudgetCategory>> categoriesByChildrenMap = new HashMap<String, List<BudgetCategory>>();
+	public static List<BudgetCategory> getBudgetCategoriesByChildren(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+		String key = model.getUid() + budgetCategories.hashCode() + parent.getUid();
+		if (categoriesByChildrenMap.get(key) == null){
+			categoriesByChildrenMap.put(key, new BudgetCategoryListFilteredByChildren(model, budgetCategories, parent));
+		}
+		
+		return categoriesByChildrenMap.get(key);
+	}
+	private static class BudgetCategoryListFilteredByChildren extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
 		public BudgetCategoryListFilteredByChildren(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
@@ -416,7 +491,16 @@ public class FilteredLists {
 	 * Returns a list of categories which are children of the given parent.
 	 * @author wyatt
 	 */
-	public static class BudgetCategoryListFilteredByParent extends BuddiFilteredList<BudgetCategory> {
+	private final static Map<String, List<BudgetCategory>> categoriesByParentMap = new HashMap<String, List<BudgetCategory>>();
+	public static List<BudgetCategory> getBudgetCategoriesByParent(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
+		String key = model.getUid() + budgetCategories.hashCode() + (parent == null ? null : parent.getUid());
+		if (categoriesByParentMap.get(key) == null){
+			categoriesByParentMap.put(key, new BudgetCategoryListFilteredByParent(model, budgetCategories, parent));
+		}
+		
+		return categoriesByParentMap.get(key);
+	}
+	private static class BudgetCategoryListFilteredByParent extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategory parent;
 
 		public BudgetCategoryListFilteredByParent(Document model, List<BudgetCategory> budgetCategories, BudgetCategory parent) {
@@ -440,7 +524,16 @@ public class FilteredLists {
 	 * Returns a list of categories, filtered by deleted status if the preferences state such.
 	 * @author wyatt
 	 */
-	public static class BudgetCategoryListFilteredByDeleted extends BuddiFilteredList<BudgetCategory> {
+	private final static Map<String, List<BudgetCategory>> categoriesByDeletedMap = new HashMap<String, List<BudgetCategory>>();
+	public static List<BudgetCategory> getBudgetCategoriesByDeleted(Document model, List<BudgetCategory> budgetCategories) {
+		String key = model.getUid() + budgetCategories.hashCode();
+		if (categoriesByDeletedMap.get(key) == null){
+			categoriesByDeletedMap.put(key, new BudgetCategoryListFilteredByDeleted(model, budgetCategories));
+		}
+		
+		return categoriesByDeletedMap.get(key);
+	}
+	private static class BudgetCategoryListFilteredByDeleted extends BuddiFilteredList<BudgetCategory> {
 		public BudgetCategoryListFilteredByDeleted(Document model, List<BudgetCategory> budgetCategories) {
 			super(model, budgetCategories);
 		}
@@ -458,7 +551,16 @@ public class FilteredLists {
 	 * Returns a list of categories which are children of the given parent.
 	 * @author wyatt
 	 */
-	public static class BudgetCategoryListFilteredByPeriodType extends BuddiFilteredList<BudgetCategory> {
+	private final static Map<String, List<BudgetCategory>> categoriesByTypeMap = new HashMap<String, List<BudgetCategory>>();
+	public static List<BudgetCategory> getBudgetCategoriesByPeriodType(Document model, BudgetCategoryType type) {
+		String key = model.getUid() + type.getName();
+		if (categoriesByTypeMap.get(key) == null){
+			categoriesByTypeMap.put(key, new BudgetCategoryListFilteredByPeriodType(model, type));
+		}
+		
+		return categoriesByTypeMap.get(key);
+	}	
+	private static class BudgetCategoryListFilteredByPeriodType extends BuddiFilteredList<BudgetCategory> {
 		private final BudgetCategoryType type;
 
 		public BudgetCategoryListFilteredByPeriodType(Document model, BudgetCategoryType type) {

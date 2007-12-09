@@ -28,8 +28,8 @@ public class TransactionListModel extends BackedListModel<Transaction> {
 	
 	public TransactionListModel(Document model, Source selectedSource) {
 		super(selectedSource == null ? 
-				new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions()) :
-					new FilteredLists.TransactionListFilteredBySearch(model, selectedSource, model.getTransactions(selectedSource)));
+				FilteredLists.getTransactionsBySearch(model, selectedSource, model.getTransactions()) :
+					FilteredLists.getTransactionsBySearch(model, selectedSource, model.getTransactions(selectedSource)));
 		
 		this.transactions = (TransactionListFilteredBySearch) listModel;
 	}

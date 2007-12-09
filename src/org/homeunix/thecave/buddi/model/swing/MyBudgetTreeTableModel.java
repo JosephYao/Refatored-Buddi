@@ -16,8 +16,6 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByDeleted;
-import org.homeunix.thecave.buddi.model.impl.FilteredLists.BudgetCategoryListFilteredByParent;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -51,7 +49,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 		
 		for (BudgetCategoryTypes typeEnum : BudgetCategoryTypes.values()) {
 			BudgetCategoryType type = ModelFactory.getBudgetCategoryType(typeEnum);
-			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
+			budgetCategoriesByType.put(type, FilteredLists.getBudgetCategoriesByPeriodType(model, type));
 		}
 	}
 
@@ -79,9 +77,9 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	private List<BudgetCategory> getRootChildren(){
 		if (rootChildren == null)
 			if (PrefsModel.getInstance().isShowFlatBudget())
-				rootChildren = new BudgetCategoryListFilteredByDeleted(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()));
+				rootChildren = FilteredLists.getBudgetCategoriesByDeleted(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()));
 			else
-				rootChildren = new BudgetCategoryListFilteredByDeleted(model, new BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
+				rootChildren = FilteredLists.getBudgetCategoriesByDeleted(model, FilteredLists.getBudgetCategoriesByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
 		return rootChildren;
 	}
 
