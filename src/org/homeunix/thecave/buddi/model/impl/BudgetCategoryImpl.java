@@ -88,13 +88,13 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	
 	public List<BudgetCategory> getChildren() {
 		if (children == null)
-			children = FilteredLists.getBudgetCategoriesByDeleted(getDocument(), FilteredLists.getBudgetCategoriesByParent(getDocument(), getDocument().getBudgetCategories(), this));
+			children = new FilteredLists.BudgetCategoryListFilteredByDeleted(getDocument(), new FilteredLists.BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this));
 		return children;
 	}
 	
 	public List<BudgetCategory> getAllChildren() {
 		if (allChildren == null)
-			allChildren = FilteredLists.getBudgetCategoriesByParent(getDocument(), getDocument().getBudgetCategories(), this);
+			allChildren = new FilteredLists.BudgetCategoryListFilteredByParent(getDocument(), getDocument().getBudgetCategories(), this);
 		return allChildren;
 	}	
 	

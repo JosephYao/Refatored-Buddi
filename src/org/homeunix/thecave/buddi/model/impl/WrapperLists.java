@@ -10,14 +10,16 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
-import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
 import org.homeunix.thecave.moss.data.list.WrapperList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -95,10 +97,10 @@ public class WrapperLists {
 				return (T) new MutableAccountImpl((Account) object);
 			if (object instanceof BudgetCategory)
 				return (T) new MutableBudgetCategoryImpl((BudgetCategory) object);
-//			if (object instanceof BudgetPeriod)
-//			return (T) new ImmutableBudgetPeriodImpl((BudgetPeriod) object);
 			if (object instanceof Transaction)
 				return (T) new MutableTransactionImpl((Transaction) object);
+			if (object instanceof ScheduledTransaction)
+				return (T) new MutableScheduledTransactionImpl((ScheduledTransaction) object);
 			if (object instanceof AccountType)
 				return (T) new MutableAccountTypeImpl((AccountType) object);
 

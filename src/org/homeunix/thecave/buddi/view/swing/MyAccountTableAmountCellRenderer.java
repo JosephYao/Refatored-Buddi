@@ -44,7 +44,7 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 		if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
 			int amount = 0;
-			for (Account a : FilteredLists.getAccountsByType(document, document.getAccounts(), t)) {
+			for (Account a : new FilteredLists.AccountListFilteredByType(document, document.getAccounts(), t)) {
 				amount += a.getBalance();
 			}
 			this.setText(TextFormatter.getHtmlWrapper(

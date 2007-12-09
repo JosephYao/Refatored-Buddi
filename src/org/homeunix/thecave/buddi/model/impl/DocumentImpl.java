@@ -101,7 +101,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * constructor.  Don't use this unless you know exactly what you are doing!)
 	 */
 	public DocumentImpl() {
-		setMinimumChangeEventPeriod(5000);
+		setMinimumChangeEventPeriod(1000);
 		startBatchChange();
 	}
 
@@ -269,16 +269,16 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return sources;
 	}
 	public List<Transaction> getTransactions(Date startDate, Date endDate) {
-		return FilteredLists.getTransactionsByDate(this, getTransactions(), startDate, endDate);
+		return new FilteredLists.TransactionListFilteredByDate(this, getTransactions(), startDate, endDate);
 	}
 	public List<Transaction> getTransactions(Source source, Date startDate, Date endDate) {
-		return FilteredLists.getTransactionsBySource(
+		return new FilteredLists.TransactionListFilteredBySource(
 				this,
-				FilteredLists.getTransactionsByDate(this, getTransactions(), startDate, endDate),
+				new FilteredLists.TransactionListFilteredByDate(this, getTransactions(), startDate, endDate),
 				source);
 	}
 	public List<Transaction> getTransactions(Source source) {
-		return FilteredLists.getTransactionsBySource(this, getTransactions(), source);
+		return new FilteredLists.TransactionListFilteredBySource(this, getTransactions(), source);
 	}
 	public void removeAccount(Account account) throws ModelException {
 		if (getTransactions(account).size() > 0)
@@ -647,7 +647,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		for (AccountType t : getAccountTypes()) {
 			sb.append(t).append("\n");
 
-			for (Account a : FilteredLists.getAccountsByType(this, this.getAccounts(), t)) {
+			for (Account a : new FilteredLists.AccountListFilteredByType(this, this.getAccounts(), t)) {
 				sb.append("\t").append(a).append("\n");
 			}
 		}
@@ -656,11 +656,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		//We only show 3 levels here; if there are more, we figure that it is not needed to
 		// output them in the toString method, as it is just for troubleshooting.
-		for (BudgetCategory bc : FilteredLists.getBudgetCategoriesByParent(this, this.getBudgetCategories(), null)) {
+		for (BudgetCategory bc : new FilteredLists.BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), null)) {
 			sb.append(bc).append("\n");
-			for (BudgetCategory child1 : FilteredLists.getBudgetCategoriesByParent(this, this.getBudgetCategories(), bc)) {
+			for (BudgetCategory child1 : new FilteredLists.BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), bc)) {
 				sb.append("\t").append(child1).append("\n");
-				for (BudgetCategory child2 : FilteredLists.getBudgetCategoriesByParent(this, this.getBudgetCategories(), child1)) {
+				for (BudgetCategory child2 : new FilteredLists.BudgetCategoryListFilteredByParent(this, this.getBudgetCategories(), child1)) {
 					sb.append("\t\t").append(child2).append("\n");	
 				}				
 			}
@@ -776,7 +776,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		// it to be cleaner later on...
 		final GregorianCalendar tempCal = new GregorianCalendar();
 
-		for (ScheduledTransaction s : FilteredLists.getScheduledTransactionsBeforeToday(this, getScheduledTransactions())) {
+		for (ScheduledTransaction s : new FilteredLists.ScheduledTransactionListFilteredByBeforeToday(this, getScheduledTransactions())) {
 			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
 
 			Date tempDate = s.getLastDayCreated();

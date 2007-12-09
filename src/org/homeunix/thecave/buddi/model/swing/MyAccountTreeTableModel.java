@@ -47,13 +47,13 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 				return model.getAccounts().get(childIndex);
 			}
 			else{
-				List<AccountType> types = FilteredLists.getTypesByAccounts(model);
+				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
 				if (childIndex < types.size())
 					return types.get(childIndex);
 			}
 		}
 		if (parent instanceof AccountType){
-			List<Account> accounts = FilteredLists.getAccountsByDeleted(model, FilteredLists.getAccountsByType(model, model.getAccounts(), (AccountType) parent));
+			List<Account> accounts = new FilteredLists.AccountListFilteredByDeleted(model, new FilteredLists.AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			if (childIndex < accounts.size())
 				return accounts.get(childIndex);
 		}
@@ -66,12 +66,12 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 				return model.getAccounts().size();
 			}
 			else{
-				List<AccountType> types = FilteredLists.getTypesByAccounts(model);
+				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
 				return types.size();
 			}
 		}
 		if (parent instanceof AccountType){
-			List<Account> accounts = FilteredLists.getAccountsByDeleted(model, FilteredLists.getAccountsByType(model, model.getAccounts(), (AccountType) parent));
+			List<Account> accounts = new FilteredLists.AccountListFilteredByDeleted(model, new FilteredLists.AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			return accounts.size();
 		}
 
@@ -88,13 +88,13 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 				return model.getAccounts().indexOf(child);
 			}
 			else{
-				List<AccountType> types = FilteredLists.getTypesByAccounts(model);
+				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
 				return types.indexOf(child);
 			}
 		}
 
 		if (parent instanceof AccountType && child instanceof Account){
-			List<Account> accounts = FilteredLists.getAccountsByDeleted(model, FilteredLists.getAccountsByType(model, model.getAccounts(), (AccountType) parent));
+			List<Account> accounts = new FilteredLists.AccountListFilteredByDeleted(model, new FilteredLists.AccountListFilteredByType(model, model.getAccounts(), (AccountType) parent));
 			return accounts.indexOf(child);
 		}
 		return -1;

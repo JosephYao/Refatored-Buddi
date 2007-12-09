@@ -49,7 +49,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 		
 		for (BudgetCategoryTypes typeEnum : BudgetCategoryTypes.values()) {
 			BudgetCategoryType type = ModelFactory.getBudgetCategoryType(typeEnum);
-			budgetCategoriesByType.put(type, FilteredLists.getBudgetCategoriesByPeriodType(model, type));
+			budgetCategoriesByType.put(type, new FilteredLists.BudgetCategoryListFilteredByPeriodType(model, type));
 		}
 	}
 
@@ -77,9 +77,9 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	private List<BudgetCategory> getRootChildren(){
 		if (rootChildren == null)
 			if (PrefsModel.getInstance().isShowFlatBudget())
-				rootChildren = FilteredLists.getBudgetCategoriesByDeleted(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()));
+				rootChildren = new FilteredLists.BudgetCategoryListFilteredByDeleted(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()));
 			else
-				rootChildren = FilteredLists.getBudgetCategoriesByDeleted(model, FilteredLists.getBudgetCategoriesByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
+				rootChildren = new FilteredLists.BudgetCategoryListFilteredByDeleted(model, new FilteredLists.BudgetCategoryListFilteredByParent(model, budgetCategoriesByType.get(getSelectedBudgetPeriodType()), null));
 		return rootChildren;
 	}
 
