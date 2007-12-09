@@ -19,6 +19,7 @@ public class DescriptionList extends AbstractList<String> {
 	private static final long serialVersionUID = 0; 
 
 	private Document model;
+	private final DocumentChangeListener listener;
 	private final List<String> descriptionList;
 	private final Set<String> descriptions = new HashSet<String>();
 
@@ -27,12 +28,12 @@ public class DescriptionList extends AbstractList<String> {
 		this.descriptionList = new ArrayList<String>();
 		updateAutoCompleteList();
 
-		model.addDocumentChangeListener(new DocumentChangeListener(){
+		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				updateAutoCompleteList();				
 			}
-		});
-			
+		};
+		model.addDocumentChangeListener(listener);
 	}
 
 	@Override

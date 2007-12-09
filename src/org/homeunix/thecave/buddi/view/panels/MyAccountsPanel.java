@@ -53,10 +53,18 @@ public class MyAccountsPanel extends MossPanel {
 	
 	private final MainFrame parent;
 	
+	private final DocumentChangeListener listener;
+	
 	public MyAccountsPanel(MainFrame parent) {
 		super(true);
 		this.parent = parent;
 		this.treeTableModel = new MyAccountTreeTableModel((Document) parent.getDocument());
+		
+		listener = new DocumentChangeListener(){
+			public void documentChange(DocumentChangeEvent event) {
+				updateContent();
+			}
+		};
 		
 		tree = new JXTreeTable();
 		tree.setColumnFactory(new ColumnFactory(){
@@ -121,11 +129,7 @@ public class MyAccountsPanel extends MossPanel {
 
 		tree.setTreeCellRenderer(new MyAccountTreeNameCellRenderer());
 		
-		parent.getDocument().addDocumentChangeListener(new DocumentChangeListener(){
-			public void documentChange(DocumentChangeEvent event) {
-				updateContent();
-			}
-		});
+		parent.getDocument().addDocumentChangeListener(listener);
 		
 		JScrollPane listScroller = new JScrollPane(tree);
 

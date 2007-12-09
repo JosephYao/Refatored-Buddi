@@ -1,4 +1,7 @@
-2.9.20.1 (2.0 RC 5.1) (December 8 2007)
+2.9.21.0 (3.0 RC 6)
+-Fixed memory / listener leak by using weak references in document listener list.  This means that once all references to the object which created the document change listener are removed, the object can be GC'd.  Before, the listener list itself counted as a reference, so all filtered lists and wrapper lists would not be GC'd.
+
+2.9.20.1 (3.0 RC 5.1) (December 8 2007)
 -Fixed bug #1847095 (RC 5 does not save files correctly)
 
 2.9.20.0 (3.0 RC 5) (December 6 2007)

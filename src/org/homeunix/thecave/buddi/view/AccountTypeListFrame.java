@@ -53,6 +53,8 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 
 	private final Document model;
 	private final JXList list;
+	
+	private final DocumentChangeListener listener;
 
 	public AccountTypeListFrame(MainFrame parent){
 		super(parent, AccountTypeListFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile());
@@ -66,11 +68,12 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 		deleteButton = new JButton(TextFormatter.getTranslation(ButtonKeys.BUTTON_DELETE));
 
 		final BackedListModel<AccountType> types = new BackedListModel<AccountType>(model.getAccountTypes());
-		model.addDocumentChangeListener(new DocumentChangeListener(){
+		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				types.fireListChanged();
 			}
-		});
+		};
+		model.addDocumentChangeListener(listener);
 		list = new JXList(types);
 		list.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

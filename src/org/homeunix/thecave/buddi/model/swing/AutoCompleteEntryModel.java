@@ -14,17 +14,19 @@ import org.homeunix.thecave.moss.model.DocumentChangeListener;
 
 public class AutoCompleteEntryModel {
 	private final Document model;
+	private final DocumentChangeListener listener;
 	private final Map<String, AutoCompleteEntry> autoCompleteEntries;
 	
 	public AutoCompleteEntryModel(Document model) {
 		this.model = model;
 		this.autoCompleteEntries = new HashMap<String, AutoCompleteEntry>();
 		updateAutoCompleteList();
-		model.addDocumentChangeListener(new DocumentChangeListener(){
+		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				updateAutoCompleteList();
 			}
-		});
+		};
+		model.addDocumentChangeListener(listener);
 	}
 
 	private void updateAutoCompleteList(){

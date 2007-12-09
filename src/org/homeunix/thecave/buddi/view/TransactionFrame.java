@@ -106,6 +106,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	private final MainFrame parent;
 
 	private boolean disableListEvents = false;
+	
+	private final DocumentChangeListener listener;
 
 	public TransactionFrame(MainFrame parent, Source source){
 		super(parent, TransactionFrame.class.getName() + ((Document) parent.getDocument()).getUid() + "_" + parent.getDocument().getFile() + "_" + (source != null ? source.getFullName() : ""));
@@ -134,6 +136,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		notClearedSum = new JLabel();
 		reconciledSum = new JLabel();
 		notReconciledSum = new JLabel();
+		
+		listener = new DocumentChangeListener(){
+			public void documentChange(DocumentChangeEvent event) {
+				listModel.update();
+			}
+		};
 
 		//Set up the transaction list.  We don't set the model here, for performance reasons.
 		// We set it after we have already established the prototype value.
@@ -639,11 +647,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		if (PrefsModel.getInstance().getClearedFilter() != null)
 			clearedFilterComboBox.setSelectedItem(TransactionClearedFilterKeys.valueOf(PrefsModel.getInstance().getClearedFilter()));		
 		
-		getDocument().addDocumentChangeListener(new DocumentChangeListener(){
-			public void documentChange(DocumentChangeEvent event) {
-				listModel.update();
-			}
-		});
+		getDocument().addDocumentChangeListener(listener);
 
 		String dataFile = getDocument().getFile() == null ? "" : " - " + getDocument().getFile();
 		this.setTitle(TextFormatter.getTranslation((associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS : BuddiKeys.TRANSACTIONS)) 
@@ -834,149 +838,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		}
 	}
 
-//	public Account getAssociatedAccount(){
-//	return associatedAccount;
-//	}
-
-//	public Component getPrintedComponent() {
-//	return list;
-//	}
-
-//	@Override
-//	public StandardWindow openWindow() {
-//	editableTransaction.resetSelection();
-//	return super.openWindow();
-//	}
-
-
-	/**
-	 * Force an update of every transaction window.
-	 * 
-	 * To plugin writers: you probably don't need to call this manually;
-	 * instead, register all changes to Transactions with the methods
-	 * addToTransactionListModel(), removeFromTransactionListModel(), and
-	 * updateTransactionListModel().  This should fire updates in all open
-	 * windows as well as save the data model, do misc. housecleaning, etc.
-	 */
-	//TODO We probably don't need to do this anymore... double check, though.
-//	public static void updateAllTransactionWindows(){
-//	for (TransactionsFrame tf : transactionInstances.values()) {
-//	if (tf != null){
-//	tf.updateContent();
-//	tf.updateToFromComboBox();
-//	}
-//	}
-//	}
-
-//	/**
-//	* Gets the filter text in the search box
-//	* @return The contents of the search box
-//	*/
-//	public String getFilterText(){
-//	return searchField.getText();
-//	}
-
-//	/**
-//	* Gets the selected item in the filter pulldown
-//	* @return The selected item in the filter pulldown
-//	*/
-//	public BuddiKeys getFilterComboBox(){
-//	return (BuddiKeys) filterComboBox.getSelectedItem();
-//	}
-
-	/**
-	 * Forces a toggle on the Cleared state, without needing to save manually.
-	 */
-//	public void toggleCleared(){
-//	Transaction t = (Transaction) list.getSelectedValue();
-//	t.setCleared(!t.isCleared());
-//	baseModel.updateNoOrderChange(t);
-//	editableTransaction.updateClearedAndReconciled();
-//	}
-
-	/**
-	 * Forces a toggle on the Reconciled state, without needing to save manually.
-	 */
-//	public void toggleReconciled(){
-//	Transaction t = (Transaction) list.getSelectedValue();
-//	t.setReconciled(!t.isReconciled());
-//	baseModel.updateNoOrderChange(t);
-//	editableTransaction.updateClearedAndReconciled();
-
-//	}
-
-//	public void clickClear(){
-//	clearButton.doClick();
-//	}
-//	public void clickRecord(){
-//	recordButton.doClick();
-//	}
-//	public void clickDelete(){
-//	deleteButton.doClick();
-//	}
-
-//	/**
-//	* After creating a Collection of new Transactions via 
-//	* DataInstance.getInstance().getDataModelFactory().createTransaction(),
-//	* and filling in all the needed details, you call this method to
-//	* add them to the data model and update all windows automatically.
-//	* 
-//	* Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
-//	* you will not update the windows properly.
-//	* @param t Transaction to add to the data model
-//	*/
-//	public static void addToTransactionListModel(Collection<Transaction> transactions){
-//	baseModel.addAll(transactions);
-//	}
-
-//	/**
-//	* After creating a new Transaction via DataInstance.getInstance().getDataModelFactory().createTransaction(),
-//	* and filling in all the needed details, you call this method to
-//	* add it to the data model and update all windows automatically.
-//	* 
-//	* Note that you should *not* call DataInstance.getInstance().addTransaction() directly, as
-//	* you will not update the windows properly.
-//	* @param t Transaction to add to the data model
-//	*/
-//	public static void addToTransactionListModel(Transaction t){
-//	baseModel.add(t);
-//	}
-
-//	/**
-//	* Remove a transaction from the data model and all open windows.
-//	* 
-//	* Note that you should *not* call DataInstance.getInstance().deleteTransaction() directly, as
-//	* you will not update the windows properly.
-//	* @param t Transaction to delete
-//	* @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
-//	* don't have this, you can use null, although you should be aware that there may be some
-//	* problems updating transaction windows with the new data, as the windows will not
-//	* have the update() method called on their FilteredDynamicListModels. 
-//	*/
-//	public static void removeFromTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
-//	baseModel.remove(t, fdlm);
-//	}
-
-//	/**
-//	* Notifies all windows that a transaction has been updated.  If you 
-//	* change a transaction and do not register it here after all the changes
-//	* are complete, you will not get the transaction updated in the 
-//	* Transaction windows.
-//	* 
-//	* @param t Transaction to update
-//	* @param fdlm The filtered dynamic list model in which the transaction exists.  If you 
-//	* don't have this, you can use null, although you should be aware that there may be some
-//	* problems updating transaction windows with the new data, as the windows will not
-//	* have the update() method called on their FilteredDynamicListModels. 
-//	*/
-//	public static void updateTransactionListModel(Transaction t, FilteredDynamicListModel fdlm){
-//	baseModel.update(t, fdlm);
-//	}
-
-//	public static void reloadModel(){
-//	baseModel.loadModel(DataInstance.getInstance().getDataModel().getAllTransactions().getTransactions());
-//	}
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(recordButton)){
 			if (!transactionEditor.isTransactionValid(this.associatedSource)){
@@ -1049,9 +910,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			getDataModel().finishBatchChange();
 
-			//TODO This should be done via a listener on AccountFrame.
-//			MainFrame.getInstance().getAccountListPanel().updateNetWorth();
-
 			transactionEditor.setTransaction(null, true);
 			list.clearSelection();
 			updateButtons();
@@ -1081,8 +939,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			this.updateContent();
 			parent.updateContent();
-
-//			DocumentController.saveFileSoon();
 		}
 		else if (e.getSource().equals(clearButton)){
 			String[] options = new String[2];

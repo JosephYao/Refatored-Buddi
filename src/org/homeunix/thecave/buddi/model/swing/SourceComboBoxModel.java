@@ -26,18 +26,20 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	private final boolean includeIncome;
 	
 	private final DefaultComboBoxModel comboBoxModel;
+	
+	private final DocumentChangeListener listener;
 
 	public SourceComboBoxModel(Document model, boolean includeIncome) {
 		this.model = model;
 		this.includeIncome = includeIncome;
 		this.comboBoxModel = new DefaultComboBoxModel();
 		updateComboBoxModel();
-		
-		model.addDocumentChangeListener(new DocumentChangeListener(){
+		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
 				updateComboBoxModel();	
 			}
-		});
+		};
+		model.addDocumentChangeListener(listener);
 	}
 
 	public Object getSelectedItem() {

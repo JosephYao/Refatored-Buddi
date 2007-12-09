@@ -30,16 +30,19 @@ public class WrapperLists {
 
 	private abstract static class BuddiWrapperList<T, W> extends WrapperList<T, W> {
 		private final Document model;
-
+		private final DocumentChangeListener listener;
+		
 		public BuddiWrapperList(Document model, List<W> wrappedList, boolean sorted) {
 			super(wrappedList, sorted);
 			this.model = model;
-
-			model.addDocumentChangeListener(new DocumentChangeListener(){
+			
+			listener = new DocumentChangeListener(){
 				public void documentChange(DocumentChangeEvent event) {
 					updateWrapperList();
 				}
-			});
+			};
+			
+			model.addDocumentChangeListener(listener);
 		}
 
 		public Document getDataModel(){

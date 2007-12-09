@@ -37,14 +37,17 @@ public class FilteredLists {
 	 * @author wyatt
 	 *
 	 */
-	private static abstract class BuddiFilteredList<T> extends FilteredList<T> {		
+	private static abstract class BuddiFilteredList<T> extends FilteredList<T> {
+		private final DocumentChangeListener listener;
+		
 		public BuddiFilteredList(Document model, List<T> source) {
 			super(source);
-			model.addDocumentChangeListener(new DocumentChangeListener(){
+			listener = new DocumentChangeListener(){
 				public void documentChange(DocumentChangeEvent event) {
 					updateFilteredList();
 				}
-			});
+			};
+			model.addDocumentChangeListener(listener);
 		}
 	}
 
