@@ -175,7 +175,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void setAccountTypes(List<AccountType> types) {
 		this.accountTypes = new SortedArrayList<AccountType>();
 		this.accountTypes.addAll(types);
-//		this.accountTypes = types;
 	}
 
 	public void setFlag(int flag, boolean set) {
@@ -259,8 +258,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return null;
 	}
 	public ModelObject getObjectByUid(String uid) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Method not implemented");
 	}
 	
 	private List<Source> sources = null;
@@ -755,7 +753,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		if (isAddOperation || isUidRefresh){
 			if (uidMap.get(object.getUid()) != null)
-				//TODO Do something drastic here... perhaps save an emergency data file, prompt, and quit.
 				throw new DataModelProblemException("Identical UID already in model!  Model is probably corrupt!", this); 
 		}
 
