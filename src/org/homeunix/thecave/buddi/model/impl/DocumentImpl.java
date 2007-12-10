@@ -1024,4 +1024,15 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	public void setPassword(char[] password) {
 		this.password = password;
 	}
+	
+	public long getNetWorth(Date date) {
+		List<Account> accounts = getAccounts();
+		long total = 0; 
+		
+		for (Account a : accounts) {
+			total += a.getBalance(date);
+		}
+
+		return total;
+	}
 }

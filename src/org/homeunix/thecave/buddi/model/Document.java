@@ -28,6 +28,7 @@ public interface Document extends ModelObject, StandardDocument {
 	public List<AccountType> getAccountTypes();
 	public List<BudgetCategory> getBudgetCategories();
 	public BudgetCategory getBudgetCategory(String fullName);
+	public long getNetWorth(Date date);
 	public ModelObject getObjectByUid(String uid);
 	public List<ScheduledTransaction> getScheduledTransactions();
 	public List<Source> getSources();

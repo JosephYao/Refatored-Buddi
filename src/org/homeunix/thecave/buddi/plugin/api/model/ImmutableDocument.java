@@ -113,4 +113,12 @@ public interface ImmutableDocument extends ImmutableModelObject {
 	 * @return
 	 */
 	public ImmutableBudgetCategoryType getBudgetCategoryType(String name);
+	
+	/**
+	 * Returns the net worth in the model as of the given date.  This is calculated by 
+	 * summing the account balances for all accounts as of the given date.
+	 * @param date The date on which to calculate the net worth
+	 * @return
+	 */
+	public long getNetWorth(Date date);
 }

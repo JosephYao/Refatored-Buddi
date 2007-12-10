@@ -16,7 +16,6 @@ import java.util.Map;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
@@ -56,15 +55,11 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 
 		dates.add(new Date());
 
-		List<ImmutableAccount> accounts = model.getImmutableAccounts();
 		for (Date d : dates) {
-			long total = 0; 
-			for (ImmutableAccount a : accounts) {
-				total += a.getBalance(d);
-			}
-
+			long netWorth = model.getNetWorth(d);
+			
 //			barData.addValue((Number) new Double(accounts.get(a) / 100.0), TextFormatter.getFormattedDate(d), a.getName());
-			barData.addValue((Number) new Double(total / 100.0), 
+			barData.addValue((Number) new Double(netWorth / 100.0), 
 					TextFormatter.getTranslation(BuddiKeys.NET_WORTH), 
 					(Formatter.getDateFormat("MM/dd").format(d)));
 		}

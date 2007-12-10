@@ -53,7 +53,7 @@ public interface BudgetCategory extends Source, Expandable {
 	 * @return
 	 */
 	public BudgetCategory getParent();
-	
+		
 	/**
 	 * Returns a list of children for this budget category.  The contents of this list
 	 * will include only children which match the current preferences for deleted items.

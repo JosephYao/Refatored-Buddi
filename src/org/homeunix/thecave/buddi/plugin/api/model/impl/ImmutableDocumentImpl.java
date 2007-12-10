@@ -98,4 +98,7 @@ public class ImmutableDocumentImpl extends ImmutableModelObjectImpl implements I
 			return null;
 		return new ImmutableBudgetCategoryTypeImpl(type);
 	}
+	public long getNetWorth(Date date) {
+		return getModel().getNetWorth(date);
+	}
 }

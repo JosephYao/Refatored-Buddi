@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
@@ -212,7 +213,11 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	
 	public void fireStructureChanged(){
-		myAccounts.fireStructureChanged();
-		myBudget.fireStructureChanged();
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				myAccounts.fireStructureChanged();
+				myBudget.fireStructureChanged();
+			}
+		});
 	}
 }

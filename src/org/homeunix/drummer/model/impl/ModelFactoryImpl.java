@@ -11,14 +11,23 @@ import java.util.Date;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.homeunix.drummer.model.*;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Accounts;
+import org.homeunix.drummer.model.AutoSaveInfo;
+import org.homeunix.drummer.model.Categories;
+import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataModel;
+import org.homeunix.drummer.model.Lists;
+import org.homeunix.drummer.model.ModelFactory;
+import org.homeunix.drummer.model.ModelPackage;
+import org.homeunix.drummer.model.Schedule;
+import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.model.Transactions;
+import org.homeunix.drummer.model.Type;
+import org.homeunix.drummer.model.Types;
 
 /**
  * <!-- begin-user-doc -->

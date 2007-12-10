@@ -176,4 +176,7 @@ public class MutableDocumentImpl extends MutableModelObjectImpl implements Mutab
 			return null;
 		return new ImmutableBudgetCategoryTypeImpl(type);
 	}
+	public long getNetWorth(Date date) {
+		return getModel().getNetWorth(date);
+	}
 }

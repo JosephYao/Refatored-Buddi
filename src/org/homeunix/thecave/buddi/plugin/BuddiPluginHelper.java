@@ -25,6 +25,12 @@ import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {
 	public static void openReport(final MainFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
+		
+		//We want to run the GUI in the EventDispatch thread.  If the user has not
+		// cancelled, then we will proceed.
+		if (!report.getReportGUI())
+			return;
+		
 		final MossStatusDialog status = new MossStatusDialog(
 				frame,
 				TextFormatter.getTranslation(BuddiKeys.MESSAGE_GENERATING_REPORT));
@@ -126,18 +132,8 @@ public class BuddiPluginHelper {
 //		endDates.add(null);
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(new Date()),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_TODAY)
-		));
-		endDates.add(new DateChoice(
-				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -1)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_YESTERDAY)
-		));
-		endDates.add(new DateChoice(
-				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -7)),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_AGO)
+				DateFunctions.addYears(new Date(), -1),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_YEAR_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
@@ -146,8 +142,38 @@ public class BuddiPluginHelper {
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.addYears(new Date(), -1),
-				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_YEAR_AGO)
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -7)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_AGO)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -1)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_YESTERDAY)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfDay(new Date()),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_TODAY)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), 7)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_FROM_NOW)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfMonth(DateFunctions.addMonths(new Date(), 1)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_NEXT_MONTH)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfYear(new Date()),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_THIS_YEAR)
+		));
+		endDates.add(new DateChoice(
+				null,
+				DateFunctions.getEndOfYear(DateFunctions.addYears(new Date(), 1)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_NEXT_YEAR)
 		));
 		endDates.add(new DateChoice(
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_OTHER)

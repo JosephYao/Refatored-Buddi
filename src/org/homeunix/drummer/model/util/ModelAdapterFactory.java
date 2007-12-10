@@ -8,12 +8,22 @@ package org.homeunix.drummer.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.homeunix.drummer.model.*;
+import org.homeunix.drummer.model.Account;
+import org.homeunix.drummer.model.Accounts;
+import org.homeunix.drummer.model.AutoSaveInfo;
+import org.homeunix.drummer.model.Categories;
+import org.homeunix.drummer.model.Category;
+import org.homeunix.drummer.model.DataModel;
+import org.homeunix.drummer.model.Lists;
+import org.homeunix.drummer.model.ModelPackage;
+import org.homeunix.drummer.model.Schedule;
+import org.homeunix.drummer.model.Source;
+import org.homeunix.drummer.model.Transaction;
+import org.homeunix.drummer.model.Transactions;
+import org.homeunix.drummer.model.Type;
+import org.homeunix.drummer.model.Types;
 
 /**
  * <!-- begin-user-doc -->

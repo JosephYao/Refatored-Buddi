@@ -40,6 +40,24 @@ public abstract class BuddiReportPlugin extends PreferenceAccess implements Moss
 	public abstract HtmlPage getReport(ImmutableDocument model, MossDocumentFrame callingFrame, Date startDate, Date endDate) throws PluginException;
 	
 	/**
+	 * This method will be called on the EventDispatch thread, before the 
+	 * getReport() method is run.  Since this method is run on the 
+	 * EventDispatch thread, and is the place to put any graphical forms or
+	 * other prompts for the user.  For instance, if you wish to show a 
+	 * window in which the user can pick options, put it here.
+	 * 
+	 * This method should return true if the plugin is to continue; false
+	 * if the user has canceled the plugin exection.
+	 * 
+	 * The default instance of the plugin returns true, without showing anything.
+	 * 
+	 * @return
+	 */
+	public boolean getReportGUI(){
+		return true;
+	}
+	
+	/**
 	 * The type of plugin this should be.  Can choose between one of the following enum
 	 * values:
 	 * 
