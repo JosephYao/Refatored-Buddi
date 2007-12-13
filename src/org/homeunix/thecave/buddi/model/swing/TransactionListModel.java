@@ -63,6 +63,7 @@ public class TransactionListModel extends BackedListModel<Transaction> {
 	}
 	
 	public void update(){
+		transactions.updateFilteredList();
 		fireContentsChanged(this, -1, -1);
 	}
 }

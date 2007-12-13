@@ -19,6 +19,7 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.moss.data.list.FilteredList;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
@@ -245,6 +246,10 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
+		((FilteredList) rootChildren).updateFilteredList();
+		for (List<BudgetCategory> list : budgetCategoriesByType.values()) {
+			((FilteredList) list).updateFilteredList();	
+		}
 		modelSupport.fireNewRoot();
 	}
 }

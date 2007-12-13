@@ -13,6 +13,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
@@ -26,9 +27,14 @@ import edu.stanford.ejalbert.BrowserLauncher;
 public class BuddiPluginHelper {
 	public static void openReport(final MainFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
 		
+		final ImmutableDocument model = new ImmutableDocumentImpl((Document) frame.getDocument());
+		
 		//We want to run the GUI in the EventDispatch thread.  If the user has not
 		// cancelled, then we will proceed.
-		if (!report.getReportGUI())
+		if (!report.getReportGUI(model,
+				frame,
+				startDate, 
+				endDate))
 			return;
 		
 		final MossStatusDialog status = new MossStatusDialog(
@@ -45,7 +51,7 @@ public class BuddiPluginHelper {
 			public Object construct() {
 				try {
 					File index = report.getReport(
-									new ImmutableDocumentImpl((Document) frame.getDocument()),
+									model,
 									frame,
 									startDate, 
 									endDate).createHTML("report");

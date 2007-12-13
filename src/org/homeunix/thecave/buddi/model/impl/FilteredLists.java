@@ -49,6 +49,13 @@ public class FilteredLists {
 			};
 			model.addDocumentChangeListener(listener);
 		}
+		
+		@Override
+		public void updateFilteredList() {
+			if (super.filteredListSource instanceof FilteredList)
+				((FilteredList) super.filteredListSource).updateFilteredList();
+			super.updateFilteredList();
+		}
 	}
 
 	/**
@@ -397,7 +404,8 @@ public class FilteredLists {
 		public boolean isIncluded(AccountType object) {
 			if (object != null){
 				for (Account a : model.getAccounts()) {
-					if (a.getAccountType().equals(object))
+					if (a.getAccountType().equals(object) 
+							&& (!a.isDeleted() || PrefsModel.getInstance().isShowDeleted()))
 						return true;
 				}
 			}

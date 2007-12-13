@@ -1030,7 +1030,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		long total = 0; 
 		
 		for (Account a : accounts) {
-			total += a.getBalance(date);
+			if (!a.isDeleted())
+				total += a.getBalance(date);
 		}
 
 		return total;

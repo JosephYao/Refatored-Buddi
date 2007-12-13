@@ -250,7 +250,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 		list.setModel(listModel);		
 		list.ensureIndexIsVisible(listModel.getSize() - 1);
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -929,7 +928,6 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 						break;
 					}
 				}
-
 			}
 
 			disableListEvents = false;
@@ -937,6 +935,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			transactionEditor.resetSelection();
 			transactionEditor.setChanged(false);
 
+			listModel.update();
 			this.updateContent();
 			parent.updateContent();
 		}

@@ -45,7 +45,8 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 			AccountType t = (AccountType) value;
 			int amount = 0;
 			for (Account a : new FilteredLists.AccountListFilteredByType(document, document.getAccounts(), t)) {
-				amount += a.getBalance();
+				if (!a.isDeleted())
+					amount += a.getBalance();
 			}
 			this.setText(TextFormatter.getHtmlWrapper(
 					TextFormatter.getFormattedCurrency(

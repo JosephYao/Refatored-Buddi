@@ -209,6 +209,8 @@ public class MainFrame extends MossDocumentFrame {
 	public static void updateAllContent(){
 		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			frame.updateContent();
+			if (frame instanceof MainFrame)
+				((MainFrame) frame).fireStructureChanged();
 		}
 	}
 	

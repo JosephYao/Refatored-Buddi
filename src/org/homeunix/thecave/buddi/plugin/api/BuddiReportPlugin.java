@@ -53,7 +53,7 @@ public abstract class BuddiReportPlugin extends PreferenceAccess implements Moss
 	 * 
 	 * @return
 	 */
-	public boolean getReportGUI(){
+	public boolean getReportGUI(ImmutableDocument model, MossDocumentFrame callingFrame, Date startDate, Date endDate){
 		return true;
 	}
 	
