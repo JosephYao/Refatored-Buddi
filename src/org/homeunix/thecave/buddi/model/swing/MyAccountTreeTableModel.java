@@ -44,7 +44,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	public Object getChild(Object parent, int childIndex) {
 		if (parent.equals(root)){
 			if (PrefsModel.getInstance().isShowFlatAccounts()){
-				return model.getAccounts().get(childIndex);
+				return new FilteredLists.AccountListFilteredByDeleted(model, model.getAccounts()).get(childIndex);
 			}
 			else{
 				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
@@ -63,7 +63,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	public int getChildCount(Object parent) {
 		if (parent.equals(root)){
 			if (PrefsModel.getInstance().isShowFlatAccounts()){
-				return model.getAccounts().size();
+				return new FilteredLists.AccountListFilteredByDeleted(model, model.getAccounts()).size();
 			}
 			else{
 				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
@@ -85,7 +85,7 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 //		if (parent.equals(root) && child instanceof AccountType){
 		if (parent.equals(root)){
 			if (PrefsModel.getInstance().isShowFlatAccounts()){
-				return model.getAccounts().indexOf(child);
+				return new FilteredLists.AccountListFilteredByDeleted(model, model.getAccounts()).indexOf(child);
 			}
 			else{
 				List<AccountType> types = new FilteredLists.TypeListFilteredByAccounts(model);
