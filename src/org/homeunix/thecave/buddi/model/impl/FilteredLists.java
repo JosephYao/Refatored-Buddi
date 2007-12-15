@@ -151,7 +151,7 @@ public class FilteredLists {
 	 */
 	private final static Map<String, List<Transaction>> transactionsBySearchMap = new HashMap<String, List<Transaction>>();
 	public static List<Transaction> getTransactionsBySearch(Document model, Source associatedSource, List<Transaction> transactions) {
-		String key = model.getUid() + transactions.hashCode() + associatedSource.getUid();
+		String key = model.getUid() + transactions.hashCode() + (associatedSource == null ? associatedSource : associatedSource.getUid());
 		System.out.println(key);
 		if (transactionsBySearchMap.get(key) == null){
 			transactionsBySearchMap.put(key, new TransactionListFilteredBySearch(model, associatedSource, transactions));

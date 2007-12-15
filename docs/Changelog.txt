@@ -1,5 +1,6 @@
 2.9.22.0 (3.0 RC 7)
 -Updated Norsk.lang (thanks to Gudbrand Hegge for this)
+-Fixed bug #1851068 (Exception when viewing all transactions)
 
 2.9.21.0 (3.0 RC 6) (December 13 2007)
 -Fixed memory / listener leak by using weak references in document listener list.  This means that once all references to the object which created the document change listener are removed, the object can be GC'd.  Before, the listener list itself counted as a reference, so all filtered lists and wrapper lists would not be GC'd.
