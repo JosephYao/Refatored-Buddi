@@ -1,4 +1,6 @@
-2.9.22.0 (3.0 RC 7)
+-Removed debug System.out.println() statements
+
+2.9.22.0 (3.0 RC 7) (December 15 2007)
 -Updated Norsk.lang (thanks to Gudbrand Hegge for this)
 -Fixed bug #1851068 (Exception when viewing all transactions)
 -Fixed bug #1847211 when "Flat account format" was selected.

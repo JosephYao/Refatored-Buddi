@@ -134,8 +134,6 @@ public class MainFrame extends MossDocumentFrame {
 		if (openFiles.size() > 0)
 			PrefsModel.getInstance().setLastDataFiles(openFiles);
 		
-		System.out.println(PrefsModel.getInstance().getLastDataFiles());
-		
 		PrefsModel.getInstance().save();
 		
 		return null;
