@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -211,7 +210,7 @@ public class MyAccountsPanel extends MossPanel {
 				tree.collapsePath(path);
 		}
 		
-		long netWorth = ((Document) parent.getDocument()).getNetWorth(new Date());
+		long netWorth = ((Document) parent.getDocument()).getNetWorth(null);
 		balanceLabel.setText(TextFormatter.getHtmlWrapper(
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) 
 				+ ": " 

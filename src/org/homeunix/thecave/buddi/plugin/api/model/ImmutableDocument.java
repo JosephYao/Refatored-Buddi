@@ -116,8 +116,11 @@ public interface ImmutableDocument extends ImmutableModelObject {
 	
 	/**
 	 * Returns the net worth in the model as of the given date.  This is calculated by 
-	 * summing the account balances for all accounts as of the given date.
-	 * @param date The date on which to calculate the net worth
+	 * summing the account balances for all accounts as of the given date.  If the given 
+	 * date is null, return the current balance of the account, as of the last transaction 
+	 * (regardless of date).
+	 * @param date The date on which to calculate the net worth.  Set this to null to return
+	 * the balance as of the last transaction. 
 	 * @return
 	 */
 	public long getNetWorth(Date date);
