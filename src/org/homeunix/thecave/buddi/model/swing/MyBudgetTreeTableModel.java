@@ -246,7 +246,7 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public void fireStructureChanged(){
-		((FilteredList) rootChildren).updateFilteredList();
+		((FilteredList) getRootChildren()).updateFilteredList();
 		for (List<BudgetCategory> list : budgetCategoriesByType.values()) {
 			((FilteredList) list).updateFilteredList();	
 		}
