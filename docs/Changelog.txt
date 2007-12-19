@@ -1,3 +1,5 @@
+-Updated Norsk.lang (thanks to Gudbrand Hegge for this)
+
 2.9.23.0 (3.0 RC 8) (December 17 2007)
 -In regards to bug #1852735, I reverted net worth calculations to summing all transactions, instead of transactions up to today.  I feel that the correct method would be to use the net worth as of today; however, due to the confusion this may cause, I have postponed the addition of this feature to a later version.
 -Fixed NullPointerException when switching budget periods
