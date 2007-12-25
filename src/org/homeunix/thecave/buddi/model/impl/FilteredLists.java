@@ -53,7 +53,7 @@ public class FilteredLists {
 		@Override
 		public void updateFilteredList() {
 			if (super.filteredListSource instanceof FilteredList)
-				((FilteredList) super.filteredListSource).updateFilteredList();
+				((FilteredList<?>) super.filteredListSource).updateFilteredList();
 			super.updateFilteredList();
 		}
 	}

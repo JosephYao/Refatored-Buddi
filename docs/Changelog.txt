@@ -1,4 +1,12 @@
--Updated Norsk.lang (thanks to Gudbrand Hegge for this)
+3.0.0.0 (December 24 2007)
+Merry Christmas!
+
+I am proud to announce the release of the 3.0 Stable branch of Buddi!  This version is the result of almost 5 months of active development, and includes many new features and changes.  The data model has been re-written from scratch, along with most of the user interface.  Some of the major changes are listed below; for a complete list, please view all changes in the 2.9 Development branch.
+-Much more powerful budgeting capabilities.  You can now specify different budgets for different months, as well as have multiple budget periods (e.g., Month, Quarter, Week, etc) for different budget items.
+-Many improvements to the user interface, and the UI architecture
+-Complete re-write of the backup / restore interface
+-New plugin API, which models the actual data much more closely than before, and should allow for more powerful plugins
+-New installer for Windows, which can set up Buddi and associate data files, translations, and plugins with the program.
 
 2.9.23.0 (3.0 RC 8) (December 17 2007)
 -In regards to bug #1852735, I reverted net worth calculations to summing all transactions, instead of transactions up to today.  I feel that the correct method would be to use the net worth as of today; however, due to the confusion this may cause, I have postponed the addition of this feature to a later version.

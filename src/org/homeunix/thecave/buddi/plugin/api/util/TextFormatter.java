@@ -61,7 +61,7 @@ public class TextFormatter {
 	 * @param key
 	 * @return
 	 */
-	public static String getTranslation(Enum key){
+	public static String getTranslation(Enum<?> key){
 		return PrefsModel.getInstance().getTranslator().get(key);
 	}
 

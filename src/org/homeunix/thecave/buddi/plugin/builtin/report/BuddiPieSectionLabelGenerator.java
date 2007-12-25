@@ -12,10 +12,12 @@ import org.jfree.data.general.PieDataset;
 public class BuddiPieSectionLabelGenerator extends StandardPieSectionLabelGenerator {
 	public static final long serialVersionUID = 0;
 	
+	@SuppressWarnings("unchecked")
 	public AttributedString generateAttributedSectionLabel(PieDataset arg0, Comparable arg1) {
 		return new AttributedString(generateSectionLabel(arg0, arg1));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String generateSectionLabel(PieDataset arg0, Comparable arg1) {
 		return super.generateSectionLabel(arg0, arg1) + ": " + TextFormatter.getFormattedCurrency(arg0.getValue(arg1).longValue(), false, false);
 	}
