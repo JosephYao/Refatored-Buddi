@@ -379,7 +379,7 @@
 		</javadoc>
 	</target>
 
-	<target name="release"  depends="scp_javadocs,ftp" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.">
+	<target name="release"  depends="ftp" description="Uploads the project, javadocs, etc to correct servers.  Only the project admin should use this.">
 		<path id="SVNANT_CLASSPATH">
 			<fileset dir="${SVNANT_PATH}">
 				<include name="**/*.jar"/>
