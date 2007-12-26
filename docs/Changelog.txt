@@ -1,3 +1,6 @@
+3.1.0.0 (December 26 2007)
+-3.1 Development branch, currently identical to 3.0 Stable.
+
 3.0.0.0 (December 24 2007)
 Merry Christmas!
 
