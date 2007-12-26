@@ -1,5 +1,6 @@
 3.1.0.0 (December 26 2007)
--3.1 Development branch, currently identical to 3.0 Stable.
+-Branching 3.1, for new development
+-Currently equivalent to 3.0 Stable, but with the legacy data support removed.  You can (or at least you will be able to shortly) download the Legacy data import plugin from the Plugins download page.  
 
 3.0.0.0 (December 24 2007)
 Merry Christmas!
