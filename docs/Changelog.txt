@@ -1,3 +1,8 @@
+3.1.0.1 (December 28 2007)
+-Fixed a bug which incorrectly caused a "Crash Report" email to be sent, when there was no reason to do so. 
+-Fixed a potential null pointer exception caused by a null selected item in some Transaction Frame operations.
+-Updated Spanish translation to better work with 3.0 branch (Thanks to Rafael Rodriguez for this)
+
 3.1.0.0 (December 26 2007)
 -Branching 3.1, for new development
 -Currently equivalent to 3.0 Stable, but with the legacy data support removed.  You can (or at least you will be able to shortly) download the Legacy data import plugin from the Plugins download page.  

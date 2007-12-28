@@ -38,8 +38,6 @@ public class FileNew extends MossMenuItem {
 		catch (ModelException me){
 			Log.error(me);
 		}
-		catch (WindowOpenException foe){
-			throw new RuntimeException(foe);
-		}
+		catch (WindowOpenException foe){}
 	}
 }

@@ -658,9 +658,9 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 	@Override
 	public void closeWindowWithoutPrompting() {
 		PrefsModel.getInstance().setSearchText(searchField.getText());
-		PrefsModel.getInstance().setDateFilter(dateFilterComboBox.getSelectedItem().toString());
-		PrefsModel.getInstance().setReconciledFilter(reconciledFilterComboBox.getSelectedItem().toString());
-		PrefsModel.getInstance().setClearedFilter(clearedFilterComboBox.getSelectedItem().toString());
+		PrefsModel.getInstance().setDateFilter(dateFilterComboBox.getSelectedItem() + "");
+		PrefsModel.getInstance().setReconciledFilter(reconciledFilterComboBox.getSelectedItem() + "");
+		PrefsModel.getInstance().setClearedFilter(clearedFilterComboBox.getSelectedItem() + "");
 		
 		PrefsModel.getInstance().putWindowSize(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getSize());
 		PrefsModel.getInstance().putWindowLocation(getDocument().getFile() + (associatedSource == null ? BuddiKeys.ALL_TRANSACTIONS.toString() : associatedSource.getFullName()), this.getLocation());
