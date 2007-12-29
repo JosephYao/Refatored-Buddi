@@ -1,3 +1,6 @@
+3.1.1.0
+-Added a "Data File Stats" option in the View menu to see how many transactions, accounts, etc are defined.  This can help to diagnose performance issues, if there are tens of thousands of transactions.
+
 3.1.0.1 (December 28 2007)
 -Fixed a bug which incorrectly caused a "Crash Report" email to be sent, when there was no reason to do so. 
 -Fixed a potential null pointer exception caused by a null selected item in some Transaction Frame operations.

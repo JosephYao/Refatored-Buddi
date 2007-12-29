@@ -38,7 +38,7 @@ public class ImportTestData extends BuddiImportPlugin {
 			List<MutableBudgetCategory> budgetCategories = model.getMutableBudgetCategories();
 			List<MutableAccount> accounts = model.getMutableAccounts();
 			
-			int MAX = 10000;
+			int MAX = 100000;
 			for (int i = 0; i < MAX; i++){
 				if (i % 100 == 0)
 					Log.info("Creating transaction " + i + " of " + MAX);
