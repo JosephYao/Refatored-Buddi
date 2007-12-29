@@ -11,7 +11,6 @@ import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class EditEditAccountTypes extends MossMenuItem{
 	public static final long serialVersionUID = 0;
@@ -33,9 +32,7 @@ public class EditEditAccountTypes extends MossMenuItem{
 		try {
 			new AccountTypeListFrame((MainFrame) getFrame()).openWindow();
 		}
-		catch (WindowOpenException woe){
-			Log.error(woe);
-		}
+		catch (WindowOpenException woe){}
 		
 		((MainFrame) getFrame()).getDocument().finishBatchChange();
 	}

@@ -28,9 +28,6 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-
-
-
 		if (value instanceof Account){
 			Account a = (Account) value;
 			this.setText(TextFormatter.getHtmlWrapper(
@@ -43,7 +40,7 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 		}
 		if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
-			int amount = 0;
+			long amount = 0;
 			for (Account a : new FilteredLists.AccountListFilteredByType(document, document.getAccounts(), t)) {
 				if (!a.isDeleted())
 					amount += a.getBalance();

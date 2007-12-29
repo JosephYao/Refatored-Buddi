@@ -12,7 +12,6 @@ import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class FileRevertToBackup extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -27,9 +26,7 @@ public class FileRevertToBackup extends MossMenuItem {
 			BackupManagerDialog bmd = new BackupManagerDialog((MossDocumentFrame) getFrame());
 			bmd.openWindow();
 		}
-		catch (WindowOpenException woe){
-			Log.error(woe);
-		}
+		catch (WindowOpenException woe){}
 	}
 	
 	@Override

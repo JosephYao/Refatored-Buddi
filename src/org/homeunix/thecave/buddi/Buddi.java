@@ -241,9 +241,7 @@ public class Buddi {
 							PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
 							PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 				}
-				catch (WindowOpenException woe){
-					Log.error("Error opening window: ", woe);
-				}
+				catch (WindowOpenException woe){}
 			}
 			catch (ModelException me){
 				me.printStackTrace(Log.getPrintStream());
@@ -326,9 +324,7 @@ public class Buddi {
 							PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
 							PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 				}
-				catch (WindowOpenException woe){
-					Log.error("Error opening window: ", woe);
-				}
+				catch (WindowOpenException woe){}
 			}
 			catch (DocumentLoadException lme){
 				lme.printStackTrace(Log.getPrintStream());
@@ -484,9 +480,7 @@ public class Buddi {
 						catch (ModelException me){
 							me.printStackTrace(Log.getPrintStream());
 						}
-						catch (WindowOpenException woe){
-							woe.printStackTrace(Log.getPrintStream());
-						}
+						catch (WindowOpenException woe){}
 					}
 				}
 

@@ -59,8 +59,6 @@ public class FileOpen extends MossMenuItem {
 		catch (DocumentLoadException dle){
 			Log.error("Error loading file", dle);
 		}
-		catch (WindowOpenException woe){
-			Log.error("Error opening window", woe);
-		}
+		catch (WindowOpenException woe){}
 	}
 }

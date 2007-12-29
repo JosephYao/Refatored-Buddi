@@ -29,8 +29,6 @@ public class EditEditScheduledTransactions extends MossMenuItem{
 					null, 
 					PrefsModel.getInstance().getWindowLocation(BuddiKeys.SCHEDULED_TRANSACTION.toString()));
 		}
-		catch (WindowOpenException foe){
-			foe.printStackTrace();
-		}
+		catch (WindowOpenException woe){}
 	}
 }

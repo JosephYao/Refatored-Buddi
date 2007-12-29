@@ -185,9 +185,7 @@ public class PluginMenuEntry extends MossMenuItem {
 									PrefsModel.getInstance().getWindowSize(d.getFile() + ""), 
 									PrefsModel.getInstance().getWindowLocation(d.getFile() + ""));
 						}
-						catch (WindowOpenException woe){
-							Log.error("Error opening window", woe);
-						}
+						catch (WindowOpenException woe){}
 					}
 					else {
 						if (getFrame() instanceof MainFrame)

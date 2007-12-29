@@ -150,6 +150,8 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			@Override
 			public String getToolTipText(MouseEvent event) {
+				if (!PrefsModel.getInstance().isShowTooltips())
+					return null;
 				int i = locationToIndex(event.getPoint());
 				if (i >= 0 && i < getModel().getSize()){
 					Object o = getModel().getElementAt(i);

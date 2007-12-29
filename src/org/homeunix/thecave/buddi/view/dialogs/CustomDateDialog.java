@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,6 +59,9 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 
 	protected final BuddiReportPlugin report;
 	private final MainFrame reportFrame;
+	
+	private static Date startDate = null; //We initialize this to null to get an approximate guess for the first time it is run.  After that, we remember the value.
+	private static Date endDate = new Date();
 
 	public CustomDateDialog(MainFrame reportFrame, BuddiReportPlugin plugin){
 		super(reportFrame);
@@ -76,17 +80,12 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 		endDateChooser = new JXDatePicker();
 
 		startDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
-		startDateChooser.setDate(new Date());
 		endDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
-		endDateChooser.setDate(new Date());
 
 		Dimension textFieldSize = new Dimension(180, startDateChooser.getPreferredSize().height);
 
 		startDateChooser.setPreferredSize(textFieldSize);
 		endDateChooser.setPreferredSize(textFieldSize);
-
-		startDateChooser.setDate(new Date());
-		endDateChooser.setDate(new Date());
 
 		JPanel r1 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel r2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -127,17 +126,22 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 		this.getRootPane().setDefaultButton(okButton);
 		this.setTitle(TextFormatter.getTranslation(BuddiKeys.CHOOSE_DATE_INTERVAL));
 
-		//Set the start date to be (by default) a time in the past
-		// back as far as the current interval.  For instance, if the 
-		// interval is set to 1 month, and the day is Feb 15, set the 
-		// date to Jan 1.
-		// This is not guaranteed to give perfect results every time,
-		// but if we are giving the user a choice in the date interva;,
-		// we may as well start at a time in the past rather than just
-		// give them the current date, as we have done before now.
-		// Added to address feature request #1649972.
-		BudgetCategoryType period = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
-		startDateChooser.setDate(period.getStartOfBudgetPeriod(new Date()));			
+		if (startDate == null){
+			//Set the start date to be (by default) a time in the past
+			// back as far as the current interval.  For instance, if the 
+			// interval is set to 1 month, and the day is Feb 15, set the 
+			// date to Jan 1.
+			// This is not guaranteed to give perfect results every time,
+			// but if we are giving the user a choice in the date interva;,
+			// we may as well start at a time in the past rather than just
+			// give them the current date, as we have done before now.
+			// Added to address feature request #1649972.
+			BudgetCategoryType period = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
+			startDate = period.getStartOfBudgetPeriod(new Date());
+		}
+		
+		startDateChooser.setDate(startDate);			
+		endDateChooser.setDate(endDate);
 
 		setVisibility(plugin.getDateRangeChoice());
 	}
@@ -170,10 +174,32 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource().equals(okButton)){
-			Date startDate, endDate;
+			try {
+				startDateChooser.commitEdit();
+				endDateChooser.commitEdit();
+			} catch (ParseException e1) {
+				String[] options = new String[1];
+				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-			startDate = DateFunctions.getStartOfDay(startDateChooser.getDate());
-			endDate = DateFunctions.getEndOfDay(endDateChooser.getDate());
+				JOptionPane.showOptionDialog(
+						null, 
+						TextFormatter.getTranslation(BuddiKeys.CANNOT_PARSE_DATE), 
+						TextFormatter.getTranslation(BuddiKeys.REPORT_DATE_ERROR),
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]
+				);
+				return;
+			}
+			
+			System.out.println(startDateChooser.getDate() + ", " + endDateChooser.getDate());
+			
+			startDate = DateFunctions.getStartOfDay(new Date(startDateChooser.getDateInMillis()));
+			endDate = DateFunctions.getEndOfDay(new Date(endDateChooser.getDateInMillis()));
+			
+			System.out.println(startDate + ", " + endDate);
 
 			if (report.getDateRangeChoice().equals(PluginReportDateRangeChoices.INTERVAL)
 					&& endDate.before(startDate)){

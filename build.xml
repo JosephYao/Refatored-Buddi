@@ -48,7 +48,7 @@
 				<jre
 					minVersion="1.5.0"
 					initialHeapSize="2"
-					maxHeapSize="128"/>
+					maxHeapSize="512"/>
 
 				<versionInfo
 			    	fileVersion="${VERSION}"
@@ -149,7 +149,8 @@
 	        jvmversion="1.5+"
 	        version="${VERSION}"
 	        infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
-	        bundleid="${MAIN_CLASS}">
+	        bundleid="${MAIN_CLASS}"
+			vmoptions="-Xmx512m">
 
 			<jarfileset file="${BUILD}/${FULL_NAME}.jar" />
 			<jarfileset dir="${LIB}">

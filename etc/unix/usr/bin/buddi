@@ -64,4 +64,4 @@ fi
 # Launch Image Tagger
 ####
 
-${JAVA} -Duser.dir=${WORKING_DIR} -jar ${JAR} --[[platform]] $*
+${JAVA} -Duser.dir=${WORKING_DIR} -Xmx512m -jar ${JAR} --[[platform]] $*

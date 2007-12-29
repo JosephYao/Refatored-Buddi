@@ -180,9 +180,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 					Log.debug("Done editing Type from TypeModifyDialog");
 					updateContent();
 				}
-				catch (WindowOpenException woe){
-					Log.error("Error when opening TypeModifyDialog window", woe);
-				}
+				catch (WindowOpenException woe){}
 			}
 		}
 		else if (e.getSource().equals(deleteButton)){

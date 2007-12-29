@@ -17,6 +17,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -469,13 +470,19 @@ public class TransactionEditorPanel extends MossPanel {
 	}
 
 	/**
-	 * Returns the updated transaction.  If called from a new transaction, returns null.
+	 * Returns the updated transaction.  If called from a new transaction, it throws an exception.
 	 * @return
 	 */
 	public Transaction getTransactionUpdated() throws InvalidValueException {
 		if (transaction == null)
 			throw new InvalidValueException("This transaction is not already created; call getTransactionNew() to get it.");
 
+		try {
+			date.commitEdit();
+		} catch (ParseException e) {
+			throw new InvalidValueException("Cannot parse updated transaction date", e);
+		}
+		
 		transaction.setDate(date.getDate());
 		transaction.setDescription(description.getText());
 		transaction.setAmount(amount.getValue());
@@ -510,6 +517,12 @@ public class TransactionEditorPanel extends MossPanel {
 		if (!isTransactionValid())
 			throw new InvalidValueException("New transaction is not completely filled in");
 
+		try {
+			date.commitEdit();
+		} catch (ParseException e) {
+			throw new InvalidValueException("Cannot parse new transaction date", e);
+		}
+		
 		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
 		t.setNumber(number.getText());
 		t.setMemo(memo.getText());

@@ -63,9 +63,7 @@ public class EditEditTransactions extends MossMenuItem{
 						PrefsModel.getInstance().getWindowSize(((MainFrame) getFrame()).getDocument().getFile() + a.getFullName()), 
 						PrefsModel.getInstance().getWindowLocation(((MainFrame) getFrame()).getDocument().getFile() + a.getFullName()));
 			}
-			catch (WindowOpenException foe){
-				foe.printStackTrace();
-			}
+			catch (WindowOpenException woe){}
 		}
 		((MainFrame) getFrame()).getDocument().finishBatchChange();
 	}

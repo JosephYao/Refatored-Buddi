@@ -162,9 +162,7 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 					closeWindow();
 				}
 				catch (OperationCancelledException oce){}
-				catch (WindowOpenException woe){
-					woe.printStackTrace(Log.getPrintStream());
-				}
+				catch (WindowOpenException woe){}
 				catch (DocumentLoadException dle){
 					Log.error("There was an error loading the file " + document.getFile());
 					dle.printStackTrace(Log.getPrintStream());

@@ -57,9 +57,7 @@ public class FileRevertToSaved extends MossMenuItem {
 						true);
 			}
 			catch (OperationCancelledException oce){}
-			catch (WindowOpenException woe){
-				woe.printStackTrace(Log.getPrintStream());
-			}
+			catch (WindowOpenException woe){}
 			catch (DocumentLoadException dle){
 				Log.error("There was an error loading the file " + ((MossDocumentFrame) getFrame()).getDocument().getFile());
 				dle.printStackTrace(Log.getPrintStream());
