@@ -62,8 +62,9 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			}
 
 			//If everything else is the same, we sort on description.
-			else 
+			else if (this.getDescription() != null && t.getDescription() != null){
 				return this.getDescription().compareTo(t.getDescription());
+			}
 		}
 		return super.compareTo(arg0);
 	}

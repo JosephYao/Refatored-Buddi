@@ -4,8 +4,9 @@
 -Fixed bug #1859806 (Set the max VM memory to 512 MB for all packaged installations - this includes Windows, OS X, Debian, Slackware, and the generic .tgz.  If running from source or from .jar, you must include the VM argument '-Xmx512m' to set this.  This is only a problem for large data files, but there has been at least one reported case of this happening, so I figured I may as well increase the memory.  The memory will only be used as needed, so you don't need to worry about Buddi using more memory than it did before.)
 -Fixed bug #1858672 (Even when tooltips are disabled, it still showed a tooltip for transactions).
 -Fixed a bug which may prevent new or updated transactions from using the currently entered date.  The JXDatePicker widget does not 'commit' the date until focus is lost; this means that if you enter / change a date, and hit the OK button immediately, you will be using the last committed date, instead of the currently entered one.  This can potentially affect both the transaction editor panel, as well as custom report date pickers.
+-Fixed a bug which did not correctly sum account type totals on the "My Accounts" tab, if the sum of all accounts of that type was more than about $14 million.  I am not aware of anyone running into this bug in real life - if someone has, I would be happy to take the extra money which causes this bug to manifest itself! 8-)
+-Fixed a bug in which a NPE may be thrown when comparing transactions with null descriptions.
 -Fixed another bug which incorrectly caused a "Crash Report" email to be sent, when there was no reason to do so.
--Fixed bug which did not correctly sum account type totals on the "My Accounts" tab, if the sum of all accounts of that type was more than about $14 million.  I am not aware of anyone running into this bug in real life - if someone has, I would be happy to take the extra money which causes this bug to manifest itself! 8-)
 
 3.1.0.1 (December 28 2007)
 -Fixed a bug which incorrectly caused a "Crash Report" email to be sent, when there was no reason to do so. 
