@@ -639,14 +639,37 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		});
 
 		//Load state of filters
-		if (PrefsModel.getInstance().getSearchText() != null)
+		if (PrefsModel.getInstance().getSearchText() != null){
 			searchField.setText(PrefsModel.getInstance().getSearchText());
-		if (PrefsModel.getInstance().getDateFilter() != null)
-			dateFilterComboBox.setSelectedItem(TransactionDateFilterKeys.valueOf(PrefsModel.getInstance().getDateFilter()));
-		if (PrefsModel.getInstance().getReconciledFilter() != null)
-			reconciledFilterComboBox.setSelectedItem(TransactionReconciledFilterKeys.valueOf(PrefsModel.getInstance().getReconciledFilter()));
-		if (PrefsModel.getInstance().getClearedFilter() != null)
-			clearedFilterComboBox.setSelectedItem(TransactionClearedFilterKeys.valueOf(PrefsModel.getInstance().getClearedFilter()));		
+		}
+		listModel.setSearchText(searchField.getText());
+		TransactionFrame.this.updateContent();
+		list.ensureIndexIsVisible(listModel.getSize() - 1);
+			
+		if (PrefsModel.getInstance().getDateFilter() != null){
+			try {
+				dateFilterComboBox.setSelectedItem(TransactionDateFilterKeys.valueOf(PrefsModel.getInstance().getDateFilter()));
+			}
+			catch (IllegalArgumentException iae){
+				dateFilterComboBox.setSelectedItem(TransactionDateFilterKeys.TRANSACTION_FILTER_ALL_DATES);
+			}
+		}
+		if (PrefsModel.getInstance().getReconciledFilter() != null){
+			try {
+				reconciledFilterComboBox.setSelectedItem(TransactionReconciledFilterKeys.valueOf(PrefsModel.getInstance().getReconciledFilter()));
+			}
+			catch (IllegalArgumentException iae){
+				reconciledFilterComboBox.setSelectedItem(TransactionReconciledFilterKeys.TRANSACTION_FILTER_ALL_RECONCILED);
+			}
+		}
+		if (PrefsModel.getInstance().getClearedFilter() != null){
+			try {
+				clearedFilterComboBox.setSelectedItem(TransactionClearedFilterKeys.valueOf(PrefsModel.getInstance().getClearedFilter()));
+			}
+			catch (IllegalArgumentException iae){
+				clearedFilterComboBox.setSelectedItem(TransactionClearedFilterKeys.TRANSACTION_FILTER_ALL_CLEARED);
+			}
+		}
 		
 		getDocument().addDocumentChangeListener(listener);
 
