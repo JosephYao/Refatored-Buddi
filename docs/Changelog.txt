@@ -1,4 +1,4 @@
-3.1.1.0
+3.1.1.0 (December 30 2007)
 -Added feature request #1846845 (Remember date ranges in 'Other' report interval)
 -Added a "Data File Stats" option in the View menu to see how many transactions, accounts, etc are defined.  This can help to diagnose performance issues, if there are tens of thousands of transactions.
 -Fixed bug #1859806 (Set the max VM memory to 512 MB for all packaged installations - this includes Windows, OS X, Debian, Slackware, and the generic .tgz.  If running from source or from .jar, you must include the VM argument '-Xmx512m' to set this.  This is only a problem for large data files, but there has been at least one reported case of this happening, so I figured I may as well increase the memory.  The memory will only be used as needed, so you don't need to worry about Buddi using more memory than it did before.)
