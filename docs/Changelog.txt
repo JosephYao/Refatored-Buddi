@@ -1,3 +1,6 @@
+3.1.1.1
+-Fixed bug which did not correctly show transaction on Jan 1 2008 as "This Year".
+
 3.1.1.0 (December 30 2007)
 -Added feature request #1846845 (Remember date ranges in 'Other' report interval)
 -Added a "Data File Stats" option in the View menu to see how many transactions, accounts, etc are defined.  This can help to diagnose performance issues, if there are tens of thousands of transactions.

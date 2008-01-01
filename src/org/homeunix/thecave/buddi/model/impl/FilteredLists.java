@@ -300,7 +300,7 @@ public class FilteredLists {
 				return DateFunctions.isSameDay(DateFunctions.addDays(today, -1), t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_WEEK == dateFilter) {
-				return DateFunctions.getStartOfDay(DateFunctions.addDays(today, -7)).before(t.getDate());
+				return DateFunctions.isSameWeek(today, t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_MONTH == dateFilter) {
 				return DateFunctions.isSameMonth(today, t.getDate());
@@ -315,12 +315,10 @@ public class FilteredLists {
 				return DateFunctions.isSameDay(DateFunctions.getStartOfQuarter(DateFunctions.addQuarters(today, -1)), DateFunctions.getStartOfQuarter(t.getDate()));
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_YEAR == dateFilter) {
-				return DateFunctions.getStartOfYear(today).before(t.getDate());				
+				return DateFunctions.isSameYear(today, t.getDate());				
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_YEAR == dateFilter) {
-				Date startOfLastYear = DateFunctions.getStartOfYear(DateFunctions.addYears(today, -1));
-				Date endOfLastYear = DateFunctions.getEndOfYear(startOfLastYear);
-				return startOfLastYear.before(t.getDate()) && endOfLastYear.after(t.getDate()); 
+				return DateFunctions.isSameYear(DateFunctions.addYears(today, -1), t.getDate());
 			}
 			else {
 				Log.error("Unknown filter pulldown: " + dateFilter);

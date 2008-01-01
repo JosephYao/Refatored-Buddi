@@ -32,16 +32,16 @@ public class ViewDataFileStats extends MossMenuItem{
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS) +
 				"</h3><p>" +
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS_ACCOUNTS) + " " +
-				Formatter.getDecimalFormat().format(model.getAccounts().size()) +
+				Formatter.getDecimalFormat(0).format(model.getAccounts().size()) +
 				"</p><p>" +
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS_BUDGET_CATEGORIES) + " " +
-				Formatter.getDecimalFormat().format(model.getBudgetCategories().size()) +
+				Formatter.getDecimalFormat(0).format(model.getBudgetCategories().size()) +
 				"</p><p>" +
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS_TRANSACTIONS) + " " +
-				Formatter.getDecimalFormat().format(model.getTransactions().size()) +
+				Formatter.getDecimalFormat(0).format(model.getTransactions().size()) +
 				"</p><p>" +
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS_SCHEDULED_TRANSACTIONS) + " " +
-				Formatter.getDecimalFormat().format(model.getScheduledTransactions().size()) +
+				Formatter.getDecimalFormat(0).format(model.getScheduledTransactions().size()) +
 				"</p></html>", 
 				TextFormatter.getTranslation(BuddiKeys.DATA_FILE_STATS_TITLE), 
 				JOptionPane.INFORMATION_MESSAGE);
