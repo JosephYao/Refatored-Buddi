@@ -136,8 +136,8 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 		pluginListModel.clear();
 		for (File file : BuddiPluginFactory.getPluginFiles()) {
 			pluginListModel.addElement(file);
-			pluginList.setSelectedValue(file, false);
 		}		
+		pluginList.setSelectedIndices(new int[0]);
 	}
 
 	public boolean save() {

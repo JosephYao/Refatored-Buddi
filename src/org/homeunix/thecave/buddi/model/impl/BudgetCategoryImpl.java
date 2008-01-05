@@ -265,7 +265,7 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			for (BudgetCategory bc : getDocument().getBudgetCategories()) {
 				if (bc.getName().equals(this.getName())
 						&& !bc.equals(this))
-					return this.getName() + " (" + this.getParent().getFullName() + ")";
+					return this.getName() + " (" + this.getParent().getName() + ")";
 			}
 		}
 		return this.getName();

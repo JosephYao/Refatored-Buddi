@@ -1,5 +1,8 @@
-3.1.1.1
--Fixed bug which did not correctly show transaction on Jan 1 2008 as "This Year".
+3.1.1.1 (January 5 2007)
+-Fixed a bug which did not correctly show transaction on Jan 1 2008 as "This Year".
+-Fixed a bug which caused stack overflow exception when handling certain configurations of categories.
+-Fixed a bug which could potentially cause a Concurrent Modification Exception
+-Fixed a bug which could cause a Null Pointer Exception
 
 3.1.1.0 (December 30 2007)
 -Added feature request #1846845 (Remember date ranges in 'Other' report interval)
