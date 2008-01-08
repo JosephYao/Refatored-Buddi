@@ -74,4 +74,12 @@ public interface ImmutableBudgetCategory extends ImmutableSource {
 	 * @return
 	 */
 	public boolean isIncome();
+	
+	/**
+	 * Returns a list of all dates for this budget period which have budget information
+	 * set for them.  Any date for this budget period which has an associated amount
+	 * of anything other than zero will be returned here. 
+	 * @return
+	 */
+	public List<Date> getBudgetedDates();
 }

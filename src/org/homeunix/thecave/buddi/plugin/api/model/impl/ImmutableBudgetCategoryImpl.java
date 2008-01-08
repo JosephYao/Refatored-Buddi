@@ -54,4 +54,8 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 	public List<ImmutableBudgetCategory> getImmutableChildren() {
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableBudgetCategory, BudgetCategory>(getBudgetCategory().getDocument(), getBudgetCategory().getChildren());
 	}
+	
+	public List<Date> getBudgetedDates() {
+		return getBudgetCategory().getBudgetedDates();
+	}
 }

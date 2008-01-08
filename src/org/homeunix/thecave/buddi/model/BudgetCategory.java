@@ -102,4 +102,12 @@ public interface BudgetCategory extends Source, Expandable {
 	 * @param periodType
 	 */
 	public void setPeriodType(BudgetCategoryType periodType) throws InvalidValueException;
+	
+	/**
+	 * Returns a list of all dates for this budget period which have budget information
+	 * set for them.  We basically look at the budget backing map, and return all keys for
+	 * non-zero values. 
+	 * @return
+	 */
+	public List<Date> getBudgetedDates();
 }

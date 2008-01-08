@@ -88,4 +88,17 @@ public class BudgetCategoryTest {
 						DateFunctions.getDate(2007, Calendar.OCTOBER, 31)));
 	}
 	
+	@Test
+	public void budgetedAmounts() throws Exception {
+		BudgetCategoryType bct = ModelFactory.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH);
+		BudgetCategory bc = ModelFactory.createBudgetCategory("Monthly Test", bct, false);
+		
+		bc.setAmount(DateFunctions.getDate(2007, Calendar.NOVEMBER, 5), 100);
+		bc.setAmount(DateFunctions.getDate(2007, Calendar.DECEMBER, 12), 100);
+	
+		assertEquals(2, bc.getBudgetedDates().size());
+		assertEquals(DateFunctions.getDate(2007, Calendar.NOVEMBER, 1), bc.getBudgetedDates().get(0));
+		assertEquals(DateFunctions.getDate(2007, Calendar.DECEMBER, 1), bc.getBudgetedDates().get(1));
+	}
+	
 }

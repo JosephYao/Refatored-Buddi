@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.moss.data.list.SortedArrayList;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 
@@ -288,5 +289,17 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			return this.getFullName().compareTo(c.getFullName());
 		}
 		return super.compareTo(arg0);
+	}
+	
+	public List<Date> getBudgetedDates() {
+		List<Date> budgetedDates = new SortedArrayList<Date>();
+		
+		Map<String, Long> amounts = getAmounts();
+		for (String key : amounts.keySet()){
+			if (amounts.get(key) != null && amounts.get(key) != 0)
+				budgetedDates.add(getPeriodDate(key));
+		}
+		
+		return budgetedDates;
 	}
 }
