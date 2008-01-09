@@ -3,7 +3,11 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
@@ -18,7 +22,8 @@ public class EditNewBudgetCategory extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
 	public EditNewBudgetCategory(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_NEW_BUDGET_CATEGORY));
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_NEW_BUDGET_CATEGORY),
+				KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_MASK));
 	}
 
 	@Override

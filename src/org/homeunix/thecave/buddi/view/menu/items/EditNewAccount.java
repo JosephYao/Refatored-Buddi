@@ -3,7 +3,11 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Document;
@@ -17,7 +21,8 @@ public class EditNewAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;
 	
 	public EditNewAccount(MainFrame frame) {
-		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_NEW_ACCOUNT));
+		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_NEW_ACCOUNT),
+				KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_MASK));
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 3.1.2.0
 -Added method List<Date> getBudgetedDates() in BudgetCategory (and associated API objects).  This allows plugins to return a list of all dates for the given budget category which have a budget set to anything other than zero.
+-Added feature request #1861222 (Add shortcut / hotkeys for Create / Edit Account / Budget Category).
 -Fixed a bug in Moss which could result in a NPE when using SmartFileChooser
 
 3.1.1.1 (January 5 2007)
