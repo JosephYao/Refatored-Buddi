@@ -7,6 +7,8 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.items.ViewDataFileStats;
+import org.homeunix.thecave.buddi.view.menu.items.ViewNextBudgetPeriod;
+import org.homeunix.thecave.buddi.view.menu.items.ViewPreviousBudgetPeriod;
 import org.homeunix.thecave.buddi.view.menu.items.ViewRollAllAccounts;
 import org.homeunix.thecave.buddi.view.menu.items.ViewRollAllBudgetCategories;
 import org.homeunix.thecave.buddi.view.menu.items.ViewUnrollAllAccounts;
@@ -37,6 +39,9 @@ public class ViewMenu extends MossMenu {
 			else if (frame.isMyBudgetTabSelected()){
 				this.add(new ViewUnrollAllBudgetCategories(frame));
 				this.add(new ViewRollAllBudgetCategories(frame));
+				this.addSeparator();
+				this.add(new ViewNextBudgetPeriod(frame));
+				this.add(new ViewPreviousBudgetPeriod(frame));				
 				this.addSeparator();
 			}
 			else if (frame.isMyReportsTabSelected()){

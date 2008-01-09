@@ -19,11 +19,11 @@ public class BudgetDateSpinnerModel extends SpinnerDateModel {
 	}
 		
 	public Object getNextValue() {
-		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), -1);
+		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), 1);
 	}
 	
 	public Object getPreviousValue() {
-		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), 1);
+		return budgetModel.getSelectedBudgetPeriodType().getBudgetPeriodOffset(getDate(), -1);
 	}
 	
 	@Override

@@ -3,8 +3,12 @@
  */
 package org.homeunix.thecave.buddi.view.menu.items;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.Date;
+
+import javax.swing.KeyStroke;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
@@ -20,7 +24,8 @@ public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 	public static final long serialVersionUID = 0;
 
 	public EditCopyBudgetCategoryValuesToNext(MainFrame frame) {
-		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD));
+		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD),
+				KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_DOWN_MASK));
 	}
 
 	@Override

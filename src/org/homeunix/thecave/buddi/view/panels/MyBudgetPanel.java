@@ -110,6 +110,14 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 
 		return budgetCategories;
 	}
+	
+	public void setNextPeriod(){
+		dateSpinner.setValue(dateSpinnerModel.getNextValue());
+	}
+	
+	public void setPreviousPeriod(){
+		dateSpinner.setValue(dateSpinnerModel.getPreviousValue());
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(periodTypeComboBox)){
@@ -136,10 +144,12 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		tree.setLeafIcon(null);
 		tree.setTreeCellRenderer(new MyBudgetTreeNameCellRenderer());
 
-		for (int i = 1; i < treeTableModel.getColumnCount(); i++){			
+//		for (int i = 1; i < treeTableModel.getColumnCount(); i++){			
 			final KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 			//This passes arrow keys on to the table, to allow cell navigation.
 			manager.addKeyEventDispatcher(new KeyEventDispatcher(){
+//				private int lastColumnSelected = 2;
+				
 				public boolean dispatchKeyEvent(KeyEvent e) {
 					if (MyBudgetPanel.this.parent.isActive()
 							&& MyBudgetPanel.this.parent.isMyBudgetTabSelected()
@@ -150,8 +160,36 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 									|| e.getKeyCode() == KeyEvent.VK_DOWN
 									|| e.getKeyCode() == KeyEvent.VK_RIGHT
 									|| e.getKeyCode() == KeyEvent.VK_LEFT)){
+						
+//						if (e.getKeyCode() == KeyEvent.VK_RIGHT 
+//								&& lastColumnSelected == 3
+//								&& MyBudgetPanel.this.tree.getSelectedColumn() == 3){
+//							Object previous = dateSpinnerModel.getPreviousValue();
+//							if (previous instanceof Date){
+////								treeTableModel.setSelectedDate((Date) previous);
+//								dateSpinner.setValue(previous);
+////								fireStructureChanged();
+////								updateContent();
+//							}
+//						}
+//						else if (e.getKeyCode() == KeyEvent.VK_LEFT
+//								&& lastColumnSelected == 1
+//								&& MyBudgetPanel.this.tree.getSelectedColumn() == 1){
+//							Object next = dateSpinnerModel.getNextValue();
+//							if (next instanceof Date){
+////								treeTableModel.setSelectedDate((Date) next);
+//								dateSpinner.setValue(next);
+////								fireStructureChanged();
+////								updateContent();
+//							}		
+//						}
+//						
+//						System.out.println(lastColumnSelected + ", " + MyBudgetPanel.this.tree.getSelectedColumn());
+//						lastColumnSelected = MyBudgetPanel.this.tree.getSelectedColumn();
+						
 						manager.redispatchEvent(tree, e);
 						e.consume();
+						
 						return true;
 					}
 					return false;
@@ -159,7 +197,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			});
 //			tree.getColumn(i).setCellRenderer(new MyBudgetTableAmountCellRenderer());
 //			tree.getColumn(i).setCellEditor(new MyBudgetTableAmountCellEditor(editor));
-		}
+//		}
 //		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
@@ -260,6 +298,9 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 	public void updateContent() {
 		super.updateContent();
 
+//		int rowSelected = tree.getSelectedRow();
+//		int columnSelected = tree.getSelectedColumn();
+		
 		//Refresh the column headers.  For some stupid reason you have
 		// to do it manually, even though the model itself updates and 
 		// fires a change event.
@@ -291,6 +332,10 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 			else
 				tree.collapsePath(path);
 		}
+		
+		//Re-select the last cell
+//		System.out.println(rowSelected + " - " + columnSelected);
+//		tree.changeSelection(rowSelected, columnSelected, false, false);
 		
 		//Update the menus (especially to get correct Copy From / To dates)
 		parent.updateMenus();
