@@ -1040,4 +1040,56 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		return total;
 	}
+	
+
+	/**
+	 * Performs a deep clone of the Document model.  This will result in a completely
+	 * different object, with all component objects different, but with all the same
+	 * values.  Immutable objects (such as Strings) and primitives may be identical 
+	 * between cloned and source objects, but all immutable objects will not be identical.  
+	 * @param source
+	 * @return
+	 */
+	public Document clone() throws CloneNotSupportedException {
+		updateAllBalances();	//We want to be sure that out original object is in the correct state before cloning.
+		
+		try {
+			Map<ModelObject, ModelObject> originalToClonedObjectMap = new HashMap<ModelObject, ModelObject>();
+
+			DocumentImpl clone = new DocumentImpl();
+			clone.startBatchChange();
+			clone.setFile(this.getFile());
+			clone.flags = flags;
+			clone.modifiedTime = new Time(modifiedTime);
+			if (password != null)
+				clone.password = new String(password).toCharArray();
+
+			originalToClonedObjectMap.put(this, clone);
+			
+			//Clone all component objects.
+			for (AccountType old : this.getAccountTypes()) {
+				clone.addAccountType((AccountType) ((AccountTypeImpl) old).clone(originalToClonedObjectMap));
+			}
+			for (Account old : this.getAccounts()) {
+				clone.addAccount((Account) ((AccountImpl) old).clone(originalToClonedObjectMap));
+			}
+			for (BudgetCategory old : this.getBudgetCategories()) {
+				clone.addBudgetCategory((BudgetCategory) ((BudgetCategoryImpl) old).clone(originalToClonedObjectMap));
+			}
+			for (ScheduledTransaction old : this.getScheduledTransactions()) {
+				clone.addScheduledTransaction((ScheduledTransaction) ((ScheduledTransactionImpl) old).clone(originalToClonedObjectMap));
+			}
+			for (Transaction old : this.getTransactions()) {
+				clone.addTransaction((Transaction) ((TransactionImpl) old).clone(originalToClonedObjectMap));
+			}
+
+			clone.refreshUidMap();
+			clone.finishBatchChange();
+
+			return clone;
+		}
+		catch (ModelException me){
+			throw new CloneNotSupportedException(me.getMessage());
+		}
+	}
 }

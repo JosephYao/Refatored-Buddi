@@ -53,9 +53,9 @@ import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
  *
  */
 public class ModelFactory {
-	
+
 	public static Map<String, BudgetCategoryType> budgetPeriodTypes;
-	
+
 	/**
 	 * Returns the budget category type of the given type, or null if it 
 	 * does not exist.
@@ -65,7 +65,7 @@ public class ModelFactory {
 	public static BudgetCategoryType getBudgetCategoryType(BudgetCategoryTypes type){
 		return getBudgetCategoryType(type.toString());
 	}
-	
+
 	/**
 	 * Returns the budget category type of the given name, or null if it 
 	 * does not exist.
@@ -80,10 +80,10 @@ public class ModelFactory {
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_QUARTER.toString(), new BudgetCategoryTypeQuarterly());
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_YEAR.toString(), new BudgetCategoryTypeYearly());
 		}
-		
+
 		return budgetPeriodTypes.get(name);
 	}
-	
+
 	/**
 	 * Creates a new Account with the given values
 	 * @param name
@@ -141,7 +141,7 @@ public class ModelFactory {
 		Document document;
 		if (getAutoSaveLocation(null).exists() && getAutoSaveLocation(null).canRead()){
 			Log.info("Autosave file found; prompting user if we should use it or not");
-			
+
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
 			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
@@ -174,7 +174,7 @@ public class ModelFactory {
 				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
 			}
 		}
-		
+
 		document = new DocumentImpl();
 		document.setFile(null); //A null dataFile will prompt for location on first save.
 
@@ -206,10 +206,10 @@ public class ModelFactory {
 		Collections.sort(document.getBudgetCategories());
 		Collections.sort(document.getTransactions());
 		Collections.sort(document.getScheduledTransactions());
-		
+
 		//Allow changes to start firing
 		document.finishBatchChange();
-		
+
 		//Fire a change event
 		document.setChanged();
 
@@ -231,7 +231,7 @@ public class ModelFactory {
 		// this may be changed if we find an autosave document and the user wants 
 		// to load it.
 		File fileToLoad = file;
-		
+
 		if (file == null)
 			throw new DocumentLoadException("Error loading model: specfied file is null.");
 
@@ -241,40 +241,9 @@ public class ModelFactory {
 		if (!file.canRead())
 			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
-		//Copy to a backup if there is no backup currently.  This is especially important for
-		// 2.9.11.0, which includes several major changes to the data format.
-//		File backupFile = new File(file.getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "") + " (2.9.11.0)" + Const.BACKUP_FILE_EXTENSION);
-//		if (!backupFile.exists()){
-//			try {
-//				FileFunctions.copyFile(file, backupFile);
-//				JOptionPane.showMessageDialog(
-//						null,
-//						"Due to changes in the data model in version 2.9.11.0, it is recommended that\n"
-//						+ "you back up any data files before opening in the new version.  Buddi has\n"
-//						+ "backed up the file '" + file.getName() + "' to '" + backupFile.getName() + "'.\n"
-//						+ "If you experience any problems, you can restore from this backup.",
-//						"Backup Data File",
-//						JOptionPane.INFORMATION_MESSAGE);
-//			}
-//			catch (IOException ioe){
-//				JOptionPane.showMessageDialog(
-//						null, 
-//						"Error backing up data file" 
-//						+ file.getAbsolutePath() 
-//						+ "\nto " + backupFile.getAbsolutePath() 
-//						+ ".\n\nDue to changes in the file format in version 2.9.11.0, it is\n"
-//						+ "highly recommended that you backup your files before opening them in\n"
-//						+ "the new version.  If you wish backup this file manually (recommended),\n"
-//						+ "please do so now, before you click OK.  Once you click OK, the file will\n"
-//						+ "be loaded.",
-//						"Error backing up file", 
-//						JOptionPane.ERROR_MESSAGE);
-//			}
-//		}
-		
 		if (getAutoSaveLocation(file).exists() && getAutoSaveLocation(file).canRead()){
 			Log.info("Autosave file found; prompting user if we should use it or not");
-			
+
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
 			options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NO);
@@ -296,7 +265,7 @@ public class ModelFactory {
 				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
 			}
 		}
-		
+
 		Log.debug("Trying to load file " + fileToLoad);
 
 		try {
@@ -320,7 +289,7 @@ public class ModelFactory {
 						throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
 					}
 					is.close();
-					
+
 					//Refresh the UID Map...
 					document.refreshUidMap();
 
@@ -337,10 +306,10 @@ public class ModelFactory {
 
 					//Check for scheduled transactions
 					document.updateScheduledTransactions();
-					
-					
-					
-					
+
+
+
+
 					//The old data format (before 2.9.11.0) used a string representation of a date
 					// object as the key to the Budget Category amount map.  Unfortunately, this
 					// meant that in different time zones, you would have different start dates
@@ -353,7 +322,7 @@ public class ModelFactory {
 					for (BudgetCategory bc : document.getBudgetCategories()) {
 						boolean changed = false;
 						Map<String, Long> newAmountMap = new HashMap<String, Long>();
-						
+
 						//Iterate through all budget periods, and check the 
 						// 
 						for (String key : ((BudgetCategoryImpl) bc).getAmounts().keySet()) {
@@ -374,37 +343,37 @@ public class ModelFactory {
 								newAmountMap.put(key, ((BudgetCategoryImpl) bc).getAmounts().get(key));
 							}
 						}
-						
+
 						if (changed){
 							Log.warning("Your data file has been updated to address bug #1811038.  Included inline are the details of the changes:\n\n"
 									+ "New Map:\n" + newAmountMap + "\n\n"
 									+ "Old Map:\n" + ((BudgetCategoryImpl) bc).getAmounts());
-							
+
 							((BudgetCategoryImpl) bc).setAmounts(newAmountMap);
 						}
 					}
-					
-					
-					
+
+
+
 					//As a precaution for the bug fix above, we are also changing our internal 
 					// representation of Date objects for Transactions to Strings.  This is done
 					// automatically when a date is read; to force this, we read every date here.
 					for (Transaction t : document.getTransactions()) {
 						t.getDate();
 					}
-					
-					
-					
+
+
+
 					//Sort lists...
 					Collections.sort(document.getAccounts());
 					Collections.sort(document.getAccountTypes());
 					Collections.sort(document.getBudgetCategories());
 					Collections.sort(document.getTransactions());
 					Collections.sort(document.getScheduledTransactions());
-					
+
 					//Allow changes to start firing
 					document.finishBatchChange();
-					
+
 					//Fire a change event
 					document.setChanged();
 					document.resetChanged();
@@ -451,7 +420,7 @@ public class ModelFactory {
 	 * @throws InvalidValueException
 	 */
 	public static ScheduledTransaction createScheduledTransaction(String name, String message, Date startDate, Date endDate, String frequencyType, int scheduleDay, int scheduleWeek, int scheduleMonth, String description, long amount, Source from, Source to) throws InvalidValueException {
-		
+
 		ScheduledTransaction st = new ScheduledTransactionImpl();
 
 		st.setScheduleName(name);
@@ -494,7 +463,7 @@ public class ModelFactory {
 		return t;
 	}
 
-	
+
 	/**
 	 * Returns the auto save file locaton for the given base file.  If the base file
 	 * is null, return the Preferences directory and a filename of "AutosaveData.buddi3autosave";

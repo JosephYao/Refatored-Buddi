@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
@@ -18,9 +19,9 @@ import org.homeunix.thecave.moss.model.AbstractDocument;
  */
 public abstract class ModelObjectImpl implements ModelObject {
 	
-	private Time modifiedTime;
-	private String uid;
-	private Document document;
+	protected Time modifiedTime;
+	protected String uid;
+	protected Document document;
 		
 	public void setChanged(){
 		setModified(new Time());
@@ -65,4 +66,23 @@ public abstract class ModelObjectImpl implements ModelObject {
 		return (getUid().compareTo(o.getUid()));
 	}
 
+	
+	/**
+	 * Clones the object.  A cloned object will contain the same values as the original, but will 
+	 * not have identical (i.e., same reference) to these values.  The originalToCloneMap allows
+	 * references to other original objects to carry over to the new cloned object.  For instance, 
+	 * when cloning a transaction, you must also have references to the new cloned sources.
+	 * 
+	 * When you clone this given object, you must also put a reference to the new object
+	 * into the map, to allow future objects to refer to the newly cloned object.
+	 * 
+	 * If you try to clone an object twice using the same map, it will return the same
+	 * object which it originally did.  This allows you to indiscriminantly use the clone
+	 * method, even if converting trees or graphs of objects.
+	 * 
+	 * @param originalToCloneMap
+	 * @return
+	 * @throws CloneNotSupportedException
+	 */
+	abstract ModelObject clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException;
 }

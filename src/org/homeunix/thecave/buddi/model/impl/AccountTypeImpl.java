@@ -3,6 +3,8 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
+import java.util.Map;
+
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
@@ -60,5 +62,22 @@ public class AccountTypeImpl extends ModelObjectImpl implements AccountType {
 			return this.getName().compareTo(t.getName());
 		}
 		return super.compareTo(o);
+	}
+	
+	AccountType clone(Map<ModelObject, ModelObject> originalToCloneMap)
+			throws CloneNotSupportedException {
+
+		if (originalToCloneMap.get(this) != null)
+			return (AccountType) originalToCloneMap.get(this);
+		
+		AccountTypeImpl a = new AccountTypeImpl();
+		a.document = (Document) originalToCloneMap.get(document);
+		a.name = name;
+		a.credit = credit;
+		a.isExpanded = isExpanded;
+		
+		originalToCloneMap.put(this, a);
+		
+		return a;
 	}
 }

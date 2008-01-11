@@ -4,9 +4,12 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
+import java.util.Map;
 
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 
 /**
@@ -105,5 +108,45 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 	public void setStartDate(Date startDate) {
 		this.startDate = new Day(startDate);
 		setChanged();
+	}
+	
+	ScheduledTransaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+
+		if (originalToCloneMap.get(this) != null)
+			return (ScheduledTransaction) originalToCloneMap.get(this);
+		
+		ScheduledTransactionImpl st = new ScheduledTransactionImpl();
+
+		st.document = (Document) originalToCloneMap.get(document);
+		st.amount = amount;
+		st.balanceFrom = balanceFrom;
+		st.balanceTo = balanceTo;
+		st.clearedFrom = clearedFrom;
+		st.clearedTo = clearedTo;
+		st.date = new Day(date);
+		st.deleted = deleted;
+		st.description = description;
+		st.from = (Source) ((SourceImpl) from).clone(originalToCloneMap);
+		st.memo = memo;
+		st.number = number;
+		st.reconciledFrom = reconciledFrom;
+		st.reconciledTo = reconciledTo;
+		st.scheduled = scheduled;
+		st.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
+		st.modifiedTime = new Time(modifiedTime);
+		
+		st.endDate = new Day(endDate);
+		st.frequencyType = frequencyType;
+		st.lastDayCreated = new Day(lastDayCreated);
+		st.message = message;
+		st.scheduleDay = scheduleDay;
+		st.scheduleMonth = scheduleMonth;
+		st.scheduleName = scheduleName;
+		st.scheduleWeek = scheduleWeek;
+		st.startDate = new Day(startDate);
+		
+		originalToCloneMap.put(this, st);
+
+		return st;
 	}
 }

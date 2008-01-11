@@ -4,10 +4,12 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
@@ -22,24 +24,24 @@ import org.homeunix.thecave.moss.util.DateFunctions;
  *
  */
 public class TransactionImpl extends ModelObjectImpl implements Transaction {
-	private Day date;
-//	private String dateString;
-	private String description;
-	private String number;
-	private long amount;
-	private Source from;
-	private Source to;
-	private boolean deleted;
-	private boolean clearedFrom;
-	private boolean clearedTo;
-	private boolean reconciledFrom;
-	private boolean reconciledTo; 
-	private String memo;
+	protected Day date;
+//	protected String dateString;
+	protected String description;
+	protected String number;
+	protected long amount;
+	protected Source from;
+	protected Source to;
+	protected boolean deleted;
+	protected boolean clearedFrom;
+	protected boolean clearedTo;
+	protected boolean reconciledFrom;
+	protected boolean reconciledTo; 
+	protected String memo;
 
-	private boolean scheduled;
+	protected boolean scheduled;
 
-	private long balanceFrom;
-	private long balanceTo;
+	protected long balanceFrom;
+	protected long balanceTo;
 	
 	
 	@Override
@@ -240,5 +242,35 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	Transaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+
+		if (originalToCloneMap.get(this) != null)
+			return (Transaction) originalToCloneMap.get(this);
+		
+		TransactionImpl t = new TransactionImpl();
+
+		t.document = (Document) originalToCloneMap.get(document);
+		t.amount = amount;
+		t.balanceFrom = balanceFrom;
+		t.balanceTo = balanceTo;
+		t.clearedFrom = clearedFrom;
+		t.clearedTo = clearedTo;
+		t.date = new Day(date);
+		t.deleted = deleted;
+		t.description = description;
+		t.from = (Source) ((SourceImpl) from).clone(originalToCloneMap);
+		t.memo = memo;
+		t.number = number;
+		t.reconciledFrom = reconciledFrom;
+		t.reconciledTo = reconciledTo;
+		t.scheduled = scheduled;
+		t.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
+		t.modifiedTime = new Time(modifiedTime);
+		
+		originalToCloneMap.put(this, t);
+
+		return t;
 	}
 }

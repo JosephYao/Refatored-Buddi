@@ -48,5 +48,5 @@ public interface Document extends ModelObject, StandardDocument {
 	public void setFlag(int flag, boolean set);
 	public void updateAllBalances();
 	public void updateScheduledTransactions();
-
+	public Document clone() throws CloneNotSupportedException;
 }

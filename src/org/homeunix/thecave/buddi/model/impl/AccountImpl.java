@@ -5,9 +5,11 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -159,5 +161,30 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (overdraftCreditLimit < 0)
 			throw new InvalidValueException("Overdraft limit must be positive");
 		this.overdraftCreditLimit = overdraftCreditLimit;
+	}
+	
+	Account clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+
+		if (originalToCloneMap.get(this) != null)
+			return (Account) originalToCloneMap.get(this);
+		
+		AccountImpl a = new AccountImpl();
+
+		a.document = (Document) originalToCloneMap.get(document);
+		a.type = (AccountType) originalToCloneMap.get(getAccountType());
+		a.balance = balance;
+		a.deleted = isDeleted();
+		if (modifiedTime != null)
+			a.modifiedTime = new Time(modifiedTime);
+		a.name = name;
+		a.notes = notes;
+		a.overdraftCreditLimit = overdraftCreditLimit;
+		if (startDate != null)
+			a.startDate = new Day(startDate);
+		a.startingBalance = startingBalance;
+		
+		originalToCloneMap.put(this, a);
+
+		return a;
 	}
 }

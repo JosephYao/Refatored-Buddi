@@ -16,9 +16,9 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
  */
 public abstract class SourceImpl extends ModelObjectImpl implements Source {
 	//Source Attributes
-	private String name;
-	private boolean deleted;
-	private String notes;
+	protected String name;
+	protected boolean deleted;
+	protected String notes;
 	
 	public String getName() {
 		return TextFormatter.getTranslation(name);

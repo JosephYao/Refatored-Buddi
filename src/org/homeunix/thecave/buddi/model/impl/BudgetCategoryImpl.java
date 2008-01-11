@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -301,5 +302,28 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		}
 		
 		return budgetedDates;
+	}
+	
+	BudgetCategory clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+
+		if (originalToCloneMap.get(this) != null)
+			return (BudgetCategory) originalToCloneMap.get(this);
+		
+		BudgetCategoryImpl b = new BudgetCategoryImpl();
+
+		b.document = (Document) originalToCloneMap.get(document);
+		b.expanded = expanded;
+		b.income = income;
+		b.periodType = periodType;
+		b.deleted = isDeleted();
+		b.modifiedTime = new Time(modifiedTime);
+		b.name = name;
+		b.notes = notes;
+		if (parent != null)
+			b.parent = (BudgetCategory) ((BudgetCategoryImpl) parent).clone(originalToCloneMap);
+		
+		originalToCloneMap.put(this, b);
+
+		return b;
 	}
 }
