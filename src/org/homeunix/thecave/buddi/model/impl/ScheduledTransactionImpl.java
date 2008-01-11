@@ -123,27 +123,34 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 		st.balanceTo = balanceTo;
 		st.clearedFrom = clearedFrom;
 		st.clearedTo = clearedTo;
-		st.date = new Day(date);
+		if (date != null)
+			st.date = new Day(date);
 		st.deleted = deleted;
 		st.description = description;
-		st.from = (Source) ((SourceImpl) from).clone(originalToCloneMap);
+		if (from != null)
+			st.from = (Source) ((SourceImpl) from).clone(originalToCloneMap);
 		st.memo = memo;
 		st.number = number;
 		st.reconciledFrom = reconciledFrom;
 		st.reconciledTo = reconciledTo;
 		st.scheduled = scheduled;
-		st.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
+		if (to != null)
+			st.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
 		st.modifiedTime = new Time(modifiedTime);
 		
-		st.endDate = new Day(endDate);
+		if (endDate != null)
+			st.endDate = new Day(endDate);
 		st.frequencyType = frequencyType;
-		st.lastDayCreated = new Day(lastDayCreated);
+		
+		if (lastDayCreated != null)
+			st.lastDayCreated = new Day(lastDayCreated);
 		st.message = message;
 		st.scheduleDay = scheduleDay;
 		st.scheduleMonth = scheduleMonth;
 		st.scheduleName = scheduleName;
 		st.scheduleWeek = scheduleWeek;
-		st.startDate = new Day(startDate);
+		if (startDate != null)
+			st.startDate = new Day(startDate);
 		
 		originalToCloneMap.put(this, st);
 

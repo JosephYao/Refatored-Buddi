@@ -3,6 +3,7 @@
 -Added clone() method to Document.  This will do a deep clone of the document, resulting in an entirely new Document object (with all associated component objects), but with all the user defined values (names, amounts, etc) being the same.  Hidden values (UID, modified time, etc) may not be identical.  The new object and the old object are guaranteed to not be identical (newObject != oldObject) and are guaranteed not to be equal (newObject.equals(oldObject) == false). 
 -Implemented feature request #1861222 (Add shortcut / hotkeys for Create / Edit Account / Budget Category).
 -Implemented feature request #1847620 (Add shortcut keys for changing to different budget periods).  Also implemented shortcuts for copying values to previous / next periods.
+-Fixed bug #1859807 (Program freezes when saving / autosaving large data files).  I now clone the data files before saving; the clone operation is much shorter than the save.
 -Fixed a bug in Moss which could result in a NPE when using SmartFileChooser
 
 3.1.1.1 (January 5 2007)

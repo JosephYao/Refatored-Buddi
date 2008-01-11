@@ -361,7 +361,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				BuddiCryptoFactory factory = new BuddiCryptoFactory();
 				OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
-				saveToStream(os);
+				//Clone the file.  This is to decrease the time needed to save large files.
+				Document clone = clone();
+				
+				clone.saveToStream(os);
 			}
 		}
 		catch (CipherException ce){
@@ -371,10 +374,14 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			throw new DocumentSaveException(ce);
 		}
 		catch (IOException ioe){
-			//This means taht there was something wrong with the given file, or writing to
+			//This means that there was something wrong with the given file, or writing to
 			// it.  Perhaps the user does not have write access, the folder does not exist,
 			// or something similar.  Notify the user, and cancel the save.
 			throw new DocumentSaveException(ioe);
+		}
+		catch (CloneNotSupportedException cnse){
+			Log.error("There was a problem cloning the data model, prior to auto saving.");
+			throw new DocumentSaveException(cnse);
 		}
 	}
 
@@ -410,13 +417,16 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			setFlag(CHANGE_PASSWORD, false);
 		}
 		
-		//Save the file
 		try {
+			//Clone the file.  This is to decrease the time needed to save large files.
+			Document clone = clone();
+			
+			//Save the file
 			BuddiCryptoFactory factory = new BuddiCryptoFactory();
 			File tempFile = new File(file.getAbsolutePath() + ".temp");
 			OutputStream os = factory.getEncryptedStream(new FileOutputStream(tempFile), password);
 
-			saveToStream(os);
+			clone.saveToStream(os);
 
 			//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
 			// to rename the existing file to a '.old' file, rename the temp file to the
@@ -437,13 +447,19 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			//This means that there is something seriously wrong with the encryption methods.
 			// Perhaps the user's platform does not support the given methods.
 			// Notify the user, and cancel the save.
+			Log.error("There was a problem saving the document.  The problem was related to the encryption of the data file.  Perhaps your Java implemntation does not support the required encryption methods?");
 			throw new DocumentSaveException(ce);
 		}
 		catch (IOException ioe){
 			//This means that there was something wrong with the given file, or writing to
 			// it.  Perhaps the user does not have write access, the folder does not exist,
 			// or something similar.  Notify the user, and cancel the save.
+			Log.error("There was an IO error while saving your file.  Please ensure that the desired folder exists, and that you have write access to it.");
 			throw new DocumentSaveException(ioe);
+		}
+		catch (CloneNotSupportedException cnse){
+			Log.error("There was a problem cloning the data model, prior to saving.");
+			throw new DocumentSaveException(cnse);
 		}
 
 
@@ -529,20 +545,6 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 		finishBatchChange();
 	}
-	/**
-	 * Streams the current Data Model object as an XML encoded string.  This is primarily meant
-	 * for troubleshooting crashes. 
-	 * @return
-	 */
-//	public String saveToString(){
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//		XMLEncoder encoder = new XMLEncoder(baos);
-//		encoder.writeObject(this);
-//		encoder.flush();
-//		encoder.close();
-//
-//		return baos.toString();
-//	}
 	/**
 	 * Updates the balances of all accounts.  Iterates through all accounts, and
 	 * calls the updateBalance() method for each. 
