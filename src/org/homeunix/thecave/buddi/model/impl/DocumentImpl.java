@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.JOptionPane;
 
@@ -354,17 +355,34 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @param file
 	 * @throws DocumentSaveException
 	 */
+	private final Semaphore autosaveMutex = new Semaphore(1);
 	public void saveAuto(File file) throws DocumentSaveException {
 		//Save the file
 		try {
 			if (!isBatchChange()){
 				BuddiCryptoFactory factory = new BuddiCryptoFactory();
-				OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
+				
+				final OutputStream os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
 				//Clone the file.  This is to decrease the time needed to save large files.
-				Document clone = clone();
+				final Document clone = clone();
 				
-				clone.saveToStream(os);
+				new Thread(new Runnable(){
+					public void run() {
+						if (autosaveMutex.tryAcquire()){
+							try {
+								clone.saveToStream(os);
+							} catch (DocumentSaveException e) {
+								Log.error("There was an error when autosaving the file.", e);
+							}
+							
+							autosaveMutex.release();
+						}
+						else {
+							Log.warning("Did not autosave, as there is another process already waiting.");
+						}
+					}
+				}).start();
 			}
 		}
 		catch (CipherException ce){
@@ -394,7 +412,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	 * @param resetUid
 	 * @throws DocumentSaveException
 	 */
-	private void saveWrapper(File file, boolean resetUid) throws DocumentSaveException {
+	private final Semaphore saveMutex = new Semaphore(1);
+	private void saveWrapper(final File file, boolean resetUid) throws DocumentSaveException, ConcurrentSaveException {
+		if (!saveMutex.tryAcquire()){
+			throw new ConcurrentSaveException("Did not save file, as there is another thread currently saving.");
+		}
 		//Do a rotating backup before saving
 		doBackupDataFile();
 		
@@ -417,52 +439,57 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			setFlag(CHANGE_PASSWORD, false);
 		}
 		
-		try {
-			//Clone the file.  This is to decrease the time needed to save large files.
-			Document clone = clone();
-			
-			//Save the file
-			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			File tempFile = new File(file.getAbsolutePath() + ".temp");
-			OutputStream os = factory.getEncryptedStream(new FileOutputStream(tempFile), password);
+		new Thread(new Runnable(){
+			public void run() {
+				try {
+					//Clone the file.  This is to decrease the time needed to save large files.
+					Document clone = DocumentImpl.this.clone();
+					
+					//Save the file
+					BuddiCryptoFactory factory = new BuddiCryptoFactory();
+					File tempFile = new File(file.getAbsolutePath() + ".temp");
+					OutputStream os = factory.getEncryptedStream(new FileOutputStream(tempFile), password);
 
-			clone.saveToStream(os);
+					clone.saveToStream(os);
 
-			//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
-			// to rename the existing file to a '.old' file, rename the temp file to the
-			// data file, and remove the .old file if all goes well.  While it would be simpler
-			// to just remove the data file intitally, by renaming it first, we have at least
-			// some assurance that we are able to recover data if needed.
-			File oldFile = new File(file.getAbsolutePath() + ".old");
-			if (oldFile.exists() && !oldFile.delete())
-				throw new IOException("Unable to delete existing file '" + oldFile + "' in preparation for moving temp file.");
-			if (file.exists() && !file.renameTo(oldFile))
-				throw new IOException("Unable to rename existing data file '" + file + "' to '" + oldFile + "'.");
-			if (!tempFile.renameTo(file))
-				throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
-			if (oldFile.exists() && !oldFile.delete())
-				Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
-		}
-		catch (CipherException ce){
-			//This means that there is something seriously wrong with the encryption methods.
-			// Perhaps the user's platform does not support the given methods.
-			// Notify the user, and cancel the save.
-			Log.error("There was a problem saving the document.  The problem was related to the encryption of the data file.  Perhaps your Java implemntation does not support the required encryption methods?");
-			throw new DocumentSaveException(ce);
-		}
-		catch (IOException ioe){
-			//This means that there was something wrong with the given file, or writing to
-			// it.  Perhaps the user does not have write access, the folder does not exist,
-			// or something similar.  Notify the user, and cancel the save.
-			Log.error("There was an IO error while saving your file.  Please ensure that the desired folder exists, and that you have write access to it.");
-			throw new DocumentSaveException(ioe);
-		}
-		catch (CloneNotSupportedException cnse){
-			Log.error("There was a problem cloning the data model, prior to saving.");
-			throw new DocumentSaveException(cnse);
-		}
-
-
+					//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
+					// to rename the existing file to a '.old' file, rename the temp file to the
+					// data file, and remove the .old file if all goes well.  While it would be simpler
+					// to just remove the data file intitally, by renaming it first, we have at least
+					// some assurance that we are able to recover data if needed.
+					File oldFile = new File(file.getAbsolutePath() + ".old");
+					if (oldFile.exists() && !oldFile.delete())
+						throw new IOException("Unable to delete existing file '" + oldFile + "' in preparation for moving temp file.");
+					if (file.exists() && !file.renameTo(oldFile))
+						throw new IOException("Unable to rename existing data file '" + file + "' to '" + oldFile + "'.");
+					if (!tempFile.renameTo(file))
+						throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
+					if (oldFile.exists() && !oldFile.delete())
+						Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
+				}
+				catch (CipherException ce){
+					//This means that there is something seriously wrong with the encryption methods.
+					// Perhaps the user's platform does not support the given methods.
+					// Notify the user, and cancel the save.
+					Log.error("There was a problem related to the encryption of the data file.  Perhaps your Java implemntation does not support the required encryption methods?", ce);
+				}
+				catch (IOException ioe){
+					//This means that there was something wrong with the given file, or writing to
+					// it.  Perhaps the user does not have write access, the folder does not exist,
+					// or something similar.  Notify the user, and cancel the save.
+					Log.error("There was an IO error while saving your file.  Please ensure that the desired folder exists, and that you have write access to it.", ioe);
+				}
+				catch (DocumentSaveException dse){
+					Log.error("There was a problem saving the document.", dse);
+				}
+				catch (CloneNotSupportedException cnse){
+					Log.error("There was a problem cloning the data model, prior to saving.", cnse);
+				}
+				
+				saveMutex.release();
+			}
+		}).start();
+		
 		//Save where we last saved this file.
 		setFile(file);
 //		PrefsModel.getInstance().setLastOpenedDataFile(file);

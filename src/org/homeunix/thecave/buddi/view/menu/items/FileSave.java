@@ -8,10 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
+import org.homeunix.thecave.buddi.model.impl.ConcurrentSaveException;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.model.StandardDocument;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
@@ -39,6 +43,13 @@ public class FileSave extends MossMenuItem {
 				getFrame().updateContent();
 			}
 		}
+		catch (ConcurrentSaveException cse){
+			JOptionPane.showMessageDialog(
+					null, 
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_CONCURRENT_SAVE_EXCEPTION_TEXT),
+					TextFormatter.getTranslation(BuddiKeys.WARNING),
+					JOptionPane.WARNING_MESSAGE);
+		}		
 		catch (DocumentSaveException dse){
 			//TODO Do something less drastic here.  For debugging, we will
 			// throw a runtime exception to ensure that we catch all error

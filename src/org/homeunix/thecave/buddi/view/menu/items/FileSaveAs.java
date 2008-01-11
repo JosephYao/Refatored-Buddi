@@ -16,6 +16,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.ConcurrentSaveException;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -79,6 +80,13 @@ public class FileSaveAs extends MossMenuItem {
 			
 			((MossDocumentFrame) getFrame()).getDocument().saveAs(f);
 			getFrame().updateContent();
+		}
+		catch (ConcurrentSaveException cse){
+			JOptionPane.showMessageDialog(
+					null, 
+					TextFormatter.getTranslation(BuddiKeys.MESSAGE_CONCURRENT_SAVE_EXCEPTION_TEXT),
+					TextFormatter.getTranslation(BuddiKeys.WARNING),
+					JOptionPane.WARNING_MESSAGE);
 		}
 		catch (DocumentSaveException dse){
 			throw new RuntimeException("Error saving file: " + dse);

@@ -25,6 +25,7 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.ConcurrentSaveException;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.BackupManagerListModel;
@@ -143,6 +144,13 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 				try {
 					try {
 						document.save();
+					}
+					catch (ConcurrentSaveException cse){
+						JOptionPane.showMessageDialog(
+								null, 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_CONCURRENT_SAVE_EXCEPTION_TEXT),
+								TextFormatter.getTranslation(BuddiKeys.WARNING),
+								JOptionPane.WARNING_MESSAGE);
 					}
 					catch (DocumentSaveException dse){
 						Log.error("Error saving data file prior to restore.  Continuing with restore anyway.");

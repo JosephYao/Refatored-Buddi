@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	MESSAGE_CONCURRENT_SAVE_EXCEPTION_TEXT,
 	CANNOT_PARSE_DATE,
 	DATA_FILE_STATS_TITLE,
 	DATA_FILE_STATS,
