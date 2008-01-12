@@ -310,6 +310,7 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			return (BudgetCategory) originalToCloneMap.get(this);
 		
 		BudgetCategoryImpl b = new BudgetCategoryImpl();
+		originalToCloneMap.put(this, b);
 
 		b.document = (Document) originalToCloneMap.get(document);
 		b.expanded = expanded;
@@ -321,9 +322,13 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		b.notes = notes;
 		if (parent != null)
 			b.parent = (BudgetCategory) ((BudgetCategoryImpl) parent).clone(originalToCloneMap);
+		b.amounts = new HashMap<String, Long>();
+		if (amounts != null){
+			for (String s : amounts.keySet()) {
+				b.amounts.put(s, amounts.get(s).longValue());
+			}
+		}
 		
-		originalToCloneMap.put(this, b);
-
 		return b;
 	}
 }
