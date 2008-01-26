@@ -1,4 +1,4 @@
-3.1.2.0
+3.1.2.0 (January 25 2008)
 -Added method List<Date> getBudgetedDates() in BudgetCategory (and associated API objects).  This allows plugins to return a list of all dates for the given budget category which have a budget set to anything other than zero.
 -Added clone() method to Document.  This will do a deep clone of the document, resulting in an entirely new Document object (with all associated component objects), but with all the user defined values (names, amounts, etc) being the same.  Hidden values (UID, modified time, etc) may not be identical.  The new object and the old object are guaranteed to not be identical (newObject != oldObject) and are guaranteed not to be equal (newObject.equals(oldObject) == false). 
 -Implemented feature request #1861222 (Add shortcut / hotkeys for Create / Edit Account / Budget Category).
@@ -6,7 +6,7 @@
 -Fixed bug #1859807 (Program freezes when saving / autosaving large data files).  I now clone the data files before saving; the clone operation is much shorter than the save.
 -Fixed a bug in Moss which could result in a NPE when using SmartFileChooser
 
-3.1.1.1 (January 5 2007)
+3.1.1.1 (January 5 2008)
 -Fixed a bug which did not correctly show transaction on Jan 1 2008 as "This Year".
 -Fixed a bug which caused stack overflow exception when handling certain configurations of categories.
 -Fixed a bug which could potentially cause a Concurrent Modification Exception
