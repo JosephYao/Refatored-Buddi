@@ -404,6 +404,20 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	}
 
 	/**
+	 * Wait until any current save operations are completed.
+	 * @return
+	 * @throws InterruptedException 
+	 */
+	public void waitUntilFinishedSaving() throws InterruptedException{
+		saveMutex.acquire();
+		saveMutex.release();
+	}
+	
+	public boolean isCurrentlySaving(){
+		return saveMutex.availablePermits() == 0;
+	}
+	
+	/**
 	 * This is a simple wrapper around the saveInternal method, which adds some key functionality.
 	 * This is especially related to handling autoSave files, and will remove the autosave
 	 * file associated with this file if it exists. 
@@ -439,7 +453,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			setFlag(CHANGE_PASSWORD, false);
 		}
 		
-		new Thread(new Runnable(){
+		Thread saveThread = new Thread(new Runnable(){
 			public void run() {
 				try {
 					//Clone the file.  This is to decrease the time needed to save large files.
@@ -488,7 +502,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				
 				saveMutex.release();
 			}
-		}).start();
+		});
+		
+		saveThread.setDaemon(false);
+		saveThread.start();
 		
 		//Save where we last saved this file.
 		setFile(file);

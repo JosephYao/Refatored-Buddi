@@ -20,6 +20,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -32,6 +33,7 @@ import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.util.Log;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;
@@ -141,6 +143,17 @@ public class MainFrame extends MossDocumentFrame {
 	
 	@Override
 	public void closeWindowWithoutPrompting() {
+		//Wait until we are finished saving, if applicable
+		if (((DocumentImpl) getDocument()).isCurrentlySaving()){			
+			try {
+				((DocumentImpl) getDocument()).waitUntilFinishedSaving();
+			}
+			catch (InterruptedException ie) {
+				Log.emergency("Thread interrupted while waiting for save operation to complete.  Cancelling exit request.", ie);
+				return;
+			}
+		}
+		
 		PrefsModel.getInstance().putWindowSize(this.getDocument().getFile() + "", this.getSize());
 		PrefsModel.getInstance().putWindowLocation(this.getDocument().getFile() + "", this.getLocation());
 		PrefsModel.getInstance().save();
