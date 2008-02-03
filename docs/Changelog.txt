@@ -1,6 +1,6 @@
 3.1.3.0 (February 3 2008)
 -Added a check for background saves when quitting - if you try to quit when a background save thread is running, we block until the save is completed.  Normally this will be within a second or two at most, but for large (> 100,000 transactions) it can be substantially longer.
--Added an 'Uninstall from Registry' script for the Windows installer.  This script will remove associations between Buddi and data files, translations, and plugins.  You will still need to manually delete the rest of the program files, preferences, etc. 
+-(Windows Installer Only) Added an 'Uninstall from Registry' script for the Windows installer.  This script will remove associations between Buddi and data files, translations, and plugins.  You will still need to manually delete the rest of the program files, preferences, etc. 
 
 3.1.2.0 (January 25 2008)
 -Added method List<Date> getBudgetedDates() in BudgetCategory (and associated API objects).  This allows plugins to return a list of all dates for the given budget category which have a budget set to anything other than zero.
