@@ -14,6 +14,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -314,6 +316,18 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		final Icon expanded = UIManager.getIcon("Tree.expandedIcon");
 		final JLabel searchCheck = new JLabel(PrefsModel.getInstance().isSearchPaneVisible() ? expanded : collapsed);
 		searchCheck.setVerticalAlignment(JLabel.TOP);
+		//Disable the Enter key for the search field
+		searchField.addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+		        if (e.getKeyCode() == KeyEvent.VK_ENTER){
+		        	e.consume();
+					return;
+		        }
+		        else
+		        	super.keyPressed(e);
+			}
+		});
 		searchCheck.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				if (searchCheck.getIcon().equals(expanded))

@@ -1,3 +1,7 @@
+3.1.3.1 (February 16 2008)
+-Updated the Russian translation for 3.0 (Thanks to Michael Krekin for this)
+-Fixed bug #1888523 (Thanks to Bryan Larson for submitting the patch for this)
+
 3.1.3.0 (February 3 2008)
 -Added a check for background saves when quitting - if you try to quit when a background save thread is running, we block until the save is completed.  Normally this will be within a second or two at most, but for large (> 100,000 transactions) it can be substantially longer.
 -(Windows Installer Only) Added an 'Uninstall from Registry' script for the Windows installer.  This script will remove associations between Buddi and data files, translations, and plugins.  You will still need to manually delete the rest of the program files, preferences, etc. 
