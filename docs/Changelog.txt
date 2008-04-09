@@ -1,3 +1,6 @@
+3.1.3.4 (April 9 2008)
+-Updated Swedish translation for 3.0 (Thanks to Gustav Stenberg for this)
+
 3.1.3.3 (March 8 2008)
 -Fixed bug #1890746 (Thanks to Bryan Larson and group for this fix)
 
