@@ -735,6 +735,9 @@ public class Buddi {
 
 						versions.load(is);
 
+						if (versions.get(Const.BRANCH) == null)
+							return getVersion();
+
 						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
 						Version thisVersion = getVersion();
 
