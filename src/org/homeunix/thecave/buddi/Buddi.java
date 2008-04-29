@@ -678,6 +678,15 @@ public class Buddi {
 				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
 			PrefsModel.getInstance().updateVersion();
 
+			JOptionPane.showMessageDialog(frame, 
+					"This version introduced a change to the encryption algorithm.  While\n" +
+					"you can still open data files from earlier versions of Buddi, if you\n" +
+					"save any changes, you may not be able to open them in earlier versions.\n" +
+					"It is recommended that you save a backup copy of your data files, in case\n" +
+					"you need to revert to an older version.", 
+					"WARNING - Encryption Format Change", 
+					JOptionPane.WARNING_MESSAGE);
+			
 			String[] buttons = new String[2];
 			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);
 			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NOT_NOW);
