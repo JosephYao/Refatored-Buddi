@@ -1,3 +1,7 @@
+3.2.0.0
+-This is the first minor stable release since the 3.0 branch.  It includes some incremental improvements over the 3.0 branch, including better performance, improved UI and HCI, and some bug fixes.  
+-For now, I am combining the Development and Stable branches into this 3.2 branch.  The reason for this is because the majority of my large / disruptive plans for Buddi are already implemented, and there is currently no point in maintaining two separate revisions.  If, in the future, I see a need to make some major changes, I will branch out a new Development version. 
+
 3.1.4.1 (May 6 2008)
 -Fixed misc. bug updating combo box, as found in a crash report
 -Fixed bug #1959755 (Add report flag to specify report loction)
