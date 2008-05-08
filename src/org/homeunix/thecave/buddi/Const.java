@@ -56,6 +56,9 @@ public class Const {
 	//Preference file constants
 	public static final String PREFERENCE_FILE_NAME = "Buddi3_Prefs.xml"; 
 		
+	//Report constants
+	public static final String REPORT_FOLDER = "Reports";
+	
 	//Plugin Constants
 	public static final String PLUGIN_FOLDER = "Plugins";
 	public static final String PLUGIN_EXTENSION = ".buddi3plugin";

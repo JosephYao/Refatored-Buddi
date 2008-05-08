@@ -1,5 +1,7 @@
-3.1.4.1
+3.1.4.1 (May 6 2008)
 -Fixed misc. bug updating combo box, as found in a crash report
+-Fixed bug #1959755 (Add report flag to specify report loction)
+-Fixed bug #1959751 (Add space after amount with trailing currency symbol) 
 
 3.1.4.0 (April 25 2008)
 -Changed Moss to improve encryption / decryption across platforms.  In particular, this should fix the problem with Leopard upgrades not being able to open the data files.  ***IMPORTANT*** While you can open files created before this version, you may not be able to open files created with this version (or later) with previous versions of Buddi.  Please make a backup of your data file before saving your files in this.

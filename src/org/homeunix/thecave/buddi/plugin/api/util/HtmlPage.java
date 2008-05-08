@@ -13,9 +13,9 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.moss.util.FileFunctions;
 import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 /**
  * A small class which defines an HTML page.  There are two parts to this: the HTML text,
@@ -59,22 +59,17 @@ public class HtmlPage {
 	public File createHTML(String name){
 		final int countMax = 100;
 
-		File dataFolder = OperatingSystemUtil.getUserFolder("Buddi");
+		File dataFolder = Buddi.getReportsFolder();
 		File htmlFolder = null;
 		int counter = 0;
 
-//		if (dataFolder) {
-//			Log.warning("Cannot load dataFolder from Preferences; trying working directory.");
-//			dataFolder = new File(Buddi.getWorkingDir());
-//		}
-
 		//Do some sanity checks, logging results
 		if (dataFolder == null)
-			Log.error("Data folder is null (APICommonHTMLHelper.createHTML()).");
+			Log.error("Data folder is null (HtmlPage.createHTML()).");
 		if (html == null)
-			Log.error("HTML is null (APICommonHTMLHelper.createHTML()).");
+			Log.error("HTML is null (HtmlPage.createHTML()).");
 		if (name == null)
-			Log.error("Name is null (APICommonHTMLHelper.createHTML()).");
+			Log.error("Name is null (HtmlPage.createHTML()).");
 
 		//Get a unique folder name which has not yet been used.
 		while (counter < countMax && (htmlFolder == null || htmlFolder.exists())){
@@ -93,7 +88,7 @@ public class HtmlPage {
 		}
 
 		//Try to create a folder.  If this doesn't work, we return with an error.
-		if (!htmlFolder.mkdir()){
+		if (!htmlFolder.mkdirs()){
 			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Please check that you have write permission on this folder and its sub folders.");
 			return null;
 		}

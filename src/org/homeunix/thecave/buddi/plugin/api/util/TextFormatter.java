@@ -176,7 +176,7 @@ public class TextFormatter {
 			sb.append(PrefsModel.getInstance().getCurrencySign());
 		sb.append(Formatter.getDecimalFormat().format((double) value / 100.0));  
 		if (symbolAfterAmount)
-			sb.append(PrefsModel.getInstance().getCurrencySign());
+			sb.append(" ").append(PrefsModel.getInstance().getCurrencySign());
 		if (isRed)
 			sb.append("</font>");
 	}

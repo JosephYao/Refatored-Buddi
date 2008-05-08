@@ -93,6 +93,7 @@ public class Buddi {
 //	private static String userDir;
 	private static String pluginsFolder;
 	private static String languagesFolder;
+	private static String reportsFolder;
 	private static List<File> filesToLoad;
 	private static Boolean noAutoSave = false;
 	private static Boolean debian = false;
@@ -191,6 +192,12 @@ public class Buddi {
 			pluginsFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.PLUGIN_FOLDER;
 		return new File(pluginsFolder);
 	}
+	
+	public static File getReportsFolder(){
+		if (reportsFolder == null)
+			reportsFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.REPORT_FOLDER;
+		return new File(reportsFolder);
+	}	
 
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
@@ -525,6 +532,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
+		variables.add(new ParseVariable("--reports", String.class, false));
 		
 		variables.add(new ParseVariable("--font", String.class, false));
 		
@@ -608,7 +616,7 @@ public class Buddi {
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		genericUnix = results.getBoolean("--unix");
-		
+		reportsFolder = results.getString("--reports");
 		
 
 		filesToLoad = new LinkedList<File>();
