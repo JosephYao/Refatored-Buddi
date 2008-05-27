@@ -47,14 +47,18 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 		
 		for (ImmutableBudgetCategory c : cats) {
 			totalExpenses += categories.get(c);
-			if (categories.get(c) > 0)
-				pieData.setValue(TextFormatter.getTranslation(c.toString()), (double) categories.get(c));
 		}
+		
+		for (ImmutableBudgetCategory c : cats) {
+			if (categories.get(c) > 0)
+				pieData.setValue(TextFormatter.getTranslation(c.toString()) + "!!!" + ((10000 * categories.get(c)) / totalExpenses) / 100.0, (double) categories.get(c));
+		}
+
 				
 		JFreeChart chart = ChartFactory.createPieChart(
 				"",
 				pieData,             // data
-				true,               // include legend
+				false,               // include legend
 				true,
 				false
 		);
