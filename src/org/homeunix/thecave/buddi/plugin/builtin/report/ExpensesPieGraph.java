@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,7 +39,7 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 	public HtmlPage getReport(ImmutableDocument model, MossDocumentFrame frame, Date startDate, Date endDate) {
 		DefaultPieDataset pieData = new DefaultPieDataset();
 		
-		Map<ImmutableBudgetCategory, Long> categories = getExpensesBetween(model, startDate, endDate);
+		final Map<ImmutableBudgetCategory, Long> categories = getExpensesBetween(model, startDate, endDate);
 		
 		List<ImmutableBudgetCategory> cats = new LinkedList<ImmutableBudgetCategory>(categories.keySet());
 		Collections.sort(cats);
@@ -49,16 +50,23 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 			totalExpenses += categories.get(c);
 		}
 		
+		Collections.sort(cats, new Comparator<ImmutableBudgetCategory>(){
+			public int compare(ImmutableBudgetCategory o1,
+					ImmutableBudgetCategory o2) {
+				return categories.get(o1).compareTo(categories.get(o2));
+			}
+		});
+		
 		for (ImmutableBudgetCategory c : cats) {
 			if (categories.get(c) > 0)
-				pieData.setValue(TextFormatter.getTranslation(c.toString()) + "!!!" + ((10000 * categories.get(c)) / totalExpenses) / 100.0, (double) categories.get(c));
+				pieData.setValue(TextFormatter.getTranslation(c.toString()) + " (" + ((10000 * categories.get(c)) / totalExpenses) / 100.0 + "%)", (double) categories.get(c));
 		}
 
 				
 		JFreeChart chart = ChartFactory.createPieChart(
 				"",
 				pieData,             // data
-				false,               // include legend
+				true,               // include legend
 				true,
 				false
 		);

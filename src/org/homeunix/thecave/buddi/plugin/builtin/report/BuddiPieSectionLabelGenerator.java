@@ -19,8 +19,6 @@ public class BuddiPieSectionLabelGenerator extends StandardPieSectionLabelGenera
 	
 	@SuppressWarnings("unchecked")
 	public String generateSectionLabel(PieDataset arg0, Comparable arg1) {
-		String value = TextFormatter.getFormattedCurrency(arg0.getValue(arg1).longValue(), false, false);
-		String[] description = super.generateSectionLabel(arg0, arg1).split("!!!");
-		return description[0] + ": "+ value + (description.length > 1 ? " (" + description[1] + "%)" : "");
+		return super.generateSectionLabel(arg0, arg1) + ": " + TextFormatter.getFormattedCurrency(arg0.getValue(arg1).longValue(), false, false);
 	}
 }
