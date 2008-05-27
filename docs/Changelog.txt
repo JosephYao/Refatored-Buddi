@@ -1,5 +1,7 @@
 3.2.1.0 
 -Added ability to customize the CSS for reports.  If the files 'screen.css' and 'print.css' exist in the Buddi data folder (~/Library/Application Support/Buddi on a Mac, C:\Documents and Settings\<User Name>\Application Data\Buddi on Windows, ~/.buddi on Unix), then we use those files instead of the default ones.
+-Implemented feature request #1971340 (Add percentage to pie graph reports)
+-Implemented feature request #1973890 (Add shortcut to reconcile / clear, and advance to next transaction)
 
 3.2.0.1 (May 14 2008)
 -Removed 'Import Test Data' plugin - this iwas for a very particular test, and does not apply to most users.

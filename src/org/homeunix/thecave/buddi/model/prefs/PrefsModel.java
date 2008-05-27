@@ -599,5 +599,12 @@ public class PrefsModel {
 	public void setSearchText(String searchText) {
 		prefsModel.setSearchText(searchText);
 	}
+	
+	public int getLastDeleteOption() {
+		return prefsModel.getLastDeleteOption();
+	}
+	public void setLastDeleteOption(int lastDeleteOption) {
+		prefsModel.setLastDeleteOption(lastDeleteOption);
+	}
 }
 

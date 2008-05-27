@@ -81,6 +81,9 @@ public class PrefsModelBean {
 	private String clearedFilter;
 	private String reconciledFilter;
 	
+	//Maintain option state
+	private int lastDeleteOption = 0;
+	
 	//Define the max / min number of budget columns visible (not currently used)
 	private int MIN_BUDGET_COLUMNS = 2;
 	private int MAX_BUDGET_COLUMNS = 13;
@@ -413,5 +416,12 @@ public class PrefsModelBean {
 
 	public void setSearchText(String searchText) {
 		this.searchText = searchText;
+	}
+	
+	public int getLastDeleteOption() {
+		return lastDeleteOption;
+	}
+	public void setLastDeleteOption(int lastDeleteOption) {
+		this.lastDeleteOption = lastDeleteOption;
 	}
 }

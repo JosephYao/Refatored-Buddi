@@ -7,6 +7,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
+import org.homeunix.thecave.buddi.view.menu.items.EditClearAndAdvanceTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditClearTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditCopyBudgetCategoryValuesToNext;
 import org.homeunix.thecave.buddi.view.menu.items.EditCopyBudgetCategoryValuesToPrevious;
@@ -22,6 +23,7 @@ import org.homeunix.thecave.buddi.view.menu.items.EditModifyBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditNewBudgetCategory;
 import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
+import org.homeunix.thecave.buddi.view.menu.items.EditReconcileAndAdvanceTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditRecordTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteBudgetCategory;
@@ -82,6 +84,12 @@ public class EditMenu extends MossMenu {
 			this.add(new EditRecordTransaction(frame));
 			this.add(new EditClearTransaction(frame));
 			this.add(new EditDeleteTransaction(frame));
+			if (PrefsModel.getInstance().isShowReconciled() || PrefsModel.getInstance().isShowCleared())
+				this.addSeparator();
+			if (PrefsModel.getInstance().isShowReconciled())
+				this.add(new EditReconcileAndAdvanceTransaction(frame));
+			if (PrefsModel.getInstance().isShowCleared())
+				this.add(new EditClearAndAdvanceTransaction(frame));			
 			if (!OperatingSystemUtil.isMac()){
 				this.addSeparator();
 				this.add(new EditPreferences(frame));

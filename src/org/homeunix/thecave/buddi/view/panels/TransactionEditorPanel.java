@@ -377,13 +377,29 @@ public class TransactionEditorPanel extends MossPanel {
 
 		reconciled.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				TransactionEditorPanel.this.setChanged(true);
+//				TransactionEditorPanel.this.setChanged(true);
+				if (transaction != null){
+					try{
+						TransactionEditorPanel.this.getTransactionUpdated();
+					}
+					catch (InvalidValueException ive){
+						Log.warning("Invalid value while reconciling transaction: ", ive);
+					}
+				}
 			}
 		});
 
 		cleared.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				TransactionEditorPanel.this.setChanged(true);
+//				TransactionEditorPanel.this.setChanged(true);
+				if (transaction != null){
+					try{
+						TransactionEditorPanel.this.getTransactionUpdated();
+					}
+					catch (InvalidValueException ive){
+						Log.warning("Invalid value while clearing transaction: ", ive);
+					}
+				}
 			}
 		});
 
@@ -501,6 +517,14 @@ public class TransactionEditorPanel extends MossPanel {
 			}
 		}
 		return transaction;
+	}
+	
+	public void toggleCleared(){
+		cleared.doClick();
+	}
+	
+	public void toggleReconciled(){
+		reconciled.doClick();
 	}
 
 	public Transaction getTransaction(){

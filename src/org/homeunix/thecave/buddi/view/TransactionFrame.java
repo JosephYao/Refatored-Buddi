@@ -1030,10 +1030,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 						JOptionPane.QUESTION_MESSAGE,
 						null,
 						options,
-						options[0]);
+						options[PrefsModel.getInstance().getLastDeleteOption()]);
 
 				//No means to Delete
 				if (deleteVoid == JOptionPane.NO_OPTION){
+					PrefsModel.getInstance().setLastDeleteOption(1);
 					options = new String[2];
 					options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_YES);
 					options[1] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_NO);
@@ -1079,6 +1080,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 				//Yes is to Void.
 				else if (deleteVoid == JOptionPane.YES_OPTION){
+					PrefsModel.getInstance().setLastDeleteOption(0);
 					if (list.getSelectedValue() instanceof Transaction){
 						Transaction t = (Transaction) list.getSelectedValue();
 						try {
@@ -1099,6 +1101,21 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 	public void doClickRecord(){
 		recordButton.doClick();
+	}
+
+	public void doClickClearAndAdvance(){
+		transactionEditor.toggleCleared();
+		advanceList();
+	}	
+	
+	public void doClickReconcileAndAdvance(){
+		transactionEditor.toggleReconciled();
+		advanceList();
+	}
+	
+	private void advanceList(){
+		int newIndex = Math.min(list.getSelectedIndex() + 1, list.getModel().getSize() - 1);
+		list.setSelectedIndex(newIndex);
 	}
 
 	public void doClickClear(){
