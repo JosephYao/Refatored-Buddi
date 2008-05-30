@@ -22,7 +22,7 @@ public class EditReconcileAndAdvanceTransaction extends MossMenuItem {
 		super(frame, PrefsModel.getInstance().getTranslator().get(MenuKeys.MENU_EDIT_RECONCILE_AND_ADVANCE),
 				KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_MASK));
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		((TransactionFrame) getFrame()).doClickReconcileAndAdvance();
