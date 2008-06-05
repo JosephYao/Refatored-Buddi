@@ -28,7 +28,7 @@ public class HelpTutorial extends MossMenuItem {
 			bl.openURLinBrowser(
 					Const.PROJECT_URL 
 					+ PrefsModel.getInstance().getLanguage().replaceAll("-.*$", "") 
-					+ "quickstart_intro.php");
+					+ "quickstart_intro.jsp");
 		}
 		catch (Exception ex){
 			Log.error(ex);
