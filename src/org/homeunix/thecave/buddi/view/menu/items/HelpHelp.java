@@ -28,7 +28,7 @@ public class HelpHelp extends MossMenuItem {
 			bl.openURLinBrowser(
 					Const.PROJECT_URL 
 					+ PrefsModel.getInstance().getLanguage().replaceAll("-.*$", "") 
-					+ "index.php");
+					+ "index.jsp");
 		}
 		catch (Exception ex){
 			Log.error(ex);
