@@ -31,7 +31,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	private final JComboBox transactionCellRenderer;
 	private final JComboBox autosavePeriod;
 	private final JCheckBox showPromptForDataFile;
-	private final JCheckBox sendCrashReport;
+//	private final JCheckBox sendCrashReport;
 	private final JCheckBox showUpdateNotifications;
 	private final JCheckBox hideNegativeSign;
 	
@@ -42,7 +42,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
 		autosavePeriod = new JComboBox(new Integer[]{15, 30, 60, 120, 300});
 		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP));
-		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
+//		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
 		showUpdateNotifications = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENABLE_UPDATE_NOTIFICATIONS));
 		hideNegativeSign = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_HIDE_NEGATIVE_SIGNS));
 	}
@@ -94,7 +94,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		JPanel editTypesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel promptForDataFilePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel checkForUpdatesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+//		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel hideNegativePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel transactionCellRendererPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
@@ -116,7 +116,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		
 		promptForDataFilePanel.add(showPromptForDataFile);
 		checkForUpdatesPanel.add(showUpdateNotifications);
-		sendCrashReportPanel.add(sendCrashReport);
+//		sendCrashReportPanel.add(sendCrashReport);
 		
 		hideNegativePanel.add(hideNegativeSign);
 				
@@ -129,7 +129,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		panel.add(promptForDataFilePanel);
 		panel.add(hideNegativePanel);
 		panel.add(checkForUpdatesPanel);
-		panel.add(sendCrashReportPanel);
+//		panel.add(sendCrashReportPanel);
 		
 		return panel;
 	}
@@ -149,7 +149,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		numberOfBackups.setSelectedItem(PrefsModel.getInstance().getNumberOfBackups());
 		showPromptForDataFile.setSelected(PrefsModel.getInstance().isShowPromptAtStartup());
 		showUpdateNotifications.setSelected(PrefsModel.getInstance().isShowUpdateNotifications());
-		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());
+//		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());
 		hideNegativeSign.setSelected(PrefsModel.getInstance().isDontShowNegativeSign());
 	}
 
@@ -159,7 +159,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		PrefsModel.getInstance().setNumberOfBackups((Integer) numberOfBackups.getSelectedItem());
 		PrefsModel.getInstance().setShowPromptAtStartup(showPromptForDataFile.isSelected());
 		PrefsModel.getInstance().setShowUpdateNotifications(showUpdateNotifications.isSelected());
-		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
+//		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
 		PrefsModel.getInstance().setShowNegativeSign(hideNegativeSign.isSelected());
 		
 		return false;

@@ -3,13 +3,10 @@
  */
 package org.homeunix.thecave.buddi;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,7 +16,6 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -868,74 +864,74 @@ public class Buddi {
 	}
 
 	public static void sendBugReport(Document... models){
-		StringBuilder crashLog = new StringBuilder();
-		crashLog.append("\n---Starting Preferences---\n");
-		crashLog.append(PrefsModel.getInstance().saveToString());
-		crashLog.append("---Finished Preferences---\n\n");
-
-		if (models != null){
-			for (Document m : models) {
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				try {
-					m.saveToStream(baos);
-
-					crashLog.append("---Starting Data File---\n");
-					crashLog.append(baos.toString());
-					crashLog.append("---Finished Data File---\n\n");
-				}
-				catch (DocumentSaveException dse){
-					crashLog.append("---Starting Data File---\n");
-					crashLog.append("Error: Could not save to stream:");
-					crashLog.append(dse.getMessage());
-					crashLog.append("---Finished Data File---\n\n");					
-				}
-			}
-		}
-
-		if (logFile != null){
-			try{
-				BufferedReader logReader = new BufferedReader(new FileReader(logFile));
-				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
-				String temp;
-				while ((temp = logReader.readLine()) != null)
-					crashLog.append(temp).append("\n");
-				crashLog.append("---Finished Log File---\n");
-			}
-			catch (IOException ioe){}
-		}
-
-
-		if (PrefsModel.getInstance().isSendCrashReports()){
-			try {
-				BrowserLauncher bl = new BrowserLauncher();
-				bl.openURLinBrowser("mailto:wyatt.olson@gmail.com?subject=" 
-						+ URLEncoder.encode("Buddi Crash Report", "UTF-8").replaceAll("\\+", "%20") 
-						+ "&body="
-						+ URLEncoder.encode(
-								"There has been a serious problem encountered in Buddi, " +
-								"and Buddi has closed.  It is recommended that you send a " +
-								"crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) " +
-								"to help him troubleshoot the problem.  The following components may " +
-								"be included in the crash report:\n\t-Contents of your Preferences " +
-								"file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi " +
-								"log file\n\nThese components are included as text in the body below, " +
-								"clearly marked between tags such as '---Starting Preferences---' " +
-								"and '---Finished Preferences---'.  If for privacy or other reasons you" +
-								" wish to remove one or more of these components, feel free to do so." +
-								"\n\nIf you use a different mail program (such as a Web based email " +
-								"program), plese copy the entire contents of this email to that program, " +
-								"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
-								"all, simply close this window.  You can disable sending future crash " + 
-								"reports in Buddi's Preferences.\n\n\n"
-								+ crashLog.toString()
-
-								, 
-						"UTF-8").replaceAll("\\+", "%20"));
-			}
-			catch (Exception e){
-				Log.emergency("Unable to send crash email.");
-			}
-		}
+//		StringBuilder crashLog = new StringBuilder();
+//		crashLog.append("\n---Starting Preferences---\n");
+//		crashLog.append(PrefsModel.getInstance().saveToString());
+//		crashLog.append("---Finished Preferences---\n\n");
+//
+//		if (models != null){
+//			for (Document m : models) {
+//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//				try {
+//					m.saveToStream(baos);
+//
+//					crashLog.append("---Starting Data File---\n");
+//					crashLog.append(baos.toString());
+//					crashLog.append("---Finished Data File---\n\n");
+//				}
+//				catch (DocumentSaveException dse){
+//					crashLog.append("---Starting Data File---\n");
+//					crashLog.append("Error: Could not save to stream:");
+//					crashLog.append(dse.getMessage());
+//					crashLog.append("---Finished Data File---\n\n");					
+//				}
+//			}
+//		}
+//
+//		if (logFile != null){
+//			try{
+//				BufferedReader logReader = new BufferedReader(new FileReader(logFile));
+//				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
+//				String temp;
+//				while ((temp = logReader.readLine()) != null)
+//					crashLog.append(temp).append("\n");
+//				crashLog.append("---Finished Log File---\n");
+//			}
+//			catch (IOException ioe){}
+//		}
+//
+//
+//		if (PrefsModel.getInstance().isSendCrashReports()){
+//			try {
+//				BrowserLauncher bl = new BrowserLauncher();
+//				bl.openURLinBrowser("mailto:wyatt.olson@gmail.com?subject=" 
+//						+ URLEncoder.encode("Buddi Crash Report", "UTF-8").replaceAll("\\+", "%20") 
+//						+ "&body="
+//						+ URLEncoder.encode(
+//								"There has been a serious problem encountered in Buddi, " +
+//								"and Buddi has closed.  It is recommended that you send a " +
+//								"crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) " +
+//								"to help him troubleshoot the problem.  The following components may " +
+//								"be included in the crash report:\n\t-Contents of your Preferences " +
+//								"file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi " +
+//								"log file\n\nThese components are included as text in the body below, " +
+//								"clearly marked between tags such as '---Starting Preferences---' " +
+//								"and '---Finished Preferences---'.  If for privacy or other reasons you" +
+//								" wish to remove one or more of these components, feel free to do so." +
+//								"\n\nIf you use a different mail program (such as a Web based email " +
+//								"program), plese copy the entire contents of this email to that program, " +
+//								"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
+//								"all, simply close this window.  You can disable sending future crash " + 
+//								"reports in Buddi's Preferences.\n\n\n"
+//								+ crashLog.toString()
+//
+//								, 
+//						"UTF-8").replaceAll("\\+", "%20"));
+//			}
+//			catch (Exception e){
+//				Log.emergency("Unable to send crash email.");
+//			}
+//		}
 
 //		Log.critical(crashLog.toString());
 	}
