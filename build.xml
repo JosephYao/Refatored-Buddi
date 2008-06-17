@@ -368,7 +368,7 @@
 		<move file="${BUILD}/${FULL_NAME}.jar" tofile="${BUILD}/${FULL_NAME}-${VERSION}.jar"/>
 	</target>
 
-	<target name="release"  depends="ftp" description="Uploads the project, etc to correct servers.  Only the project admin should use this.">
+	<target name="release" depends="all" description="Builds all targets architectures, and tags the project version in SVN">
 		<path id="SVNANT_CLASSPATH">
 			<fileset dir="${SVNANT_PATH}">
 				<include name="**/*.jar"/>
@@ -381,17 +381,7 @@
 		</svn>				
 	</target>
 	
-	<target name="ftp" depends="all" description="Uploads all the build files to an FTP account">
-		<ftp server="${FTP_HOST}" 
-				userid="${FTP_USER}"
-				password="${FTP_PASSWORD}" 
-				remotedir="${FTP_DIRECTORY}"
-				action="put">
-			<fileset dir="${BUILD}"/>
-		</ftp>		
-	</target>
-	
-	<target name="jar" depends="clean,compile" description="Creatse a single 'fat' jar, containing all jars in the lib directory.">		
+	<target name="jar" depends="clean,compile" description="Creates a single 'fat' jar, containing all jars in the lib directory.">		
 		<mkdir dir="${BUILD}/tmp"/>
 		<unzip dest="${BUILD}/tmp">
 			<fileset dir="${LIB}">

@@ -2,20 +2,9 @@
 #  modify the paths as needed to reflect your project.
 ########################
 
-#Web configuration for uploading to the web site
-WEB_USER=web
-WEB_HOST=www.example.com
-WEB_ROOT=/var/www
-
 #SSH Configuration
 SSH_KEY=/home/user/.ssh/id_dsa
 SSH_KEY_PASSPHRASE=password
-
-#FTP Configuration
-FTP_HOST=upload.sourceforge.net
-FTP_USER=anonymous
-FTP_PASSWORD=password
-FTP_DIRECTORY=/incoming
 
 #SVN Configuration
 SVN_USER=johnsmith
