@@ -6,7 +6,7 @@
 -Removed crash notification - for months, the only crashes I have seen reported are either a) out of my control (in a third party library), or b) due to a known multi-threading issue which I am working on.  Will re-enable this if I branch to Development again.
 
 3.2.0.1 (May 14 2008)
--Removed 'Import Test Data' plugin - this iwas for a very particular test, and does not apply to most users.
+-Removed 'Import Test Data' plugin - this was for a very particular test, and does not apply to most users.
 
 3.2.0.0 (May 12 2008)
 -This is the first minor stable release since the 3.0 branch.  It includes some incremental improvements over the 3.0 branch, including better performance, improved UI and HCI, and some bug fixes.  
