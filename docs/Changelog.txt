@@ -1,3 +1,6 @@
+3.2.1.1. (June 19 2008)
+-Fixed a bug with the new CSS features, which did not properly include the .css in the .jar file.
+
 3.2.1.0 (June 17 2008) 
 -Added ability to customize the CSS for reports.  If the files 'screen.css' and 'print.css' exist in the Buddi data folder (~/Library/Application Support/Buddi on a Mac, C:\Documents and Settings\<User Name>\Application Data\Buddi on Windows, ~/.buddi on Unix), then we use those files instead of the default ones.
 -Implemented feature request #1971340 (Add percentage to pie graph reports)

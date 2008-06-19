@@ -398,6 +398,7 @@
 			<fileset dir="${BUILD}/tmp" includes="**/*"/>
 			<fileset dir="${ETC}">
 				<include name="Languages/*"/>
+				<include name="css/*"/>
 			</fileset>
 			<fileset dir="${ROOT}">
 				<include name="version.txt"/>

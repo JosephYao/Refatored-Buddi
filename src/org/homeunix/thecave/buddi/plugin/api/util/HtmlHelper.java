@@ -182,7 +182,7 @@ public class HtmlHelper {
 	}
 	
 	private static void includeCss(String cssName, StringBuilder sb){
-		InputStream is = HtmlHelper.class.getResourceAsStream(cssName);
+		InputStream is = HtmlHelper.class.getResourceAsStream("/css/" + cssName);
 		File css = OperatingSystemUtil.getUserFile("Buddi", cssName);
 		if (css.exists()){
 			try {
