@@ -1,3 +1,6 @@
+3.2.1.2
+-Fixed a bug which would sometimes delete the wrong transaction in a list (thanks to Ravenpolaris for noticing this) 
+
 3.2.1.1. (June 19 2008)
 -Fixed a bug with the new CSS features, which did not properly include the .css in the .jar file.
 

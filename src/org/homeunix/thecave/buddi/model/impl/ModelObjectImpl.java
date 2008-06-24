@@ -62,6 +62,11 @@ public abstract class ModelObjectImpl implements ModelObject {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return this.getUid().hashCode();
+	}
+	
 	public int compareTo(ModelObject o) {
 		return (getUid().compareTo(o.getUid()));
 	}
