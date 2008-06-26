@@ -606,5 +606,12 @@ public class PrefsModel {
 	public void setLastDeleteOption(int lastDeleteOption) {
 		prefsModel.setLastDeleteOption(lastDeleteOption);
 	}
+	
+	public String getAvailableVersion() {
+		return prefsModel.getAvailableVersion();
+	}
+	public void setAvailableVersion(String availableVersion) {
+		prefsModel.setAvailableVersion(availableVersion);
+	}	
 }
 

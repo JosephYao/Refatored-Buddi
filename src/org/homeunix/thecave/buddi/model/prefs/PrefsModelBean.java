@@ -36,6 +36,7 @@ public class PrefsModelBean {
 	
 	//State
 	private String lastVersion;
+	private String availableVersion;
 	
 	//Locale
 	private String language;
@@ -423,5 +424,12 @@ public class PrefsModelBean {
 	}
 	public void setLastDeleteOption(int lastDeleteOption) {
 		this.lastDeleteOption = lastDeleteOption;
+	}
+	
+	public String getAvailableVersion() {
+		return availableVersion;
+	}
+	public void setAvailableVersion(String availableVersion) {
+		this.availableVersion = availableVersion;
 	}
 }

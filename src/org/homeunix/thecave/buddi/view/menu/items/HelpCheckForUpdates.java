@@ -19,6 +19,6 @@ public class HelpCheckForUpdates extends MossMenuItem {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Buddi.startUpdateCheck(getFrame(), true);
+		Buddi.doUpdateCheck(getFrame());
 	}
 }

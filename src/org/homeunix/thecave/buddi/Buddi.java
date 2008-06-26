@@ -119,7 +119,7 @@ public class Buddi {
 			genericUnix = false;
 		return genericUnix;
 	}
-	
+
 	/** 
 	 * @return True if running on Slackware, false otherwise.  This is 
 	 * obtained through the startup flag --slackware, so it can be 
@@ -133,7 +133,7 @@ public class Buddi {
 			slackware = false;
 		return slackware;
 	}
-	
+
 	/**
 	 * @return True if running from a Windows Installer installed .exe, false
 	 * otherwise.  This is obtained through the startup flag --windows-installer, so it can be 
@@ -176,7 +176,7 @@ public class Buddi {
 			debian = false;
 		return debian;
 	}
-	
+
 	private static boolean isAutoSave(){
 		if (noAutoSave == null)
 			noAutoSave = false;
@@ -188,7 +188,7 @@ public class Buddi {
 			pluginsFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.PLUGIN_FOLDER;
 		return new File(pluginsFolder);
 	}
-	
+
 	public static File getReportsFolder(){
 		if (reportsFolder == null)
 			reportsFolder = OperatingSystemUtil.getUserFolder("Buddi") + File.separator + Const.REPORT_FOLDER;
@@ -218,6 +218,69 @@ public class Buddi {
 			}
 		}
 
+		//If we have found a new version last time, we prompt for it now.
+		if (PrefsModel.getInstance().getAvailableVersion() != null){
+			Version availableVersion = new Version(PrefsModel.getInstance().getAvailableVersion());
+			Version thisVersion = getVersion();
+
+			if (thisVersion.compareTo(availableVersion) < 0){
+				String[] buttons = new String[2];
+				buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+				buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+
+				int reply = JOptionPane.showOptionDialog(
+						null,
+						TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
+						+ " " + PrefsModel.getInstance().getAvailableVersion() + "\n"
+						+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
+						TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE,
+						null,
+						buttons,
+						buttons[0]);
+
+				if (reply == JOptionPane.YES_OPTION){
+					String fileLocation;
+					if (Const.BRANCH.equals(Const.STABLE))
+						fileLocation = Const.DOWNLOAD_URL_STABLE;
+					else
+						fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+
+					//Link to the correct download by default.
+					if (OperatingSystemUtil.isMac())
+						fileLocation += Const.DOWNLOAD_TYPE_OSX;
+					else if (OperatingSystemUtil.isWindows()){
+						if (isWindowsInstaller())
+							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
+						else
+							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+					}
+					else {
+						//Check for any specific distributions here
+						if (Buddi.isDebian())
+							fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
+						else if (Buddi.isSlackware())
+							fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+						else if (Buddi.isRedhat())
+							fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
+						else if (Buddi.isUnix())
+							fileLocation += Const.DOWNLOAD_TYPE_UNIX;
+						else
+							fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
+					}
+
+					try{
+						BrowserLauncher bl = new BrowserLauncher(null);
+						bl.openURLinBrowser(fileLocation);
+					}
+					catch (Exception e){
+						Log.error(e);
+					}
+				}
+			}
+		}
+
 		//If we have specified that we want to prompt for a data file at startup,
 		// do so (assuming that we have not already opened one from the command
 		// line, or Mac Application listeners.
@@ -225,7 +288,7 @@ public class Buddi {
 				&& ApplicationModel.getInstance().getOpenFrames().size() == 0){
 			new FileOpen(null).doClick();
 		}
-		
+
 		//Handle opening the last user file, if available.
 		if (PrefsModel.getInstance().getLastDataFiles() != null
 				&& ApplicationModel.getInstance().getOpenFrames().size() == 0) {
@@ -264,7 +327,7 @@ public class Buddi {
 
 		//Start the background startup tasks... 
 		startVersionCheck(mainFrame);
-		startUpdateCheck(mainFrame, false);
+		startUpdateCheck(mainFrame);
 
 
 		//Start the auto save timer
@@ -302,7 +365,7 @@ public class Buddi {
 			PrefsModel.getInstance().getAutosaveDelay() * 1000, 
 			PrefsModel.getInstance().getAutosaveDelay() * 1000); //Use preferences to decide save period
 		}
-		
+
 		//If it has not already been done, disable the splash screen now.
 		MossSplashScreen.hideSplash();
 	}
@@ -317,7 +380,7 @@ public class Buddi {
 		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
 			try {
 				MossSplashScreen.hideSplash();
-				
+
 				Document model;
 				model = ModelFactory.createDocument(f);
 
@@ -416,12 +479,12 @@ public class Buddi {
 		//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
 		// so we must set it here manually. 
 		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
-		
+
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
 
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
 		LookAndFeelUtil.setLookAndFeel();
-		
+
 		splash: if (!OperatingSystemUtil.isMac()){
 			for (String string : args) {
 				if (string.equals("--nosplash"))
@@ -429,7 +492,7 @@ public class Buddi {
 			}
 			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
 		}
-		
+
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
@@ -500,7 +563,7 @@ public class Buddi {
 				}
 			});
 		}
-		
+
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
 			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
@@ -529,9 +592,9 @@ public class Buddi {
 		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
 		variables.add(new ParseVariable("--reports", String.class, false));
-		
+
 		variables.add(new ParseVariable("--font", String.class, false));
-		
+
 		variables.add(new ParseVariable("--debian", Boolean.class, false));
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--slackware", Boolean.class, false));
@@ -545,7 +608,7 @@ public class Buddi {
 			extractFile(new File(results.getString("--extract")));
 			System.exit(0);
 		}
-		
+
 		//Set up the logging system.  If we have specified --log, we first
 		// try using that file.  If that is not specified, on the Mac
 		// we just use stderr (since Console.app provides an easy way
@@ -605,7 +668,7 @@ public class Buddi {
 		String font = results.getString("--font");
 		languagesFolder = results.getString("--languages");
 		pluginsFolder = results.getString("--plugins");
-		
+
 		noAutoSave = results.getBoolean("--noautosave");
 		windowsInstaller = results.getBoolean("--windows-installer");
 		slackware = results.getBoolean("--slackware");
@@ -613,7 +676,7 @@ public class Buddi {
 		redhat = results.getBoolean("--redhat");
 		genericUnix = results.getBoolean("--unix");
 		reportsFolder = results.getString("--reports");
-		
+
 
 		filesToLoad = new LinkedList<File>();
 		for (String s : results.getCommands()) {
@@ -623,7 +686,7 @@ public class Buddi {
 		Log.debug("Files to load: " + filesToLoad);
 
 		String currentWorkingDir = System.getProperty("user.dir") + File.separator;
-		
+
 		//Set some directories if USB mode is enabled.
 		if (usbKey != null){
 			if (languagesFolder == null)
@@ -664,7 +727,7 @@ public class Buddi {
 		for (BuddiRunnablePlugin plugin : (List<BuddiRunnablePlugin>) BuddiPluginFactory.getPlugins(BuddiRunnablePlugin.class)) {
 			plugin.run();
 		}
-		
+
 		//Start the GUI in the proper thread
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -683,14 +746,14 @@ public class Buddi {
 			PrefsModel.getInstance().updateVersion();
 
 //			JOptionPane.showMessageDialog(frame, 
-//					"This version introduced a change to the encryption algorithm.  While\n" +
-//					"you can still open data files from earlier versions of Buddi, if you\n" +
-//					"save any changes, you may not be able to open them in earlier versions.\n" +
-//					"It is recommended that you save a backup copy of your data files, in case\n" +
-//					"you need to revert to an older version.", 
-//					"WARNING - Encryption Format Change", 
-//					JOptionPane.WARNING_MESSAGE);
-			
+//			"This version introduced a change to the encryption algorithm.  While\n" +
+//			"you can still open data files from earlier versions of Buddi, if you\n" +
+//			"save any changes, you may not be able to open them in earlier versions.\n" +
+//			"It is recommended that you save a backup copy of your data files, in case\n" +
+//			"you need to revert to an older version.", 
+//			"WARNING - Encryption Format Change", 
+//			JOptionPane.WARNING_MESSAGE);
+
 			String[] buttons = new String[2];
 			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);
 			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NOT_NOW);
@@ -720,14 +783,11 @@ public class Buddi {
 	/**
 	 * Starts a thread which checks the Internet for any new versions.
 	 */
-	public static void startUpdateCheck(final MossFrame frame, final boolean confirm){
-		if (confirm || PrefsModel.getInstance().isShowUpdateNotifications()){
-			SwingWorker updateWorker = new SwingWorker(){
-				@Override
-				public Object construct() {
+	public static void startUpdateCheck(final MossFrame frame){
+		if (PrefsModel.getInstance().isShowUpdateNotifications()){
+			Thread updateThread = new Thread("Update Thread"){
+				public void run() {
 					try{
-
-
 						Proxy p;
 						if (PrefsModel.getInstance().isShowProxySettings()){
 							InetAddress proxyAddress = InetAddress.getByName(PrefsModel.getInstance().getProxyServer());
@@ -748,194 +808,234 @@ public class Buddi {
 
 						versions.load(is);
 
-						if (versions.get(Const.BRANCH) == null)
-							return getVersion();
-
-						Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
-						Version thisVersion = getVersion();
-
-						Log.debug("This version: " + thisVersion);
-						Log.debug("Available version: " + availableVersion);
-
-						if (thisVersion.compareTo(availableVersion) < 0)
-							return availableVersion;
+						PrefsModel.getInstance().setAvailableVersion(versions.getProperty(Const.BRANCH));
 					}
 					catch (IOException ioe){
 						Log.error(ioe);
-
-						String[] options = new String[1];
-						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-
-						JOptionPane.showOptionDialog(
-								frame, 
-								TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
-								TextFormatter.getTranslation(BuddiKeys.ERROR), 
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.ERROR_MESSAGE,
-								null,
-								options,
-								options[0]);
-					}
-
-					return null;
-				}
-
-				@Override
-				public void finished() {
-					if (get() != null){
-						String[] buttons = new String[2];
-						buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
-						buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
-
-						int reply = JOptionPane.showOptionDialog(
-								frame, 
-								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
-								+ " " + get() + "\n"
-								+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
-								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.INFORMATION_MESSAGE,
-								null,
-								buttons,
-								buttons[0]);
-
-						if (reply == JOptionPane.YES_OPTION){
-							String fileLocation;
-							if (Const.BRANCH.equals(Const.STABLE))
-								fileLocation = Const.DOWNLOAD_URL_STABLE;
-							else
-								fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
-
-							//Link to the correct download by default.
-							if (OperatingSystemUtil.isMac())
-								fileLocation += Const.DOWNLOAD_TYPE_OSX;
-							else if (OperatingSystemUtil.isWindows()){
-								if (isWindowsInstaller())
-									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
-								else
-									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
-							}
-							else {
-								//Check for any specific distributions here
-								if (Buddi.isDebian())
-									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
-								else if (Buddi.isSlackware())
-									fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
-								else if (Buddi.isRedhat())
-									fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
-								else if (Buddi.isUnix())
-									fileLocation += Const.DOWNLOAD_TYPE_UNIX;
-								else
-									fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
-							}
-
-							try{
-								BrowserLauncher bl = new BrowserLauncher(null);
-								bl.openURLinBrowser(fileLocation);
-							}
-							catch (Exception e){
-								Log.error(e);
-							}
-						}
-					}
-					//There was no updates - if we want a confirmation, show it
-					else if (confirm){
-						String[] options = new String[1];
-						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-
-						JOptionPane.showOptionDialog(
-								frame, 
-								TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION), 
-								TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.INFORMATION_MESSAGE,
-								null,
-								options,
-								options[0]);
-					}
-
-					super.finished();
-				}
+					}					
+				};
 			};
 
-			if (Const.DEVEL) Log.debug("Starting update checking...");
-			updateWorker.start();
+			updateThread.start();
 		}
 	}
+
+	/**
+	 * Checks for new updates, and notifies user if they are found.
+	 */
+	public static void doUpdateCheck(final MossFrame frame){
+		SwingWorker updateWorker = new SwingWorker(){
+			@Override
+			public Object construct() {
+				try{
+					Proxy p;
+					if (PrefsModel.getInstance().isShowProxySettings()){
+						InetAddress proxyAddress = InetAddress.getByName(PrefsModel.getInstance().getProxyServer());
+						InetSocketAddress socketAddress = new InetSocketAddress(proxyAddress, PrefsModel.getInstance().getPort()); 
+						p = new Proxy(Proxy.Type.DIRECT, socketAddress);
+					}
+					else {
+						p = Proxy.NO_PROXY;
+					}
+
+					URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
+					URLConnection connection = mostRecentVersion.openConnection(p);
+
+					InputStream is = connection.getInputStream();
+
+
+					Properties versions = new Properties();
+
+					versions.load(is);
+
+					if (versions.get(Const.BRANCH) == null)
+						return getVersion();
+
+					Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
+					Version thisVersion = getVersion();
+
+					Log.debug("This version: " + thisVersion);
+					Log.debug("Available version: " + availableVersion);
+
+					if (thisVersion.compareTo(availableVersion) < 0)
+						return availableVersion;
+				}
+				catch (IOException ioe){
+					Log.error(ioe);
+
+					String[] options = new String[1];
+					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							frame, 
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
+							TextFormatter.getTranslation(BuddiKeys.ERROR), 
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE,
+							null,
+							options,
+							options[0]);
+				}
+
+				return null;
+			}
+
+			@Override
+			public void finished() {
+				if (get() != null){
+					String[] buttons = new String[2];
+					buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+					buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+
+					int reply = JOptionPane.showOptionDialog(
+							frame, 
+							TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
+							+ " " + get() + "\n"
+							+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
+							TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
+
+					if (reply == JOptionPane.YES_OPTION){
+						String fileLocation;
+						if (Const.BRANCH.equals(Const.STABLE))
+							fileLocation = Const.DOWNLOAD_URL_STABLE;
+						else
+							fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+
+						//Link to the correct download by default.
+						if (OperatingSystemUtil.isMac())
+							fileLocation += Const.DOWNLOAD_TYPE_OSX;
+						else if (OperatingSystemUtil.isWindows()){
+							if (isWindowsInstaller())
+								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
+							else
+								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+						}
+						else {
+							//Check for any specific distributions here
+							if (Buddi.isDebian())
+								fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
+							else if (Buddi.isSlackware())
+								fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+							else if (Buddi.isRedhat())
+								fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
+							else if (Buddi.isUnix())
+								fileLocation += Const.DOWNLOAD_TYPE_UNIX;
+							else
+								fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
+						}
+
+						try{
+							BrowserLauncher bl = new BrowserLauncher(null);
+							bl.openURLinBrowser(fileLocation);
+						}
+						catch (Exception e){
+							Log.error(e);
+						}
+					}
+				}
+				//There was no updates - if we want a confirmation, show it
+				else {
+					String[] options = new String[1];
+					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+					JOptionPane.showOptionDialog(
+							frame, 
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION), 
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							options,
+							options[0]);
+				}
+
+				super.finished();
+			}
+		};
+
+		if (Const.DEVEL) Log.debug("Starting update checking...");
+		updateWorker.start();
+	}
+
 
 	public static void sendBugReport(Document... models){
 //		StringBuilder crashLog = new StringBuilder();
 //		crashLog.append("\n---Starting Preferences---\n");
 //		crashLog.append(PrefsModel.getInstance().saveToString());
 //		crashLog.append("---Finished Preferences---\n\n");
-//
+
 //		if (models != null){
-//			for (Document m : models) {
-//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//				try {
-//					m.saveToStream(baos);
-//
-//					crashLog.append("---Starting Data File---\n");
-//					crashLog.append(baos.toString());
-//					crashLog.append("---Finished Data File---\n\n");
-//				}
-//				catch (DocumentSaveException dse){
-//					crashLog.append("---Starting Data File---\n");
-//					crashLog.append("Error: Could not save to stream:");
-//					crashLog.append(dse.getMessage());
-//					crashLog.append("---Finished Data File---\n\n");					
-//				}
-//			}
+//		for (Document m : models) {
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		try {
+//		m.saveToStream(baos);
+
+//		crashLog.append("---Starting Data File---\n");
+//		crashLog.append(baos.toString());
+//		crashLog.append("---Finished Data File---\n\n");
 //		}
-//
+//		catch (DocumentSaveException dse){
+//		crashLog.append("---Starting Data File---\n");
+//		crashLog.append("Error: Could not save to stream:");
+//		crashLog.append(dse.getMessage());
+//		crashLog.append("---Finished Data File---\n\n");					
+//		}
+//		}
+//		}
+
 //		if (logFile != null){
-//			try{
-//				BufferedReader logReader = new BufferedReader(new FileReader(logFile));
-//				crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
-//				String temp;
-//				while ((temp = logReader.readLine()) != null)
-//					crashLog.append(temp).append("\n");
-//				crashLog.append("---Finished Log File---\n");
-//			}
-//			catch (IOException ioe){}
+//		try{
+//		BufferedReader logReader = new BufferedReader(new FileReader(logFile));
+//		crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
+//		String temp;
+//		while ((temp = logReader.readLine()) != null)
+//		crashLog.append(temp).append("\n");
+//		crashLog.append("---Finished Log File---\n");
 //		}
-//
-//
+//		catch (IOException ioe){}
+//		}
+
+
 //		if (PrefsModel.getInstance().isSendCrashReports()){
-//			try {
-//				BrowserLauncher bl = new BrowserLauncher();
-//				bl.openURLinBrowser("mailto:wyatt.olson@gmail.com?subject=" 
-//						+ URLEncoder.encode("Buddi Crash Report", "UTF-8").replaceAll("\\+", "%20") 
-//						+ "&body="
-//						+ URLEncoder.encode(
-//								"There has been a serious problem encountered in Buddi, " +
-//								"and Buddi has closed.  It is recommended that you send a " +
-//								"crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) " +
-//								"to help him troubleshoot the problem.  The following components may " +
-//								"be included in the crash report:\n\t-Contents of your Preferences " +
-//								"file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi " +
-//								"log file\n\nThese components are included as text in the body below, " +
-//								"clearly marked between tags such as '---Starting Preferences---' " +
-//								"and '---Finished Preferences---'.  If for privacy or other reasons you" +
-//								" wish to remove one or more of these components, feel free to do so." +
-//								"\n\nIf you use a different mail program (such as a Web based email " +
-//								"program), plese copy the entire contents of this email to that program, " +
-//								"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
-//								"all, simply close this window.  You can disable sending future crash " + 
-//								"reports in Buddi's Preferences.\n\n\n"
-//								+ crashLog.toString()
-//
-//								, 
-//						"UTF-8").replaceAll("\\+", "%20"));
-//			}
-//			catch (Exception e){
-//				Log.emergency("Unable to send crash email.");
-//			}
+//		try {
+//		BrowserLauncher bl = new BrowserLauncher();
+//		bl.openURLinBrowser("mailto:wyatt.olson@gmail.com?subject=" 
+//		+ URLEncoder.encode("Buddi Crash Report", "UTF-8").replaceAll("\\+", "%20") 
+//		+ "&body="
+//		+ URLEncoder.encode(
+//		"There has been a serious problem encountered in Buddi, " +
+//		"and Buddi has closed.  It is recommended that you send a " +
+//		"crash report to the program author (Wyatt Olson <wyatt.olson@gmail.com>) " +
+//		"to help him troubleshoot the problem.  The following components may " +
+//		"be included in the crash report:\n\t-Contents of your Preferences " +
+//		"file,\n\t-Contents of all open Data files\n\t-Contents of the Buddi " +
+//		"log file\n\nThese components are included as text in the body below, " +
+//		"clearly marked between tags such as '---Starting Preferences---' " +
+//		"and '---Finished Preferences---'.  If for privacy or other reasons you" +
+//		" wish to remove one or more of these components, feel free to do so." +
+//		"\n\nIf you use a different mail program (such as a Web based email " +
+//		"program), plese copy the entire contents of this email to that program, " +
+//		"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
+//		"all, simply close this window.  You can disable sending future crash " + 
+//		"reports in Buddi's Preferences.\n\n\n"
+//		+ crashLog.toString()
+
+//		, 
+//		"UTF-8").replaceAll("\\+", "%20"));
+//		}
+//		catch (Exception e){
+//		Log.emergency("Unable to send crash email.");
+//		}
 //		}
 
 //		Log.critical(crashLog.toString());
 	}
-	
+
 	private static void extractFile(File fileToLoad){
 		try {
 			InputStream is;
@@ -949,7 +1049,7 @@ public class Buddi {
 					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
 					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".xml"));
 					StreamFunctions.copyInputStreamToOutputStream(is, os);
-					
+
 					os.flush();
 					os.close();
 					is.close();					
@@ -975,7 +1075,7 @@ public class Buddi {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
+
 		System.exit(0);
 	}
 }
