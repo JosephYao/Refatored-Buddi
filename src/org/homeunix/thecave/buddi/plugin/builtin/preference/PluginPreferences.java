@@ -98,13 +98,14 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 				if (value instanceof File && ((File) value).getName().endsWith(Const.PLUGIN_EXTENSION)){
 					File file = (File) value;
 					if (fileToVersionMap.get(file) == null){
-						String version = "  ?"; 
+						String version = ""; 
 						Properties p = new Properties();
 						InputStream is = ClassLoaderFunctions.getResourceAsStreamFromJar(file, Const.PLUGIN_PROPERTIES);
 						if (is != null) {
 							try {
 								p.load(is);
-								version = "  (" + p.getProperty(Const.PLUGIN_PROPERTIES_VERSION) + ")";
+								if (p.getProperty(Const.PLUGIN_PROPERTIES_VERSION) != null)
+									version = "  (" + p.getProperty(Const.PLUGIN_PROPERTIES_VERSION) + ")";
 								fileToVersionMap.put(file, version);
 							}
 							catch (IOException ioe){}

@@ -1,6 +1,7 @@
-3.2.1.2
+3.2.1.2 (June 30 2008)
 -Fixed a bug which would sometimes delete the wrong transaction in a list (thanks to Ravenpolaris for noticing this) 
 -Fixed bug #2003076 (Usability issue with update notifications).
+-Fixed a bug which showed 'null' for the plugin version if a plugin.properties text file is not included at the root of the .jar file.  Now I just don't attempt to show a version number in this case.  
 
 3.2.1.1. (June 19 2008)
 -Fixed a bug with the new CSS features, which did not properly include the .css in the .jar file.
