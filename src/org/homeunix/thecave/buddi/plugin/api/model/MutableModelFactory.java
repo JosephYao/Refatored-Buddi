@@ -53,7 +53,8 @@ public class MutableModelFactory {
 	 */
 	public static MutableAccount createMutableAccount(String name, long startingBalance, MutableAccountType type)  throws ModelException {
 		Account a = ModelFactory.createAccount(name, type.getType());
-
+		a.setStartingBalance(startingBalance);
+		
 		return new MutableAccountImpl(a);
 	}
 	
