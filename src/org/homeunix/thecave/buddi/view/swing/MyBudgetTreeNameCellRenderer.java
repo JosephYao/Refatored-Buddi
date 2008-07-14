@@ -19,6 +19,8 @@ public class MyBudgetTreeNameCellRenderer extends DefaultTreeCellRenderer {
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
+		this.setIcon(null);
+		
 		if (value instanceof BudgetCategory)
 			this.setText(TextFormatter.getHtmlWrapper(
 					TextFormatter.getDeletedWrapper(

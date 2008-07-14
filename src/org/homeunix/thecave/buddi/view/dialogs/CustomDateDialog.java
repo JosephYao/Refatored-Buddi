@@ -196,8 +196,8 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 			
 			System.out.println(startDateChooser.getDate() + ", " + endDateChooser.getDate());
 			
-			startDate = DateFunctions.getStartOfDay(new Date(startDateChooser.getDateInMillis()));
-			endDate = DateFunctions.getEndOfDay(new Date(endDateChooser.getDateInMillis()));
+			startDate = DateFunctions.getStartOfDay(startDateChooser.getDate());
+			endDate = DateFunctions.getEndOfDay(endDateChooser.getDate());
 			
 			System.out.println(startDate + ", " + endDate);
 
