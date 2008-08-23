@@ -1,4 +1,4 @@
-3.2.1.4
+3.2.1.4 (August 23 2008)
 -Updated some dependent libraries (SwingX, Moss).
 
 3.2.1.3 (July 27 2008)
