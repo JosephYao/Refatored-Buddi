@@ -21,7 +21,7 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.data.list.FilteredList;
+import org.homeunix.thecave.moss.data.collection.FilteredList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 import org.homeunix.thecave.moss.util.DateFunctions;

@@ -15,7 +15,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
-import org.homeunix.thecave.moss.data.list.SortedArrayList;
+import org.homeunix.thecave.moss.data.collection.SortedArrayList;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 

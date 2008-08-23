@@ -41,7 +41,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.data.list.CompositeList;
+import org.homeunix.thecave.moss.data.collection.CompositeList;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;

@@ -20,7 +20,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
-import org.homeunix.thecave.moss.data.list.WrapperList;
+import org.homeunix.thecave.moss.data.collection.WrapperList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
 

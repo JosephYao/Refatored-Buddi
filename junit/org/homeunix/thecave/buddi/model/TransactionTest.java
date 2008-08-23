@@ -10,7 +10,7 @@ import org.homeunix.thecave.buddi.model.impl.AccountImpl;
 import org.homeunix.thecave.buddi.model.impl.AccountTypeImpl;
 import org.homeunix.thecave.buddi.model.impl.BudgetCategoryImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionImpl;
-import org.homeunix.thecave.moss.data.list.SortedArrayList;
+import org.homeunix.thecave.moss.data.collection.SortedArrayList;
 import org.homeunix.thecave.moss.util.DateFunctions;
 import org.junit.Test;
 
