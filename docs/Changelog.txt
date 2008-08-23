@@ -1,3 +1,6 @@
+3.2.1.5
+-Updated Quaqua library to 4.4.7.  This helps improve some tree table rendering bugs (still not perfect, but closer).
+
 3.2.1.4 (August 23 2008)
 -Updated some dependent libraries (SwingX, Moss).
 
