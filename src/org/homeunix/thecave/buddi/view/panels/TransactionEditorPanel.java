@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -58,6 +59,7 @@ import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.swing.model.AutoCompleteMossHintComboBoxModel;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
+import org.homeunix.thecave.moss.util.DateFunctions;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
@@ -285,6 +287,18 @@ public class TransactionEditorPanel extends MossPanel {
 				}
 			});
 		}
+		
+		date.getEditor().addFocusListener(new FocusAdapter(){
+			@Override
+			public void focusLost(FocusEvent e) {
+				super.focusLost(e);
+				
+				if (date.getDate().before(DateFunctions.getDate(1900)) || date.getDate().after(DateFunctions.getDate(3000))){
+					Toolkit.getDefaultToolkit().beep();
+					date.requestFocusInWindow();
+				}
+			}
+		});
 
 		description.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent arg0) {
