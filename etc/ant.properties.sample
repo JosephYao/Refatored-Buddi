@@ -1,5 +1,7 @@
 # Sample properties file for building the project.  Ensure you have all needed tools, and 
 #  modify the paths as needed to reflect your project.
+# You won't need this if you are just building a .jar; this is for the more advanced
+#  release builds, such as .exe, installer, .deb, etc.
 ########################
 
 #SSH Configuration
