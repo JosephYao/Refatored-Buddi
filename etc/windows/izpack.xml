@@ -17,7 +17,6 @@
     -->
     <info>
         <appname>Buddi</appname>
-        <appversion>3.2.1.5</appversion>
         <authors>
             <author name="Wyatt Olson" email="wyatt.olson@gmail.com"/>
         </authors>
@@ -28,7 +27,9 @@
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
     -->
-    <guiprefs width="640" height="480" resizable="no"/>
+    <guiprefs width="640" height="480" resizable="no">
+    	<modifier key="langDisplayType" value="native"/>    
+    </guiprefs>
 
     <!-- 
         The locale section.
@@ -49,10 +50,6 @@
         <res id="Installer.image" src="Buddi.png" /> 
     </resources>
     
-    <guiprefs>
-    	<modifier key="langDIsplayType" value="native"/>
-    </guiprefs>
-
     <!-- 
         The panels section.
         We indicate here which panels we want to use. The order will be respected.
