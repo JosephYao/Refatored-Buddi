@@ -15,7 +15,7 @@
         The info section.
         The meaning of the tags should be natural ...
     -->
-<!--    <info>
+	<info>
         <appname>Buddi</appname>
         <appversion></appversion>
         <authors>
@@ -23,7 +23,6 @@
         </authors>
         <url>http://buddi.thecave.homeunix.org/</url>
     </info>
-    -->
 
     <!-- 
         The gui preferences indication.
