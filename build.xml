@@ -34,7 +34,6 @@
 
 	<target name="windows" depends="jar" description="Builds .exe for Windows, using Launch4J">
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
-		<echo message="${IZPACK_PATH}"/>
 		<taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask" classpath="${IZPACK_PATH}/lib/standalone-compiler.jar" />
 		
 		<launch4j>
@@ -65,7 +64,7 @@
 			</config>
 		</launch4j>
 
-		<copy todir="${BUILD}/${FULL_NAME}">
+		<copy todir="${BUILD}">
 			<fileset dir="${IMG}/windows">
 				<exclude name="${UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
