@@ -71,13 +71,16 @@
         <pack name="Base" required="yes">
             <description>Buddi Program Files</description>
             <file src="Buddi.exe" targetdir="$INSTALL_PATH"/>
-            <parsable targetfile="$INSTALL_PATH/script.bat"/>
-            <!-- The file will be parsed -->
+        </pack>
+        <pack name="License" required="yes">
+        	<description>License Text</description>
+        	<file src="License.rtf" targetdir="$INSTALL_PATH"/>
+        	<file src="Licenses" targetdir="$INSTALL_PATH"/>
         </pack>
         <pack name="Documentation" required="no">
-            <description>Buddi documentation</description>
-            <file src="doc" targetdir="$INSTALL_PATH"/>
-            <!-- Reccursive adding -->
+            <description>Buddi Documentation</description>
+            <file src="Readme.rtf" targetdir="$INSTALL_PATH"/>
+            <file src="Changelog.txt" targetdir="$INSTALL_PATH"/>
         </pack>
     </packs>
 
