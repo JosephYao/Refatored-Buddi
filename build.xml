@@ -65,6 +65,18 @@
 			</config>
 		</launch4j>
 
+		<copy todir="${BUILD}/${FULL_NAME}">
+			<fileset dir="${IMG}/windows">
+				<exclude name="${UNIX_NAME}.ico"/>
+				<include name="*.ico"/>
+			</fileset>
+			<fileset dir="${ROOT}/docs">
+				<include name="*.txt"/>
+				<include name="*.rtf"/>
+				<include name="Licenses/*"/>
+			</fileset>
+		</copy>	
+
 		<!-- Generate an installer.jar file; we will later wrap it as an .exe. -->		
 		<izpack 
 			input="${ETC}/windows/izpack.xml" 
