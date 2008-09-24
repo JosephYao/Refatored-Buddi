@@ -1,3 +1,7 @@
+3.2.2.0
+-Added new Windows installer method, using the excellent IzPack software (http://izpack.org/).  This should now prevent the problems which some people had experienced with my home-rolled installer package, as well as new features (such as a real uninstaller, etc).
+-Added support for new schedule interval: Every X Days. 
+
 3.2.1.5 (September 19 2008) (Happy Talk Like A Pirate Day!) 
 -Updated Quaqua library to 4.4.7.  This helps improve some tree table rendering bugs (still not perfect, but closer).
 -Added a check to the transaction editor, which does not allow years less than 1900 or greater than 3000.  If someone has a need of this, let me know and I can extend the dates a bit.  This is added to prevent people from typing '08' as '2008', and having their transactions turn out being from 2000 years ago.  
