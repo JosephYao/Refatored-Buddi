@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!-- 
+    A sample installation file.
+    Use it as a base for your own installers :-)
+    
+    To compile it :
+    - go in the bin directory where you installed IzPack
+    - call "compile ../sample/install.xml -b ../sample"
+-->
+
+<installation version="1.0">
+
+    <!-- 
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>Buddi</appname>
+        <appversion>3.2.1.5</appversion>
+        <authors>
+            <author name="Wyatt Olson" email="wyatt.olson@gmail.com"/>
+        </authors>
+        <url>http://buddi.thecave.homeunix.org/</url>
+    </info>
+
+    <!-- 
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="480" resizable="no"/>
+
+    <!-- 
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale>
+        <langpack iso3="eng"/>
+        <langpack iso3="fra"/>
+    </locale>
+
+    <!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="LicencePanel.licence" src="Licence.txt"/>
+        <res id="InfoPanel.info" src="Changelog.txt"/>
+        <res id="Installer.image" src="Buddi.png" /> 
+    </resources>
+    
+    <guiprefs>
+    	<modifier key="langDIsplayType" value="native"/>
+    </guiprefs>
+
+    <!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+<!--        <panel classname="HelloPanel"/> -->
+        <panel classname="InfoPanel"/>
+<!--        <panel classname="LicencePanel"/>-->
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="SummaryPanel"/>        
+        <panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+
+    <!-- 
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <pack name="Base" required="yes">
+            <description>Buddi Program Files</description>
+            <file src="Buddi.exe" targetdir="$INSTALL_PATH"/>
+            <parsable targetfile="$INSTALL_PATH/script.bat"/>
+            <!-- The file will be parsed -->
+        </pack>
+        <pack name="Documentation" required="no">
+            <description>Buddi documentation</description>
+            <file src="doc" targetdir="$INSTALL_PATH"/>
+            <!-- Reccursive adding -->
+        </pack>
+    </packs>
+
+</installation>
