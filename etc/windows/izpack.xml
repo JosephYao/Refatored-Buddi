@@ -15,13 +15,15 @@
         The info section.
         The meaning of the tags should be natural ...
     -->
-    <info>
+<!--    <info>
         <appname>Buddi</appname>
+        <appversion></appversion>
         <authors>
             <author name="Wyatt Olson" email="wyatt.olson@gmail.com"/>
         </authors>
         <url>http://buddi.thecave.homeunix.org/</url>
     </info>
+    -->
 
     <!-- 
         The gui preferences indication.
