@@ -64,7 +64,7 @@
 			</config>
 		</launch4j>
 
-		<copy todir="${BUILD}">
+		<copy todir="${BUILD}/izpack_temp">
 			<fileset dir="${IMG}/windows">
 				<exclude name="${UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
@@ -77,13 +77,16 @@
 				<include name="*.rtf"/>
 				<include name="Licenses/*"/>
 			</fileset>
+			<fileset dir="${BUILD}">
+				<include name="${FULL_NAME}.exe"/>
+			</fileset>
 		</copy>	
 
 		<!-- Generate an installer.jar file; we will later wrap it as an .exe. -->		
 		<izpack 
 			input="${ETC}/windows/izpack.xml" 
 			output="${BUILD}/installer.jar" 
-			baseDir="${BUILD}"/>
+			baseDir="${BUILD}/izpack_temp"/>
 
 <!-- The old installer method.  Now we use IzPack.
 		<mkdir dir="${BUILD}/${FULL_NAME}"/>
@@ -151,12 +154,11 @@
 			</config>
 		</launch4j>
 
-		<delete dir="${BUILD}/${FULL_NAME}"/>
+		<delete dir="${BUILD}/izpack_temp"/>
 		<delete includeemptydirs="true">
 			<fileset dir="${BUILD}">
 				<include name="installer.jar"/>
 				<include name="package.zip"/>
-				<include name="${FULL_NAME}"/>
 			</fileset>
 		</delete>
 	</target>
