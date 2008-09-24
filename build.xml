@@ -34,6 +34,7 @@
 
 	<target name="windows" depends="jar" description="Builds .exe for Windows, using Launch4J">
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${LAUNCH4J_PATH}/launch4j.jar:${LAUNCH4J_PATH}/lib/xstream.jar" />
+		<taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask" classpath="${IZPACK_PATH}/lib/standalone-compiler.jar" />
 		
 		<launch4j>
 			<config 
@@ -63,6 +64,13 @@
 			</config>
 		</launch4j>
 
+		<!-- Generate an installer.jar file; we will later wrap it as an .exe. -->		
+		<izpack 
+			input="${ETC}/windows/izpack.xml" 
+			output="${BUILD}/installer.jar" 
+			baseDir="${BUILD}"/>
+
+<!-- The old installer method.  Now we use IzPack.
 		<mkdir dir="${BUILD}/${FULL_NAME}"/>
 		<move file="${BUILD}/${FULL_NAME}.exe" tofile="${BUILD}/${FULL_NAME}/${FULL_NAME}.exe"/>
 		<copy todir="${BUILD}/${FULL_NAME}">
@@ -96,6 +104,9 @@
 				<include name="*.gif"/>
 			</zipfileset>
 		</jar>
+ -->
+ 
+ 		
 		
 		<launch4j>
 			<config 

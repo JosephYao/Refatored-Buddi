@@ -18,3 +18,5 @@ JARBUNDLER_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jarbundl
 JDEB_JAR=/Users/Wyatt/Documents/Programming/Workplace/build_tools/jdeb/jdeb-0.3.jar
 #SVN Ant (http://vafer.org/projects/jdeb) - Include SVN abilities in Ant
 SVNANT_PATH=/Users/wyatt/Documents/Programming/Workplace/build_tools/svnant/lib
+#IzPack Ant - Cross platform installer
+IZPACK_PATH=/Users/wyatt/Documents/Programming/Workplace/build_tools/izpack
