@@ -47,7 +47,7 @@
     -->
     <resources>
         <res id="InfoPanel.info" src="Changelog.txt"/>
-        <res id="Installer.image" src="Buddi.png" /> 
+        <res id="Installer.image" src="BuddiAboutLogo.png" /> 
     </resources>
     
     <!-- 
