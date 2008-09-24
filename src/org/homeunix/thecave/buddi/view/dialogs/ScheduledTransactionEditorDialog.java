@@ -40,6 +40,7 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.BiWeeklyCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.DailyCard;
+import org.homeunix.thecave.buddi.view.dialogs.schedule.EveryXDaysCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.MonthlyByDateCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.MultipleMonthsEachYearCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.MultipleWeeksEachMonthCard;
@@ -82,6 +83,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 	private final BiWeeklyCard biWeekly;
 	private final WeekdayCard everyWeekday;
 	private final DailyCard everyDay;
+	private final EveryXDaysCard everyXDays;
 	private final MultipleWeeksEachMonthCard multipleWeeksMonthly;
 	private final MultipleMonthsEachYearCard multipleMonthsYearly;
 
@@ -121,6 +123,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		biWeekly = new BiWeeklyCard();
 		everyWeekday = new WeekdayCard();
 		everyDay = new DailyCard();
+		everyXDays = new EveryXDaysCard();
 		multipleWeeksMonthly = new MultipleWeeksEachMonthCard();
 		multipleMonthsYearly = new MultipleMonthsEachYearCard();
 
@@ -211,6 +214,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString(), biWeekly);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString(), everyWeekday);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString(), everyDay);
+		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_X_DAYS.toString(), everyXDays);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString(), multipleWeeksMonthly);
 		cardMap.put(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString(), multipleMonthsYearly);
 
@@ -220,6 +224,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		cardHolder.add(biWeekly, ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString());
 		cardHolder.add(new JPanel(), ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString());
 		cardHolder.add(new JPanel(), ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString());
+		cardHolder.add(everyXDays, ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_X_DAYS.toString());
 		cardHolder.add(multipleWeeksMonthly, ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString());
 		cardHolder.add(multipleMonthsYearly, ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_MONTHS_EVERY_YEAR.toString());
 
@@ -260,6 +265,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		biWeekly.setEnabled(schedule == null);
 		everyWeekday.setEnabled(schedule == null);
 		everyDay.setEnabled(schedule == null);
+		everyXDays.setEnabled(schedule == null);
 		multipleWeeksMonthly.setEnabled(schedule == null);
 		multipleMonthsYearly.setEnabled(schedule == null);
 

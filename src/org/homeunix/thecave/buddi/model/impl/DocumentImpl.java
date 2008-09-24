@@ -917,6 +917,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 						isNewTransaction=false;
 					}
 				}
+				//Every X days, where X is the value in s.getScheduleDay().  Check if we
+				// have passed the correct number of days since the last transaction.
+				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_X_DAYS.toString())
+						&& DateFunctions.getDaysBetween(lastDayCreated, tempDate, false) >= s.getScheduleDay() ){
+					todayIsTheDay = true;
+					lastDayCreated = (Date) tempDate.clone();
+				}
 				//Every day - it's obvious enough even for a monkey!
 				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString())){
 					todayIsTheDay = true;
