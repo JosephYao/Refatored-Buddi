@@ -1,4 +1,4 @@
-3.2.2.0
+3.2.2.0 (September 27 2008)
 -Added new Windows installer method, using the excellent IzPack software (http://izpack.org/).  This should now prevent the problems which some people had experienced with my home-rolled installer package, as well as new features (such as a real uninstaller, etc).
 -Added support for new schedule interval: Every X Days. 
 

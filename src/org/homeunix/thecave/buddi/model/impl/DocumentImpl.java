@@ -838,7 +838,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				isNewTransaction=true;
 				//The below is just to avoid NPE's; ideally changing the order 
 				// of the checking below will solve the problem, but better safe than sorry.
-				lastDayCreated=DateFunctions.getStartOfDay(tempDate);
+				//The reason we set this date to an impossibly early date is to ensure
+				// that we include a scheduled transaction on the first day that matches,
+				// even if that day is the first day of any scheduled transactions.
+				lastDayCreated=DateFunctions.getDate(1900);
 			}
 			else {
 				lastDayCreated = DateFunctions.getStartOfDay(tempDate);

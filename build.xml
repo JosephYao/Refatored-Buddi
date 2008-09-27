@@ -65,6 +65,12 @@
 		</launch4j>
 
 		<copy todir="${BUILD}/izpack_temp">
+			<fileset dir="${ETC}/windows">
+				<include name="RegistrySpec.xml"/>
+				<include name="izpack-info.html"/>
+				<include name="buddi-langpack.eng.xml"/>
+				<include name="izpack.xml"/>
+			</fileset>
 			<fileset dir="${IMG}/windows">
 				<exclude name="${UNIX_NAME}.ico"/>
 				<include name="*.ico"/>
@@ -80,11 +86,21 @@
 			<fileset dir="${BUILD}">
 				<include name="${FULL_NAME}.exe"/>
 			</fileset>
-		</copy>	
+		</copy>
+		
+		<!-- Copy files which need to be filtered, to update version information. -->
+		<!--<copy todir="${BUILD}/izpack_temp">
+			<fileset dir="${ETC}/windows">
+				<include name="izpack.xml"/>
+			</fileset>
+			<filterset begintoken="[[" endtoken="]]">
+				<filter token="version" value="${VERSION}"/>
+			</filterset>
+		</copy>-->
 
 		<!-- Generate an installer.jar file; we will later wrap it as an .exe. -->		
 		<izpack 
-			input="${ETC}/windows/izpack.xml" 
+			input="${BUILD}/izpack_temp/izpack.xml" 
 			output="${BUILD}/installer.jar" 
 			baseDir="${BUILD}/izpack_temp"/>
 
@@ -153,6 +169,8 @@
 			    	originalFilename="${FULL_NAME}-${VERSION}.exe"/>
 			</config>
 		</launch4j>
+		
+		<move file="${BUILD}/Buddi.exe" tofile="${BUILD}/Buddi-${VERSION}.exe"/>
 
 		<delete dir="${BUILD}/izpack_temp"/>
 		<delete includeemptydirs="true">

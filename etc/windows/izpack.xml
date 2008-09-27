@@ -1,87 +1,77 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 
 <!-- 
-    A sample installation file.
-    Use it as a base for your own installers :-)
-    
-    To compile it :
-    - go in the bin directory where you installed IzPack
-    - call "compile ../sample/install.xml -b ../sample"
+	A sample installation file.
+	Use it as a base for your own installers :-)
+	
+	To compile it :
+	- go in the bin directory where you installed IzPack
+	- call "compile ../sample/install.xml -b ../sample"
 -->
 
 <installation version="1.0">
-
-    <!-- 
-        The info section.
-        The meaning of the tags should be natural ...
-    -->
 	<info>
-        <appname>Buddi</appname>
-        <appversion>3</appversion>
-        <authors>
-            <author name="Wyatt Olson" email="wyatt.olson@gmail.com"/>
-        </authors>
-        <url>http://buddi.thecave.homeunix.org/</url>
-    </info>
+		<appname>Buddi</appname>
+		<appversion>(Personal Budget Software)</appversion>
+		<authors>
+			<author name="Wyatt Olson" email="wyatt.olson@gmail.com" />
+		</authors>
+		<url>http://buddi.thecave.homeunix.org/</url>
+	</info>
 
-    <!-- 
-        The gui preferences indication.
-        Sets the installer window to 640x480. It will not be able to change the size.
-    -->
-    <guiprefs width="640" height="480" resizable="no">
-    	<modifier key="langDisplayType" value="native"/>    
-    </guiprefs>
+	<guiprefs width="640" height="480" resizable="no">
+		<modifier key="langDisplayType" value="native" />
+<!-- 
+		<laf name="looks">
+			<os family="windows"/>
+			<param name="variant" value="windows"/>
+		</laf>
+-->
+	</guiprefs>
 
-    <!-- 
-        The locale section.
-        Asks here to include the English and French langpacks.
-    -->
-    <locale>
-        <langpack iso3="eng"/>
-        <langpack iso3="fra"/>
-    </locale>
+	<locale>
+		<langpack iso3="eng"/>		
+	</locale>
+	<langpack>
+	</langpack>
 
-    <!-- 
-        The resources section.
-        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
-    -->
-    <resources>
-        <res id="InfoPanel.info" src="Changelog.txt"/>
-        <res id="Installer.image" src="BuddiAboutLogo.png" /> 
-    </resources>
-    
-    <!-- 
-        The panels section.
-        We indicate here which panels we want to use. The order will be respected.
-    -->
-    <panels>
-        <panel classname="InfoPanel"/>
-        <panel classname="TargetPanel"/>
-        <panel classname="PacksPanel"/>
-        <panel classname="SummaryPanel"/>        
-        <panel classname="InstallPanel"/>
-        <panel classname="SimpleFinishPanel"/>
-    </panels>
+	<resources>
+		<!-- The following resources must be copied in from build.xml first -->
+		<res id="Installer.image" src="BuddiAboutLogo.png" />
+		<res id="RegistrySpec.xml" src="RegistrySpec.xml" />
+		<res id="CustomLangpack.xml_eng" src="buddi-langpack.eng.xml"/> 
+	</resources>
 
-    <!-- 
-        The packs section.
-        We specify here our packs.
-    -->
-    <packs>
-        <pack name="Base" required="yes">
-            <description>Buddi Program Files</description>
-            <file src="Buddi.exe" targetdir="$INSTALL_PATH"/>
-        </pack>
-        <pack name="License" required="yes">
-        	<description>License Text</description>
-        	<file src="License.rtf" targetdir="$INSTALL_PATH"/>
-        	<file src="Licenses" targetdir="$INSTALL_PATH"/>
-        </pack>
-        <pack name="Documentation" required="no">
-            <description>Buddi Documentation</description>
-            <file src="Readme.rtf" targetdir="$INSTALL_PATH"/>
-            <file src="Changelog.txt" targetdir="$INSTALL_PATH"/>
-        </pack>
-    </packs>
+	<panels>
+		<panel classname="CheckedHelloPanel" />
+		<panel classname="TargetPanel" />
+		<panel classname="SummaryPanel" />
+		<panel classname="InstallPanel" />
+		<panel classname="SimpleFinishPanel" />
+	</panels>
 
+	<packs>
+		<pack name="Base" required="yes">
+			<description>Buddi Program Files</description>
+			<file src="Buddi.exe" targetdir="$INSTALL_PATH" />
+			<file src="BuddiData.ico" targetdir="$INSTALL_PATH" />
+			<file src="BuddiPlugin.ico" targetdir="$INSTALL_PATH" />
+			<file src="BuddiLanguage.ico" targetdir="$INSTALL_PATH" />
+			<file src="License.rtf" targetdir="$INSTALL_PATH" />
+			<file src="Licenses" targetdir="$INSTALL_PATH" />
+			<file src="Readme.rtf" targetdir="$INSTALL_PATH" />
+			<file src="Changelog.txt" targetdir="$INSTALL_PATH" />
+		</pack>
+	</packs>
+
+	<listeners>
+		<listener installer="RegistryInstallerListener"
+			uninstaller="RegistryUninstallerListener">
+			<os family="windows" />
+		</listener>
+	</listeners>
+
+	<native type="3rdparty" name="COIOSHelper.dll" stage="both">
+		<os family="windows" />
+	</native>
 </installation>
