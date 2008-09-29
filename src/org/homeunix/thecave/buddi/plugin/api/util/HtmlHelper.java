@@ -200,7 +200,7 @@ public class HtmlHelper {
 			sb.append(baos.toString());
 		}
 		catch (IOException ioe){
-			Log.warning("Error reading css input stream.  Not using css for report.", ioe);
+			Log.warning("Error reading CSS input stream; you are probably not running this from an official Buddi release bundle.  I am therefore not using CSS for the report.");
 		}
 	}
 }

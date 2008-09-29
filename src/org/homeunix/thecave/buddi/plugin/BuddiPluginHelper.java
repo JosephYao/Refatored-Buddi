@@ -76,7 +76,7 @@ public class BuddiPluginHelper {
 		worker.start();
 	}
 
-	public static Vector<DateChoice> getInterval() {
+	public static Vector<DateChoice> getInterval(Document model) {
 		Vector<DateChoice> intervals = new Vector<DateChoice>();
 
 		intervals.add(new DateChoice(
@@ -125,13 +125,22 @@ public class BuddiPluginHelper {
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_YEAR)
 		));
 		intervals.add(new DateChoice(
+				//Note that this is called when the data file is first opened, and it will not change until the main window is re-opened (i.e., 
+				// we start Buddi again).  To try to ensure that we don't miss anything, including new entries, we go to the beginning of the 
+				// year of the first transaction, and go to one week after today.  If people comment on this, we may expand the range,
+				// or possibly update the ranges at plugin runtime.
+				DateFunctions.getStartOfYear((model != null && model.getTransactions() != null && model.getTransactions().size() > 0 ? model.getTransactions().get(0).getDate() : new Date())),
+				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), 7)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ALL_TIME)
+		));		
+		intervals.add(new DateChoice(
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_OTHER)
 		));
 
 		return intervals;
 	}
 
-	public static Vector<DateChoice> getEndOnly() {
+	public static Vector<DateChoice> getEndOnly(Document model) {
 		Vector<DateChoice> endDates = new Vector<DateChoice>();
 
 		endDates.add(new DateChoice(
@@ -187,7 +196,7 @@ public class BuddiPluginHelper {
 		return endDates;
 	}
 
-	public static Vector<DateChoice> getStartOnly() {
+	public static Vector<DateChoice> getStartOnly(Document model) {
 		Vector<DateChoice> startDates = new Vector<DateChoice>();
 
 		startDates.add(new DateChoice(

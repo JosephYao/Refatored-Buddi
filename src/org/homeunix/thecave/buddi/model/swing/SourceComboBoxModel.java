@@ -3,8 +3,8 @@
  */
 package org.homeunix.thecave.buddi.model.swing;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
@@ -15,6 +15,8 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -25,6 +27,9 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	private final Document model;
 	private final boolean includeIncome;
 	
+	private final List<Account> accounts = new ArrayList<Account>();
+	private final List<BudgetCategory> budgetCategories = new ArrayList<BudgetCategory>();
+	
 	private final DefaultComboBoxModel comboBoxModel;
 	
 	private final DocumentChangeListener listener;
@@ -33,10 +38,10 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		this.model = model;
 		this.includeIncome = includeIncome;
 		this.comboBoxModel = new DefaultComboBoxModel();
-		updateComboBoxModel();
+		updateComboBoxModel(null);
 		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
-				updateComboBoxModel();	
+				updateComboBoxModel(null);	
 			}
 		};
 		model.addDocumentChangeListener(listener);
@@ -69,12 +74,38 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	private DefaultComboBoxModel getComboBoxModel(){
 		return comboBoxModel;
 	}
-
-	private void updateComboBoxModel(){
+	
+	/**
+	 * Returns true if the given source is included in this 
+	 * combo box model, and false otherwise.
+	 * @param source
+	 * @return
+	 */
+	public boolean contains(Source source){
+		return (accounts.contains(source) || budgetCategories.contains(source));
+	}
+	
+	/**
+	 * Updates the model, and optionally (if source is not null) forces it to include
+	 * the given source.  This is used to ensure that deleted accounts still show up 
+	 * for transactions which link to them, but not for others.
+	 * @param source
+	 */
+	public void updateComboBoxModel(Source source){
 		Object selected = getSelectedItem(); 
 		
-		List<Account> accounts = new LinkedList<Account>(model.getAccounts());
-		List<BudgetCategory> budgetCategories = new LinkedList<BudgetCategory>(model.getBudgetCategories());
+		accounts.clear();
+		for (Account a : model.getAccounts()) {
+			if (!a.isDeleted() || PrefsModel.getInstance().isShowDeleted() || a.equals(source)){
+				accounts.add(a);
+			}
+		}
+		budgetCategories.clear();
+		for (BudgetCategory bc : model.getBudgetCategories()) {
+			if (!bc.isDeleted() || PrefsModel.getInstance().isShowDeleted() || bc.equals(source)){
+				budgetCategories.add(bc);
+			}
+		}
 		
 		Collections.sort(accounts);
 		Collections.sort(budgetCategories);		

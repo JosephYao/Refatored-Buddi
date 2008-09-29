@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
@@ -59,11 +60,11 @@ public class MyReportsPanel extends MossPanel {
 			//Select the correct options for the dropdown, based on the plugin
 			Vector<DateChoice> dateChoices;
 			if (report.getDateRangeChoice().equals(PluginReportDateRangeChoices.INTERVAL))
-				dateChoices = BuddiPluginHelper.getInterval();
+				dateChoices = BuddiPluginHelper.getInterval((Document) parent.getDocument());
 			else if (report.getDateRangeChoice().equals(PluginReportDateRangeChoices.START_ONLY))
-				dateChoices = BuddiPluginHelper.getStartOnly();
+				dateChoices = BuddiPluginHelper.getStartOnly((Document) parent.getDocument());
 			else if (report.getDateRangeChoice().equals(PluginReportDateRangeChoices.END_ONLY))
-				dateChoices = BuddiPluginHelper.getEndOnly();
+				dateChoices = BuddiPluginHelper.getEndOnly((Document) parent.getDocument());
 			else
 				dateChoices = new Vector<DateChoice>();
 

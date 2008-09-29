@@ -430,11 +430,17 @@ public class TransactionEditorPanel extends MossPanel {
 		//   a) Both are equal - do nothing
 		//   b) Both are not equal - update
 		// 3) One is null, the other is not - update.
-		if (!force && this.transaction == null && transaction == null)
+		if (!force && this.transaction == null && transaction == null){
+			resetToFromComboBoxModels();
 			return;
-		if (!force && this.transaction != null && this.transaction.equals(transaction))
+		}
+		if (!force && this.transaction != null && this.transaction.equals(transaction)){
+			resetToFromComboBoxModels();
 			return;
+		}
 		if (transaction != null){
+			resetToFromComboBoxModels();
+			
 			//If the date is null, we should create a new date.  This should really only
 			// happen in scheduled transactions, where the date is set to null.  In this
 			// case, it does not matter that we set a new date.  In the erroneous case
@@ -445,7 +451,15 @@ public class TransactionEditorPanel extends MossPanel {
 			description.setText(transaction.getDescription());
 			memo.setText(transaction.getMemo());
 			amount.setValue(transaction.getAmount());
+			if (!((SourceComboBoxModel) from.getModel()).contains(transaction.getFrom())){
+				((SourceComboBoxModel) from.getModel()).updateComboBoxModel(transaction.getFrom());
+				from.invalidate();
+			}
 			from.setSelectedItem(transaction.getFrom());
+			if (!((SourceComboBoxModel) to.getModel()).contains(transaction.getTo())){
+				((SourceComboBoxModel) to.getModel()).updateComboBoxModel(transaction.getTo());
+				to.invalidate();
+			}
 			to.setSelectedItem(transaction.getTo());
 			if (associatedSource != null){
 				if (associatedSource.equals(from.getSelectedItem())){
@@ -476,6 +490,14 @@ public class TransactionEditorPanel extends MossPanel {
 		setChanged(false);
 
 		this.transaction = transaction;
+	}
+	
+	private void resetToFromComboBoxModels(){
+		//Re-update the model to remove any deleted sources which were there previously.
+		((SourceComboBoxModel) from.getModel()).updateComboBoxModel(null);
+		((SourceComboBoxModel) to.getModel()).updateComboBoxModel(null);
+		from.invalidate();
+		to.invalidate();
 	}
 
 	public boolean isChanged(){
