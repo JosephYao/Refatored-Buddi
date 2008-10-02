@@ -3,7 +3,10 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
@@ -13,6 +16,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.util.DateFunctions;
 
@@ -42,8 +47,10 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 	protected long balanceFrom;
 	protected long balanceTo;
-	
-	
+
+	protected final List<TransactionSplit> splits = new ArrayList<TransactionSplit>();
+
+
 	@Override
 	public int compareTo(ModelObject arg0) {
 		if (arg0 instanceof Transaction){
@@ -80,11 +87,11 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		return balanceTo;
 	}
 //	public Date getDate() {
-//		if (getDateString() == null){
-//			setDate(date);
-//		}
-//		
-//		return stringToDate(getDateString());
+//	if (getDateString() == null){
+//	setDate(date);
+//	}
+
+//	return stringToDate(getDateString());
 //	}
 	public Date getDate(){
 		return date;
@@ -239,16 +246,27 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public boolean isDeleted() {
 		return deleted;
 	}
-	
+
 	public void setDeleted(boolean deleted) {
+		setChanged();
 		this.deleted = deleted;
 	}
-	
+
+	public List<TransactionSplit> getSplits() {
+		return Collections.unmodifiableList(splits);
+	}
+
+	public void setSplits(List<TransactionSplit> splits) throws InvalidValueException {
+		setChanged();
+		this.splits.clear();
+		this.splits.addAll(splits);
+	}
+
 	Transaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
 
 		if (originalToCloneMap.get(this) != null)
 			return (Transaction) originalToCloneMap.get(this);
-		
+
 		TransactionImpl t = new TransactionImpl();
 
 		t.document = (Document) originalToCloneMap.get(document);
@@ -267,8 +285,12 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		t.reconciledTo = reconciledTo;
 		t.scheduled = scheduled;
 		t.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
+		t.splits.clear();
+		for (TransactionSplit split : splits) {
+			t.splits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));
+		}
 		t.modifiedTime = new Time(modifiedTime);
-		
+
 		originalToCloneMap.put(this, t);
 
 		return t;

@@ -4,12 +4,16 @@
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 
 public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implements ImmutableTransaction {
 	
@@ -47,6 +51,9 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	}
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
+	}
+	public List<ImmutableTransactionSplit> getImmutableSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getSplits());
 	}
 	public ImmutableSource getFrom(){
 		if (getTransaction().getFrom() instanceof Account)

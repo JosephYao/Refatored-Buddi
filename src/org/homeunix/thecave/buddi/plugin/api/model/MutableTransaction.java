@@ -40,6 +40,19 @@ public interface MutableTransaction extends ImmutableTransaction {
 	public void setDescription(String description) throws InvalidValueException;
 	
 	/**
+	 * Add a split.  You must also set exactly one of 'to' or 'from
+	 * to an instance of ImmutableSplit.
+	 * @param splits
+	 */
+	public void addSplit(MutableTransactionSplit split) throws InvalidValueException;
+	
+	/**
+	 * Remove a split.
+	 * @param split
+	 */
+	public void removeSplit(MutableTransactionSplit split) throws InvalidValueException;
+	
+	/**
 	 * Sets the given source as the From field
 	 * @param from
 	 */

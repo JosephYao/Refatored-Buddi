@@ -7,6 +7,7 @@ import org.homeunix.thecave.buddi.model.AccountTest;
 import org.homeunix.thecave.buddi.model.BudgetCategoryTest;
 import org.homeunix.thecave.buddi.model.DocumentTest;
 import org.homeunix.thecave.buddi.model.ScheduledTransactionTest;
+import org.homeunix.thecave.buddi.model.SplitsTest;
 import org.homeunix.thecave.buddi.model.TransactionTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,6 +18,7 @@ import org.junit.runners.Suite;
 	AccountTest.class,
 	BudgetCategoryTest.class,
 	ScheduledTransactionTest.class,
+	SplitsTest.class,
 	TransactionTest.class,
 })
 public class BuddiTests {}

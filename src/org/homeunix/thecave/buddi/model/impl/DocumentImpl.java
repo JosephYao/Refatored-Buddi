@@ -34,7 +34,9 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -776,6 +778,21 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			}
 
 
+			if (object instanceof Transaction){
+				Transaction t = (Transaction) object;
+				if (t.getFrom() instanceof Split && t.getTo() instanceof Split)
+					throw new ModelException("You cannot split both the To and From fields on a single transaction");
+				if (t.getFrom() instanceof Split || t.getTo() instanceof Split){
+					long splitSum = 0;
+					for (TransactionSplit split : t.getSplits()) {
+						splitSum += split.getAmount();
+					}
+					
+					if (splitSum != t.getAmount())
+						throw new ModelException("The sum of all split amounts do not equal the transaction amount");
+				}
+			}
+			
 			//We currently don't check for duplicate names.  Some instances (such as Perfitrack plugin) may require duplicates; also, 
 			// other than the potential to be confused with two identical names, there is no problem having duplicates. 
 //			if (object instanceof BudgetCategory){

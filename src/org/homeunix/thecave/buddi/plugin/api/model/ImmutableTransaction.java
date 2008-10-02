@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.plugin.api.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Transaction;
 
@@ -62,6 +63,12 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	 * @return
 	 */
 	public ImmutableSource getTo();
+	
+	/**
+	 * Returns a list of splits
+	 * @return
+	 */
+	public List<ImmutableTransactionSplit> getImmutableSplits();
 	
 	/**
 	 * Returns the wrapped object from the underlying data model.  By 

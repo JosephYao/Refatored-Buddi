@@ -3,15 +3,22 @@
  */
 package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
+import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.MutableTransactionSplit;
 
 public class MutableTransactionImpl extends MutableModelObjectImpl implements MutableTransaction {
 
@@ -65,6 +72,9 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
+	public List<ImmutableTransactionSplit> getImmutableSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getSplits());
+	}
 	public long getBalanceFrom() {
 		return getTransaction().getBalanceFrom();
 	}
@@ -106,6 +116,9 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	}
 
 	public void setFrom(MutableSource from) throws InvalidValueException{
+		if (from instanceof ImmutableSplit && getTo() instanceof ImmutableSplit)
+			throw new InvalidValueException("You cannot set 'from' to type 'Split' when 'to' is already set to type 'Split'.");
+			
 		if (from == null)
 			getTransaction().setFrom(null);
 		else
@@ -129,6 +142,9 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	}
 
 	public void setTo(MutableSource to) throws InvalidValueException{
+		if (to instanceof ImmutableSplit && getFrom() instanceof ImmutableSplit)
+			throw new InvalidValueException("You cannot set 'to' to type 'Split' when 'from' is already set to type 'Split'.");
+		
 		if (to == null)
 			getTransaction().setTo(null);
 		else
@@ -145,5 +161,17 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	
 	public void setDeleted(boolean deleted) throws InvalidValueException {
 		getTransaction().setDeleted(deleted);
+	}
+	
+	public void addSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getSplits());
+		splits.add((TransactionSplit) split.getRaw());
+		getTransaction().setSplits(splits);
+	}
+	
+	public void removeSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getSplits());
+		splits.remove(split.getRaw());
+		getTransaction().setSplits(splits);		
 	}
 }

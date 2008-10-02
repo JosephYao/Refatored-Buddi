@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
@@ -24,6 +25,8 @@ public interface Transaction extends ModelObject {
 	public String getMemo();
 	
 	public String getNumber();
+	
+	public List<TransactionSplit> getSplits();
 	
 	public Source getTo();
 	
@@ -66,6 +69,8 @@ public interface Transaction extends ModelObject {
 	public void setReconciledTo(boolean reconciled) throws InvalidValueException;
 	
 	public void setScheduled(boolean scheduled) throws InvalidValueException;
+	
+	public void setSplits(List<TransactionSplit> splits) throws InvalidValueException;
 	
 	public void setTo(Source to) throws InvalidValueException;
 	
