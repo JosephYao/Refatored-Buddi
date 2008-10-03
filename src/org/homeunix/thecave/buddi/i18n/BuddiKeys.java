@@ -410,5 +410,6 @@ public enum BuddiKeys {
 	TYPE_MODIFY_NEW,
 	USE_PROXY_SERVER,
 	UTILITIES,
-	VIEW, 
+	VIEW,
+	SPLIT,
 }

@@ -62,6 +62,7 @@ public class DocumentTest {
 				Log.info("Creating transaction " + i + " of " + MAX);
 			Account a = accounts.get((int) (Math.random() * accounts.size()));
 			BudgetCategory bc = budgetCategories.get((int) (Math.random() * budgetCategories.size()));
+			bc.setIncome(false);
 			Transaction t = ModelFactory.createTransaction(DateFunctions.getDate(2006, (int) (Math.random() * 12), (int) (Math.random() * 28)), "Test Transaction " + i, (long) (Math.random() * 1000000), a, bc);
 			t.setMemo(Math.random() + "");
 			model.addTransaction(t);

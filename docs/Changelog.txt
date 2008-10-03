@@ -1,3 +1,7 @@
+3.3.0.0 - New Development branch to add support for split transactions
+-Added checks at the model level to verify that Income BC's can only be used in From position, and Expense BC's can only be used in To
+-Added JUnit tests for both splits and BC sanity checks.
+
 3.2.2.1 (October 3 2008)
 -Added 'All Time' as a plugin interval option.  This will return the date range from the beginning of the year of the first transaction, to one week after today.  If you have no transactions yet, it will return the range from the beginning of this year to one week from today.
 -Fixed bug #2021995 (Deleted sources still show up in To / From dropdowns).  I Changed the transaction to / from pulldowns to not show deleted sources.  If you select a transaction for which one of the sources has already been deleted, we will add it on the fly, but you cannot choose a deleted source for a new transaction (unless the "Show Deleted" is selected in Preferences, of course).

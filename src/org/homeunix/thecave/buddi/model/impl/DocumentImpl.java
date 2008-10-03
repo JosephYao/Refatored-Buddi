@@ -789,10 +789,17 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 							throw new ModelException("Cannot have a null source within a TransactionSplit object.");
 						if (split.getAmount() == 0)
 							throw new ModelException("Cannot have an amount equal to zero within a TransactionSplit object.");
+						if (split.getSource() instanceof BudgetCategory && !((BudgetCategory) split.getSource()).isIncome())
+							throw new ModelException("All Budget Category splits in the From position must be income categories.");
 					}
 					
 					if (splitSum != t.getAmount())
 						throw new ModelException("The sum of the From splits do not equal the transaction amount");
+				}
+				else {
+					if (t.getFrom() instanceof BudgetCategory && !((BudgetCategory) t.getFrom()).isIncome()){
+						throw new ModelException("Budget Categories in the From position must be income categories.");
+					}
 				}
 				
 				if (t.getTo() instanceof Split){
@@ -803,11 +810,19 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 							throw new ModelException("Cannot have a null source within a TransactionSplit object.");
 						if (split.getAmount() == 0)
 							throw new ModelException("Cannot have an amount equal to zero within a TransactionSplit object.");
+						if (split.getSource() instanceof BudgetCategory && ((BudgetCategory) split.getSource()).isIncome())
+							throw new ModelException("All Budget Category splits in the To position must be expense categories.");
 					}
 					
 					if (splitSum != t.getAmount())
 						throw new ModelException("The sum of the To splits do not equal the transaction amount");
 				}
+				else {
+					if (t.getTo() instanceof BudgetCategory && ((BudgetCategory) t.getTo()).isIncome()){
+						throw new ModelException("Budget Categories in the To position must be expense categories.");
+					}
+				}
+				
 			}
 			
 			//We currently don't check for duplicate names.  Some instances (such as Perfitrack plugin) may require duplicates; also, 

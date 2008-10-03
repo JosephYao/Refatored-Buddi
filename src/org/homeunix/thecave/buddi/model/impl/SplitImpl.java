@@ -5,10 +5,12 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Map;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
 
 public class SplitImpl extends SourceImpl implements Split {
@@ -29,6 +31,6 @@ public class SplitImpl extends SourceImpl implements Split {
 	}
 	
 	public String getFullName() {
-		return null;
+		return PrefsModel.getInstance().getTranslator().get(BuddiKeys.SPLIT);
 	}
 }
