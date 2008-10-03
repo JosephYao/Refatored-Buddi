@@ -52,8 +52,11 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 	public boolean isScheduled() {
 		return getTransaction().isScheduled();
 	}
-	public List<ImmutableTransactionSplit> getImmutableSplits(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getSplits());
+	public List<ImmutableTransactionSplit> getImmutableFromSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getFromSplits());
+	}
+	public List<ImmutableTransactionSplit> getImmutableToSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getToSplits());
 	}
 	public ImmutableSource getFrom(){
 		if (getTransaction().getFrom() instanceof Account)

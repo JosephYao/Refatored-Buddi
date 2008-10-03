@@ -12,7 +12,7 @@ import org.homeunix.thecave.buddi.model.TransactionSplit;
 
 
 public class SplitImpl extends SourceImpl implements Split {
-
+	
 	@Override
 	ModelObject clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
 		if (originalToCloneMap.get(this) != null)

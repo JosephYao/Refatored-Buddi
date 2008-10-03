@@ -780,16 +780,25 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 			if (object instanceof Transaction){
 				Transaction t = (Transaction) object;
-				if (t.getFrom() instanceof Split && t.getTo() instanceof Split)
-					throw new ModelException("You cannot split both the To and From fields on a single transaction");
-				if (t.getFrom() instanceof Split || t.getTo() instanceof Split){
+				
+				if (t.getFrom() instanceof Split){
 					long splitSum = 0;
-					for (TransactionSplit split : t.getSplits()) {
+					for (TransactionSplit split : t.getFromSplits()) {
 						splitSum += split.getAmount();
 					}
 					
 					if (splitSum != t.getAmount())
-						throw new ModelException("The sum of all split amounts do not equal the transaction amount");
+						throw new ModelException("The sum of the From splits do not equal the transaction amount");
+				}
+				
+				if (t.getTo() instanceof Split){
+					long splitSum = 0;
+					for (TransactionSplit split : t.getToSplits()) {
+						splitSum += split.getAmount();
+					}
+					
+					if (splitSum != t.getAmount())
+						throw new ModelException("The sum of the To splits do not equal the transaction amount");
 				}
 			}
 			

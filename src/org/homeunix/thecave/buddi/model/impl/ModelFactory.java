@@ -30,6 +30,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
@@ -98,6 +99,12 @@ public class ModelFactory {
 		a.setAccountType(type);
 
 		return a;
+	}
+	
+	public static Split createSplit() throws InvalidValueException {
+		Split s = new SplitImpl();
+		
+		return s;
 	}
 
 	/**

@@ -26,7 +26,9 @@ public interface Transaction extends ModelObject {
 	
 	public String getNumber();
 	
-	public List<TransactionSplit> getSplits();
+	public List<TransactionSplit> getFromSplits();
+	
+	public List<TransactionSplit> getToSplits();
 	
 	public Source getTo();
 	
@@ -70,7 +72,9 @@ public interface Transaction extends ModelObject {
 	
 	public void setScheduled(boolean scheduled) throws InvalidValueException;
 	
-	public void setSplits(List<TransactionSplit> splits) throws InvalidValueException;
+	public void setFromSplits(List<TransactionSplit> splits) throws InvalidValueException;
+	
+	public void setToSplits(List<TransactionSplit> splits) throws InvalidValueException;
 	
 	public void setTo(Source to) throws InvalidValueException;
 	

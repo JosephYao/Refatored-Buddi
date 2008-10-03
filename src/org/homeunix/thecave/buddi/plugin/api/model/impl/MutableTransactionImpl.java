@@ -13,7 +13,6 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
-import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
@@ -72,8 +71,11 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
 		return null;
 	}
-	public List<ImmutableTransactionSplit> getImmutableSplits(){
-		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getSplits());
+	public List<ImmutableTransactionSplit> getImmutableFromSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getFromSplits());
+	}
+	public List<ImmutableTransactionSplit> getImmutableToSplits(){
+		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getToSplits());
 	}
 	public long getBalanceFrom() {
 		return getTransaction().getBalanceFrom();
@@ -116,9 +118,6 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	}
 
 	public void setFrom(MutableSource from) throws InvalidValueException{
-		if (from instanceof ImmutableSplit && getTo() instanceof ImmutableSplit)
-			throw new InvalidValueException("You cannot set 'from' to type 'Split' when 'to' is already set to type 'Split'.");
-			
 		if (from == null)
 			getTransaction().setFrom(null);
 		else
@@ -142,9 +141,6 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	}
 
 	public void setTo(MutableSource to) throws InvalidValueException{
-		if (to instanceof ImmutableSplit && getFrom() instanceof ImmutableSplit)
-			throw new InvalidValueException("You cannot set 'to' to type 'Split' when 'from' is already set to type 'Split'.");
-		
 		if (to == null)
 			getTransaction().setTo(null);
 		else
@@ -163,15 +159,26 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 		getTransaction().setDeleted(deleted);
 	}
 	
-	public void addSplit(MutableTransactionSplit split) throws InvalidValueException {
-		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getSplits());
+	public void addFromSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getFromSplits());
 		splits.add((TransactionSplit) split.getRaw());
-		getTransaction().setSplits(splits);
+		getTransaction().setFromSplits(splits);
 	}
 	
-	public void removeSplit(MutableTransactionSplit split) throws InvalidValueException {
-		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getSplits());
+	public void removeFromSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getFromSplits());
 		splits.remove(split.getRaw());
-		getTransaction().setSplits(splits);		
+		getTransaction().setFromSplits(splits);		
+	}
+	public void addToSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getToSplits());
+		splits.add((TransactionSplit) split.getRaw());
+		getTransaction().setToSplits(splits);
+	}
+	
+	public void removeToSplit(MutableTransactionSplit split) throws InvalidValueException {
+		List<TransactionSplit> splits = new ArrayList<TransactionSplit>(getTransaction().getToSplits());
+		splits.remove(split.getRaw());
+		getTransaction().setToSplits(splits);		
 	}
 }

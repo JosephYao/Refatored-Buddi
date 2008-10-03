@@ -65,10 +65,16 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	public ImmutableSource getTo();
 	
 	/**
-	 * Returns a list of splits
+	 * Returns a list of from splits
 	 * @return
 	 */
-	public List<ImmutableTransactionSplit> getImmutableSplits();
+	public List<ImmutableTransactionSplit> getImmutableFromSplits();
+
+	/**
+	 * Returns a list of to splits
+	 * @return
+	 */
+	public List<ImmutableTransactionSplit> getImmutableToSplits();
 	
 	/**
 	 * Returns the wrapped object from the underlying data model.  By 

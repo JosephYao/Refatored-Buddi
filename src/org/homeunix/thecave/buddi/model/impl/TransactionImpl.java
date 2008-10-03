@@ -48,7 +48,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	protected long balanceFrom;
 	protected long balanceTo;
 
-	protected final List<TransactionSplit> splits = new ArrayList<TransactionSplit>();
+	protected final List<TransactionSplit> fromSplits = new ArrayList<TransactionSplit>();
+	protected final List<TransactionSplit> toSplits = new ArrayList<TransactionSplit>();
 
 
 	@Override
@@ -252,14 +253,24 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		this.deleted = deleted;
 	}
 
-	public List<TransactionSplit> getSplits() {
-		return Collections.unmodifiableList(splits);
+	public List<TransactionSplit> getToSplits() {
+		return Collections.unmodifiableList(toSplits);
 	}
 
-	public void setSplits(List<TransactionSplit> splits) throws InvalidValueException {
+	public void setToSplits(List<TransactionSplit> splits) throws InvalidValueException {
 		setChanged();
-		this.splits.clear();
-		this.splits.addAll(splits);
+		this.toSplits.clear();
+		this.toSplits.addAll(splits);
+	}
+	
+	public List<TransactionSplit> getFromSplits() {
+		return Collections.unmodifiableList(fromSplits);
+	}
+
+	public void setFromSplits(List<TransactionSplit> splits) throws InvalidValueException {
+		setChanged();
+		this.fromSplits.clear();
+		this.fromSplits.addAll(splits);
 	}
 
 	Transaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
@@ -285,9 +296,13 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		t.reconciledTo = reconciledTo;
 		t.scheduled = scheduled;
 		t.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
-		t.splits.clear();
-		for (TransactionSplit split : splits) {
-			t.splits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));
+		t.fromSplits.clear();
+		for (TransactionSplit split : fromSplits) {
+			t.fromSplits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));
+		}
+		t.toSplits.clear();
+		for (TransactionSplit split : toSplits) {
+			t.toSplits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));
 		}
 		t.modifiedTime = new Time(modifiedTime);
 
