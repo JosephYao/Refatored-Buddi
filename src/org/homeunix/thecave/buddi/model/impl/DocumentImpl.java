@@ -785,6 +785,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					long splitSum = 0;
 					for (TransactionSplit split : t.getFromSplits()) {
 						splitSum += split.getAmount();
+						if (split.getSource() == null)
+							throw new ModelException("Cannot have a null source within a TransactionSplit object.");
+						if (split.getAmount() == 0)
+							throw new ModelException("Cannot have an amount equal to zero within a TransactionSplit object.");
 					}
 					
 					if (splitSum != t.getAmount())
@@ -795,6 +799,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					long splitSum = 0;
 					for (TransactionSplit split : t.getToSplits()) {
 						splitSum += split.getAmount();
+						if (split.getSource() == null)
+							throw new ModelException("Cannot have a null source within a TransactionSplit object.");
+						if (split.getAmount() == 0)
+							throw new ModelException("Cannot have an amount equal to zero within a TransactionSplit object.");
 					}
 					
 					if (splitSum != t.getAmount())

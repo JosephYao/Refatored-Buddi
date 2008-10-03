@@ -5,7 +5,6 @@ package org.homeunix.thecave.buddi.plugin.api.model.impl;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
-import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
@@ -14,8 +13,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableTransactionSplit;
 
 public class MutableTransactionSplitImpl extends MutableModelObjectImpl implements MutableTransactionSplit {
 
-	public MutableTransactionSplitImpl(Transaction transaction) {
-		super(transaction);
+	public MutableTransactionSplitImpl(TransactionSplit transactionSplit) {
+		super(transactionSplit);
 	}
 	
 	public TransactionSplit getTransactionSplit(){
@@ -26,11 +25,11 @@ public class MutableTransactionSplitImpl extends MutableModelObjectImpl implemen
 		getTransactionSplit().setAmount(amount);
 	}
 
-	public void setSource(MutableSource from) throws InvalidValueException{
-		if (from == null)
+	public void setSource(MutableSource source) throws InvalidValueException{
+		if (source == null)
 			getTransactionSplit().setSource(null);
 		else
-			getTransactionSplit().setSource(from.getSource());
+			getTransactionSplit().setSource(source.getSource());
 	}
 	
 	public ImmutableSource getSource(){

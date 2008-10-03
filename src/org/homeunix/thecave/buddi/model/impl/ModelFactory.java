@@ -32,6 +32,7 @@ import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -101,10 +102,18 @@ public class ModelFactory {
 		return a;
 	}
 	
+	private static Split split = new SplitImpl();
 	public static Split createSplit() throws InvalidValueException {
-		Split s = new SplitImpl();
+		return split;
+	}
+	
+	public static TransactionSplit createTransactionSplit(Source source, long amount) throws InvalidValueException {
+		TransactionSplit t = new TransactionSplitImpl();
 		
-		return s;
+		t.setSource(source);
+		t.setAmount(amount);
+		
+		return t;
 	}
 
 	/**

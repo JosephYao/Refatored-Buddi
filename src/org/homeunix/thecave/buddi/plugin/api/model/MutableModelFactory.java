@@ -11,14 +11,17 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableSplitImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionSplitImpl;
 import org.homeunix.thecave.moss.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.exception.OperationCancelledException;
 
@@ -56,6 +59,22 @@ public class MutableModelFactory {
 		a.setStartingBalance(startingBalance);
 		
 		return new MutableAccountImpl(a);
+	}
+	
+	/**
+	 * Creates a new Split object.  Split objects are used for exactly one purpose: to 
+	 * signal that instead of having a single source for the to / from of a transaction,
+	 * we instead will use the toSplits / fromSplits.  Thus, there is no need to set any
+	 * fields in this Split object, and thus we will just use an immutable one.
+	 * 
+	 * In fact, since there is no necessary information contained within a split object 
+	 * other than the fact that it is of type Split, the ModelFactory will reuse a
+	 * single Split object each time you call the method.
+	 * @return
+	 * @throws ModelException
+	 */
+	public static ImmutableSplit createImmutableSplit() throws ModelException {
+		return new ImmutableSplitImpl(ModelFactory.createSplit());
 	}
 	
 	/**
@@ -110,5 +129,10 @@ public class MutableModelFactory {
 		Transaction t = ModelFactory.createTransaction(date, description, amount, from.getSource(), to.getSource());
 		
 		return new MutableTransactionImpl(t);
+	}
+	
+	public static MutableTransactionSplit createMutableTransactionSplit(MutableSource source, long amount) throws ModelException {
+		TransactionSplit t = ModelFactory.createTransactionSplit(source.getSource(), amount);
+		return new MutableTransactionSplitImpl(t);
 	}
 }
