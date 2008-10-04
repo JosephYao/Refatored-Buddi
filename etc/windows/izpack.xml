@@ -17,6 +17,10 @@
 			<author name="Wyatt Olson" email="wyatt.olson@gmail.com" />
 		</authors>
 		<url>http://buddi.thecave.homeunix.org/</url>
+        <javaversion>1.5</javaversion>
+        <requiresjdk>no</requiresjdk>
+        <pack2000/>
+
 	</info>
 
 	<guiprefs width="640" height="480" resizable="no">
@@ -39,16 +43,22 @@
 		<!-- The following resources must be copied in from build.xml first -->
 		<res id="Installer.image" src="BuddiAboutLogo.png" />
 		<res id="RegistrySpec.xml" src="RegistrySpec.xml" />
-		<res id="CustomLangpack.xml_eng" src="buddi-langpack.eng.xml"/> 
+		<res id="shortcutSpec.xml" src="ShortcutSpec.xml"/>   
 	</resources>
 
 	<panels>
-		<panel classname="CheckedHelloPanel" />
-		<panel classname="TargetPanel" />
-		<panel classname="SummaryPanel" />
-		<panel classname="InstallPanel" />
-		<panel classname="SimpleFinishPanel" />
+		<!-- <panel classname="CheckedHelloPanel" /> -->
+		<panel classname="HelloPanel" id="hello_panel"/>
+		<panel classname="TargetPanel" id="target_panel"/>
+		<panel classname="SummaryPanel" id="summary_panel"/>
+		<panel classname="InstallPanel" id="install_panel"/>
+		<panel classname="ShortcutPanel" id="shortcut_panel"/>
+		<panel classname="SimpleFinishPanel" id="simple_finish_panel"/>
 	</panels>
+
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>
 
 	<packs>
 		<pack name="Base" required="yes">
@@ -63,14 +73,14 @@
 			<file src="Changelog.txt" targetdir="$INSTALL_PATH" />
 		</pack>
 	</packs>
-
+	
 	<listeners>
-		<listener installer="RegistryInstallerListener"
-			uninstaller="RegistryUninstallerListener">
+		<listener installer="RegistryInstallerListener" uninstaller="RegistryUninstallerListener">
 			<os family="windows" />
 		</listener>
 	</listeners>
 
+	<native type="izpack" name="ShellLink.dll"/>
 	<native type="3rdparty" name="COIOSHelper.dll" stage="both">
 		<os family="windows" />
 	</native>

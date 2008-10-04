@@ -115,7 +115,7 @@ public class MainFrame extends MossDocumentFrame {
 				//We want to exit, but save first.
 				new FileSave(this).doClick();
 			}
-			else if (reply == JOptionPane.CANCEL_OPTION){
+			else if (reply == JOptionPane.CANCEL_OPTION || reply == -1){ //-1 maps to ESC / close dialog
 				//We don't want to exit.
 				return false;
 			}

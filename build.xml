@@ -66,9 +66,7 @@
 
 		<copy todir="${BUILD}/izpack_temp">
 			<fileset dir="${ETC}/windows">
-				<include name="RegistrySpec.xml"/>
-				<include name="izpack-info.html"/>
-				<include name="buddi-langpack.eng.xml"/>
+				<include name="*.xml"/>
 				<include name="izpack.xml"/>
 			</fileset>
 			<fileset dir="${IMG}/windows">
