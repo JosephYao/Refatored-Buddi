@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.panels.SplitEditorPanel;
 import org.homeunix.thecave.moss.swing.MossDialog;
 
 public class SplitTransactionDialog extends MossDialog implements ActionListener {
@@ -34,9 +36,10 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	private final Transaction transaction;
 	private final boolean from; //Is this for a To or From?  This will affect what types of BCs can be used.
 	
-	private final Map<TransactionSplit, JPanel> panels = new HashMap<TransactionSplit, JPanel>();
+	//This keeps track of the relationship between TransactionSplits and JPanels, for displaying splits.
+	private final Map<TransactionSplit, SplitEditorPanel> splitsToPanelsMap = new HashMap<TransactionSplit, SplitEditorPanel>();
 	
-	private final JPanel splitsPanel;
+	private final JPanel splitPanels;
 
 	@SuppressWarnings("unchecked")
 	public SplitTransactionDialog(MainFrame frame, Document model, Transaction transaction, boolean from) {
@@ -46,7 +49,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		this.transaction = transaction;
 		this.from = from;
 
-		splitsPanel = new JPanel();
+		splitPanels = new JPanel();
 		
 		save = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_SAVE));
 		cancel = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CANCEL));
@@ -57,8 +60,8 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		
 		this.setLayout(new BorderLayout());
 		
-		splitsPanel.setLayout(new GridLayout(0, 1));
-		this.add(splitsPanel, BorderLayout.NORTH);
+		splitPanels.setLayout(new GridLayout(0, 1));
+		this.add(splitPanels, BorderLayout.NORTH);
 
 		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonsPanel.add(cancel);
@@ -89,7 +92,34 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	}
 
 	public void updateContent() {
+		List<TransactionSplit> splits;
+		if (from)
+			splits = transaction.getFromSplits();
+		else
+			splits = transaction.getToSplits();
 		
+		if (splits == null)
+			splits = new ArrayList<TransactionSplit>();
+		
+		//First we remove splits which are not in the transaction
+		for (TransactionSplit split : splitsToPanelsMap.keySet()) {
+			if (!splits.contains(split)){
+				splitPanels.remove(splitsToPanelsMap.get(split));
+				splitsToPanelsMap.remove(split);
+			}
+		}
+		
+		//Next we add in new ones
+		for (TransactionSplit split : splits) {
+			if (!splitsToPanelsMap.keySet().contains(split)){
+				SplitEditorPanel splitPanel = new SplitEditorPanel(split);
+				splitPanels.add(splitPanel);
+				splitsToPanelsMap.put(split, splitPanel);
+			}
+		}
+		
+		//Force a refresh
+		splitPanels.invalidate();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
