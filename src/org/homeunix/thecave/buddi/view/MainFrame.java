@@ -111,12 +111,18 @@ public class MainFrame extends MossDocumentFrame {
 					buttons,
 					buttons[0]);
 
+			//Question is "Do you want to save?"
 			if (reply == JOptionPane.YES_OPTION){
 				//We want to exit, but save first.
 				new FileSave(this).doClick();
+				return true;
 			}
-			else if (reply == JOptionPane.CANCEL_OPTION || reply == -1){ //-1 maps to ESC / close dialog
-				//We don't want to exit.
+			else if (reply == JOptionPane.NO_OPTION){
+				//Don't save, but exit
+				return true;
+			}
+			else {
+				//Cancel or anything else (click Clost button, esc, etc)
 				return false;
 			}
 		}

@@ -27,6 +27,7 @@ public enum ButtonKeys {
     BUTTON_RECORD,
     BUTTON_REPLACE,
     BUTTON_REMOVE,
+    BUTTON_SAVE,
     BUTTON_UNDELETE,
     BUTTON_UPDATE,
     BUTTON_YES,
