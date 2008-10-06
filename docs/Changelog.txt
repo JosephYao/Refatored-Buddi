@@ -8,6 +8,7 @@
 -Updated to SwingX 0.9.4
 -Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
 -Added feature request to include available funds on the main window
+-Added tooltips to accounts / budget categories to show notes
 
 3.2.2.1 (October 3 2008)
 -Added 'All Time' as a plugin interval option.  This will return the date range from the beginning of the year of the first transaction, to one week after today.  If you have no transactions yet, it will return the range from the beginning of this year to one week from today.

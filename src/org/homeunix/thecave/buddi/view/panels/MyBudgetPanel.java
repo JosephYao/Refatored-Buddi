@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -40,6 +41,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.BudgetDateSpinnerModel;
 import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -78,7 +80,26 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		super(true);
 		this.parent = parent;
 		this.treeTableModel = new MyBudgetTreeTableModel((Document) parent.getDocument());
-		tree = new JXTreeTable();
+		tree = new JXTreeTable(){
+			public static final long serialVersionUID = 0;
+			@Override
+			public String getToolTipText(MouseEvent event) {
+				if (PrefsModel.getInstance().isShowTooltips()){
+					Point p = event.getPoint();
+					int rowIndex = rowAtPoint(p);
+
+					if (this.getPathForRow(rowIndex) != null){
+						Object[] path = this.getPathForRow(rowIndex).getPath();
+						if (path != null && path.length > 0){
+							Object node = path[path.length - 1];
+							if (node instanceof BudgetCategory)
+								return ((BudgetCategory) node).getNotes();
+						}
+					}
+				}
+				return null;
+			}
+		};
 		tree.setColumnFactory(new ColumnFactory(){
 			@Override
 			public void configureTableColumn(TableModel arg0, TableColumnExt arg1) {
