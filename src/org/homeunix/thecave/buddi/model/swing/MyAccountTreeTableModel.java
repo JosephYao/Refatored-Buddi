@@ -25,7 +25,10 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 	}
 
 	public int getColumnCount() {
-		return 2;
+		int columns = 2;
+		if (PrefsModel.getInstance().isShowOverdraft() || PrefsModel.getInstance().isShowCreditRemaining())
+			columns++;
+		return columns;
 	}
 
 	@Override
@@ -34,6 +37,8 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT);
 		if (column == 1)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AMOUNT);
+		if (column == 2)
+			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AVAILABLE_FUNDS);
 		return "";
 	}
 

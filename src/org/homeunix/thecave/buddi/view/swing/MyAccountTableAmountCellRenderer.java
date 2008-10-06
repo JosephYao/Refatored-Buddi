@@ -12,6 +12,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 
@@ -30,26 +31,57 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 
 		if (value instanceof Account){
 			Account a = (Account) value;
-			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getDeletedWrapper(
-							TextFormatter.getFormattedCurrency(
-									a.getBalance(), 
-									InternalFormatter.isRed(a, a.getBalance()), 
-									a.getAccountType().isCredit()
-							), a)));
+			if (column == 1){
+				this.setText(TextFormatter.getHtmlWrapper(
+						TextFormatter.getDeletedWrapper(
+								TextFormatter.getFormattedCurrency(
+										a.getBalance(), 
+										InternalFormatter.isRed(a, a.getBalance()), 
+										a.getAccountType().isCredit()
+								), a)));
+			}
+			else if (column == 2){
+				this.setText("");
+				
+				if (a.getAccountType().isCredit() && PrefsModel.getInstance().isShowCreditRemaining()){
+					long availableFunds = (a.getBalance() + a.getOverdraftCreditLimit()) * -1;
+					this.setText(TextFormatter.getHtmlWrapper(
+							TextFormatter.getDeletedWrapper(
+									TextFormatter.getFormattedCurrency(
+											availableFunds, 
+											InternalFormatter.isRed(a, availableFunds), 
+											a.getAccountType().isCredit()
+									), a)));
+				}
+				else if (!a.getAccountType().isCredit() && PrefsModel.getInstance().isShowOverdraft()){
+					long availableFunds = a.getBalance() + a.getOverdraftCreditLimit();
+					this.setText(TextFormatter.getHtmlWrapper(
+							TextFormatter.getDeletedWrapper(
+									TextFormatter.getFormattedCurrency(
+											availableFunds, 
+											InternalFormatter.isRed(a, availableFunds), 
+											a.getAccountType().isCredit()
+									), a)));
+				}
+			}
 		}
 		if (value instanceof AccountType){
-			AccountType t = (AccountType) value;
-			long amount = 0;
-			for (Account a : new FilteredLists.AccountListFilteredByType(document, document.getAccounts(), t)) {
-				if (!a.isDeleted())
-					amount += a.getBalance();
+			if (column == 1){
+				AccountType t = (AccountType) value;
+				long amount = 0;
+				for (Account a : new FilteredLists.AccountListFilteredByType(document, document.getAccounts(), t)) {
+					if (!a.isDeleted())
+						amount += a.getBalance();
+				}
+				this.setText(TextFormatter.getHtmlWrapper(
+						TextFormatter.getFormattedCurrency(
+								amount, 
+								InternalFormatter.isRed(t, amount), 
+								t.isCredit())));
 			}
-			this.setText(TextFormatter.getHtmlWrapper(
-					TextFormatter.getFormattedCurrency(
-							amount, 
-							InternalFormatter.isRed(t, amount), 
-							t.isCredit())));
+			else {
+				this.setText("");
+			}
 		}
 
 
