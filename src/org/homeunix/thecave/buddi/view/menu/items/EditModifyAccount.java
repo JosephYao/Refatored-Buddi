@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
@@ -38,6 +39,15 @@ public class EditModifyAccount extends MossMenuItem {
 
 		((MainFrame) getFrame()).fireStructureChanged();
 		((MainFrame) getFrame()).updateContent();
+		
+		//We add this to the end of the AWT event thread to allow the 
+		// structure change to register first.  Otherwise, the tree
+		// will not unroll again.
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				((MainFrame) getFrame()).updateContent();
+			}
+		});
 	}
 
 	@Override

@@ -215,6 +215,8 @@ public class MyAccountsPanel extends MossPanel {
 				PrefsModel.getInstance().getTranslator().get(BuddiKeys.NET_WORTH) 
 				+ ": " 
 				+ TextFormatter.getFormattedCurrency(netWorth)));
+		
+		tree.invalidate();
 	}
 	
 	public void fireStructureChanged(){
