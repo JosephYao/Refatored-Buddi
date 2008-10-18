@@ -73,6 +73,9 @@ public class ExpensesPieGraph extends BuddiReportPlugin {
 		
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.setBorderStroke(new BasicStroke(0));
+		chart.getPlot().setBackgroundPaint(Color.WHITE);
+		chart.getPlot().setOutlinePaint(Color.WHITE);
+		
 		((PiePlot) chart.getPlot()).setLabelGenerator(new BuddiPieSectionLabelGenerator());
 				
 		StringBuilder sb = HtmlHelper.getHtmlHeader(
