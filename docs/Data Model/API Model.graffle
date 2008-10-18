@@ -734,8 +734,8 @@
 			<integer>27</integer>
 			<key>Points</key>
 			<array>
-				<string>{158.654, 402.5}</string>
-				<string>{130.674, 603.5}</string>
+				<string>{163.064, 420.5}</string>
+				<string>{132.792, 603.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -944,8 +944,8 @@
 			<integer>22</integer>
 			<key>Points</key>
 			<array>
-				<string>{206.705, 552}</string>
-				<string>{152.564, 603.5}</string>
+				<string>{209.091, 552}</string>
+				<string>{159.262, 603.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1037,7 +1037,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{50.3333, 603.5}, {154, 48}}</string>
+			<string>{{50.3333, 603.5}, {154, 66}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1093,7 +1093,9 @@
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
 \f0\fs16 \cf0 +setStartingBalance(long)\
-+setAccountType(MutableAccountType)}</string>
++setAccountType(MutableAccountType)\
++setOverdraftCreditLimit()\
++setInterestRate()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -1721,8 +1723,8 @@
 			<integer>8</integer>
 			<key>Points</key>
 			<array>
-				<string>{255.333, 280.081}</string>
-				<string>{211, 319.331}</string>
+				<string>{255.333, 284.99}</string>
+				<string>{222.091, 318.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1816,7 +1818,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{118, 318.5}, {93, 84}}</string>
+			<string>{{118, 318.5}, {107, 102}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1876,7 +1878,9 @@
 +getBalance()\
 +getBalance(Date)\
 +getStartDate()\
-+getStartingBalance()}</string>
++getStartingBalance()\
++getOverdraftCreditLimit()\
++getInterstRate()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -2262,7 +2266,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2008-10-02 19:36:00 -0600</string>
+	<string>2008-10-17 20:20:30 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -2360,8 +2364,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDgtMTAtMDNUMDE6MjE6
-	MTFaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDgtMTAtMThUMDI6MTk6
+	MzhaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -2374,7 +2378,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA4LTEwLTAzVDAxOjIxOjExWjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA4LTEwLTE4VDAyOjE5OjM4WjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8
@@ -2486,7 +2490,7 @@
 		<key>ShowStatusBar</key>
 		<true/>
 		<key>VisibleRegion</key>
-		<string>{{157, 15}, {995, 719}}</string>
+		<string>{{0, 15}, {995, 719}}</string>
 		<key>Zoom</key>
 		<string>1</string>
 	</dict>

@@ -612,6 +612,14 @@ public class PrefsModel {
 	}
 	public void setAvailableVersion(String availableVersion) {
 		prefsModel.setAvailableVersion(availableVersion);
-	}	
+	}
+	
+	public boolean isShowInterestRates(){
+		return prefsModel.isShowInterestRates();
+	}
+	
+	public void setShowInterestRates(boolean showInterestRates){
+		prefsModel.setShowInterestRates(showInterestRates);
+	}
 }
 

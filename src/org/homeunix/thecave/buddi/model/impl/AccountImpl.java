@@ -26,6 +26,7 @@ public class AccountImpl extends SourceImpl implements Account {
 	private long startingBalance;
 	private long balance;
 	private long overdraftCreditLimit;
+	private long interestRate;
 	private Day startDate;
 	private AccountType type;
 
@@ -73,10 +74,10 @@ public class AccountImpl extends SourceImpl implements Account {
 	@Override
 	public void setName(String name) throws InvalidValueException {
 //		if (getDocument() != null){
-//			for (Account a : ((Document) getDocument()).getAccounts()) {
-//				if (a.getName().equals(name) && !a.equals(this))
-//					throw new InvalidValueException("The account name must be unique");
-//			}
+//		for (Account a : ((Document) getDocument()).getAccounts()) {
+//		if (a.getName().equals(name) && !a.equals(this))
+//		throw new InvalidValueException("The account name must be unique");
+//		}
 //		}
 		super.setName(name);
 	}
@@ -152,22 +153,24 @@ public class AccountImpl extends SourceImpl implements Account {
 		}
 		return super.compareTo(arg0);
 	}
-	
+
 	public long getOverdraftCreditLimit() {
 		return overdraftCreditLimit;
 	}
-	
+
 	public void setOverdraftCreditLimit(long overdraftCreditLimit) throws InvalidValueException {
 		if (overdraftCreditLimit < 0)
 			throw new InvalidValueException("Overdraft limit must be positive");
+		if (this.overdraftCreditLimit != overdraftCreditLimit)
+			setChanged();
 		this.overdraftCreditLimit = overdraftCreditLimit;
 	}
-	
+
 	Account clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
 
 		if (originalToCloneMap.get(this) != null)
 			return (Account) originalToCloneMap.get(this);
-		
+
 		AccountImpl a = new AccountImpl();
 
 		a.document = (Document) originalToCloneMap.get(document);
@@ -179,12 +182,28 @@ public class AccountImpl extends SourceImpl implements Account {
 		a.name = name;
 		a.notes = notes;
 		a.overdraftCreditLimit = overdraftCreditLimit;
+		a.interestRate = interestRate;
 		if (startDate != null)
 			a.startDate = new Day(startDate);
 		a.startingBalance = startingBalance;
-		
+
 		originalToCloneMap.put(this, a);
 
 		return a;
+	}
+
+	public long getInterestRate() {
+		return interestRate;
+	}
+	public void setInterestRate(long interestRate) throws InvalidValueException {
+		if (interestRate < 0) //Should only affect API setters, as the decimal input field does not allow negatives.
+			throw new InvalidValueException("Interest rate must be positive");
+		//TODO Should we check for this?  Perhaps at a later date; for now, since this value is not used
+		// for anything other than 'FYI', it's probably not needed.
+//		if (interestRate > 100000)
+//			throw new InvalidValueException("Interest rate cannot be greater than 100%");
+		if (this.interestRate != interestRate)
+			setChanged();
+		this.interestRate = interestRate;
 	}
 }

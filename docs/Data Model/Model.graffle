@@ -261,8 +261,8 @@
 			<integer>21</integer>
 			<key>Points</key>
 			<array>
-				<string>{337.004, 297.002}</string>
-				<string>{359.891, 329.834}</string>
+				<string>{329.517, 297.002}</string>
+				<string>{374.736, 374.834}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -359,7 +359,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{302.583, 618.5}, {254, 94}}</string>
+			<string>{{104.583, 627.499}, {235.167, 94}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -438,8 +438,8 @@
 			<integer>18</integer>
 			<key>Points</key>
 			<array>
-				<string>{492.251, 68.3333}</string>
-				<string>{492.251, 91.5}</string>
+				<string>{492.251, 60.3333}</string>
+				<string>{492.251, 82.2502}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -473,8 +473,8 @@
 			<integer>17</integer>
 			<key>Points</key>
 			<array>
-				<string>{441.47, 44.3333}</string>
-				<string>{410.97, 44.3333}</string>
+				<string>{441.471, 39.5717}</string>
+				<string>{410.97, 41.5167}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -508,8 +508,8 @@
 			<integer>16</integer>
 			<key>Points</key>
 			<array>
-				<string>{105.626, 77.3333}</string>
-				<string>{350.563, 350.019}</string>
+				<string>{102.7, 77.3333}</string>
+				<string>{349.563, 382.275}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -533,7 +533,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{350.563, 329.834}, {208.958, 273}}</string>
+			<string>{{349.563, 374.834}, {208.958, 273}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -690,7 +690,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{441.47, 20.3333}, {101.562, 48}}</string>
+			<string>{{441.47, 12.3333}, {101.562, 48}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -771,8 +771,8 @@
 			<integer>12</integer>
 			<key>Points</key>
 			<array>
-				<string>{79.6918, 454.417}</string>
-				<string>{78.2696, 514.166}</string>
+				<string>{73.0669, 454.417}</string>
+				<string>{69.1595, 515.166}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -796,7 +796,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{19.6511, 514.166}, {112.667, 192}}</string>
+			<string>{{6.6511, 515.166}, {112.667, 192}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1085,8 +1085,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{304.667, 110.275}</string>
-				<string>{417.835, 132.431}</string>
+				<string>{304.667, 108.41}</string>
+				<string>{417.835, 126.111}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1127,8 +1127,8 @@
 			<integer>5</integer>
 			<key>Points</key>
 			<array>
-				<string>{304.667, 134.303}</string>
-				<string>{426.085, 219.655}</string>
+				<string>{304.667, 136.118}</string>
+				<string>{426.085, 226.12}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1152,7 +1152,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{417.835, 91.5}, {148.833, 111}}</string>
+			<string>{{417.835, 82.2502}, {148.833, 111}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1223,7 +1223,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{426.085, 215.167}, {132.333, 102}}</string>
+			<string>{{426.085, 206.167}, {132.333, 138}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -1285,7 +1285,11 @@
 +getStartDate()\
 +getBalance(Date)\
 +getBalance()\
-+getAccountType()}</string>
++getAccountType()\
++getInterestRate()\
++setInterestRate(long)\
++getOverdraftCreditLimit()\
++setOverdraftCreditLimit()}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -1453,7 +1457,7 @@
 	<key>MagnetsVisible</key>
 	<string>NO</string>
 	<key>ModificationDate</key>
-	<string>2008-10-02 19:21:05 -0600</string>
+	<string>2008-10-17 20:19:35 -0600</string>
 	<key>Modifier</key>
 	<string>Wyatt Olson</string>
 	<key>Orientation</key>
@@ -1551,8 +1555,8 @@
 	CQkJCTxyZWFsPjU3NjwvcmVhbD4KCQkJCQk8L2FycmF5PgoJCQkJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LnRpY2tldC5jbGllbnQ8L2tleT4KCQkJCQk8c3RyaW5nPmNvbS5hcHBs
 	ZS5wcmludGluZ21hbmFnZXI8L3N0cmluZz4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmlu
-	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDgtMTAtMDNUMDE6MTQ6
-	MzZaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
+	dC50aWNrZXQubW9kRGF0ZTwva2V5PgoJCQkJCTxkYXRlPjIwMDgtMTAtMThUMDI6MTc6
+	NTFaPC9kYXRlPgoJCQkJCTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5zdGF0ZUZs
 	YWc8L2tleT4KCQkJCQk8aW50ZWdlcj4wPC9pbnRlZ2VyPgoJCQkJPC9kaWN0PgoJCQk8
 	L2FycmF5PgoJCTwvZGljdD4KCQk8a2V5PmNvbS5hcHBsZS5wcmludC5QYWdlRm9ybWF0
 	LlBNQWRqdXN0ZWRQYXBlclJlY3Q8L2tleT4KCQk8ZGljdD4KCQkJPGtleT5jb20uYXBw
@@ -1565,7 +1569,7 @@
 	L3JlYWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNr
 	ZXQuY2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5h
 	Z2VyPC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERh
-	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA4LTEwLTAzVDAxOjE0OjM2WjwvZGF0ZT4KCQkJ
+	dGU8L2tleT4KCQkJCQk8ZGF0ZT4yMDA4LTEwLTE4VDAyOjE3OjUxWjwvZGF0ZT4KCQkJ
 	CQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJ
 	PGludGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2Rp
 	Y3Q+CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFwZXJJbmZvLlBNQ3VzdG9tUGFwZXI8

@@ -15,6 +15,7 @@ import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.moss.util.Formatter;
 
 public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;
@@ -40,10 +41,10 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 										a.getAccountType().isCredit()
 								), a)));
 			}
-			else if (column == 2){
+			else if (column == 2 || column == 3){
 				this.setText("");
-				
-				if (a.getAccountType().isCredit() && PrefsModel.getInstance().isShowCreditRemaining()){
+
+				if (column == 2 && a.getAccountType().isCredit() && PrefsModel.getInstance().isShowCreditRemaining()){
 					long availableFunds = (a.getBalance() + a.getOverdraftCreditLimit()) * -1;
 					this.setText(TextFormatter.getHtmlWrapper(
 							TextFormatter.getDeletedWrapper(
@@ -53,7 +54,7 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 											a.getAccountType().isCredit()
 									), a)));
 				}
-				else if (!a.getAccountType().isCredit() && PrefsModel.getInstance().isShowOverdraft()){
+				else if (column == 2 && !a.getAccountType().isCredit() && PrefsModel.getInstance().isShowOverdraft()){
 					long availableFunds = a.getBalance() + a.getOverdraftCreditLimit();
 					this.setText(TextFormatter.getHtmlWrapper(
 							TextFormatter.getDeletedWrapper(
@@ -62,6 +63,16 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 											InternalFormatter.isRed(a, availableFunds), 
 											a.getAccountType().isCredit()
 									), a)));
+				}
+				else if (PrefsModel.getInstance().isShowInterestRates()){
+					long interestRate = a.getInterestRate();
+					if (interestRate != 0){
+						this.setText(TextFormatter.getHtmlWrapper(
+								TextFormatter.getDeletedWrapper(
+										Formatter.getDecimalFormat(3).format((double) interestRate / 1000.0)
+										+ "%", 
+										a)));
+					}
 				}
 			}
 		}

@@ -351,7 +351,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 						this.message.getText(),
 						
 						startDateChooser.getDate(),
-						endDateChooser.getDate(),
+						(endDateChooserEnabled.isSelected() ? endDateChooser.getDate() : null),
 						frequencyPulldown.getSelectedItem().toString(),
 						getSelectedCard().getScheduleDay(),
 						getSelectedCard().getScheduleWeek(),
@@ -459,6 +459,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 			}
 			else {
 				endDateChooserEnabled.setSelected(false);
+				endDateChooser.setDate(null);
 			}
 			if (schedule.getFrequencyType() != null)
 				frequencyPulldown.setSelectedItem(ScheduleFrequency.valueOf(schedule.getFrequencyType()));

@@ -71,4 +71,20 @@ public interface Account extends Source{
 	 * @return
 	 */
 	public long getOverdraftCreditLimit();
+	
+	/**
+	 * Returns the interest rate.  The rate is given as a long, to three decimal places;
+	 * for instance, 6123 would be 6.123%.  Zero means the rate has not been set (logical
+	 * equivalent to null).
+	 * @return
+	 */
+	public long getInterestRate();
+	
+	/**
+	 * Sets the interest rate.  The rate is given as a long, to three decimal places;
+	 * for instance, 6123 would be 6.123%.  Zero means the rate has not been set (logical
+	 * equivalent to null).
+	 * @param interestRate
+	 */
+	public void setInterestRate(long interestRate) throws InvalidValueException;
 }

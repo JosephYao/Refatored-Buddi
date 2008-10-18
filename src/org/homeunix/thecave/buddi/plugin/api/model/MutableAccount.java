@@ -37,4 +37,14 @@ public interface MutableAccount extends ImmutableAccount, MutableSource {
 	 * @param startDate
 	 */
 	public void setStartDate(Date startDate);
+	
+	/**
+	 * Sets the interest rate.  This is a three decimal-place value interpreted as a long; 
+	 * for instance, the value "6123" would mean "6.123%".  This value cannot be negative,
+	 * and should not be greater than 100% (100000 long) (we currently don't check that
+	 * the value is less than 100%, but we may do this in the future, so to be safe, don't rely
+	 * on being able to do this).
+	 * @param interestRate
+	 */
+	public void setInterestRate(long interestRate) throws InvalidValueException;
 }

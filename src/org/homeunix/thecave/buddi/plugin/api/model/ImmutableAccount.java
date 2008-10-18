@@ -56,4 +56,11 @@ public interface ImmutableAccount extends ImmutableSource {
 	 * @return
 	 */
 	public long getOverdraftCreditLimit();
+	
+	/**
+	 * Returns the interest rate.  This is a three decimal-place value interpreted as a long; 
+	 * for instance, the value "6123" would mean "6.123%".
+	 * @return
+	 */
+	public long getInterestRate();
 }

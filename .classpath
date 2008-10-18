@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/quaqua-4.4.7.jar"/>
 	<classpathentry kind="lib" path="lib/Moss.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/winlaf-0.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

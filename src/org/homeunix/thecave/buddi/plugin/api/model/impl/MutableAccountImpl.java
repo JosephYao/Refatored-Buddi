@@ -67,4 +67,12 @@ public class MutableAccountImpl extends MutableSourceImpl implements MutableAcco
 	public void setStartDate(Date startDate) {
 		getAccount().setStartDate(startDate);
 	}
+	
+	public void setInterestRate(long interestRate) throws InvalidValueException {
+		getAccount().setInterestRate(interestRate);
+	}
+	
+	public long getInterestRate() {
+		return getAccount().getInterestRate();
+	}
 }

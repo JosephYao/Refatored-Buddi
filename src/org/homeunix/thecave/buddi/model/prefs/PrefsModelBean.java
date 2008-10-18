@@ -53,6 +53,7 @@ public class PrefsModelBean {
 	private boolean showFlatBudget;
 	private boolean showOverdraft;
 	private boolean showCreditRemaining;
+	private boolean showInterestRates;
 	private boolean showTooltips;
 	private boolean showNegativeSign;
 	//Currently must be set to 4.  If we change this, we will need to change 
@@ -431,5 +432,12 @@ public class PrefsModelBean {
 	}
 	public void setAvailableVersion(String availableVersion) {
 		this.availableVersion = availableVersion;
+	}
+	
+	public boolean isShowInterestRates() {
+		return showInterestRates;
+	}
+	public void setShowInterestRates(boolean showInterestRates) {
+		this.showInterestRates = showInterestRates;
 	}
 }

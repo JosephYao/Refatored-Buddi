@@ -28,6 +28,8 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 		int columns = 2;
 		if (PrefsModel.getInstance().isShowOverdraft() || PrefsModel.getInstance().isShowCreditRemaining())
 			columns++;
+		if (PrefsModel.getInstance().isShowInterestRates())
+			columns++;
 		return columns;
 	}
 
@@ -37,8 +39,19 @@ public class MyAccountTreeTableModel extends AbstractTreeTableModel {
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT);
 		if (column == 1)
 			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AMOUNT);
-		if (column == 2)
-			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AVAILABLE_FUNDS);
+		
+		//Depending on which of overdraft/credit and interest options are enabled, we
+		// may have 3 or 4 columns.  If overdraft/credit is enabled, column index 2 is
+		// used for it; otherwise, it is used for interest rate.
+		if (column == 2){
+			if (PrefsModel.getInstance().isShowOverdraft() || PrefsModel.getInstance().isShowCreditRemaining())
+				return PrefsModel.getInstance().getTranslator().get(BuddiKeys.AVAILABLE_FUNDS);
+			else
+				return PrefsModel.getInstance().getTranslator().get(BuddiKeys.INTEREST_RATE);	
+		}
+		//If there is a column index 3, it will always be for interest rate.
+		if (column == 3)
+			return PrefsModel.getInstance().getTranslator().get(BuddiKeys.INTEREST_RATE);
 		return "";
 	}
 

@@ -54,7 +54,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 	private final MossDecimalField startingBalance;
 	private final MossHintTextArea notes;
 	private final MossDecimalField overdraftCreditLimit;
+	private final MossDecimalField interestRate;
 	private final JLabel overdraftCreditLimitLabel;
+	private final JLabel interestRateLabel;
 
 	private final JButton ok;
 	private final JButton cancel;
@@ -75,7 +77,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			type.setSelectedIndex(0);
 		startingBalance = new MossDecimalField(true);
 		overdraftCreditLimit = new MossDecimalField(false);
+		interestRate = new MossDecimalField(0, false, 3);
 		overdraftCreditLimitLabel = new JLabel();
+		interestRateLabel = new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.INTEREST_RATE));
 		notes = new MossHintTextArea(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NOTES));
 
 		ok = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK));
@@ -94,12 +98,19 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_NAME)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_TYPE)));
 		textPanelLeft.add(new JLabel(PrefsModel.getInstance().getTranslator().get(BuddiKeys.ACCOUNT_EDITOR_STARTING_BALANCE)));
-		textPanelLeft.add(overdraftCreditLimitLabel);
-		
 		textPanelRight.add(name);
 		textPanelRight.add(type);
 		textPanelRight.add(startingBalance);
-		textPanelRight.add(overdraftCreditLimit);
+
+		if (PrefsModel.getInstance().isShowOverdraft() || PrefsModel.getInstance().isShowCreditRemaining()){
+			textPanelLeft.add(overdraftCreditLimitLabel);
+			textPanelRight.add(overdraftCreditLimit);			
+		}
+		if (PrefsModel.getInstance().isShowInterestRates()){
+			textPanelLeft.add(interestRateLabel);
+			textPanelRight.add(interestRate);			
+		}
+		
 		
 		JScrollPane notesScroller = new JScrollPane(notes);
 		notesScroller.setPreferredSize(new Dimension(150, 75));		
@@ -181,6 +192,9 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 
 		ok.setEnabled(name.getText() != null && name.getText().length() > 0);
 		
+		interestRate.setVisible(PrefsModel.getInstance().isShowInterestRates());
+		interestRateLabel.setVisible(PrefsModel.getInstance().isShowInterestRates());
+		
 		if (((AccountType) type.getSelectedItem()).isCredit()){
 			if (PrefsModel.getInstance().isShowCreditRemaining()){
 				overdraftCreditLimitLabel.setText(TextFormatter.getTranslation(BuddiKeys.CREDIT_LIMIT));
@@ -216,6 +230,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			startingBalance.setValue(0l);
 			notes.setText("");
 			overdraftCreditLimit.setValue(0l);
+			interestRate.setValue(0l);
 		}
 		else {
 			name.setText(PrefsModel.getInstance().getTranslator().get(selected.getName()));
@@ -223,6 +238,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 			startingBalance.setValue(selected.getStartingBalance() * (selected.getAccountType().isCredit() ? -1 : 1));
 			notes.setText(PrefsModel.getInstance().getTranslator().get(selected.getNotes()));
 			overdraftCreditLimit.setValue(selected.getOverdraftCreditLimit());
+			interestRate.setValue(selected.getInterestRate());
 		}
 	}
 
@@ -262,6 +278,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a.setStartingBalance(startingBalance.getValue() * (((AccountType) type.getSelectedItem()).isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
 					a.setOverdraftCreditLimit(overdraftCreditLimit.getValue());
+					a.setInterestRate(interestRate.getValue());
 					Log.debug("Created new Account " + a);
 
 					model.addAccount(a);
@@ -273,6 +290,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a.setStartingBalance(startingBalance.getValue() * (a.getAccountType().isCredit() ? -1 : 1));
 					a.setNotes(notes.getText());
 					a.setOverdraftCreditLimit(overdraftCreditLimit.getValue());
+					a.setInterestRate(interestRate.getValue());
 				}
 				a.updateBalance();
 								
