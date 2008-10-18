@@ -110,30 +110,20 @@ public class HtmlHelper {
 	 * Returns an HTML table row consisting of information from the given transaction. 
 	 * @param t Transaction to display.
 	 * @param source Associated source.  This would be the account which 
-	 * the transaction frame is associated with, for instace.  This can be null
+	 * the transaction frame is associated with, for instance.  This can be null
 	 * if there is none.
 	 * @return
 	 */
 	public static StringBuilder getHtmlTransactionRow(ImmutableTransaction t, ImmutableSource source){
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<tr><td width='20%'>");
+		sb.append("<tr><td width='15%'>");
 		sb.append(TextFormatter.getDateFormat().format(t.getDate()));
 
-		sb.append("</td><td width='30%'>");
-		//Set up the variables needed for the link to work.
-//		ImmutableAccount accountToUse = null;
-//		if (associatedSource instanceof ImmutableAccount)
-//			accountToUse = (ImmutableAccount) associatedSource;
-//		else if (t.getTo() instanceof ImmutableAccount)
-//			accountToUse = (ImmutableAccount) t.getTo();
-//		else if (t.getFrom() instanceof ImmutableAccount)
-//			accountToUse = (ImmutableAccount) t.getFrom();
-//		
-//		sb.append(getLinkToTransactionsFrame(TextFormatter.getTranslation(t.getDescription()), accountToUse, t));
+		sb.append("</td><td width='20%'>");
 		sb.append(TextFormatter.getTranslation(t.getDescription()));
 
-		sb.append("</td><td width='35%'>");
+		sb.append("</td><td width='30%'>");
 		sb.append(TextFormatter.getTranslation(t.getFrom().toString()));
 		sb.append(TextFormatter.getTranslation(BuddiKeys.HTML_TO));
 		sb.append(TextFormatter.getTranslation(t.getTo().toString()));
@@ -146,6 +136,8 @@ public class HtmlHelper {
 
 		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
 		sb.append(TextFormatter.getFormattedCurrency(t.getAmount()));
+		sb.append("</td><td width='20%'>");
+		sb.append(t.getMemo());
 		sb.append("</td></tr>\n");
 
 		return sb;		
@@ -168,6 +160,8 @@ public class HtmlHelper {
 		sb.append(TextFormatter.getTranslation(BuddiKeys.SOURCE_TO_FROM));
 		sb.append("</th><th>");
 		sb.append(TextFormatter.getTranslation(BuddiKeys.AMOUNT));
+		sb.append("</th><th>");
+		sb.append(TextFormatter.getTranslation(BuddiKeys.MEMO));
 		sb.append("</th></tr>\n");
 
 		return sb;

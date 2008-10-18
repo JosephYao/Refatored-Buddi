@@ -1,15 +1,17 @@
 3.3.0.0
--New Development branch to add support for split transactions
+-Added support for split transactions
+-Added feature request to include available funds on the main window
+-Added feature request #1799063 (Add 'Memo' column to reports).
+-Added interest rate to the account definition again (optionally enabled by the Show Interest Rate option in Preferences).  This is for information only; it does *not* automatically calculate interest.
 -Added checks at the model level to verify that Income BC's can only be used in From position, and Expense BC's can only be used in To
 -Added JUnit tests for both splits and BC sanity checks.
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
 -Fixed bug with new installer which did not create Start Menu icon (Windows)
+-Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
 -Updated Russian translation (Thanks to Michael Krekin for this)
 -Updated to SwingX 0.9.4
--Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
--Added feature request to include available funds on the main window
--Added interest rate to the account definition again (optionally enabled by the Show Interest Rate option in Preferences).  This is for information only; it does *not* automatically calculate interest.
+-Updated to JFreeChart 1.0.11 / JCommon 1.0.14
 
 3.2.2.1 (October 3 2008)
 -Added 'All Time' as a plugin interval option.  This will return the date range from the beginning of the year of the first transaction, to one week after today.  If you have no transactions yet, it will return the range from the beginning of this year to one week from today.
