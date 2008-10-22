@@ -5,6 +5,7 @@
 -Added interest rate to the account definition again (optionally enabled by the Show Interest Rate option in Preferences).  This is for information only; it does *not* automatically calculate interest.
 -Added checks at the model level to verify that Income BC's can only be used in From position, and Expense BC's can only be used in To
 -Added JUnit tests for both splits and BC sanity checks.
+-Added --lnf option to specify certain Java look and feel.  You still must manually add the specified LnF .jar to the classpath at launch.
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
 -Fixed bug with new installer which did not create Start Menu icon (Windows)

@@ -472,7 +472,7 @@ public class Buddi {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		//Set Buddi-specific LnF options.
+		//Set Buddi-specific LnF options, mostly (all?) for Quaqua.
 		//This one removes the width limitation for dialogs.  Since we already will
 		// wrap for other OS's, there is no need to have Quaqua do this for you.
 		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
@@ -482,8 +482,55 @@ public class Buddi {
 
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
 
+		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
+			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
+			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
+			+ "--verbosity\t0-5\tVerbosity Level (0 = Emergency, 5 = Verbose)\n"
+			+ "--languages\tFolder\tFolder to store custom languages (should be writable; default varies by platform)\n"
+			+ "--plugins\tFolder\tFolder to store plugins (should be writable; default varies by platform)\n"
+			+ "--nosplash\t\tDon't show splash screen on startup\n"
+			+ "--lnf\tclassname\tTry to use the given LnF; you must manually include the LnF jar in the classpath\n"
+			+ "--extract\tData File\tExtracts the XML contents of the given file, to Filename.xml.  Used for debugging.\n"
+			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
+		// Undocumented flag --font	<fontName> will specify a font to use by default
+		// Undocumented flag --windows-installer will specify a -Installer.exe download for new versions.
+		// Undocumented flag --debian will specify a .deb download for new versions.
+		// Undocumented flag --redhat will specify a .rpm download for new versions.
+		// Undocumented flag --slackware will specify a -Slackware.tgz download for new versions.
+		// Undocumented flag --unix will specify a .tgz download for new versions.
+		// Undocumented flag --noautosave will disable auto save (for development testing).
+
+		List<ParseVariable> variables = new LinkedList<ParseVariable>();
+		variables.add(new ParseVariable("--usb", Boolean.class, false));
+		variables.add(new ParseVariable("--prefs", String.class, false));
+		variables.add(new ParseVariable("--verbosity", Integer.class, false));
+		variables.add(new ParseVariable("--plugins", String.class, false));
+		variables.add(new ParseVariable("--languages", String.class, false));
+		variables.add(new ParseVariable("--log", String.class, false));
+		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
+		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
+		variables.add(new ParseVariable("--extract", String.class, false));
+		variables.add(new ParseVariable("--reports", String.class, false));
+		variables.add(new ParseVariable("--lnf", String.class, false));
+
+		variables.add(new ParseVariable("--font", String.class, false));
+
+		variables.add(new ParseVariable("--debian", Boolean.class, false));
+		variables.add(new ParseVariable("--redhat", Boolean.class, false));
+		variables.add(new ParseVariable("--slackware", Boolean.class, false));
+		variables.add(new ParseVariable("--unix", Boolean.class, false));
+		variables.add(new ParseVariable("--windows-installer", Boolean.class, false));
+
+		ParseResults results = ParseCommands.parse(args, help, variables);
+
+		//Extract file to stdout, and exit.
+		if (results.getString("--extract") != null){
+			extractFile(new File(results.getString("--extract")));
+			System.exit(0);
+		}
+		
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-		LookAndFeelUtil.setLookAndFeel();
+		LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
 
 		splash: if (!OperatingSystemUtil.isMac()){
 			for (String string : args) {
@@ -562,51 +609,6 @@ public class Buddi {
 					new FileQuit(null).doClick();
 				}
 			});
-		}
-
-		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
-			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
-			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
-			+ "--verbosity\t0-5\tVerbosity Level (0 = Emergency, 5 = Verbose)\n"
-			+ "--languages\tFolder\tFolder to store custom languages (should be writable; default varies by platform)\n"
-			+ "--plugins\tFolder\tFolder to store plugins (should be writable; default varies by platform)\n"
-			+ "--nosplash\t\tDon't show splash screen on startup\n"
-			+ "--extract\tData File\tExtracts the XML contents of the given file, to Filename.xml.  Used for debugging.\n"
-			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
-		// Undocumented flag --font	<fontName> will specify a font to use by default
-		// Undocumented flag --windows-installer will specify a -Installer.exe download for new versions.
-		// Undocumented flag --debian will specify a .deb download for new versions.
-		// Undocumented flag --redhat will specify a .rpm download for new versions.
-		// Undocumented flag --slackware will specify a -Slackware.tgz download for new versions.
-		// Undocumented flag --unix will specify a .tgz download for new versions.
-		// Undocumented flag --noautosave will disable auto save (for development testing).
-
-		List<ParseVariable> variables = new LinkedList<ParseVariable>();
-		variables.add(new ParseVariable("--usb", Boolean.class, false));
-		variables.add(new ParseVariable("--prefs", String.class, false));
-		variables.add(new ParseVariable("--verbosity", Integer.class, false));
-		variables.add(new ParseVariable("--plugins", String.class, false));
-		variables.add(new ParseVariable("--languages", String.class, false));
-		variables.add(new ParseVariable("--log", String.class, false));
-		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
-		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
-		variables.add(new ParseVariable("--extract", String.class, false));
-		variables.add(new ParseVariable("--reports", String.class, false));
-
-		variables.add(new ParseVariable("--font", String.class, false));
-
-		variables.add(new ParseVariable("--debian", Boolean.class, false));
-		variables.add(new ParseVariable("--redhat", Boolean.class, false));
-		variables.add(new ParseVariable("--slackware", Boolean.class, false));
-		variables.add(new ParseVariable("--unix", Boolean.class, false));
-		variables.add(new ParseVariable("--windows-installer", Boolean.class, false));
-
-		ParseResults results = ParseCommands.parse(args, help, variables);
-
-		//Extract file to stdout, and exit.
-		if (results.getString("--extract") != null){
-			extractFile(new File(results.getString("--extract")));
-			System.exit(0);
 		}
 
 		//Set up the logging system.  If we have specified --log, we first
