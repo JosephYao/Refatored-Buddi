@@ -8,6 +8,7 @@
 -Added --lnf option to specify certain Java look and feel.  You still must manually add the specified LnF .jar to the classpath at launch.
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
+-Fixed bug #2212486 (Get Info on Mac doesn't show version number, shows ${PROJECT_COPYRIGHT} instead)
 -Fixed bug with new installer which did not create Start Menu icon (Windows)
 -Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
 -Updated Russian translation (Thanks to Michael Krekin for this)
