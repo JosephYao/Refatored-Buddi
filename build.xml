@@ -192,7 +192,7 @@
 	        icon="${IMG}/osx/${FULL_NAME}.icns"
 	        jvmversion="1.5+"
 	        version="${VERSION}"
-	        infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
+	        infostring="${FULL_NAME}, ${VERSION}"
 	        bundleid="${MAIN_CLASS}"
 			vmoptions="-Xmx512m">
 
