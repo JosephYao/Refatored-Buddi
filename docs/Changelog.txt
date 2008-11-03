@@ -12,6 +12,7 @@
 -Fixed bug with new installer which did not create Start Menu icon (Windows)
 -Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
 -Updated Russian translation (Thanks to Michael Krekin for this)
+-Updated Norwegian translation (Thanks to Gudbrand Hegge for this)
 -Updated to SwingX 0.9.4
 -Updated to JFreeChart 1.0.11 / JCommon 1.0.14
 
