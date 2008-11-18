@@ -852,7 +852,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		}
 
 	}
-
+	
 	/**
 	 * Runs through the list of scheduled transactions, and adds any which
 	 * show be executed to the apropriate transacactions list.
@@ -860,10 +860,23 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 + 	 * that has gone past.
 	 */
 	public void updateScheduledTransactions(){
+		updateScheduledTransactions(new Date());
+	}
+
+	/**
+	 * Runs through the list of scheduled transactions, and adds any which
+	 * show be executed to the apropriate transacactions list.
+ 	 * Checks for the frequency type and based on it finds if a transaction is scheduled for a date
+ 	 * that has gone past.
+ 	 * 
+ 	 * This method includes an argument to specify what the current date is.  This can
+ 	 * be useful if you want to add transactions after the current date.
+	 */
+	public void updateScheduledTransactions(Date currentDate){
 		startBatchChange();
 
 		//Update any scheduled transactions
-		final Date today = DateFunctions.getEndOfDay(new Date());
+		final Date today = DateFunctions.getEndOfDay(currentDate);
 		//We specify a GregorianCalendar because we make some assumptions
 		// about numbering of months, etc that may break if we 
 		// use the default calendar for the locale.  It's not the
