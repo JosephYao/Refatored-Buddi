@@ -945,7 +945,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				// we only check if the given day is equal to the
 				// scheduled day.
 				if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString())
-						&& s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH)){
+						&& (s.getScheduleDay() == tempCal.get(Calendar.DAY_OF_MONTH) 
+								|| (s.getScheduleDay() == 32 //Position 32 is 'Last Day of Month'.  ScheduleFrequencyDayOfMonth.SCHEDULE_DATE_LAST_DAY.ordinal() + 1
+										&& tempCal.get(Calendar.DAY_OF_MONTH) == tempCal.getActualMaximum(Calendar.DAY_OF_MONTH)))){
+
 					todayIsTheDay = true;
 				}
 				//If we are using the Monthly by Day of Week,

@@ -46,6 +46,9 @@ public class OneDayEveryMonthCard extends MossPanel implements ScheduleCard {
 	}
 	
 	public int getScheduleDay() {
+		//Be careful here - this depends on the order of the order of ScheduleFrequencyDayOfMonth enum.
+		// Before we can change the order here (or add more special meanings), we will need to assign
+		// a special value to each meaning.  Just be careful.
 		return monthlyFirstDayChooser.getSelectedIndex();
 	}
 	
