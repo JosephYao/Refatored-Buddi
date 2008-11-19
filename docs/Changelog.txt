@@ -3,6 +3,7 @@
 -Added feature request to include available funds on the main window
 -Added feature request #1799063 (Add 'Memo' column to reports).
 -Added support for scheduled transactions on 'Last Day of Month'.  Thanks to Mauricio Peccorini for this patch.
+-Added support for semi-monthly budget period.  Thanks to Mauricio Peccorini for this patch.
 -Added interest rate to the account definition again (optionally enabled by the Show Interest Rate option in Preferences).  This is for information only; it does *not* automatically calculate interest.
 -Added checks at the model level to verify that Income BC's can only be used in From position, and Expense BC's can only be used in To
 -Added JUnit tests for both splits and BC sanity checks.

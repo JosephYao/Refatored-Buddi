@@ -681,3 +681,4 @@ REPORTS_SELECT_DATE_RANGE=Selectionner...
 LANGUAGE_EDITOR_LOCALE=Veuillez saisir le code de localisation, tel \: \n\u00AB CA \u00BB pour Fran\u00E7ais (CA)\n\u00AB US \u00BB pour Anglais (US)\n\nCe champs peut \u00EAtre laiss\u00E9 vide.
 SHOW_CLEAR=Afficher la case \u00E0 cocher "point\u00E9e"
 SHOW_CLEAR_RECONCILE=Afficher les cases \u00E0 cocher Point\u00E9e et Rapproch\u00E9e
+SCHEDULE_DATE_LAST_DAY=Derniere Jour
