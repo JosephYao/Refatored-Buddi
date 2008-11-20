@@ -23,6 +23,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
@@ -44,16 +46,20 @@ public class MainFrame extends MossDocumentFrame {
 	
 	private final JTabbedPane tabs;
 	
+	private List<BuddiPanelPlugin> panelPlugins;
+	
+	@SuppressWarnings("unchecked")
 	public MainFrame(Document model) {
 		super(model, MainFrame.class.getName() + model.getUid() + "_" + model.getFile());
 		this.setIconImage(ClassLoaderFunctions.getImageFromClasspath("img/BuddiFrameIcon.gif"));
 		myAccounts = new MyAccountsPanel(this);
 		myBudget = new MyBudgetPanel(this);
 		myReports = new MyReportsPanel(this);
-		
+		panelPlugins = (List<BuddiPanelPlugin>) BuddiPluginFactory.getPlugins(BuddiPanelPlugin.class);
 		tabs = new JTabbedPane();
 	}
 	
+	@Override
 	public void init() {
 		super.init();
 		
@@ -61,6 +67,13 @@ public class MainFrame extends MossDocumentFrame {
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_BUDGET), myBudget);
 		tabs.addTab(TextFormatter.getTranslation(BuddiKeys.MY_REPORTS), myReports);
 
+		if (panelPlugins != null){
+			for (BuddiPanelPlugin panelPlugin : panelPlugins){
+				panelPlugin.setParentFrame(this);
+				tabs.addTab(TextFormatter.getTranslation(panelPlugin.getTabLabelKey()), panelPlugin);
+			}
+		}
+		
 		this.setJMenuBar(new BuddiMenuBar(this));
 		
 		ComponentAdapter tabSelectListener = new ComponentAdapter(){
@@ -76,6 +89,12 @@ public class MainFrame extends MossDocumentFrame {
 		myBudget.addComponentListener(tabSelectListener);
 		myReports.addComponentListener(tabSelectListener);
 		
+		if (panelPlugins != null){
+			for (BuddiPanelPlugin panelPlugin : panelPlugins){
+				panelPlugin.addComponentListener(tabSelectListener);
+			}
+		}
+		
 		this.add(tabs, BorderLayout.CENTER);
 	}
 	
@@ -89,6 +108,12 @@ public class MainFrame extends MossDocumentFrame {
 		myAccounts.updateContent();
 		myBudget.updateContent();
 		myReports.updateContent();
+
+		if (panelPlugins != null){
+			for (BuddiPanelPlugin panelPlugin : panelPlugins){
+				panelPlugin.updateContent();
+			}
+		}
 		
 		this.repaint();
 	}
