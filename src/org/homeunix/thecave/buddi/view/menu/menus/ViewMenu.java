@@ -49,6 +49,8 @@ public class ViewMenu extends MossMenu {
 			}
 
 			this.add(new ViewDataFileStats(frame));
+			this.addSeparator();
+			this.add(new ViewPanelsMenu(frame));
 		}
 		else {
 			this.setVisible(false);

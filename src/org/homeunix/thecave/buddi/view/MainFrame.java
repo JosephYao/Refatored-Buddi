@@ -69,8 +69,10 @@ public class MainFrame extends MossDocumentFrame {
 
 		if (panelPlugins != null){
 			for (BuddiPanelPlugin panelPlugin : panelPlugins){
-				panelPlugin.setParentFrame(this);
-				tabs.addTab(TextFormatter.getTranslation(panelPlugin.getTabLabelKey()), panelPlugin);
+				if (panelPlugin.isStartedAutomatically() || panelPlugin.wasInUse()){
+					panelPlugin.setParentFrame(this);
+					addPanel(TextFormatter.getTranslation(panelPlugin.getTabLabelKey()), panelPlugin);
+				}
 			}
 		}
 		
@@ -243,6 +245,18 @@ public class MainFrame extends MossDocumentFrame {
 	}
 	public boolean isMyReportsTabSelected(){
 		return tabs.getSelectedIndex() == 2;
+	}
+	
+	public boolean isPanelOpen(BuddiPanelPlugin plugin){
+		return (tabs.indexOfComponent(plugin) != -1);
+	}
+
+	public void addPanel(String title, BuddiPanelPlugin plugin){
+		tabs.addTab(title, plugin);
+	}
+
+	public void removePanel(BuddiPanelPlugin plugin){
+		tabs.removeTabAt(tabs.indexOfComponent(plugin));
 	}
 	
 	/**

@@ -223,6 +223,10 @@ public class Const {
 //		SkinChangerPlugin.class.getCanonicalName(),
 	};
 	
+	//Built in Panel plugins
+	public static final String[] BUILT_IN_PANELS = {
+	};
+	
 	//Built in transaction cell renderers
 	public static final String[] BUILT_IN_TRANSACTION_CELL_RENDERERS = {
 		DefaultTransactionCellRenderer.class.getCanonicalName(),

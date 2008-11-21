@@ -145,7 +145,21 @@ public class PluginPreferences extends BuddiPreferencePlugin implements ActionLi
 		//At save time, we actually copy the files over to the new location, and remove ones which
 		// are to be removed.		
 		for (File f : filesToRemove) {
-			f.delete();
+			if (!f.delete()){
+				f.deleteOnExit();
+				String[] options = new String[1];
+				options[0] = PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_OK);
+				JOptionPane.showOptionDialog(
+						null, 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_DELETING_PLUGIN_POSTPONED), 
+						TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_DELETING_PLUGIN_TITLE), 
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE,
+						null,
+						options,
+						options[0]
+				);
+			}
 		}
 
 		if (!Buddi.getPluginsFolder().exists()){

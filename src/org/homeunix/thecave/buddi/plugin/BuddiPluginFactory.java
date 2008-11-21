@@ -17,6 +17,7 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.plugin.api.BuddiExportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
+import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
@@ -64,6 +65,8 @@ public class BuddiPluginFactory extends PluginFactory {
 				builtIn = Const.BUILT_IN_SYNCHRONIZES;
 			else if (pluginType.getName().equals(BuddiTransactionCellRendererPlugin.class.getName()))
 				builtIn = Const.BUILT_IN_TRANSACTION_CELL_RENDERERS;
+			else if (pluginType.getName().equals(BuddiPanelPlugin.class.getName()))
+				builtIn = Const.BUILT_IN_PANELS;
 			else {
 				builtIn = new String[0];
 				Log.warning("Unknown plugin type: " + pluginType.getName());
@@ -131,7 +134,8 @@ public class BuddiPluginFactory extends PluginFactory {
 							|| plugin instanceof BuddiPreferencePlugin
 							|| plugin instanceof BuddiReportPlugin
 							|| plugin instanceof BuddiRunnablePlugin
-							|| plugin instanceof BuddiTransactionCellRendererPlugin){
+							|| plugin instanceof BuddiTransactionCellRendererPlugin
+							|| plugin instanceof BuddiPanelPlugin){
 						pluginFiles.add(pluginFile);
 						break;
 					}
