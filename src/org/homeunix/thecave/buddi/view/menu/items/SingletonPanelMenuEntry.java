@@ -3,7 +3,6 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.event.ActionEvent;
 
 import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
-import org.homeunix.thecave.buddi.plugin.api.event.PanelPluginClosedListener;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossCheckboxMenuItem;
@@ -12,7 +11,7 @@ import org.homeunix.thecave.moss.swing.MossCheckboxMenuItem;
  *
  * @author mpeccorini
  */
-public class SingletonPanelMenuEntry extends MossCheckboxMenuItem implements PanelPluginClosedListener {
+public class SingletonPanelMenuEntry extends MossCheckboxMenuItem {
 
 	public static final long serialVersionUID = 0;
 	private final BuddiPanelPlugin plugin;
@@ -20,7 +19,6 @@ public class SingletonPanelMenuEntry extends MossCheckboxMenuItem implements Pan
 	public SingletonPanelMenuEntry(MainFrame parentFrame, BuddiPanelPlugin plugin) {
 		super(parentFrame, TextFormatter.getTranslation(plugin.getTabLabelKey()));
 		this.plugin = plugin;
-		plugin.addPanelPluginClosedListener(this);
 	}
 
 	@Override

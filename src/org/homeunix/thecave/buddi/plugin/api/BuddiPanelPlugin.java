@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -14,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.plugin.api.event.PanelPluginClosedListener;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
@@ -31,7 +29,7 @@ public abstract class BuddiPanelPlugin extends MossPanel implements MossPlugin {
 	private MainFrame parentFrame;
 	protected Document document;
 	private DocumentChangeListener listener;
-	private final Vector<PanelPluginClosedListener> pluginClosedListeners = new Vector<PanelPluginClosedListener>();
+//	private final Vector<PanelPluginClosedListener> pluginClosedListeners = new Vector<PanelPluginClosedListener>();
 	private CloseTabButton tabButton;
 
 	public abstract String getTabLabelKey();
@@ -61,18 +59,18 @@ public abstract class BuddiPanelPlugin extends MossPanel implements MossPlugin {
 
 	public void close() {
 		parentFrame.removePanel(this);
-		for (PanelPluginClosedListener pluginClosedListener : pluginClosedListeners) {
-			pluginClosedListener.panelPluginClosed(this);
-		}
+//		for (PanelPluginClosedListener pluginClosedListener : pluginClosedListeners) {
+//			pluginClosedListener.panelPluginClosed(this);
+//		}
 	}
-
-	public void addPanelPluginClosedListener(PanelPluginClosedListener pluginClosedListener) {
-		pluginClosedListeners.add(pluginClosedListener);
-	}
-
-	public void removePluginClosedListener(PanelPluginClosedListener pluginClosedListener) {
-		pluginClosedListeners.remove(pluginClosedListener);
-	}
+//
+//	public void addPanelPluginClosedListener(PanelPluginClosedListener pluginClosedListener) {
+//		pluginClosedListeners.add(pluginClosedListener);
+//	}
+//
+//	public void removePluginClosedListener(PanelPluginClosedListener pluginClosedListener) {
+//		pluginClosedListeners.remove(pluginClosedListener);
+//	}
 
 	public MainFrame getParentFrame() {
 		return parentFrame;
@@ -136,7 +134,7 @@ public abstract class BuddiPanelPlugin extends MossPanel implements MossPlugin {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			plugin.close();
+//			plugin.close();
 		}
 	}
 }
