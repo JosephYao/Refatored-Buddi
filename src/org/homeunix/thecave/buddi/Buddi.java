@@ -727,7 +727,17 @@ public class Buddi {
 
 		//Run any RunnablePlugins which we may have here.
 		for (BuddiRunnablePlugin plugin : (List<BuddiRunnablePlugin>) BuddiPluginFactory.getPlugins(BuddiRunnablePlugin.class)) {
-			plugin.run();
+			try {
+				plugin.run();
+			}
+			catch (RuntimeException re){
+				Log.emergency("Runtime Exception encountered while starting plugin", re);
+				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+			}
+			catch (Exception e){
+				Log.emergency("Exception encountered while starting plugin", e);
+				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+			}
 		}
 
 		//Start the GUI in the proper thread

@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.thecave.homeunix.org
-#Fri Nov 21 15:47:10 MST 2008
+#Tue Nov 25 21:32:44 MST 2008
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUDGET_CATEGORIES_COMBOBOX_HEADER=--Budget Categories--
@@ -115,7 +115,6 @@ MENU_EDIT_COPY_VALUES_TO_PREVIOUS_BUDGET_PERIOD=Copy Values to Previous Period
 MESSAGE_PROMPT_OVERWRITE_FILE_TITLE=Overwrite File
 BUDGET_CATEGORY=Budget Category
 MENU_EDIT=Edit
-MENU_VIEW_PANELS=Panel Plugins
 IMPORT_LEGACY_BUDDI_FILES=Import Legacy Buddi Files
 BUTTON_OVERWRITE_TRANSACTON=Overwrite
 REPORT_TITLE_TRANSACTIONS_NOT_CLEARED=Transactions Not Cleared
@@ -533,6 +532,7 @@ DATA_FILE_STATS_TRANSACTIONS=Number of Transactions\:
 VIEW=View
 CURRENT_BUDGET_PERIOD=Current Budget Period
 MENU_VIEW_NEXT_BUDGET_PERIOD=Next Budget Period
+MENU_HELP_DOWNLOAD_PLUGINS=Download Plugins
 IMPORT_LEGACY_POTENTIAL_WARNINGS=There were some potential issues encountered while importing the \nlegacy data file, where an existing value conflicted with an imported \nvalue.  These are listed below.\n\nPlease verify each one, and change the value manually if required.  \nYou can select the text below, and copy it to a text editor if there \nare many potential conflicts found.
 MENU_EDIT_TOGGLE_RECONCILED=Toggle Reconciled
 BONUS=Bonus
@@ -602,7 +602,6 @@ BUDGET_CATEGORY_TYPE_QUARTER=Quarter
 FILECHOOSER_SAVE_DATA_FILE_TITLE=Save Data File...
 EXPORT_TO_HTML=Export to HTML
 HINT_FROM=&lt;From&gt;
-MESSAGE_ERROR_DELETING_PLUGIN_POSTPONED=There was an error deleting the plugin.  The plugin has been\nmarked for deletion upon Buddi exit; please try to exit Buddi,\nand verify that the plugin has been deleted.\n\nIf Buddi is still unable to delete the plugin, you can try to \nmanually delete it, by removing the .buddi3plugin file in the\nPlugins folder in your Buddi Data directory.
 MESSAGE_ENTER_PASSWORD_TITLE=Enter Password
 INCORRECT_PASSWORD_TITLE=Incorrect Password
 ACCOUNT_EDITOR_EXPENSE=Expense

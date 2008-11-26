@@ -7,10 +7,12 @@
 -Added interest rate to the account definition again (optionally enabled by the Show Interest Rate option in Preferences).  This is for information only; it does *not* automatically calculate interest.
 -Added checks at the model level to verify that Income BC's can only be used in From position, and Expense BC's can only be used in To
 -Added JUnit tests for both splits and BC sanity checks.
+-Added Download Plugins to Help Menu
 -Added --lnf option to specify certain Java look and feel.  You still must manually add the specified LnF .jar to the classpath at launch.
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
 -Fixed bug #2212486 (Get Info on Mac doesn't show version number, shows ${PROJECT_COPYRIGHT} instead)
+-Fixed bug #2347862 (Crash on startup possible with bad Runnable plugins)
 -Fixed bug with new installer which did not create Start Menu icon (Windows)
 -Fixed GUI bug where Accounts / BCs don't roll down again automatically after modifying one of them.
 -Updated Russian translation (Thanks to Michael Krekin for this)

@@ -27,6 +27,7 @@ import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -64,8 +65,14 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 		}
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(cancelButton);
-		buttonPanel.add(okButton);
+		if (OperatingSystemUtil.isMac()){
+			buttonPanel.add(cancelButton);
+			buttonPanel.add(okButton);
+		}
+		else {
+			buttonPanel.add(okButton);			
+			buttonPanel.add(cancelButton);
+		}
 
 		okButton.setPreferredSize(InternalFormatter.getButtonSize(okButton));
 		cancelButton.setPreferredSize(InternalFormatter.getButtonSize(cancelButton));

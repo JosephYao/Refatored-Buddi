@@ -7,6 +7,7 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.buddi.view.menu.items.HelpCheckForUpdates;
+import org.homeunix.thecave.buddi.view.menu.items.HelpDownloadPlugins;
 import org.homeunix.thecave.buddi.view.menu.items.HelpHelp;
 import org.homeunix.thecave.buddi.view.menu.items.HelpTutorial;
 import org.homeunix.thecave.moss.swing.MossFrame;
@@ -25,6 +26,8 @@ public class HelpMenu extends MossMenu {
 		}
 		this.add(new HelpHelp(frame));
 		this.add(new HelpTutorial(frame));
+		this.addSeparator();
+		this.add(new HelpDownloadPlugins(frame));
 		this.addSeparator();
 		this.add(new HelpCheckForUpdates(frame));
 		
