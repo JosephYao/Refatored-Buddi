@@ -9,6 +9,7 @@
 -Added JUnit tests for both splits and BC sanity checks.
 -Added Download Plugins to Help Menu
 -Added --lnf option to specify certain Java look and feel.  You still must manually add the specified LnF .jar to the classpath at launch.
+-Added Concise Transaction Renderer (another rendering option for showing transactions).  Thanks to igx89 for this patch.
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
 -Fixed bug #2212486 (Get Info on Mac doesn't show version number, shows ${PROJECT_COPYRIGHT} instead)

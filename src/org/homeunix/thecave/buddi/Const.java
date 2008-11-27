@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileFilter;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.ChequeTransactionCellRenderer;
+import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.ConciseTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.SimpleTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.AdvancedPreferences;
@@ -232,6 +233,7 @@ public class Const {
 		DefaultTransactionCellRenderer.class.getCanonicalName(),
 		SimpleTransactionCellRenderer.class.getCanonicalName(),
 		ChequeTransactionCellRenderer.class.getCanonicalName(),
+		ConciseTransactionCellRenderer.class.getCanonicalName(),
 	};
 	
 	//Built in main screen tabs

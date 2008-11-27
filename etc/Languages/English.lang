@@ -1,5 +1,6 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.thecave.homeunix.org
 #Tue Nov 25 21:32:44 MST 2008
+CONCISE_TRANSACTION_CELL_RENDERER=Concise Transaction Renderer
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUDGET_CATEGORIES_COMBOBOX_HEADER=--Budget Categories--
