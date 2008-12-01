@@ -137,13 +137,14 @@ public class Const {
 	// is no good method of reading the main jar file by itself (since
 	// it may be wrapped in a .exe, etc).
 	public final static String[] BUNDLED_LANGUAGES = {
-		"Czech",
+//		"Czech",
 		"Deutsch",
 		"English_(US)",
 		"English",
 		"Espanol",
 		"Francais",
 		"Greek",
+		"Hebrew",
 		"Italiano",
 		"Nederlands",
 		"Norsk",

@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.moss.util.Log;
@@ -62,7 +63,11 @@ public class HtmlHelper {
 //		sb.append("</SCRIPT>\n");
 
 		sb.append("</head>\n");
-		sb.append("<body>\n<div class='separator'></div>\n");
+		if ("Hebrew".equals(PrefsModel.getInstance().getLanguage()))
+			sb.append("<body dir='rtl'>\n");
+		else
+			sb.append("<body>\n");
+		sb.append("<div class='separator'></div>\n");
 
 		sb.append("<div class='header'>\n<div class='empty'>&nbsp;</div>");
 		sb.append("<h1>").append(TextFormatter.getTranslation(title)).append("</h1>\n");

@@ -457,31 +457,32 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		
 		Thread saveThread = new Thread(new Runnable(){
 			public void run() {
+				OutputStream os = null;
 				try {
 					//Clone the file.  This is to decrease the time needed to save large files.
 					Document clone = DocumentImpl.this.clone();
 					
 					//Save the file
 					BuddiCryptoFactory factory = new BuddiCryptoFactory();
-					File tempFile = new File(file.getAbsolutePath() + ".temp");
-					OutputStream os = factory.getEncryptedStream(new FileOutputStream(tempFile), password);
+//					File tempFile = new File(file.getAbsolutePath() + ".temp");
+					os = factory.getEncryptedStream(new FileOutputStream(file), password);
 
 					clone.saveToStream(os);
 
-					//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
-					// to rename the existing file to a '.old' file, rename the temp file to the
-					// data file, and remove the .old file if all goes well.  While it would be simpler
-					// to just remove the data file intitally, by renaming it first, we have at least
-					// some assurance that we are able to recover data if needed.
-					File oldFile = new File(file.getAbsolutePath() + ".old");
-					if (oldFile.exists() && !oldFile.delete())
-						throw new IOException("Unable to delete existing file '" + oldFile + "' in preparation for moving temp file.");
-					if (file.exists() && !file.renameTo(oldFile))
-						throw new IOException("Unable to rename existing data file '" + file + "' to '" + oldFile + "'.");
-					if (!tempFile.renameTo(file))
-						throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
-					if (oldFile.exists() && !oldFile.delete())
-						Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
+//					//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
+//					// to rename the existing file to a '.old' file, rename the temp file to the
+//					// data file, and remove the .old file if all goes well.  While it would be simpler
+//					// to just remove the data file intitally, by renaming it first, we have at least
+//					// some assurance that we are able to recover data if needed.
+//					File oldFile = new File(file.getAbsolutePath() + ".old");
+//					if (oldFile.exists() && !oldFile.delete())
+//						throw new IOException("Unable to delete existing file '" + oldFile + "' in preparation for moving temp file.");
+//					if (file.exists() && !file.renameTo(oldFile))
+//						throw new IOException("Unable to rename existing data file '" + file + "' to '" + oldFile + "'.");
+//					if (!tempFile.renameTo(file))
+//						throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
+//					if (oldFile.exists() && !oldFile.delete())
+//						Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
 				}
 				catch (CipherException ce){
 					//This means that there is something seriously wrong with the encryption methods.
@@ -500,6 +501,16 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				}
 				catch (CloneNotSupportedException cnse){
 					Log.error("There was a problem cloning the data model, prior to saving.", cnse);
+				}
+				finally {
+					if (os != null) {
+						try {
+							os.close();
+						}
+						catch (IOException ioe) {
+							Log.emergency("Problem encountered while trying to close Output Stream", ioe);
+						}
+					}
 				}
 				
 				saveMutex.release();
