@@ -109,16 +109,16 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		//If Start and End are in the same budget period
 		if (getBudgetPeriodType().getStartOfBudgetPeriod(startDate).equals(
 				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
-			Log.info("Start Date and End Date are in the same period.");
+//			Log.info("Start Date and End Date are in the same period.");
 			long amount = getAmount(startDate);
-			Log.info("Amount = " + amount);
+//			Log.info("Amount = " + amount);
 			long daysInPeriod = getBudgetPeriodType().getDaysInPeriod(startDate);
-			Log.info("Days in Period = " + daysInPeriod);
+//			Log.info("Days in Period = " + daysInPeriod);
 			long daysBetween = DateFunctions.getDaysBetween(startDate, endDate, true);
-			Log.info("Days Between = " + daysBetween);
+//			Log.info("Days Between = " + daysBetween);
 		
-			Log.info("Returning " + (long) (((double) amount / (double) daysInPeriod) * daysBetween));
-			Log.info("Finished calculating the budget amount.\n\n");
+//			Log.info("Returning " + (long) (((double) amount / (double) daysInPeriod) * daysBetween));
+//			Log.info("Finished calculating the budget amount.\n\n");
 			return (long) (((double) amount / (double) daysInPeriod) * daysBetween);
 		}
 		 
@@ -127,15 +127,15 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))
 				|| getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).before(
 						getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
-			Log.info("Start Date and End Date are in different budget periods.");
+//			Log.info("Start Date and End Date are in different budget periods.");
 			long amountStartPeriod = getAmount(startDate);
-			Log.info("Amount Start Period = " + amountStartPeriod);
+//			Log.info("Amount Start Period = " + amountStartPeriod);
 			long daysInStartPeriod = getBudgetPeriodType().getDaysInPeriod(startDate);
-			Log.info("Days in Start Period = " + daysInStartPeriod);
+//			Log.info("Days in Start Period = " + daysInStartPeriod);
 			long daysAfterStartDateInStartPeriod = DateFunctions.getDaysBetween(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate), true);
-			Log.info("Days After Start Date in Start Period = " + daysAfterStartDateInStartPeriod);
+//			Log.info("Days After Start Date in Start Period = " + daysAfterStartDateInStartPeriod);
 			double totalStartPeriod = (((double) amountStartPeriod / (double) daysInStartPeriod) * daysAfterStartDateInStartPeriod);
-			Log.info("Total in Start Period = " + totalStartPeriod);
+//			Log.info("Total in Start Period = " + totalStartPeriod);
 			
 			double totalInMiddle = 0;
 			for (String periodKey : getBudgetPeriods(
@@ -144,19 +144,19 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 				totalInMiddle += getAmount(getPeriodDate(periodKey));
 				Log.info("Added " + getAmount(getPeriodDate(periodKey)) + " to total for one period in between; current value is " + totalInMiddle);
 			}
-			Log.info("Total in Middle = " + totalInMiddle);
+//			Log.info("Total in Middle = " + totalInMiddle);
 			
 			long amountEndPeriod = getAmount(endDate);
-			Log.info("Amount End Period = " + amountEndPeriod);
+//			Log.info("Amount End Period = " + amountEndPeriod);
 			long daysInEndPeriod = getBudgetPeriodType().getDaysInPeriod(endDate);
-			Log.info("Days in End Period = " + daysInEndPeriod);
+//			Log.info("Days in End Period = " + daysInEndPeriod);
 			long daysBeforeEndDateInEndPeriod = DateFunctions.getDaysBetween(getBudgetPeriodType().getStartOfBudgetPeriod(endDate), endDate, true);
-			Log.info("Days before End Period = " + daysBeforeEndDateInEndPeriod);
+//			Log.info("Days before End Period = " + daysBeforeEndDateInEndPeriod);
 			double totalEndPeriod = (long) (((double) amountEndPeriod / (double) daysInEndPeriod) * daysBeforeEndDateInEndPeriod); 
-			Log.info("Total in End Period = " + totalEndPeriod);
+//			Log.info("Total in End Period = " + totalEndPeriod);
 			
-			Log.info("Sum of Start Period, Middle, and End Period = " + (totalStartPeriod + totalInMiddle + totalEndPeriod));
-			Log.info("Finished Calculating the Budget Amount\n\n");
+//			Log.info("Sum of Start Period, Middle, and End Period = " + (totalStartPeriod + totalInMiddle + totalEndPeriod));
+//			Log.info("Finished Calculating the Budget Amount\n\n");
 			return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
 		}
 

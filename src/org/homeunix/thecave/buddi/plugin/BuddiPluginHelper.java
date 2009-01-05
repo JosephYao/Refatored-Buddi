@@ -12,6 +12,7 @@ import net.java.dev.SwingWorker;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginRangeFilters;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.impl.BudgetCategoryTypeSemiMonthly;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
@@ -102,6 +103,18 @@ public class BuddiPluginHelper {
 				DateFunctions.getStartOfMonth(DateFunctions.addMonths(new Date(), -1)),
 				DateFunctions.getEndOfMonth(DateFunctions.addMonths(new Date(), -1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_MONTH)
+		));
+		//It's easier to just make the category type and use it, rather than duplicate all the calculations. 
+		BudgetCategoryTypeSemiMonthly semiMonth = new BudgetCategoryTypeSemiMonthly();
+		intervals.add(new DateChoice(
+				semiMonth.getStartOfBudgetPeriod(new Date()),
+				semiMonth.getEndOfBudgetPeriod(new Date()),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_SEMI_MONTH)
+		));
+		intervals.add(new DateChoice(
+				semiMonth.getStartOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)),
+				semiMonth.getEndOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)),
+				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_SEMI_MONTH)
 		));
 		intervals.add(new DateChoice(
 				DateFunctions.getStartOfQuarter(new Date()),

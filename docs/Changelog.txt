@@ -1,4 +1,7 @@
-3.3.0.0
+3.3.1.0
+-Added report interval for THis SemiMonth and Last SemiMonth
+
+3.3.0.0 (December 14 2008)
 -Added support for split transactions
 -Added feature request to include available funds on the main window
 -Added feature request #1799063 (Add 'Memo' column to reports).
