@@ -1,5 +1,5 @@
 3.3.1.0
--Added report interval for THis SemiMonth and Last SemiMonth
+-Added report interval for This SemiMonth and Last SemiMonth
 
 3.3.0.0 (December 14 2008)
 -Added support for split transactions
@@ -14,6 +14,7 @@
 -Added --lnf option to specify certain Java look and feel.  You still must manually add the specified LnF .jar to the classpath at launch.
 -Added Concise Transaction Renderer (another rendering option for showing transactions).  Thanks to Matthew "IGx89" Lieder for this patch.
 -Added Hebrew translation and support for Right-to-Left languages in reports (thanks to Yoni Bar-Lavie for this)
+-Added true Mac Universal support for Java Application Stub (no performance difference, but now shows up as Universal in process listings)
 -Fixed bug #2146327 (Esc confirms exit, not cancels it)
 -Fixed bug #2174651 (End date still set, even if unchecked the end date option).
 -Fixed bug #2212486 (Get Info on Mac doesn't show version number, shows ${PROJECT_COPYRIGHT} instead)
