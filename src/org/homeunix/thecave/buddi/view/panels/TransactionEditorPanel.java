@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -41,6 +42,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
@@ -49,8 +51,10 @@ import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoCompleteEntry;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.view.dialogs.SplitTransactionDialog;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
+import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossHintComboBox;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
@@ -136,8 +140,8 @@ public class TransactionEditorPanel extends MossPanel {
 
 		description.setText("");
 
-		from.setModel(new SourceComboBoxModel(this.model, true));
-		to.setModel(new SourceComboBoxModel(this.model, false));
+		from.setModel(new SourceComboBoxModel(this.model, true, true));
+		to.setModel(new SourceComboBoxModel(this.model, false, true));
 
 		from.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_FROM), from));
 		to.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_TO), to));
@@ -350,6 +354,20 @@ public class TransactionEditorPanel extends MossPanel {
 						}
 					}
 				}
+				else if (from.getSelectedItem() != null 
+						&& from.getSelectedItem().toString().equals(BuddiKeys.SPLIT_VERB.toString())){
+					try {
+						List<TransactionSplit> splits;
+						if (getTransaction() == null)
+							splits = null;
+						else
+							splits = getTransaction().getFromSplits();
+						new SplitTransactionDialog(null, model, splits, amount.getValue(), true).openWindow();
+					}
+					catch (WindowOpenException woe){
+						Log.warning("Failed to open split transaction window", woe);
+					}
+				}
 				else {
 					from.setSelectedItem(null);
 				}
@@ -382,6 +400,22 @@ public class TransactionEditorPanel extends MossPanel {
 							from.setSelectedItem(null);
 						}
 					}
+				}
+				else if (to.getSelectedItem() != null 
+						&& to.getSelectedItem().toString().equals(BuddiKeys.SPLIT_VERB.toString())){
+					Log.info("Opening split dialog");
+					try {
+						List<TransactionSplit> splits;
+						if (getTransaction() == null)
+							splits = null;
+						else
+							splits = getTransaction().getFromSplits();
+						new SplitTransactionDialog(null, model, splits, amount.getValue(), false).openWindow();
+					}
+					catch (WindowOpenException woe){
+						Log.warning("Failed to open split transaction window", woe);
+					}
+
 				}
 				else {
 					to.setSelectedItem(null);

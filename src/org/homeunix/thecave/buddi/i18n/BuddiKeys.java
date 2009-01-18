@@ -11,6 +11,7 @@ package org.homeunix.thecave.buddi.i18n;
  *
  */
 public enum BuddiKeys {
+	HINT_SOURCE,
 	DAYS,
 	MESSAGE_CONCURRENT_SAVE_EXCEPTION_TEXT,
 	CANNOT_PARSE_DATE,
@@ -416,4 +417,5 @@ public enum BuddiKeys {
 	UTILITIES,
 	VIEW,
 	SPLIT,
+	SPLIT_VERB, //Used to tell the user to split a transaction, at bottom of source combo box list. 
 }

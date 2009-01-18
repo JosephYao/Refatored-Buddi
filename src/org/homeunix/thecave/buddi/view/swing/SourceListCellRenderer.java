@@ -8,7 +8,9 @@ import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
+import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 	public static final long serialVersionUID = 0;
@@ -50,6 +52,9 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 			if (((Source) value).isDeleted())
 				this.setText("<strike>" + this.getText() + "</strike>");
 			this.setText("<html>" + this.getText() + "</html>");
+		}
+		else if (value != null && value.equals(BuddiKeys.SPLIT_VERB.toString())){
+			this.setText(TextFormatter.getTranslation(value.toString()));
 		}
 		else
 			this.setText("<html><font color='gray'>" + this.getText() + "</font></html>");

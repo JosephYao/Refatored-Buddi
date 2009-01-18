@@ -26,6 +26,7 @@ public class SourceComboBoxModel implements ComboBoxModel {
 
 	private final Document model;
 	private final boolean includeIncome;
+	private final boolean includeSplit; //True for calls from transaction editor; false for calls from split editor.
 	
 	private final List<Account> accounts = new ArrayList<Account>();
 	private final List<BudgetCategory> budgetCategories = new ArrayList<BudgetCategory>();
@@ -34,9 +35,10 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	
 	private final DocumentChangeListener listener;
 
-	public SourceComboBoxModel(Document model, boolean includeIncome) {
+	public SourceComboBoxModel(Document model, boolean includeIncome, boolean includeSplit) {
 		this.model = model;
 		this.includeIncome = includeIncome;
+		this.includeSplit = includeSplit;
 		this.comboBoxModel = new DefaultComboBoxModel();
 		updateComboBoxModel(null);
 		listener = new DocumentChangeListener(){
@@ -121,6 +123,10 @@ public class SourceComboBoxModel implements ComboBoxModel {
 			if (bc.isIncome() == includeIncome){
 				getComboBoxModel().addElement(bc);
 			}
+		}
+		if (includeSplit){
+			getComboBoxModel().addElement("&nbsp;");
+			getComboBoxModel().addElement(BuddiKeys.SPLIT_VERB.toString());
 		}
 		
 		setSelectedItem(selected);

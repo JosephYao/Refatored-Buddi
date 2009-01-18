@@ -18,12 +18,13 @@ import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.Document;
-import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
+import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.panels.SplitEditorPanel;
 import org.homeunix.thecave.moss.swing.MossDialog;
+import org.homeunix.thecave.moss.util.Log;
 
 public class SplitTransactionDialog extends MossDialog implements ActionListener {
 
@@ -33,7 +34,8 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	private final JButton cancel;
 
 	private final Document model;
-	private final Transaction transaction;
+	private final List<TransactionSplit> splits;
+	private final long amount; //The sum of all splits must equal this number.
 	private final boolean from; //Is this for a To or From?  This will affect what types of BCs can be used.
 	
 	//This keeps track of the relationship between TransactionSplits and JPanels, for displaying splits.
@@ -42,11 +44,12 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	private final JPanel splitPanels;
 
 	@SuppressWarnings("unchecked")
-	public SplitTransactionDialog(MainFrame frame, Document model, Transaction transaction, boolean from) {
+	public SplitTransactionDialog(MainFrame frame, Document model, List<TransactionSplit> splits, long amount, boolean from) {
 		super(frame);
 
 		this.model = model;
-		this.transaction = transaction;
+		this.splits = splits;
+		this.amount = amount;
 		this.from = from;
 
 		splitPanels = new JPanel();
@@ -72,19 +75,13 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	public void updateButtons() {
 		super.updateButtons();
 
-		List<TransactionSplit> splits;
-		if (from)
-			splits = transaction.getFromSplits();
-		else
-			splits = transaction.getToSplits();
-		
 		if (splits != null){
 			long amount = 0;
 			for (TransactionSplit split : splits) {
 				amount += split.getAmount();
 			}
 			
-			save.setEnabled(amount == transaction.getAmount());
+			save.setEnabled(amount == this.amount);
 		}
 		else {
 			save.setEnabled(false);
@@ -92,11 +89,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	}
 
 	public void updateContent() {
-		List<TransactionSplit> splits;
-		if (from)
-			splits = transaction.getFromSplits();
-		else
-			splits = transaction.getToSplits();
+		List<TransactionSplit> splits = null;
 		
 		if (splits == null)
 			splits = new ArrayList<TransactionSplit>();
@@ -108,18 +101,35 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 				splitsToPanelsMap.remove(split);
 			}
 		}
-		
+
 		//Next we add in new ones
 		for (TransactionSplit split : splits) {
 			if (!splitsToPanelsMap.keySet().contains(split)){
-				SplitEditorPanel splitPanel = new SplitEditorPanel(split);
-				splitPanels.add(splitPanel);
-				splitsToPanelsMap.put(split, splitPanel);
+				try {
+					SplitEditorPanel splitPanel = new SplitEditorPanel(split, from);
+					splitPanels.add(splitPanel);
+					splitsToPanelsMap.put(split, splitPanel);
+				}
+				catch (InvalidValueException ive){
+					Log.warning("Error creating split editor", ive);
+				}
 			}
+		}
+
+		//Include a new line, for adding more
+		try {
+			SplitEditorPanel splitPanel = new SplitEditorPanel(model, from);
+			splitPanels.add(splitPanel);
+			splitsToPanelsMap.put(null, splitPanel);
+		}
+		catch (InvalidValueException ive){
+			Log.warning("Error creating split editor", ive);
 		}
 		
 		//Force a refresh
 		splitPanels.invalidate();
+		
+		this.pack();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
