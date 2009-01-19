@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
+import org.homeunix.thecave.moss.util.DateFunctions;
 
 /**
  * 
@@ -62,7 +63,7 @@ public class BudgetCategoryTypeSemiMonthly extends BudgetCategoryType {
 		} else {
 			cal.set(Calendar.DAY_OF_MONTH, 16);
 		}
-		return cal.getTime();
+		return DateFunctions.getStartOfDay(cal.getTime());
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class BudgetCategoryTypeSemiMonthly extends BudgetCategoryType {
 			cal.set(Calendar.DAY_OF_MONTH, cal
 					.getActualMaximum(Calendar.DAY_OF_MONTH));
 		}
-		return cal.getTime();
+		return DateFunctions.getEndOfDay(cal.getTime());
 	}
 
 }

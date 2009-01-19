@@ -302,6 +302,14 @@ public class FilteredLists {
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_WEEK == dateFilter) {
 				return DateFunctions.isSameWeek(today, t.getDate());
 			}
+			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_SEMI_MONTH == dateFilter) {
+				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
+				return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
+			}
+			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_SEMI_MONTH == dateFilter) {
+				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
+				return (semiMonth.getStartOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
+			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_MONTH == dateFilter) {
 				return DateFunctions.isSameMonth(today, t.getDate());
 			}
