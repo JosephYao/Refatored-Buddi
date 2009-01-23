@@ -1,6 +1,7 @@
 3.3.1.0
 -Added report interval for This Semi Month and Last Semi Month
 -Added transaction filter interval This Semi Month and Last Semi Month
+-Remove C / R check boxes from All Transactions view, as they are not able to be used here.
 -Updated Portugese translation (thanks to Adonai Jr for this)
 -Fixed bug with Semi Monthly period which did not set the time correctly for the start / end date.
 

@@ -102,10 +102,10 @@ public class TransactionEditorPanel extends MossPanel {
 
 	private boolean changed;
 
-	public TransactionEditorPanel(Document model, Source associatedAccount, boolean scheduledTransactionPane){
+	public TransactionEditorPanel(Document model, Source associatedSource, boolean scheduledTransactionPane){
 		super(true);
 		this.model = model;
-		this.associatedSource = associatedAccount;
+		this.associatedSource = associatedSource;
 
 		autoCompleteEntries = new AutoCompleteEntryModel(model);
 
@@ -128,8 +128,8 @@ public class TransactionEditorPanel extends MossPanel {
 		components = new Vector<JComponent>();
 
 		date.setVisible(!scheduledTransactionPane);
-		cleared.setVisible(!scheduledTransactionPane);
-		reconciled.setVisible(!scheduledTransactionPane);
+		cleared.setVisible(!scheduledTransactionPane && associatedSource != null);
+		reconciled.setVisible(!scheduledTransactionPane && associatedSource != null);
 
 		open();
 	}

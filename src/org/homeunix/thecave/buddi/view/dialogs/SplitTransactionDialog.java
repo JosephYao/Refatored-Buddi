@@ -5,7 +5,8 @@ package org.homeunix.thecave.buddi.view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		
 		this.setLayout(new BorderLayout());
 		
-		splitPanels.setLayout(new GridLayout(0, 1));
+		splitPanels.setLayout(new GridBagLayout());
 		this.add(splitPanels, BorderLayout.NORTH);
 
 		JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -96,19 +97,45 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		
 		//First we remove splits which are not in the transaction
 		for (TransactionSplit split : splitsToPanelsMap.keySet()) {
-			if (!splits.contains(split)){
-				splitPanels.remove(splitsToPanelsMap.get(split));
-				splitsToPanelsMap.remove(split);
-			}
+//			if (!splits.contains(split)){
+//				splitPanels.remove(splitsToPanelsMap.get(split));
+//				splitsToPanelsMap.remove(split);
+//			}
 		}
 
+		GridBagConstraints c = new GridBagConstraints();
+		c.weighty = 0;
+		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.2;
+		
 		//Next we add in new ones
 		for (TransactionSplit split : splits) {
 			if (!splitsToPanelsMap.keySet().contains(split)){
 				try {
-					SplitEditorPanel splitPanel = new SplitEditorPanel(split, from);
-					splitPanels.add(splitPanel);
+					SplitEditorPanel splitPanel;
+					if (splitsToPanelsMap.get(split) != null)
+						splitPanel = splitsToPanelsMap.get(split);
+					else
+						splitPanel = new SplitEditorPanel(split, from);
+					
+					final TransactionSplit finalSplit = split;
+					c.gridx = 0;
+					splitPanels.add(splitPanel, c);
 					splitsToPanelsMap.put(split, splitPanel);
+										
+					c.gridx = 2;
+					JButton removeButton = new JButton("-");
+					removeButton.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+//							splitPanels.remove(splitPanel);
+							splitsToPanelsMap.remove(finalSplit);
+							updateContent();
+						}
+					});
+					splitPanel.add(removeButton);
+					
+					c.gridy++;
 				}
 				catch (InvalidValueException ive){
 					Log.warning("Error creating split editor", ive);
@@ -119,8 +146,32 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		//Include a new line, for adding more
 		try {
 			SplitEditorPanel splitPanel = new SplitEditorPanel(model, from);
-			splitPanels.add(splitPanel);
+			c.gridx = 0;
+			splitPanels.add(splitPanel, c);
 			splitsToPanelsMap.put(null, splitPanel);
+			
+			c.gridx = 1;
+			JButton addButton = new JButton("+");
+			addButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					try {
+						SplitEditorPanel editor = (SplitEditorPanel) splitsToPanelsMap.get(null); //Get the unsaved split editor
+						if (editor != null){
+							splitsToPanelsMap.put(editor.getNewSplit(), editor);
+							splitsToPanelsMap.remove(null);
+						}
+						updateContent();
+					}
+					catch (InvalidValueException ive){
+						Log.warning("You must fill in both amount and source");
+					}
+				}
+			});
+			splitPanel.add(addButton);
+			
+			c.gridx = 2;
+			JButton removeButton = new JButton("-");
+			splitPanel.add(removeButton);
 		}
 		catch (InvalidValueException ive){
 			Log.warning("Error creating split editor", ive);

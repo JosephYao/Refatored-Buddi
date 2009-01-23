@@ -15,6 +15,7 @@ import javax.swing.JButton;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
@@ -103,5 +104,13 @@ public class SplitEditorPanel extends MossPanel {
 			source.setSelectedItem(split.getSource());
 			amount.setValue(split.getAmount());
 		}
+	}
+	
+	public TransactionSplit getNewSplit() throws InvalidValueException {
+		if (!(source.getSelectedItem() instanceof Source) || amount.getValue() == 0){
+			throw new InvalidValueException("You must fill in a non-zero amount, and select a source for the split.");
+		}
+		
+		return ModelFactory.createTransactionSplit((Source) source.getSelectedItem(), amount.getValue()); 
 	}
 }
