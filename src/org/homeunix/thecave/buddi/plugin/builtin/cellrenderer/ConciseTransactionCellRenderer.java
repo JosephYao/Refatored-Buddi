@@ -116,7 +116,7 @@ public class ConciseTransactionCellRenderer extends BuddiTransactionCellRenderer
 			//Memo
 			g.drawString(
 					Formatter.getStringToLength(
-							transaction.getMemo(),
+							transaction.getMemo() != null ? transaction.getMemo() : "",
 							width - amountXOffset, fm
 					), 
 					150, 

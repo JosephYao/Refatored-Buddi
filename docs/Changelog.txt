@@ -1,3 +1,6 @@
+3.3.2.0
+-Fixed edge case NPE exception in ConciseTransactionCellRenderer (thanks to Matthew Lieder for the patch) 
+
 3.3.1.0 (January 24 2009)
 UNSTABLE VERSION FOR TESTING ONLY.  USE AT YOUR OWN RISK
 -Added support in GUI for split transactions.  
