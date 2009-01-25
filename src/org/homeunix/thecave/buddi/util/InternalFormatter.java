@@ -173,7 +173,7 @@ public class InternalFormatter {
 //	}
 
 	public static Dimension getComponentSize(JComponent component, int minWidth){
-		return new Dimension(Math.max(minWidth, component.getPreferredSize().width), component.getPreferredSize().height);
+		return new Dimension(Math.max(minWidth, component.getPreferredSize().width), Math.max(component.getPreferredSize().height, component.getSize().height));
 	}
 
 	public static Dimension getComboBoxSize(JComboBox comboBox){

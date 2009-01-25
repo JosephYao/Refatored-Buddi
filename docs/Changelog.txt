@@ -1,4 +1,6 @@
-3.3.1.0
+3.3.1.0 (January 24 2009)
+UNSTABLE VERSION FOR TESTING ONLY.  USE AT YOUR OWN RISK
+-Added support in GUI for split transactions.  
 -Added report interval for This Semi Month and Last Semi Month
 -Added transaction filter interval This Semi Month and Last Semi Month
 -Remove C / R check boxes from All Transactions view, as they are not able to be used here.

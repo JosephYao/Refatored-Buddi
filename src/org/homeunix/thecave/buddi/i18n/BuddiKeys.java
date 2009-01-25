@@ -417,5 +417,10 @@ public enum BuddiKeys {
 	UTILITIES,
 	VIEW,
 	SPLIT,
-	SPLIT_VERB, //Used to tell the user to split a transaction, at bottom of source combo box list. 
+	SPLITS, //Used to tell the user a transaction is split, at bottom of source combo box list.
+	SPLIT_BUTTON, //Used to open the split dialog.  Normal translation is '...'.
+	SPLIT_EDITOR,
+	SPLIT_TRANSACTION_DIFFERENCE,
+	SPLIT_TOTAL,
+	TRANSACTION_AMOUNT,
 }

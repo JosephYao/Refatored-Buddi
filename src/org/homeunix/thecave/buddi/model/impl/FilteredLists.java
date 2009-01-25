@@ -409,7 +409,8 @@ public class FilteredLists {
 		public boolean isIncluded(AccountType object) {
 			if (object != null){
 				for (Account a : model.getAccounts()) {
-					if (a.getAccountType().equals(object) 
+					if (a != null 
+							&& a.getAccountType().equals(object) 
 							&& (!a.isDeleted() || PrefsModel.getInstance().isShowDeleted()))
 						return true;
 				}

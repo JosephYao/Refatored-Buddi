@@ -9,25 +9,24 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Split;
-import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 
 
 public class SplitImpl extends SourceImpl implements Split {
 	
 	@Override
-	ModelObject clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+	Split clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
 		if (originalToCloneMap.get(this) != null)
-			return (TransactionSplit) originalToCloneMap.get(this);
+			return (Split) originalToCloneMap.get(this);
 
-		TransactionSplitImpl t = new TransactionSplitImpl();
+		SplitImpl s = new SplitImpl();
 
-		t.document = (Document) originalToCloneMap.get(document);
-		t.modifiedTime = new Time(modifiedTime);
+		s.document = (Document) originalToCloneMap.get(document);
+		s.modifiedTime = new Time(modifiedTime);
 
-		originalToCloneMap.put(this, t);
+		originalToCloneMap.put(this, s);
 
-		return t;
+		return s;
 	}
 	
 	public String getFullName() {

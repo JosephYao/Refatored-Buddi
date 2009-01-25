@@ -28,6 +28,8 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	private final boolean includeIncome;
 	private final boolean includeSplit; //True for calls from transaction editor; false for calls from split editor.
 	
+	private final Source ignoredSource; //An array of sources which will not be added to the list. 
+	
 	private final List<Account> accounts = new ArrayList<Account>();
 	private final List<BudgetCategory> budgetCategories = new ArrayList<BudgetCategory>();
 	
@@ -35,11 +37,12 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	
 	private final DocumentChangeListener listener;
 
-	public SourceComboBoxModel(Document model, boolean includeIncome, boolean includeSplit) {
+	public SourceComboBoxModel(Document model, boolean includeIncome, boolean includeSplit, Source ignoredSource) {
 		this.model = model;
 		this.includeIncome = includeIncome;
 		this.includeSplit = includeSplit;
 		this.comboBoxModel = new DefaultComboBoxModel();
+		this.ignoredSource = ignoredSource;
 		updateComboBoxModel(null);
 		listener = new DocumentChangeListener(){
 			public void documentChange(DocumentChangeEvent event) {
@@ -97,15 +100,18 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		Object selected = getSelectedItem(); 
 		
 		accounts.clear();
+		
 		for (Account a : model.getAccounts()) {
 			if (!a.isDeleted() || PrefsModel.getInstance().isShowDeleted() || a.equals(source)){
-				accounts.add(a);
+				if (!a.equals(ignoredSource))
+					accounts.add(a);
 			}
 		}
 		budgetCategories.clear();
 		for (BudgetCategory bc : model.getBudgetCategories()) {
 			if (!bc.isDeleted() || PrefsModel.getInstance().isShowDeleted() || bc.equals(source)){
-				budgetCategories.add(bc);
+				if (!bc.equals(ignoredSource))
+					budgetCategories.add(bc);
 			}
 		}
 		
@@ -126,7 +132,7 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		}
 		if (includeSplit){
 			getComboBoxModel().addElement("&nbsp;");
-			getComboBoxModel().addElement(BuddiKeys.SPLIT_VERB.toString());
+			getComboBoxModel().addElement(BuddiKeys.SPLITS.toString());
 		}
 		
 		setSelectedItem(selected);

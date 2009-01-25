@@ -4,7 +4,6 @@
 package org.homeunix.thecave.buddi.view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -275,10 +274,10 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 		renderer.setAccount(associatedAccount);
 		list.setCellRenderer(renderer);
 
-		recordButton.setPreferredSize(new Dimension(Math.max(100, recordButton.getPreferredSize().width), recordButton.getPreferredSize().height));
-		clearButton.setPreferredSize(new Dimension(Math.max(100, clearButton.getPreferredSize().width), clearButton.getPreferredSize().height));
-		deleteButton.setPreferredSize(new Dimension(Math.max(100, deleteButton.getPreferredSize().width), deleteButton.getPreferredSize().height));
-		searchField.setPreferredSize(new Dimension(160, searchField.getPreferredSize().height));
+		recordButton.setPreferredSize(InternalFormatter.getButtonSize(recordButton));
+		clearButton.setPreferredSize(InternalFormatter.getButtonSize(clearButton));
+		deleteButton.setPreferredSize(InternalFormatter.getButtonSize(deleteButton));
+		searchField.setPreferredSize(InternalFormatter.getComponentSize(searchField, 160));
 		searchField.setMaximumSize(searchField.getPreferredSize());
 		dateFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(dateFilterComboBox));
 		clearedFilterComboBox.setPreferredSize(InternalFormatter.getComboBoxSize(clearedFilterComboBox));

@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.i18n.keys;
 public enum ButtonKeys {
 	BUTTON_VOID,
     BUTTON_ADD,
+    BUTTON_ADD_SPLIT,
     BUTTON_CANCEL,
     BUTTON_CLEAR,
     BUTTON_CLOSE,
@@ -27,6 +28,7 @@ public enum ButtonKeys {
     BUTTON_RECORD,
     BUTTON_REPLACE,
     BUTTON_REMOVE,
+    BUTTON_REMOVE_SPLIT,
     BUTTON_SAVE,
     BUTTON_UNDELETE,
     BUTTON_UPDATE,

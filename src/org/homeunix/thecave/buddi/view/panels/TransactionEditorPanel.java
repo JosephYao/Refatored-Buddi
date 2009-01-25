@@ -27,6 +27,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -41,6 +42,7 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
@@ -89,10 +91,14 @@ public class TransactionEditorPanel extends MossPanel {
 	private final MossDecimalField amount;
 	private final MossScrollingComboBox from;
 	private final MossScrollingComboBox to;
+	private final JButton fromSplit;
+	private final JButton toSplit;
 	private final JCheckBox cleared;
 	private final JCheckBox reconciled;
 	private final MossHintTextArea memo;
 
+	private List<TransactionSplit> fromSplits = null;
+	private List<TransactionSplit> toSplits = null;
 
 
 	private final Document model;
@@ -113,6 +119,8 @@ public class TransactionEditorPanel extends MossPanel {
 		amount = new MossDecimalField();
 		from = new MossScrollingComboBox();
 		to = new MossScrollingComboBox();
+		fromSplit = new JButton(TextFormatter.getTranslation(BuddiKeys.SPLIT_BUTTON));
+		toSplit = new JButton(TextFormatter.getTranslation(BuddiKeys.SPLIT_BUTTON));
 		number = new MossHintTextField(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_NUMBER));
 		description = new MossHintComboBox(PrefsModel.getInstance().getTranslator().get(BuddiKeys.HINT_DESCRIPTION));
 		description.setMaximumRowCount(5);
@@ -140,14 +148,53 @@ public class TransactionEditorPanel extends MossPanel {
 
 		description.setText("");
 
-		from.setModel(new SourceComboBoxModel(this.model, true, true));
-		to.setModel(new SourceComboBoxModel(this.model, false, true));
+		from.setModel(new SourceComboBoxModel(this.model, true, true, null));
+		to.setModel(new SourceComboBoxModel(this.model, false, true, null));
 
 		from.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_FROM), from));
 		to.setRenderer(new SourceListCellRenderer(TextFormatter.getTranslation(BuddiKeys.HINT_TO), to));
 		
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
+
+		fromSplit.setVisible(false);
+		toSplit.setVisible(false);
+		
+		fromSplit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					List<TransactionSplit> splits;
+					if (getTransaction() == null)
+						splits = null;
+					else
+						splits = fromSplits; //getTransaction().getFromSplits();
+					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, associatedSource, amount.getValue(), true);
+					splitTransactionDialog.openWindow();
+					fromSplits = splitTransactionDialog.getSplits();
+				}
+				catch (WindowOpenException woe){
+					Log.warning("Error opening to split window", woe);
+				}
+			}
+		});
+		
+		toSplit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					List<TransactionSplit> splits;
+					if (getTransaction() == null)
+						splits = null;
+					else
+						splits = toSplits; //getTransaction().getToSplits();
+					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, associatedSource, amount.getValue(), false);
+					splitTransactionDialog.openWindow();
+					toSplits = splitTransactionDialog.getSplits();
+				}
+				catch (WindowOpenException woe){
+					Log.warning("Error opening to split window", woe);
+				}
+			}
+		});
 		
 		date.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
 		date.setDate(new Date());
@@ -250,16 +297,26 @@ public class TransactionEditorPanel extends MossPanel {
 		cBottom.ipadx = 0;
 		cBottom.gridx = 2;
 		bottomPanel.add(from, cBottom);
-
+		
 		cBottom.weightx = 0.0;
 		cBottom.ipadx = 0;
 		cBottom.gridx = 3;
+		bottomPanel.add(fromSplit, cBottom);		
+
+		cBottom.weightx = 0.0;
+		cBottom.ipadx = 0;
+		cBottom.gridx = 4;
 		bottomPanel.add(new JLabel(TextFormatter.getTranslation(BuddiKeys.TO)), cBottom);
 
 		cBottom.weightx = 0.5;
 		cBottom.ipadx = 0;
-		cBottom.gridx = 4;
+		cBottom.gridx = 5;
 		bottomPanel.add(to, cBottom);
+
+		cBottom.weightx = 0.0;
+		cBottom.ipadx = 0;
+		cBottom.gridx = 6;
+		bottomPanel.add(toSplit, cBottom);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -330,7 +387,12 @@ public class TransactionEditorPanel extends MossPanel {
 		// When you select one source, automatically select the other if possible
 		from.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (from.getSelectedItem() instanceof Source) {
+				fromSplit.setVisible(BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()));
+				
+				if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem())){
+					to.setSelectedItem(associatedSource);
+				}
+				else if (from.getSelectedItem() instanceof Source) {
 					if (associatedSource != null){
 						if (!associatedSource.equals(from.getSelectedItem())){
 							to.setSelectedItem(associatedSource);
@@ -354,21 +416,23 @@ public class TransactionEditorPanel extends MossPanel {
 						}
 					}
 				}
-				else if (from.getSelectedItem() != null 
-						&& from.getSelectedItem().toString().equals(BuddiKeys.SPLIT_VERB.toString())){
-					try {
-						List<TransactionSplit> splits;
-						if (getTransaction() == null)
-							splits = null;
-						else
-							splits = getTransaction().getFromSplits();
-						new SplitTransactionDialog(null, model, splits, amount.getValue(), true).openWindow();
-					}
-					catch (WindowOpenException woe){
-						Log.warning("Failed to open split transaction window", woe);
-					}
-				}
-				else {
+//				else if (from.getSelectedItem() != null 
+//						&& from.getSelectedItem().toString().equals(BuddiKeys.SPLITS.toString())){
+//					try {
+//						List<TransactionSplit> splits;
+//						if (getTransaction() == null)
+//							splits = null;
+//						else
+//							splits = getTransaction().getFromSplits();
+//						SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, amount.getValue(), true);
+//						splitTransactionDialog.openWindow();
+//						fromSplits = splitTransactionDialog.getSplits();
+//					}
+//					catch (WindowOpenException woe){
+//						Log.warning("Failed to open split transaction window", woe);
+//					}
+//				}
+				else if (!BuddiKeys.SPLITS.toString().equals(from.getSelectedItem())){
 					from.setSelectedItem(null);
 				}
 			}
@@ -377,7 +441,12 @@ public class TransactionEditorPanel extends MossPanel {
 		// When you select one source, automatically select the other if possible
 		to.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				if (to.getSelectedItem() instanceof Source) {
+				toSplit.setVisible(BuddiKeys.SPLITS.toString().equals(to.getSelectedItem()));
+				
+				if (BuddiKeys.SPLITS.toString().equals(to.getSelectedItem())){
+					from.setSelectedItem(associatedSource);
+				}
+				else if (to.getSelectedItem() instanceof Source) {
 					if (associatedSource != null){
 						if (!associatedSource.equals(to.getSelectedItem())){
 							from.setSelectedItem(associatedSource);
@@ -401,28 +470,30 @@ public class TransactionEditorPanel extends MossPanel {
 						}
 					}
 				}
-				else if (to.getSelectedItem() != null 
-						&& to.getSelectedItem().toString().equals(BuddiKeys.SPLIT_VERB.toString())){
-					Log.info("Opening split dialog");
-					try {
-						List<TransactionSplit> splits;
-						if (getTransaction() == null)
-							splits = null;
-						else
-							splits = getTransaction().getFromSplits();
-						new SplitTransactionDialog(null, model, splits, amount.getValue(), false).openWindow();
-					}
-					catch (WindowOpenException woe){
-						Log.warning("Failed to open split transaction window", woe);
-					}
-
-				}
-				else {
+//				else if (to.getSelectedItem() != null 
+//						&& to.getSelectedItem().toString().equals(BuddiKeys.SPLITS.toString())){
+//					Log.info("Opening split dialog");
+//					try {
+//						List<TransactionSplit> splits;
+//						if (getTransaction() == null)
+//							splits = null;
+//						else
+//							splits = getTransaction().getToSplits();
+//						SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, amount.getValue(), false);
+//						splitTransactionDialog.openWindow();
+//						toSplits = splitTransactionDialog.getSplits();
+//					}
+//					catch (WindowOpenException woe){
+//						Log.warning("Failed to open split transaction window", woe);
+//					}
+//
+//				}
+				else if (!BuddiKeys.SPLITS.toString().equals(to.getSelectedItem())){
 					to.setSelectedItem(null);
 				}
 			}
 		});
-
+		
 		reconciled.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 //				TransactionEditorPanel.this.setChanged(true);
@@ -489,12 +560,22 @@ public class TransactionEditorPanel extends MossPanel {
 				((SourceComboBoxModel) from.getModel()).updateComboBoxModel(transaction.getFrom());
 				from.invalidate();
 			}
-			from.setSelectedItem(transaction.getFrom());
+			if (transaction.getFromSplits() != null && transaction.getFromSplits().size() > 0){
+				from.setSelectedItem(BuddiKeys.SPLITS);
+			}
+			else {				
+				from.setSelectedItem(transaction.getFrom());
+			}
 			if (!((SourceComboBoxModel) to.getModel()).contains(transaction.getTo())){
 				((SourceComboBoxModel) to.getModel()).updateComboBoxModel(transaction.getTo());
 				to.invalidate();
 			}
-			to.setSelectedItem(transaction.getTo());
+			if (transaction.getToSplits() != null && transaction.getToSplits().size() > 0){
+				to.setSelectedItem(BuddiKeys.SPLITS.toString());
+			}
+			else {
+				to.setSelectedItem(transaction.getTo());
+			}
 			if (associatedSource != null){
 				if (associatedSource.equals(from.getSelectedItem())){
 					cleared.setSelected(transaction.isClearedFrom());
@@ -505,6 +586,8 @@ public class TransactionEditorPanel extends MossPanel {
 					reconciled.setSelected(transaction.isReconciledTo());
 				}
 			}
+			fromSplits = transaction.getFromSplits();
+			toSplits = transaction.getToSplits();
 		}
 		else{
 			if (date.getDate() == null)
@@ -517,6 +600,8 @@ public class TransactionEditorPanel extends MossPanel {
 			memo.setText("");
 			cleared.setSelected(false);
 			reconciled.setSelected(false);
+			fromSplits = null;
+			toSplits = null;
 
 			resetSelection();
 		}
@@ -572,10 +657,26 @@ public class TransactionEditorPanel extends MossPanel {
 		transaction.setDate(date.getDate());
 		transaction.setDescription(description.getText());
 		transaction.setAmount(amount.getValue());
-		transaction.setFrom((Source) from.getSelectedItem());
-		transaction.setTo((Source) to.getSelectedItem());
+		
+		if (from.getSelectedItem() instanceof Source){
+			transaction.setFrom((Source) from.getSelectedItem());
+		}
+		else if (fromSplits != null) {
+			transaction.setFromSplits(fromSplits);
+		}
+		
+		if (to.getSelectedItem() instanceof Source){
+			transaction.setTo((Source) to.getSelectedItem());
+		}
+		else if (toSplits != null) {
+			transaction.setToSplits(toSplits);
+		}
+		
 		transaction.setNumber(number.getText().toString());
 		transaction.setMemo(memo.getText().toString());
+		
+		//We assume that one of the sources must be the associated source.  
+		// Is this still valid with splits in the mix?  
 		if (associatedSource != null){
 			if (associatedSource.equals(from.getSelectedItem())){
 				transaction.setClearedFrom(cleared.isSelected());
@@ -603,8 +704,8 @@ public class TransactionEditorPanel extends MossPanel {
 
 	/**
 	 * Creates and returns a new transaction, given the currently entered values
-	 * in TransactinEditor.  If all the required fields are not filled in, 
-	 * returns null.
+	 * in TransactionEditor.  If all the required fields are not filled in, 
+	 * throws an exception.
 	 * @return
 	 */
 	public Transaction getTransactionNew() throws InvalidValueException {
@@ -616,10 +717,28 @@ public class TransactionEditorPanel extends MossPanel {
 		} catch (ParseException e) {
 			throw new InvalidValueException("Cannot parse new transaction date", e);
 		}
-		
-		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), (Source) from.getSelectedItem(), (Source) to.getSelectedItem());
+
+		Source fromSource = (Source) (from.getSelectedItem() instanceof Source ? from.getSelectedItem() : null);
+		Source toSource = (Source) (to.getSelectedItem() instanceof Source ? to.getSelectedItem() : null);
+		Transaction t = ModelFactory.createTransaction(date.getDate(), description.getText(), amount.getValue(), fromSource, toSource);
 		t.setNumber(number.getText());
 		t.setMemo(memo.getText());
+
+		//Set the to / from, potentially with splits.
+		if (from.getSelectedItem() instanceof Source){
+			t.setFrom((Source) from.getSelectedItem());
+		}
+		else if (fromSplits != null) {
+			t.setFromSplits(fromSplits);
+		}
+		
+		if (to.getSelectedItem() instanceof Source){
+			t.setTo((Source) to.getSelectedItem());
+		}
+		else if (toSplits != null) {
+			t.setToSplits(toSplits);
+		}
+		
 		if (associatedSource != null){
 			if (associatedSource.equals(from.getSelectedItem())){
 				t.setClearedFrom(cleared.isSelected());
@@ -633,30 +752,34 @@ public class TransactionEditorPanel extends MossPanel {
 		return t;
 	}
 
-	public Source getFrom(){
-		if (from.getSelectedItem() instanceof Source) {
-			return (Source) from.getSelectedItem();	
-		}
-		else if (from.getSelectedItem() != null)
-			Log.error("Unknown object selected in TransferFrom combobox; returning null.");
-		return null;
-	}
-
-	public Source getTo(){
-		if (to.getSelectedItem() instanceof Source) {
-			return (Source) to.getSelectedItem();	
-		}
-		else if (to.getSelectedItem() != null)
-			Log.error("Unknown object selected in TransferTo combobox; returning null.");
-
-		return null;
-	}
+//	public Source getFrom(){
+//		if (from.getSelectedItem() instanceof Source) {
+//			return (Source) from.getSelectedItem();	
+//		}
+//		else if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem())){
+//			return null; 
+//		}
+//		else if (from.getSelectedItem() != null)
+//			Log.error("Unknown object selected in TransferFrom combobox; returning null.");
+//		return null;
+//	}
+//
+//	public Source getTo(){
+//		if (to.getSelectedItem() instanceof Source) {
+//			return (Source) to.getSelectedItem();	
+//		}
+//		else if (to.getSelectedItem() != null)
+//			Log.error("Unknown object selected in TransferTo combobox; returning null.");
+//
+//		return null;
+//	}
 
 	public boolean isTransactionValid(){
 		return this.isTransactionValid(null);
 	}
 
 	public boolean isTransactionValid(Source thisSource){
+		//Description, date, to, and from must all be set to something.
 		if (description.getText().length() == 0)
 			return false;
 		if (date.getDate() == null)
@@ -665,6 +788,13 @@ public class TransactionEditorPanel extends MossPanel {
 			return false;
 		if (from.getSelectedItem() == null)
 			return false;
+		
+		//Both to and from cannot be set to splits
+		if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()) && BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()))
+			return false;
+		
+		//If we are not viewing 'all transactions', one of either to or from must match 
+		// the currently opened source.
 		if (thisSource != null){
 			if (!from.getSelectedItem().equals(thisSource) && !to.getSelectedItem().equals(thisSource))
 				return false;
@@ -758,7 +888,9 @@ public class TransactionEditorPanel extends MossPanel {
 					//This doesn't always work when you go to a different account; it should
 					// be good enough for the vast majorty of cases, though, and does a pretty
 					// good job at guessing which account is the correct one..
-					if (ace.getFrom() != null && from.getSelectedItem() == null){
+					if (ace.getFrom() instanceof Split)
+						from.setSelectedItem(BuddiKeys.SPLITS.toString());
+					else if (ace.getFrom() != null && from.getSelectedItem() == null){
 						for (int i = 0; i < from.getModel().getSize(); i++){
 							if (from.getModel().getElementAt(i) != null
 									&& from.getModel().getElementAt(i).equals(ace.getFrom())){
@@ -767,7 +899,10 @@ public class TransactionEditorPanel extends MossPanel {
 							}
 						}
 					}
-					if (ace.getTo() != null && to.getSelectedItem() == null){
+
+					if (ace.getTo() instanceof Split)
+						to.setSelectedItem(BuddiKeys.SPLITS.toString());
+					else if (ace.getTo() != null && to.getSelectedItem() == null){
 						for (int i = 0; i < to.getModel().getSize(); i++){
 							if (to.getModel().getElementAt(i) != null
 									&& to.getModel().getElementAt(i).equals(ace.getTo())){

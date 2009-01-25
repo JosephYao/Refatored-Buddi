@@ -4,7 +4,6 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +47,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	protected long balanceFrom;
 	protected long balanceTo;
 
-	protected final List<TransactionSplit> fromSplits = new ArrayList<TransactionSplit>();
-	protected final List<TransactionSplit> toSplits = new ArrayList<TransactionSplit>();
+	protected List<TransactionSplit> fromSplits;// = new ArrayList<TransactionSplit>();
+	protected List<TransactionSplit> toSplits;// = new ArrayList<TransactionSplit>();
 
 
 	@Override
@@ -158,6 +157,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		// we set both of the flags to the same value.
 		if (this.getTo() != null
 				&& this.getFrom() != null
+				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory) 
+				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
@@ -194,6 +195,9 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public void setFrom(Source from) {
 		setChanged();
 		this.from = from;
+		if (this.fromSplits == null)
+			this.fromSplits = new ArrayList<TransactionSplit>();
+		this.fromSplits.clear();
 	}
 	public void setMemo(String memo) {
 		if (this.memo != null && !this.memo.equals(memo))
@@ -214,6 +218,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		// we set both of the flags to the same value.
 		if (this.getTo() != null
 				&& this.getFrom() != null
+				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
+				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)				
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
@@ -230,6 +236,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		// we set both of the flags to the same value.
 		if (this.getTo() != null
 				&& this.getFrom() != null
+				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
+				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
@@ -243,6 +251,9 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public void setTo(Source to) {
 		setChanged();
 		this.to = to;
+		if (this.toSplits == null)
+			this.toSplits = new ArrayList<TransactionSplit>();
+		this.toSplits.clear();
 	}
 	public boolean isDeleted() {
 		return deleted;
@@ -254,21 +265,27 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	}
 
 	public List<TransactionSplit> getToSplits() {
-		return Collections.unmodifiableList(toSplits);
+		return toSplits;
 	}
 
 	public void setToSplits(List<TransactionSplit> splits) throws InvalidValueException {
 		setChanged();
+		if (this.toSplits == null)
+			this.toSplits = new ArrayList<TransactionSplit>();
+		this.to = new SplitImpl();
 		this.toSplits.clear();
 		this.toSplits.addAll(splits);
 	}
 	
 	public List<TransactionSplit> getFromSplits() {
-		return Collections.unmodifiableList(fromSplits);
+		return fromSplits;
 	}
 
 	public void setFromSplits(List<TransactionSplit> splits) throws InvalidValueException {
 		setChanged();
+		if (this.fromSplits == null)
+			this.fromSplits = new ArrayList<TransactionSplit>();
+		this.from = new SplitImpl();
 		this.fromSplits.clear();
 		this.fromSplits.addAll(splits);
 	}
@@ -296,6 +313,14 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		t.reconciledTo = reconciledTo;
 		t.scheduled = scheduled;
 		t.to = (Source) ((SourceImpl) to).clone(originalToCloneMap);
+		if (this.toSplits == null)
+			this.toSplits = new ArrayList<TransactionSplit>();
+		if (this.fromSplits == null)
+			this.fromSplits = new ArrayList<TransactionSplit>();
+		if (t.toSplits == null)
+			t.toSplits = new ArrayList<TransactionSplit>();
+		if (t.fromSplits == null)
+			t.fromSplits = new ArrayList<TransactionSplit>();		
 		t.fromSplits.clear();
 		for (TransactionSplit split : fromSplits) {
 			t.fromSplits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));

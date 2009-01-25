@@ -753,18 +753,33 @@ public class Buddi {
 	 * donation requests, etc. 
 	 */
 	private static void startVersionCheck(final MossFrame frame){
+		String[] warningButtons = new String[2];
+		warningButtons[0] = "Continue";
+		warningButtons[1] = "Quit";
+		
+		int warningReply = JOptionPane.showOptionDialog(
+				frame,
+				"This version of Buddi includes major changes to transactions, and is probably\n" +
+				"not yet stable enough for production use.  USE THIS VERSION AT YOUR OWN RISK!!!\n\n" +
+				"Please report any bugs you encounter to Wyatt (wyatt.olson@gmail.com), or via the\n" +
+				"Buddi website.\n\n" +
+				"To repeat: There are very likely serious bugs with this version, and IT IS NOT\n" +
+				"RECOMMENDED FOR USE WITH REAL FINANCIAL DATA.  IF YOU USE IT, AND YOU\n" +
+				"LOSE YOUR DATA, DON'T COMPLAIN TO ME!",
+				"WARNING - Major Unstable Changes to Data and User Interface",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE,
+				null,
+				warningButtons,
+				warningButtons[1]
+				);
+		if (warningReply != JOptionPane.YES_OPTION){
+			System.exit(0);
+		}
+		
 		if (PrefsModel.getInstance().getLastVersion() == null 
 				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
 			PrefsModel.getInstance().updateVersion();
-
-//			JOptionPane.showMessageDialog(frame, 
-//			"This version introduced a change to the encryption algorithm.  While\n" +
-//			"you can still open data files from earlier versions of Buddi, if you\n" +
-//			"save any changes, you may not be able to open them in earlier versions.\n" +
-//			"It is recommended that you save a backup copy of your data files, in case\n" +
-//			"you need to revert to an older version.", 
-//			"WARNING - Encryption Format Change", 
-//			JOptionPane.WARNING_MESSAGE);
 
 			String[] buttons = new String[2];
 			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);

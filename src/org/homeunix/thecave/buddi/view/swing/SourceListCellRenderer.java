@@ -35,6 +35,8 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 		Object newValue = "";
 		if (value instanceof Source)
 			newValue = (((Source) value).getFullName());
+		else if (BuddiKeys.SPLITS.toString().equals(value))
+			newValue = TextFormatter.getTranslation(value.toString());
 		else if (index == -1)
 			newValue = nullLabel;
 		else
@@ -53,10 +55,7 @@ public class SourceListCellRenderer extends MaxLengthListCellRenderer {
 				this.setText("<strike>" + this.getText() + "</strike>");
 			this.setText("<html>" + this.getText() + "</html>");
 		}
-		else if (value != null && value.equals(BuddiKeys.SPLIT_VERB.toString())){
-			this.setText(TextFormatter.getTranslation(value.toString()));
-		}
-		else
+		else if (!BuddiKeys.SPLITS.toString().equals(value))
 			this.setText("<html><font color='gray'>" + this.getText() + "</font></html>");
 		
 		return this;
