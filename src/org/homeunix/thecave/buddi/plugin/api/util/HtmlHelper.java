@@ -14,7 +14,9 @@ import java.util.Date;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.moss.util.Log;
 import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.homeunix.thecave.moss.util.StreamFunctions;
@@ -129,9 +131,20 @@ public class HtmlHelper {
 		sb.append(TextFormatter.getTranslation(t.getDescription()));
 
 		sb.append("</td><td width='30%'>");
-		sb.append(TextFormatter.getTranslation(t.getFrom().toString()));
+		if (t.getFrom() instanceof ImmutableSplit)
+			//We assume that if there is an immutable split, then the given source is the from / to source.  Is this right?
+			sb.append(TextFormatter.getTranslation(source + ""));
+		else 
+			sb.append(TextFormatter.getTranslation(t.getFrom().toString()));
+		
 		sb.append(TextFormatter.getTranslation(BuddiKeys.HTML_TO));
-		sb.append(TextFormatter.getTranslation(t.getTo().toString()));
+		
+		if (t.getTo() instanceof ImmutableSplit)
+			//We assume that if there is an immutable split, then the given source is the from / to source.  Is this right?
+			sb.append(TextFormatter.getTranslation(source + ""));
+		else 
+			sb.append(TextFormatter.getTranslation(t.getTo().toString()));
+			
 
 		boolean red;
 		if (source != null)
@@ -140,7 +153,22 @@ public class HtmlHelper {
 			red = TextFormatter.isRed(t);
 
 		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
-		sb.append(TextFormatter.getFormattedCurrency(t.getAmount()));
+		if (t.getFrom().equals(source) || t.getTo().equals(source))
+			sb.append(TextFormatter.getFormattedCurrency(t.getAmount()));
+		else {
+			long amount = 0;
+			for (ImmutableTransactionSplit split : t.getImmutableFromSplits()) {
+				if (split.getSource().equals(source)){
+					amount += split.getAmount();
+				}
+			}
+			for (ImmutableTransactionSplit split : t.getImmutableToSplits()) {
+				if (split.getSource().equals(source)){
+					amount += split.getAmount();
+				}
+			}
+			sb.append(TextFormatter.getFormattedCurrency(amount));
+		}
 		sb.append("</td><td width='20%'>");
 		sb.append(t.getMemo());
 		sb.append("</td></tr>\n");

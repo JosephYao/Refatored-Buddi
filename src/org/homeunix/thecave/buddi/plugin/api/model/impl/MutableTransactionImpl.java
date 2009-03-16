@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.WrapperLists;
@@ -62,6 +63,8 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 			return new MutableAccountImpl((Account) getTransaction().getFrom());
 		if (getTransaction().getFrom() instanceof BudgetCategory)
 			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getFrom());
+		if (getTransaction().getFrom() instanceof Split)
+			return new MutableSplitImpl((Split) getTransaction().getFrom());
 		return null;
 	}
 	public MutableSourceImpl getTo(){
@@ -69,6 +72,8 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 			return new MutableAccountImpl((Account) getTransaction().getTo());
 		if (getTransaction().getTo() instanceof BudgetCategory)
 			return new MutableBudgetCategoryImpl((BudgetCategory) getTransaction().getTo());
+		if (getTransaction().getTo() instanceof Split)
+			return new MutableSplitImpl((Split) getTransaction().getTo());
 		return null;
 	}
 	public List<ImmutableTransactionSplit> getImmutableFromSplits(){

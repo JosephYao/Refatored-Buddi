@@ -14,7 +14,9 @@ import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
@@ -96,6 +98,22 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 					}
 					else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 						totalActual += transaction.getAmount();
+					}
+					
+					//Check for splits 
+					if (transaction.getTo() instanceof ImmutableSplit){
+						for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
+							if (split.getSource().equals(c)){
+								totalActual -= split.getAmount();
+							}
+						}
+					}
+					if (transaction.getFrom() instanceof ImmutableSplit){
+						for (ImmutableTransactionSplit split : transaction.getImmutableFromSplits()) {
+							if (split.getSource().equals(c)){
+								totalActual += split.getAmount();
+							}
+						}
 					}
 				}
 			}

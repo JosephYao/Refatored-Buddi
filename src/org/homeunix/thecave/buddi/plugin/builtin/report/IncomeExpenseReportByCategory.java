@@ -8,18 +8,18 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Log;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -76,16 +76,45 @@ public class IncomeExpenseReportByCategory extends BuddiReportPlugin {
 			long actual = 0;
 			for (ImmutableTransaction transaction : transactions) {
 				if (!transaction.isDeleted()){
-					actual += transaction.getAmount();
+					
+					//Figure out the actual amounts
+					if (transaction.getFrom().equals(c) || transaction.getTo().equals(c)){
+						actual += transaction.getAmount();						
+					}
+					
+					for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
+						if (split.getSource().equals(c)){
+							actual += split.getAmount();
+						}
+					}
+					for (ImmutableTransactionSplit split : transaction.getImmutableFromSplits()) {
+						if (split.getSource().equals(c)){
+							actual -= split.getAmount();
+						}
+					}
 
+					//Add to total for non-split transactions
 					if (transaction.getTo() instanceof ImmutableBudgetCategory){
 						totalActual -= transaction.getAmount();
 					}
 					else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 						totalActual += transaction.getAmount();
 					}
-					else {
-						if (Const.DEVEL) Log.debug("For transaction " + transaction + ", neither " + transaction.getTo() + " nor " + transaction.getFrom() + " are of type Category.");
+
+					//Add to total for split transactions
+					if (transaction.getTo() instanceof ImmutableSplit){
+						for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
+							if (split.getSource().equals(c)){
+								totalActual -= split.getAmount();
+							}
+						}
+					}
+					if (transaction.getFrom() instanceof ImmutableSplit){
+						for (ImmutableTransactionSplit split : transaction.getImmutableFromSplits()) {
+							if (split.getSource().equals(c)){
+								totalActual += split.getAmount();
+							}
+						}
 					}
 				}
 			}

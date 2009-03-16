@@ -18,7 +18,9 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.data.collection.FilteredList;
@@ -76,6 +78,20 @@ public class FilteredLists {
 			if (t.getTo().equals(source)
 					|| t.getFrom().equals(source)){
 				return true;
+			}
+			
+			if (t.getTo() instanceof Split){
+				for (TransactionSplit split : t.getToSplits()) {
+					if (split.getSource().equals(source))
+						return true;
+				}
+			}
+			
+			if (t.getFrom() instanceof Split){
+				for (TransactionSplit split : t.getFromSplits()) {
+					if (split.getSource().equals(source))
+						return true;
+				}
 			}
 
 			return false;

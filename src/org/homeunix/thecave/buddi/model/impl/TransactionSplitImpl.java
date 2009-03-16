@@ -10,11 +10,25 @@ import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.moss.util.Log;
 
 public class TransactionSplitImpl extends ModelObjectImpl implements TransactionSplit {	
 	
 	private long amount;
 	private Source source;
+	
+	public TransactionSplitImpl() {
+	}
+	
+	public TransactionSplitImpl(TransactionSplit transactionSplit) {
+		try {
+			setSource(transactionSplit.getSource());
+		}
+		catch (InvalidValueException ive){
+			Log.emergency("Invalid value excetion when wrapping TransactionSplitImpl", ive);
+		}
+		setAmount(transactionSplit.getAmount());
+	}
 	
 	public long getAmount(){
 		return amount;

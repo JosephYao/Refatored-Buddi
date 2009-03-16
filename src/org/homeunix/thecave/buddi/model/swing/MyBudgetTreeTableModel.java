@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -116,11 +117,13 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 				// 2: The amount total for all children of this node
 				// 3: The depth of the node (used for indenting)
 				
-				Object[] retValues = new Object[4];
+				Object[] retValues = new Object[6];
 				retValues[0] = bc;
 				retValues[1] = bc.getAmount(getColumnDate(column));
 				retValues[2] = getChildCount(node) == 0 ? 0 : getChildTotal(node, column);
 				retValues[3] = getChildDepth(node);
+				retValues[4] = getActual(bc, getColumnDate(column), false);
+				retValues[5] = getActual(bc, getColumnDate(column), true);
 
 //				long value = bc.getAmount(getColumnDate(column));
 //				return TextFormatter.getHtmlWrapper(TextFormatter.getFormattedCurrency(value, InternalFormatter.isRed(bc, value)));
@@ -128,6 +131,32 @@ public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 			}
 		}
 		return null;
+	}
+	
+	private long getActual(BudgetCategory bc, Date date, boolean includeChildren) {
+		List<Transaction> transactions = model.getTransactions(bc, date,
+				getSelectedBudgetPeriodType().getEndOfBudgetPeriod(date));
+
+		long actual = 0;
+		for (Transaction transaction : transactions) {
+			if (!transaction.isDeleted()){
+				if (transaction.getTo() instanceof BudgetCategory){
+					actual -= transaction.getAmount();
+				}
+				else if (transaction.getFrom() instanceof BudgetCategory){
+					actual += transaction.getAmount();
+				}
+			}
+		}
+
+		if(includeChildren) {
+			for(BudgetCategory child: bc.getChildren()) {
+				// we could avoid recursion, but it's just so cool
+				actual += getActual(child, date, true);
+			}
+		}
+
+		return actual;
 	}
 
 	private int getChildDepth(Object node){

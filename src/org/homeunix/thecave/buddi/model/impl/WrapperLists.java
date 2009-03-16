@@ -12,6 +12,7 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccount;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableModelObject;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableAccountImpl;
@@ -20,6 +21,7 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableAccountTypeImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
+import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionSplitImpl;
 import org.homeunix.thecave.moss.data.collection.WrapperList;
 import org.homeunix.thecave.moss.model.DocumentChangeEvent;
 import org.homeunix.thecave.moss.model.DocumentChangeListener;
@@ -106,6 +108,8 @@ public class WrapperLists {
 				return (T) new MutableScheduledTransactionImpl((ScheduledTransaction) object);
 			if (object instanceof AccountType)
 				return (T) new MutableAccountTypeImpl((AccountType) object);
+			if (object instanceof TransactionSplit)
+				return (T) new MutableTransactionSplitImpl((TransactionSplit) object);
 
 			//Catch all
 			return null;

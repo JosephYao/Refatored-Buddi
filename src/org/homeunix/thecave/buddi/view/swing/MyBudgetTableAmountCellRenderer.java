@@ -47,6 +47,22 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 					sb.append(")");
 				}
 			}
+
+			sb.append(" / ");
+			final Long actual = (Long) values[4];
+			if(actual != 0) {
+				TextFormatter.appendFormattedCurrency(sb, actual, actual < 0, actual < 0);
+			} else {
+				sb.append("---");
+			}
+
+			final Long actualIncludingSubs = (Long) values[5];
+			if(actualIncludingSubs != (long)actual) {
+				sb.append(" (");
+				TextFormatter.appendFormattedCurrency(sb, actualIncludingSubs, actualIncludingSubs < 0,
+						actualIncludingSubs < 0);
+				sb.append(")");
+			}
 			
 			for (int i = 0; i < ((Integer) values[3]); i++){
 				sb.insert(0, "&nbsp&nbsp&nbsp "); 

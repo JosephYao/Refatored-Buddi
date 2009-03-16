@@ -219,7 +219,8 @@ public class Buddi {
 		}
 
 		//If we have found a new version last time, we prompt for it now.
-		if (PrefsModel.getInstance().getAvailableVersion() != null){
+		if (PrefsModel.getInstance().isShowUpdateNotifications() 
+				&& PrefsModel.getInstance().getAvailableVersion() != null){
 			Version availableVersion = new Version(PrefsModel.getInstance().getAvailableVersion());
 			Version thisVersion = getVersion();
 
