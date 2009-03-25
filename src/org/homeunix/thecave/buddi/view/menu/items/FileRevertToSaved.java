@@ -73,6 +73,6 @@ public class FileRevertToSaved extends MossMenuItem {
 		super.updateMenus();
 
 		this.setEnabled(getFrame() instanceof MossDocumentFrame 
-				&& ((MossDocumentFrame) getFrame()).getDocument().getFile() != null);
+				&& ((MossDocumentFrame) getFrame()).getDocument().getFile() != null && ((MossDocumentFrame) getFrame()).getDocument().isChanged());
 	}
 }

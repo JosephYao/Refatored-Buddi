@@ -91,16 +91,31 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 			long actual = 0;
 			for (ImmutableTransaction transaction : transactions) {
 				if (!transaction.isDeleted()){
-					actual += transaction.getAmount();
+					//Figure out the actual amounts
+					if (transaction.getFrom().equals(c) || transaction.getTo().equals(c)){
+						actual += transaction.getAmount();						
+					}
+					
+					for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
+						if (split.getSource().equals(c)){
+							actual += split.getAmount();
+						}
+					}
+					for (ImmutableTransactionSplit split : transaction.getImmutableFromSplits()) {
+						if (split.getSource().equals(c)){
+							actual -= split.getAmount();
+						}
+					}
 
+					//Add to total for non-split transactions
 					if (transaction.getTo() instanceof ImmutableBudgetCategory){
 						totalActual -= transaction.getAmount();
 					}
 					else if (transaction.getFrom() instanceof ImmutableBudgetCategory){
 						totalActual += transaction.getAmount();
 					}
-					
-					//Check for splits 
+
+					//Add to total for split transactions
 					if (transaction.getTo() instanceof ImmutableSplit){
 						for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
 							if (split.getSource().equals(c)){

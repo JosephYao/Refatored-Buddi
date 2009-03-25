@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
@@ -157,6 +158,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		// we set both of the flags to the same value.
 		if (this.getTo() != null
 				&& this.getFrom() != null
+				&& !(this.getFrom() instanceof Split)
+				&& !(this.getTo() instanceof Split)
 				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory) 
 				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)
 				&& (this.getTo() instanceof BudgetCategory
@@ -175,6 +178,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		// we set both of the flags to the same value.
 		if (this.getTo() != null
 				&& this.getFrom() != null
+				&& !(this.getFrom() instanceof Split)
+				&& !(this.getTo() instanceof Split)
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))

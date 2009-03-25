@@ -790,7 +790,7 @@ public class TransactionEditorPanel extends MossPanel {
 			return false;
 		
 		//Both to and from cannot be set to splits
-		if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()) && BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()))
+		if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()) && BuddiKeys.SPLITS.toString().equals(to.getSelectedItem()))
 			return false;
 		
 		//If we are not viewing 'all transactions', one of either to or from must match 

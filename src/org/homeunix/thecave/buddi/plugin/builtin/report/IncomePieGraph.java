@@ -135,7 +135,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 							ImmutableBudgetCategory c = (ImmutableBudgetCategory) split.getSource();
 							if (c.isIncome()){
 								Long l = categories.get(c);
-								l += transaction.getAmount();
+								l += split.getAmount();
 								categories.put(c, l);
 							}
 						}
@@ -147,7 +147,7 @@ public class IncomePieGraph extends BuddiReportPlugin {
 							ImmutableBudgetCategory c = (ImmutableBudgetCategory) split.getSource();
 							if (c.isIncome()){
 								Long l = categories.get(c);
-								l += transaction.getAmount();
+								l += split.getAmount();
 								categories.put(c, l);
 							}
 						}
