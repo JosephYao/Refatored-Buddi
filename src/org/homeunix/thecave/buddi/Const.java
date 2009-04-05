@@ -212,6 +212,7 @@ public class Const {
 	public static final String[] BUILT_IN_IMPORTS = {
 //		ImportLegacyData.class.getCanonicalName(),
 //		ImportTestData.class.getCanonicalName(),
+//		CSVImportDoneRight.class.getCanonicalName(),
 	};
 	
 	//Built in Exports
