@@ -333,7 +333,9 @@ public class TransactionEditorPanel extends MossPanel {
 		for (JComponent component : components) {
 			component.addKeyListener(new KeyAdapter(){
 				public void keyTyped(KeyEvent arg0) {
-					TransactionEditorPanel.this.setChanged(true);
+					if (arg0.getKeyChar() != '\n') {
+						TransactionEditorPanel.this.setChanged(true);
+					}
 					super.keyTyped(arg0);
 				}
 			});
