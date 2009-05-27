@@ -1,7 +1,7 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.test.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,11 +9,15 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,11 +63,11 @@ public class DocumentTest {
 		int MAX = 2000;
 		for (int i = 0; i < MAX; i++){
 			if (i % 100 == 0)
-				Log.info("Creating transaction " + i + " of " + MAX);
+				Logger.getLogger(this.getClass().getName()).info("Creating transaction " + i + " of " + MAX);
 			Account a = accounts.get((int) (Math.random() * accounts.size()));
 			BudgetCategory bc = budgetCategories.get((int) (Math.random() * budgetCategories.size()));
 			bc.setIncome(false);
-			Transaction t = ModelFactory.createTransaction(DateFunctions.getDate(2006, (int) (Math.random() * 12), (int) (Math.random() * 28)), "Test Transaction " + i, (long) (Math.random() * 1000000), a, bc);
+			Transaction t = ModelFactory.createTransaction(DateUtil.getDate(2006, (int) (Math.random() * 12), (int) (Math.random() * 28)), "Test Transaction " + i, (long) (Math.random() * 1000000), a, bc);
 			t.setMemo(Math.random() + "");
 			model.addTransaction(t);
 		}

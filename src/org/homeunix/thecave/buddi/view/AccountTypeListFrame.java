@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -32,14 +34,13 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.AccountTypeEditorDialog;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.model.BackedListModel;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
@@ -164,11 +165,11 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 		else if (e.getSource().equals(newButton)){
 			try {
 				new AccountTypeEditorDialog(this, null).openWindow();
-				Log.debug("Done creating new Type from TypeModifyDialog");
+				Logger.getLogger(this.getClass().getName()).finest("Done creating new Type from TypeModifyDialog");
 				updateContent();
 			}
 			catch (WindowOpenException woe){
-				Log.error("Error when opening TypeModifyDialog window", woe);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error when opening TypeModifyDialog window", woe);
 			}
 		}
 		else if (e.getSource().equals(editButton)){
@@ -177,7 +178,7 @@ public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements
 				try {
 					AccountType t = (AccountType) o;
 					new AccountTypeEditorDialog(this, t).openWindow();
-					Log.debug("Done editing Type from TypeModifyDialog");
+					Logger.getLogger(this.getClass().getName()).finest("Done editing Type from TypeModifyDialog");
 					updateContent();
 				}
 				catch (WindowOpenException woe){}

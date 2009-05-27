@@ -15,14 +15,15 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
-import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.homeunix.thecave.moss.util.Version;
+import org.homeunix.thecave.buddi.util.FileFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
+import org.homeunix.thecave.moss.common.Version;
 
 public class PrefsModel {
 	//Singleton Instance
@@ -84,7 +85,7 @@ public class PrefsModel {
 				encoder.close();
 			}
 			catch (FileNotFoundException fnfe){
-				Log.error("Problem saving preferences file: ", fnfe);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Problem saving preferences file: ", fnfe);
 			}
 		}
 	}

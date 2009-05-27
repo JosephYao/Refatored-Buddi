@@ -9,8 +9,8 @@ import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class EditEditAccountTypes extends MossMenuItem{
 	public static final long serialVersionUID = 0;

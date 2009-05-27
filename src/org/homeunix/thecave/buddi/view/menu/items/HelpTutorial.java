@@ -4,6 +4,8 @@
 package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
@@ -11,7 +13,6 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -31,7 +32,7 @@ public class HelpTutorial extends MossMenuItem {
 					+ "quickstart_intro.jsp");
 		}
 		catch (Exception ex){
-			Log.error(ex);
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Exception", ex);
 		}
 	}
 }

@@ -3,8 +3,9 @@
  */
 package org.homeunix.thecave.buddi.util;
 
-import org.homeunix.thecave.moss.util.crypto.CipherException;
-import org.homeunix.thecave.moss.util.crypto.MossCryptoFactory;
+import org.homeunix.thecave.moss.crypto.CipherException;
+import org.homeunix.thecave.moss.crypto.CryptoFactory;
+
 
 /**
  * A class which extends CipherStreamFactory and provides the header value
@@ -13,7 +14,7 @@ import org.homeunix.thecave.moss.util.crypto.MossCryptoFactory;
  * @author wyatt
  *
  */
-public class BuddiCryptoFactory  extends MossCryptoFactory {
+public class BuddiCryptoFactory  extends CryptoFactory {
 	private static final byte[] HEADER = "buddi_data_03.00".getBytes();
 
 	public BuddiCryptoFactory() throws CipherException {}

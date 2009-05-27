@@ -20,6 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -43,15 +45,14 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
+import org.homeunix.thecave.buddi.util.FileFunctions;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
-import org.homeunix.thecave.moss.data.collection.CompositeList;
-import org.homeunix.thecave.moss.data.collection.SortedArrayList;
-import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.model.AbstractDocument;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.crypto.CipherException;
+import org.homeunix.thecave.moss.application.document.AbstractDocument;
+import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
+import org.homeunix.thecave.moss.collections.CompositeList;
+import org.homeunix.thecave.moss.collections.SortedArrayList;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.crypto.CipherException;
 
 
 /**
@@ -92,6 +93,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	//Model object data
 	private Time modifiedTime;
 	private String uid;
+	
+	private final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	/**
 	 * By default, we start with one batch change enabled.  This is because, otherwise,
@@ -121,21 +124,19 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					File tempBackupSource = new File(fileBase + "_" + i + Const.BACKUP_FILE_EXTENSION);
 					if (tempBackupSource.exists()){
 						FileFunctions.copyFile(tempBackupSource, tempBackupDest);
-						Log.debug("Moving " + tempBackupSource + " to " + tempBackupDest);
+						logger.finest("Moving " + tempBackupSource + " to " + tempBackupDest);
 					}
 				}
 				File tempBackupDest = new File(fileBase + "_0" + Const.BACKUP_FILE_EXTENSION);
 				FileFunctions.copyFile(getFile(), tempBackupDest);
-				if (Const.DEVEL) Log.debug("Backing up file to " + tempBackupDest);
+				if (Const.DEVEL) logger.finest("Backing up file to " + tempBackupDest);
 			}
 		}
 		catch(IOException ioe){
-			Log.error("Problem backing up data files: ");
-			ioe.printStackTrace(Log.getPrintStream());
+			logger.log(Level.WARNING, "Problem backing up data files", ioe);
 		}
 		catch (RuntimeException re){
-			Log.emergency("Runtime Exception encountered when backing up data file!");
-			re.printStackTrace(Log.getPrintStream());
+			logger.log(Level.SEVERE, "Runtime Exception encountered when backing up data file!", re);
 		}
 	}
 	
@@ -375,13 +376,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 							try {
 								clone.saveToStream(os);
 							} catch (DocumentSaveException e) {
-								Log.error("There was an error when autosaving the file.", e);
+								logger.log(Level.WARNING, "There was an error when autosaving the file.", e);
 							}
 							
 							autosaveMutex.release();
 						}
 						else {
-							Log.warning("Did not autosave, as there is another process already waiting.");
+							logger.warning("Did not autosave, as there is another process already waiting.");
 						}
 					}
 				}).start();
@@ -400,7 +401,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			throw new DocumentSaveException(ioe);
 		}
 		catch (CloneNotSupportedException cnse){
-			Log.error("There was a problem cloning the data model, prior to auto saving.");
+			logger.warning("There was a problem cloning the data model, prior to auto saving.");
 			throw new DocumentSaveException(cnse);
 		}
 	}
@@ -482,25 +483,25 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 //					if (!tempFile.renameTo(file))
 //						throw new IOException("Unable to rename temp file '" + tempFile + "' to data file '" + file + "'.");
 //					if (oldFile.exists() && !oldFile.delete())
-//						Log.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
+//						logger.error("Unable to delete old data file '" + oldFile + "'.  This may cause problems the next time we try to save.");
 				}
 				catch (CipherException ce){
 					//This means that there is something seriously wrong with the encryption methods.
 					// Perhaps the user's platform does not support the given methods.
 					// Notify the user, and cancel the save.
-					Log.error("There was a problem related to the encryption of the data file.  Perhaps your Java implemntation does not support the required encryption methods?", ce);
+					logger.log(Level.WARNING, "There was a problem related to the encryption of the data file.  Perhaps your Java implemntation does not support the required encryption methods?", ce);
 				}
 				catch (IOException ioe){
 					//This means that there was something wrong with the given file, or writing to
 					// it.  Perhaps the user does not have write access, the folder does not exist,
 					// or something similar.  Notify the user, and cancel the save.
-					Log.error("There was an IO error while saving your file.  Please ensure that the desired folder exists, and that you have write access to it.", ioe);
+					logger.log(Level.WARNING, "There was an IO error while saving your file.  Please ensure that the desired folder exists, and that you have write access to it.", ioe);
 				}
 				catch (DocumentSaveException dse){
-					Log.error("There was a problem saving the document.", dse);
+					logger.log(Level.WARNING, "There was a problem saving the document.", dse);
 				}
 				catch (CloneNotSupportedException cnse){
-					Log.error("There was a problem cloning the data model, prior to saving.", cnse);
+					logger.log(Level.WARNING, "There was a problem cloning the data model, prior to saving.", cnse);
 				}
 				finally {
 					if (os != null) {
@@ -508,7 +509,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 							os.close();
 						}
 						catch (IOException ioe) {
-							Log.emergency("Problem encountered while trying to close Output Stream", ioe);
+							logger.log(Level.SEVERE, "Problem encountered while trying to close Output Stream", ioe);
 						}
 					}
 				}
@@ -531,7 +532,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		File autosave = ModelFactory.getAutoSaveLocation(file);
 		if (autosave.exists() && autosave.isFile()){
 			if (!autosave.delete())
-				Log.error("Unable to delete file " + autosave + "; you may be prompted to load this file next time you load.");
+				logger.warning("Unable to delete file " + autosave + "; you may be prompted to load this file next time you load.");
 		}
 	}
 
@@ -550,8 +551,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		XMLEncoder encoder = new XMLEncoder(os);
 		encoder.setExceptionListener(new ExceptionListener(){
 			public void exceptionThrown(Exception e) {
-				Log.error(e.getMessage());
-				e.printStackTrace(Log.getPrintStream());
+				logger.log(Level.WARNING, "Error writing XML", e);
 			}
 		});
 		encoder.setPersistenceDelegate(File.class, new PersistenceDelegate(){
@@ -567,9 +567,9 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				Date date = (Date) oldInstance;
 				return new Expression(
 						date,
-						DateFunctions.class, 
+						DateUtil.class, 
 						"getDate",
-						new Object[]{DateFunctions.getYear(date), DateFunctions.getMonth(date), DateFunctions.getDay(date)});
+						new Object[]{DateUtil.getYear(date), DateUtil.getMonth(date), DateUtil.getDay(date)});
 			}
 		});
 		encoder.setPersistenceDelegate(Day.class, new PersistenceDelegate(){
@@ -580,7 +580,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 						date,
 						Day.class,
 						"new",
-						new Object[]{DateFunctions.getYear(date), DateFunctions.getMonth(date), DateFunctions.getDay(date)});
+						new Object[]{DateUtil.getYear(date), DateUtil.getMonth(date), DateUtil.getDay(date)});
 			}
 		});
 		encoder.setPersistenceDelegate(Time.class, new PersistenceDelegate(){
@@ -887,7 +887,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		startBatchChange();
 
 		//Update any scheduled transactions
-		final Date today = DateFunctions.getEndOfDay(currentDate);
+		final Date today = DateUtil.getEndOfDay(currentDate);
 		//We specify a GregorianCalendar because we make some assumptions
 		// about numbering of months, etc that may break if we 
 		// use the default calendar for the locale.  It's not the
@@ -896,7 +896,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		final GregorianCalendar tempCal = new GregorianCalendar();
 
 		for (ScheduledTransaction s : new FilteredLists.ScheduledTransactionListFilteredByBeforeToday(this, getScheduledTransactions())) {
-			if (Const.DEVEL) Log.info("Looking at scheduled transaction " + s.getScheduleName());
+			if (Const.DEVEL) logger.info("Looking at scheduled transaction " + s.getScheduleName());
 
 			Date tempDate = s.getLastDayCreated();
 			//#1779286 Bug BiWeekly Scheduled Transactions -Check if this transcation has never been created. 
@@ -914,32 +914,32 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				//The reason we set this date to an impossibly early date is to ensure
 				// that we include a scheduled transaction on the first day that matches,
 				// even if that day is the first day of any scheduled transactions.
-				lastDayCreated=DateFunctions.getDate(1900);
+				lastDayCreated=DateUtil.getDate(1900);
 			}
 			else {
-				lastDayCreated = DateFunctions.getStartOfDay(tempDate);
+				lastDayCreated = DateUtil.getStartOfDay(tempDate);
 				//We start one day after the last day, to avoid repeats.  
 				// See bug #1641937 for more details.
-				tempDate = DateFunctions.addDays(tempDate, 1);
+				tempDate = DateUtil.addDays(tempDate, 1);
 
 			}
 
 
 
-			tempDate = DateFunctions.getStartOfDay(tempDate);
+			tempDate = DateUtil.getStartOfDay(tempDate);
 
 			if (Const.DEVEL){
-				Log.debug("tempDate = " + tempDate);
-				Log.debug("startDate = " + s.getStartDate());
-				Log.debug("endDate = " + s.getEndDate());
+				logger.finest("tempDate = " + tempDate);
+				logger.finest("startDate = " + s.getStartDate());
+				logger.finest("endDate = " + s.getEndDate());
 			}
 
 			//The transaction is scheduled for a date before today and before the EndDate 
 			while (tempDate.before(today) 
 					&& (s.getEndDate() == null 
 							|| s.getEndDate().after(tempDate)
-							|| (DateFunctions.getDaysBetween(s.getEndDate(), tempDate, false) == 0))) {
-				if (Const.DEVEL) Log.debug("Trying date " + tempDate);
+							|| (DateUtil.getDaysBetween(s.getEndDate(), tempDate, false) == 0))) {
+				if (Const.DEVEL) logger.finest("Trying date " + tempDate);
 
 				//We use a Calendar instead of a Date object for comparisons
 				// because the Calendar interface is much nicer.
@@ -988,7 +988,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)
 						//As tempdate has been moved forward by one day we need to check if it is >= 13 instead of >13
-						&& ((DateFunctions.getDaysBetween(lastDayCreated, tempDate, false) >= 13)
+						&& ((DateUtil.getDaysBetween(lastDayCreated, tempDate, false) >= 13)
 								|| isNewTransaction)){
 					todayIsTheDay = true;
 					lastDayCreated = (Date) tempDate.clone();
@@ -999,7 +999,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				//Every X days, where X is the value in s.getScheduleDay().  Check if we
 				// have passed the correct number of days since the last transaction.
 				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_X_DAYS.toString())
-						&& DateFunctions.getDaysBetween(lastDayCreated, tempDate, false) >= s.getScheduleDay() ){
+						&& DateUtil.getDaysBetween(lastDayCreated, tempDate, false) >= s.getScheduleDay() ){
 					todayIsTheDay = true;
 					lastDayCreated = (Date) tempDate.clone();
 				}
@@ -1020,8 +1020,8 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				else if (s.getFrequencyType().equals(ScheduleFrequency.SCHEDULE_FREQUENCY_MULTIPLE_WEEKS_EVERY_MONTH.toString())
 						&& s.getScheduleDay() + 1 == tempCal.get(Calendar.DAY_OF_WEEK)){
 					if (Const.DEVEL) {
-						Log.debug("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
-						Log.debug("s.getScheduleWeek() == " + s.getScheduleWeek());
+						logger.finest("We are looking at day " + tempCal.get(Calendar.DAY_OF_WEEK) + ", which matches s.getScheduleDay() which == " + s.getScheduleDay());
+						logger.finest("s.getScheduleWeek() == " + s.getScheduleWeek());
 					}
 					int week = s.getScheduleWeek();
 					//The week mask should return 1 for the first week (day 1 - 7), 
@@ -1032,10 +1032,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					int weekNumber = tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1;
 					int weekMask = (int) Math.pow(2, weekNumber);
 					if (Const.DEVEL){
-						Log.debug("The week number is " + weekNumber + ", the week mask is " + weekMask + ", and the day of week in month is " + tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+						logger.finest("The week number is " + weekNumber + ", the week mask is " + weekMask + ", and the day of week in month is " + tempCal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
 					}
 					if ((week & weekMask) != 0){
-						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						if (Const.DEVEL) logger.info("The date " + tempCal.getTime() + " matches the requirements.");
 						todayIsTheDay = true;
 					}
 				}
@@ -1051,7 +1051,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					// i.e. 1 for January, 4 for March, 2048 for December.
 					int monthMask = (int) Math.pow(2, tempCal.get(Calendar.MONTH));
 					if ((months & monthMask) != 0){
-						if (Const.DEVEL) Log.info("The date " + tempCal.getTime() + " matches the requirements.");
+						if (Const.DEVEL) logger.info("The date " + tempCal.getTime() + " matches the requirements.");
 						todayIsTheDay = true;
 					}
 				}
@@ -1066,7 +1066,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				// be a problem, we may make the checks more specific.
 				if (todayIsTheDay){
 					for (Transaction t : getTransactions(tempDate, tempDate)) {
-						if (DateFunctions.isSameDay(t.getDate(), tempDate)
+						if (DateUtil.isSameDay(t.getDate(), tempDate)
 								&& t.isScheduled()
 								&& t.getFrom().equals(s.getFrom())
 								&& t.getTo().equals(s.getTo())
@@ -1076,7 +1076,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 								s.setLastDayCreated(tempDate);
 							}
 							catch (InvalidValueException ive){
-								Log.error("Error setting last created date");
+								logger.warning("Error setting last created date");
 							}
 						}
 					}
@@ -1089,9 +1089,9 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					// at the given day.
 					if (todayIsTheDay){
 						
-						if (Const.DEVEL) Log.debug("Setting last created date to " + tempDate);
-						s.setLastDayCreated(DateFunctions.getEndOfDay(tempDate));
-						if (Const.DEVEL) Log.debug("Last created date to " + s.getLastDayCreated());
+						if (Const.DEVEL) logger.finest("Setting last created date to " + tempDate);
+						s.setLastDayCreated(DateUtil.getEndOfDay(tempDate));
+						if (Const.DEVEL) logger.finest("Last created date to " + s.getLastDayCreated());
 
 						if (s.getMessage() != null && s.getMessage().trim().length() > 0){
 							String[] options = new String[1];
@@ -1130,11 +1130,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 							t.setScheduled(true);
 
 							this.addTransaction(t);
-							if (Const.DEVEL) Log.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
+							if (Const.DEVEL) logger.info("Added scheduled transaction " + t + " to transaction list on date " + t.getDate());
 						}
 					}
 					else {
-						Log.debug("Today was not the day to add the scheduled transaction...\n\tDate = " 
+						logger.finest("Today was not the day to add the scheduled transaction...\n\tDate = " 
 								+ tempDate
 								+ "\n\tDescription = " 
 								+ s.getDescription());
@@ -1142,10 +1142,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 				}
 				catch (ModelException me){
-					Log.error("Error adding scheduled tranaction: " + me);
+					logger.log(Level.WARNING, "Error adding scheduled tranaction", me);
 				}
 
-				tempDate = DateFunctions.addDays(tempDate, 1);
+				tempDate = DateUtil.addDays(tempDate, 1);
 			}
 		}
 

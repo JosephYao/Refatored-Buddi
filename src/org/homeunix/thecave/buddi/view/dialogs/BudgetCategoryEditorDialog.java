@@ -16,6 +16,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
@@ -41,14 +42,13 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.data.collection.CompositeList;
+import org.homeunix.thecave.moss.collections.CompositeList;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class BudgetCategoryEditorDialog extends MossDialog implements ActionListener {
 
@@ -283,7 +283,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 					bc.setNotes(notes.getText());
 					model.addBudgetCategory(bc);
 					
-					Log.debug("Created new BudgetCategory " + bc);
+					Logger.getLogger(this.getClass().getName()).finest("Created new BudgetCategory " + bc);
 				}
 				else {
 					bc = selected;
@@ -293,7 +293,7 @@ public class BudgetCategoryEditorDialog extends MossDialog implements ActionList
 					bc.setIncome(income.isSelected());
 					bc.setNotes(notes.getText());
 					
-					Log.debug("Updated BudgetCategory " + bc);
+					Logger.getLogger(this.getClass().getName()).finest("Updated BudgetCategory " + bc);
 				}
 				
 				closeWindow();

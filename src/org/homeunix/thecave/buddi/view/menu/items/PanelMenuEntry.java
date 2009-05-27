@@ -3,6 +3,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;

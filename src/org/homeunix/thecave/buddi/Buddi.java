@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -43,6 +48,8 @@ import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
+import org.homeunix.thecave.buddi.util.FileFunctions;
+import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.buddi.view.menu.bars.FramelessMenuBar;
@@ -50,26 +57,23 @@ import org.homeunix.thecave.buddi.view.menu.items.EditPreferences;
 import org.homeunix.thecave.buddi.view.menu.items.FileOpen;
 import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
-import org.homeunix.thecave.moss.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.exception.OperationCancelledException;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
+import org.homeunix.thecave.moss.common.ParseCommands;
+import org.homeunix.thecave.moss.common.StreamUtil;
+import org.homeunix.thecave.moss.common.Version;
+import org.homeunix.thecave.moss.common.ParseCommands.ParseResults;
+import org.homeunix.thecave.moss.common.ParseCommands.ParseVariable;
+import org.homeunix.thecave.moss.crypto.IncorrectPasswordException;
+import org.homeunix.thecave.moss.osx.Application;
+import org.homeunix.thecave.moss.osx.ApplicationAdapter;
+import org.homeunix.thecave.moss.osx.ApplicationEvent;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
+import org.homeunix.thecave.moss.swing.LookAndFeelUtil;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossSplashScreen;
-import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.LookAndFeelUtil;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.homeunix.thecave.moss.util.ParseCommands;
-import org.homeunix.thecave.moss.util.StreamFunctions;
-import org.homeunix.thecave.moss.util.Version;
-import org.homeunix.thecave.moss.util.ParseCommands.ParseResults;
-import org.homeunix.thecave.moss.util.ParseCommands.ParseVariable;
-import org.homeunix.thecave.moss.util.apple.Application;
-import org.homeunix.thecave.moss.util.apple.ApplicationAdapter;
-import org.homeunix.thecave.moss.util.apple.ApplicationEvent;
-import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -198,7 +202,7 @@ public class Buddi {
 	public static File getLanguagesFolder(){
 		if (languagesFolder == null)
 			languagesFolder = OperatingSystemUtil.getUserFile("Buddi", Const.LANGUAGE_FOLDER).getAbsolutePath();
-		Log.debug(languagesFolder);
+		Logger.getLogger(Buddi.class.getName()).finest(languagesFolder);
 		return new File(languagesFolder);
 	}
 
@@ -276,7 +280,7 @@ public class Buddi {
 						bl.openURLinBrowser(fileLocation);
 					}
 					catch (Exception e){
-						Log.error(e);
+						Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
 					}
 				}
 			}
@@ -311,7 +315,7 @@ public class Buddi {
 				catch (WindowOpenException woe){}
 			}
 			catch (ModelException me){
-				me.printStackTrace(Log.getPrintStream());
+				Logger.getLogger(Buddi.class.getName()).log(Level.SEVERE, "Model Exception", me);
 			}
 		}
 
@@ -324,7 +328,7 @@ public class Buddi {
 			}
 		}
 		if (mainFrame == null)
-			Log.emergency("No Buddi main windows were able to open!");
+			Logger.getLogger(Buddi.class.getName()).severe("No Buddi main windows were able to open!");
 
 		//Start the background startup tasks... 
 		startVersionCheck(mainFrame);
@@ -347,15 +351,14 @@ public class Buddi {
 
 										try {
 											((DocumentImpl) mainFrame.getDocument()).saveAuto(autoSaveLocation);
-											Log.debug("Auto saved file to " + autoSaveLocation);
+											Logger.getLogger(this.getClass().getName()).finest("Auto saved file to " + autoSaveLocation);
 										}
 										catch (DocumentSaveException dse){
-											Log.emergency("Error saving autosave file:");
-											dse.printStackTrace(Log.getPrintStream());
+											Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Error saving autosave file", dse);
 										}
 									}
 									else {
-										Log.debug("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
+										Logger.getLogger(this.getClass().getName()).finest("Did not autosave, as there are no changes to the data file " + mainFrame.getDocument().getFile());
 									}		
 								}
 							}
@@ -394,15 +397,15 @@ public class Buddi {
 				catch (WindowOpenException woe){}
 			}
 			catch (DocumentLoadException lme){
-				lme.printStackTrace(Log.getPrintStream());
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error loading document", lme);
 			}
 			catch (OperationCancelledException oce){}  //Do nothing
 		}
 		else if (f.getName().endsWith(Const.PLUGIN_EXTENSION)){
-			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
+			Logger.getLogger(Buddi.class.getName()).info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
 			if (!Buddi.getPluginsFolder().exists()){
 				if (!Buddi.getPluginsFolder().mkdirs()){
-					Log.error("Error creating Plugins directory!");
+					Logger.getLogger(Buddi.class.getName()).warning("Error creating Plugins directory!");
 				}
 			}
 			try {
@@ -426,14 +429,14 @@ public class Buddi {
 				);
 			}
 			catch (IOException ioe){
-				Log.error("Error copying plugin to Plugins directory", ioe);
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error copying plugin to Plugins directory", ioe);
 			}
 		}
 		else if (f.getName().endsWith(Const.LANGUAGE_EXTENSION)){
-			Log.info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getLanguagesFolder() + File.separator + f.getName());
+			Logger.getLogger(Buddi.class.getName()).info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getLanguagesFolder() + File.separator + f.getName());
 			if (!Buddi.getLanguagesFolder().exists()){
 				if (!Buddi.getLanguagesFolder().mkdirs()){
-					Log.error("Error creating Languages directory!");
+					Logger.getLogger(Buddi.class.getName()).warning("Error creating Languages directory!");
 				}
 			}
 			try {
@@ -460,7 +463,7 @@ public class Buddi {
 				PrefsModel.getInstance().save();
 			}
 			catch (IOException ioe){
-				Log.error("Error copying translation to Languages directory", ioe);
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error copying translation to Languages directory", ioe);
 			}
 		}
 	}
@@ -544,14 +547,11 @@ public class Buddi {
 		//Catch runtime exceptions
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
 			public void uncaughtException(Thread arg0, Throwable arg1) {
-				arg1.printStackTrace(Log.getPrintStream());
-				if (!Log.getPrintStream().equals(System.err)
-						&& !Log.getPrintStream().equals(System.out)){
-					if (arg1 instanceof DataModelProblemException)
-						sendBugReport(((DataModelProblemException) arg1).getDataModel());
-					else
-						sendBugReport();
-				}
+				Logger.getLogger(Buddi.class.getName()).log(Level.SEVERE, "Uncaught exception", arg1);
+				if (arg1 instanceof DataModelProblemException)
+					sendBugReport(((DataModelProblemException) arg1).getDataModel());
+				else
+					sendBugReport();
 			}
 		});
 
@@ -592,7 +592,7 @@ public class Buddi {
 									PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
 						}
 						catch (ModelException me){
-							me.printStackTrace(Log.getPrintStream());
+							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Model Exception", me);
 						}
 						catch (WindowOpenException woe){}
 					}
@@ -613,10 +613,8 @@ public class Buddi {
 		}
 
 		//Set up the logging system.  If we have specified --log, we first
-		// try using that file.  If that is not specified, on the Mac
-		// we just use stderr (since Console.app provides an easy way
-		// to view that).  On all else, we default to buddi.log, in
-		// the working directory.
+		// try using that file.  If that is not specified, we use the OS
+		// specific log file location.
 		try {
 			PrintStream logStream = System.err; //Default to stderr
 			if (results.getString("--log") != null){
@@ -637,33 +635,64 @@ public class Buddi {
 				if (logFile.getParentFile().exists())
 					logStream = new PrintStream(logFile);
 			}
-
-			//Set the log stream
-			Log.setPrintStream(logStream);
+			
+			Logger logger = Logger.getLogger("org.homeunix.thecave");
+			Handler streamHandler = new StreamHandler(logStream, new SimpleFormatter());
+			logger.addHandler(streamHandler);
 		}
 		catch (FileNotFoundException fnfe){
-			Log.setPrintStream(System.err);
-			Log.error(fnfe);
+			Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Cannot open log file", fnfe);
 		}
 
 		//Set up the log levels
 		Integer verbosity = results.getInteger("--verbosity");
 		if (verbosity != null){
-			Log.setLogLevel(verbosity);
-			Log.debug("Setting log level to " + verbosity);
+			Level level;
+			switch (verbosity) {
+			case 0:
+				level = Level.SEVERE;
+				break;
+			case 1:
+				level = Level.WARNING;
+				break;
+			case 2:
+				level = Level.WARNING;
+				break;
+			case 3:
+				level = Level.INFO;
+				break;
+			case 4:
+				level = Level.INFO;
+				break;
+			case 5:
+				level = Level.FINE;
+				break;
+			case 6:
+				level = Level.FINER;
+				break;
+			case 7:
+				level = Level.FINEST;
+				break;
+			default:
+				level = Level.INFO;
+				break;
+			}
+
+			Logger.getLogger("org.homeunix.thecave").setLevel(level);
+			Logger.getLogger(Buddi.class.getName()).finest("Setting log level to " + level);
 		}
 		else {
 			if (Const.DEVEL)
-				Log.setLogLevel(Log.DEBUG);
+				Logger.getLogger("org.homeunix.thecave").setLevel(Level.FINEST);
 			else
-				Log.setLogLevel(Log.INFO);
+				Logger.getLogger(Buddi.class.getName()).setLevel(Level.INFO);
 		}
 
 		//Prints the version of Buddi to the logs
-		Log.info("Buddi version: " + getVersion());
-		Log.info("Buddi command line arguments: " + Arrays.toString(args));
-		Log.info("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
-		Log.info("Java VM version: " + System.getProperty("java.version"));
+		Logger.getLogger(Buddi.class.getName()).info("Buddi version: " + getVersion());
+		Logger.getLogger(Buddi.class.getName()).info("Buddi command line arguments: " + Arrays.toString(args));
+		Logger.getLogger(Buddi.class.getName()).info("Operating System: " + System.getProperty("os.name") + ", " + System.getProperty("os.arch"));
+		Logger.getLogger(Buddi.class.getName()).info("Java VM version: " + System.getProperty("java.version"));
 
 		//Parse all the remaining options
 		Boolean usbKey = results.getBoolean("--usb");
@@ -686,7 +715,7 @@ public class Buddi {
 			filesToLoad.add(new File(s));
 		}
 
-		Log.debug("Files to load: " + filesToLoad);
+		Logger.getLogger(Buddi.class.getName()).finest("Files to load: " + filesToLoad);
 
 		String currentWorkingDir = System.getProperty("user.dir") + File.separator;
 
@@ -724,7 +753,7 @@ public class Buddi {
 
 		//Let the user know where the working directory is, after
 		// we have set up logging properly.
-		Log.info("Working directory: " + currentWorkingDir);
+		Logger.getLogger(Buddi.class.getName()).info("Working directory: " + currentWorkingDir);
 
 		//Run any RunnablePlugins which we may have here.
 		for (BuddiRunnablePlugin plugin : (List<BuddiRunnablePlugin>) BuddiPluginFactory.getPlugins(BuddiRunnablePlugin.class)) {
@@ -732,11 +761,11 @@ public class Buddi {
 				plugin.run();
 			}
 			catch (RuntimeException re){
-				Log.emergency("Runtime Exception encountered while starting plugin", re);
+				Logger.getLogger(Buddi.class.getName()).log(Level.SEVERE, "Runtime Exception encountered while starting plugin", re);
 				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
 			}
 			catch (Exception e){
-				Log.emergency("Exception encountered while starting plugin", e);
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Exception encountered while starting plugin", e);
 				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
 			}
 		}
@@ -802,7 +831,7 @@ public class Buddi {
 					bl.openURLinBrowser(Const.DONATE_URL);
 				}
 				catch (Exception e){
-					Log.error(e);
+					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
 				}
 			}
 		}
@@ -839,7 +868,7 @@ public class Buddi {
 						PrefsModel.getInstance().setAvailableVersion(versions.getProperty(Const.BRANCH));
 					}
 					catch (IOException ioe){
-						Log.error(ioe);
+						Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", ioe);
 					}					
 				};
 			};
@@ -882,14 +911,14 @@ public class Buddi {
 					Version availableVersion = new Version(versions.get(Const.BRANCH).toString());
 					Version thisVersion = getVersion();
 
-					Log.debug("This version: " + thisVersion);
-					Log.debug("Available version: " + availableVersion);
+					Logger.getLogger(Buddi.class.getName()).finest("This version: " + thisVersion);
+					Logger.getLogger(Buddi.class.getName()).finest("Available version: " + availableVersion);
 
 					if (thisVersion.compareTo(availableVersion) < 0)
 						return availableVersion;
 				}
 				catch (IOException ioe){
-					Log.error(ioe);
+					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", ioe);
 
 					String[] options = new String[1];
 					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
@@ -962,7 +991,7 @@ public class Buddi {
 							bl.openURLinBrowser(fileLocation);
 						}
 						catch (Exception e){
-							Log.error(e);
+							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
 						}
 					}
 				}
@@ -986,16 +1015,16 @@ public class Buddi {
 			}
 		};
 
-		if (Const.DEVEL) Log.debug("Starting update checking...");
+		if (Const.DEVEL) Logger.getLogger(Buddi.class.getName()).finest("Starting update checking...");
 		updateWorker.start();
 	}
 
 
 	public static void sendBugReport(Document... models){
 //		StringBuilder crashLog = new StringBuilder();
-//		crashLog.append("\n---Starting Preferences---\n");
-//		crashLog.append(PrefsModel.getInstance().saveToString());
-//		crashLog.append("---Finished Preferences---\n\n");
+//		crashLogger.getLogger().append("\n---Starting Preferences---\n");
+//		crashLogger.getLogger().append(PrefsModel.getInstance().saveToString());
+//		crashLogger.getLogger().append("---Finished Preferences---\n\n");
 
 //		if (models != null){
 //		for (Document m : models) {
@@ -1003,15 +1032,15 @@ public class Buddi {
 //		try {
 //		m.saveToStream(baos);
 
-//		crashLog.append("---Starting Data File---\n");
-//		crashLog.append(baos.toString());
-//		crashLog.append("---Finished Data File---\n\n");
+//		crashLogger.getLogger().append("---Starting Data File---\n");
+//		crashLogger.getLogger().append(baos.toString());
+//		crashLogger.getLogger().append("---Finished Data File---\n\n");
 //		}
 //		catch (DocumentSaveException dse){
-//		crashLog.append("---Starting Data File---\n");
-//		crashLog.append("Error: Could not save to stream:");
-//		crashLog.append(dse.getMessage());
-//		crashLog.append("---Finished Data File---\n\n");					
+//		crashLogger.getLogger().append("---Starting Data File---\n");
+//		crashLogger.getLogger().append("Error: Could not save to stream:");
+//		crashLogger.getLogger().append(dse.getMessage());
+//		crashLogger.getLogger().append("---Finished Data File---\n\n");					
 //		}
 //		}
 //		}
@@ -1019,11 +1048,11 @@ public class Buddi {
 //		if (logFile != null){
 //		try{
 //		BufferedReader logReader = new BufferedReader(new FileReader(logFile));
-//		crashLog.append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
+//		crashLogger.getLogger().append("---Starting Log File (" + logFile.getAbsolutePath() + ")---\n");
 //		String temp;
 //		while ((temp = logReader.readLine()) != null)
-//		crashLog.append(temp).append("\n");
-//		crashLog.append("---Finished Log File---\n");
+//		crashLogger.getLogger().append(temp).append("\n");
+//		crashLogger.getLogger().append("---Finished Log File---\n");
 //		}
 //		catch (IOException ioe){}
 //		}
@@ -1051,17 +1080,17 @@ public class Buddi {
 //		"and send it to Wyatt.\n\nIf you do not wish to send this crash report at " +
 //		"all, simply close this window.  You can disable sending future crash " + 
 //		"reports in Buddi's Preferences.\n\n\n"
-//		+ crashLog.toString()
+//		+ crashLogger.getLogger().toString()
 
 //		, 
 //		"UTF-8").replaceAll("\\+", "%20"));
 //		}
 //		catch (Exception e){
-//		Log.emergency("Unable to send crash email.");
+//		Logger.getLogger().emergency("Unable to send crash email.");
 //		}
 //		}
 
-//		Log.critical(crashLog.toString());
+//		Logger.getLogger().critical(crashLogger.getLogger().toString());
 	}
 
 	private static void extractFile(File fileToLoad){
@@ -1076,7 +1105,7 @@ public class Buddi {
 				try {
 					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
 					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".xml"));
-					StreamFunctions.copyInputStreamToOutputStream(is, os);
+					StreamUtil.copyStream(is, os);
 
 					os.flush();
 					os.close();

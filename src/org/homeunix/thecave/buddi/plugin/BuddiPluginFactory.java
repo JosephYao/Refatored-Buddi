@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
@@ -23,10 +24,9 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
-import org.homeunix.thecave.moss.plugin.factory.PluginFactory;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.application.plugin.factory.PluginFactory;
 
 public class BuddiPluginFactory extends PluginFactory {
 	
@@ -69,7 +69,7 @@ public class BuddiPluginFactory extends PluginFactory {
 				builtIn = Const.BUILT_IN_PANELS;
 			else {
 				builtIn = new String[0];
-				Log.warning("Unknown plugin type: " + pluginType.getName());
+				Logger.getLogger(BuddiPluginFactory.class.getName()).warning("Unknown plugin type: " + pluginType.getName());
 			}
 			
 			for (String className : builtIn){

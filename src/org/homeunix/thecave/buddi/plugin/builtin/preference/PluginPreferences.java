@@ -37,10 +37,10 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.buddi.util.FileFunctions;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.swing.model.DefaultGenericListModel;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.FileFunctions;
 
 public class PluginPreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0;

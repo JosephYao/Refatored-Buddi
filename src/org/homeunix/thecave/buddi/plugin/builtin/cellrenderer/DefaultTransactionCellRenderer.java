@@ -22,9 +22,9 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 
 
 /**

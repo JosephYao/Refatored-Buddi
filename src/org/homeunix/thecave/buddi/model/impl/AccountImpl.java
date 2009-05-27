@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
@@ -13,7 +15,6 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
-import org.homeunix.thecave.moss.util.Log;
 
 /**
  * Default implementation of an Account.  You should not create this object directly; 
@@ -106,7 +107,7 @@ public class AccountImpl extends SourceImpl implements Account {
 				}
 			}
 			catch (InvalidValueException ive){
-				Log.error(ive);
+				Logger.getLogger(AccountImpl.class.getName()).log(Level.WARNING, "Incorrect value", ive);
 			}
 		}
 
@@ -137,7 +138,7 @@ public class AccountImpl extends SourceImpl implements Account {
 			return getStartingBalance();
 		}
 
-//		Log.error("AccountImpl.getBalance(Date) - Something is wrong... we should not be here.");
+//		Logger.getLogger().error("AccountImpl.getBalance(Date) - Something is wrong... we should not be here.");
 		return 0;
 	}
 	@Override

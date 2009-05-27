@@ -18,8 +18,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
 
 public class SourceComboBoxModel implements ComboBoxModel {
 	private static final long serialVersionUID = 0; 

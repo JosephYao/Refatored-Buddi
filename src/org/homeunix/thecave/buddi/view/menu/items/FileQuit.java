@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -18,7 +19,6 @@ import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class FileQuit extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -44,7 +44,7 @@ public class FileQuit extends MossMenuItem {
 		
 		for (MossFrame frame : ApplicationModel.getInstance().getOpenFrames()) {
 			if (!frame.canClose()){
-				Log.debug("Frame " + frame.getTitle() + " refused to quit; cancelling quit request.");
+				Logger.getLogger(this.getClass().getName()).finest("Frame " + frame.getTitle() + " refused to quit; cancelling quit request.");
 				return;
 			}
 		}

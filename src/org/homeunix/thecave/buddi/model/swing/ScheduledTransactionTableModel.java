@@ -22,7 +22,6 @@ public class ScheduledTransactionTableModel extends AbstractTableModel {
 //	private final List<ScheduledTransaction> unsavedScheduledTransactions;
 //	private final CompositeList<ScheduledTransaction> allSchedules;
 	
-	@SuppressWarnings("unchecked")
 	public ScheduledTransactionTableModel(Document model) {
 		this.model = model;
 		

@@ -1,7 +1,7 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.test.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -14,8 +14,13 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.junit.Test;
 
 
@@ -31,27 +36,27 @@ public class AccountTest {
 			d.addAccount(a);
 			
 			d.addTransaction(ModelFactory.createTransaction(
-					DateFunctions.getDate(2007, Calendar.AUGUST, 1), "Test 1", 100, a, d.getBudgetCategory("Groceries")));
+					DateUtil.getDate(2007, Calendar.AUGUST, 1), "Test 1", 100, a, d.getBudgetCategory("Groceries")));
 			d.addTransaction(ModelFactory.createTransaction(
-					DateFunctions.getDate(2007, Calendar.AUGUST, 5), "Test 2", 100, a, d.getBudgetCategory("Groceries")));
+					DateUtil.getDate(2007, Calendar.AUGUST, 5), "Test 2", 100, a, d.getBudgetCategory("Groceries")));
 			d.addTransaction(ModelFactory.createTransaction(
-					DateFunctions.getDate(2007, Calendar.AUGUST, 10), "Test 3", -100, a, d.getBudgetCategory("Groceries")));
+					DateUtil.getDate(2007, Calendar.AUGUST, 10), "Test 3", -100, a, d.getBudgetCategory("Groceries")));
 			d.addTransaction(ModelFactory.createTransaction(
-					DateFunctions.getDate(2007, Calendar.SEPTEMBER, 1), "Test 4", -100, a, d.getBudgetCategory("Groceries")));
+					DateUtil.getDate(2007, Calendar.SEPTEMBER, 1), "Test 4", -100, a, d.getBudgetCategory("Groceries")));
 			d.addTransaction(ModelFactory.createTransaction(
-					DateFunctions.getDate(2007, Calendar.SEPTEMBER, 2), "Test 5", -100, a, d.getBudgetCategory("Groceries")));
+					DateUtil.getDate(2007, Calendar.SEPTEMBER, 2), "Test 5", -100, a, d.getBudgetCategory("Groceries")));
 			
 			d.updateAllBalances();
 			
 			Object[][] tests = {
-					{DateFunctions.getDate(2007, Calendar.JULY, 30), 0l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 1), -100l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 2), -100l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 4), -100l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 5), -200l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 6), -200l},
-					{DateFunctions.getDate(2007, Calendar.AUGUST, 30), -100l},
-					{DateFunctions.getDate(2007, Calendar.SEPTEMBER, 3), 100l}
+					{DateUtil.getDate(2007, Calendar.JULY, 30), 0l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 1), -100l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 2), -100l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 4), -100l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 5), -200l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 6), -200l},
+					{DateUtil.getDate(2007, Calendar.AUGUST, 30), -100l},
+					{DateUtil.getDate(2007, Calendar.SEPTEMBER, 3), 100l}
 			};
 			
 			for (Object[] test : tests) {
@@ -74,16 +79,16 @@ public class AccountTest {
 		//StartDate == null, No transactions; return today
 		// We wrap each in getStartOfDay() to avoid millisecond differences, if the get()
 		// method takes a few millis.
-		assertEquals(DateFunctions.getStartOfDay(a.getStartDate()), DateFunctions.getStartOfDay(new Date()));
+		assertEquals(DateUtil.getStartOfDay(a.getStartDate()), DateUtil.getStartOfDay(new Date()));
 		
 		//StartDate != null, No transactions; return startDate
-		Date startDate = DateFunctions.getDate(2007, Calendar.JANUARY, 3);
+		Date startDate = DateUtil.getDate(2007, Calendar.JANUARY, 3);
 		a.setStartDate(startDate);
 		assertEquals(startDate, a.getStartDate());
 		
 		//StartDate != null, Transactions exist, and are after startDate; return startDate
 		Transaction t = ModelFactory.createTransaction(
-				DateFunctions.getDate(2007, Calendar.JANUARY, 5), 
+				DateUtil.getDate(2007, Calendar.JANUARY, 5), 
 				"Test", 
 				1234, 
 				a,
@@ -93,17 +98,17 @@ public class AccountTest {
 		
 		//StartDate != null, Transactions exist, and are before startDate; return first transaction
 		t = ModelFactory.createTransaction(
-				DateFunctions.getDate(2007, Calendar.JANUARY, 1), 
+				DateUtil.getDate(2007, Calendar.JANUARY, 1), 
 				"Test", 
 				1234, 
 				a,
 				bc);
 		d.addTransaction(t);
-		assertEquals(a.getStartDate(), DateFunctions.getDate(2007, Calendar.JANUARY, 1));
+		assertEquals(a.getStartDate(), DateUtil.getDate(2007, Calendar.JANUARY, 1));
 		
 		//StartDate == null, Transactions exist; return first transaction
 		a.setStartDate(null);
-		assertEquals(a.getStartDate(), DateFunctions.getDate(2007, Calendar.JANUARY, 1));
+		assertEquals(a.getStartDate(), DateUtil.getDate(2007, Calendar.JANUARY, 1));
 	}
 	
 	@Test

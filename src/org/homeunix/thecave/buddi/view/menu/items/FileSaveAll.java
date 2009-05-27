@@ -8,10 +8,10 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.moss.osx.HiddenMossFrame;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.apple.HiddenMossFrame;
 
 public class FileSaveAll extends MossMenuItem {
 	public static final long serialVersionUID = 0;

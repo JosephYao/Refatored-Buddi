@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
@@ -14,7 +15,6 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class EditDeleteBudgetCategory extends MossMenuItem{
 	public static final long serialVersionUID = 0;
@@ -39,7 +39,7 @@ public class EditDeleteBudgetCategory extends MossMenuItem{
 					bc.setDeleted(true);
 				}
 				catch (InvalidValueException ive){
-					Log.error("Error setting deleted flag on budget category");
+					Logger.getLogger(this.getClass().getName()).warning("Error setting deleted flag on budget category");
 				}
 			}
 		}

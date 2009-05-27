@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
 import org.homeunix.thecave.moss.swing.MossPanel;
 
 /**
@@ -25,7 +25,7 @@ import org.homeunix.thecave.moss.swing.MossPanel;
  * @author mpeccorini
  */
 public abstract class BuddiPanelPlugin extends MossPanel implements MossPlugin {
-
+	private static final long serialVersionUID = 0L;
 	private MainFrame parentFrame;
 	protected Document document;
 	private DocumentChangeListener listener;

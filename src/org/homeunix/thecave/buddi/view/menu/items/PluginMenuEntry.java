@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -35,12 +37,11 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
 import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
 import org.homeunix.thecave.moss.swing.MossStatusDialog;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class PluginMenuEntry extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -65,7 +66,7 @@ public class PluginMenuEntry extends MossMenuItem {
 				}
 			}
 			catch (ModelException me){
-				Log.error("Could not create a new document!", me);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Could not create a new document!", me);
 				return;	
 			}
 		}
@@ -156,15 +157,15 @@ public class PluginMenuEntry extends MossMenuItem {
 						return pm;
 					}
 					catch (PluginException pe){
-						Log.error("Error processing data in plugin: ", pe);
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error processing data in plugin: ", pe);
 						return null;
 					}
 					catch (RuntimeException re){
-						Log.emergency("Runtime exception processing data in plugin: ", re);
+						Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Runtime exception processing data in plugin: ", re);
 						return null;
 					}
 					catch (Error e){
-						Log.emergency("Error processing data in plugin: ", e);
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error processing data in plugin: ", e);
 						return null;						
 					}
 
@@ -247,7 +248,7 @@ public class PluginMenuEntry extends MossMenuItem {
 			worker.start();
 		}
 		catch (Exception ex){
-			Log.error("Error encountered in plugin: " + ex);
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error encountered in plugin: " + ex);
 		}
 	}
 }

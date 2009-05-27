@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -50,14 +51,13 @@ import org.homeunix.thecave.buddi.view.dialogs.schedule.WeekdayCard;
 import org.homeunix.thecave.buddi.view.dialogs.schedule.WeeklyCard;
 import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class ScheduledTransactionEditorDialog extends MossDialog implements ActionListener {
@@ -154,7 +154,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		startDateChooser.setDate(new Date());
 
 		endDateChooser.setEditor(new JFormattedTextField(new SimpleDateFormat(PrefsModel.getInstance().getDateFormat())));
-		endDateChooser.setDate(DateFunctions.addYears(new Date(), 1));
+		endDateChooser.setDate(DateUtil.addYears(new Date(), 1));
 
 		Dimension textSize = new Dimension(Math.max(250, scheduleName.getPreferredSize().width), scheduleName.getPreferredSize().height);
 		startDateChooser.setPreferredSize(textSize);
@@ -293,7 +293,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		if (frequencyPulldown.getSelectedItem() != null) {
 			cardLayout.show(cardHolder, frequencyPulldown.getSelectedItem().toString());
 
-			if (Const.DEVEL) Log.info("Showing card " + frequencyPulldown.getSelectedItem().toString());
+			Logger.getLogger(this.getClass().getName()).info("Showing card " + frequencyPulldown.getSelectedItem().toString());
 		}
 	}
 
@@ -412,7 +412,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 					return true;
 				}
 				else
-					if (Const.DEVEL) Log.debug("Cancelled from either start date in the past, or info not correct");
+					if (Const.DEVEL) Logger.getLogger(this.getClass().getName()).finest("Cancelled from either start date in the past, or info not correct");
 			}
 			else {
 				String[] options = new String[1];

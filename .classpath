@@ -9,8 +9,14 @@
 	<classpathentry kind="lib" path="lib/quaqua-4.4.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/winlaf-0.5.1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Moss"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.14.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.11.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.application"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.collections"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.crypto"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.swing"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.i18n"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.osx"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

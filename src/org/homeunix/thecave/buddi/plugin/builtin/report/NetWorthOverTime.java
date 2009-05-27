@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
@@ -20,11 +21,10 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.Formatter;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.Version;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.Version;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -43,14 +43,14 @@ public class NetWorthOverTime extends BuddiReportPlugin {
 		List<Date> dates = new LinkedList<Date>();
 		Date date = startDate;
 
-		int numberOfDaysBetween = DateFunctions.getDaysBetween(startDate, new Date(), false);
+		int numberOfDaysBetween = DateUtil.getDaysBetween(startDate, new Date(), false);
 		int daysBetweenReport = numberOfDaysBetween / NUM_SAMPLES;
 
 		for (int i = 0; i < NUM_SAMPLES; i++){
-			date = DateFunctions.addDays(startDate, i * daysBetweenReport);
+			date = DateUtil.addDays(startDate, i * daysBetweenReport);
 			if (date.before(new Date()))
 				dates.add(date);
-			Log.debug("Added date: " + date);			
+			Logger.getLogger(this.getClass().getName()).finest("Added date: " + date);			
 		}
 
 		dates.add(new Date());

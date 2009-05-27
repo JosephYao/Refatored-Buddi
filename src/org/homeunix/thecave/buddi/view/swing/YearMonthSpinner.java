@@ -13,7 +13,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * @author wyatt
@@ -31,8 +31,8 @@ public class YearMonthSpinner extends JPanel {
 		year = new JSpinner();
 		month = new JSpinner();
 		
-		yearModel = new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH);
-		monthModel = new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH);
+		yearModel = new SpinnerDateModel(new Date(), DateUtil.getDate(1900, Calendar.JANUARY), DateUtil.getDate(3000, Calendar.DECEMBER), Calendar.MONTH);
+		monthModel = new SpinnerDateModel(new Date(), DateUtil.getDate(1900, Calendar.JANUARY), DateUtil.getDate(3000, Calendar.DECEMBER), Calendar.MONTH);
 		year.setModel(yearModel);
 		month.setModel(monthModel);
 		

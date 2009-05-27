@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
-import org.homeunix.thecave.moss.model.AbstractDocument;
+import org.homeunix.thecave.moss.application.document.AbstractDocument;
 
 /**
  * The class from which most other model objects descend from.  You should not 

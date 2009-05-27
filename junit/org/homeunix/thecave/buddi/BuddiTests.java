@@ -1,14 +1,14 @@
 /*
  * Created on Aug 30, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi;
+package org.homeunix.thecave.buddi.test;
 
-import org.homeunix.thecave.buddi.model.AccountTest;
-import org.homeunix.thecave.buddi.model.BudgetCategoryTest;
-import org.homeunix.thecave.buddi.model.DocumentTest;
-import org.homeunix.thecave.buddi.model.ScheduledTransactionTest;
-import org.homeunix.thecave.buddi.model.SplitsTest;
-import org.homeunix.thecave.buddi.model.TransactionTest;
+import org.homeunix.thecave.buddi.test.model.AccountTest;
+import org.homeunix.thecave.buddi.test.model.BudgetCategoryTest;
+import org.homeunix.thecave.buddi.test.model.DocumentTest;
+import org.homeunix.thecave.buddi.test.model.ScheduledTransactionTest;
+import org.homeunix.thecave.buddi.test.model.SplitsTest;
+import org.homeunix.thecave.buddi.test.model.TransactionTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

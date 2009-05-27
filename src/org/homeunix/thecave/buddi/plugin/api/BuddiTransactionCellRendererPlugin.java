@@ -6,8 +6,8 @@ package org.homeunix.thecave.buddi.plugin.api;
 import javax.swing.DefaultListCellRenderer;
 
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
-import org.homeunix.thecave.moss.util.Version;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
+import org.homeunix.thecave.moss.common.Version;
 
 /**
  * Create a plugin of this type to allow custom cell renderers for the transaction
@@ -20,6 +20,7 @@ import org.homeunix.thecave.moss.util.Version;
  *
  */
 public abstract class BuddiTransactionCellRendererPlugin extends DefaultListCellRenderer implements MossPlugin {
+	private static final long serialVersionUID = 0L;
 	private Account account;
 	
 	public String getDescription() {

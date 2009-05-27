@@ -10,9 +10,9 @@ import java.io.File;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
+import org.homeunix.thecave.moss.common.Version;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Version;
 
 /**
  * The abstract class to extend when creating an import plugin.  The method importData() 

@@ -14,8 +14,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.AccountEditorDialog;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class EditNewAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;

@@ -3,7 +3,8 @@
  */
 package org.homeunix.thecave.buddi.view.menu.bars;
 
-import org.homeunix.thecave.moss.util.apple.Application;
+import org.homeunix.thecave.moss.osx.Application;
+
 
 public class FramelessMenuBar extends BuddiMenuBar {
 	public static final long serialVersionUID = 0;

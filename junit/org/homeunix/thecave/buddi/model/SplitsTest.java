@@ -1,7 +1,7 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.test.model;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.AccountImpl;
 import org.homeunix.thecave.buddi.model.impl.AccountTypeImpl;
 import org.homeunix.thecave.buddi.model.impl.BudgetCategoryImpl;
@@ -18,7 +23,7 @@ import org.homeunix.thecave.buddi.model.impl.SplitImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionSplitImpl;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
-import org.homeunix.thecave.moss.data.collection.SortedArrayList;
+import org.homeunix.thecave.moss.collections.SortedArrayList;
 import org.junit.Before;
 import org.junit.Test;
 

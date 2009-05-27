@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -32,9 +33,8 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.homeunix.thecave.moss.swing.MossDialog;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
 import org.jdesktop.swingx.JXDatePicker;
 
 /**
@@ -196,8 +196,8 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 			
 			System.out.println(startDateChooser.getDate() + ", " + endDateChooser.getDate());
 			
-			startDate = DateFunctions.getStartOfDay(startDateChooser.getDate());
-			endDate = DateFunctions.getEndOfDay(endDateChooser.getDate());
+			startDate = DateUtil.getStartOfDay(startDateChooser.getDate());
+			endDate = DateUtil.getEndOfDay(endDateChooser.getDate());
 			
 			System.out.println(startDate + ", " + endDate);
 
@@ -219,7 +219,7 @@ public class CustomDateDialog extends MossDialog implements ActionListener {
 				return;
 			}
 
-			if (Const.DEVEL) Log.debug("Getting transactions between " + startDate + " and " + endDate);
+			if (Const.DEVEL) Logger.getLogger(this.getClass().getName()).finest("Getting transactions between " + startDate + " and " + endDate);
 
 			CustomDateDialog.this.setVisible(false);
 

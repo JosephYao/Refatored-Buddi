@@ -22,9 +22,9 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableBudgetCategoryImp
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionSplitImpl;
-import org.homeunix.thecave.moss.data.collection.WrapperList;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+import org.homeunix.thecave.moss.collections.WrapperList;
 
 public class WrapperLists {
 

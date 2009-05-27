@@ -4,13 +4,14 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
-import org.homeunix.thecave.moss.util.Log;
 
 public class TransactionSplitImpl extends ModelObjectImpl implements TransactionSplit {	
 	
@@ -25,7 +26,7 @@ public class TransactionSplitImpl extends ModelObjectImpl implements Transaction
 			setSource(transactionSplit.getSource());
 		}
 		catch (InvalidValueException ive){
-			Log.emergency("Invalid value excetion when wrapping TransactionSplitImpl", ive);
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Invalid value excetion when wrapping TransactionSplitImpl", ive);
 		}
 		setAmount(transactionSplit.getAmount());
 	}

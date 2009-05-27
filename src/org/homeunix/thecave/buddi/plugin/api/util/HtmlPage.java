@@ -10,12 +10,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import org.homeunix.thecave.buddi.Buddi;
-import org.homeunix.thecave.moss.util.FileFunctions;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.buddi.util.FileFunctions;
 
 /**
  * A small class which defines an HTML page.  There are two parts to this: the HTML text,
@@ -65,11 +65,11 @@ public class HtmlPage {
 
 		//Do some sanity checks, logging results
 		if (dataFolder == null)
-			Log.error("Data folder is null (HtmlPage.createHTML()).");
+			Logger.getLogger(this.getClass().getName()).warning("Data folder is null (HtmlPage.createHTML()).");
 		if (html == null)
-			Log.error("HTML is null (HtmlPage.createHTML()).");
+			Logger.getLogger(this.getClass().getName()).warning("HTML is null (HtmlPage.createHTML()).");
 		if (name == null)
-			Log.error("Name is null (HtmlPage.createHTML()).");
+			Logger.getLogger(this.getClass().getName()).warning("Name is null (HtmlPage.createHTML()).");
 
 		//Get a unique folder name which has not yet been used.
 		while (counter < countMax && (htmlFolder == null || htmlFolder.exists())){
@@ -78,18 +78,18 @@ public class HtmlPage {
 		}
 		//We could not create a folder, after 1000 tries.  Exit.
 		if (counter == countMax){
-			Log.warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.  Please verify if you really have this many folders in your data drectory, and if so, clean up a bit.");
+			Logger.getLogger(this.getClass().getName()).warning("Could not find a folder to use in the data folder, after 1000 tries.  Cancelling HTML export.  Please verify if you really have this many folders in your data drectory, and if so, clean up a bit.");
 
 			return null;
 		}
 
 		if (!FileFunctions.isFolderWritable(htmlFolder.getParentFile())){
-			Log.error("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
+			Logger.getLogger(this.getClass().getName()).warning("Cannot write to '" + htmlFolder.getParentFile().getAbsolutePath() + "'.  This may cause problems shortly...");
 		}
 
 		//Try to create a folder.  If this doesn't work, we return with an error.
 		if (!htmlFolder.mkdirs()){
-			Log.warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Please check that you have write permission on this folder and its sub folders.");
+			Logger.getLogger(this.getClass().getName()).warning("Could not create folder '" + htmlFolder.getAbsolutePath() + "'.  Please check that you have write permission on this folder and its sub folders.");
 			return null;
 		}
 
@@ -108,7 +108,7 @@ public class HtmlPage {
 //			bw.close();
 		}
 		catch (IOException ioe){
-			Log.error("Could not write HTML file.");
+			Logger.getLogger(this.getClass().getName()).warning("Could not write HTML file.");
 			return null;
 		}
 
@@ -121,7 +121,7 @@ public class HtmlPage {
 						f.deleteOnExit();
 					}
 					catch (IOException ioe){
-						Log.warning("Error writing file " + f.getAbsolutePath());
+						Logger.getLogger(this.getClass().getName()).warning("Error writing file " + f.getAbsolutePath());
 					}
 				}
 			}

@@ -27,9 +27,9 @@ import org.homeunix.thecave.buddi.view.menu.items.EditReconcileAndAdvanceTransac
 import org.homeunix.thecave.buddi.view.menu.items.EditRecordTransaction;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteAccount;
 import org.homeunix.thecave.buddi.view.menu.items.EditUndeleteBudgetCategory;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenu;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class EditMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

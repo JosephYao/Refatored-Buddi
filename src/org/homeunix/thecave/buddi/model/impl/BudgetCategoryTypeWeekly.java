@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * Definition of a Weekly BudgetCategoryType
@@ -17,15 +17,15 @@ import org.homeunix.thecave.moss.util.DateFunctions;
 public class BudgetCategoryTypeWeekly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
-		return DateFunctions.getStartOfWeek(date);
+		return DateUtil.getStartOfWeek(date);
 	}
 	
 	public Date getEndOfBudgetPeriod(Date date) {
-		return DateFunctions.getEndOfWeek(date);
+		return DateUtil.getEndOfWeek(date);
 	}
 	
 	public Date getBudgetPeriodOffset(Date date, int offset) {
-		return getStartOfBudgetPeriod(DateFunctions.addDays(DateFunctions.getStartOfWeek(date), 7 * offset));
+		return getStartOfBudgetPeriod(DateUtil.addDays(DateUtil.getStartOfWeek(date), 7 * offset));
 	}
 	
 	public long getDaysInPeriod(Date date) {

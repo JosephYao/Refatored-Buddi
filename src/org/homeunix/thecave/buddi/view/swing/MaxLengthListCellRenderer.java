@@ -9,7 +9,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
-import org.homeunix.thecave.moss.util.Formatter;
+import org.homeunix.thecave.buddi.util.Formatter;
 
 public class MaxLengthListCellRenderer extends DefaultListCellRenderer {
 	public static final long serialVersionUID = 0;

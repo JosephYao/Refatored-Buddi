@@ -5,13 +5,13 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 public class Day extends Date{
 	public static final long serialVersionUID = 0;
 	
 	public Day(int year, int month, int day) {
-		DateFunctions.setDate(this, year, month, day);
+		DateUtil.setDate(this, year, month, day);
 	}
 	
 	public Day(Date date) {

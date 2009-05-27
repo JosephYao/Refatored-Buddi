@@ -1,17 +1,20 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.test.model;
 
 import java.util.Date;
 import java.util.List;
 
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.AccountImpl;
 import org.homeunix.thecave.buddi.model.impl.AccountTypeImpl;
 import org.homeunix.thecave.buddi.model.impl.BudgetCategoryImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionImpl;
-import org.homeunix.thecave.moss.data.collection.SortedArrayList;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.collections.SortedArrayList;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.junit.Test;
 
 
@@ -49,7 +52,7 @@ public class TransactionTest {
 		for(int i = 0; i < 1000; i++){
 			Transaction t = new TransactionImpl();
 			t.setAmount((long) (Math.random() * 100000));
-			t.setDate(DateFunctions.getDate((int) (Math.random() * 10) + 2000, (int) (Math.random() * 12), (int) Math.random() * 28));
+			t.setDate(DateUtil.getDate((int) (Math.random() * 10) + 2000, (int) (Math.random() * 12), (int) Math.random() * 28));
 			t.setDescription("Foo #" + Math.random());
 			t.setFrom(a);
 			t.setTo(bc);

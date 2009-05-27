@@ -20,9 +20,9 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.Version;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Version;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make
@@ -138,7 +138,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
                        if(isQuarter(startDate, endDate,model.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH).getDaysInPeriod(endDate)))
                            average = (long) ((double) actual / 3.0);
                        else 
-			average = (long) ((double) actual / (double) DateFunctions.getDaysBetween(startDate, endDate, true) * 
+			average = (long) ((double) actual / (double) DateUtil.getDaysBetween(startDate, endDate, true) * 
 				model.getBudgetCategoryType(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH).getDaysInPeriod(endDate));
                         //////////////////
 			if (c.isIncome()){
@@ -217,13 +217,13 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
         ////////////////////////////////////////////////////The following code has been added to fix the average calculations bug
         public boolean isQuarter(Date startDate, Date endDate , long days)
         {
-              if(!DateFunctions.isSameYear(startDate, endDate))
+              if(!DateUtil.isSameYear(startDate, endDate))
                   return false;
-              if(DateFunctions.getDay(startDate) != 1)
+              if(DateUtil.getDay(startDate) != 1)
                   return false;
-              if(DateFunctions.getDay(endDate) != days)
+              if(DateUtil.getDay(endDate) != days)
                   return false;
-              if(DateFunctions.getMonthsBetween(startDate, endDate, false) != 2)
+              if(DateUtil.getMonthsBetween(startDate, endDate, false) != 2)
                   return false;
               return true;
         }

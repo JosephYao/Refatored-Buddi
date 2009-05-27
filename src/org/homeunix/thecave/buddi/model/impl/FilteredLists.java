@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.TransactionClearedFilterKeys;
 import org.homeunix.thecave.buddi.i18n.keys.TransactionDateFilterKeys;
@@ -23,12 +24,11 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.data.collection.FilteredList;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.buddi.util.Formatter;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+import org.homeunix.thecave.moss.collections.FilteredList;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 public class FilteredLists {
 	private FilteredLists() {}
@@ -111,7 +111,7 @@ public class FilteredLists {
 	 *
 	 */
 	public static class ScheduledTransactionListFilteredByBeforeToday extends BuddiFilteredList<ScheduledTransaction> {
-		private Date today = DateFunctions.getStartOfDay(new Date());
+		private Date today = DateUtil.getStartOfDay(new Date());
 		
 		public ScheduledTransactionListFilteredByBeforeToday(Document model, List<ScheduledTransaction> transactions){
 			super(model, transactions);
@@ -119,14 +119,14 @@ public class FilteredLists {
 
 		@Override
 		public boolean isIncluded(ScheduledTransaction st) {
-			if ((DateFunctions.getDaysBetween(st.getStartDate(), today, false) == 0
-					|| DateFunctions.getStartOfDay(st.getStartDate()).before(today))
+			if ((DateUtil.getDaysBetween(st.getStartDate(), today, false) == 0
+					|| DateUtil.getStartOfDay(st.getStartDate()).before(today))
 					&& (st.getLastDayCreated() == null 
-							|| DateFunctions.getStartOfDay(st.getLastDayCreated()).before(today))
+							|| DateUtil.getStartOfDay(st.getLastDayCreated()).before(today))
 							&& (st.getEndDate() == null 
 									|| st.getEndDate().after(today))
 									|| st.getLastDayCreated() == null
-									|| (DateFunctions.getDaysBetween(st.getEndDate(), st.getLastDayCreated(), false) == 0)
+									|| (DateUtil.getDaysBetween(st.getEndDate(), st.getLastDayCreated(), false) == 0)
 									|| st.getEndDate().after(st.getLastDayCreated()))
 				return true;
 			return false;
@@ -248,7 +248,7 @@ public class FilteredLists {
 					return !t.isClearedFrom();
 				}
 				else {
-					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
+					Logger.getLogger(this.getClass().getName()).severe("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
 				}
 			}
 			else if (associatedSource.equals(t.getTo())){
@@ -259,7 +259,7 @@ public class FilteredLists {
 					return !t.isClearedTo();
 				}
 				else {
-					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
+					Logger.getLogger(this.getClass().getName()).severe("Unknown value in Transaction Cleared Filter Keys: " + clearedFilter);
 				}
 			}
 				
@@ -283,7 +283,7 @@ public class FilteredLists {
 					return !t.isReconciledFrom();
 				}
 				else {
-					Log.emergency("Unknown value in Transaction Cleared Filter Keys: " + reconciledFilter);
+					Logger.getLogger(this.getClass().getName()).severe("Unknown value in Transaction Cleared Filter Keys: " + reconciledFilter);
 				}
 			}
 			else if (associatedSource.equals(t.getTo())){
@@ -294,7 +294,7 @@ public class FilteredLists {
 					return !t.isReconciledTo();
 				}
 				else {
-					Log.emergency("Unknown value in Transaction Reconciled Filter Keys: " + reconciledFilter);
+					Logger.getLogger(this.getClass().getName()).severe("Unknown value in Transaction Reconciled Filter Keys: " + reconciledFilter);
 				}
 			}
 				
@@ -310,13 +310,13 @@ public class FilteredLists {
 			Date today = new Date();
 
 			if (TransactionDateFilterKeys.TRANSACTION_FILTER_TODAY == dateFilter) {
-				return DateFunctions.isSameDay(today, t.getDate());
+				return DateUtil.isSameDay(today, t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_YESTERDAY == dateFilter) {
-				return DateFunctions.isSameDay(DateFunctions.addDays(today, -1), t.getDate());
+				return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_WEEK == dateFilter) {
-				return DateFunctions.isSameWeek(today, t.getDate());
+				return DateUtil.isSameWeek(today, t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_SEMI_MONTH == dateFilter) {
 				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
@@ -327,25 +327,25 @@ public class FilteredLists {
 				return (semiMonth.getStartOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_MONTH == dateFilter) {
-				return DateFunctions.isSameMonth(today, t.getDate());
+				return DateUtil.isSameMonth(today, t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_MONTH == dateFilter) {
-				return DateFunctions.isSameMonth(DateFunctions.addMonths(today, -1), t.getDate());
+				return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_QUARTER == dateFilter) {
-				return DateFunctions.getStartOfDay(DateFunctions.getStartOfQuarter(today)).before(t.getDate());
+				return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_QUARTER == dateFilter) {
-				return DateFunctions.isSameDay(DateFunctions.getStartOfQuarter(DateFunctions.addQuarters(today, -1)), DateFunctions.getStartOfQuarter(t.getDate()));
+				return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_YEAR == dateFilter) {
-				return DateFunctions.isSameYear(today, t.getDate());				
+				return DateUtil.isSameYear(today, t.getDate());				
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_YEAR == dateFilter) {
-				return DateFunctions.isSameYear(DateFunctions.addYears(today, -1), t.getDate());
+				return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
 			}
 			else {
-				Log.error("Unknown filter pulldown: " + dateFilter);
+				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + dateFilter);
 				return false;
 			}
 		}

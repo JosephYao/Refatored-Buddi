@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -56,18 +58,17 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.SplitTransactionDialog;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossHintComboBox;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.MossPanel;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.model.AutoCompleteMossHintComboBoxModel;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
 /**
@@ -173,7 +174,7 @@ public class TransactionEditorPanel extends MossPanel {
 					fromSplits = splitTransactionDialog.getSplits();
 				}
 				catch (WindowOpenException woe){
-					Log.warning("Error opening to split window", woe);
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error opening to split window", woe);
 				}
 			}
 		});
@@ -191,7 +192,7 @@ public class TransactionEditorPanel extends MossPanel {
 					toSplits = splitTransactionDialog.getSplits();
 				}
 				catch (WindowOpenException woe){
-					Log.warning("Error opening to split window", woe);
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error opening to split window", woe);
 				}
 			}
 		});
@@ -356,7 +357,7 @@ public class TransactionEditorPanel extends MossPanel {
 			public void focusLost(FocusEvent e) {
 				super.focusLost(e);
 				
-				if (date.getDate().before(DateFunctions.getDate(1900)) || date.getDate().after(DateFunctions.getDate(3000))){
+				if (date.getDate().before(DateUtil.getDate(1900)) || date.getDate().after(DateUtil.getDate(3000))){
 					Toolkit.getDefaultToolkit().beep();
 					date.requestFocusInWindow();
 				}
@@ -427,11 +428,11 @@ public class TransactionEditorPanel extends MossPanel {
 //						else
 //							splits = getTransaction().getFromSplits();
 //						SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, amount.getValue(), true);
-//						splitTransactionDialog.openWindow();
-//						fromSplits = splitTransactionDialog.getSplits();
+//						splitTransactionDiaLogger.getLogger().openWindow();
+//						fromSplits = splitTransactionDiaLogger.getLogger().getSplits();
 //					}
 //					catch (WindowOpenException woe){
-//						Log.warning("Failed to open split transaction window", woe);
+//						Logger.getLogger().warning("Failed to open split transaction window", woe);
 //					}
 //				}
 				else if (!BuddiKeys.SPLITS.toString().equals(from.getSelectedItem())){
@@ -474,7 +475,7 @@ public class TransactionEditorPanel extends MossPanel {
 				}
 //				else if (to.getSelectedItem() != null 
 //						&& to.getSelectedItem().toString().equals(BuddiKeys.SPLITS.toString())){
-//					Log.info("Opening split dialog");
+//					Logger.getLogger().info("Opening split dialog");
 //					try {
 //						List<TransactionSplit> splits;
 //						if (getTransaction() == null)
@@ -482,11 +483,11 @@ public class TransactionEditorPanel extends MossPanel {
 //						else
 //							splits = getTransaction().getToSplits();
 //						SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, amount.getValue(), false);
-//						splitTransactionDialog.openWindow();
-//						toSplits = splitTransactionDialog.getSplits();
+//						splitTransactionDiaLogger.getLogger().openWindow();
+//						toSplits = splitTransactionDiaLogger.getLogger().getSplits();
 //					}
 //					catch (WindowOpenException woe){
-//						Log.warning("Failed to open split transaction window", woe);
+//						Logger.getLogger().warning("Failed to open split transaction window", woe);
 //					}
 //
 //				}
@@ -504,7 +505,7 @@ public class TransactionEditorPanel extends MossPanel {
 						TransactionEditorPanel.this.getTransactionUpdated();
 					}
 					catch (InvalidValueException ive){
-						Log.warning("Invalid value while reconciling transaction: ", ive);
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Invalid value while reconciling transaction: ", ive);
 					}
 				}
 			}
@@ -518,7 +519,7 @@ public class TransactionEditorPanel extends MossPanel {
 						TransactionEditorPanel.this.getTransactionUpdated();
 					}
 					catch (InvalidValueException ive){
-						Log.warning("Invalid value while clearing transaction: ", ive);
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Invalid value while clearing transaction: ", ive);
 					}
 				}
 			}
@@ -762,7 +763,7 @@ public class TransactionEditorPanel extends MossPanel {
 //			return null; 
 //		}
 //		else if (from.getSelectedItem() != null)
-//			Log.error("Unknown object selected in TransferFrom combobox; returning null.");
+//			Logger.getLogger().error("Unknown object selected in TransferFrom combobox; returning null.");
 //		return null;
 //	}
 //
@@ -771,7 +772,7 @@ public class TransactionEditorPanel extends MossPanel {
 //			return (Source) to.getSelectedItem();	
 //		}
 //		else if (to.getSelectedItem() != null)
-//			Log.error("Unknown object selected in TransferTo combobox; returning null.");
+//			Logger.getLogger().error("Unknown object selected in TransferTo combobox; returning null.");
 //
 //		return null;
 //	}

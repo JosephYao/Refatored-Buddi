@@ -1,7 +1,7 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.model;
+package org.homeunix.thecave.buddi.test.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,8 +11,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
+import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
+import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,29 +29,29 @@ public class ScheduledTransactionTest {
 	public static List<Object[]> getData(){
 		return Arrays.asList(new Object[][] {
 				{ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString(), //Frequency
-					DateFunctions.getDate(2007, Calendar.JANUARY, 1), //Start Date
-					DateFunctions.getDate(2007, Calendar.JANUARY, 31), //End Date
-					DateFunctions.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
+					DateUtil.getDate(2007, Calendar.JANUARY, 1), //Start Date
+					DateUtil.getDate(2007, Calendar.JANUARY, 31), //End Date
+					DateUtil.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
 					-3100l},	//Expected amount
 					{ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_DAY.toString(), //Frequency
-						DateFunctions.getDate(2007, Calendar.JANUARY, 1), //Start Date
-						DateFunctions.getDate(2007, Calendar.JANUARY, 31), //End Date
-						DateFunctions.getDate(2007, Calendar.MARCH, 1), //Test Date
+						DateUtil.getDate(2007, Calendar.JANUARY, 1), //Start Date
+						DateUtil.getDate(2007, Calendar.JANUARY, 31), //End Date
+						DateUtil.getDate(2007, Calendar.MARCH, 1), //Test Date
 						-3100l},	//Expected amount
 						{ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString(), //Frequency
-							DateFunctions.getDate(2007, Calendar.JANUARY, 1), //Start Date
-							DateFunctions.getDate(2007, Calendar.JANUARY, 31), //End Date
-							DateFunctions.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
+							DateUtil.getDate(2007, Calendar.JANUARY, 1), //Start Date
+							DateUtil.getDate(2007, Calendar.JANUARY, 31), //End Date
+							DateUtil.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
 							-2300l},	//Expected amount
 							{ScheduleFrequency.SCHEDULE_FREQUENCY_BIWEEKLY.toString(), //Frequency
-								DateFunctions.getDate(2007, Calendar.JANUARY, 1), //Start Date
-								DateFunctions.getDate(2007, Calendar.JANUARY, 31), //End Date
-								DateFunctions.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
+								DateUtil.getDate(2007, Calendar.JANUARY, 1), //Start Date
+								DateUtil.getDate(2007, Calendar.JANUARY, 31), //End Date
+								DateUtil.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
 								-200l},	//Expected amount
 								{ScheduleFrequency.SCHEDULE_FREQUENCY_EVERY_WEEKDAY.toString(), //Frequency
-									DateFunctions.getDate(2007, Calendar.JANUARY, 1), //Start Date
-									DateFunctions.getDate(2007, Calendar.JANUARY, 31), //End Date
-									DateFunctions.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
+									DateUtil.getDate(2007, Calendar.JANUARY, 1), //Start Date
+									DateUtil.getDate(2007, Calendar.JANUARY, 31), //End Date
+									DateUtil.getDate(2007, Calendar.FEBRUARY, 1), //Test Date
 									-2300l},	//Expected amount
 		});
 	}

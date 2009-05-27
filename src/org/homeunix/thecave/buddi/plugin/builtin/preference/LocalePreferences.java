@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -36,9 +37,8 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class LocalePreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0; 
@@ -230,7 +230,7 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 					currencyModel.addElement(s);
 					if (s.equals(newCurrency)){
 						customCurrency = false;
-						Log.debug("Currency " + newCurrency + " already in list...");
+						Logger.getLogger(this.getClass().getName()).finest("Currency " + newCurrency + " already in list...");
 					}
 				}
 				if (customCurrency){
@@ -240,7 +240,7 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 				currencyFormat.setSelectedItem(newCurrency);
 			}
 			else {
-				Log.debug("Invalid currency: '" + newCurrency + "'");
+				Logger.getLogger(this.getClass().getName()).finest("Invalid currency: '" + newCurrency + "'");
 			}	
 		}
 		else if (e.getSource().equals(otherDateFormatButton)){
@@ -283,7 +283,7 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 					dateFormatModel.addElement(s);
 					if (s.equals(newDateFormat)){
 						customDateFormat = false;
-						Log.debug("Date Format " + newDateFormat + " already in list...");
+						Logger.getLogger(this.getClass().getName()).finest("Date Format " + newDateFormat + " already in list...");
 					}
 				}
 				if (customDateFormat){
@@ -293,7 +293,7 @@ public class LocalePreferences extends BuddiPreferencePlugin implements ActionLi
 				dateFormatModel.setSelectedItem(newDateFormat);
 			}
 			else {
-				Log.debug("Invalid Date Format: '" + newDateFormat + "'");
+				Logger.getLogger(this.getClass().getName()).finest("Invalid Date Format: '" + newDateFormat + "'");
 			}
 		}
 		else if (e.getSource().equals(editLanguagesButton)){

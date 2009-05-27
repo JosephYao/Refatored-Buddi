@@ -19,7 +19,7 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * Default implementation of a Transaction.  You should not create this object directly; 
@@ -58,7 +58,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			Transaction t = (Transaction) arg0;
 
 			//For regular transactions, first we sort by date 
-			if (!DateFunctions.isSameDay(this.getDate(), t.getDate()))
+			if (!DateUtil.isSameDay(this.getDate(), t.getDate()))
 				return this.getDate().compareTo(t.getDate());
 
 			//Next we sort by debit / credit.  This is a nebulous beast, because of negative 

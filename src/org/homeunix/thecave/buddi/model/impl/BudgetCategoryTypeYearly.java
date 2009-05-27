@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * Definition of a Yearly BudgetCategoryType
@@ -18,19 +18,19 @@ import org.homeunix.thecave.moss.util.DateFunctions;
 public class BudgetCategoryTypeYearly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
-		return DateFunctions.getStartOfYear(date);
+		return DateUtil.getStartOfYear(date);
 	}
 	
 	public Date getEndOfBudgetPeriod(Date date) {
-		return DateFunctions.getEndOfYear(date);
+		return DateUtil.getEndOfYear(date);
 	}
 	
 	public Date getBudgetPeriodOffset(Date date, int offset) {
-		return getStartOfBudgetPeriod(DateFunctions.addYears(date, offset));
+		return getStartOfBudgetPeriod(DateUtil.addYears(date, offset));
 	}
 	
 	public long getDaysInPeriod(Date date) {
-		return DateFunctions.getDaysBetween(getStartOfBudgetPeriod(date), getEndOfBudgetPeriod(date), true);
+		return DateUtil.getDaysBetween(getStartOfBudgetPeriod(date), getEndOfBudgetPeriod(date), true);
 	}
 	
 	public String getDateFormat() {

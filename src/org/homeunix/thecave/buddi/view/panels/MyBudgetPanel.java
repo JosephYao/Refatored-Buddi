@@ -52,9 +52,9 @@ import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellEditor;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTableAmountCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.MyBudgetTreeNameCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossPanel;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 import org.jdesktop.swingx.table.ColumnFactory;
@@ -115,7 +115,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		balanceLabel = new JLabel();
 		dateSpinnerModel = new BudgetDateSpinnerModel(treeTableModel);
 		dateSpinner = new JSpinner(dateSpinnerModel);
-//		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateFunctions.getDate(1900, Calendar.JANUARY), DateFunctions.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
+//		dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), DateUtil.getDate(1900, Calendar.JANUARY), DateUtil.getDate(3000, Calendar.DECEMBER), Calendar.MONTH));
 //		monthComboBox = new JComboBox(new DefaultComboBoxModel(MonthKeys.values()));
 		periodTypeComboBox = new JComboBox(BudgetCategoryTypes.values());
 

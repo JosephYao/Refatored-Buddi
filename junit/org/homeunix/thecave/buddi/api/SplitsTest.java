@@ -1,7 +1,7 @@
 /*
  * Created on Aug 24, 2007 by wyatt
  */
-package org.homeunix.thecave.buddi.api;
+package org.homeunix.thecave.buddi.test.api;
 
 import static org.junit.Assert.fail;
 

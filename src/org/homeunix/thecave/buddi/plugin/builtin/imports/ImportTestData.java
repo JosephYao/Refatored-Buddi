@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.plugin.builtin.imports;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
@@ -16,9 +17,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
 
 public class ImportTestData extends BuddiImportPlugin {
 
@@ -41,10 +41,10 @@ public class ImportTestData extends BuddiImportPlugin {
 			int MAX = 100000;
 			for (int i = 0; i < MAX; i++){
 				if (i % 100 == 0)
-					Log.info("Creating transaction " + i + " of " + MAX);
+					Logger.getLogger(this.getClass().getName()).info("Creating transaction " + i + " of " + MAX);
 				MutableAccount a = accounts.get((int) (Math.random() * accounts.size()));
 				MutableBudgetCategory bc = budgetCategories.get((int) (Math.random() * budgetCategories.size()));
-				MutableTransaction t = MutableModelFactory.createMutableTransaction(DateFunctions.getDate(2006, (int) (Math.random() * 12), (int) (Math.random() * 28)), "Test Transaction " + i, (long) (Math.random() * 1000000), a, bc);
+				MutableTransaction t = MutableModelFactory.createMutableTransaction(DateUtil.getDate(2006, (int) (Math.random() * 12), (int) (Math.random() * 28)), "Test Transaction " + i, (long) (Math.random() * 1000000), a, bc);
 				model.addTransaction(t);
 			}
 		}

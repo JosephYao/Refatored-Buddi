@@ -4,6 +4,8 @@
 package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -14,14 +16,13 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.exception.OperationCancelledException;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class FileRevertToSaved extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -59,12 +60,11 @@ public class FileRevertToSaved extends MossMenuItem {
 			catch (OperationCancelledException oce){}
 			catch (WindowOpenException woe){}
 			catch (DocumentLoadException dle){
-				Log.error("There was an error loading the file " + ((MossDocumentFrame) getFrame()).getDocument().getFile());
-				dle.printStackTrace(Log.getPrintStream());
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "There was an error loading the file " + ((MossDocumentFrame) getFrame()).getDocument().getFile(), dle);
 			}
 		}
 		else {
-			Log.info("User cancelled file restore.");
+			Logger.getLogger(this.getClass().getName()).info("User cancelled file restore.");
 		}
 	}
 	

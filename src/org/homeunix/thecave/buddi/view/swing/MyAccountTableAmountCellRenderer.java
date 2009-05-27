@@ -14,8 +14,8 @@ import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.util.Formatter;
 
 public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 	public static final long serialVersionUID = 0;

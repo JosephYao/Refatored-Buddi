@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,10 +26,9 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -142,7 +143,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 					bl.openURLinBrowser(Const.PROJECT_URL);
 				}
 				catch (Exception ex){
-					Log.error(ex);
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Unknown Exception", ex);
 				}
 				super.mouseClicked(e);
 			}
@@ -159,7 +160,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 				bl.openURLinBrowser(Const.DONATE_URL);
 			}
 			catch (Exception ex){
-				Log.error(ex);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Unknown Exception", ex);
 			}
 		}
 	}

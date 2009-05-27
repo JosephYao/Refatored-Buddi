@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -15,9 +16,8 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class EditEditTransactions extends MossMenuItem{
 	public static final long serialVersionUID = 0;
@@ -52,7 +52,7 @@ public class EditEditTransactions extends MossMenuItem{
 		else if (((MainFrame) getFrame()).isMyBudgetTabSelected())
 			selectedSources = ((MainFrame) getFrame()).getSelectedBudgetCategories();
 		else {
-			Log.error("EditEditTransactions called from a menu other than MyAccounts or MyBudget!");
+			Logger.getLogger(this.getClass().getName()).warning("EditEditTransactions called from a menu other than MyAccounts or MyBudget!");
 			return;
 		}
 		

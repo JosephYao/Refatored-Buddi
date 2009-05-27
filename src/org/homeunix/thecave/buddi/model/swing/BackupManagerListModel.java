@@ -14,15 +14,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractListModel;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.crypto.CipherException;
-import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
+import org.homeunix.thecave.moss.crypto.CipherException;
+import org.homeunix.thecave.moss.crypto.IncorrectDocumentFormatException;
 
 public class BackupManagerListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;
@@ -79,17 +80,15 @@ public class BackupManagerListModel extends AbstractListModel {
 						backups.put(f, bcf.getTimestamp(new FileInputStream(newFile)));
 					}
 					catch (IOException ioe){
-						Log.error("IOException for file " + f);
-						ioe.printStackTrace(Log.getPrintStream());
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "IOException for file " + f, ioe);
 					}
 					catch (IncorrectDocumentFormatException idfe){
-						Log.error("Incorrect document format for file " + f);
-						idfe.printStackTrace(Log.getPrintStream());
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Incorrect document format for file " + f, idfe);
 					}
 				}
 			}
 			catch (CipherException ce){
-				ce.printStackTrace(Log.getPrintStream());
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cipher Exception", ce);
 			}
 		}
 

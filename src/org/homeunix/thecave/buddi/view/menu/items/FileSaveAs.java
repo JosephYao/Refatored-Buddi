@@ -20,7 +20,7 @@ import org.homeunix.thecave.buddi.model.impl.ConcurrentSaveException;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.exception.DocumentSaveException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;

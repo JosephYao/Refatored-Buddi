@@ -12,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -30,10 +31,9 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class AccountTypeEditorDialog extends MossDialog implements ActionListener {
 
@@ -49,7 +49,6 @@ public class AccountTypeEditorDialog extends MossDialog implements ActionListene
 	private final AccountType selected;
 	private final Document model;
 
-	@SuppressWarnings("unchecked")
 	public AccountTypeEditorDialog(AccountTypeListFrame frame, AccountType selected) {
 		super(frame);
 
@@ -158,7 +157,7 @@ public class AccountTypeEditorDialog extends MossDialog implements ActionListene
 			try {
 				if (selected == null){
 					at = ModelFactory.createAccountType(name.getText(), credit.isSelected());
-					Log.debug("Created new AccountType " + at);
+					Logger.getLogger(this.getClass().getName()).finest("Created new AccountType " + at);
 
 					model.addAccountType(at);
 				}

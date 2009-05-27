@@ -4,6 +4,7 @@
 package org.homeunix.thecave.buddi.view.menu.items;
 
 import java.awt.event.ActionEvent;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.Account;
@@ -14,7 +15,6 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class EditDeleteAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -37,7 +37,7 @@ public class EditDeleteAccount extends MossMenuItem {
 					a.setDeleted(true);
 				}
 				catch (InvalidValueException ive){
-					Log.error("Error setting deleted flag on account");
+					Logger.getLogger(this.getClass().getName()).warning("Error setting deleted flag on account");
 				}
 			}
 		}

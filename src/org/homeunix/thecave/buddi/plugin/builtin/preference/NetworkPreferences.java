@@ -6,6 +6,7 @@ package org.homeunix.thecave.buddi.plugin.builtin.preference;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -18,7 +19,6 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
-import org.homeunix.thecave.moss.util.Log;
 
 public class NetworkPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;
@@ -57,7 +57,7 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 				PrefsModel.getInstance().setPort(Integer.parseInt(port.getText().replaceAll("\\D", "")));
 			}
 			catch (NumberFormatException nfe){
-				Log.error("Incorrect port number; setting to 80");
+				Logger.getLogger(this.getClass().getName()).warning("Incorrect port number; setting to 80");
 			}
 		}
 		else {

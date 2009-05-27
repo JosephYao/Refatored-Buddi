@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.plugin;
 import java.io.File;
 import java.util.Date;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.java.dev.SwingWorker;
 
@@ -18,10 +20,9 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.common.DateUtil;
 import org.homeunix.thecave.moss.swing.MossStatusDialog;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 import edu.stanford.ejalbert.BrowserLauncher;
 
@@ -60,8 +61,7 @@ public class BuddiPluginHelper {
 					bl.openURLinBrowser(index.toURI().toURL().toString());
 				}
 				catch (Exception e){
-					Log.error("Error making HTML: " + e);
-					e.printStackTrace(Log.getPrintStream());
+					Logger.getLogger(BuddiPluginHelper.class.getName()).log(Level.WARNING, "Error making HTML", e);
 				}
 				
 				return null;
@@ -85,23 +85,23 @@ public class BuddiPluginHelper {
 		Vector<DateChoice> intervals = new Vector<DateChoice>();
 
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfWeek(new Date()),
-				DateFunctions.getEndOfWeek(new Date()),
+				DateUtil.getStartOfWeek(new Date()),
+				DateUtil.getEndOfWeek(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_WEEK)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfWeek(DateFunctions.addDays(new Date(), -7)),
-				DateFunctions.getEndOfWeek(DateFunctions.addDays(new Date(), -7)),
+				DateUtil.getStartOfWeek(DateUtil.addDays(new Date(), -7)),
+				DateUtil.getEndOfWeek(DateUtil.addDays(new Date(), -7)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_WEEK)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.getStartOfMonth(new Date())),
-				DateFunctions.getEndOfDay(DateFunctions.getEndOfMonth(new Date())),
+				DateUtil.getStartOfDay(DateUtil.getStartOfMonth(new Date())),
+				DateUtil.getEndOfDay(DateUtil.getEndOfMonth(new Date())),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfMonth(DateFunctions.addMonths(new Date(), -1)),
-				DateFunctions.getEndOfMonth(DateFunctions.addMonths(new Date(), -1)),
+				DateUtil.getStartOfMonth(DateUtil.addMonths(new Date(), -1)),
+				DateUtil.getEndOfMonth(DateUtil.addMonths(new Date(), -1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_MONTH)
 		));
 		//It's easier to just make the category type and use it, rather than duplicate all the calculations. 
@@ -117,28 +117,28 @@ public class BuddiPluginHelper {
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_SEMI_MONTH)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfQuarter(new Date()),
-				DateFunctions.getEndOfQuarter(new Date()),
+				DateUtil.getStartOfQuarter(new Date()),
+				DateUtil.getEndOfQuarter(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_QUARTER)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.addQuarters(DateFunctions.getStartOfQuarter(new Date()), -1),
-				DateFunctions.addQuarters(DateFunctions.getEndOfQuarter(new Date()), -1),
+				DateUtil.addQuarters(DateUtil.getStartOfQuarter(new Date()), -1),
+				DateUtil.addQuarters(DateUtil.getEndOfQuarter(new Date()), -1),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_QUARTER)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.getStartOfYear(new Date())),
-				DateFunctions.getEndOfDay(DateFunctions.getEndOfYear(new Date())),
+				DateUtil.getStartOfDay(DateUtil.getStartOfYear(new Date())),
+				DateUtil.getEndOfDay(DateUtil.getEndOfYear(new Date())),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_YEAR)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.getStartOfDay(DateFunctions.getStartOfYear(new Date())),
-				DateFunctions.getEndOfDay(new Date()),
+				DateUtil.getStartOfDay(DateUtil.getStartOfYear(new Date())),
+				DateUtil.getEndOfDay(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_THIS_YEAR_TO_DATE)
 		));
 		intervals.add(new DateChoice(
-				DateFunctions.addYears(DateFunctions.getStartOfYear(new Date()), -1),
-				DateFunctions.addYears(DateFunctions.getEndOfYear(new Date()), -1),
+				DateUtil.addYears(DateUtil.getStartOfYear(new Date()), -1),
+				DateUtil.addYears(DateUtil.getEndOfYear(new Date()), -1),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_LAST_YEAR)
 		));
 		intervals.add(new DateChoice(
@@ -146,8 +146,8 @@ public class BuddiPluginHelper {
 				// we start Buddi again).  To try to ensure that we don't miss anything, including new entries, we go to the beginning of the 
 				// year of the first transaction, and go to one week after today.  If people comment on this, we may expand the range,
 				// or possibly update the ranges at plugin runtime.
-				DateFunctions.getStartOfYear((model != null && model.getTransactions() != null && model.getTransactions().size() > 0 ? model.getTransactions().get(0).getDate() : new Date())),
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), 7)),
+				DateUtil.getStartOfYear((model != null && model.getTransactions() != null && model.getTransactions().size() > 0 ? model.getTransactions().get(0).getDate() : new Date())),
+				DateUtil.getEndOfDay(DateUtil.addDays(new Date(), 7)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ALL_TIME)
 		));		
 		intervals.add(new DateChoice(
@@ -166,47 +166,47 @@ public class BuddiPluginHelper {
 
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.addYears(new Date(), -1),
+				DateUtil.addYears(new Date(), -1),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_YEAR_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.addMonths(new Date(), -1),
+				DateUtil.addMonths(new Date(), -1),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_MONTH_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -7)),
+				DateUtil.getEndOfDay(DateUtil.addDays(new Date(), -7)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_AGO)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), -1)),
+				DateUtil.getEndOfDay(DateUtil.addDays(new Date(), -1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_YESTERDAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(new Date()),
+				DateUtil.getEndOfDay(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_TODAY)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfDay(DateFunctions.addDays(new Date(), 7)),
+				DateUtil.getEndOfDay(DateUtil.addDays(new Date(), 7)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_WEEK_FROM_NOW)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfMonth(DateFunctions.addMonths(new Date(), 1)),
+				DateUtil.getEndOfMonth(DateUtil.addMonths(new Date(), 1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_NEXT_MONTH)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfYear(new Date()),
+				DateUtil.getEndOfYear(new Date()),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_THIS_YEAR)
 		));
 		endDates.add(new DateChoice(
 				null,
-				DateFunctions.getEndOfYear(DateFunctions.addYears(new Date(), 1)),
+				DateUtil.getEndOfYear(DateUtil.addYears(new Date(), 1)),
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_END_OF_NEXT_YEAR)
 		));
 		endDates.add(new DateChoice(
@@ -225,23 +225,23 @@ public class BuddiPluginHelper {
 		Vector<DateChoice> startDates = new Vector<DateChoice>();
 
 		startDates.add(new DateChoice(
-				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -1),
+				DateUtil.addMonths(DateUtil.getStartOfMonth(new Date()), -1),
 				null,
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_ONE_MONTH)
 		));
 		startDates.add(new DateChoice(
-				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -2),
+				DateUtil.addMonths(DateUtil.getStartOfMonth(new Date()), -2),
 				null,
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_TWO_MONTHS)
 		));
 		startDates.add(new DateChoice(
-				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -6),
+				DateUtil.addMonths(DateUtil.getStartOfMonth(new Date()), -6),
 				null,
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_SIX_MONTHS)
 		));
 
 		startDates.add(new DateChoice(
-				DateFunctions.addMonths(DateFunctions.getStartOfMonth(new Date()), -12),
+				DateUtil.addMonths(DateUtil.getStartOfMonth(new Date()), -12),
 				null,
 				TextFormatter.getTranslation(PluginRangeFilters.PLUGIN_FILTER_YEAR)
 		));

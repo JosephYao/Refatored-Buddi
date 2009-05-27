@@ -8,6 +8,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -23,11 +25,10 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -85,7 +86,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 				panel.load();
 			}
 			catch (PluginException pe){
-				pe.printStackTrace(Log.getPrintStream());
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Plugin Exception", pe);
 			}
 		}
 		
@@ -117,7 +118,7 @@ public class PreferencesFrame extends MossFrame implements ActionListener {
 						restart = true;
 				}
 				catch (PluginException pe){
-					pe.printStackTrace(Log.getPrintStream());
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Plugin Exception", pe);
 				}
 			}
 			

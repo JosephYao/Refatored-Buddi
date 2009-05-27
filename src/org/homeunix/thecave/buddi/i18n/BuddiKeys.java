@@ -418,7 +418,7 @@ public enum BuddiKeys {
 	VIEW,
 	SPLIT,
 	SPLITS, //Used to tell the user a transaction is split, at bottom of source combo box list.
-	SPLIT_BUTTON, //Used to open the split dialog.  Normal translation is '...'.
+	SPLIT_BUTTON, //Used to open the split diaLogger.getLogger().  Normal translation is '...'.
 	SPLIT_EDITOR,
 	SPLIT_TRANSACTION_DIFFERENCE,
 	SPLIT_TOTAL,

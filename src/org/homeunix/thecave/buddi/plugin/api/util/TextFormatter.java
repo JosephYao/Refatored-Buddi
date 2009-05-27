@@ -16,8 +16,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableAccountType;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
+import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.util.Formatter;
 
 /**
  * Gives a common framework for formatting text.  It is recommended that all plugins which

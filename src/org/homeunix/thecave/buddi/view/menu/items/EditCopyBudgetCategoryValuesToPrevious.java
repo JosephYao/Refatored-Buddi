@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -18,7 +20,6 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
 
 public class EditCopyBudgetCategoryValuesToPrevious extends MossMenuItem{
 	public static final long serialVersionUID = 0;
@@ -38,7 +39,7 @@ public class EditCopyBudgetCategoryValuesToPrevious extends MossMenuItem{
 					bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, -1), amount);
 			}
 			catch (InvalidValueException ive){
-				Log.error(ive);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Invalid Value Exception", ive);
 			}
 		}
 

@@ -9,6 +9,8 @@ import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -31,11 +33,10 @@ import org.homeunix.thecave.buddi.view.menu.items.FileSave;
 import org.homeunix.thecave.buddi.view.panels.MyAccountsPanel;
 import org.homeunix.thecave.buddi.view.panels.MyBudgetPanel;
 import org.homeunix.thecave.buddi.view.panels.MyReportsPanel;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Log;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;
@@ -182,7 +183,7 @@ public class MainFrame extends MossDocumentFrame {
 				((DocumentImpl) getDocument()).waitUntilFinishedSaving();
 			}
 			catch (InterruptedException ie) {
-				Log.emergency("Thread interrupted while waiting for save operation to complete.  Cancelling exit request.", ie);
+				Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Thread interrupted while waiting for save operation to complete.  Cancelling exit request.", ie);
 				return;
 			}
 		}

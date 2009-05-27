@@ -15,6 +15,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,7 +38,6 @@ import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.util.Log;
 
 /**
  * This class lets a user modify / create a list of split transactions.  When this is done, 
@@ -66,7 +67,6 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	
 	private final JPanel splitPanels;
 
-	@SuppressWarnings("unchecked")
 	public SplitTransactionDialog(MainFrame frame, Document model, List<TransactionSplit> splits, Source associatedSource, long amount, boolean from) {
 		super(frame, true);
 
@@ -95,7 +95,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 				this.workingSplits.add(ModelFactory.createTransactionSplit(null, 0l));
 		}
 		catch (InvalidValueException ive){
-			Log.warning("Error populating split list", ive);
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error populating split list", ive);
 		}
 
 		
@@ -217,7 +217,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 						finalSplit.setAmount(amount.getValue());
 					}
 					catch (InvalidValueException ive){
-						Log.warning("Error setting split information", ive);
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error setting split information", ive);
 					}
 					updateButtons();
 				}
@@ -277,7 +277,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 				updateContent();
 			}
 			catch (InvalidValueException ive){
-				Log.warning("Error adding split", ive);
+				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error adding split", ive);
 			}
 		}
 		else if (e.getSource().equals(cancel)){

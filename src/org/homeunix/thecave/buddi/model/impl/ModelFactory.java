@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -37,15 +38,14 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
+import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
-import org.homeunix.thecave.moss.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.exception.OperationCancelledException;
-import org.homeunix.thecave.moss.util.DateFunctions;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.homeunix.thecave.moss.util.crypto.CipherException;
-import org.homeunix.thecave.moss.util.crypto.IncorrectDocumentFormatException;
-import org.homeunix.thecave.moss.util.crypto.IncorrectPasswordException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
+import org.homeunix.thecave.moss.crypto.CipherException;
+import org.homeunix.thecave.moss.crypto.IncorrectDocumentFormatException;
+import org.homeunix.thecave.moss.crypto.IncorrectPasswordException;
 
 /**
  * The factory for all model objects.  It is highly recommended to use this
@@ -157,7 +157,7 @@ public class ModelFactory {
 	public static Document createDocument() throws ModelException {
 		Document document;
 		if (getAutoSaveLocation(null).exists() && getAutoSaveLocation(null).canRead()){
-			Log.info("Autosave file found; prompting user if we should use it or not");
+			Logger.getLogger(ModelFactory.class.getName()).info("Autosave file found; prompting user if we should use it or not");
 
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
@@ -177,18 +177,18 @@ public class ModelFactory {
 					document = createDocument(getAutoSaveLocation(null));
 					document.setFile(null);
 					document.setChanged();
-					Log.info("User decided to load AutoSave file");
+					Logger.getLogger(ModelFactory.class.getName()).info("User decided to load AutoSave file");
 					return document;
 				}
 				catch (DocumentLoadException dle){
-					Log.error("Error opening auto save file.  Continuing on to create normal file.");
+					Logger.getLogger(ModelFactory.class.getName()).warning("Error opening auto save file.  Continuing on to create normal file.");
 				}
 				catch (OperationCancelledException oce){
-					Log.debug("User cancelled opening auto save file.  Continuing on to create normal file.");
+					Logger.getLogger(ModelFactory.class.getName()).finest("User cancelled opening auto save file.  Continuing on to create normal file.");
 				}
 			}
 			else {
-				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
+				Logger.getLogger(ModelFactory.class.getName()).info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
 			}
 		}
 
@@ -259,7 +259,7 @@ public class ModelFactory {
 			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
 
 		if (getAutoSaveLocation(file).exists() && getAutoSaveLocation(file).canRead()){
-			Log.info("Autosave file found; prompting user if we should use it or not");
+			Logger.getLogger(ModelFactory.class.getName()).info("Autosave file found; prompting user if we should use it or not");
 
 			String[] options = new String[2];
 			options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_YES);
@@ -276,14 +276,14 @@ public class ModelFactory {
 					options[0]
 			) == 0) {  //The index of the Yes button.
 				fileToLoad = getAutoSaveLocation(file);
-				Log.info("User decided to load AutoSave file");
+				Logger.getLogger(ModelFactory.class.getName()).info("User decided to load AutoSave file");
 			}
 			else {
-				Log.info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
+				Logger.getLogger(ModelFactory.class.getName()).info("User decided not to load AutoSave file.  It will be removed the next time this file is saved.");
 			}
 		}
 
-		Log.debug("Trying to load file " + fileToLoad);
+		Logger.getLogger(ModelFactory.class.getName()).finest("Trying to load file " + fileToLoad);
 
 		try {
 			InputStream is;
@@ -347,13 +347,13 @@ public class ModelFactory {
 							if (splitKey.length == 2){
 								changed = true;
 								Date dateKey = new Date(Long.parseLong(splitKey[1]));
-								Log.debug("dateKey: " + dateKey);
+								Logger.getLogger(ModelFactory.class.getName()).finest("dateKey: " + dateKey);
 								long amount = ((BudgetCategoryImpl) bc).getAmounts().get(key);
 								String newDateKey = 
 									bc.getBudgetPeriodType().getName() 
-									+ ":" + DateFunctions.getYear(dateKey)
-									+ ":" + DateFunctions.getMonth(dateKey)
-									+ ":" + DateFunctions.getDay(dateKey);
+									+ ":" + DateUtil.getYear(dateKey)
+									+ ":" + DateUtil.getMonth(dateKey)
+									+ ":" + DateUtil.getDay(dateKey);
 								newAmountMap.put(newDateKey, amount);
 							}
 							else if (splitKey.length == 4){
@@ -362,7 +362,7 @@ public class ModelFactory {
 						}
 
 						if (changed){
-							Log.warning("Your data file has been updated to address bug #1811038.  Included inline are the details of the changes:\n\n"
+							Logger.getLogger(ModelFactory.class.getName()).warning("Your data file has been updated to address bug #1811038.  Included inline are the details of the changes:\n\n"
 									+ "New Map:\n" + newAmountMap + "\n\n"
 									+ "Old Map:\n" + ((BudgetCategoryImpl) bc).getAmounts());
 

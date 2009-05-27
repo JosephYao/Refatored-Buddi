@@ -19,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -53,20 +55,19 @@ import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
+import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.model.DocumentChangeEvent;
-import org.homeunix.thecave.moss.model.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
+import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
 import org.homeunix.thecave.moss.swing.MossSearchField;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEvent;
 import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEventListener;
-import org.homeunix.thecave.moss.util.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
@@ -637,13 +638,13 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 						transactionEditor.setTransaction(t, false);
 
-						Log.debug("Set transaction to " + t);
+						Logger.getLogger(this.getClass().getName()).finest("Set transaction to " + t);
 					}
 					else if (list.getSelectedValue() == null){
 						transactionEditor.setTransaction(null, false);
 						transactionEditor.updateContent();
 
-						Log.debug("Set transaction to null");
+						Logger.getLogger(this.getClass().getName()).finest("Set transaction to null");
 					}
 
 					updateButtons();
@@ -794,7 +795,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							notReconciledTotal += t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
 					}
 					else {
-						Log.emergency("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
+						Logger.getLogger(this.getClass().getName()).severe("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
 					}
 				}
 			}
@@ -905,7 +906,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 			else if (recordButton.getText().equals(TextFormatter.getTranslation(ButtonKeys.BUTTON_RECORD)))
 				isUpdate = false;
 			else {
-				Log.error("Unknown record button state: " + recordButton.getText());
+				Logger.getLogger(this.getClass().getName()).warning("Unknown record button state: " + recordButton.getText());
 				return;
 			}
 
@@ -939,7 +940,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 				}
 			}
 			catch (ModelException me){
-				Log.emergency("Error in record button in Transaction frame", me);
+				Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Error in record button in Transaction frame", me);
 				return;
 			}
 
@@ -1008,7 +1009,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					t.setDeleted(false);
 				}
 				catch (InvalidValueException ive){
-					Log.error(ive);
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Invalid Value Exception", ive);
 				}
 				
 				((Document) getDocument()).updateAllBalances();
@@ -1073,7 +1074,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							transactionEditor.setChanged(false);
 						}
 						catch (ModelException me){
-							me.printStackTrace(Log.getPrintStream());
+							Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Model Exception", me);
 						}
 					}
 				}
@@ -1086,7 +1087,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							t.setDeleted(true);
 						}
 						catch (InvalidValueException ive){
-							Log.error(ive);
+							Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Invalid Value Exception", ive);
 						}
 						
 						((Document) getDocument()).updateAllBalances();

@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
-import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.model.StandardDocument;
+import org.homeunix.thecave.moss.application.document.StandardDocument;
+import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
 
 public interface Document extends ModelObject, StandardDocument {
 

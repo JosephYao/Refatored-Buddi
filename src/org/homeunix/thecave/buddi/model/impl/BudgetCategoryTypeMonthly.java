@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * Definition of a Monthly BudgetCategoryType.
@@ -18,19 +18,19 @@ import org.homeunix.thecave.moss.util.DateFunctions;
 public class BudgetCategoryTypeMonthly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
-		return DateFunctions.getStartOfMonth(date);
+		return DateUtil.getStartOfMonth(date);
 	}
 	
 	public Date getEndOfBudgetPeriod(Date date) {
-		return DateFunctions.getEndOfMonth(date);
+		return DateUtil.getEndOfMonth(date);
 	}
 	
 	public Date getBudgetPeriodOffset(Date date, int offset) {
-		return getStartOfBudgetPeriod(DateFunctions.addMonths(DateFunctions.getStartOfMonth(date), 1 * offset));
+		return getStartOfBudgetPeriod(DateUtil.addMonths(DateUtil.getStartOfMonth(date), 1 * offset));
 	}
 	
 	public long getDaysInPeriod(Date date) {
-		return DateFunctions.getDaysInMonth(date);
+		return DateUtil.getDaysInMonth(date);
 	}
 	
 	public String getDateFormat() {

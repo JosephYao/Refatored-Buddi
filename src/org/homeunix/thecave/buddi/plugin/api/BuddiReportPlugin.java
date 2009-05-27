@@ -11,9 +11,9 @@ import org.homeunix.thecave.buddi.i18n.keys.PluginReportDateRangeChoices;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
-import org.homeunix.thecave.moss.plugin.MossPlugin;
+import org.homeunix.thecave.moss.application.plugin.MossPlugin;
+import org.homeunix.thecave.moss.common.Version;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Version;
 
 
 /**

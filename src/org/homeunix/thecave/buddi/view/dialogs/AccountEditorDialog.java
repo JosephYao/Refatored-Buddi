@@ -15,6 +15,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -37,13 +38,12 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossHintTextArea;
 import org.homeunix.thecave.moss.swing.MossHintTextField;
 import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
 
 public class AccountEditorDialog extends MossDialog implements ActionListener {
 
@@ -279,7 +279,7 @@ public class AccountEditorDialog extends MossDialog implements ActionListener {
 					a.setNotes(notes.getText());
 					a.setOverdraftCreditLimit(overdraftCreditLimit.getValue());
 					a.setInterestRate(interestRate.getValue());
-					Log.debug("Created new Account " + a);
+					Logger.getLogger(this.getClass().getName()).finest("Created new Account " + a);
 
 					model.addAccount(a);
 				}

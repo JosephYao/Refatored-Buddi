@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -17,9 +18,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
-import org.homeunix.thecave.moss.util.Log;
-import org.homeunix.thecave.moss.util.OperatingSystemUtil;
-import org.homeunix.thecave.moss.util.StreamFunctions;
+import org.homeunix.thecave.moss.common.OperatingSystemUtil;
+import org.homeunix.thecave.moss.common.StreamUtil;
 
 public class HtmlHelper {
 
@@ -217,17 +217,17 @@ public class HtmlHelper {
 				is = cssStream;
 			}
 			catch (FileNotFoundException fnfe){
-				Log.warning("Error opening css file " + css.getAbsolutePath() + "; using default css for report.");
+				Logger.getLogger(HtmlHelper.class.getName()).warning("Error opening css file " + css.getAbsolutePath() + "; using default css for report.");
 			}
 		}
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			StreamFunctions.copyInputStreamToOutputStream(is, baos);
+			StreamUtil.copyStream(is, baos);
 			sb.append(baos.toString());
 		}
 		catch (IOException ioe){
-			Log.warning("Error reading CSS input stream; you are probably not running this from an official Buddi release bundle.  I am therefore not using CSS for the report.");
+			Logger.getLogger(HtmlHelper.class.getName()).warning("Error reading CSS input stream; you are probably not running this from an official Buddi release bundle.  I am therefore not using CSS for the report.");
 		}
 	}
 }

@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.view.menu.items;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.KeyStroke;
 
@@ -14,10 +16,9 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
 import org.homeunix.thecave.moss.swing.MossFrame;
 import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 public class FileNew extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -36,7 +37,7 @@ public class FileNew extends MossMenuItem {
 					PrefsModel.getInstance().getWindowLocation(mainFrame.getDocument().getFile() + ""));
 		}
 		catch (ModelException me){
-			Log.error(me);
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Model Exception", me);
 		}
 		catch (WindowOpenException foe){}
 	}

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.moss.util.DateFunctions;
+import org.homeunix.thecave.moss.common.DateUtil;
 
 /**
  * Definition of a Quarterly BudgetCategoryType
@@ -17,19 +17,19 @@ import org.homeunix.thecave.moss.util.DateFunctions;
 public class BudgetCategoryTypeQuarterly extends BudgetCategoryType {
 	
 	public Date getStartOfBudgetPeriod(Date date) {
-		return DateFunctions.getStartOfQuarter(date);
+		return DateUtil.getStartOfQuarter(date);
 	}
 	
 	public Date getEndOfBudgetPeriod(Date date) {
-		return DateFunctions.getEndOfQuarter(date);
+		return DateUtil.getEndOfQuarter(date);
 	}
 	
 	public Date getBudgetPeriodOffset(Date date, int offset) {
-		return getStartOfBudgetPeriod(DateFunctions.addQuarters(date, offset));
+		return getStartOfBudgetPeriod(DateUtil.addQuarters(date, offset));
 	}
 	
 	public long getDaysInPeriod(Date date) {
-		return DateFunctions.getDaysBetween(getStartOfBudgetPeriod(date), getEndOfBudgetPeriod(date), true);
+		return DateUtil.getDaysBetween(getStartOfBudgetPeriod(date), getEndOfBudgetPeriod(date), true);
 	}
 	
 	public String getDateFormat() {

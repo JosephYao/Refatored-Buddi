@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -30,16 +32,15 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.BackupManagerListModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
+import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.exception.OperationCancelledException;
-import org.homeunix.thecave.moss.exception.WindowOpenException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
+import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
 import org.homeunix.thecave.moss.swing.MossDialog;
 import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.util.Formatter;
-import org.homeunix.thecave.moss.util.Log;
+import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 
@@ -153,8 +154,7 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 								JOptionPane.WARNING_MESSAGE);
 					}
 					catch (DocumentSaveException dse){
-						Log.error("Error saving data file prior to restore.  Continuing with restore anyway.");
-						dse.printStackTrace(Log.getPrintStream());
+						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error saving data file prior to restore.  Continuing with restore anyway.", dse);
 					}					
 					
 					Document newDoc = ModelFactory.createDocument((File) backupList.getSelectedValue());
@@ -166,18 +166,17 @@ public class BackupManagerDialog extends MossDialog implements ActionListener {
 							PrefsModel.getInstance().getWindowLocation(newDoc.getFile() + ""), 
 							true);
 					
-					Log.info("User restored file " + ((File) backupList.getSelectedValue()).getName() + " to " + document.getFile().getAbsolutePath());
+					Logger.getLogger(this.getClass().getName()).info("User restored file " + ((File) backupList.getSelectedValue()).getName() + " to " + document.getFile().getAbsolutePath());
 					closeWindow();
 				}
 				catch (OperationCancelledException oce){}
 				catch (WindowOpenException woe){}
 				catch (DocumentLoadException dle){
-					Log.error("There was an error loading the file " + document.getFile());
-					dle.printStackTrace(Log.getPrintStream());
+					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "There was an error loading the file " + document.getFile(), dle);
 				}
 			}
 			else {
-				Log.info("User cancelled file restore.");
+				Logger.getLogger(ModelFactory.class.getName()).info("User cancelled file restore.");
 			}
 			
 		}
