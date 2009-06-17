@@ -72,7 +72,6 @@ import org.homeunix.thecave.moss.osx.ApplicationEvent;
 import org.homeunix.thecave.moss.swing.ApplicationModel;
 import org.homeunix.thecave.moss.swing.LookAndFeelUtil;
 import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossSplashScreen;
 import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -371,7 +370,7 @@ public class Buddi {
 		}
 
 		//If it has not already been done, disable the splash screen now.
-		MossSplashScreen.hideSplash();
+//		MossSplashScreen.hideSplash();
 	}
 
 
@@ -383,7 +382,7 @@ public class Buddi {
 		//Handle opening files from command line.
 		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
 			try {
-				MossSplashScreen.hideSplash();
+//				MossSplashScreen.hideSplash();
 
 				Document model;
 				model = ModelFactory.createDocument(f);
@@ -541,7 +540,7 @@ public class Buddi {
 				if (string.equals("--nosplash"))
 					break splash;
 			}
-			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
+//			MossSplashScreen.showSplash("img/BuddiSplashScreen.jpg");
 		}
 
 		//Catch runtime exceptions

@@ -102,9 +102,9 @@ public class Const {
 	
 	//Web addresses
 	public final static String DONATE_URL = "http://sourceforge.net/donate/index.php?group_id=167026";
-	public final static String PROJECT_URL = "http://buddi.thecave.homeunix.org/";
-	public final static String DOWNLOAD_URL_STABLE = "http://buddi.thecave.homeunix.org/buddi";
-	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.thecave.homeunix.org/buddi-development";
+	public final static String PROJECT_URL = "http://buddi.digitalcave.ca/";
+	public final static String DOWNLOAD_URL_STABLE = "http://buddi.digitalcave.ca/buddi";
+	public final static String DOWNLOAD_URL_UNSTABLE = "http://buddi.digitalcave.ca/buddi-development";
 	public final static String VERSION_FILE = "version.txt";
 	
 	//File Types

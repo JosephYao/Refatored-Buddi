@@ -70,6 +70,12 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 					return -1;
 				return 1;
 			}
+			
+			//Next we sort on the number field
+			String thisNumber = this.getNumber() == null ? "" : this.getNumber();
+			String otherNumber = t.getNumber() == null ? "" : t.getNumber();
+			if (!thisNumber.equals(otherNumber))
+				return thisNumber.compareTo(otherNumber);
 
 			//If everything else is the same, we sort on description.
 			if (this.getDescription() != null && t.getDescription() != null && !this.getDescription().equals(t.getDescription())){

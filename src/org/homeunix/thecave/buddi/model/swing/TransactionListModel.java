@@ -15,8 +15,7 @@ import org.homeunix.thecave.moss.swing.model.BackedListModel;
 
 /**
  * The transaction list model.  Implements List interface to ease navigation,
- * but only the read-only methods are implemented.  This list model is backed
- * by a 
+ * but only the read-only methods are implemented.  
  * 
  * @author wyatt
  *

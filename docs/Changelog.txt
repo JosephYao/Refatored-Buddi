@@ -1,3 +1,8 @@
+3.3.3.0
+-Fixed misc. bugs related to split transactions
+-Fixed bug #2807502 (sort order of transactions doesn't include number)
+-Changed domain name from thecave.homeunix.org to digitalcave.ca
+
 3.3.2.0 (March 24 2009)
 UNSTABLE VERSION FOR TESTING ONLY.  USE AT YOUR OWN RISK
 -Updated reports to work correctly for split transactions
