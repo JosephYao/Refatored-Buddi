@@ -11,12 +11,12 @@
 	<classpathentry kind="lib" path="lib/winlaf-0.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.14.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.11.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.application"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.collections"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.crypto"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.swing"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.i18n"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.homeunix.thecave.moss.osx"/>
+	<classpathentry kind="lib" path="lib/moss-collections-2.0.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-common-2.0.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-crypto-2.0.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-osx-2.0.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-swing-2.0.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-application-2.0.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/moss-i18n-2.0.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
