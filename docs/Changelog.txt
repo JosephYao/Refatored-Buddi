@@ -1,6 +1,7 @@
 3.3.3.0
 -Fixed misc. bugs related to split transactions
 -Fixed bug #2807502 (sort order of transactions doesn't include number)
+-Fixed URLs for help system
 -Changed domain name from thecave.homeunix.org to digitalcave.ca
 -Updated French translation
 
