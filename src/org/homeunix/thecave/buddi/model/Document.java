@@ -22,6 +22,7 @@ public interface Document extends ModelObject, StandardDocument {
 	public void addBudgetCategory(BudgetCategory budgetCategory) throws ModelException;
 	public void addScheduledTransaction(ScheduledTransaction scheduledTransaction) throws ModelException;
 	public void addTransaction(Transaction transaction) throws ModelException;
+	public String doSanityChecks();
 	public Account getAccount(String name);
 	public List<Account> getAccounts();
 	public AccountType getAccountType(String name);

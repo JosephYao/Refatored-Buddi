@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -652,6 +653,79 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		return (getUid().compareTo(o.getUid()));
 	}
 
+	/**
+	 * Goes through all objects in the document and verifies that things are
+	 * looking correct.  Returns null if things are good, or a string describing
+	 * the problems (and optionally steps to resolve) otherwise. 
+	 */
+	public String doSanityChecks(){
+		StringBuilder sb = new StringBuilder();
+		Logger logger = Logger.getLogger(this.getClass().getName());
+
+		List<ScheduledTransaction> stToDelete = new ArrayList<ScheduledTransaction>();
+		for (ScheduledTransaction st : getScheduledTransactions()){
+			if (st.getTo() == null
+					|| st.getFrom() == null){
+			
+				String message = "The scheduled transaction " + st.getDescription() + " for amount " + st.getAmount() + " doesn't have the To and From sources set up correctly; deleting scheduled transaction.";
+				logger.warning(message);
+				sb.append(message).append("\n\n");
+				stToDelete.add(st);
+			}
+		}
+		for (ScheduledTransaction st : stToDelete) {
+			try {
+				removeScheduledTransaction(st);
+			}
+			catch (ModelException me){
+				String message = "Unable to delete scheduled transaction " + st.getDescription();
+				logger.severe(message);
+				sb.append(message).append("\n\n");
+			}
+		}
+		
+		for (Transaction t : getTransactions()) {
+			try {
+				if (t.getFrom() == null){
+					Source s = null;
+					if (getAccounts().size() > 0)
+						s = getAccounts().get(0);
+					else if (getBudgetCategories().size() > 0)
+						s = getBudgetCategories().get(0);
+					else
+						s = null;
+					String message = "Transaction with description '" + t.getDescription() + "' of amount '"+ t.getAmount() + "' on date '" + t.getDate() + "' does not have a From source defined.  Setting this to '" + s.getFullName();
+					logger.warning(message);
+					sb.append(message).append("\n\n");
+					t.setFrom(s);
+				}
+				
+				if (t.getTo() == null){
+					Source s = null;
+					if (getBudgetCategories().size() > 0)
+						s = getBudgetCategories().get(0);
+					else if (getAccounts().size() > 0)
+						s = getAccounts().get(0);
+					else
+						s = null;
+					String message = "Transaction with description '" + t.getDescription() + "' of amount '"+ t.getAmount() + "' on date '" + t.getDate() + "' does not have a To source defined.  Setting this to '" + s.getFullName();
+					logger.warning(message);
+					sb.append(message).append("\n\n");
+					t.setFrom(s);
+				}
+			}
+			catch (InvalidValueException ive){
+				String message = "Error while correcting corrupted transaction: " + ive.getMessage();
+				logger.severe(message);
+				sb.append(message).append("\n\n");
+			}
+		}
+		
+		if (sb.length() > 0)
+			return sb.toString();
+		return null;
+	}
+	
 	/**
 	 * Refreshes the UID map.  This is a relatively expensive operation, and as such is 
 	 * generally only done at file load time.

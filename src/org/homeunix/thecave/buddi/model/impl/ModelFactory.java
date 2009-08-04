@@ -213,6 +213,11 @@ public class ModelFactory {
 
 		//Refresh the UID Map...
 		document.refreshUidMap();
+		
+		//Do some sanity checks.  If this returns anything, display it.
+		String errors = document.doSanityChecks();
+		if (errors != null)
+			JOptionPane.showMessageDialog(null, errors);
 
 		//Update all balances...
 		document.updateAllBalances();
