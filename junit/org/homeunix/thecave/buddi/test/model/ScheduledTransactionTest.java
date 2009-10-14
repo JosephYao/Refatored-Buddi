@@ -100,7 +100,7 @@ public class ScheduledTransactionTest {
 
 		d.updateAllBalances();
 
-		assertEquals(expected, a1.getBalance((Date) test));
+		assertEquals((long) expected, a1.getBalance((Date) test));
 	}
 
 }

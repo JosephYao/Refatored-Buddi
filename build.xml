@@ -192,7 +192,7 @@
 	        icon="${IMG}/osx/${FULL_NAME}.icns"
 	        jvmversion="1.5+"
 	        version="${VERSION}"
-	        infostring="${FULL_NAME}, ${VERSION}"
+	        infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
 	        bundleid="${MAIN_CLASS}"
 			vmoptions="-Xmx512m">
 
@@ -344,10 +344,13 @@
 		
 		<copy todir="${BUILD}/deb/data/usr">
 			<fileset dir="${ETC}/unix/usr"/>
-			<fileset dir="${IMG}/unix/usr"/>
 			<filterset begintoken="[[" endtoken="]]">
 				<filter token="platform" value="debian"/>
 			</filterset>
+		</copy>
+		
+		<copy todir="${BUILD}/deb/data/usr">
+			<fileset dir="${IMG}/unix/usr"/>
 		</copy>
 		
 		<mkdir dir="${BUILD}/deb/data/usr/share/doc"/>
@@ -472,6 +475,17 @@
 		</javac>
 	</target>
 
+	<target name="javadocs" description="Builds the project documentation">
+		<mkdir dir="${BUILD}/classes"/>
+		<javadoc sourcepath="${SRC}" destdir="${BUILD}/javadoc">
+			<classpath>
+				<fileset dir="${LIB}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javadoc>
+	</target>
+	
 	<target name="clean" description="Removes all files from bin, and build directories">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${BUILD}">

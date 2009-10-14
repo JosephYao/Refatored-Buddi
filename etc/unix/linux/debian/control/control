@@ -3,7 +3,7 @@ Version: [[version]]
 Section: misc
 Priority: optional
 Architecture: all
-Depends: sun-java5-jre | sun-java6-jre
+Depends: sun-java5-jre | sun-java6-jre | openjdk-6-jre
 Maintainer: Wyatt Olson <wyatt.olson@gmail.com>
 Description: A personal finance program which helps users keep to a budget.
    .
