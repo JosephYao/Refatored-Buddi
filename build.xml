@@ -463,6 +463,21 @@
 			<fileset dir="${BUILD}/classes"/>
 		</delete>
 	</target>
+	
+	<target name="javadocs" depends="clean" description="Creates the javadocs">
+		<mkdir dir="${BUILD}/javadocs"/>
+		<javadoc destdir="${BUILD}/javadocs" 
+				packagenames="org">
+			<classpath>
+				<fileset dir="${LIB}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<packageset dir="${SRC}">
+				<include name="**/*"/>
+			</packageset>
+		</javadoc>
+	</target>
 
 	<target name="compile" description="Builds the project">
 		<mkdir dir="${BUILD}/classes"/>
