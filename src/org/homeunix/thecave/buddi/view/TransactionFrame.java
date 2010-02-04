@@ -46,7 +46,9 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.homeunix.thecave.buddi.model.impl.SplitImpl;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.TransactionListModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
@@ -210,7 +212,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 
 		//Set up the editing portion
-		transactionEditor = new TransactionEditorPanel((Document) parent.getDocument(), associatedSource, false);
+		transactionEditor = new TransactionEditorPanel(this, (Document) parent.getDocument(), associatedSource, false);
 
 		recordButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_RECORD));
 		clearButton = new JButton(PrefsModel.getInstance().getTranslator().get(ButtonKeys.BUTTON_CLEAR));
@@ -636,12 +638,12 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 					if (list.getSelectedValue() instanceof Transaction) {
 						Transaction t = (Transaction) list.getSelectedValue();
 
-						transactionEditor.setTransaction(t, false);
+						transactionEditor.setTransaction(t, false, recordButton);
 
 						Logger.getLogger(this.getClass().getName()).finest("Set transaction to " + t);
 					}
 					else if (list.getSelectedValue() == null){
-						transactionEditor.setTransaction(null, false);
+						transactionEditor.setTransaction(null, false, recordButton);
 						transactionEditor.updateContent();
 
 						Logger.getLogger(this.getClass().getName()).finest("Set transaction to null");
@@ -793,6 +795,45 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 						}
 						else
 							notReconciledTotal += t.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+					}
+					else if (t.getFrom() instanceof SplitImpl){
+						for (TransactionSplit split : t.getFromSplits()){
+							if (split.getSource().equals(associatedSource)){
+								if (t.isClearedFrom()){
+									clearedTotal -= split.getAmount();
+									clearedBalanceTotal -= split.getAmount();
+								}
+								else
+									notClearedTotal -= split.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+								
+								if (t.isReconciledFrom()){
+									reconciledTotal -= split.getAmount();
+									reconciledBalanceTotal -= split.getAmount();
+								}
+								else
+									notReconciledTotal -= split.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+								
+							}
+						}
+					}
+					else if (t.getTo() instanceof SplitImpl){
+						for (TransactionSplit split : t.getToSplits()){
+							if (split.getSource().equals(associatedSource)){
+								if (t.isClearedTo()){
+									clearedTotal += split.getAmount();
+									clearedBalanceTotal += split.getAmount();
+								}
+								else
+									notClearedTotal += split.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+
+								if (t.isReconciledTo()){
+									reconciledTotal += split.getAmount();
+									reconciledBalanceTotal += split.getAmount();
+								}
+								else
+									notReconciledTotal += split.getAmount(); //(t.getAmount() * (t.isInflow() ? 1 : -1));
+							}
+						}
 					}
 					else {
 						Logger.getLogger(this.getClass().getName()).severe("Neither TO nor FROM equals the associated source.  The value of TO is " + t.getTo().getFullName() + " and the value of FROM is " + t.getFrom().getFullName() + ", and associatedSource is " + associatedSource);
@@ -948,7 +989,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 
 			getDataModel().finishBatchChange();
 
-			transactionEditor.setTransaction(null, true);
+			transactionEditor.setTransaction(null, true, recordButton);
 			list.clearSelection();
 			updateButtons();
 
@@ -994,7 +1035,7 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							options,
 							options[0]) == JOptionPane.YES_OPTION){
 
-				transactionEditor.setTransaction(null, true);
+				transactionEditor.setTransaction(null, true, recordButton);
 				transactionEditor.updateContent();
 				list.ensureIndexIsVisible(list.getModel().getSize() - 1);
 				list.clearSelection();
@@ -1063,11 +1104,11 @@ public class TransactionFrame extends MossAssociatedDocumentFrame implements Act
 							list.setSelectedIndex(position);
 							if (list.getSelectedValue() instanceof Transaction){
 								t = (Transaction) list.getSelectedValue();
-								transactionEditor.setTransaction(t, true);
+								transactionEditor.setTransaction(t, true, recordButton);
 								list.ensureIndexIsVisible(position);
 							}
 							else{
-								transactionEditor.setTransaction(null, true);
+								transactionEditor.setTransaction(null, true, recordButton);
 								list.clearSelection();
 							}
 

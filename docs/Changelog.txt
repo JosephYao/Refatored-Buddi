@@ -1,8 +1,9 @@
-3.3.3.0
+3.3.3.0 (February 3 2010)
 -Fixed misc. bugs related to split transactions
 -Fixed bug #2807502 (sort order of transactions doesn't include number)
 -Fixed URLs for help system
 -Changed domain name from thecave.homeunix.org to digitalcave.ca
+-Changed from launch4j to janel for .exe wrappers
 -Updated French translation
 -Added Brazilian localization of Portuguese translation (thanks to Fausto Trentini for this)
 -Added openjdk support for Debian package

@@ -16,7 +16,7 @@
 		<authors>
 			<author name="Wyatt Olson" email="wyatt.olson@gmail.com" />
 		</authors>
-		<url>http://buddi.thecave.homeunix.org/</url>
+		<url>http://buddi.digitalcave.ca/</url>
         <javaversion>1.5</javaversion>
         <requiresjdk>no</requiresjdk>
         <pack2000/>
@@ -64,6 +64,10 @@
 		<pack name="Base" required="yes">
 			<description>Buddi Program Files</description>
 			<file src="Buddi.exe" targetdir="$INSTALL_PATH" />
+			<file src="Buddi.jar" targetdir="$INSTALL_PATH" />
+			<file src="Buddi.lap" targetdir="$INSTALL_PATH" />
+			<file src="msvcr71.dll" targetdir="$INSTALL_PATH" />
+			<file src="Buddi.ico" targetdir="$INSTALL_PATH" />
 			<file src="BuddiData.ico" targetdir="$INSTALL_PATH" />
 			<file src="BuddiPlugin.ico" targetdir="$INSTALL_PATH" />
 			<file src="BuddiLanguage.ico" targetdir="$INSTALL_PATH" />

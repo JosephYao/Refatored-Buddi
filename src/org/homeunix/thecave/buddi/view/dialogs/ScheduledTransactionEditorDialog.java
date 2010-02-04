@@ -107,7 +107,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 		startDateChooser = new JXDatePicker();
 		endDateChooser = new JXDatePicker();
 		endDateChooserEnabled = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.ENDING_ON));
-		transactionEditor = new TransactionEditorPanel((Document) parentFrame.getDocument(), null, true);
+		transactionEditor = new TransactionEditorPanel(null, (Document) parentFrame.getDocument(), null, true);
 
 		scheduleName = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.HINT_SCHEDULED_TRANSACTION_NAME));
 
@@ -448,7 +448,7 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 			//Load the changeable fields, including Transaction
 			scheduleName.setText(schedule.getScheduleName());
 			message.setText(schedule.getMessage());
-			transactionEditor.setTransaction(schedule, true);
+			transactionEditor.setTransaction(schedule, true, okButton);
 
 			//Load the schedule pulldowns, based on which type of 
 			// schedule we're following.

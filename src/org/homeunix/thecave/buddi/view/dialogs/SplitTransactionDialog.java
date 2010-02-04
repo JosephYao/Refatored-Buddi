@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,7 +35,7 @@ import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.buddi.view.MainFrame;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
 import org.homeunix.thecave.moss.swing.MossDecimalField;
 import org.homeunix.thecave.moss.swing.MossDialog;
@@ -67,7 +69,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 	
 	private final JPanel splitPanels;
 
-	public SplitTransactionDialog(MainFrame frame, Document model, List<TransactionSplit> splits, Source associatedSource, long amount, boolean from) {
+	public SplitTransactionDialog(TransactionFrame frame, Document model, List<TransactionSplit> splits, Source associatedSource, long amount, boolean from) {
 		super(frame, true);
 
 		this.model = model;
@@ -128,6 +130,8 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		save.addActionListener(this);
 		cancel.addActionListener(this);
 		add.addActionListener(this);
+		
+		this.getRootPane().setDefaultButton(save);
 	}
 
 	public void updateButtons() {
@@ -166,8 +170,17 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
 		for (TransactionSplit split : workingSplits) {
-			final MossScrollingComboBox source = new MossScrollingComboBox();;
-			final MossDecimalField amount = new MossDecimalField();;
+			final MossScrollingComboBox source = new MossScrollingComboBox();
+			final MossDecimalField amount = new MossDecimalField();
+			final TransactionSplit finalSplit = split;
+			
+			amount.addKeyListener(new KeyAdapter(){
+				@Override
+				public void keyTyped(KeyEvent e) {
+					setAmount(source, finalSplit, amount);
+					updateButtons();
+				}
+			});
 			
 			source.setPreferredSize(new Dimension(150, source.getPreferredSize().height));
 			amount.setPreferredSize(new Dimension(100, amount.getPreferredSize().height));
@@ -188,8 +201,9 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 
 			c.weightx = 0.0;
 			c.gridx = 2;
-			final TransactionSplit finalSplit = split;
+			
 			JButton remove = new JButton("-");
+			remove.setFocusable(false);
 			remove.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					workingSplits.remove(finalSplit);
@@ -207,18 +221,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 				@Override
 				public void focusLost(FocusEvent e) {
 					super.focusLost(e);
-					try {
-						if (source.getSelectedItem() instanceof Source){
-							finalSplit.setSource((Source) source.getSelectedItem());
-						}
-						else {
-							finalSplit.setSource(null);
-						}
-						finalSplit.setAmount(amount.getValue());
-					}
-					catch (InvalidValueException ive){
-						Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error setting split information", ive);
-					}
+					setAmount(source, finalSplit, amount);
 					updateButtons();
 				}
 			};
@@ -226,6 +229,7 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 			amount.addFocusListener(fa);
 			
 			splitPanels.add(remove, c);
+			source.requestFocusInWindow();
 			
 			c.gridy++;
 		}
@@ -268,6 +272,22 @@ public class SplitTransactionDialog extends MossDialog implements ActionListener
 		this.pack();
 		
 		updateButtons();
+	}
+	
+	private void setAmount(MossScrollingComboBox source, TransactionSplit finalSplit, MossDecimalField amount){
+		try {
+			if (source.getSelectedItem() instanceof Source){
+				finalSplit.setSource((Source) source.getSelectedItem());
+			}
+			else {
+				finalSplit.setSource(null);
+			}
+			finalSplit.setAmount(amount.getValue());
+		}
+		catch (InvalidValueException ive){
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error setting split information", ive);
+		}
+
 	}
 	
 	public void actionPerformed(ActionEvent e) {

@@ -4,10 +4,19 @@
 
 	<programGroup defaultName="Buddi" location="applications" />
 
-	<shortcut name="Buddi" programGroup="yes" desktop="no"
-		applications="no" startMenu="no" startup="no"
-		target="$INSTALL_PATH\Buddi.exe" workingDirectory="" commandLine=""
-		type="Application" encoding="UTF-8"
+	<shortcut 
+		name="Buddi" 
+		programGroup="no" 
+		desktop="yes"
+		applications="no" 
+		startMenu="yes" 
+		startup="no"
+		target="$INSTALL_PATH\Buddi.exe"
+		iconFile="$INSTALL_PATH\Buddi.ico" 
+		workingDirectory="" 
+		commandLine=""
+		type="Application" 
+		encoding="UTF-8"
 		description="Personal Budget Software">
 	</shortcut>
 

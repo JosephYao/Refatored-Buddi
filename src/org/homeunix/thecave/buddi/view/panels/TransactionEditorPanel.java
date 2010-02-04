@@ -48,6 +48,7 @@ import org.homeunix.thecave.buddi.model.Split;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.homeunix.thecave.buddi.model.impl.SplitImpl;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel;
 import org.homeunix.thecave.buddi.model.swing.DescriptionList;
@@ -55,6 +56,7 @@ import org.homeunix.thecave.buddi.model.swing.SourceComboBoxModel;
 import org.homeunix.thecave.buddi.model.swing.AutoCompleteEntryModel.AutoCompleteEntry;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.buddi.view.dialogs.SplitTransactionDialog;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
@@ -85,6 +87,7 @@ public class TransactionEditorPanel extends MossPanel {
 
 	private Transaction transaction; //Set when editing existing one; null otherwise
 
+	private final TransactionFrame frame;
 
 	private final JXDatePicker date;
 	private final MossHintComboBox description;
@@ -109,10 +112,11 @@ public class TransactionEditorPanel extends MossPanel {
 
 	private boolean changed;
 
-	public TransactionEditorPanel(Document model, Source associatedSource, boolean scheduledTransactionPane){
+	public TransactionEditorPanel(TransactionFrame frame, Document model, Source associatedSource, boolean scheduledTransactionPane){
 		super(true);
 		this.model = model;
 		this.associatedSource = associatedSource;
+		this.frame = frame;
 
 		autoCompleteEntries = new AutoCompleteEntryModel(model);
 
@@ -169,7 +173,7 @@ public class TransactionEditorPanel extends MossPanel {
 						splits = null;
 					else
 						splits = fromSplits; //getTransaction().getFromSplits();
-					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, associatedSource, amount.getValue(), true);
+					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(frame, model, splits, associatedSource, amount.getValue(), true);
 					splitTransactionDialog.openWindow();
 					fromSplits = splitTransactionDialog.getSplits();
 				}
@@ -187,7 +191,7 @@ public class TransactionEditorPanel extends MossPanel {
 						splits = null;
 					else
 						splits = toSplits; //getTransaction().getToSplits();
-					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(null, model, splits, associatedSource, amount.getValue(), false);
+					SplitTransactionDialog splitTransactionDialog = new SplitTransactionDialog(frame, model, splits, associatedSource, amount.getValue(), false);
 					splitTransactionDialog.openWindow();
 					toSplits = splitTransactionDialog.getSplits();
 				}
@@ -201,17 +205,7 @@ public class TransactionEditorPanel extends MossPanel {
 		date.setDate(new Date());
 
 		//Add the tooltips
-		if (PrefsModel.getInstance().isShowTooltips()){
-			date.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DATE));
-			amount.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_AMOUNT));
-			from.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_FROM));
-			to.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_TO));
-			number.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_NUMBER));
-			description.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DESC));
-			memo.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_MEMO));
-			cleared.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_CLEARED));
-			reconciled.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_RECONCILED));
-		}
+		addTooltips();
 
 		JScrollPane memoScroller = new JScrollPane(memo);
 		memo.setWrapStyleWord(true);
@@ -393,7 +387,7 @@ public class TransactionEditorPanel extends MossPanel {
 				fromSplit.setVisible(BuddiKeys.SPLITS.toString().equals(from.getSelectedItem()));
 				
 				if (BuddiKeys.SPLITS.toString().equals(from.getSelectedItem())){
-					to.setSelectedItem(associatedSource);
+//					to.setSelectedItem(associatedSource);
 				}
 				else if (from.getSelectedItem() instanceof Source) {
 					if (associatedSource != null){
@@ -447,7 +441,7 @@ public class TransactionEditorPanel extends MossPanel {
 				toSplit.setVisible(BuddiKeys.SPLITS.toString().equals(to.getSelectedItem()));
 				
 				if (BuddiKeys.SPLITS.toString().equals(to.getSelectedItem())){
-					from.setSelectedItem(associatedSource);
+//					from.setSelectedItem(associatedSource);
 				}
 				else if (to.getSelectedItem() instanceof Source) {
 					if (associatedSource != null){
@@ -528,8 +522,46 @@ public class TransactionEditorPanel extends MossPanel {
 		final MaxLengthListCellRenderer renderer = new MaxLengthListCellRenderer(description);
 		description.setRenderer(renderer);
 	}
+	
+	private void addTooltips(){
+		if (PrefsModel.getInstance().isShowTooltips()){
+			date.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DATE));
+			amount.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_AMOUNT));
+			from.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_FROM));
+			to.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_TO));
+			number.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_NUMBER));
+			description.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DESC));
+			memo.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_MEMO));
+			cleared.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_CLEARED));
+			reconciled.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_RECONCILED));
+		}		
+		else {
+			date.setToolTipText(null);
+			amount.setToolTipText(null);
+			from.setToolTipText(null);
+			to.setToolTipText(null);
+			number.setToolTipText(null);
+			description.setToolTipText(null);
+			memo.setToolTipText(null);
+			cleared.setToolTipText(null);
+			reconciled.setToolTipText(null);			
+		}
+	}
 
-	public void setTransaction(Transaction transaction, boolean force){
+	public void setTransaction(Transaction transaction, boolean force, JButton saveButton){
+		//Make sure all of these are enabled - we will conditionally disable them later, based on splits. 
+		date.setEnabled(true);
+		description.setEnabled(true);
+		number.setEnabled(true);
+		from.setEnabled(true);
+		to.setEnabled(true);
+		amount.setEnabled(true);
+		fromSplit.setEnabled(true);
+		toSplit.setEnabled(true);
+		memo.setEnabled(true);
+		saveButton.setEnabled(true);
+		addTooltips();
+		
 		//If the new transaction is not the same as the old one, then we 
 		// want to reset the form.  Since this can include nulls, we need
 		// to consider a few cases.
@@ -549,6 +581,34 @@ public class TransactionEditorPanel extends MossPanel {
 		if (transaction != null){
 			resetToFromComboBoxModels();
 			
+			//If the transaction is a split, and it has been set up from the other account / category, 
+			// we want to disable editing from this side.
+			if (transaction.getFrom() instanceof Split || transaction.getTo() instanceof Split){
+				if (!transaction.getFrom().equals(associatedSource) && !transaction.getTo().equals(associatedSource)){
+					date.setEnabled(false);
+					description.setEnabled(false);
+					number.setEnabled(false);
+					from.setEnabled(false);
+					to.setEnabled(false);
+					amount.setEnabled(false);
+					fromSplit.setEnabled(false);
+					toSplit.setEnabled(false);
+					memo.setEnabled(false);
+					saveButton.setEnabled(false);
+					
+					date.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					description.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					number.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					from.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					to.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					amount.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					fromSplit.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					toSplit.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					memo.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+					saveButton.setToolTipText(PrefsModel.getInstance().getTranslator().get(BuddiKeys.TOOLTIP_DISABLED_FOR_SPLIT));
+				}
+			}
+			
 			//If the date is null, we should create a new date.  This should really only
 			// happen in scheduled transactions, where the date is set to null.  In this
 			// case, it does not matter that we set a new date.  In the erroneous case
@@ -563,8 +623,8 @@ public class TransactionEditorPanel extends MossPanel {
 				((SourceComboBoxModel) from.getModel()).updateComboBoxModel(transaction.getFrom());
 				from.invalidate();
 			}
-			if (transaction.getFromSplits() != null && transaction.getFromSplits().size() > 0){
-				from.setSelectedItem(BuddiKeys.SPLITS);
+			if (transaction.getFrom() instanceof SplitImpl){//transaction.getFromSplits() != null && transaction.getFromSplits().size() > 0){
+				from.setSelectedItem(BuddiKeys.SPLITS.toString());
 			}
 			else {				
 				from.setSelectedItem(transaction.getFrom());
@@ -573,7 +633,7 @@ public class TransactionEditorPanel extends MossPanel {
 				((SourceComboBoxModel) to.getModel()).updateComboBoxModel(transaction.getTo());
 				to.invalidate();
 			}
-			if (transaction.getToSplits() != null && transaction.getToSplits().size() > 0){
+			if (transaction.getTo() instanceof SplitImpl){//transaction.getToSplits() != null && transaction.getToSplits().size() > 0){
 				to.setSelectedItem(BuddiKeys.SPLITS.toString());
 			}
 			else {
