@@ -81,6 +81,7 @@ public class ModelFactory {
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_WEEK.toString(), new BudgetCategoryTypeWeekly());
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_SEMI_MONTH.toString(), new BudgetCategoryTypeSemiMonthly());
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_QUARTER.toString(), new BudgetCategoryTypeQuarterly());
+			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_SEMI_YEAR.toString(), new BudgetCategoryTypeSemiYearly());
 			budgetPeriodTypes.put(BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_YEAR.toString(), new BudgetCategoryTypeYearly());
 		}
 

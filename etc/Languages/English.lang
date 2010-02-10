@@ -1,5 +1,6 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.thecave.homeunix.org
 #Sat Jan 24 20:28:02 MST 2009
+BUDGET_CATEGORY_TYPE_SEMI_YEAR=Semi Year
 BUTTON_CLEAR=Clear
 DELETE_TRANSACTION=Delete Transaction
 BUDGET_CATEGORIES_COMBOBOX_HEADER=--Budget Categories--
