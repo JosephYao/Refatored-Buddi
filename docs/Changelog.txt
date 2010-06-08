@@ -1,4 +1,4 @@
-3.3.4.0
+3.3.4.0 (June 8 2010)
 -Added semi monthly budget category period
 -Updated to Quaqua 6.3.1, for various bugfixes and Snow Leopard support
 -Updated to SwingX 1.0
