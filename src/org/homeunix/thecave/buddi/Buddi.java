@@ -786,25 +786,25 @@ public class Buddi {
 		warningButtons[0] = "Continue";
 		warningButtons[1] = "Quit";
 		
-		int warningReply = JOptionPane.showOptionDialog(
-				frame,
-				"This version of Buddi includes major changes to transactions, and is probably\n" +
-				"not yet stable enough for production use.  USE THIS VERSION AT YOUR OWN RISK!!!\n\n" +
-				"Please report any bugs you encounter to Wyatt (wyatt.olson@gmail.com), or via the\n" +
-				"Buddi website.\n\n" +
-				"To repeat: There are very likely serious bugs with this version, and IT IS NOT\n" +
-				"RECOMMENDED FOR USE WITH REAL FINANCIAL DATA.  IF YOU USE IT, AND YOU\n" +
-				"LOSE YOUR DATA, DON'T COMPLAIN TO ME!",
-				"WARNING - Major Unstable Changes to Data and User Interface",
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.WARNING_MESSAGE,
-				null,
-				warningButtons,
-				warningButtons[1]
-				);
-		if (warningReply != JOptionPane.YES_OPTION){
-			System.exit(0);
-		}
+//		int warningReply = JOptionPane.showOptionDialog(
+//				frame,
+//				"This version of Buddi includes major changes to transactions, and is probably\n" +
+//				"not yet stable enough for production use.  USE THIS VERSION AT YOUR OWN RISK!!!\n\n" +
+//				"Please report any bugs you encounter to Wyatt (wyatt.olson@gmail.com), or via the\n" +
+//				"Buddi website.\n\n" +
+//				"To repeat: There are very likely serious bugs with this version, and IT IS NOT\n" +
+//				"RECOMMENDED FOR USE WITH REAL FINANCIAL DATA.  IF YOU USE IT, AND YOU\n" +
+//				"LOSE YOUR DATA, DON'T COMPLAIN TO ME!",
+//				"WARNING - Major Unstable Changes to Data and User Interface",
+//				JOptionPane.YES_NO_OPTION,
+//				JOptionPane.WARNING_MESSAGE,
+//				null,
+//				warningButtons,
+//				warningButtons[1]
+//				);
+//		if (warningReply != JOptionPane.YES_OPTION){
+//			System.exit(0);
+//		}
 		
 		if (PrefsModel.getInstance().getLastVersion() == null 
 				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
