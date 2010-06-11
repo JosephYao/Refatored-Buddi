@@ -719,7 +719,7 @@ public class Buddi {
 		String currentWorkingDir = System.getProperty("user.dir") + File.separator;
 
 		//Set some directories if USB mode is enabled.
-		if (usbKey != null){
+		if (usbKey != null && usbKey){
 			if (languagesFolder == null)
 				languagesFolder = currentWorkingDir + Const.LANGUAGE_FOLDER;
 			if (pluginsFolder == null)
