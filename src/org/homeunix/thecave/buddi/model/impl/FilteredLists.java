@@ -357,6 +357,7 @@ public class FilteredLists {
 			String decimal = Formatter.getDecimalFormat().format(100).replaceAll("\\d", "");
 			return (searchText == null
 					|| searchText.length() == 0
+					|| t == null 
 					|| t.getDescription().toLowerCase().contains(searchText.toLowerCase())
 					|| (t.getNumber() != null && t.getNumber().toLowerCase().contains(searchText.toLowerCase()))
 					|| (t.getMemo() != null && t.getMemo().toLowerCase().contains(searchText.toLowerCase()))
