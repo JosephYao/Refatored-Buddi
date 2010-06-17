@@ -361,8 +361,8 @@ public class FilteredLists {
 					|| t.getDescription().toLowerCase().contains(searchText.toLowerCase())
 					|| (t.getNumber() != null && t.getNumber().toLowerCase().contains(searchText.toLowerCase()))
 					|| (t.getMemo() != null && t.getMemo().toLowerCase().contains(searchText.toLowerCase()))
-					|| t.getFrom().getName().toLowerCase().contains(searchText.toLowerCase())
-					|| t.getTo().getName().toLowerCase().contains(searchText.toLowerCase())
+					|| (t.getFrom() != null && t.getFrom().getName() != null && t.getFrom().getName().toLowerCase().contains(searchText.toLowerCase()))
+					|| (t.getTo() != null && t.getTo().getName() != null && t.getTo().getName().toLowerCase().contains(searchText.toLowerCase()))
 					|| TextFormatter.getFormattedCurrency(t.getAmount()).replaceAll("[^\\d" + decimal + "]", "").contains(searchText.toLowerCase()))
 					|| TextFormatter.getDateFormat().format(t.getDate()).toLowerCase().contains(searchText.toLowerCase());
 
