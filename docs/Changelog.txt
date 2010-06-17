@@ -1,3 +1,6 @@
+3.5.0.1 (June 17 2010)
+-Fixed bug with split transactions and filtering
+
 3.5.0.0 (June 10 2010)
 -New development version
 
