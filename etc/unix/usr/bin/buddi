@@ -45,9 +45,9 @@ if [ ! -x ${JAVA} ]; then
 fi
 
 # Check that we have the Sun Java version.
-${JAVA} -version 2>&1 | grep -q 'Java(TM)'
+${JAVA} -version 2>&1 | grep -q 'Java(TM)\|OpenJDK'
 if [ ${?} != 0 ]; then
-	echo "The installed Java version does not appear to be a Sun JVM.  Please set the JAVA variable in this script to the correct location of the Sun JVM."
+	echo "The installed Java version does not appear to be a Sun compatible JVM.  Please set the JAVA variable in this script to the correct location of the Sun (or Sun compatible) JVM."
 	exit 1
 fi
 
