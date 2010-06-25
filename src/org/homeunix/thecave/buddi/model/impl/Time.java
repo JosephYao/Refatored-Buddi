@@ -24,7 +24,7 @@ public class Time extends Date {
 		super(time);
 	}
 	
-	public Time(Date date){
-		super(date.getTime());
+	public Time(Date date){ 
+		super(date != null ? date.getTime() : new Date().getTime());
 	}
 }

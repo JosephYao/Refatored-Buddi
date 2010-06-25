@@ -866,7 +866,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			if (object instanceof Transaction){
 				Transaction t = (Transaction) object;
 				
-				if (t.getFrom() instanceof Split){
+				if (t.getFrom() instanceof Split && t.getFromSplits() != null){
 					long splitSum = 0;
 					for (TransactionSplit split : t.getFromSplits()) {
 						splitSum += split.getAmount();
@@ -887,7 +887,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 					}
 				}
 				
-				if (t.getTo() instanceof Split){
+				if (t.getTo() instanceof Split && t.getToSplits() != null){
 					long splitSum = 0;
 					for (TransactionSplit split : t.getToSplits()) {
 						splitSum += split.getAmount();

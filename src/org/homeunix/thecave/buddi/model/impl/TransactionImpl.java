@@ -285,7 +285,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			this.toSplits = new ArrayList<TransactionSplit>();
 		this.to = new SplitImpl();
 		this.toSplits.clear();
-		this.toSplits.addAll(splits);
+		if (splits != null) this.toSplits.addAll(splits);
 	}
 	
 	public List<TransactionSplit> getFromSplits() {
@@ -298,7 +298,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			this.fromSplits = new ArrayList<TransactionSplit>();
 		this.from = new SplitImpl();
 		this.fromSplits.clear();
-		this.fromSplits.addAll(splits);
+		if (splits != null) this.fromSplits.addAll(splits);
 	}
 
 	Transaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
