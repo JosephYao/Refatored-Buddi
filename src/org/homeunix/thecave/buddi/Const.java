@@ -40,7 +40,7 @@ public class Const {
 	public static final String DEVELOPMENT = "DEVELOPMENT";
 	
 	//Version variables
-	public static final String BRANCH = DEVELOPMENT;
+	public static final String BRANCH = STABLE;
 	public static final boolean DEVEL = BRANCH.equals(DEVELOPMENT);
 	
 	//Language constants
