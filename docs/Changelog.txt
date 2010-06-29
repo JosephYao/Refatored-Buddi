@@ -1,8 +1,8 @@
-3.5.0.1 (June 17 2010)
--Fixed bug with split transactions and filtering
+3.4.0.2 (June 28 2010)
+-Fixed bug with split transaction set To / From (thanks to belmakor for pointing out this fix)
 
-3.5.0.0 (June 10 2010)
--New development version
+3.4.0.1 (June 17 2010)
+-Fixed bug with split transactions and filtering
 
 3.4.0.0 (June 10 2010)
 -Same as 3.3.4.0 development version; moving to stable branch now.
