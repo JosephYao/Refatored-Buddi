@@ -281,6 +281,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 	public void setToSplits(List<TransactionSplit> splits) throws InvalidValueException {
 		setChanged();
+		if (splits == this.toSplits) return;
 		if (this.toSplits == null)
 			this.toSplits = new ArrayList<TransactionSplit>();
 		this.to = new SplitImpl();
@@ -294,6 +295,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 	public void setFromSplits(List<TransactionSplit> splits) throws InvalidValueException {
 		setChanged();
+		if (splits == this.toSplits) return;
 		if (this.fromSplits == null)
 			this.fromSplits = new ArrayList<TransactionSplit>();
 		this.from = new SplitImpl();
