@@ -506,13 +506,13 @@ LANGUAGE=Langue de l'interface
 SHOW_DELETED=Afficher les comptes et cat\u00E9gories de budget supprim\u00E9s
 LINE_OF_CREDIT=Marge de cr\u00E9dit
 CANNOT_SAVE_OVER_DIR=\u00C9chec de l'enregistrement dans un r\u00E9pretoire.
-ABOUT_COPYRIGHT=Copyright 2006 - 2008 Wyatt Olson
+ABOUT_COPYRIGHT=Copyright 2006 - 2010 Wyatt Olson
 MENU_EDIT_UNDELETE_ACCOUNTS=Restaurer les comptes
 CREDIT_CARD=Carte de cr\u00E9dit
 TOOLTIP_AMOUNT=Montant \u00E0 transf\u00E9rer.
 TOOLTIP_DESC=<html>Description de la transaction, tel le nom du magasin,<br>\nle b\u00E9n\u00E9ficiaire du ch\u00E8que ou la valeur mobili\u00E8re achet\u00E9e.</html>
 MONTH_APRIL=avril
-ABOUT_TRANSLATION=Traduction \: 2007 Serge Leblanc, 2008-2009 St\u00E9phane Bouchet
+ABOUT_TRANSLATION=Traduction \: 2007 Serge Leblanc, 2010-2009 St\u00E9phane Bouchet
 MENU_FILE_ENCRYPT=Crypter le fichier de donn\u00E9es / Changer le mot de passe
 SCHEDULE_DATE_FOURTH=4e
 LANGUAGE_EDITOR_HELP=<html><h2>Traducteur de langue Buddi</h2><p><font color\=\#00D000>Vert\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\: Valeur localis\u00E9e existante. Bien entendu vous pouvez la corriger \!</font></p><p><font color\=\#000090>Bleu fonc\u00E9 \: Valeur localis\u00E9e \= Valeur de base (Anglais)</font></p><p><font color\=\#0000FF>Bleu\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\: \u00A0Valeur de base \= Valeur en Anglais</font></p><p><font color\=\#A000A0>Pourpre \u00A0\u00A0\u00A0\u00A0\: Valeur localis\u00E9e manquante et Valeur de base existante</font></p><p><font color\=\#FF0000>Rouge\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0 \u00A0\: Valeur localis\u00E9e manquante et valeur en Anglais existante</font></p><p><font color\=\#FF9090>Rose\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0 \: Aucune valeur en Anglais<br>        (Probablement une cl\u00E9 ambigu\u00EB pour la traduction)</font></p><p>* (ast\u00E9risque) \: Valeur \u00E9dit\u00E9e depuis le dernier enregistrement </font></p><br><p>Pour donner un sens \u00E0 ce qui pr\u00E9c\u00E8de, sachez que Buddi<br>poss\u00E8de trois niveaux de traduction \: Anglais, Base<br>et Localis\u00E9e. L'Anglais est (\u00E9videmment) la traduction<br>anglaise par d\u00E9faut. Base est la base des versions traduites \: Fran\u00E7ais,<br>Espagnol, Italien, etc. Localis\u00E9e est la version de Base <br>adapt\u00E9e \u00E0 la r\u00E9gion \: Espagnol (MX),<br>Anglais (CA), Fran\u00E7ais (FR), Fran\u00E7ais (CA), etc.</p></html>

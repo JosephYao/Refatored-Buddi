@@ -1,5 +1,5 @@
 #Created by Wyatt Olson's Language Editor, included in Moss: http://moss.thecave.homeunix.org
-#Tue Apr 08 14:09:04 CEST 2008
+#Tue Apr 08 14:09:04 CEST 2010
 BUTTON_CLEAR=Rensa
 DELETE_TRANSACTION=Ta bort transaktion
 BUDGET_CATEGORIES_COMBOBOX_HEADER=--Budget Kategorier--
@@ -502,7 +502,7 @@ CREDIT_CARD=Kreditkort
 TOOLTIP_AMOUNT=Belopp att \u00F6verf\u00F6ra.
 TOOLTIP_DESC=<html>Transaktionens beskrivning, t.ex.<br>butik eller person som<br>genomf\u00F6rde transaktionen.</html>
 MONTH_APRIL=April
-ABOUT_TRANSLATION=Uppdaterad av Neer, 2008-04-07\n\nOrginal \u00F6vers\u00E4ttning av\: Ok\u00E4nd
+ABOUT_TRANSLATION=Uppdaterad av Neer, 2010-04-07\n\nOrginal \u00F6vers\u00E4ttning av\: Ok\u00E4nd
 MENU_FILE_ENCRYPT=Kryptera datafil / Byt l\u00F6senord
 SCHEDULE_DATE_FOURTH=4\:e
 LANGUAGE_EDITOR_HELP=<html><h2>Buddi Spr\u00E5k Redigerare</h2><p>font color\=\#00D000>Gr\u00F6n\: Lokaliserat v\u00E4rde existerar.  Detta \u00E4r bra</font></p><p><font color\=\#000090>M\u00F6rkbl\u00E5\: Lokaliserat v\u00E4rde \= Standardv\u00E4rde</font></p><p><font color\=\#0000FF>Bl\u00E5\: Standardv\u00E4rde \= Engelskt v\u00E4rde</font></p><p><font color\=\#A000A0>Lila\: Lokaliserat v\u00E4rde fattas; Standardv\u00E4rde existerar</font></p><p><font color\=\#FF0000>R\u00F6d\: Lokaliserat v\u00E4rde fattas; Engelskt v\u00E4rde existerar</font></p><p><font color\=\#FF9090>Rosa\: V\u00E4rde ej p\u00E5 engelska (F\u00F6rmodligen en misst\u00E4nksam nyckel i \u00F6vers\u00E4ttningen)</font></p><p>*\: Redigerad sedan f\u00F6rra sparningen</font></p><br><br><p>F\u00F6r att f\u00F6rst\u00E5 detta, begrip f\u00F6rst att<br>Buddi har tre niv\u00E5er av \u00F6vers\u00E4ttningar\: Engelska,<br>Standard, och lokaliserad.  Engelska \u00E4r (naturligtvis), den<br>f\u00F6rvalda Engelska \u00F6vers\u00E4ttningen. Standard \u00E4r basen av<br>\u00F6versatt version\: Spanska, Norska, etc.  Lokaliserad<br>\u00E4r den lokaliserade versionen av Standard\: Spanska (MX),<br>Engelska (CA), Franska (FR), Franska (CA), etc.</p></html>
