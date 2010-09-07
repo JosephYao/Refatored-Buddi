@@ -1,3 +1,7 @@
+3.4.0.3 (September 9 2010)
+-Updated translations
+-Added optional icons to repository for UK Pounds instead of dollar symbol
+
 3.4.0.2 (June 28 2010)
 -Fixed bug with split transaction set To / From (thanks to belmakor for pointing out this fix)
 
