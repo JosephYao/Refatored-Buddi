@@ -17,17 +17,11 @@ public interface ImmutableTransaction extends ImmutableModelObject {
 	public long getAmount();
 	
 	/**
-	 * Returns the balance in the From account at the point in time of this transaction
+	 * Returns the balance from the given account at the point in time of this transaction
 	 * @return
 	 */
-	public long getBalanceFrom();
+	public long getBalance(ImmutableSource source);
 
-	/**
-	 * Returns the balance in the To account at the point in time of this transaction
-	 * @return
-	 */
-	public long getBalanceTo();
-	
 	/**
 	 * Returns the date associated with this transaction
 	 * @return

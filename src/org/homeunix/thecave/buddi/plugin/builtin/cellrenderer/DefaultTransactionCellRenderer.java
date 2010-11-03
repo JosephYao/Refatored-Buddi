@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
-import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
@@ -181,12 +180,7 @@ public class DefaultTransactionCellRenderer extends BuddiTransactionCellRenderer
 				g.setFont(bold);
 				fm = this.getGraphics().getFontMetrics();
 				if (transaction != null){
-					long balanceValue;
-					if (transaction.getFrom() instanceof Account 
-							&& transaction.getFrom().equals(getAccount()))
-						balanceValue = transaction.getBalanceFrom();
-					else
-						balanceValue = transaction.getBalanceTo();
+					final long balanceValue = transaction.getBalance(getAccount().getUid());
 
 					xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, getAccount().getAccountType().isCredit()));
 					if (xPos < minXPos) minXPos = xPos;

@@ -41,7 +41,7 @@ public class Const {
 	
 	//Version variables
 	public static final String BRANCH = STABLE;
-	public static final boolean DEVEL = BRANCH.equals(DEVELOPMENT);
+	public static final boolean DEVEL = true; //BRANCH.equals(DEVELOPMENT);
 	
 	//Language constants
 	public final static String LANGUAGE_EXTENSION = ".lang";

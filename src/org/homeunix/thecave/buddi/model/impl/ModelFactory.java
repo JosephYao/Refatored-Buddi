@@ -302,7 +302,7 @@ public class ModelFactory {
 				try {
 					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
 
-					//Attempt to decode the XML within the (now hopefully unencrypted) data file. 
+					//Attempt to decode the XML within the (now hopefully un-encrypted) data file. 
 					XMLDecoder decoder = new XMLDecoder(is);
 					Object o = decoder.readObject();
 					if (o instanceof DocumentImpl){
@@ -316,7 +316,7 @@ public class ModelFactory {
 					//Refresh the UID Map...
 					document.refreshUidMap();
 
-					//This wil let us know where to save the file to.  Even if we found
+					//This will let us know where to save the file to.  Even if we found
 					// an autosave file, we want to save the file to the new location, 
 					// so we don't use the fileToLoad variable.
 					document.setFile(file);

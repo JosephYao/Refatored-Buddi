@@ -96,14 +96,14 @@ public class AccountImpl extends SourceImpl implements Account {
 				if (transaction.getTo().equals(this)){
 					if (!transaction.isDeleted())
 						balance = balance + transaction.getAmount();
-					transaction.setBalanceTo(balance);
+					transaction.setBalance(this.getUid(), balance);
 				}
 
 				//We are moving money *from* this account
 				else{
 					if (!transaction.isDeleted())
 						balance = balance - transaction.getAmount();
-					transaction.setBalanceFrom(balance);
+					transaction.setBalance(this.getUid(), balance);
 				}
 			}
 			catch (InvalidValueException ive){
@@ -128,10 +128,8 @@ public class AccountImpl extends SourceImpl implements Account {
 		List<Transaction> ts = getDocument().getTransactions(this, getStartDate(), d);
 		if (ts.size() > 0){
 			Transaction t = ts.get(ts.size() - 1);
-			if (t.getFrom().equals(this))
-				return t.getBalanceFrom();
-			else if (t.getTo().equals(this))
-				return t.getBalanceTo();
+			if (t.getFrom().equals(this) || t.getTo().equals(this))
+				return t.getBalance(this.getUid());
 		}
 		else {
 			//If there are no transactions, return the starting balance.

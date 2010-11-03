@@ -160,12 +160,7 @@ public class ConciseTransactionCellRenderer extends BuddiTransactionCellRenderer
 
 				//Balance - max 150px
 				g.setFont(bold);
-				final long balanceValue;
-				if (transaction.getFrom() instanceof Account 
-						&& transaction.getFrom().equals(getAccount()))
-					balanceValue = transaction.getBalanceFrom();
-				else
-					balanceValue = transaction.getBalanceTo();
+				final long balanceValue = transaction.getBalance(getAccount().getUid());
 
 				xPos = width - 20 - fm.stringWidth(TextFormatter.getFormattedCurrency(balanceValue, false, getAccount().getAccountType().isCredit()));
 				if (xPos < minXPos) minXPos = xPos;

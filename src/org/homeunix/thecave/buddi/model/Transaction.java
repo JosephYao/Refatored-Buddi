@@ -12,9 +12,7 @@ public interface Transaction extends ModelObject {
 	
 	public long getAmount();
 	
-	public long getBalanceFrom();
-	
-	public long getBalanceTo();
+	public long getBalance(String sourceUid);
 	
 	public Date getDate();
 	
@@ -48,9 +46,7 @@ public interface Transaction extends ModelObject {
 	
 	public void setAmount(long amount);
 	
-	void setBalanceFrom(long balanceFrom) throws InvalidValueException;
-	
-	void setBalanceTo(long balanceTo) throws InvalidValueException;
+	void setBalance(String sourceUid, long balance) throws InvalidValueException;
 	
 	public void setClearedFrom(boolean cleared) throws InvalidValueException;
 	

@@ -59,6 +59,7 @@ import org.homeunix.thecave.buddi.view.menu.items.FileQuit;
 import org.homeunix.thecave.buddi.view.menu.items.HelpAbout;
 import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
 import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
+import org.homeunix.thecave.moss.common.LogUtil;
 import org.homeunix.thecave.moss.common.OperatingSystemUtil;
 import org.homeunix.thecave.moss.common.ParseCommands;
 import org.homeunix.thecave.moss.common.StreamUtil;
@@ -488,7 +489,7 @@ public class Buddi {
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
 			+ "--usb\t\tRun on a USB key: put preferences, languages, and plugins in working dir.\n"
 			+ "--prefs\tFilename\tPath and name of Preference File (Default varies by platform)\n"
-			+ "--verbosity\t0-5\tVerbosity Level (0 = Emergency, 5 = Verbose)\n"
+			+ "--verbosity\t0-5\tVerbosity Level (0 = Emergency, 7 = Verbose)\n"
 			+ "--languages\tFolder\tFolder to store custom languages (should be writable; default varies by platform)\n"
 			+ "--plugins\tFolder\tFolder to store plugins (should be writable; default varies by platform)\n"
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
@@ -677,7 +678,7 @@ public class Buddi {
 				break;
 			}
 
-			Logger.getLogger("org.homeunix.thecave").setLevel(level);
+			LogUtil.setLogLevel(level.toString());
 			Logger.getLogger(Buddi.class.getName()).finest("Setting log level to " + level);
 		}
 		else {

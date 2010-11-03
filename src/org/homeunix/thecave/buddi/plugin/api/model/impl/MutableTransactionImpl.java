@@ -14,6 +14,7 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.impl.WrapperLists;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
+import org.homeunix.thecave.buddi.plugin.api.model.ImmutableSource;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransaction;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableSource;
@@ -82,11 +83,8 @@ public class MutableTransactionImpl extends MutableModelObjectImpl implements Mu
 	public List<ImmutableTransactionSplit> getImmutableToSplits(){
 		return new WrapperLists.ImmutableObjectWrapperList<ImmutableTransactionSplit, TransactionSplit>(getRaw().getDocument(), ((Transaction) getRaw()).getToSplits());
 	}
-	public long getBalanceFrom() {
-		return getTransaction().getBalanceFrom();
-	}
-	public long getBalanceTo() {
-		return getTransaction().getBalanceTo();
+	public long getBalance(ImmutableSource source) {
+		return getTransaction().getBalance(source.getUid());
 	}
 	public boolean isInflow(){
 		return getTransaction().isInflow();

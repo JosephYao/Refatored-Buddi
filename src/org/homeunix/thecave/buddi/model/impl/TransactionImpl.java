@@ -5,6 +5,7 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 	protected boolean scheduled;
 
-	protected long balanceFrom;
-	protected long balanceTo;
+	protected final Map<String, Long> balances = new HashMap<String, Long>();
 
 	protected List<TransactionSplit> fromSplits;// = new ArrayList<TransactionSplit>();
 	protected List<TransactionSplit> toSplits;// = new ArrayList<TransactionSplit>();
@@ -87,19 +87,11 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public long getAmount() {
 		return amount;
 	}
-	public long getBalanceFrom() {
-		return balanceFrom;
+	public long getBalance(String sourceUid) {
+		if (balances.containsKey(sourceUid))
+			return balances.get(sourceUid);
+		return 0;
 	}
-	public long getBalanceTo() {
-		return balanceTo;
-	}
-//	public Date getDate() {
-//	if (getDateString() == null){
-//	setDate(date);
-//	}
-
-//	return stringToDate(getDateString());
-//	}
 	public Date getDate(){
 		return date;
 	}
@@ -149,11 +141,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			setChanged();
 		this.amount = amount;
 	}
-	public void setBalanceFrom(long balanceFrom) {
-		this.balanceFrom = balanceFrom;
-	}
-	public void setBalanceTo(long balanceTo) {
-		this.balanceTo = balanceTo;
+	public void setBalance(String sourceUid, long balance) {
+		this.balances.put(sourceUid, balance);
 	}
 	public void setClearedFrom(boolean cleared) {
 		if (this.clearedFrom != cleared)
@@ -284,9 +273,13 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		if (splits == this.toSplits) return;
 		if (this.toSplits == null)
 			this.toSplits = new ArrayList<TransactionSplit>();
-		this.to = new SplitImpl();
+		
 		this.toSplits.clear();
-		if (splits != null) this.toSplits.addAll(splits);
+		
+		if (splits != null) {
+			this.to = new SplitImpl();
+			this.toSplits.addAll(splits);			
+		}
 	}
 	
 	public List<TransactionSplit> getFromSplits() {
@@ -298,9 +291,12 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		if (splits == this.toSplits) return;
 		if (this.fromSplits == null)
 			this.fromSplits = new ArrayList<TransactionSplit>();
-		this.from = new SplitImpl();
 		this.fromSplits.clear();
-		if (splits != null) this.fromSplits.addAll(splits);
+		
+		if (splits != null){
+			this.from = new SplitImpl();
+			this.fromSplits.addAll(splits);			
+		}
 	}
 
 	Transaction clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
@@ -312,8 +308,6 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 
 		t.document = (Document) originalToCloneMap.get(document);
 		t.amount = amount;
-		t.balanceFrom = balanceFrom;
-		t.balanceTo = balanceTo;
 		t.clearedFrom = clearedFrom;
 		t.clearedTo = clearedTo;
 		t.date = new Day(date);
@@ -343,9 +337,14 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			t.toSplits.add((TransactionSplit) ((TransactionSplitImpl) split).clone(originalToCloneMap));
 		}
 		t.modifiedTime = new Time(modifiedTime);
-
+		
 		originalToCloneMap.put(this, t);
 
 		return t;
+	}
+	
+	@Override
+	public String toString() {
+		return getDescription() + " " + getAmount() + " (" + getFrom() + " -> " + getTo() + ")";
 	}
 }

@@ -95,7 +95,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 	private Time modifiedTime;
 	private String uid;
 	
-	private final Logger logger = Logger.getLogger(this.getClass().getName());
+	private final Logger logger = Logger.getLogger(DocumentImpl.class.getName());
 
 	/**
 	 * By default, we start with one batch change enabled.  This is because, otherwise,
@@ -474,7 +474,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 //					//Windows does not support renameTo'ing a file to an existing file.  Thus, we need
 //					// to rename the existing file to a '.old' file, rename the temp file to the
 //					// data file, and remove the .old file if all goes well.  While it would be simpler
-//					// to just remove the data file intitally, by renaming it first, we have at least
+//					// to just remove the data file initially, by renaming it first, we have at least
 //					// some assurance that we are able to recover data if needed.
 //					File oldFile = new File(file.getAbsolutePath() + ".old");
 //					if (oldFile.exists() && !oldFile.delete())
@@ -809,6 +809,11 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 		sb.append("Total transactions: ").append(getTransactions().size()).append("\n");
 		for (Transaction t : getTransactions()) {
 			sb.append(t.toString()).append("\n");
+		}
+		
+		sb.append("\n--Scheduled Transactions--\n");
+		for (ScheduledTransaction st : getScheduledTransactions()) {
+			sb.append(st.toString()).append("\n");
 		}
 		sb.append("--");
 

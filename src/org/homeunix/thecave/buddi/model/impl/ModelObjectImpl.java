@@ -65,7 +65,7 @@ public abstract class ModelObjectImpl implements ModelObject {
 	public int compareTo(ModelObject o) {
 		return (getUid().compareTo(o.getUid()));
 	}
-
+	
 	
 	/**
 	 * Clones the object.  A cloned object will contain the same values as the original, but will 

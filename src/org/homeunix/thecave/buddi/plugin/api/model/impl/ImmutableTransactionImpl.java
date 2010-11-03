@@ -77,11 +77,8 @@ public class ImmutableTransactionImpl extends ImmutableModelObjectImpl implement
 			return new ImmutableSplitImpl((Split) getTransaction().getTo());
 		return null;
 	}
-	public long getBalanceFrom() {
-		return getTransaction().getBalanceFrom();
-	}
-	public long getBalanceTo() {
-		return getTransaction().getBalanceTo();
+	public long getBalance(ImmutableSource source) {
+		return getTransaction().getBalance(source.getUid());
 	}
 	public boolean isInflow(){
 		return getTransaction().isInflow();

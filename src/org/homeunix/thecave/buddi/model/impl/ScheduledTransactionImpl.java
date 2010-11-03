@@ -119,8 +119,6 @@ public class ScheduledTransactionImpl extends TransactionImpl implements Schedul
 
 		st.document = (Document) originalToCloneMap.get(document);
 		st.amount = amount;
-		st.balanceFrom = balanceFrom;
-		st.balanceTo = balanceTo;
 		st.clearedFrom = clearedFrom;
 		st.clearedTo = clearedTo;
 		if (date != null)

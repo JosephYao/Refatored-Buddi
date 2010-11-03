@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -383,6 +384,27 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 				options[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
+				//We check for this in the validation, but if we do it here we can have a nice error message as well. 
+				for (ScheduledTransaction existingSched : model.getScheduledTransactions()) {
+					if (existingSched.getScheduleName().equalsIgnoreCase(s.getScheduleName())){
+						String[] errorOptions = new String[1];
+						errorOptions[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+						JOptionPane.showOptionDialog(ScheduledTransactionEditorDialog.this, 
+								TextFormatter.getTranslation(BuddiKeys.SCHEDULED_DUPLICATE_NAME),
+								TextFormatter.getTranslation(BuddiKeys.SCHEDULED_DUPLICATE_NAME_TITLE),
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE,
+								null,
+								errorOptions,
+								errorOptions[0]);
+						
+						model.finishBatchChange();
+						return false;
+					}
+				}				
+
+				
 				if (!ScheduledTransactionEditorDialog.this.startDateChooser.getDate().before(new Date())
 						|| schedule != null		//If the schedule has already been defined, we won't bother people again 
 						|| JOptionPane.showOptionDialog(ScheduledTransactionEditorDialog.this, 
@@ -428,7 +450,21 @@ public class ScheduledTransactionEditorDialog extends MossDialog implements Acti
 						options[0]);
 			}
 		}
-		catch (ModelException me){}
+		catch (ModelException me){
+			String[] errorOptions = new String[1];
+			errorOptions[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+
+			JOptionPane.showOptionDialog(ScheduledTransactionEditorDialog.this, 
+					TextFormatter.getTranslation(BuddiKeys.SCHEDULED_UNHANDLED_EXCEPTION) + "\n\n" + me.getLocalizedMessage(),
+					TextFormatter.getTranslation(BuddiKeys.SCHEDULED_UNHANDLED_EXCEPTION_TITLE),
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					errorOptions,
+					errorOptions[0]);
+			
+			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Error when saving scheduled transaction", me);
+		}
 
 		model.finishBatchChange();
 		return false;

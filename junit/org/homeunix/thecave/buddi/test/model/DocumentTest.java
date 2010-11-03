@@ -7,17 +7,33 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.beans.XMLDecoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
+import org.homeunix.thecave.buddi.i18n.keys.ScheduleFrequency;
 import org.homeunix.thecave.buddi.model.Account;
+import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
+import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.model.Transaction;
+import org.homeunix.thecave.buddi.model.impl.AccountImpl;
+import org.homeunix.thecave.buddi.model.impl.BudgetCategoryImpl;
+import org.homeunix.thecave.buddi.model.impl.DocumentImpl;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
+import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
+import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
 import org.homeunix.thecave.moss.common.DateUtil;
+import org.homeunix.thecave.moss.common.StreamUtil;
+import org.homeunix.thecave.moss.crypto.IncorrectPasswordException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -72,17 +88,36 @@ public class DocumentTest {
 			model.addTransaction(t);
 		}
 		
+		MAX = 10;
+		for (int i = 0; i < MAX; i++){
+			model.addScheduledTransaction(
+					ModelFactory.createScheduledTransaction(
+							"Scheduled Test #" + i, 
+							null, 
+							DateUtil.getDate(2010, 1, 1), 
+							DateUtil.getDate(2010, 2, 1), 
+							ScheduleFrequency.SCHEDULE_FREQUENCY_MONTHLY_BY_DATE.toString(), 
+							0, 
+							0, 
+							0, 
+							"Description", 
+							100, 
+							model.getAccounts().get(0), 
+							model.getBudgetCategory("Groceries")));		
+			
+		}
+		
 //		long start = System.currentTimeMillis();
 		Document clonedModel = model.clone();
 //		long end = System.currentTimeMillis();
 //		System.out.println("Time to clone: " + (end - start) + " millis.");
 		
-		File f = new File("temp.test");
+//		File f = new File("temp.test");
 //		start = System.currentTimeMillis();
 //		model.saveAs(f);
 //		end = System.currentTimeMillis();
 //		System.out.println("Time to save: " + (end - start) + " millis.");
-		f.delete();
+//		f.delete();
 		
 		if (clonedModel == model)
 			throw new Exception("Cloned object must not be identical to original!");
@@ -114,6 +149,41 @@ public class DocumentTest {
 			}
 		}
 		
+		for (ScheduledTransaction st1 : model.getScheduledTransactions()) {
+			for (ScheduledTransaction st2 : clonedModel.getScheduledTransactions()) {
+				if (st1 == st2)
+					throw new Exception("Cloned object must not be identical to original!");
+				if (st1.equals(st2))
+					throw new Exception("Cloned object must not be equal to original!");				
+			}
+		}
+		
+		checkAssertions(model, clonedModel);
+		
+		//Verify that cloning retains all essential data. 
+		byte[] modelBytes = saveToBytes(model);
+		byte[] clonedModelBytes = saveToBytes(clonedModel);
+		
+		checkAssertions(model, clonedModel);
+		
+		//Verify that serializing to XML and re-reading still retains all essential data.
+		model = (Document) new XMLDecoder(new ByteArrayInputStream(modelBytes)).readObject();
+		clonedModel = (Document) new XMLDecoder(new ByteArrayInputStream(clonedModelBytes)).readObject();
+		
+		checkAssertions(model, clonedModel);
+	}
+
+	private byte[] saveToBytes(Document d) throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Document d2 = d.clone();
+		d2.saveToStream(baos);
+		baos.flush();
+
+		return baos.toByteArray();
+	}
+
+
+	private void checkAssertions(Document model, Document clonedModel){
 		assertEquals(model.getAccounts().size(), clonedModel.getAccounts().size());
 		assertEquals(model.getAccountTypes().size(), clonedModel.getAccountTypes().size());
 		assertEquals(model.getBudgetCategories().size(), clonedModel.getBudgetCategories().size());
@@ -134,14 +204,18 @@ public class DocumentTest {
 			assertEquals(model.getTransactions().get(i).getFrom().getName(), clonedModel.getTransactions().get(i).getFrom().getName());
 		}
 		
-//		ByteArrayOutputStream modelStream = new ByteArrayOutputStream();
-//		ByteArrayOutputStream clonedModelStream = new ByteArrayOutputStream();
-//		model.saveToStream(modelStream);
-//		clonedModel.saveToStream(clonedModelStream);
-//		
-//		System.out.println(modelStream.toString().replaceAll("[ \\n\\t]", "").substring(1, 10000));
-//		System.out.println(clonedModelStream.toString().replaceAll("[ \\n\\t]", "").substring(1, 10000));
-//		
-//		assertEquals(modelStream.toString().length(), clonedModelStream.toString().length());
+		for (int i = 0; i < model.getScheduledTransactions().size(); i++){
+			assertEquals(model.getScheduledTransactions().get(i).getDescription(), clonedModel.getScheduledTransactions().get(i).getDescription());
+			assertEquals(model.getScheduledTransactions().get(i).getAmount(), clonedModel.getScheduledTransactions().get(i).getAmount());
+			assertEquals(model.getScheduledTransactions().get(i).getMemo(), clonedModel.getScheduledTransactions().get(i).getMemo());
+			assertEquals(model.getScheduledTransactions().get(i).getTo().getName(), clonedModel.getScheduledTransactions().get(i).getTo().getName());
+			assertEquals(model.getScheduledTransactions().get(i).getFrom().getName(), clonedModel.getScheduledTransactions().get(i).getFrom().getName());
+		}
+		
+		assertEquals(model.getScheduledTransactions().get(0).getFrom().getClass(), AccountImpl.class);
+		assertEquals(model.getScheduledTransactions().get(0).getTo().getClass(), BudgetCategoryImpl.class);
+		assertEquals(clonedModel.getScheduledTransactions().get(0).getFrom().getClass(), AccountImpl.class);
+		assertEquals(clonedModel.getScheduledTransactions().get(0).getTo().getClass(), BudgetCategoryImpl.class);
+		
 	}
 }
