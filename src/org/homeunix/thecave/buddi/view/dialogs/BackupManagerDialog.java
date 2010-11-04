@@ -36,13 +36,14 @@ import org.homeunix.thecave.buddi.util.Formatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.swing.MossDialog;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+
+import ca.digitalcave.moss.application.document.exception.DocumentLoadException;
+import ca.digitalcave.moss.application.document.exception.DocumentSaveException;
+import ca.digitalcave.moss.swing.MossDialog;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 public class BackupManagerDialog extends MossDialog implements ActionListener {
 	public static final long serialVersionUID = 0;

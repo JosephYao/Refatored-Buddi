@@ -15,10 +15,11 @@ import javax.swing.JPanel;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
-import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
-import org.homeunix.thecave.moss.application.plugin.MossPlugin;
-import org.homeunix.thecave.moss.swing.MossPanel;
+
+import ca.digitalcave.moss.application.document.DocumentChangeEvent;
+import ca.digitalcave.moss.application.document.DocumentChangeListener;
+import ca.digitalcave.moss.application.plugin.MossPlugin;
+import ca.digitalcave.moss.swing.MossPanel;
 
 /**
  *

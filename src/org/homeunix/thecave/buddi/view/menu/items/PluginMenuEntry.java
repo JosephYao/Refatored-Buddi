@@ -37,11 +37,12 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
-import org.homeunix.thecave.moss.swing.MossStatusDialog;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
+
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
+import ca.digitalcave.moss.swing.MossSmartFileChooser;
+import ca.digitalcave.moss.swing.MossStatusDialog;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 public class PluginMenuEntry extends MossMenuItem {
 	public static final long serialVersionUID = 0;

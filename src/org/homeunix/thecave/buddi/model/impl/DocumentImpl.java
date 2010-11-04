@@ -48,12 +48,13 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.util.FileFunctions;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
-import org.homeunix.thecave.moss.application.document.AbstractDocument;
-import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.collections.CompositeList;
-import org.homeunix.thecave.moss.collections.SortedArrayList;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.crypto.CipherException;
+
+import ca.digitalcave.moss.application.document.AbstractDocument;
+import ca.digitalcave.moss.application.document.exception.DocumentSaveException;
+import ca.digitalcave.moss.collections.CompositeList;
+import ca.digitalcave.moss.collections.SortedArrayList;
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.crypto.CipherException;
 
 
 /**

@@ -14,9 +14,10 @@ import org.homeunix.thecave.buddi.view.menu.items.FileRevertToSaved;
 import org.homeunix.thecave.buddi.view.menu.items.FileSave;
 import org.homeunix.thecave.buddi.view.menu.items.FileSaveAll;
 import org.homeunix.thecave.buddi.view.menu.items.FileSaveAs;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenu;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenu;
 
 public class FileMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

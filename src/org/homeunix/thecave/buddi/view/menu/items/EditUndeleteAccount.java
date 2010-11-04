@@ -11,8 +11,9 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
+
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
 
 public class EditUndeleteAccount extends MossMenuItem {
 	public static final long serialVersionUID = 0;

@@ -22,8 +22,9 @@ import javax.swing.AbstractListModel;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
-import org.homeunix.thecave.moss.crypto.CipherException;
-import org.homeunix.thecave.moss.crypto.IncorrectDocumentFormatException;
+
+import ca.digitalcave.moss.crypto.CipherException;
+import ca.digitalcave.moss.crypto.IncorrectDocumentFormatException;
 
 public class BackupManagerListModel extends AbstractListModel {
 	public static final long serialVersionUID = 0;

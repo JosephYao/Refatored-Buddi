@@ -9,7 +9,8 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
-import org.homeunix.thecave.moss.i18n.Translator;
+
+import ca.digitalcave.moss.i18n.Translator;
 
 public class BuddiTranslator extends Translator {
 

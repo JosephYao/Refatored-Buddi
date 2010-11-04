@@ -31,8 +31,9 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.dialogs.CustomDateDialog;
-import org.homeunix.thecave.moss.swing.MossPanel;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
+
+import ca.digitalcave.moss.swing.MossPanel;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 /**
  * @author wyatt

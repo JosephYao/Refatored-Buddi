@@ -37,9 +37,10 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.swing.MossDecimalField;
-import org.homeunix.thecave.moss.swing.MossDialog;
-import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
+
+import ca.digitalcave.moss.swing.MossDecimalField;
+import ca.digitalcave.moss.swing.MossDialog;
+import ca.digitalcave.moss.swing.MossScrollingComboBox;
 
 /**
  * This class lets a user modify / create a list of split transactions.  When this is done, 

@@ -23,7 +23,8 @@ import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableScheduledTransact
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionImpl;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.MutableTransactionSplitImpl;
 import org.homeunix.thecave.buddi.util.OperationCancelledException;
-import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
+
+import ca.digitalcave.moss.application.document.exception.DocumentLoadException;
 
 public class MutableModelFactory {
 	/**

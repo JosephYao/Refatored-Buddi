@@ -10,7 +10,8 @@ import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
+
+import ca.digitalcave.moss.swing.MossMenuItem;
 
 public class ViewUnrollAllAccounts extends MossMenuItem{
 	public static final long serialVersionUID = 0;

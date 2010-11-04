@@ -22,8 +22,9 @@ import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.BuddiTranslator;
 import org.homeunix.thecave.buddi.util.FileFunctions;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.common.Version;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.common.Version;
 
 public class PrefsModel {
 	//Singleton Instance

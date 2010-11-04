@@ -7,7 +7,8 @@ import java.util.logging.Logger;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
+
+import ca.digitalcave.moss.swing.MossMenuItem;
 
 /**
  *

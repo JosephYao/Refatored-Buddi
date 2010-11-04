@@ -6,8 +6,9 @@ package org.homeunix.thecave.buddi.plugin.api;
 import javax.swing.DefaultListCellRenderer;
 
 import org.homeunix.thecave.buddi.model.Account;
-import org.homeunix.thecave.moss.application.plugin.MossPlugin;
-import org.homeunix.thecave.moss.common.Version;
+
+import ca.digitalcave.moss.application.plugin.MossPlugin;
+import ca.digitalcave.moss.common.Version;
 
 /**
  * Create a plugin of this type to allow custom cell renderers for the transaction

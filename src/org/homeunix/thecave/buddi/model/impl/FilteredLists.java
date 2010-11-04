@@ -25,10 +25,11 @@ import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.Formatter;
-import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
-import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
-import org.homeunix.thecave.moss.collections.FilteredList;
-import org.homeunix.thecave.moss.common.DateUtil;
+
+import ca.digitalcave.moss.application.document.DocumentChangeEvent;
+import ca.digitalcave.moss.application.document.DocumentChangeListener;
+import ca.digitalcave.moss.collections.FilteredList;
+import ca.digitalcave.moss.common.DateUtil;
 
 public class FilteredLists {
 	private FilteredLists() {}

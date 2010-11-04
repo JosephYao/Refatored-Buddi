@@ -5,7 +5,8 @@ import java.util.Date;
 
 import org.homeunix.thecave.buddi.i18n.keys.BudgetCategoryTypes;
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
-import org.homeunix.thecave.moss.common.DateUtil;
+
+import ca.digitalcave.moss.common.DateUtil;
 
 /**
  * 

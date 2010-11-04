@@ -20,7 +20,8 @@ import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.common.DateUtil;
+
+import ca.digitalcave.moss.common.DateUtil;
 
 /**
  * Default implementation of a Transaction.  You should not create this object directly; 

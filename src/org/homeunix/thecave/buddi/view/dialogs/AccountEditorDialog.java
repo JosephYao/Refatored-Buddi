@@ -38,12 +38,13 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossDecimalField;
-import org.homeunix.thecave.moss.swing.MossDialog;
-import org.homeunix.thecave.moss.swing.MossHintTextArea;
-import org.homeunix.thecave.moss.swing.MossHintTextField;
-import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossDecimalField;
+import ca.digitalcave.moss.swing.MossDialog;
+import ca.digitalcave.moss.swing.MossHintTextArea;
+import ca.digitalcave.moss.swing.MossHintTextField;
+import ca.digitalcave.moss.swing.model.BackedComboBoxModel;
 
 public class AccountEditorDialog extends MossDialog implements ActionListener {
 

@@ -31,9 +31,10 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.AccountTypeListFrame;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossDialog;
-import org.homeunix.thecave.moss.swing.MossHintTextField;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossDialog;
+import ca.digitalcave.moss.swing.MossHintTextField;
 
 public class AccountTypeEditorDialog extends MossDialog implements ActionListener {
 

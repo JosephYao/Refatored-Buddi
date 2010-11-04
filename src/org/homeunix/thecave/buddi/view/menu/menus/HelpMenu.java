@@ -10,9 +10,10 @@ import org.homeunix.thecave.buddi.view.menu.items.HelpCheckForUpdates;
 import org.homeunix.thecave.buddi.view.menu.items.HelpDownloadPlugins;
 import org.homeunix.thecave.buddi.view.menu.items.HelpHelp;
 import org.homeunix.thecave.buddi.view.menu.items.HelpTutorial;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenu;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenu;
 
 public class HelpMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

@@ -10,9 +10,10 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.BuddiPluginFactory;
 import org.homeunix.thecave.buddi.plugin.api.BuddiImportPlugin;
 import org.homeunix.thecave.buddi.view.menu.items.PluginMenuEntry;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenu;
+
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenu;
 
 public class FileImportMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

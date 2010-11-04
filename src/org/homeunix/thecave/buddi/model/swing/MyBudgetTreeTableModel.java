@@ -20,8 +20,9 @@ import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.collections.FilteredList;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
+
+import ca.digitalcave.moss.collections.FilteredList;
 
 public class MyBudgetTreeTableModel extends AbstractTreeTableModel {
 

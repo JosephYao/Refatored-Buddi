@@ -60,18 +60,19 @@ import org.homeunix.thecave.buddi.view.TransactionFrame;
 import org.homeunix.thecave.buddi.view.dialogs.SplitTransactionDialog;
 import org.homeunix.thecave.buddi.view.swing.MaxLengthListCellRenderer;
 import org.homeunix.thecave.buddi.view.swing.SourceListCellRenderer;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossDecimalField;
-import org.homeunix.thecave.moss.swing.MossHintComboBox;
-import org.homeunix.thecave.moss.swing.MossHintTextArea;
-import org.homeunix.thecave.moss.swing.MossHintTextField;
-import org.homeunix.thecave.moss.swing.MossPanel;
-import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.model.AutoCompleteMossHintComboBoxModel;
-import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
 import org.jdesktop.swingx.JXDatePicker;
+
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossDecimalField;
+import ca.digitalcave.moss.swing.MossHintComboBox;
+import ca.digitalcave.moss.swing.MossHintTextArea;
+import ca.digitalcave.moss.swing.MossHintTextField;
+import ca.digitalcave.moss.swing.MossPanel;
+import ca.digitalcave.moss.swing.MossScrollingComboBox;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
+import ca.digitalcave.moss.swing.model.AutoCompleteMossHintComboBoxModel;
+import ca.digitalcave.moss.swing.model.BackedComboBoxModel;
 
 /**
  * The transaction editing pane, which includes text fields to enter

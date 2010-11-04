@@ -18,11 +18,12 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
+
+import ca.digitalcave.moss.application.document.exception.DocumentLoadException;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 public class FileRevertToSaved extends MossMenuItem {
 	public static final long serialVersionUID = 0;

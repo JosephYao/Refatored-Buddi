@@ -25,10 +25,11 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.ApplicationModel;
-import org.homeunix.thecave.moss.swing.MossFrame;
+
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.ApplicationModel;
+import ca.digitalcave.moss.swing.MossFrame;
 
 public class PreferencesFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;

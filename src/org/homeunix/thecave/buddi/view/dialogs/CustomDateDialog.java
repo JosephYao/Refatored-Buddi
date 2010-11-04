@@ -33,9 +33,10 @@ import org.homeunix.thecave.buddi.plugin.BuddiPluginHelper;
 import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.swing.MossDialog;
 import org.jdesktop.swingx.JXDatePicker;
+
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.swing.MossDialog;
 
 /**
  * The dialog which allows users to choose a custom date range, or

@@ -8,8 +8,9 @@ import org.homeunix.thecave.buddi.view.menu.menus.FileMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.HelpMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.ViewMenu;
 import org.homeunix.thecave.buddi.view.menu.menus.WindowMenu;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuBar;
+
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuBar;
 
 public class BuddiMenuBar extends MossMenuBar {
 	public static final long serialVersionUID = 0;

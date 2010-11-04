@@ -20,9 +20,10 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.common.Version;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.common.Version;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
 
 /**
  * Built-in plugin.  Feel free to use this as an example on how to make

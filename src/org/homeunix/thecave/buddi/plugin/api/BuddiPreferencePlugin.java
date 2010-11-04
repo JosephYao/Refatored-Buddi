@@ -8,8 +8,9 @@ package org.homeunix.thecave.buddi.plugin.api;
 import javax.swing.JPanel;
 
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
-import org.homeunix.thecave.moss.application.plugin.MossPlugin;
-import org.homeunix.thecave.moss.common.Version;
+
+import ca.digitalcave.moss.application.plugin.MossPlugin;
+import ca.digitalcave.moss.common.Version;
 
 /**
  * A Buddi plugin which will be loaded into the Preferences screen.  If your plugin needs

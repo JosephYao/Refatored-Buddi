@@ -11,8 +11,9 @@ import javax.swing.JLabel;
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.ScheduledTransaction;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.swing.MossDecimalField;
-import org.homeunix.thecave.moss.swing.MossPanel;
+
+import ca.digitalcave.moss.swing.MossDecimalField;
+import ca.digitalcave.moss.swing.MossPanel;
 
 public class EveryXDaysCard extends MossPanel implements ScheduleCard {
 	public static final long serialVersionUID = 0;

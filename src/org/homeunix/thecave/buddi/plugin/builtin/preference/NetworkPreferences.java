@@ -18,7 +18,8 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.swing.MossHintTextField;
+
+import ca.digitalcave.moss.swing.MossHintTextField;
 
 public class NetworkPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;

@@ -20,10 +20,10 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.swing.MossStatusDialog;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
 
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.swing.MossStatusDialog;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {

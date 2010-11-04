@@ -22,7 +22,8 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
-import org.homeunix.thecave.moss.swing.model.BackedComboBoxModel;
+
+import ca.digitalcave.moss.swing.model.BackedComboBoxModel;
 
 public class AdvancedPreferences extends BuddiPreferencePlugin {
 	public static final long serialVersionUID = 0;

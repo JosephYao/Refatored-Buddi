@@ -62,17 +62,18 @@ import org.homeunix.thecave.buddi.util.InternalFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 import org.homeunix.thecave.buddi.view.panels.TransactionEditorPanel;
 import org.homeunix.thecave.buddi.view.swing.TranslatorListCellRenderer;
-import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
-import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossSearchField;
-import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEvent;
-import org.homeunix.thecave.moss.swing.MossSearchField.SearchTextChangedEventListener;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+
+import ca.digitalcave.moss.application.document.DocumentChangeEvent;
+import ca.digitalcave.moss.application.document.DocumentChangeListener;
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossAssociatedDocumentFrame;
+import ca.digitalcave.moss.swing.MossSearchField;
+import ca.digitalcave.moss.swing.MossSearchField.SearchTextChangedEvent;
+import ca.digitalcave.moss.swing.MossSearchField.SearchTextChangedEventListener;
 
 public class TransactionFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;	

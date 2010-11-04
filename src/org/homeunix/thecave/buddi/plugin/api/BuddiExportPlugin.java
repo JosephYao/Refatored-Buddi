@@ -12,8 +12,9 @@ import org.homeunix.thecave.buddi.plugin.api.exception.PluginException;
 import org.homeunix.thecave.buddi.plugin.api.exception.PluginMessage;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
-import org.homeunix.thecave.moss.application.plugin.MossPlugin;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+
+import ca.digitalcave.moss.application.plugin.MossPlugin;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
 
 /**
  * The abstract class to extend when creating an export plugin.  The method exportData() 

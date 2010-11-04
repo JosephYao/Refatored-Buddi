@@ -19,7 +19,8 @@ import org.homeunix.thecave.buddi.model.swing.MyBudgetTreeTableModel;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.MainFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
+
+import ca.digitalcave.moss.swing.MossMenuItem;
 
 public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 	public static final long serialVersionUID = 0;

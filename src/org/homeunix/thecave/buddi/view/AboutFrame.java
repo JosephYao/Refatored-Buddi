@@ -26,10 +26,10 @@ import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossFrame;
 
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossFrame;
 import edu.stanford.ejalbert.BrowserLauncher;
 
 public class AboutFrame extends MossFrame implements ActionListener {

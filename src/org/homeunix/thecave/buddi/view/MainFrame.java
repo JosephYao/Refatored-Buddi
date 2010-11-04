@@ -33,10 +33,11 @@ import org.homeunix.thecave.buddi.view.menu.items.FileSave;
 import org.homeunix.thecave.buddi.view.panels.MyAccountsPanel;
 import org.homeunix.thecave.buddi.view.panels.MyBudgetPanel;
 import org.homeunix.thecave.buddi.view.panels.MyReportsPanel;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.swing.ApplicationModel;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
+
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
+import ca.digitalcave.moss.swing.ApplicationModel;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossFrame;
 
 public class MainFrame extends MossDocumentFrame {
 	public static final long serialVersionUID = 0;

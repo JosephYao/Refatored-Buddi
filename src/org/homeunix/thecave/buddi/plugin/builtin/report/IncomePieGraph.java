@@ -26,12 +26,13 @@ import org.homeunix.thecave.buddi.plugin.api.model.ImmutableTransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlHelper;
 import org.homeunix.thecave.buddi.plugin.api.util.HtmlPage;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.common.Version;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+
+import ca.digitalcave.moss.common.Version;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
 
 public class IncomePieGraph extends BuddiReportPlugin {
 	

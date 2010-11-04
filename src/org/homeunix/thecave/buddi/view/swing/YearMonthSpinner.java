@@ -13,7 +13,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.homeunix.thecave.moss.common.DateUtil;
+import ca.digitalcave.moss.common.DateUtil;
 
 /**
  * @author wyatt

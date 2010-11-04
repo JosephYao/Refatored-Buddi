@@ -40,12 +40,13 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.util.OperationCancelledException;
 import org.homeunix.thecave.buddi.view.dialogs.BuddiPasswordDialog;
-import org.homeunix.thecave.moss.application.document.exception.DocumentLoadException;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.crypto.CipherException;
-import org.homeunix.thecave.moss.crypto.IncorrectDocumentFormatException;
-import org.homeunix.thecave.moss.crypto.IncorrectPasswordException;
+
+import ca.digitalcave.moss.application.document.exception.DocumentLoadException;
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.crypto.CipherException;
+import ca.digitalcave.moss.crypto.IncorrectDocumentFormatException;
+import ca.digitalcave.moss.crypto.IncorrectPasswordException;
 
 /**
  * The factory for all model objects.  It is highly recommended to use this

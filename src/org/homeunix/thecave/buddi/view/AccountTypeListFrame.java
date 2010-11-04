@@ -34,15 +34,16 @@ import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.view.dialogs.AccountTypeEditorDialog;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
-import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
-import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.common.OperatingSystemUtil;
-import org.homeunix.thecave.moss.swing.MossAssociatedDocumentFrame;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
-import org.homeunix.thecave.moss.swing.model.BackedListModel;
 import org.jdesktop.swingx.JXList;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+
+import ca.digitalcave.moss.application.document.DocumentChangeEvent;
+import ca.digitalcave.moss.application.document.DocumentChangeListener;
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
+import ca.digitalcave.moss.common.OperatingSystemUtil;
+import ca.digitalcave.moss.swing.MossAssociatedDocumentFrame;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
+import ca.digitalcave.moss.swing.model.BackedListModel;
 
 public class AccountTypeListFrame extends MossAssociatedDocumentFrame implements ActionListener {
 	public static final long serialVersionUID = 0;

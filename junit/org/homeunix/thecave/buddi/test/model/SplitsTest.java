@@ -23,9 +23,10 @@ import org.homeunix.thecave.buddi.model.impl.SplitImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionImpl;
 import org.homeunix.thecave.buddi.model.impl.TransactionSplitImpl;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
-import org.homeunix.thecave.moss.collections.SortedArrayList;
 import org.junit.Before;
 import org.junit.Test;
+
+import ca.digitalcave.moss.collections.SortedArrayList;
 
 
 

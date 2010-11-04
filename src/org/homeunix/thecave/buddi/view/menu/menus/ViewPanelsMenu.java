@@ -9,8 +9,9 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPanelPlugin;
 import org.homeunix.thecave.buddi.view.MainFrame;
 import org.homeunix.thecave.buddi.view.menu.items.PanelMenuEntry;
 import org.homeunix.thecave.buddi.view.menu.items.SingletonPanelMenuEntry;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenu;
+
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenu;
 
 /**
  *

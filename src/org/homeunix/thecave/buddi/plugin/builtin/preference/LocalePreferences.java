@@ -37,8 +37,9 @@ import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
-import org.homeunix.thecave.moss.swing.MossScrollingComboBox;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
+
+import ca.digitalcave.moss.swing.MossScrollingComboBox;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 public class LocalePreferences extends BuddiPreferencePlugin implements ActionListener {
 	public static final long serialVersionUID = 0; 

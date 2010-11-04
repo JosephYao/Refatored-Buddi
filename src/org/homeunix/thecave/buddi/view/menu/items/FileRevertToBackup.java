@@ -8,10 +8,11 @@ import java.awt.event.ActionEvent;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.dialogs.BackupManagerDialog;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.swing.exception.WindowOpenException;
+
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
+import ca.digitalcave.moss.swing.exception.WindowOpenException;
 
 public class FileRevertToBackup extends MossMenuItem {
 	public static final long serialVersionUID = 0;

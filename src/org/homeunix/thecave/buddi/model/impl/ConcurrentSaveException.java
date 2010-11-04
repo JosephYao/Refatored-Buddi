@@ -3,7 +3,7 @@
  */
 package org.homeunix.thecave.buddi.model.impl;
 
-import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
+import ca.digitalcave.moss.application.document.exception.DocumentSaveException;
 
 public class ConcurrentSaveException extends DocumentSaveException {
 	private static final long serialVersionUID = 1L;

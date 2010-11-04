@@ -24,9 +24,10 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiSynchronizePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
-import org.homeunix.thecave.moss.application.plugin.MossPlugin;
-import org.homeunix.thecave.moss.application.plugin.factory.ClassLoaderFunctions;
-import org.homeunix.thecave.moss.application.plugin.factory.PluginFactory;
+
+import ca.digitalcave.moss.application.plugin.MossPlugin;
+import ca.digitalcave.moss.application.plugin.factory.PluginFactory;
+import ca.digitalcave.moss.common.ClassLoaderFunctions;
 
 public class BuddiPluginFactory extends PluginFactory {
 	

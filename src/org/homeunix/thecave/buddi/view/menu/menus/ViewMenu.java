@@ -13,8 +13,9 @@ import org.homeunix.thecave.buddi.view.menu.items.ViewRollAllAccounts;
 import org.homeunix.thecave.buddi.view.menu.items.ViewRollAllBudgetCategories;
 import org.homeunix.thecave.buddi.view.menu.items.ViewUnrollAllAccounts;
 import org.homeunix.thecave.buddi.view.menu.items.ViewUnrollAllBudgetCategories;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenu;
+
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenu;
 
 public class ViewMenu extends MossMenu {
 	public static final long serialVersionUID = 0;

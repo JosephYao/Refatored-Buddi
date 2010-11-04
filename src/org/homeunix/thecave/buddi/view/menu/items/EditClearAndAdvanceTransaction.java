@@ -12,8 +12,9 @@ import javax.swing.KeyStroke;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.view.TransactionFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
+
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
 
 public class EditClearAndAdvanceTransaction extends MossMenuItem {
 	public static final long serialVersionUID = 0;

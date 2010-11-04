@@ -17,8 +17,9 @@ import org.homeunix.thecave.buddi.plugin.api.model.MutableBudgetCategory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableModelFactory;
 import org.homeunix.thecave.buddi.plugin.api.model.MutableTransaction;
-import org.homeunix.thecave.moss.common.DateUtil;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
+
+import ca.digitalcave.moss.common.DateUtil;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
 
 public class ImportTestData extends BuddiImportPlugin {
 

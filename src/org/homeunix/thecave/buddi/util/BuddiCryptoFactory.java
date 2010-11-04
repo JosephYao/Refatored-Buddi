@@ -3,8 +3,8 @@
  */
 package org.homeunix.thecave.buddi.util;
 
-import org.homeunix.thecave.moss.crypto.CipherException;
-import org.homeunix.thecave.moss.crypto.CryptoFactory;
+import ca.digitalcave.moss.crypto.CipherException;
+import ca.digitalcave.moss.crypto.CryptoFactory;
 
 
 /**

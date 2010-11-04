@@ -12,8 +12,9 @@ import java.util.Set;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.moss.application.document.DocumentChangeEvent;
-import org.homeunix.thecave.moss.application.document.DocumentChangeListener;
+
+import ca.digitalcave.moss.application.document.DocumentChangeEvent;
+import ca.digitalcave.moss.application.document.DocumentChangeListener;
 
 public class DescriptionList extends AbstractList<String> {
 	private static final long serialVersionUID = 0; 

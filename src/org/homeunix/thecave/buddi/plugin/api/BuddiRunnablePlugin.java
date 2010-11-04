@@ -5,8 +5,8 @@
  */
 package org.homeunix.thecave.buddi.plugin.api;
 
-import org.homeunix.thecave.moss.application.plugin.MossRunnablePlugin;
-import org.homeunix.thecave.moss.common.Version;
+import ca.digitalcave.moss.application.plugin.MossRunnablePlugin;
+import ca.digitalcave.moss.common.Version;
 
 /**
  * A generic Buddi plugin, which will be loaded at the beginning of 

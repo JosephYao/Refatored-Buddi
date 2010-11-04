@@ -20,11 +20,12 @@ import org.homeunix.thecave.buddi.model.impl.ConcurrentSaveException;
 import org.homeunix.thecave.buddi.model.impl.ModelFactory;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
-import org.homeunix.thecave.moss.application.document.exception.DocumentSaveException;
-import org.homeunix.thecave.moss.swing.MossDocumentFrame;
-import org.homeunix.thecave.moss.swing.MossFrame;
-import org.homeunix.thecave.moss.swing.MossMenuItem;
-import org.homeunix.thecave.moss.swing.MossSmartFileChooser;
+
+import ca.digitalcave.moss.application.document.exception.DocumentSaveException;
+import ca.digitalcave.moss.swing.MossDocumentFrame;
+import ca.digitalcave.moss.swing.MossFrame;
+import ca.digitalcave.moss.swing.MossMenuItem;
+import ca.digitalcave.moss.swing.MossSmartFileChooser;
 
 public class FileSaveAs extends MossMenuItem {
 	public static final long serialVersionUID = 0;

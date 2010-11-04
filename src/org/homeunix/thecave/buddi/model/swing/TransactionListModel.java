@@ -11,7 +11,8 @@ import org.homeunix.thecave.buddi.model.Source;
 import org.homeunix.thecave.buddi.model.Transaction;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.impl.FilteredLists.TransactionListFilteredBySearch;
-import org.homeunix.thecave.moss.swing.model.BackedListModel;
+
+import ca.digitalcave.moss.swing.model.BackedListModel;
 
 /**
  * The transaction list model.  Implements List interface to ease navigation,
