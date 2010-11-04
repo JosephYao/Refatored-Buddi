@@ -1,5 +1,8 @@
 3.4.0.4 (November 3 2010)
 -Fixed a bug which could corrupt scheduled transactions at save / load time under certain circumstances
+-Upgraded Quaqua version
+-Upgraded Moss dependencies
+-Switched from WINLAF to default Swing look and feel when running on Windows.  This should hopefully eliminate the black menu problem on Windows Vista.
 
 3.4.0.3 (September 9 2010)
 -Updated translations
