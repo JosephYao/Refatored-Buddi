@@ -1,3 +1,6 @@
+3.4.0.5 (December 5 2010)
+-Fixed a bug with Net Worth over Time built in plugin not taking into account openening balances.
+
 3.4.0.4 (November 3 2010)
 -Fixed a bug which could corrupt scheduled transactions at save / load time under certain circumstances
 -Upgraded Quaqua version

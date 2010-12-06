@@ -123,16 +123,18 @@ public class AccountImpl extends SourceImpl implements Account {
 			//This used to be defined to return starting balance... I think that it makes more
 			// sense to return 0, though - if the account has not been defined, there is by
 			// definition, no balance.
-//			return getStartingBalance();
-			return 0;
+			//Update (Dec 5 2010): I reverted back to using getStartingBalance, as after
+			// re-thinking I think this makes more sense.
+			return getStartingBalance();
+//			return 0;
 		List<Transaction> ts = getDocument().getTransactions(this, getStartDate(), d);
 		if (ts.size() > 0){
 			Transaction t = ts.get(ts.size() - 1);
 			if (t.getFrom().equals(this) || t.getTo().equals(this))
-				return t.getBalance(this.getUid());
+				return getStartingBalance() + t.getBalance(this.getUid());
 		}
 		else {
-			//If there are no transactions, return the starting balance.
+			//If there are no transactions, just return the starting balance.
 			return getStartingBalance();
 		}
 
