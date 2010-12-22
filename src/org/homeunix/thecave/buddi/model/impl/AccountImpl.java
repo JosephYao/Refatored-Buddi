@@ -131,7 +131,7 @@ public class AccountImpl extends SourceImpl implements Account {
 		if (ts.size() > 0){
 			Transaction t = ts.get(ts.size() - 1);
 			if (t.getFrom().equals(this) || t.getTo().equals(this))
-				return getStartingBalance() + t.getBalance(this.getUid());
+				return t.getBalance(this.getUid());
 		}
 		else {
 			//If there are no transactions, just return the starting balance.

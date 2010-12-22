@@ -27,8 +27,7 @@ public class HelpDownloadPlugins extends MossMenuItem {
 		try{
 			BrowserLauncher bl = new BrowserLauncher(null);
 			bl.openURLinBrowser(
-					Const.PROJECT_URL 
-					+ PrefsModel.getInstance().getLanguage().replaceAll("-.*$", "") 
+					Const.PROJECT_URL  
 					+ "download_plugins.jsp");
 		}
 		catch (Exception ex){
