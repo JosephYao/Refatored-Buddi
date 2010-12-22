@@ -21,4 +21,9 @@ public class IndentedSourceWrapper {
 	public Source getSource() {
 		return source;
 	}
+	
+	@Override
+	public String toString() {
+		return source.toString();
+	}
 }
