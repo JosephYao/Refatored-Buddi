@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
-import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 import ca.digitalcave.moss.swing.MossFrame;

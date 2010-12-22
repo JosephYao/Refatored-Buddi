@@ -19,6 +19,7 @@ ENTER_CATEGORY_NAME=You must enter the category name
 CREDIT_LIMIT=Credit Limit
 DUPLICATE_ACCOUNT_NAMES=You already have an account with this name.  While this will not\ncause any problems, it may be confusing for you.  If you hit 'Cancel'\nhere, you will be able to change the name to something else.\n\nDo you wish to continue to use this name?
 PREFERENCE_SHOW_FLAT_BUDGET=Show Budget Categories in Flat Format (no Parent Categories)
+PREFERENCE_SHOW_FLAT_BUDGET_IN_SOURCE_COMBOBOX=Show Budget Categories in Transaction Combo Box in Flat Format
 DEBIT_CREDIT_TYPE=Type
 BUDGET_PERIOD_FORTNIGHT=Fortnight
 MENU_FILE_RESTORE=Restore

@@ -56,6 +56,7 @@ public class PrefsModelBean {
 	private boolean showInterestRates;
 	private boolean showTooltips;
 	private boolean showNegativeSign;
+	private boolean showFlatBudgetInSourceCombobox;
 	//Currently must be set to 4.  If we change this, we will need to change 
 	// the menu item code which displays the dates to copy to / from, as well 
 	// as other things.
@@ -439,5 +440,12 @@ public class PrefsModelBean {
 	}
 	public void setShowInterestRates(boolean showInterestRates) {
 		this.showInterestRates = showInterestRates;
+	}
+	public boolean isShowFlatBudgetInSourceCombobox() {
+		return showFlatBudgetInSourceCombobox;
+	}
+	public void setShowFlatBudgetInSourceCombobox(
+			boolean showFlatBudgetInSourceCombobox) {
+		this.showFlatBudgetInSourceCombobox = showFlatBudgetInSourceCombobox;
 	}
 }

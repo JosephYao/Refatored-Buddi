@@ -132,6 +132,12 @@ public class PrefsModel {
 	public void setShowFlatBudget(boolean showFlatBudget) {
 		prefsModel.setShowFlatBudget(showFlatBudget);
 	}
+	public boolean isShowFlatBudgetInSourceCombobox() {
+		return prefsModel.isShowFlatBudgetInSourceCombobox();
+	}
+	public void setShowFlatBudgetInSourceCombobox(boolean showFlatBudgetInSourceCombobox) {
+		prefsModel.setShowFlatBudgetInSourceCombobox(showFlatBudgetInSourceCombobox);
+	}	
 	
 	public Version getLastVersion(){
 		if (prefsModel.getLastVersion() == null)

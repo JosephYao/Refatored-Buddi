@@ -16,6 +16,7 @@ import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.BudgetCategory;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.Source;
+import org.homeunix.thecave.buddi.model.impl.FilteredLists;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
@@ -122,20 +123,36 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		getComboBoxModel().removeAllElements();
 		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.ACCOUNTS_COMBOBOX_HEADER));
 		for (Account a : accounts) {
-			getComboBoxModel().addElement(a);
+			getComboBoxModel().addElement(new IndentedSourceWrapper(a, 0));
 		}
 		getComboBoxModel().addElement("&nbsp;");
 		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.BUDGET_CATEGORIES_COMBOBOX_HEADER));
-		for (BudgetCategory bc : budgetCategories) {
-			if (bc.isIncome() == includeIncome){
-				getComboBoxModel().addElement(bc);
-			}
-		}
+
+		addBudgetCategories(null, 0);
+		
 		if (includeSplit){
 			getComboBoxModel().addElement("&nbsp;");
 			getComboBoxModel().addElement(BuddiKeys.SPLITS.toString());
 		}
 		
 		setSelectedItem(selected);
+	}
+	
+	private void addBudgetCategories(BudgetCategory parent, int level){
+		final List<BudgetCategory> siblings;
+		if (PrefsModel.getInstance().isShowFlatBudgetInSourceCombobox()) {
+			siblings = budgetCategories;
+		}
+		else {
+			siblings = new FilteredLists.BudgetCategoryListFilteredByParent(model, budgetCategories, parent);
+		}
+		for (BudgetCategory bc : siblings) {
+			if (bc.isIncome() == includeIncome){
+				getComboBoxModel().addElement(new IndentedSourceWrapper(bc, level));
+				if (!PrefsModel.getInstance().isShowFlatBudgetInSourceCombobox()){
+					addBudgetCategories(bc, level + 1);
+				}
+			}
+		}		
 	}
 }

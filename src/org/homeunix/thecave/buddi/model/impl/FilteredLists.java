@@ -53,6 +53,7 @@ public class FilteredLists {
 			model.addDocumentChangeListener(listener);
 		}
 		
+		@SuppressWarnings("unchecked")
 		@Override
 		public void updateFilteredList() {
 			if (super.filteredListSource instanceof FilteredList)
