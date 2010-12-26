@@ -5,7 +5,9 @@ package org.homeunix.thecave.buddi.model.swing;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -34,6 +36,8 @@ public class SourceComboBoxModel implements ComboBoxModel {
 	
 	private final List<Account> accounts = new ArrayList<Account>();
 	private final List<BudgetCategory> budgetCategories = new ArrayList<BudgetCategory>();
+	
+	private final Map<Object, Integer> levelMappings = new HashMap<Object, Integer>();
 	
 	private final DefaultComboBoxModel comboBoxModel;
 	
@@ -92,6 +96,12 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		return (accounts.contains(source) || budgetCategories.contains(source));
 	}
 	
+	public int getLevel(Object item){
+		if (levelMappings.containsKey(item))
+			return levelMappings.get(item);
+		return 0;
+	}
+	
 	/**
 	 * Updates the model, and optionally (if source is not null) forces it to include
 	 * the given source.  This is used to ensure that deleted accounts still show up 
@@ -123,7 +133,7 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		getComboBoxModel().removeAllElements();
 		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.ACCOUNTS_COMBOBOX_HEADER));
 		for (Account a : accounts) {
-			getComboBoxModel().addElement(new IndentedSourceWrapper(a, 0));
+			getComboBoxModel().addElement(a);
 		}
 		getComboBoxModel().addElement("&nbsp;");
 		getComboBoxModel().addElement(TextFormatter.getTranslation(BuddiKeys.BUDGET_CATEGORIES_COMBOBOX_HEADER));
@@ -148,7 +158,8 @@ public class SourceComboBoxModel implements ComboBoxModel {
 		}
 		for (BudgetCategory bc : siblings) {
 			if (bc.isIncome() == includeIncome){
-				getComboBoxModel().addElement(new IndentedSourceWrapper(bc, level));
+				getComboBoxModel().addElement(bc);
+				levelMappings.put(bc, level);
 				if (!PrefsModel.getInstance().isShowFlatBudgetInSourceCombobox()){
 					addBudgetCategories(bc, level + 1);
 				}

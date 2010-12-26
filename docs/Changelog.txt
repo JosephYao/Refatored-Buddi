@@ -1,4 +1,5 @@
 3.4.0.7
+-Fixed a bug introduced in 3.4.0.6 where in some conditions you could not select sources for new transactions
 -Fixed a bug where the first item in the report pulldowns could not be selected
 
 3.4.0.6 (December 22 2010)
