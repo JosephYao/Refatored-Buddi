@@ -956,7 +956,7 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 
 	/**
 	 * Runs through the list of scheduled transactions, and adds any which
-	 * show be executed to the apropriate transacactions list.
+	 * show be executed to the appropriate transactions list.
  	 * Checks for the frequency type and based on it finds if a transaction is scheduled for a date
  	 * that has gone past.
  	 * 
@@ -979,10 +979,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			if (Const.DEVEL) logger.info("Looking at scheduled transaction " + s.getScheduleName());
 
 			Date tempDate = s.getLastDayCreated();
-			//#1779286 Bug BiWeekly Scheduled Transactions -Check if this transcation has never been created. 
+			//#1779286 Bug BiWeekly Scheduled Transactions -Check if this transaction has never been created. 
 			boolean isNewTransaction=false;
 			//The lastDayCreated need to date as such without rolling forward by a day and the start fo the day 
-			//so calculations of difference of days are on the smae keel as tempDate.
+			//so calculations of difference of days are on the same keel as tempDate.
 			Date lastDayCreated = null;
 			//Temp date is where we will start looping from.
 			if (tempDate == null){
