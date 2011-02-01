@@ -1,3 +1,7 @@
+3.4.0.8 (January 31 2011)
+-Fixed a bug in the account total math where splits were not handled correctly.
+-Updated German translation (thanks to Jan Beekhuis)
+
 3.4.0.7
 -Fixed a bug introduced in 3.4.0.6 where in some conditions you could not select sources for new transactions
 -Fixed a bug where the first item in the report pulldowns could not be selected
