@@ -1,6 +1,6 @@
-3.4.0.10
+3.4.0.10 (June 13 2011)
 -Updated copyright dates in translations
--If number of backups is set to 0, then delete last backup on exit (we still keep it for the time being, so that in case of a bad save there is something to revert to).
+-Fixed bug in 0 backup feature from 3.4.0.9, where there is no longer any backup files left  (in the initial implementation there was one which was left behind).
 
 3.4.0.9 (June 12 2011)
 -From user's request, added the ability to disable backup files (Warning: this is not recommended.  If you do this, MAKE SURE you have an alternate backup method.)
