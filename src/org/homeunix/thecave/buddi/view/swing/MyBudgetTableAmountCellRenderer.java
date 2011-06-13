@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.homeunix.thecave.buddi.model.BudgetCategory;
+import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.util.InternalFormatter;
 
@@ -48,24 +49,26 @@ public class MyBudgetTableAmountCellRenderer extends DefaultTableCellRenderer {
 				}
 			}
 
-			sb.append(" / ");
-			final Long actual = (Long) values[4];
-			if(actual != 0) {
-				TextFormatter.appendFormattedCurrency(sb, actual, actual < 0, actual < 0);
-			} else {
-				sb.append("---");
-			}
+			if (PrefsModel.getInstance().isShowCurrentBudget()){
+				sb.append(" / ");
+				final Long actual = (Long) values[4];
+				if(actual != 0) {
+					TextFormatter.appendFormattedCurrency(sb, actual, actual < 0, actual < 0);
+				} else {
+					sb.append("---");
+				}
 
-			final Long actualIncludingSubs = (Long) values[5];
-			if(actualIncludingSubs != (long)actual) {
-				sb.append(" (");
-				TextFormatter.appendFormattedCurrency(sb, actualIncludingSubs, actualIncludingSubs < 0,
-						actualIncludingSubs < 0);
-				sb.append(")");
-			}
-			
-			for (int i = 0; i < ((Integer) values[3]); i++){
-				sb.insert(0, "&nbsp&nbsp&nbsp "); 
+				final Long actualIncludingSubs = (Long) values[5];
+				if(actualIncludingSubs != (long)actual) {
+					sb.append(" (");
+					TextFormatter.appendFormattedCurrency(sb, actualIncludingSubs, actualIncludingSubs < 0,
+							actualIncludingSubs < 0);
+					sb.append(")");
+				}
+
+				for (int i = 0; i < ((Integer) values[3]); i++){
+					sb.insert(0, "&nbsp&nbsp&nbsp "); 
+				}
 			}
 			
 			sb.insert(0, "<html>");

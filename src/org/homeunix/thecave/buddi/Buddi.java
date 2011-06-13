@@ -807,6 +807,11 @@ public class Buddi {
 //			System.exit(0);
 //		}
 		
+		//Set the default My Budget renderer behaviour to be the same as 3.4.0.8.  You can delete this line once most people have upgraded past it.
+		if (PrefsModel.getInstance().getLastVersion() != null && PrefsModel.getInstance().getLastVersion().isSamePatch(new Version(3, 4, 0, 8))){
+			PrefsModel.getInstance().setShowCurrentBudget(true);
+		}
+		
 		if (PrefsModel.getInstance().getLastVersion() == null 
 				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
 			PrefsModel.getInstance().updateVersion();
@@ -855,7 +860,7 @@ public class Buddi {
 							p = Proxy.NO_PROXY;
 						}
 
-						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE);
+						URL mostRecentVersion = new URL(Const.PROJECT_URL + Const.VERSION_FILE + "?current=" + Buddi.getVersion().toString());
 						URLConnection connection = mostRecentVersion.openConnection(p);
 
 						InputStream is = connection.getInputStream();

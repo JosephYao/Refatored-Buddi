@@ -51,6 +51,7 @@ public class PrefsModelBean {
 	private boolean showReconciled;
 	private boolean showFlatAccounts;
 	private boolean showFlatBudget;
+	private boolean showCurrentBudget;
 	private boolean showOverdraft;
 	private boolean showCreditRemaining;
 	private boolean showInterestRates;
@@ -447,5 +448,13 @@ public class PrefsModelBean {
 	public void setShowFlatBudgetInSourceCombobox(
 			boolean showFlatBudgetInSourceCombobox) {
 		this.showFlatBudgetInSourceCombobox = showFlatBudgetInSourceCombobox;
+	}
+
+	public boolean isShowCurrentBudget() {
+		return this.showCurrentBudget;
+	}
+
+	public void setShowCurrentBudget(boolean showCurrentBudget) {
+		this.showCurrentBudget = showCurrentBudget;
 	}
 }

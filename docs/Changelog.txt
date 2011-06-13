@@ -1,3 +1,8 @@
+3.4.0.9 (June 12 2011)
+-From user's request, added the ability to disable backup files (Warning: this is not recommended.  If you do this, MAKE SURE you have an alternate backup method.)
+-From user's request, added the ability to turn off the 'actual budget values' from showing in My Budget.
+-Added parameter to version check HTTP request to verify the current version.
+
 3.4.0.8 (January 31 2011)
 -Fixed a bug in the account total math where splits were not handled correctly.
 -Updated German translation (thanks to Jan Beekhuis)

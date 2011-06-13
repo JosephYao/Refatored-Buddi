@@ -629,5 +629,13 @@ public class PrefsModel {
 	public void setShowInterestRates(boolean showInterestRates){
 		prefsModel.setShowInterestRates(showInterestRates);
 	}
+
+	public void setShowCurrentBudget(boolean showCurrentBudget) {
+		prefsModel.setShowCurrentBudget(showCurrentBudget);
+	}
+
+	public boolean isShowCurrentBudget() {
+		return prefsModel.isShowCurrentBudget();
+	}
 }
 

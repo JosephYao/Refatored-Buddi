@@ -4,8 +4,6 @@
 package org.homeunix.thecave.buddi.i18n;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.Buddi;
 import org.homeunix.thecave.buddi.Const;
@@ -23,14 +21,6 @@ public class BuddiTranslator extends Translator {
 	}
 	
 	public void reloadLanguages(){
-		
-//		try {
-//			throw new RuntimeException();
-//		}
-//		catch (Throwable t){
-//			Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Path", t);
-//		}
-		
 		translations.clear();
 		loadLanguages("/" + Const.LANGUAGE_FOLDER, this.getLanguageList(PrefsModel.getInstance().getLanguage()));
 		loadLanguages(Buddi.getLanguagesFolder(), this.getLanguageList(PrefsModel.getInstance().getLanguage()));
