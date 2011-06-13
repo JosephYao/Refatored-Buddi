@@ -13,7 +13,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
@@ -46,6 +49,27 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 //		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
 		showUpdateNotifications = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENABLE_UPDATE_NOTIFICATIONS));
 		hideNegativeSign = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_HIDE_NEGATIVE_SIGNS));
+		
+		numberOfBackups.addPopupMenuListener(new PopupMenuListener() {
+			private void checkForZero(PopupMenuEvent e){
+				if (numberOfBackups.getSelectedItem().equals(new Integer(0))){
+					JOptionPane.showMessageDialog(
+							null, 
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_BACKUPS_ARE_IMPORTANT_TEXT),
+							TextFormatter.getTranslation(BuddiKeys.WARNING),
+							JOptionPane.WARNING_MESSAGE);					
+				}
+			}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+			
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				checkForZero(e);
+			}
+			
+			public void popupMenuCanceled(PopupMenuEvent e) {
+				checkForZero(e);
+			}
+		});
 	}
 
 	@Override
