@@ -40,7 +40,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 	@SuppressWarnings("unchecked")
 	public AdvancedPreferences() {
 		transactionCellRenderer = new JComboBox(new BackedComboBoxModel<BuddiTransactionCellRendererPlugin>((List<BuddiTransactionCellRendererPlugin>) BuddiPluginFactory.getPlugins(BuddiTransactionCellRendererPlugin.class)));
-		numberOfBackups = new JComboBox(new Integer[]{3, 5, 10, 25, 50});
+		numberOfBackups = new JComboBox(new Integer[]{0, 3, 5, 10, 25, 50});
 		autosavePeriod = new JComboBox(new Integer[]{15, 30, 60, 120, 300});
 		showPromptForDataFile = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_PROMPT_FOR_DATA_FILE_AT_STARTUP));
 //		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
