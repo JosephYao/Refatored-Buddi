@@ -132,6 +132,10 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				File tempBackupDest = new File(fileBase + "_0" + Const.BACKUP_FILE_EXTENSION);
 				FileFunctions.copyFile(getFile(), tempBackupDest);
 				if (Const.DEVEL) logger.finest("Backing up file to " + tempBackupDest);
+				
+				if (PrefsModel.getInstance().getNumberOfBackups() == 0){
+					tempBackupDest.deleteOnExit();
+				}
 			}
 		}
 		catch(IOException ioe){

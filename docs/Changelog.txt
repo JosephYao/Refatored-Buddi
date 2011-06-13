@@ -1,3 +1,7 @@
+3.4.0.10
+-Updated copyright dates in translations
+-If number of backups is set to 0, then delete last backup on exit (we still keep it for the time being, so that in case of a bad save there is something to revert to).
+
 3.4.0.9 (June 12 2011)
 -From user's request, added the ability to disable backup files (Warning: this is not recommended.  If you do this, MAKE SURE you have an alternate backup method.)
 -From user's request, added the ability to turn off the 'actual budget values' from showing in My Budget.
