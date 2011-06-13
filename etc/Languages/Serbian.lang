@@ -24,7 +24,7 @@ ENTER_CATEGORY_NAME=Morate da unesete naziv kategorije
 PLUGIN_FILTER_OTHER=Drugo
 SCHEDULE_DATE_TWENTYSECOND=22-og
 LANGUAGE_EDITOR_HELP=<html><h2>Buddi izmena jezika</h2><p><font color\=\#00D000>Zeleno\: Postoji unos za lokalizovani jezik.  To je dobro.</font></p><p><font color\=\#000090>Tamno-plavo\: Lokalizovani jezik \= Osnovni unos</font></p><p><font color\=\#0000FF>Plavo\: Osnovni unos \= engleski unos</font></p><p><font color\=\#A000A0>Ljubi\u010Dasto\: Nedostaje lokalizovani unos; Osnovni unos postoji</font></p><p><font color\=\#FF0000>Crveno\: Nedostaje lokalizovani unos; engleski unos postoji</font></p><p><font color\=\#FF9090>Roze\: Unos nije na engleskom (Verovatno gre\u0161ka u prevodu)</font></p><p>*\: Izmene nakon poslednjeg snimanja</font></p><br><br><p>Kako bi ovo razumeli, prvo shvatite da<br>Buddi ima tri nivoa prevoda\: engleski,<br>osnovni, i lokalizovani.  Engleski je (o\u010Digledno), <br>podrazumevani engleski prevod.  Osnovni je osnova<br>prevedene verzije\: \u0161panski, norve\u0161ki, itd.  Lokalizovani<br>je lokalizovana verzija osnove\: \u0161panski (MX),<br>engleski (CA), francuski (FR), francuski (CA), itd.</p></html>
-ABOUT_COPYRIGHT=Sva prava zadr\u017Eana 2006, 2007 Wyatt Olson
+ABOUT_COPYRIGHT=Sva prava zadr\u017Eana 2006 - 2011 Wyatt Olson
 INTERVAL_YEAR=Godina
 CATEGORY_MODIFY_EDIT=Izmeni postoje\u0107u kategoriju
 LICENCES=Licence

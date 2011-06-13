@@ -23,7 +23,7 @@ ENTER_CATEGORY_NAME=Devi inserire il nome della categoria
 PLUGIN_FILTER_OTHER=Altro
 SCHEDULE_DATE_TWENTYSECOND=22\u00B0
 LANGUAGE_EDITOR_HELP=<html><h2>Buddi Editor Lingue</h2><p><font color\=\#00D000>Verde\: Il valore localizzato esiste. Questo \u00E8 OK.</font></p><p><font color\=\#000090>Blu scuro\: Valore localizzato \= Valore base</font></p><p><font color\=\#0000FF>Blu\: Valore base \= English value</font></p><p><font color\=\#A000A0>Porpora\: Valore localizzato mancante; Valore base esistente</font></p><p><font color\=\#FF0000>Rosso\: Valore localizzato mancante; Il valore Inglese esiste</font></p><p><font color\=\#FF9090>Rosa\: Valore non in Inglese (Probabilmente una chiave spuria nella traduzione)</font></p><p>*\: Modificato fino all'ultimo salvataggio</font></p><br><br><p>Per comprendere questo in primis bisogna capire che<br>Buddi ha tre livelli di traduzione\: Inglese,<br>Base, Localizzato.  Inglese \u00E8 (ovviamente), quello<br>di default, la traduzione Inglese.  Base \u00E8 la base della<br>versione tradotta\: Spagnolo, Norvegese, etc.  Localizzato<br>\u00E8 la versione locale della base\: Spagnolo (MX),<br>Inglese (CA), Francese (FR), Franco (CA), etc.</p></html>
-ABOUT_COPYRIGHT=Copyright 2006 Wyatt Olson
+ABOUT_COPYRIGHT=Copyright 2006 - 2011 Wyatt Olson
 INTERVAL_YEAR=Anno
 LICENCES=Licenza
 SCHEDULE_DAY_FIRST_TUESDAY=Primo Marted\u00EC
