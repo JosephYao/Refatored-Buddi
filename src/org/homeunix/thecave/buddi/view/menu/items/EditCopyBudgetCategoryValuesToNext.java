@@ -27,7 +27,7 @@ public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 
 	public EditCopyBudgetCategoryValuesToNext(MainFrame frame) {
 		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_EDIT_COPY_VALUES_TO_NEXT_BUDGET_PERIOD),
-				KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_DOWN_MASK));
+				KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_DOWN_MASK + KeyEvent.ALT_DOWN_MASK));
 	}
 
 	@Override

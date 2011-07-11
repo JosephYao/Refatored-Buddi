@@ -1,3 +1,9 @@
+3.4.0.11 (July 11 2011)
+-Fixed bug #3354124 (pasting values into the transaction amount field sometimes results in incorrect values)
+-Fixed bug #3151001 (duplicate of 3354124) 
+-Fixed bug #3314970 (Some OS / JVM combinations don't like using Ctrl + Arrows for menu shortcuts; replace this with Ctrl + > and Ctrl + < (i.e. Ctrl + Shift + . / Ctrl + Shift + ,)
+-Fixed bug #3184045 (Allow user to enter invalid ports in proxy setup)
+
 3.4.0.10 (June 13 2011)
 -Updated copyright dates in translations
 -Fixed bug in 0 backup feature from 3.4.0.9, where there is no longer any backup files left  (in the initial implementation there was one which was left behind).

@@ -20,7 +20,7 @@ public class ViewPreviousBudgetPeriod extends MossMenuItem{
 
 	public ViewPreviousBudgetPeriod(MainFrame frame) {
 		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_VIEW_PREVIOUS_BUDGET_PERIOD),
-				KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_DOWN_MASK));
 	}
 
 	@Override

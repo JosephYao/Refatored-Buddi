@@ -20,7 +20,7 @@ public class ViewNextBudgetPeriod extends MossMenuItem{
 
 	public ViewNextBudgetPeriod(MainFrame frame) {
 		super(frame, TextFormatter.getTranslation(MenuKeys.MENU_VIEW_NEXT_BUDGET_PERIOD),
-				KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+				KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() + KeyEvent.SHIFT_DOWN_MASK));
 	}
 
 	@Override

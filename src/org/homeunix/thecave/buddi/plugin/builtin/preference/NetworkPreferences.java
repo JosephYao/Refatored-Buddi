@@ -6,6 +6,8 @@ package org.homeunix.thecave.buddi.plugin.builtin.preference;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
@@ -32,6 +34,22 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 		useProxy = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.USE_PROXY_SERVER));
 		proxy = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.HINT_PROXY_SERVER_NAME));
 		port = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.HINT_PORT));
+		port.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				super.focusLost(e);
+				
+				try {
+					final int portNumber = Integer.parseInt(port.getText().replaceAll("\\D", ""));
+					if (portNumber < 0) port.setText("0");
+					if (portNumber > 65535) port.setText("65535");
+				}
+				catch (NumberFormatException nfe){
+					port.setText("80");
+				}
+
+			}
+		});
 		
 		useProxy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -55,7 +73,10 @@ public class NetworkPreferences extends BuddiPreferencePlugin {
 		if (useProxy.isSelected()){
 			PrefsModel.getInstance().setProxyServer(proxy.getText());
 			try {
-				PrefsModel.getInstance().setPort(Integer.parseInt(port.getText().replaceAll("\\D", "")));
+				int portNumber = Integer.parseInt(port.getText().replaceAll("\\D", ""));
+				if (portNumber < 0) portNumber = 0;
+				if (portNumber > 65535) portNumber = 65535;
+				PrefsModel.getInstance().setPort(portNumber);
 			}
 			catch (NumberFormatException nfe){
 				Logger.getLogger(this.getClass().getName()).warning("Incorrect port number; setting to 80");
