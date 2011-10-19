@@ -1,6 +1,6 @@
-3.4.0.12 (October 19 2011)
+3.4.0.12
 -Implemented an enhancement request to right align values in My Account. (Thanks to Toomas Remmelg for this patch)
--Fixed bug where you can't type in the description pulldown anywhere except the end of the line.  (Thanks to Toomas Remmelg for this patch)
+-Fixed bug #1992522 where the cursor jumps to the end of the line when you modify the description text.  (Thanks to Toomas Remmelg for this patch)
 -Updated library moss-swing to version 2.1.0.3
 -Updated library quaqua to version 7.4.2
 -Updated library jcommon to version 1.0.13
