@@ -24,6 +24,8 @@ public class MyAccountTableAmountCellRenderer extends DefaultTableCellRenderer {
 	
 	public MyAccountTableAmountCellRenderer(Document document) {
 		this.document = document;
+		
+		setHorizontalAlignment(RIGHT);
 	}
 
 	@Override
