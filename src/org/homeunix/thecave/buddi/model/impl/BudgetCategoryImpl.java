@@ -224,10 +224,30 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	public BudgetCategory getParent() {
 		return parent;
 	}
-	public void setParent(BudgetCategory parent) {
+	public void setParent(BudgetCategory parent) throws InvalidValueException {
+		
+		if (children != null) {
+			boolean invalidParent = isChild(parent) || parent == this;
+			if (invalidParent) {
+				throw new InvalidValueException();
+			}
+		}
+		
 		this.parent = parent;
 		setChanged();
 	}
+	
+	private boolean isChild(BudgetCategory category) {
+		
+		boolean isChild = children.contains(category);
+		
+		for (BudgetCategory child : children) {
+			isChild = isChild || ((BudgetCategoryImpl) child).isChild(category);
+		}
+		
+		return isChild;
+	}
+	
 	public boolean isExpanded() {
 		return expanded;
 	}
