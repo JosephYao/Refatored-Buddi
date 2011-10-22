@@ -4,6 +4,7 @@
 -Fixed bug #2553159 (copying text from transaction editor causes 'unsaved' flag to be set) (Thanks to Toomas Remmelg for this patch)
 -Fixed bug #2590924 (check for circular ancestry of categories) (Thanks to Toomas Remmelg for this patch)
 -Updated library moss-swing to version 2.1.0.3
+-Updated library moss-i18n to version 2.1.0.1
 -Updated library quaqua to version 7.4.2
 -Updated library jcommon to version 1.0.13
 
