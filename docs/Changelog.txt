@@ -1,4 +1,4 @@
-3.4.0.12
+3.4.0.12 (December 12 2011)
 -Implemented an enhancement request to right align values in My Account. (Thanks to Toomas Remmelg for this patch)
 -Fixed bug #1992522 where the cursor jumps to the end of the line when you modify the description text.  (Thanks to Toomas Remmelg for this patch)
 -Fixed bug #2553159 (copying text from transaction editor causes 'unsaved' flag to be set) (Thanks to Toomas Remmelg for this patch)
