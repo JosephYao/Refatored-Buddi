@@ -148,12 +148,19 @@ public class HtmlHelper {
 			
 
 		boolean red;
-		if (source != null)
-			red = TextFormatter.isRed(t, t.getFrom().equals(source));
+		if (source != null){
+			boolean toSelectedAccount = t.getFrom().equals(source);
+			for (ImmutableTransactionSplit split : t.getImmutableFromSplits()) {
+				if (split.getSource().equals(source)){
+					toSelectedAccount = true;
+				}
+			}
+			red = TextFormatter.isRed(t, toSelectedAccount);
+		}
 		else 
 			red = TextFormatter.isRed(t);
 
-		sb.append("</td><td width='15%' class='right" + (red ? " red'" : "'") + "'>");
+		sb.append("</td><td width='15%' class='right" + (red ? " red" : "") + "'>");
 		if (t.getFrom().equals(source) || t.getTo().equals(source))
 			sb.append(TextFormatter.getFormattedCurrency(t.getAmount()));
 		else {
