@@ -1,3 +1,6 @@
+3.4.0.14
+-Added support for pasting transaction amounts from other locales.
+
 3.4.0.13 (January 21 2012)
 -Fixed bug in 'Income and Expense by Category' report where split transactions were displayed as red even though they should have been black.  (Thanks to Bob for reporting this bug)
 
