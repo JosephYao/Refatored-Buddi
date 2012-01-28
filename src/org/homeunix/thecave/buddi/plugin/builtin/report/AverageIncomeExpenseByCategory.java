@@ -99,7 +99,7 @@ public class AverageIncomeExpenseByCategory extends BuddiReportPlugin {
 					
 					for (ImmutableTransactionSplit split : transaction.getImmutableToSplits()) {
 						if (split.getSource().equals(c)){
-							actual -= split.getAmount();
+							actual += split.getAmount();
 						}
 					}
 					for (ImmutableTransactionSplit split : transaction.getImmutableFromSplits()) {

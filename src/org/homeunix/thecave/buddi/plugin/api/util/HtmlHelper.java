@@ -218,6 +218,12 @@ public class HtmlHelper {
 	
 	private static void includeCss(String cssName, StringBuilder sb){
 		InputStream is = HtmlHelper.class.getResourceAsStream("/css/" + cssName);
+		if (is == null){
+			try {
+				is = new FileInputStream(new File("etc/css/" + cssName));
+			}
+			catch (Exception e){}
+		}
 		File css = OperatingSystemUtil.getUserFile("Buddi", cssName);
 		if (css.exists()){
 			try {
