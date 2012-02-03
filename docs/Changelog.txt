@@ -1,4 +1,4 @@
-3.4.0.14
+3.4.0.14 (February 2 2012)
 -Added support for pasting transaction amounts from other locales.
 -Fixed bug #3480733 (incorrect summing of split transactions; thanks to Rich for reporting this bug)
 
