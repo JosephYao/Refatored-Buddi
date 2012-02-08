@@ -1,5 +1,6 @@
 3.4.0.15 
 -Upgraded Quaqua to 8.0 for increased support on OSX Lion
+-Fixed bug where negative numbers could not be pasted into decimal fields
 
 3.4.0.14 (February 2 2012)
 -Added support for pasting transaction amounts from other locales.
