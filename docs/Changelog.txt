@@ -1,4 +1,4 @@
-3.4.0.15 
+3.4.0.15  (March 16 2012)
 -Upgraded Quaqua to 8.0 for increased support on OSX Lion
 -Fixed bug where negative numbers could not be pasted into decimal fields
 
