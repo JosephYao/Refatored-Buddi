@@ -25,6 +25,7 @@ import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime;
+import org.homeunix.thecave.buddi.plugin.builtin.report.Transactions;
 
 
 /**
@@ -206,6 +207,7 @@ public class Const {
 		IncomePieGraph.class.getCanonicalName(),
 		ExpensesPieGraph.class.getCanonicalName(),
 		NetWorthOverTime.class.getCanonicalName(),
+		Transactions.class.getCanonicalName(),
 	};
 	
 	//Built in Imports
