@@ -1,3 +1,6 @@
+3.4.1.1 (June 3 2012)
+-Fixed a packaging problem with OSX 10.7 which resulted in the main window being blank.
+
 3.4.1.0 (May 30 2012)
 -Added a 'Transactions' report which displays a list of all transactions from a given date.  This allows users to print lists of transactions as a hard copy for their own records.
 -Reverted to Quaqua 7.4.2 as 8.0 introduced some usability bugs.
