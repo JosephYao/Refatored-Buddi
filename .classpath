@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
 	<classpathentry kind="lib" path="/Users/wyatt/Documents/Programming/Workspace/ca.digitalcave.buddi/lib/moss-i18n-2.1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/moss-swing-2.1.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/quaqua-7.4.2.jar"/>
+	<classpathentry kind="lib" path="/Users/Wyatt/Documents/Programming/Workspace/ca.digitalcave.buddi/lib/quaqua-8.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="lib" path="lib/BrowserLauncher2-1_3.jar"/>
 	<classpathentry kind="output" path="bin"/>

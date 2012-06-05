@@ -1,3 +1,7 @@
+3.4.1.2 (June 4 2012)
+-Split OSX version into two: one for legacy OS versions (10.4 - 10.6), and one for current (10.7).  Eventually this will merge back into one package which supports 10.4 - 10.7, but for now there is a bug in the 10.7 library which causes usability issues on older versions.
+-Fixed bug 3531762 (related to packaging issues)  
+
 3.4.1.1 (June 3 2012)
 -Fixed a packaging problem with OSX 10.7 which resulted in the main window being blank.
 

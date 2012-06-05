@@ -110,6 +110,7 @@ public class Const {
 	
 	//File Types
 	public final static String DOWNLOAD_TYPE_OSX = ".dmg";
+	public final static String DOWNLOAD_TYPE_OSX_LEGACY = "-Legacy.dmg";
 	public final static String DOWNLOAD_TYPE_WINDOWS = ".exe";
 	public final static String DOWNLOAD_TYPE_WINDOWS_INSTALLER = "-Installer.exe";
 	public final static String DOWNLOAD_TYPE_GENERIC = ".jar";

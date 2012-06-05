@@ -254,7 +254,13 @@ public class Buddi {
 
 					//Link to the correct download by default.
 					if (OperatingSystemUtil.isMac())
-						fileLocation += Const.DOWNLOAD_TYPE_OSX;
+						//TODO Once Quaqua fixes the combo box bugs in 8.x we can merge back into a single OSX distribution
+						if (System.getProperty("os.version").startsWith("10.7")){
+							fileLocation += Const.DOWNLOAD_TYPE_OSX;	
+						}
+						else {
+							fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+						}
 					else if (OperatingSystemUtil.isWindows()){
 						if (isWindowsInstaller())
 							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
