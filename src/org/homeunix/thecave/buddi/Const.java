@@ -20,6 +20,7 @@ import org.homeunix.thecave.buddi.plugin.builtin.preference.LocalePreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.NetworkPreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.PluginPreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.ViewPreferences;
+import org.homeunix.thecave.buddi.plugin.builtin.report.AccountBalance;
 import org.homeunix.thecave.buddi.plugin.builtin.report.AverageIncomeExpenseByCategory;
 import org.homeunix.thecave.buddi.plugin.builtin.report.ExpensesPieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCategory;
@@ -209,6 +210,7 @@ public class Const {
 		ExpensesPieGraph.class.getCanonicalName(),
 		NetWorthOverTime.class.getCanonicalName(),
 		Transactions.class.getCanonicalName(),
+		AccountBalance.class.getCanonicalName(),
 	};
 	
 	//Built in Imports
