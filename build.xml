@@ -376,8 +376,8 @@
 			</filterset>
 		</copy>
 
-		<deb destfile="${BUILD}/${SAFE_NAME}-${VERSION}.deb" control="${BUILD}/deb/control">
-			<data src="${BUILD}/deb/data">
+		<deb destfile="${BUILD}/${SAFE_NAME}-${VERSION}.deb" control="${BUILD}/deb/control" >
+			<data src="${BUILD}/deb/data" type="directory">
 				<exclude name="**/.svn"/>
 			</data>
 		</deb>
