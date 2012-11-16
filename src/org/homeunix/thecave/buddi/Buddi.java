@@ -101,6 +101,7 @@ public class Buddi {
 	private static Boolean genericUnix = false;
 	private static Boolean slackware = false;
 	private static Boolean redhat = false;
+	private static Boolean legacy = false;
 	private static File logFile = null;
 	private static Version version = null;
 
@@ -122,6 +123,18 @@ public class Buddi {
 		if (genericUnix == null)
 			genericUnix = false;
 		return genericUnix;
+	}
+	
+	/** 
+	 * @return True if running on legacy OSX (<= 10.6), false otherwise.  This is 
+	 * obtained through the startup flag --legacy, so it can be 
+	 * faked if desired.  This is used to determine which download
+	 * to use on OSX.
+	 */
+	public static boolean isLegacy(){
+		if (legacy == null)
+			legacy = false;
+		return legacy;
 	}
 
 	/** 
@@ -221,6 +234,80 @@ public class Buddi {
 				openFile(f);
 			}
 		}
+		
+		int osxMinorVersion = 0;
+		try {
+			osxMinorVersion = Integer.parseInt(System.getProperty("os.version").split("\\.")[1]);
+		}
+		catch (Throwable t){}
+		
+		if (OperatingSystemUtil.isMac() && isLegacy() && osxMinorVersion >= 7){
+			String[] buttons = new String[2];
+			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+
+			int reply = JOptionPane.showOptionDialog(
+					null,
+					"It appears that a legacy version of Buddi is running on a new version of OS X.\nThis can result in errors to the look and feel.  Please download\na version of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
+					"LEgacy Buddi Version",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					buttons,
+					buttons[0]);
+
+			if (reply == JOptionPane.YES_OPTION){
+				String fileLocation;
+				if (Const.BRANCH.equals(Const.STABLE))
+					fileLocation = Const.DOWNLOAD_URL_STABLE;
+				else
+					fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+
+				fileLocation += Const.DOWNLOAD_TYPE_OSX;
+
+				try{
+					BrowserLauncher bl = new BrowserLauncher(null);
+					bl.openURLinBrowser(fileLocation);
+				}
+				catch (Exception e){
+					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+				}
+			}
+		}
+		else if (OperatingSystemUtil.isMac() && !isLegacy() && osxMinorVersion < 7){
+			String[] buttons = new String[2];
+			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+
+			int reply = JOptionPane.showOptionDialog(
+					null,
+					"It appears that a new version of Buddi is running on an old version of OS X.\nThis can result in errors to the look and feel.  Please download a\nversion of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
+					"Legacy OS X Version",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					buttons,
+					buttons[0]);
+
+			if (reply == JOptionPane.YES_OPTION){
+				String fileLocation;
+				if (Const.BRANCH.equals(Const.STABLE))
+					fileLocation = Const.DOWNLOAD_URL_STABLE;
+				else
+					fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+
+				fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+
+				try{
+					BrowserLauncher bl = new BrowserLauncher(null);
+					bl.openURLinBrowser(fileLocation);
+				}
+				catch (Exception e){
+					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+				}
+			}			
+		}
+		
 
 		//If we have found a new version last time, we prompt for it now.
 		if (PrefsModel.getInstance().isShowUpdateNotifications() 
@@ -253,7 +340,7 @@ public class Buddi {
 						fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
 					//Link to the correct download by default.
-					if (OperatingSystemUtil.isMac())
+					if (OperatingSystemUtil.isMac() && osxMinorVersion >= 7)
 						//TODO Once Quaqua fixes the combo box bugs in 8.x we can merge back into a single OSX distribution
 						if (System.getProperty("os.version").startsWith("10.7")){
 							fileLocation += Const.DOWNLOAD_TYPE_OSX;	
@@ -261,6 +348,8 @@ public class Buddi {
 						else {
 							fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
 						}
+					else if (OperatingSystemUtil.isMac() && osxMinorVersion < 7)
+						fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
 					else if (OperatingSystemUtil.isWindows()){
 						if (isWindowsInstaller())
 							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
@@ -508,6 +597,7 @@ public class Buddi {
 		// Undocumented flag --redhat will specify a .rpm download for new versions.
 		// Undocumented flag --slackware will specify a -Slackware.tgz download for new versions.
 		// Undocumented flag --unix will specify a .tgz download for new versions.
+		// Undocumented flag --legacy will specify a -Legacy.dmg download for new versions on OSX.
 		// Undocumented flag --noautosave will disable auto save (for development testing).
 
 		List<ParseVariable> variables = new LinkedList<ParseVariable>();
@@ -529,6 +619,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--redhat", Boolean.class, false));
 		variables.add(new ParseVariable("--slackware", Boolean.class, false));
 		variables.add(new ParseVariable("--unix", Boolean.class, false));
+		variables.add(new ParseVariable("--legacy", Boolean.class, false));
 		variables.add(new ParseVariable("--windows-installer", Boolean.class, false));
 
 		ParseResults results = ParseCommands.parse(args, help, variables);
@@ -713,6 +804,7 @@ public class Buddi {
 		debian = results.getBoolean("--debian");
 		redhat = results.getBoolean("--redhat");
 		genericUnix = results.getBoolean("--unix");
+		legacy = results.getBoolean("--legacy");
 		reportsFolder = results.getString("--reports");
 
 
@@ -975,8 +1067,16 @@ public class Buddi {
 							fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
 						//Link to the correct download by default.
-						if (OperatingSystemUtil.isMac())
+						int osxMinorVersion = 0;
+						try {
+							osxMinorVersion = Integer.parseInt(System.getProperty("os.version").split("\\.")[1]);
+						}
+						catch (Throwable t){}
+						
+						if (OperatingSystemUtil.isMac() && osxMinorVersion >= 7)
 							fileLocation += Const.DOWNLOAD_TYPE_OSX;
+						else if (OperatingSystemUtil.isMac() && osxMinorVersion < 7)
+							fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
 						else if (OperatingSystemUtil.isWindows()){
 							if (isWindowsInstaller())
 								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
