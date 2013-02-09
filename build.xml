@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Buddi" default="all" basedir=".">
+<project name="Buddi" default="jar" basedir=".">
 
 	<property name="FULL_NAME" value="Buddi" 
 		description="The full project name.  This can include any character which is valid on the filesystem."/>
@@ -392,16 +392,9 @@
 	</target>
 
 	<target name="source" depends="clean" description="Exports the source and tars the bundle.  Requires the SVN Ant path to be set up in the ant.properties file.">
-		<path id="SVNANT_CLASSPATH">
-			<fileset dir="${SVNANT_PATH}">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>
-		<taskdef name="svn" classpathref="SVNANT_CLASSPATH" classname="org.tigris.subversion.svnant.SvnTask"/>
-
-		<svn>
-			<export srcPath="${ROOT}" destPath="${BUILD}/src"/>
-		</svn>
+		<delete includeemptydirs="true" dir="${BUILD}/src"/>
+		<exec command="git clone . ${BUILD}/src"/>
+		<delete includeemptydirs="true" dir="${BUILD}/src/.git"/>
 
 		<tar destfile="${BUILD}/${FULL_NAME}.src.tar">
 			<tarfileset dir="${BUILD}/src">
@@ -409,12 +402,8 @@
 			</tarfileset>
 		</tar>
 		<gzip zipfile="${BUILD}/${SAFE_NAME}-${VERSION}.src.tgz" src="${BUILD}/${FULL_NAME}.src.tar"/>
-		<delete includeemptydirs="true">
-			<fileset dir="${BUILD}">
-				<include name="${FULL_NAME}.src.tar"/>
-			</fileset>
-			<fileset dir="${BUILD}/src"/>
-		</delete>
+		<delete file="${BUILD}/${FULL_NAME}.src.tar"/>
+		<delete includeemptydirs="true" dir="${BUILD}/src"/>
 	</target>
 
 	<target name="generic" depends="jar" description="Renames the fat jar to the release name (including version number)">
