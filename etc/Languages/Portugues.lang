@@ -32,7 +32,7 @@ ENTER_CATEGORY_NAME=Voc\u00EA deve inserir o nome da categoria
 PLUGIN_FILTER_OTHER=Outros
 SCHEDULE_DATE_TWENTYSECOND=22\u00BA
 LANGUAGE_EDITOR_HELP=<html><h2>Editor de Idiomas Buddi</h2><p><font color\=\#00D000>Verde\: Valor local existe.  Isso \u00E9 bom</font></p><p><font color\=\#000090>Azul escuro\: Valor local \= Valor de base</font></p><p><font color\=\#0000FF>Azul\: Valor base \= Valor em ingl\u00EAs</font></p><p><font color\=\#A000A0>Lil\u00E1s\: Valor local inexistente; Valor de base existe</font></p><p><font color\=\#FF0000>Vermelho\: Valor local inexistente; Valor em ingl\u00EAs existe</font></p><p><font color\=\#FF9090>Rosa\: Valor n\u00E3o em ingl\u00EAs (Provavelmente uma entrada falsa na tradu\u00E7\u00E3o)</font></p><p>*\: Editado desde o \u00FAltima vez que foi salvo</font></p><br><br><p>Para que isso fa\u00E7a sentido, primeiro entenda que<br>Buddi tem tr\u00EAs n\u00EDveis de tradu\u00E7\u00E3o\: Ingl\u00EAs,<br>Base e Local. Ingl\u00EAs \u00E9 (obviamente), a tradu\u00E7\u00E3o<br>padr\u00E3o para o ingl\u00EAs. Base \u00E9 a base da vers\u00E3o traduzida\: Espa\u00F1ol, Norsk, etc.<br>Local \u00E9 a vers\u00E3o local da Base\: Espa\u00F1ol (MX),English(CA), etc.</p></html>
-ABOUT_COPYRIGHT=Direitos Reservados 2006 - 2011 Wyatt Olson
+ABOUT_COPYRIGHT=Direitos Reservados 2006 - 2013 Wyatt Olson
 INTERVAL_YEAR=Ano
 MENU_EDIT_DELETE_BUDGET_CATEGORY=Apagar Categoria Or\u00E7ament\u00E1ria
 CATEGORY_MODIFY_EDIT=Editar Categoria Existente
