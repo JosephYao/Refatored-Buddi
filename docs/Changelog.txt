@@ -1,3 +1,8 @@
+3.4.1.6 (February 20 2013)
+-Finally, the Debian version gets some love!  Updated the .deb package with current dependencies and documentation, and verified on a vanilla Ubuntu install (12.10).
+-Updated copyright dates
+-Converted to git version control; updated build script to support new VCS.
+
 3.4.1.5 (November 15 2012)
 -Added logic to inform the user if they are running the wrong version of Buddi on OS X.  The legacy version should be used for OS X versions 10.6 and previous, and the normal version should be used for OS X version 10.7 and higher.  If you are running an incompatible version it will inform you.
 
@@ -154,7 +159,7 @@ UNSTABLE VERSION FOR TESTING ONLY.  USE AT YOUR OWN RISK
 -Added 'All Time' as a plugin interval option.  This will return the date range from the beginning of the year of the first transaction, to one week after today.  If you have no transactions yet, it will return the range from the beginning of this year to one week from today.
 -Fixed bug #2021995 (Deleted sources still show up in To / From dropdowns).  I Changed the transaction to / from pulldowns to not show deleted sources.  If you select a transaction for which one of the sources has already been deleted, we will add it on the fly, but you cannot choose a deleted source for a new transaction (unless the "Show Deleted" is selected in Preferences, of course).
 -Fixed bug #1977195 (Wrong message when adding plugin)   
--Updated French translation (thanks to StŽphane Bouchet for this)
+-Updated French translation (thanks to Stï¿½phane Bouchet for this)
 
 3.2.2.0 (September 27 2008)
 -Added new Windows installer method, using the excellent IzPack software (http://izpack.org/).  This should now prevent the problems which some people had experienced with my home-rolled installer package, as well as new features (such as a real uninstaller, etc).
@@ -211,7 +216,7 @@ UNSTABLE VERSION FOR TESTING ONLY.  USE AT YOUR OWN RISK
 
 3.1.3.2
 -Updated Spanish translation for 3.0 (Thanks to Ignacio Baca and Rafael Rodriguez for this)
--Updated French translation for 3.0 (Thanks to Jean-JosŽ Mayol for this)
+-Updated French translation for 3.0 (Thanks to Jean-Josï¿½ Mayol for this)
 
 3.1.3.1 (February 16 2008)
 -Updated the Russian translation for 3.0 (Thanks to Michael Krekin for this)
