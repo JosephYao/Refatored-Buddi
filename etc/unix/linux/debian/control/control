@@ -3,12 +3,13 @@ Version: [[version]]
 Section: misc
 Priority: optional
 Architecture: all
-Depends: java6-runtime | java7-runtime | sun-java6-jre | openjdk-6-jre 
+Depends: openjdk-7-jdk | java6-runtime | java7-runtime | sun-java6-jre | openjdk-6-jre 
 Maintainer: Wyatt Olson <wyatt.olson@gmail.com>
+Homepage: http://buddi.digitalcave.ca
 Description: A personal finance program which helps users keep to a budget.
    .
    This package contains the Buddi .jar file, and a launch script to allow
    launching from the command line.  The Buddi.jar file along with the buddi
    launch script are put in /usr/bin.
    .
-   Please see http://buddi.thecave.homeunix.org for more details.
+   Please see http://buddi.digitalcave.ca for more details.
