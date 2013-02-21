@@ -1,3 +1,6 @@
+3.4.1.7
+-Show the proper version string in OSX application package
+
 3.4.1.6 (February 20 2013)
 -Finally, the Debian version gets some love!  Updated the .deb package with current dependencies and documentation, and verified on a vanilla Ubuntu install (12.10).
 -Updated copyright dates
