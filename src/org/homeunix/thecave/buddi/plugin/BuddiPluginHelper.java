@@ -19,12 +19,12 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiReportPlugin;
 import org.homeunix.thecave.buddi.plugin.api.model.ImmutableDocument;
 import org.homeunix.thecave.buddi.plugin.api.model.impl.ImmutableDocumentImpl;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.BrowserLauncher;
 import org.homeunix.thecave.buddi.view.MainFrame;
 
 import ca.digitalcave.moss.common.DateUtil;
 import ca.digitalcave.moss.swing.MossStatusDialog;
 import ca.digitalcave.moss.swing.exception.WindowOpenException;
-import edu.stanford.ejalbert.BrowserLauncher;
 
 public class BuddiPluginHelper {
 	public static void openReport(final MainFrame frame, final BuddiReportPlugin report, final Date startDate, final Date endDate){
@@ -57,8 +57,7 @@ public class BuddiPluginHelper {
 									frame,
 									startDate, 
 									endDate).createHTML("report");
-					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(index.toURI().toURL().toString());
+					BrowserLauncher.open(index.toURI().toURL().toString());
 				}
 				catch (Exception e){
 					Logger.getLogger(BuddiPluginHelper.class.getName()).log(Level.WARNING, "Error making HTML", e);

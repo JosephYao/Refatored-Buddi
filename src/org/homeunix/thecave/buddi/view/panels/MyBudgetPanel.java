@@ -224,7 +224,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 //		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 //		tree.setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
-		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
+		if (OperatingSystemUtil.isMacAqua()) tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 
 		tree.addTreeExpansionListener(new TreeExpansionListener(){
 			public void treeCollapsed(TreeExpansionEvent event) {

@@ -47,6 +47,7 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiRunnablePlugin;
 import org.homeunix.thecave.buddi.plugin.api.exception.DataModelProblemException;
 import org.homeunix.thecave.buddi.plugin.api.exception.ModelException;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.BrowserLauncher;
 import org.homeunix.thecave.buddi.util.BuddiCryptoFactory;
 import org.homeunix.thecave.buddi.util.FileFunctions;
 import org.homeunix.thecave.buddi.util.OperationCancelledException;
@@ -63,10 +64,10 @@ import ca.digitalcave.moss.application.document.exception.DocumentSaveException;
 import ca.digitalcave.moss.common.LogUtil;
 import ca.digitalcave.moss.common.OperatingSystemUtil;
 import ca.digitalcave.moss.common.ParseCommands;
-import ca.digitalcave.moss.common.StreamUtil;
-import ca.digitalcave.moss.common.Version;
 import ca.digitalcave.moss.common.ParseCommands.ParseResults;
 import ca.digitalcave.moss.common.ParseCommands.ParseVariable;
+import ca.digitalcave.moss.common.StreamUtil;
+import ca.digitalcave.moss.common.Version;
 import ca.digitalcave.moss.crypto.IncorrectPasswordException;
 import ca.digitalcave.moss.osx.Application;
 import ca.digitalcave.moss.osx.ApplicationAdapter;
@@ -75,7 +76,6 @@ import ca.digitalcave.moss.swing.ApplicationModel;
 import ca.digitalcave.moss.swing.LookAndFeelUtil;
 import ca.digitalcave.moss.swing.MossFrame;
 import ca.digitalcave.moss.swing.exception.WindowOpenException;
-import edu.stanford.ejalbert.BrowserLauncher;
 
 /**
  * The main class, containing the launch methods for Buddi.  This class 
@@ -266,8 +266,7 @@ public class Buddi {
 				fileLocation += Const.DOWNLOAD_TYPE_OSX;
 
 				try{
-					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(fileLocation);
+					BrowserLauncher.open(fileLocation);
 				}
 				catch (Exception e){
 					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
@@ -299,8 +298,7 @@ public class Buddi {
 				fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
 
 				try{
-					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(fileLocation);
+					BrowserLauncher.open(fileLocation);
 				}
 				catch (Exception e){
 					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
@@ -371,8 +369,7 @@ public class Buddi {
 					}
 
 					try{
-						BrowserLauncher bl = new BrowserLauncher(null);
-						bl.openURLinBrowser(fileLocation);
+						BrowserLauncher.open(fileLocation);
 					}
 					catch (Exception e){
 						Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
@@ -930,8 +927,7 @@ public class Buddi {
 
 			if (reply == JOptionPane.YES_OPTION){
 				try{
-					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(Const.DONATE_URL);
+					BrowserLauncher.open(Const.DONATE_URL);
 				}
 				catch (Exception e){
 					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
@@ -1098,8 +1094,7 @@ public class Buddi {
 						}
 
 						try{
-							BrowserLauncher bl = new BrowserLauncher(null);
-							bl.openURLinBrowser(fileLocation);
+							BrowserLauncher.open(fileLocation);
 						}
 						catch (Exception e){
 							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);

@@ -140,7 +140,7 @@ public class MyAccountsPanel extends MossPanel {
 //		tree.setColumnSelectionAllowed(false);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));		
+		if (OperatingSystemUtil.isMacAqua()) tree.addHighlighter(HighlighterFactory.createAlternateStriping(Const.COLOR_EVEN_ROW, Const.COLOR_ODD_ROW));
 
 //		int treeColumnWidth = 30;
 //		tree.getColumn(0).setMaxWidth(treeColumnWidth);

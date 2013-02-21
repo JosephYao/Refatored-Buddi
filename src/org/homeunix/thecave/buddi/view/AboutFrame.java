@@ -25,12 +25,12 @@ import org.homeunix.thecave.buddi.i18n.BuddiKeys;
 import org.homeunix.thecave.buddi.i18n.keys.ButtonKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.BrowserLauncher;
 import org.homeunix.thecave.buddi.view.menu.bars.BuddiMenuBar;
 
 import ca.digitalcave.moss.common.ClassLoaderFunctions;
 import ca.digitalcave.moss.common.OperatingSystemUtil;
 import ca.digitalcave.moss.swing.MossFrame;
-import edu.stanford.ejalbert.BrowserLauncher;
 
 public class AboutFrame extends MossFrame implements ActionListener {
 	public static final long serialVersionUID = 0;
@@ -139,8 +139,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try{
-					BrowserLauncher bl = new BrowserLauncher(null);
-					bl.openURLinBrowser(Const.PROJECT_URL);
+					BrowserLauncher.open(Const.PROJECT_URL);
 				}
 				catch (Exception ex){
 					Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Unknown Exception", ex);
@@ -156,8 +155,7 @@ public class AboutFrame extends MossFrame implements ActionListener {
 		}
 		else if (e.getSource().equals(donateButton)){		
 			try{
-				BrowserLauncher bl = new BrowserLauncher(null);
-				bl.openURLinBrowser(Const.DONATE_URL);
+				BrowserLauncher.open(Const.DONATE_URL);
 			}
 			catch (Exception ex){
 				Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Unknown Exception", ex);

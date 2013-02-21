@@ -11,10 +11,10 @@ import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.i18n.keys.MenuKeys;
 import org.homeunix.thecave.buddi.model.prefs.PrefsModel;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
+import org.homeunix.thecave.buddi.util.BrowserLauncher;
 
 import ca.digitalcave.moss.swing.MossFrame;
 import ca.digitalcave.moss.swing.MossMenuItem;
-import edu.stanford.ejalbert.BrowserLauncher;
 
 public class HelpHelp extends MossMenuItem {
 	public static final long serialVersionUID = 0;
@@ -25,8 +25,7 @@ public class HelpHelp extends MossMenuItem {
 
 	public void actionPerformed(ActionEvent e) {
 		try{
-			BrowserLauncher bl = new BrowserLauncher(null);
-			bl.openURLinBrowser(
+			BrowserLauncher.open(
 					Const.PROJECT_URL 
 					+ PrefsModel.getInstance().getLanguage().replaceAll("-.*$", "") 
 					+ "/index.jsp");
