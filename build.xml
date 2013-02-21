@@ -5,18 +5,11 @@
 		description="The full project name.  This can include any character which is valid on the filesystem."/>
 	<property name="SAFE_NAME" value="Buddi" 
 		description="The safe project name.  This must only include alphabetic characters, numbers, period, dash, and underscore."/>
-	<property name="UNIX_NAME" value="buddi" 
-		description="The unix project name.  This must only include lower case characters, numbers, period, dash, and underscore."/>
-	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)" 
-		description="The project description.  This is used on the Start menu in Windows, among other places."/>
-	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi" 
-		description="The package and class name of the .class file which contains the main method."/>
-	<property name="COPYRIGHT_HOLDER" value="Wyatt Olson" 
-		description="The copyright holder."/>
-	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}" 
-		description="The copyright message"/>
-	<property name="SVN_ROOT" value="https://buddi.svn.sourceforge.net/svnroot/buddi" 
-		description="The path to the head of the SVN repository.  The folders trunk, tags, and branches must be immediately below this location."/>
+	<property name="UNIX_NAME" value="buddi" description="The unix project name.  This must only include lower case characters, numbers, period, dash, and underscore."/>
+	<property name="DESCRIPTION" value="Buddi (Personal Budget Software)" description="The project description.  This is used on the Start menu in Windows, among other places."/>
+	<property name="MAIN_CLASS" value="org.homeunix.thecave.buddi.Buddi" 	description="The package and class name of the .class file which contains the main method."/>
+	<property name="COPYRIGHT_HOLDER" value="Wyatt Olson" 	description="The copyright holder."/>
+	<property name="COPYRIGHT" value="Copyright ${COPYRIGHT_HOLDER}" description="The copyright message"/>
 	
 	<property name="ROOT" value="."/>
 	<property name="BIN" value="${ROOT}/bin"/>
@@ -165,7 +158,7 @@
 			<os name="Mac OS X"/>
 		</condition>
 
-		<ant target="osx_zip"/>
+		<ant target="osx_dmg_linux"/>
 		<ant target="osx_dmg"/>
 
 		<delete dir="${BUILD}/${FULL_NAME}"/>
@@ -178,10 +171,38 @@
 		</exec>
 	</target>
 
-	<target name="osx_zip" unless="OS_IS_MAC">
-		<zip destfile="${BUILD}/${SAFE_NAME}-${VERSION}-OSX.zip">
-			<fileset dir="${BUILD}/${FULL_NAME}"/>
-		</zip>
+	<target name="osx_dmg_linux" unless="OS_IS_MAC">
+		<!-- This should be run on a *nix system (so that dd, etc are available). Also requires hfsutils package. -->
+		<mkdir dir="${BUILD}/mnt"/>
+		<exec executable="/bin/bash" outputproperty="SIZE">
+			<arg value="-c"/>
+			<arg value="du -s ${BUILD}/${FULL_NAME} | cut -f 1 | xargs expr 100 +"/>
+		</exec>
+		<exec executable="/bin/bash">
+			<arg value="-c"/>
+			<arg value="dd if=/dev/zero of=${BUILD}/${SAFE_NAME}-${VERSION}.dmg bs=1k count=${SIZE}"/>
+		</exec>
+		<exec executable="/bin/bash">
+			<arg value="-c"/>
+			<arg value="hformat -l ${FULL_NAME} ${BUILD}/${SAFE_NAME}-${VERSION}.dmg"/>
+		</exec>
+		<exec executable="sudo">
+			<arg value="/bin/bash"/>
+			<arg value="-c"/>
+			<arg value="mount -t hfs -o loop ${BUILD}/${SAFE_NAME}-${VERSION}.dmg ${BUILD}/mnt"/>
+		</exec>
+		<exec executable="sudo">
+			<arg value="/bin/bash"/>
+			<arg value="-c"/>
+			<arg value="mv ${BUILD}/${FULL_NAME}/* ${BUILD}/mnt/"/>
+		</exec>
+		<exec executable="sudo">
+			<arg value="/bin/bash"/>
+			<arg value="-c"/>
+			<arg value="umount ${BUILD}/mnt"/>
+		</exec>
+		<delete dir="${BUILD}/${FULL_NAME}"/>
+		<delete dir="${BUILD}/mnt"/>
 	</target>
 	
 	<target name="osx_legacy" depends="jar" description="Builds an OSX package for 10.4 - 10.6, using JarBundler.  If on a Mac, will also wrap this in a .dmg; otherwise, will wrap in .zip">
@@ -189,16 +210,16 @@
 
 		<mkdir dir="${BUILD}/${FULL_NAME}"/>
 		<jarbundler dir="${BUILD}/${FULL_NAME}" verbose="true" showPlist="false"
-	        name="${FULL_NAME}"
-	        shortname="${FULL_NAME}"
-	        signature="????"
-	        stubfile="${ETC}/osx/JavaApplicationStub"
-	        mainclass="${MAIN_CLASS}"
-	        icon="${IMG}/osx/${FULL_NAME}.icns"
-	        jvmversion="1.5+"
-	        version="${VERSION}"
-	        infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
-	        bundleid="${MAIN_CLASS}"
+			name="${FULL_NAME}"
+			shortname="${FULL_NAME}"
+			signature="????"
+			stubfile="${ETC}/osx/JavaApplicationStub"
+			mainclass="${MAIN_CLASS}"
+			icon="${IMG}/osx/${FULL_NAME}.icns"
+			jvmversion="1.5+"
+			version="${VERSION}"
+			infostring="${FULL_NAME}, ${PROJECT_COPYRIGHT}"
+			bundleid="${MAIN_CLASS}"
 			arguments="--legacy"
 			vmoptions="-Xmx512m">
 
@@ -245,23 +266,12 @@
 			<os name="Mac OS X"/>
 		</condition>
 
-		<ant target="osx_zip_legacy"/>
-		<ant target="osx_dmg_legacy"/>
+		<ant target="osx_dmg_linux"/>
+		<ant target="osx_dmg"/>
 
 		<delete dir="${BUILD}/${FULL_NAME}"/>
 
-	</target>
-	
-	<target name="osx_dmg_legacy" if="OS_IS_MAC">
-		<exec executable="/usr/bin/hdiutil" os="Mac OS X">
-			<arg line="create -format UDZO -srcfolder '${BUILD}/${FULL_NAME}' -o '${BUILD}/${SAFE_NAME}-${VERSION}-Legacy.dmg'"/>
-		</exec>
-	</target>
-
-	<target name="osx_zip_legacy" unless="OS_IS_MAC">
-		<zip destfile="${BUILD}/${SAFE_NAME}-${VERSION}-OSX-Legacy.zip">
-			<fileset dir="${BUILD}/${FULL_NAME}"/>
-		</zip>
+		<move file="${BUILD}/${SAFE_NAME}-${VERSION}.dmg" tofile="${BUILD}/${SAFE_NAME}-${VERSION}-Legacy.dmg"/>
 	</target>
 	
 	<target name="slackware" depends="jar" description="Creates a Slackware package, with a command line capable launcher.">		
@@ -393,7 +403,10 @@
 
 	<target name="source" depends="clean" description="Exports the source and tars the bundle.  Requires the SVN Ant path to be set up in the ant.properties file.">
 		<delete includeemptydirs="true" dir="${BUILD}/src"/>
-		<exec command="git clone . ${BUILD}/src"/>
+		<exec executable="/bin/bash">
+			<arg value="-c"/>
+			<arg value="git clone . ${BUILD}/src"/>
+		</exec>
 		<delete includeemptydirs="true" dir="${BUILD}/src/.git"/>
 
 		<tar destfile="${BUILD}/${FULL_NAME}.src.tar">
@@ -411,16 +424,10 @@
 	</target>
 
 	<target name="release" depends="all" description="Builds all targets architectures, and tags the project version in SVN">
-		<path id="SVNANT_CLASSPATH">
-			<fileset dir="${SVNANT_PATH}">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>
-		<taskdef name="svn" classpathref="SVNANT_CLASSPATH" classname="org.tigris.subversion.svnant.SvnTask"/>
-		
-		<svn username="${SVN_USER}" password="${SVN_PASSWORD}">
-			<copy srcUrl="${SVN_ROOT}/trunk" destUrl="${SVN_ROOT}/tags/${VERSION}" message="Tagging release ${VERSION}"/>
-		</svn>				
+		<exec executable="/bin/bash">
+			<arg value="-c"/>
+			<arg value="git tag -f ${VERSION}"/>
+		</exec>
 	</target>
 	
 	<target name="jar" depends="clean,compile">		
