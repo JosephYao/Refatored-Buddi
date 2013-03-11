@@ -79,5 +79,9 @@ public class BudgetCategoryTypeSemiMonthly extends BudgetCategoryType {
 		}
 		return DateUtil.getEndOfDay(cal.getTime());
 	}
+	@Override
+	public String getKey() {
+		return "SEMI_MONTH";
+	}
 
 }

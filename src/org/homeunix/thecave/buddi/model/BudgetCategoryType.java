@@ -96,4 +96,12 @@ public abstract class BudgetCategoryType {
 	public String toString() {
 		return getName();
 	}
+	
+	/**
+	 * Returns the base key of the budget period.  For instance, the monthly period with
+	 * enum type BUDGET_CATEGORY_TYPE_MONTH would return MONTH.
+	 * Used for the Buddi Live export plugin.
+	 * @return
+	 */
+	public abstract String getKey();
 }

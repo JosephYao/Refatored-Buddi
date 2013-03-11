@@ -15,6 +15,7 @@ import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.ChequeTransactionC
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.ConciseTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.SimpleTransactionCellRenderer;
+import org.homeunix.thecave.buddi.plugin.builtin.exports.ExportBuddiLiveData;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.AdvancedPreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.LocalePreferences;
 import org.homeunix.thecave.buddi.plugin.builtin.preference.NetworkPreferences;
@@ -221,7 +222,9 @@ public class Const {
 	};
 	
 	//Built in Exports
-	public static final String[] BUILT_IN_EXPORTS = {};
+	public static final String[] BUILT_IN_EXPORTS = {
+		ExportBuddiLiveData.class.getCanonicalName()
+	};
 	
 	//Built in Synchronizes
 	public static final String[] BUILT_IN_SYNCHRONIZES = {};
