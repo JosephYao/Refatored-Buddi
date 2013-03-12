@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.io.File;
 
 import javax.swing.JList;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
 import org.homeunix.thecave.buddi.i18n.BuddiKeys;
@@ -27,6 +28,9 @@ import org.homeunix.thecave.buddi.plugin.builtin.report.IncomeExpenseReportByCat
 import org.homeunix.thecave.buddi.plugin.builtin.report.IncomePieGraph;
 import org.homeunix.thecave.buddi.plugin.builtin.report.NetWorthOverTime;
 import org.homeunix.thecave.buddi.plugin.builtin.report.Transactions;
+import org.homeunix.thecave.buddi.util.ColorUtil;
+
+import ca.digitalcave.moss.common.OperatingSystemUtil;
 
 
 /**
@@ -132,7 +136,7 @@ public class Const {
 	public final static Color COLOR_JLIST_SELECTED_TEXT = new JList().getSelectionForeground();
 	public final static Color COLOR_JLIST_UNSELECTED_TEXT = new JList().getForeground();
 	public final static Color COLOR_TRANSPARENT = new Color(0, 0, 0, 255);
-	public final static Color COLOR_EVEN_ROW = new Color(237, 243, 254);
+	public final static Color COLOR_EVEN_ROW = (OperatingSystemUtil.isMac() || OperatingSystemUtil.isWindows() ? new Color(237, 243, 254) : ColorUtil.desaturate(UIManager.getColor("EditorPane.selectionBackground").brighter()));
 	public final static Color COLOR_ODD_ROW = Color.WHITE;
 
 	
