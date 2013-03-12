@@ -41,4 +41,8 @@ public class BudgetCategoryTypeMonthly extends BudgetCategoryType {
 	public String getName() {
 		return BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_MONTH.toString();
 	}
+	@Override
+	public String getKey() {
+		return "MONTH";
+	}
 }

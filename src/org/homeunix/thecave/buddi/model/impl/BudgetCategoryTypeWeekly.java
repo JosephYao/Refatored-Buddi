@@ -40,4 +40,8 @@ public class BudgetCategoryTypeWeekly extends BudgetCategoryType {
 	public String getName() {
 		return BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_WEEK.toString();
 	}
+	@Override
+	public String getKey() {
+		return "WEEK";
+	}
 }

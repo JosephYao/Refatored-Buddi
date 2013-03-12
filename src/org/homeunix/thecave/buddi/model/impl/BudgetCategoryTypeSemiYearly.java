@@ -48,4 +48,8 @@ public class BudgetCategoryTypeSemiYearly extends BudgetCategoryType {
 	public String getName() {
 		return BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_SEMI_YEAR.toString();
 	}
+	@Override
+	public String getKey() {
+		return "SEMI_YEAR";
+	}
 }

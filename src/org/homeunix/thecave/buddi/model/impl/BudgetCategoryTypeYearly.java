@@ -41,4 +41,9 @@ public class BudgetCategoryTypeYearly extends BudgetCategoryType {
 	public String getName() {
 		return BudgetCategoryTypes.BUDGET_CATEGORY_TYPE_YEAR.toString();
 	}
+	
+	@Override
+	public String getKey() {
+		return "YEAR";
+	}
 }

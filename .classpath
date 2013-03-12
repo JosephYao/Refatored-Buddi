@@ -13,6 +13,7 @@
 	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-core-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/moss-swing-2.1.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/org.json-2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/moss-i18n-2.1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/quaqua-8.0.jar"/>
