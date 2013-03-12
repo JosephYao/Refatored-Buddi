@@ -162,7 +162,7 @@ public class TransactionEditorPanel extends MossPanel {
 		
 		from.setSelectedItem(null);
 		to.setSelectedItem(null);
-
+		
 		fromSplit.setVisible(false);
 		toSplit.setVisible(false);
 		
