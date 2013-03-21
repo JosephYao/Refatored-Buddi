@@ -5,11 +5,10 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
-
-import ca.digitalcave.moss.application.document.AbstractDocument;
 
 /**
  * The class from which most other model objects descend from.  You should not 
@@ -40,7 +39,7 @@ public abstract class ModelObjectImpl implements ModelObject {
 	}
 	public String getUid() {
 		if (uid == null || uid.length() == 0){
-			setUid(AbstractDocument.getGeneratedUid(this));
+			setUid(UUID.randomUUID().toString());
 		}
 		return uid;
 	}
