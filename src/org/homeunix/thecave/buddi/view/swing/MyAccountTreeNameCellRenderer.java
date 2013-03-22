@@ -16,7 +16,6 @@ import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 public class MyAccountTreeNameCellRenderer extends DefaultTreeCellRenderer {
 	public static final long serialVersionUID = 0;
 
-
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		this.setIcon(null);
@@ -34,6 +33,7 @@ public class MyAccountTreeNameCellRenderer extends DefaultTreeCellRenderer {
 		else
 			this.setText("");
 
-		return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+		//this.setBounds(this.getBounds().x, this.getBounds().y, this.getBounds().width + 1000, this.getBounds().height);
+		return this;
 	}
 }

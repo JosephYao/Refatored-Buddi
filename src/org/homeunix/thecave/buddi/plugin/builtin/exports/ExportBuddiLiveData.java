@@ -140,7 +140,7 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 	
 	@Override
 	public String[] getFileExtensions() {
-		return new String[]{"json"};
+		return new String[]{".json"};
 	}
 	
 	public String getName() {
