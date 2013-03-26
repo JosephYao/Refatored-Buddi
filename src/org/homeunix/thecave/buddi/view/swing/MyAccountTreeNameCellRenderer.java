@@ -3,15 +3,14 @@
  */
 package org.homeunix.thecave.buddi.view.swing;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.homeunix.thecave.buddi.Const;
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
-import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 
 public class MyAccountTreeNameCellRenderer extends DefaultTreeCellRenderer {
 	public static final long serialVersionUID = 0;
@@ -22,13 +21,18 @@ public class MyAccountTreeNameCellRenderer extends DefaultTreeCellRenderer {
 		
 		if (value instanceof Account){
 			Account a = (Account) value;
-			this.setText("<html>" 
-					+ TextFormatter.getDeletedWrapper(TextFormatter.getFormattedNameForAccount(a), a)
-					+ "</html>");
+			this.setText(a.getFullName() + "                                                                                                 ");
+			if (a.getAccountType().isCredit()) this.setForeground(Color.RED);
+			else this.setForeground(Color.BLACK);
+//			this.setText("<html>" 
+//					+ TextFormatter.getDeletedWrapper(TextFormatter.getFormattedNameForAccount(a).replaceAll(" ", "&nbsp;"), a)
+//					+ "</html>");
 		}
 		else if (value instanceof AccountType){
 			AccountType t = (AccountType) value;
-			this.setText("<html>" + TextFormatter.getFormattedNameForType(t) + "</html>");
+			this.setText(t.getName() + "                                                                                                     ");
+			if (t.isCredit()) this.setForeground(Color.RED);
+			else this.setForeground(Color.BLACK);
 		}		
 		else
 			this.setText("");
