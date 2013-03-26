@@ -44,7 +44,7 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 				a.put("startBalance", formatCurrency(new BigDecimal(account.getStartingBalance()).divide(new BigDecimal(100))));
 				a.put("startDate", formatDate(account.getStartDate()));
 				a.put("type", account.getAccountType().isCredit() ? "C" : "D");
-				a.put("uuid", account.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", "").replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+				a.put("uuid", account.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", "").replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 				result.append("accounts", a);
 			}
 			
@@ -58,53 +58,53 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 				for (Date d : category.getBudgetedDates()) {
 					final JSONObject e = new JSONObject();
 					e.put("amount", formatCurrency(new BigDecimal(category.getAmount(d)).divide(new BigDecimal(100))));
-					e.put("category", category.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+					e.put("category", category.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 					e.put("date", formatDate(d));
 					result.append("entries", e);
 				}
 			}
 			
 			//Splits transactions are not visible to plugins, so we have to go to the raw object
-			for (ScheduledTransaction transaction : ((Document) model.getRaw().getDocument()).getScheduledTransactions()){
+			for (ScheduledTransaction scheduledTransaction : ((Document) model.getRaw().getDocument()).getScheduledTransactions()){
 				final JSONObject st = new JSONObject();
-				st.put("deleted", transaction.isDeleted());
-				st.put("description", transaction.getDescription());
-				st.put("number", transaction.getNumber());
-				st.put("uuid", transaction.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+				st.put("deleted", scheduledTransaction.isDeleted());
+				st.put("description", scheduledTransaction.getDescription());
+				st.put("number", scheduledTransaction.getNumber());
+				st.put("uuid", scheduledTransaction.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 				
 				//Here is the stuff over and above the base transactions
-				st.put("scheduleDay", transaction.getScheduleDay());
-				st.put("scheduleWeek", transaction.getScheduleWeek());
-				st.put("scheduleMonth", transaction.getScheduleMonth());
-				st.put("frequencyType", transaction.getFrequencyType());
-				st.put("startDate", formatDate(transaction.getStartDate()));
-				st.put("endDate", formatDate(transaction.getEndDate()));
-				st.put("lastDayCreated", transaction.getLastDayCreated());
-				st.put("message", transaction.getMessage());
-				st.put("scheduleName", transaction.getScheduleName());
+				st.put("scheduleName", scheduledTransaction.getScheduleName());
+				st.put("scheduleDay", scheduledTransaction.getScheduleDay());
+				st.put("scheduleWeek", scheduledTransaction.getScheduleWeek());
+				st.put("scheduleMonth", scheduledTransaction.getScheduleMonth());
+				st.put("frequencyType", scheduledTransaction.getFrequencyType());
+				st.put("startDate", formatDate(scheduledTransaction.getStartDate()));
+				st.put("endDate", formatDate(scheduledTransaction.getEndDate()));
+				st.put("lastCreatedDate", formatDate(scheduledTransaction.getLastDayCreated()));
+				st.put("message", scheduledTransaction.getMessage());
 				
 				//Here we have to do some work, since the data models differ a bit.
 				// If there are no splits, then our life is easy: just add a single
 				// split with the from / to sources as indicated.
-				if (transaction.getFromSplits().size() == 0 && transaction.getToSplits().size() == 0){
+				if (scheduledTransaction.getFromSplits().size() == 0 && scheduledTransaction.getToSplits().size() == 0){
 					final JSONObject s = new JSONObject();
-					s.put("amount", formatCurrency(new BigDecimal(transaction.getAmount()).divide(new BigDecimal(100))));
-					s.put("from", transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
-					s.put("to", transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl*Impl", ""));
-					s.put("memo", transaction.getMemo());
+					s.put("amount", formatCurrency(new BigDecimal(scheduledTransaction.getAmount()).divide(new BigDecimal(100))));
+					s.put("from", scheduledTransaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+					s.put("to", scheduledTransaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+					s.put("memo", scheduledTransaction.getMemo());
 					st.append("splits", s);
 				}
 				//If we only have one of either to or from splits, then things are 
 				// still not too complicated; we can just add one split for each
 				// one, with the other side being the single source
-				else if (transaction.getFromSplits().size() > 0 ^ transaction.getToSplits().size() > 0){
-					boolean fromSplits = transaction.getFromSplits().size() > 0;
-					for (TransactionSplit split : fromSplits ? transaction.getFromSplits() : transaction.getToSplits()) {
+				else if (scheduledTransaction.getFromSplits().size() > 0 ^ scheduledTransaction.getToSplits().size() > 0){
+					boolean fromSplits = scheduledTransaction.getFromSplits().size() > 0;
+					for (TransactionSplit split : fromSplits ? scheduledTransaction.getFromSplits() : scheduledTransaction.getToSplits()) {
 						final JSONObject s = new JSONObject();
 						s.put("amount", formatCurrency(new BigDecimal(split.getAmount()).divide(new BigDecimal(100))));
-						s.put("from", fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", "") : transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
-						s.put("to", !fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", "") : transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
-						s.put("memo", transaction.getMemo());
+						s.put("from", fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", "") : scheduledTransaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+						s.put("to", !fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", "") : scheduledTransaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+						s.put("memo", scheduledTransaction.getMemo());
 						st.append("splits", s);
 					}
 				}
@@ -125,15 +125,15 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 				t.put("deleted", transaction.isDeleted());
 				t.put("description", transaction.getDescription());
 				t.put("number", transaction.getNumber());
-				t.put("uuid", transaction.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+				t.put("uuid", transaction.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 				//Here we have to do some work, since the data models differ a bit.
 				// If there are no splits, then our life is easy: just add a single
 				// split with the from / to sources as indicated.
 				if (transaction.getImmutableFromSplits().size() == 0 && transaction.getImmutableToSplits().size() == 0){
 					final JSONObject s = new JSONObject();
 					s.put("amount", formatCurrency(new BigDecimal(transaction.getAmount()).divide(new BigDecimal(100))));
-					s.put("from", transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
-					s.put("to", transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+					s.put("from", transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+					s.put("to", transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 					s.put("memo", transaction.getMemo());
 					t.append("splits", s);
 				}
@@ -145,8 +145,8 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 					for (ImmutableTransactionSplit split : fromSplits ? transaction.getImmutableFromSplits() : transaction.getImmutableToSplits()) {
 						final JSONObject s = new JSONObject();
 						s.put("amount", formatCurrency(new BigDecimal(split.getAmount()).divide(new BigDecimal(100))));
-						s.put("from", fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", "") : transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
-						s.put("to", !fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", "") : transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+						s.put("from", fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", "") : transaction.getFrom().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
+						s.put("to", !fromSplits ? split.getSource().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", "") : transaction.getTo().getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 						s.put("memo", transaction.getMemo());
 						t.append("splits", s);
 					}
@@ -183,7 +183,7 @@ public class ExportBuddiLiveData extends BuddiExportPlugin {
 			c.put("deleted", category.isDeleted());
 			c.put("periodType", category.getBudgetPeriodType().getBudgetCategoryType().getKey());
 			c.put("type", category.isIncome() ? "I" : "E");
-			c.put("uuid", category.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl", ""));
+			c.put("uuid", category.getUid().replaceAll("org.homeunix.thecave.buddi.model.impl.*Impl-", ""));
 			if (category.getAllImmutableChildren().size() > 0) c.put("categories", getCategories(category.getAllImmutableChildren()));
 			result.put(c);
 		}
