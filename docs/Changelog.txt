@@ -1,5 +1,7 @@
-3.4.1.7
+3.4.1.7 (April 16 2013)
 -Show the proper version string in OSX application package
+-Added export for Buddi Live
+-More work on Look and Feel for non-OSX / Windows package (specifically, we should now use the system color scheme on Linux, among other minor tweaks)
 
 3.4.1.6 (February 20 2013)
 -Finally, the Debian version gets some love!  Updated the .deb package with current dependencies and documentation, and verified on a vanilla Ubuntu install (12.10).
