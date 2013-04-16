@@ -33,7 +33,6 @@ public class MyAccountTreeNameCellRenderer extends DefaultTreeCellRenderer {
 		else
 			this.setText("");
 
-		//this.setBounds(this.getBounds().x, this.getBounds().y, this.getBounds().width + 1000, this.getBounds().height);
-		return this;
+		return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 	}
 }
