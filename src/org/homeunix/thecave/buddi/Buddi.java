@@ -628,7 +628,7 @@ public class Buddi {
 		}
 		
 		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-		LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
+		if (!"none".equals(results.getString("--lnf"))) LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
 
 		splash: if (!OperatingSystemUtil.isMac()){
 			for (String string : args) {
