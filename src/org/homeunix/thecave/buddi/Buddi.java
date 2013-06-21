@@ -236,147 +236,162 @@ public class Buddi {
 			}
 		}
 		
-		int osxMinorVersion = 0;
+		int osxMinorVersion;
 		try {
 			osxMinorVersion = Integer.parseInt(System.getProperty("os.version").split("\\.")[1]);
 		}
-		catch (Throwable t){}
-		
+		catch (Throwable t){
+			osxMinorVersion = 0;
+		}
+
 		if (OperatingSystemUtil.isMac() && isLegacy() && osxMinorVersion >= 7){
-			String[] buttons = new String[2];
-			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
-			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					String[] buttons = new String[2];
+					buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+					buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-			int reply = JOptionPane.showOptionDialog(
-					null,
-					"It appears that a legacy version of Buddi is running on a new version of OS X.\nThis can result in errors to the look and feel.  Please download\na version of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
-					"LEgacy Buddi Version",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE,
-					null,
-					buttons,
-					buttons[0]);
+					int reply = JOptionPane.showOptionDialog(
+							null,
+							"It appears that a legacy version of Buddi is running on a new version of OS X.\nThis can result in errors to the look and feel.  Please download\na version of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
+							"LEgacy Buddi Version",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
 
-			if (reply == JOptionPane.YES_OPTION){
-				String fileLocation;
-				if (Const.BRANCH.equals(Const.STABLE))
-					fileLocation = Const.DOWNLOAD_URL_STABLE;
-				else
-					fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+					if (reply == JOptionPane.YES_OPTION){
+						String fileLocation;
+						if (Const.BRANCH.equals(Const.STABLE))
+							fileLocation = Const.DOWNLOAD_URL_STABLE;
+						else
+							fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
-				fileLocation += Const.DOWNLOAD_TYPE_OSX;
+						fileLocation += Const.DOWNLOAD_TYPE_OSX;
 
-				try{
-					BrowserLauncher.open(fileLocation);
+						try{
+							BrowserLauncher.open(fileLocation);
+						}
+						catch (Exception e){
+							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+						}
+					}
 				}
-				catch (Exception e){
-					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
-				}
-			}
+			});
 		}
 		else if (OperatingSystemUtil.isMac() && !isLegacy() && osxMinorVersion < 7){
-			String[] buttons = new String[2];
-			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
-			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					String[] buttons = new String[2];
+					buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+					buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-			int reply = JOptionPane.showOptionDialog(
-					null,
-					"It appears that a new version of Buddi is running on an old version of OS X.\nThis can result in errors to the look and feel.  Please download a\nversion of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
-					"Legacy OS X Version",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE,
-					null,
-					buttons,
-					buttons[0]);
+					int reply = JOptionPane.showOptionDialog(
+							null,
+							"It appears that a new version of Buddi is running on an old version of OS X.\nThis can result in errors to the look and feel.  Please download a\nversion of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
+							"Legacy OS X Version",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
 
-			if (reply == JOptionPane.YES_OPTION){
-				String fileLocation;
-				if (Const.BRANCH.equals(Const.STABLE))
-					fileLocation = Const.DOWNLOAD_URL_STABLE;
-				else
-					fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+					if (reply == JOptionPane.YES_OPTION){
+						String fileLocation;
+						if (Const.BRANCH.equals(Const.STABLE))
+							fileLocation = Const.DOWNLOAD_URL_STABLE;
+						else
+							fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
-				fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+						fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
 
-				try{
-					BrowserLauncher.open(fileLocation);
+						try{
+							BrowserLauncher.open(fileLocation);
+						}
+						catch (Exception e){
+							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+						}
+					}
 				}
-				catch (Exception e){
-					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
-				}
-			}			
+			});
 		}
 		
 
+		final int finalOsxMinorVersion = osxMinorVersion;
 		//If we have found a new version last time, we prompt for it now.
 		if (PrefsModel.getInstance().isShowUpdateNotifications() 
 				&& PrefsModel.getInstance().getAvailableVersion() != null){
-			Version availableVersion = new Version(PrefsModel.getInstance().getAvailableVersion());
-			Version thisVersion = getVersion();
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					Version availableVersion = new Version(PrefsModel.getInstance().getAvailableVersion());
+					Version thisVersion = getVersion();
 
-			if (thisVersion.compareTo(availableVersion) < 0){
-				String[] buttons = new String[2];
-				buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
-				buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+					if (thisVersion.compareTo(availableVersion) < 0){
+						String[] buttons = new String[2];
+						buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+						buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-				int reply = JOptionPane.showOptionDialog(
-						null,
-						TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
-						+ " " + PrefsModel.getInstance().getAvailableVersion() + "\n"
-						+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
-						TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null,
-						buttons,
-						buttons[0]);
+						int reply = JOptionPane.showOptionDialog(
+								null,
+								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
+								+ " " + PrefsModel.getInstance().getAvailableVersion() + "\n"
+								+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
+								TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								buttons,
+								buttons[0]);
 
-				if (reply == JOptionPane.YES_OPTION){
-					String fileLocation;
-					if (Const.BRANCH.equals(Const.STABLE))
-						fileLocation = Const.DOWNLOAD_URL_STABLE;
-					else
-						fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+						if (reply == JOptionPane.YES_OPTION){
+							String fileLocation;
+							if (Const.BRANCH.equals(Const.STABLE))
+								fileLocation = Const.DOWNLOAD_URL_STABLE;
+							else
+								fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
-					//Link to the correct download by default.
-					if (OperatingSystemUtil.isMac() && osxMinorVersion >= 7)
-						//TODO Once Quaqua fixes the combo box bugs in 8.x we can merge back into a single OSX distribution
-						if (System.getProperty("os.version").startsWith("10.7")){
-							fileLocation += Const.DOWNLOAD_TYPE_OSX;	
+							//Link to the correct download by default.
+							if (OperatingSystemUtil.isMac() && finalOsxMinorVersion >= 7)
+								//TODO Once Quaqua fixes the combo box bugs in 8.x we can merge back into a single OSX distribution
+								if (System.getProperty("os.version").startsWith("10.7")){
+									fileLocation += Const.DOWNLOAD_TYPE_OSX;	
+								}
+								else {
+									fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+								}
+							else if (OperatingSystemUtil.isMac() && finalOsxMinorVersion < 7)
+								fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+							else if (OperatingSystemUtil.isWindows()){
+								if (isWindowsInstaller())
+									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
+								else
+									fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+							}
+							else {
+								//Check for any specific distributions here
+								if (Buddi.isDebian())
+									fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
+								else if (Buddi.isSlackware())
+									fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+								else if (Buddi.isRedhat())
+									fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
+								else if (Buddi.isUnix())
+									fileLocation += Const.DOWNLOAD_TYPE_UNIX;
+								else
+									fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
+							}
+
+							try{
+								BrowserLauncher.open(fileLocation);
+							}
+							catch (Exception e){
+								Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+							}
 						}
-						else {
-							fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
-						}
-					else if (OperatingSystemUtil.isMac() && osxMinorVersion < 7)
-						fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
-					else if (OperatingSystemUtil.isWindows()){
-						if (isWindowsInstaller())
-							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
-						else
-							fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
-					}
-					else {
-						//Check for any specific distributions here
-						if (Buddi.isDebian())
-							fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
-						else if (Buddi.isSlackware())
-							fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
-						else if (Buddi.isRedhat())
-							fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
-						else if (Buddi.isUnix())
-							fileLocation += Const.DOWNLOAD_TYPE_UNIX;
-						else
-							fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
-					}
-
-					try{
-						BrowserLauncher.open(fileLocation);
-					}
-					catch (Exception e){
-						Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
 					}
 				}
-			}
+			});
 		}
 
 		//If we have specified that we want to prompt for a data file at startup,
@@ -472,12 +487,10 @@ public class Buddi {
 	 * Opens the given file.  Must be run in the event dispatch thread. 
 	 * @param f
 	 */
-	private static void openFile(File f){
+	private static void openFile(final File f){
 		//Handle opening files from command line.
 		if (f.getName().endsWith(Const.DATA_FILE_EXTENSION)){
 			try {
-//				MossSplashScreen.hideSplash();
-
 				Document model;
 				model = ModelFactory.createDocument(f);
 
@@ -507,19 +520,23 @@ public class Buddi {
 					throw new IOException("Cannot copy to the same file.");
 				FileFunctions.copyFile(f, dest);
 
-				String[] options = new String[1];
-				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run() {	
+						String[] options = new String[1];
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-				JOptionPane.showOptionDialog(
-						null, 
-						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null,
-						options,
-						options[0]
-				);
+						JOptionPane.showOptionDialog(
+								null, 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED),
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_PLUGIN_ADDED_RESTART_NEEDED_TITLE),
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]
+								);
+					}
+				});
 			}
 			catch (IOException ioe){
 				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error copying plugin to Plugins directory", ioe);
@@ -532,32 +549,36 @@ public class Buddi {
 					Logger.getLogger(Buddi.class.getName()).warning("Error creating Languages directory!");
 				}
 			}
-			try {
-				File dest = new File(Buddi.getLanguagesFolder().getAbsolutePath() + File.separator + f.getName());
-				if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
-					throw new IOException("Cannot copy to the same file.");
-				FileFunctions.copyFile(f, dest);
+			SwingUtilities.invokeLater(new Runnable(){
+				public void run() {	
+					try {
+						File dest = new File(Buddi.getLanguagesFolder().getAbsolutePath() + File.separator + f.getName());
+						if (f.getAbsolutePath().equals(dest.getAbsolutePath()))
+							throw new IOException("Cannot copy to the same file.");
+						FileFunctions.copyFile(f, dest);
 
-				String[] options = new String[1];
-				options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
+						String[] options = new String[1];
+						options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-				JOptionPane.showOptionDialog(
-						null, 
-						TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
-						TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE,
-						null,
-						options,
-						options[0]
-				);
+						JOptionPane.showOptionDialog(
+								null, 
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED),
+								TextFormatter.getTranslation(BuddiKeys.MESSAGE_LANGUAGE_ADDED_RESTART_NEEDED_TITLE),
+								JOptionPane.OK_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								options,
+								options[0]
+								);
 
-				PrefsModel.getInstance().setLanguage(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
-				PrefsModel.getInstance().save();
-			}
-			catch (IOException ioe){
-				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error copying translation to Languages directory", ioe);
-			}
+						PrefsModel.getInstance().setLanguage(f.getName().replaceAll(Const.LANGUAGE_EXTENSION, ""));
+						PrefsModel.getInstance().save();
+					}
+					catch (IOException ioe){
+						Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error copying translation to Languages directory", ioe);
+					}
+				}
+			});
 		}
 	}
 
@@ -865,16 +886,25 @@ public class Buddi {
 
 		//Run any RunnablePlugins which we may have here.
 		for (BuddiRunnablePlugin plugin : (List<BuddiRunnablePlugin>) BuddiPluginFactory.getPlugins(BuddiRunnablePlugin.class)) {
+			final BuddiRunnablePlugin finalPlugin = plugin;
 			try {
 				plugin.run();
 			}
 			catch (RuntimeException re){
 				Logger.getLogger(Buddi.class.getName()).log(Level.SEVERE, "Runtime Exception encountered while starting plugin", re);
-				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + finalPlugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+					}
+				});
 			}
 			catch (Exception e){
 				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Exception encountered while starting plugin", e);
-				JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + plugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						JOptionPane.showMessageDialog(null, "There was a problem starting the plugin " + finalPlugin.getClass() + ".  Please send a copy of Buddi.log to the plugin author for debugging.");
+					}
+				});
 			}
 		}
 
@@ -924,28 +954,33 @@ public class Buddi {
 				|| !PrefsModel.getInstance().getLastVersion().equals(getVersion())){
 			PrefsModel.getInstance().updateVersion();
 
-			String[] buttons = new String[2];
-			buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);
-			buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NOT_NOW);
 
-			int reply = JOptionPane.showOptionDialog(
-					frame, 
-					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION),
-					TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE,
-					null,
-					buttons,
-					buttons[0]);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					String[] buttons = new String[2];
+					buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DONATE);
+					buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_NOT_NOW);
 
-			if (reply == JOptionPane.YES_OPTION){
-				try{
-					BrowserLauncher.open(Const.DONATE_URL);
+					int reply = JOptionPane.showOptionDialog(
+							frame, 
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION),
+							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ASK_FOR_DONATION_TITLE),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,
+							buttons,
+							buttons[0]);
+
+					if (reply == JOptionPane.YES_OPTION){
+						try{
+							BrowserLauncher.open(Const.DONATE_URL);
+						}
+						catch (Exception e){
+							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+						}
+					}
 				}
-				catch (Exception e){
-					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
-				}
-			}
+			});
 		}
 	}
 
@@ -1031,19 +1066,22 @@ public class Buddi {
 				}
 				catch (IOException ioe){
 					Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", ioe);
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							String[] options = new String[1];
+							options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-					String[] options = new String[1];
-					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-
-					JOptionPane.showOptionDialog(
-							frame, 
-							TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
-							TextFormatter.getTranslation(BuddiKeys.ERROR), 
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.ERROR_MESSAGE,
-							null,
-							options,
-							options[0]);
+							JOptionPane.showOptionDialog(
+									frame, 
+									TextFormatter.getTranslation(BuddiKeys.MESSAGE_ERROR_CHECKING_FOR_UPDATES), 
+									TextFormatter.getTranslation(BuddiKeys.ERROR), 
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.ERROR_MESSAGE,
+									null,
+									options,
+									options[0]);
+						}
+					});
 				}
 
 				return null;
@@ -1051,85 +1089,88 @@ public class Buddi {
 
 			@Override
 			public void finished() {
-				if (get() != null){
-					String[] buttons = new String[2];
-					buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
-					buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						if (get() != null){
+							String[] buttons = new String[2];
+							buttons[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_DOWNLOAD);
+							buttons[1] = TextFormatter.getTranslation(ButtonKeys.BUTTON_CANCEL);
 
-					int reply = JOptionPane.showOptionDialog(
-							frame, 
-							TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
-							+ " " + get() + "\n"
-							+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
-							TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.INFORMATION_MESSAGE,
-							null,
-							buttons,
-							buttons[0]);
+							int reply = JOptionPane.showOptionDialog(
+									frame, 
+									TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE)
+									+ " " + get() + "\n"
+									+ TextFormatter.getTranslation(BuddiKeys.NEW_VERSION_MESSAGE_2),
+									TextFormatter.getTranslation(BuddiKeys.NEW_VERSION),
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.INFORMATION_MESSAGE,
+									null,
+									buttons,
+									buttons[0]);
 
-					if (reply == JOptionPane.YES_OPTION){
-						String fileLocation;
-						if (Const.BRANCH.equals(Const.STABLE))
-							fileLocation = Const.DOWNLOAD_URL_STABLE;
-						else
-							fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
+							if (reply == JOptionPane.YES_OPTION){
+								String fileLocation;
+								if (Const.BRANCH.equals(Const.STABLE))
+									fileLocation = Const.DOWNLOAD_URL_STABLE;
+								else
+									fileLocation = Const.DOWNLOAD_URL_UNSTABLE;
 
-						//Link to the correct download by default.
-						int osxMinorVersion = 0;
-						try {
-							osxMinorVersion = Integer.parseInt(System.getProperty("os.version").split("\\.")[1]);
+								//Link to the correct download by default.
+								int osxMinorVersion = 0;
+								try {
+									osxMinorVersion = Integer.parseInt(System.getProperty("os.version").split("\\.")[1]);
+								}
+								catch (Throwable t){}
+
+								if (OperatingSystemUtil.isMac() && osxMinorVersion >= 7)
+									fileLocation += Const.DOWNLOAD_TYPE_OSX;
+								else if (OperatingSystemUtil.isMac() && osxMinorVersion < 7)
+									fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
+								else if (OperatingSystemUtil.isWindows()){
+									if (isWindowsInstaller())
+										fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
+									else
+										fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
+								}
+								else {
+									//Check for any specific distributions here
+									if (Buddi.isDebian())
+										fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
+									else if (Buddi.isSlackware())
+										fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
+									else if (Buddi.isRedhat())
+										fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
+									else if (Buddi.isUnix())
+										fileLocation += Const.DOWNLOAD_TYPE_UNIX;
+									else
+										fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
+								}
+
+								try{
+									BrowserLauncher.open(fileLocation);
+								}
+								catch (Exception e){
+									Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+								}
+							}
 						}
-						catch (Throwable t){}
-						
-						if (OperatingSystemUtil.isMac() && osxMinorVersion >= 7)
-							fileLocation += Const.DOWNLOAD_TYPE_OSX;
-						else if (OperatingSystemUtil.isMac() && osxMinorVersion < 7)
-							fileLocation += Const.DOWNLOAD_TYPE_OSX_LEGACY;
-						else if (OperatingSystemUtil.isWindows()){
-							if (isWindowsInstaller())
-								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS_INSTALLER;
-							else
-								fileLocation += Const.DOWNLOAD_TYPE_WINDOWS;
-						}
+						//There was no updates - if we want a confirmation, show it
 						else {
-							//Check for any specific distributions here
-							if (Buddi.isDebian())
-								fileLocation += Const.DOWNLOAD_TYPE_DEBIAN;
-							else if (Buddi.isSlackware())
-								fileLocation += Const.DOWNLOAD_TYPE_SLACKWARE;
-							else if (Buddi.isRedhat())
-								fileLocation += Const.DOWNLOAD_TYPE_REDHAT;
-							else if (Buddi.isUnix())
-								fileLocation += Const.DOWNLOAD_TYPE_UNIX;
-							else
-								fileLocation += Const.DOWNLOAD_TYPE_GENERIC;
-						}
+							String[] options = new String[1];
+							options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
 
-						try{
-							BrowserLauncher.open(fileLocation);
-						}
-						catch (Exception e){
-							Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Unknown Exception", e);
+							JOptionPane.showOptionDialog(
+									frame, 
+									TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION), 
+									TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.INFORMATION_MESSAGE,
+									null,
+									options,
+									options[0]);
 						}
 					}
-				}
-				//There was no updates - if we want a confirmation, show it
-				else {
-					String[] options = new String[1];
-					options[0] = TextFormatter.getTranslation(ButtonKeys.BUTTON_OK);
-
-					JOptionPane.showOptionDialog(
-							frame, 
-							TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION), 
-							TextFormatter.getTranslation(BuddiKeys.MESSAGE_NO_NEW_VERSION_TITLE), 
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.INFORMATION_MESSAGE,
-							null,
-							options,
-							options[0]);
-				}
-
+				});
 				super.finished();
 			}
 		};
@@ -1212,46 +1253,50 @@ public class Buddi {
 //		Logger.getLogger().critical(crashLogger.getLogger().toString());
 	}
 
-	private static void extractFile(File fileToLoad){
-		try {
-			InputStream is;
-			BuddiCryptoFactory factory = new BuddiCryptoFactory();
-			char[] password = null;
-
-			//Loop until the user gets the password correct, hits cancel, 
-			// or some other error occurs.
-			while (true) {
+	private static void extractFile(final File fileToLoad){
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
 				try {
-					is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
-					OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".xml"));
-					StreamUtil.copyStream(is, os);
+					InputStream is;
+					BuddiCryptoFactory factory = new BuddiCryptoFactory();
+					char[] password = null;
 
-					os.flush();
-					os.close();
-					is.close();					
+					//Loop until the user gets the password correct, hits cancel, 
+					// or some other error occurs.
+					while (true) {
+						try {
+							is = factory.getDecryptedStream(new FileInputStream(fileToLoad), password);
+							OutputStream os = new FileOutputStream(new File(fileToLoad.getAbsolutePath() + ".xml"));
+							StreamUtil.copyStream(is, os);
 
-					System.exit(0);
-				}
-				catch (IncorrectPasswordException ipe){
-					//The password was not correct.  Prompt for a new one.
-					BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
-					password = passwordDialog.askForPassword(false, true);
+							os.flush();
+							os.close();
+							is.close();					
 
-					//User hit cancel.  Exit.
-					if (password == null)
-						System.exit(0);
+							System.exit(0);
+						}
+						catch (IncorrectPasswordException ipe){
+							//The password was not correct.  Prompt for a new one.
+							BuddiPasswordDialog passwordDialog = new BuddiPasswordDialog();
+							password = passwordDialog.askForPassword(false, true);
+
+							//User hit cancel.  Exit.
+							if (password == null)
+								System.exit(0);
+						}
+						catch (Exception e){
+							e.printStackTrace();
+							System.exit(1);
+						}
+					}
 				}
 				catch (Exception e){
 					e.printStackTrace();
 					System.exit(1);
 				}
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-			System.exit(1);
-		}
 
-		System.exit(0);
+				System.exit(0);
+			}
+		});
 	}
 }
