@@ -568,14 +568,6 @@ public class Buddi {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		//Set Buddi-specific LnF options, mostly (all?) for Quaqua.
-		//This one removes the width limitation for dialogs.  Since we already will
-		// wrap for other OS's, there is no need to have Quaqua do this for you.
-		UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
-		//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
-		// so we must set it here manually. 
-		UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));
-
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Const.PROJECT_NAME);
 
 		String help = "USAGE: java -jar Buddi.jar <options> <data file>, where options include:\n"
@@ -585,7 +577,7 @@ public class Buddi {
 			+ "--languages\tFolder\tFolder to store custom languages (should be writable; default varies by platform)\n"
 			+ "--plugins\tFolder\tFolder to store plugins (should be writable; default varies by platform)\n"
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
-			+ "--lnf\tclassname\tTry to use the given LnF; you must manually include the LnF jar in the classpath\n"
+			+ "--lnf\tclassname\tTry to use the given LnF; you must manually include the LnF jar in the classpath.  Set to 'none' to disable all Look and Feel calls\n"
 			+ "--extract\tData File\tExtracts the XML contents of the given file, to Filename.xml.  Used for debugging.\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --font	<fontName> will specify a font to use by default
@@ -627,8 +619,18 @@ public class Buddi {
 			System.exit(0);
 		}
 		
-		//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-		if (!"none".equals(results.getString("--lnf"))) LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
+		if (!"none".equals(results.getString("--lnf"))) {
+			//Set Buddi-specific LnF options, mostly (all?) for Quaqua.
+			//This one removes the width limitation for dialogs.  Since we already will
+			// wrap for other OS's, there is no need to have Quaqua do this for you.
+			UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
+			//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
+			// so we must set it here manually. 
+			UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));		
+
+			//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
+			LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
+		}
 
 		splash: if (!OperatingSystemUtil.isMac()){
 			for (String string : args) {
