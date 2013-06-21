@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -611,7 +612,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--legacy", Boolean.class, false));
 		variables.add(new ParseVariable("--windows-installer", Boolean.class, false));
 
-		ParseResults results = ParseCommands.parse(args, help, variables);
+		final ParseResults results = ParseCommands.parse(args, help, variables);
 
 		//Extract file to stdout, and exit.
 		if (results.getString("--extract") != null){
@@ -620,16 +621,26 @@ public class Buddi {
 		}
 		
 		if (!"none".equals(results.getString("--lnf"))) {
-			//Set Buddi-specific LnF options, mostly (all?) for Quaqua.
-			//This one removes the width limitation for dialogs.  Since we already will
-			// wrap for other OS's, there is no need to have Quaqua do this for you.
-			UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
-			//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
-			// so we must set it here manually. 
-			UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));		
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run() {
+						//Set Buddi-specific LnF options, mostly (all?) for Quaqua.
+						//This one removes the width limitation for dialogs.  Since we already will
+						// wrap for other OS's, there is no need to have Quaqua do this for you.
+						UIManager.put("OptionPane.maxCharactersPerLineCount", Integer.MAX_VALUE);
+						//Set the max row count.  Quaqua overrides the value set in MossScrollingComboBox, 
+						// so we must set it here manually. 
+						UIManager.put("ComboBox.maximumRowCount", Integer.valueOf(10));		
 
-			//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
-			LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
+						//Load the correct Look and Feel.  Includes OS specific options, such as Quaqua constants.
+						LookAndFeelUtil.setLookAndFeel(results.getString("--lnf"));
+					}
+				});
+			} catch (InterruptedException e) {
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, e.getMessage(), e);
+			} catch (InvocationTargetException e) {
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, e.getMessage(), e);
+			}
 		}
 
 		splash: if (!OperatingSystemUtil.isMac()){
