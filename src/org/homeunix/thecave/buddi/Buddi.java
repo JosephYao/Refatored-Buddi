@@ -254,7 +254,7 @@ public class Buddi {
 					int reply = JOptionPane.showOptionDialog(
 							null,
 							"It appears that a legacy version of Buddi is running on a new version of OS X.\nThis can result in errors to the look and feel.  Please download\na version of Buddi from http://buddi.digitalcave.ca/download.jsp\nwhich matches your operating system version.",
-							"LEgacy Buddi Version",
+							"Legacy Buddi Version",
 							JOptionPane.YES_NO_OPTION,
 							JOptionPane.WARNING_MESSAGE,
 							null,
