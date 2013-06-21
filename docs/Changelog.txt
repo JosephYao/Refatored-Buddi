@@ -1,3 +1,6 @@
+3.4.1.9 (June 20 2013)
+-Improved the workaround for the latest Java update in 10.6.8, so that you do not have to manually edit Info.plist, and so that you have a normal looking Mac application.  All OS X users should update to this version (and it won't hurt Windows / Linux users to upgrade as well).
+
 3.4.1.8 (June 20 2013)
 -Added support for --lnf none option to completely disable setting the look and feel.  This may be required for certain operating systems, most notably OSX 10.6.8 with the latest Java installs, which seems to have broken calls to UIManager.setLookAndFeel().
 
