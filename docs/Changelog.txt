@@ -1,3 +1,6 @@
+3.4.1.8 (June 20 2013)
+-Added support for --lnf none option to completely disable setting the look and feel.  This may be required for certain operating systems, most notably OSX 10.6.8 with the latest Java installs, which seems to have broken calls to UIManager.setLookAndFeel().
+
 3.4.1.7 (April 16 2013)
 -Show the proper version string in OSX application package
 -Added export for Buddi Live
