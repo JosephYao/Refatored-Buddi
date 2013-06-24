@@ -507,6 +507,24 @@ public class Buddi {
 			}
 			catch (OperationCancelledException oce){}  //Do nothing
 		}
+		else if (f.getName().endsWith(Const.EXTRACTED_DATA_FILE_EXTENSION)){
+			try {
+				Document model;
+				model = ModelFactory.importDocument(f);
+
+				MainFrame mainWndow = new MainFrame(model);
+				try {
+					mainWndow.openWindow(
+							PrefsModel.getInstance().getWindowSize(model.getFile() + ""), 
+							PrefsModel.getInstance().getWindowLocation(model.getFile() + ""));
+				}
+				catch (WindowOpenException woe){}
+			}
+			catch (DocumentLoadException lme){
+				Logger.getLogger(Buddi.class.getName()).log(Level.WARNING, "Error loading document", lme);
+			}
+			catch (OperationCancelledException oce){}  //Do nothing
+		}
 		else if (f.getName().endsWith(Const.PLUGIN_EXTENSION)){
 			Logger.getLogger(Buddi.class.getName()).info("Trying to copy " + f.getAbsolutePath() + " to " + Buddi.getPluginsFolder() + File.separator + f.getName());
 			if (!Buddi.getPluginsFolder().exists()){
@@ -601,6 +619,7 @@ public class Buddi {
 			+ "--nosplash\t\tDon't show splash screen on startup\n"
 			+ "--lnf\tclassname\tTry to use the given LnF; you must manually include the LnF jar in the classpath.  Set to 'none' to disable all Look and Feel calls\n"
 			+ "--extract\tData File\tExtracts the XML contents of the given file, to Filename.xml.  Used for debugging.\n"
+			+ "--import\tData File\tImports the XML contents of the given file, from Filename.xml.  Used to load XML files previously extracted by --extract option.\n"
 			+ "--log\tlogFile\tLocation to store logs, or 'stdout' / 'stderr' (default varies by platform)\n";
 		// Undocumented flag --font	<fontName> will specify a font to use by default
 		// Undocumented flag --windows-installer will specify a -Installer.exe download for new versions.
@@ -621,6 +640,7 @@ public class Buddi {
 		variables.add(new ParseVariable("--nosplash", Boolean.class, false));
 		variables.add(new ParseVariable("--noautosave", Boolean.class, false));
 		variables.add(new ParseVariable("--extract", String.class, false));
+		variables.add(new ParseVariable("--import", String.class, false));
 		variables.add(new ParseVariable("--reports", String.class, false));
 		variables.add(new ParseVariable("--lnf", String.class, false));
 
@@ -840,6 +860,10 @@ public class Buddi {
 
 
 		filesToLoad = new LinkedList<File>();
+		
+		if (results.getString("--import") != null){
+			filesToLoad.add(new File(results.getString("--import")));
+		}
 		for (String s : results.getCommands()) {
 			filesToLoad.add(new File(s));
 		}

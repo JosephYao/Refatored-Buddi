@@ -436,7 +436,62 @@ public class ModelFactory {
 		}
 	}
 
+	/**
+	 * Attempts to import a data model from extracted XML file.  Works with Buddi 3 extracted format.
+	 * @param file File to load
+	 * @throws DocumentLoadException
+	 */
+	public static Document importDocument(File file) throws DocumentLoadException, OperationCancelledException {
+		DocumentImpl document;
 
+		if (!file.exists())
+			throw new DocumentLoadException("File " + file + " does not exist.");
+
+		if (!file.canRead())
+			throw new DocumentLoadException("File " + file + " cannot be opened for reading.");
+
+		try {
+			InputStream is = new FileInputStream(file);
+			
+			//Attempt to decode the XML within the (now hopefully un-encrypted) data file. 
+			XMLDecoder decoder = new XMLDecoder(is);
+			Object o = decoder.readObject();
+			if (o instanceof DocumentImpl){
+				document = (DocumentImpl) o;
+			}
+			else {
+				throw new IncorrectDocumentFormatException("Could not find a DataModelBean object in the data file!");
+			}
+			is.close();
+
+			//Refresh the UID Map...
+			document.refreshUidMap();
+
+			//This will let us know where to save the file to.  Even if we found
+			// an autosave file, we want to save the file to the new location, 
+			// so we don't use the fileToLoad variable.
+			document.setFile(null);
+
+			//Update all balances...
+			document.updateAllBalances();
+
+			//Check for scheduled transactions
+			document.updateScheduledTransactions();
+			
+			return document;
+		}
+		catch (IncorrectDocumentFormatException ife){
+			//The document we are trying to load does not have the proper header.
+			// This is not a valid Buddi3 data file.
+			throw new DocumentLoadException("Incorrect document format", ife);
+		}
+		catch (IOException e){
+			throw new DocumentLoadException("IO Exception", e);
+		}
+		catch (ModelException me){
+			throw new DocumentLoadException("Model exception", me);
+		}
+	}
 
 	/**
 	 * Creates a new ScheduledTransaction with the given values

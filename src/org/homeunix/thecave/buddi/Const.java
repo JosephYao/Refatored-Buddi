@@ -57,6 +57,7 @@ public class Const {
 	
 	//Data file constants
 	public final static String DATA_FILE_EXTENSION = ".buddi3";
+	public final static String EXTRACTED_DATA_FILE_EXTENSION = ".xml";
 	public final static String BACKUP_FILE_EXTENSION = ".buddi3bak";
 	public final static String AUTOSAVE_FILE_EXTENSION = ".buddi3autosave";
 	

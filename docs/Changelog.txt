@@ -1,3 +1,6 @@
+3.4.1.11
+-Added an --import option to load an .XML from a previously --extract'd data file.  This lets users extract, modify, and re-import their changes. 
+
 3.4.1.10 (June 21 2013)
 -Found a few more sections which hang on 10.6.8's most recent Java update.  Fixed (I think?) all of them now.
 
