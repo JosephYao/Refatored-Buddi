@@ -75,7 +75,8 @@ public class PrefsModelBean {
 	private boolean sendCrashReports;
 	private boolean showUpdateNotifications;
 	private boolean showPromptAtStartup;
-	private String transactionCellRenderer; 
+	private String transactionCellRenderer;
+	private String backupLocation;
 	
 	//Transaction Pane collapsible panes
 	private boolean searchPaneVisible;
@@ -456,5 +457,13 @@ public class PrefsModelBean {
 
 	public void setShowCurrentBudget(boolean showCurrentBudget) {
 		this.showCurrentBudget = showCurrentBudget;
+	}
+	
+	public String getBackupLocation() {
+		return backupLocation;
+	}
+	
+	public void setBackupLocation(String backupLocation) {
+		this.backupLocation = backupLocation;
 	}
 }

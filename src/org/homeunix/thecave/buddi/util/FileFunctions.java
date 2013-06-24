@@ -43,6 +43,7 @@ public class FileFunctions {
 		}
 		catch (FileNotFoundException fnfe){
 			fnfe.printStackTrace();
+			throw new IOException(fnfe);
 		}
 		finally{
 			if (in != null)

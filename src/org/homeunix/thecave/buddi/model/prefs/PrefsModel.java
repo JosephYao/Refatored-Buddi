@@ -637,5 +637,13 @@ public class PrefsModel {
 	public boolean isShowCurrentBudget() {
 		return prefsModel.isShowCurrentBudget();
 	}
+	
+	public String getBackupLocation(){
+		return prefsModel.getBackupLocation();
+	}
+	
+	public void setBackupLocation(String backupLocation){
+		prefsModel.setBackupLocation(backupLocation);
+	}
 }
 

@@ -120,7 +120,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 			if (getFile() != null){
 				//Use a rotating backup file, of form 'Data.X.buddi'  
 				// The one with the smallest number X is the most recent.
-				String fileBase = getFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+				final String fileBase;
+				if (PrefsModel.getInstance().getBackupLocation() == null || PrefsModel.getInstance().getBackupLocation().trim().length() == 0){
+					fileBase = getFile().getAbsolutePath().replaceAll(Const.DATA_FILE_EXTENSION + "$", "");
+				}
+				else {
+					fileBase = new File(PrefsModel.getInstance().getBackupLocation() + "/" + getFile().getName().replaceAll(Const.DATA_FILE_EXTENSION + "$", "")).getAbsolutePath();
+				}
 				for (int i = PrefsModel.getInstance().getNumberOfBackups() - 2; i >= 0; i--){
 					File tempBackupDest = new File(fileBase + "_" + (i + 1) + Const.BACKUP_FILE_EXTENSION);
 					File tempBackupSource = new File(fileBase + "_" + i + Const.BACKUP_FILE_EXTENSION);
@@ -136,11 +142,13 @@ public class DocumentImpl extends AbstractDocument implements ModelObject, Docum
 				}
 			}
 		}
-		catch(IOException ioe){
-			logger.log(Level.WARNING, "Problem backing up data files", ioe);
-		}
-		catch (RuntimeException re){
-			logger.log(Level.SEVERE, "Runtime Exception encountered when backing up data file!", re);
+		catch (Throwable e){
+			JOptionPane.showMessageDialog(
+					null,
+					"There was an error backing up the data file.  Please check the Buddi\nlogs for more details.  If the backup location\nis set, please ensure the folder exists and is writable.",
+					"Error Backing Up Data",
+					JOptionPane.WARNING_MESSAGE);
+			logger.log(Level.WARNING, "Problem backing up data files", e);
 		}
 	}
 	

@@ -25,7 +25,9 @@ import org.homeunix.thecave.buddi.plugin.api.BuddiPreferencePlugin;
 import org.homeunix.thecave.buddi.plugin.api.BuddiTransactionCellRendererPlugin;
 import org.homeunix.thecave.buddi.plugin.api.util.TextFormatter;
 import org.homeunix.thecave.buddi.plugin.builtin.cellrenderer.DefaultTransactionCellRenderer;
+import org.homeunix.thecave.buddi.util.InternalFormatter;
 
+import ca.digitalcave.moss.swing.MossHintTextField;
 import ca.digitalcave.moss.swing.model.BackedComboBoxModel;
 
 public class AdvancedPreferences extends BuddiPreferencePlugin {
@@ -38,6 +40,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 //	private final JCheckBox sendCrashReport;
 	private final JCheckBox showUpdateNotifications;
 	private final JCheckBox hideNegativeSign;
+	private final MossHintTextField backupLocation;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -49,6 +52,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 //		sendCrashReport = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_SEND_CRASH_REPORTS));
 		showUpdateNotifications = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_ENABLE_UPDATE_NOTIFICATIONS));
 		hideNegativeSign = new JCheckBox(TextFormatter.getTranslation(BuddiKeys.PREFERENCE_HIDE_NEGATIVE_SIGNS));
+		backupLocation = new MossHintTextField(TextFormatter.getTranslation(BuddiKeys.BACKUP_LOCATION_HINT));
 		
 		numberOfBackups.addPopupMenuListener(new PopupMenuListener() {
 			private void checkForZero(PopupMenuEvent e){
@@ -57,7 +61,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 							null, 
 							TextFormatter.getTranslation(BuddiKeys.MESSAGE_BACKUPS_ARE_IMPORTANT_TEXT),
 							TextFormatter.getTranslation(BuddiKeys.WARNING),
-							JOptionPane.WARNING_MESSAGE);					
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
@@ -122,10 +126,14 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 //		JPanel sendCrashReportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel hideNegativePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel transactionCellRendererPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel backupLocationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		JLabel autosavePeriodLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.AUTOSAVE_PERIOD));
 		JLabel numberOfBackupsLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.NUMBER_OF_BACKUPS));
 		JLabel transactionCellRendererLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.TRANSACTION_CELL_RENDERER));
+		JLabel backupLocationLabel = new JLabel(TextFormatter.getTranslation(BuddiKeys.BACKUP_LOCATION));
+		
+		backupLocation.setPreferredSize(InternalFormatter.getComponentSize(backupLocation, 300));
 
 		transactionCellRendererPanel.add(transactionCellRendererLabel);
 		transactionCellRendererPanel.add(transactionCellRenderer);
@@ -144,6 +152,9 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 //		sendCrashReportPanel.add(sendCrashReport);
 		
 		hideNegativePanel.add(hideNegativeSign);
+		
+		backupLocationPanel.add(backupLocationLabel);
+		backupLocationPanel.add(backupLocation);
 				
 		panel.add(autosavePeriodPanel);
 		panel.add(numberOfBackupsPanel);
@@ -154,6 +165,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		panel.add(promptForDataFilePanel);
 		panel.add(hideNegativePanel);
 		panel.add(checkForUpdatesPanel);
+		panel.add(backupLocationPanel);
 //		panel.add(sendCrashReportPanel);
 		
 		return panel;
@@ -176,6 +188,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		showUpdateNotifications.setSelected(PrefsModel.getInstance().isShowUpdateNotifications());
 //		sendCrashReport.setSelected(PrefsModel.getInstance().isSendCrashReports());
 		hideNegativeSign.setSelected(PrefsModel.getInstance().isDontShowNegativeSign());
+		backupLocation.setText(PrefsModel.getInstance().getBackupLocation());
 	}
 
 	public boolean save() {
@@ -186,6 +199,7 @@ public class AdvancedPreferences extends BuddiPreferencePlugin {
 		PrefsModel.getInstance().setShowUpdateNotifications(showUpdateNotifications.isSelected());
 //		PrefsModel.getInstance().setSendCrashReports(sendCrashReport.isSelected());
 		PrefsModel.getInstance().setShowNegativeSign(hideNegativeSign.isSelected());
+		PrefsModel.getInstance().setBackupLocation(backupLocation.getText());
 		
 		return false;
 	}
