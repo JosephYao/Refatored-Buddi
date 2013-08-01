@@ -1,4 +1,4 @@
-3.4.1.11
+3.4.1.11 (August 1 2013)
 -Added an --import option to load an .XML from a previously --extract'd data file.  This lets users extract, modify, and re-import their changes.
 -Added backup location option (under Advanced preferences) which lets users specify a directory to store backup files to, instead of backing up next to the data file.  This location must exist, and must be writable, or an error is thrown and the file is not backed up.
 
