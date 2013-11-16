@@ -1,4 +1,4 @@
-package org.homeunix.thecave.buddi.test;
+package org.homeunix.thecave.buddi.test.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class BetterBudgetCategoryTest {
 
-	private BudgetCategoryImpl bc = new BudgetCategoryImpl();
+	private BudgetCategoryImpl bc = new BudgetCategoryImpl(); 
 	private Date fourthOfJuly2011;
 	private Date secondOfJuly2011;
 	private Date twentyJune2011;
