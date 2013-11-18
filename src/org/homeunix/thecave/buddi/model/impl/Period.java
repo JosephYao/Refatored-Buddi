@@ -2,6 +2,8 @@ package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
 
+import ca.digitalcave.moss.common.DateUtil;
+
 public class Period {
 	
 	private final Date start;
@@ -25,5 +27,8 @@ public class Period {
 		return another.start.equals(this.start) &&
 			   another.end.equals(this.end);
 	}
-
+	
+	public long getDayCount() {
+		return DateUtil.getDaysBetween(start, end, true);
+	}
 }
