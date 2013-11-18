@@ -120,34 +120,30 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	}
 
 	private long getTotalAmount(Period period) {
-		BudgetPeriod firstBudgetPeriod = createBudgetPeriod(period.getStartDate());
-		BudgetPeriod lastBudgetPeriod = createBudgetPeriod(period.getEndDate());
+		BudgetPeriod firstBudgetPeriod = createFirstBudgetPeriod(period);
+		BudgetPeriod lastBudgetPeriod = createLastBudgetPeriod(period);
 
-		if (firstBudgetPeriod.equals(lastBudgetPeriod)) {
-			return (long) getAmountInPeriod(period, firstBudgetPeriod);
+		double total = 0;
+		for (BudgetPeriod budgetPeriod : firstBudgetPeriod.createBudgetPeriodListTill(lastBudgetPeriod)) {
+			total += getAmountForOverlappingDays(period, budgetPeriod);
 		}
 
-		double totalStartPeriod = getAmountInPeriod(new Period(period.getStartDate(), firstBudgetPeriod.getEndDate()), firstBudgetPeriod);
-
-		double totalInMiddle = 0;
-		for (BudgetPeriod budgetPeriod : firstBudgetPeriod.nextBudgetPeriod().createBudgetPeriodListTill(lastBudgetPeriod.perviousBudgetPeriod())) {
-			totalInMiddle += getAmountFromBudgetPeriod(budgetPeriod);
-		}
-
-		double totalEndPeriod = getAmountInPeriod(
-				new Period(lastBudgetPeriod.getStartDate(), period.getEndDate()), lastBudgetPeriod);
-		return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
+		return (long) total;
 	}
 
-	private BudgetPeriod createBudgetPeriod(Date date) {
-		return new BudgetPeriod(getBudgetPeriodType(), date);
-	}
-
-	private double getAmountInPeriod(Period period, BudgetPeriod budgetPeriod) {
+	private double getAmountForOverlappingDays(Period period, BudgetPeriod budgetPeriod) {
 		long amount = getAmountFromBudgetPeriod(budgetPeriod);
 		long daysInPeriod = budgetPeriod.getDayCount();
-		long daysBetween = period.getDayCount();
+		long daysBetween = period.getOverlappingDayCount(budgetPeriod.getPeriod()); 
 		return ((double) amount / (double) daysInPeriod) * daysBetween;
+	}
+
+	private BudgetPeriod createFirstBudgetPeriod(Period period) {
+		return new BudgetPeriod(getBudgetPeriodType(), period.getStartDate());
+	}
+
+	private BudgetPeriod createLastBudgetPeriod(Period period) {
+		return new BudgetPeriod(getBudgetPeriodType(), period.getEndDate());
 	}
 
 	private long getAmountFromBudgetPeriod(BudgetPeriod budgetPeriod) {

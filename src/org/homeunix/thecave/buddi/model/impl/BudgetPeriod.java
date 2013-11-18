@@ -33,10 +33,6 @@ public class BudgetPeriod {
 		return period.getEndDate();
 	}
 
-	public BudgetPeriod perviousBudgetPeriod() {
-		return new BudgetPeriod(type, type.getBudgetPeriodOffset(period.getStartDate(), -1));
-	}
-
 	public long getDayCount() {
 		return period.getDayCount();
 	}
@@ -52,6 +48,10 @@ public class BudgetPeriod {
 		}
 	
 		return budgetPeriods;
+	}
+
+	public Period getPeriod() {
+		return period;
 	}
 
 }

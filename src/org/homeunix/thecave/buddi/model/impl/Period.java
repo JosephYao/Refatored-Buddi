@@ -31,4 +31,14 @@ public class Period {
 	public long getDayCount() {
 		return DateUtil.getDaysBetween(start, end, true);
 	}
+	
+	public long getOverlappingDayCount(Period anotherPeriod) {
+		Date laterStartDate = (start.after(anotherPeriod.start)) ? start : anotherPeriod.start;
+		Date earlierEndDate = (end.before(anotherPeriod.end)) ? end : anotherPeriod.end;
+		
+		if (laterStartDate.after(earlierEndDate))
+			return 0;
+		
+		return new Period(laterStartDate, earlierEndDate).getDayCount();
+	}
 }
