@@ -35,7 +35,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	}
 
 	public long getAmount(Date startDate, Date endDate) {
-		return getBudgetCategory().getAmount(startDate, endDate);
+		return getBudgetCategory().getTotalAmount(startDate, endDate);
 	}
 	
 	public void setAmount(Date date, long amount) throws InvalidValueException{
@@ -43,7 +43,7 @@ public class MutableBudgetCategoryImpl extends MutableSourceImpl implements Muta
 	}
 	
 	public long getAmount(Date date) {
-		return getBudgetCategory().getAmount(date);
+		return getBudgetCategory().getAmountFromBudgetPeriodContainingDate(date);
 	}
 	
 	public ImmutableBudgetCategoryType getBudgetPeriodType() {

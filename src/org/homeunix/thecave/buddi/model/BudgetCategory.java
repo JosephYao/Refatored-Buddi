@@ -16,7 +16,7 @@ public interface BudgetCategory extends Source, Expandable {
 	 * @param periodDate
 	 * @return
 	 */
-	public long getAmount(Date periodDate);
+	public long getAmountFromBudgetPeriodContainingDate(Date periodDate);
 	
 	/**
 	 * Returns the budgeted amount associated with this budget category, over
@@ -40,7 +40,7 @@ public interface BudgetCategory extends Source, Expandable {
 	 * @param endDate
 	 * @return
 	 */
-	public long getAmount(Date startDate, Date endDate);
+	public long getTotalAmount(Date startDate, Date endDate);
 		
 	/**
 	 * Returns the Budget Period type.  One of the values in Enum BudgePeriodKeys.
