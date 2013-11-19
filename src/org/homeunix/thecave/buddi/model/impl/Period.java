@@ -19,4 +19,10 @@ public class Period {
 	public Date getEndDate() {
 		return endDate;
 	}
+	
+	public boolean equals(Object object) {
+		Period another = (Period) object;
+		return another.startDate.equals(this.startDate) &&
+			   another.endDate.equals(this.endDate);
+	}
 }
