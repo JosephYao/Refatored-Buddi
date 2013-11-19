@@ -9,7 +9,7 @@ import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 public class BudgetPeriod {
 
 	private final Period period;
-	private BudgetCategoryType type;
+	private final BudgetCategoryType type;
 
 	public BudgetPeriod(BudgetCategoryType type, Date date) {
 		this.type = type;
@@ -33,10 +33,6 @@ public class BudgetPeriod {
 		return period.getEndDate();
 	}
 
-	public BudgetPeriod previousBudgetPeriod() {
-		return new BudgetPeriod(type, type.getBudgetPeriodOffset(period.getStartDate(), -1));
-	}
-	
 	public long getDayCount() {
 		return period.getDayCount();
 	}
@@ -52,6 +48,10 @@ public class BudgetPeriod {
 		}
 	
 		return budgetPeriods;
+	}
+
+	public Period getPeriod() {
+		return period;
 	}
 	
 }
