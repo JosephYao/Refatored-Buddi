@@ -104,27 +104,31 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (startDate.after(endDate))
 			throw new RuntimeException("Start date cannot be before End Date!");
 		
+		return getAmountInPeriod(new Period(startDate, endDate));
+	}
+	
+	private long getAmountInPeriod(Period period) {
 		//If Start and End are in the same budget period
-		if (getBudgetPeriodType().getStartOfBudgetPeriod(startDate).equals(
-				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
-			return (long) getAmountInPeriod(startDate, endDate);
+		if (getBudgetPeriodType().getStartOfBudgetPeriod(period.getStartDate()).equals(
+				getBudgetPeriodType().getStartOfBudgetPeriod(period.getEndDate()))){
+			return (long) getAmountInPeriod(period.getStartDate(), period.getEndDate());
 		}
 		 
 		//If the area between Start and End overlap at least two budget periods. 
-		if (getBudgetPeriodType().getStartOfNextBudgetPeriod(startDate).equals(
-				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))
-				|| getBudgetPeriodType().getStartOfNextBudgetPeriod(startDate).before(
-						getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
-			double totalStartPeriod = getAmountInPeriod(startDate, getBudgetPeriodType().getEndOfBudgetPeriod(startDate));
+		if (getBudgetPeriodType().getStartOfNextBudgetPeriod(period.getStartDate()).equals(
+				getBudgetPeriodType().getStartOfBudgetPeriod(period.getEndDate()))
+				|| getBudgetPeriodType().getStartOfNextBudgetPeriod(period.getStartDate()).before(
+						getBudgetPeriodType().getStartOfBudgetPeriod(period.getEndDate()))){
+			double totalStartPeriod = getAmountInPeriod(period.getStartDate(), getBudgetPeriodType().getEndOfBudgetPeriod(period.getStartDate()));
 			
 			double totalInMiddle = 0;
 			for (String periodKey : getBudgetPeriods(
-					getBudgetPeriodType().getStartOfNextBudgetPeriod(startDate),
-					getBudgetPeriodType().getStartOfPreviousBudgetPeriod(endDate))) {
+					getBudgetPeriodType().getStartOfNextBudgetPeriod(period.getStartDate()),
+					getBudgetPeriodType().getStartOfPreviousBudgetPeriod(period.getEndDate()))) {
 				totalInMiddle += getAmount(getPeriodDate(periodKey));
 			}
 			
-			double totalEndPeriod = getAmountInPeriod(getBudgetPeriodType().getStartOfBudgetPeriod(endDate), endDate);
+			double totalEndPeriod = getAmountInPeriod(getBudgetPeriodType().getStartOfBudgetPeriod(period.getEndDate()), period.getEndDate());
 			return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
 		}
 
