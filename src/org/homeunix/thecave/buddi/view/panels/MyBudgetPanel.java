@@ -343,7 +343,7 @@ public class MyBudgetPanel extends MossPanel implements ActionListener {
 		for (BudgetCategory bc : new LinkedList<BudgetCategory>(new FilteredLists.BudgetCategoryListFilteredByPeriodType(
 				(Document) parent.getDocument(), 
 				treeTableModel.getSelectedBudgetPeriodType()))) {
-			budgetedNetIncome += (bc.getAmount(treeTableModel.getSelectedDate()) * (bc.isIncome() ? 1 : -1));
+			budgetedNetIncome += (bc.getAmountOfBudgetPeriodContainingDate(treeTableModel.getSelectedDate()) * (bc.isIncome() ? 1 : -1));
 		}
 		balanceLabel.setText(TextFormatter.getHtmlWrapper(TextFormatter.getFormattedCurrency(budgetedNetIncome)));
 
