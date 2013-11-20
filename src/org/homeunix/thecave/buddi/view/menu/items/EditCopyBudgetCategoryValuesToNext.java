@@ -34,9 +34,9 @@ public class EditCopyBudgetCategoryValuesToNext extends MossMenuItem{
 	public void actionPerformed(ActionEvent e) {
 		Date currentlySelectedDate = ((MainFrame) getFrame()).getMyBudgetPanel().getTreeTableModel().getSelectedDate();
 		for (BudgetCategory bc : ((MainFrame) getFrame()).getBudgetCategoriesInSelectedPeriod()) {
-			long amount = bc.getAmountOfBudgetPeriodContainingDate(currentlySelectedDate);
+			long amount = bc.getAmount(currentlySelectedDate);
 			try {
-				if (bc.getAmountOfBudgetPeriodContainingDate(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, 1)) == 0)
+				if (bc.getAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, 1)) == 0)
 					bc.setAmount(bc.getBudgetPeriodType().getBudgetPeriodOffset(currentlySelectedDate, 1), amount);
 			}
 			catch (InvalidValueException ive){

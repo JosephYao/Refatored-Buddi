@@ -349,13 +349,13 @@ public class ModelFactory {
 
 						//Iterate through all budget periods, and check the 
 						// 
-						for (String key : ((BudgetCategoryImpl) bc).getBudgetPeriods().keySet()) {
+						for (String key : ((BudgetCategoryImpl) bc).getAmounts().keySet()) {
 							String[] splitKey = key.split(":");
 							if (splitKey.length == 2){
 								changed = true;
 								Date dateKey = new Date(Long.parseLong(splitKey[1]));
 								Logger.getLogger(ModelFactory.class.getName()).finest("dateKey: " + dateKey);
-								long amount = ((BudgetCategoryImpl) bc).getBudgetPeriods().get(key);
+								long amount = ((BudgetCategoryImpl) bc).getAmounts().get(key);
 								String newDateKey = 
 									bc.getBudgetPeriodType().getName() 
 									+ ":" + DateUtil.getYear(dateKey)
@@ -364,16 +364,16 @@ public class ModelFactory {
 								newAmountMap.put(newDateKey, amount);
 							}
 							else if (splitKey.length == 4){
-								newAmountMap.put(key, ((BudgetCategoryImpl) bc).getBudgetPeriods().get(key));
+								newAmountMap.put(key, ((BudgetCategoryImpl) bc).getAmounts().get(key));
 							}
 						}
 
 						if (changed){
 							Logger.getLogger(ModelFactory.class.getName()).warning("Your data file has been updated to address bug #1811038.  Included inline are the details of the changes:\n\n"
 									+ "New Map:\n" + newAmountMap + "\n\n"
-									+ "Old Map:\n" + ((BudgetCategoryImpl) bc).getBudgetPeriods());
+									+ "Old Map:\n" + ((BudgetCategoryImpl) bc).getAmounts());
 
-							((BudgetCategoryImpl) bc).setBudgetPeriod(newAmountMap);
+							((BudgetCategoryImpl) bc).setAmounts(newAmountMap);
 						}
 					}
 
