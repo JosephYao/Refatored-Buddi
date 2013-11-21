@@ -35,4 +35,8 @@ public class BudgetPeriod {
 		return new BudgetPeriod(type, type.getStartOfPreviousBudgetPeriod(period.getStartDate()));
 	}
 
+	public long getDayCount() {
+		return type.getDaysInPeriod(period.getStartDate());
+	}
+
 }
