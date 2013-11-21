@@ -1,3 +1,4 @@
 bin/
 build/
 etc/ant.properties
+.settings
