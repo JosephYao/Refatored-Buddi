@@ -116,25 +116,19 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 			return (long) getAmountInPeriod(period.getStartDate(), period.getEndDate());
 		}
 		 
-		//If the area between Start and End overlap at least two budget periods. 
-		if (firstBudgetPeriod.nextBudgetPeriod().getStartDate().equals(
-				lastBudgetPeriod.getStartDate())
-				|| firstBudgetPeriod.nextBudgetPeriod().getStartDate().before(
-						lastBudgetPeriod.getStartDate())){
-			double totalStartPeriod = getAmountInPeriod(period.getStartDate(), firstBudgetPeriod.getEndDate());
-			
-			double totalInMiddle = 0;
-			for (String periodKey : getBudgetPeriods(
-					firstBudgetPeriod.nextBudgetPeriod().getStartDate(),
-					lastBudgetPeriod.previousBudgetPeriod().getStartDate())) {
-				totalInMiddle += getAmountOfBudgetPeriodContainingDate(getPeriodDate(periodKey));
-			}
-			
-			double totalEndPeriod = getAmountInPeriod(lastBudgetPeriod.getStartDate(), period.getEndDate());
-			return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
+		double totalStartPeriod = getAmountInPeriod(period.getStartDate(),
+				firstBudgetPeriod.getEndDate());
+
+		double totalInMiddle = 0;
+		for (String periodKey : getBudgetPeriods(firstBudgetPeriod
+				.nextBudgetPeriod().getStartDate(), lastBudgetPeriod
+				.previousBudgetPeriod().getStartDate())) {
+			totalInMiddle += getAmountOfBudgetPeriodContainingDate(getPeriodDate(periodKey));
 		}
 
-		throw new RuntimeException("You should not be here.  We have returned all legitimate numbers from getAmount(Date, Date) in BudgetCategoryImpl.  Please contact Wyatt Olson with details on how you got here (what steps did you perform in Buddi to get this error message).");
+		double totalEndPeriod = getAmountInPeriod(
+				lastBudgetPeriod.getStartDate(), period.getEndDate());
+		return (long) (totalStartPeriod + totalInMiddle + totalEndPeriod);
 	}
 	private BudgetPeriod createLastBudgetPeriod(Period period) {
 		return new BudgetPeriod(getBudgetPeriodType(), period.getEndDate());
