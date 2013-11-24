@@ -1,6 +1,8 @@
 package org.homeunix.thecave.buddi.model.impl;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.homeunix.thecave.buddi.model.BudgetCategoryType;
 
@@ -37,6 +39,19 @@ public class BudgetPeriod {
 
 	public long getDayCount() {
 		return period.getDayCount();
+	}
+
+	public List<BudgetPeriod> createBudgetPeriodsTill(BudgetPeriod lastBudgetPeriod){
+		List<BudgetPeriod> budgetPeriods = new LinkedList<BudgetPeriod>();
+	
+		BudgetPeriod current = this;
+	
+		while (current.getStartDate().before(lastBudgetPeriod.getEndDate())){
+			budgetPeriods.add(current);
+			current = current.nextBudgetPeriod();
+		}
+	
+		return budgetPeriods;
 	}
 
 }
