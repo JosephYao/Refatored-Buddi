@@ -21,7 +21,7 @@ public class BudgetPeriod {
 		return another.period.equals(this.period);
 	}
 
-	public BudgetPeriod nextBudgetPeriod() {
+	private BudgetPeriod nextBudgetPeriod() {
 		return new BudgetPeriod(type, type.getBudgetPeriodOffset(period.getStartDate(), 1));
 	}
 
@@ -29,12 +29,8 @@ public class BudgetPeriod {
 		return period.getStartDate();
 	}
 
-	public Date getEndDate() {
+	private Date getEndDate() {
 		return period.getEndDate();
-	}
-
-	public BudgetPeriod previousBudgetPeriod() {
-		return new BudgetPeriod(type, type.getBudgetPeriodOffset(period.getStartDate(), -1));
 	}
 
 	public long getDayCount() {
@@ -52,6 +48,10 @@ public class BudgetPeriod {
 		}
 	
 		return budgetPeriods;
+	}
+
+	public Period getPeriod() {
+		return period;
 	}
 
 }
