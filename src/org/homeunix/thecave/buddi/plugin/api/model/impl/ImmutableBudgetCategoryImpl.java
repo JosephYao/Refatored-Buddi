@@ -31,11 +31,11 @@ public class ImmutableBudgetCategoryImpl extends ImmutableSourceImpl implements 
 	}
 	
 	public long getAmount(Date startDate, Date endDate) {
-		return getBudgetCategory().getTotalAmount(startDate, endDate);
+		return getBudgetCategory().getAmount(startDate, endDate);
 	}
 	
 	public long getAmount(Date date) {
-		return getBudgetCategory().getAmountOfBudgetPeriodContainingDate(date);
+		return getBudgetCategory().getAmount(date);
 	}
 	
 	public ImmutableBudgetCategoryType getBudgetPeriodType() {
