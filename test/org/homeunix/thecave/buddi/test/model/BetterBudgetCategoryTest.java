@@ -32,20 +32,20 @@ public class BetterBudgetCategoryTest {
 
 	@Test (expected=RuntimeException.class)
 	public void testBeginDateIsLaterThanStartDateThrowsAnException() throws Exception {
-		bc.getAmount(fourthOfJuly2011 , secondOfJuly2011);
+		bc.getTotalAmount(fourthOfJuly2011 , secondOfJuly2011);
 	}
 	
 	@Test
 	public void getAmountOfARangeInsideABudgetPeriod() throws Exception {
 		bc.setAmount(secondOfJuly2011, 31);
-		assertEquals(3, bc.getAmount(secondOfJuly2011, fourthOfJuly2011));
+		assertEquals(3, bc.getTotalAmount(secondOfJuly2011, fourthOfJuly2011));
 	}
 
 	@Test
 	public void getAmountOfARangeTwoNeigbouringBudgetPeriods() throws Exception {
 		bc.setAmount(twentyJune2011, 300);
 		bc.setAmount(secondOfJuly2011, 31);
-		assertEquals(114, bc.getAmount(twentyJune2011, fourthOfJuly2011));
+		assertEquals(114, bc.getTotalAmount(twentyJune2011, fourthOfJuly2011));
 	}
 	
 	@Test
@@ -55,7 +55,7 @@ public class BetterBudgetCategoryTest {
 		bc.setAmount(twentyMay2011, 3100);
 		bc.setAmount(twentyJune2011, 3000);
 		bc.setAmount(secondOfJuly2011, 31);
-		assertEquals(9100 + 2 + 22, bc.getAmount(tenthMarch2011, secondOfJuly2011));
+		assertEquals(9100 + 2 + 22, bc.getTotalAmount(tenthMarch2011, secondOfJuly2011));
 	}
 	
 }
