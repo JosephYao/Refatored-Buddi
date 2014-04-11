@@ -1,3 +1,5 @@
 bin/
 build/
 etc/ant.properties
+.idea
+*.iml
