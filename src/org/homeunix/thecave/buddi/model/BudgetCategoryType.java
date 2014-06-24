@@ -104,4 +104,5 @@ public abstract class BudgetCategoryType {
 	 * @return
 	 */
 	public abstract String getKey();
+	
 }
